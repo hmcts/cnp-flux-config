@@ -1,0 +1,16 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: kured
+  namespace: kured
+spec:
+  releaseName: kured
+  chart:
+    git: ssh://git@github.com/hmcts/chart-kured
+    ref: master
+    path: kured
+  values:
+    slackUsername: aks-aat-cluster
+  valueFileSecrets:
+  - name: "kured-values"
