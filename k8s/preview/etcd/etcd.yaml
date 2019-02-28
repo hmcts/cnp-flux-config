@@ -1,0 +1,29 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: etcd 
+  namespace: etcd
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: etcd
+  chart:
+    repository: http://storage.googleapis.com/kubernetes-charts-incubator
+    name: etcd
+    version: 0.6.2
+  values:
+    image:
+      repository: "k8s.gcr.io/etcd-amd64"
+      tag: "3.3.10" # "v3.3.8-0-gke.1"
+    pullPolicy: "IfNotPresent"
+    replicas: 3
+    resources:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 1000m
+        memory: 2500Mi
+    persistentVolume:
+      enabled: true
+      storage: "2Gi"
