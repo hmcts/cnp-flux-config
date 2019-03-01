@@ -1,0 +1,21 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: cmc-pdf-service
+  namespace: software-engineering
+spec:
+  releaseName: cmc-pdf-service
+  chart:
+    git: ssh://git@github.com/hmcts/charts
+    ref: master
+    path: cmc-pdf-service
+  values:
+    java:
+      applicationPort: 5500
+      environment:
+        LOGBACK_REQUIRE_ALERT_LEVEL: 'false'
+        LOGBACK_REQUIRE_ERROR_CODE: 'false'
+        APPINSIGHTS_INSTRUMENTATIONKEY: "cdd56761-038b-49e9-9fdf-b42b10e11ed5"
+      image: hmcts.azurecr.io/cmc-pdf-service:latest
+      ingressHost: cmc-pdf-service.service.core-compute.aat.internal
