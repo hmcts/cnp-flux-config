@@ -1,0 +1,40 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: admin
+spec:
+  releaseName: neuvector
+  chart:
+    git: ssh://git@github.com/github.com/neuvector
+    ref: master
+    path: neuvector-helm
+  values:
+    registry: hmcts.azurecr.io
+    tag: 2.3.0
+    controller:
+      image:
+        repository:
+          neuvector/controller
+    enforcer:
+      image:
+        repository:
+          neuvector/enforcer
+    manager:
+      image:
+        repository:
+          neuvector/manager
+       ingress:
+         enabled: true
+         host: neuvector.service.core-compute-aat.internal
+         annotations:
+           kubernetes.io/ingress.class: traefik
+    cve:
+      updater:
+        # If false, cve updater will not be installed
+        enabled: true
+        image:
+          repository: neuvector/updater
+          tag: latest
+        schedule: "0 0 * * *"
