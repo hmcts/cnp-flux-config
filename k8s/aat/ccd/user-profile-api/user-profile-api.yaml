@@ -1,0 +1,29 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccd-user-profile-api
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:latest-*
+spec:
+  releaseName: ccd-user-profile-api
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: ccd-user-profile-api
+    version: 0.0.4
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "f61ab34c-07da-42fc-ac7e-3f8cdadfd5a1"
+      image: hmcts.azurecr.io/hmcts/ccd-user-profile-api:latest
+      ingressHost: ccd-user-profile-api.service.core-compute-aat.internal
+      environment:
+        USER_PROFILE_DB_USE_SSL: true
+        USER_PROFILE_DB_HOST: ${SERVICE_NAME}-postgres
+        USER_PROFILE_DB_NAME: ccd_user_profile
+        USER_PROFILE_DB_USERNAME: ccd
+        #USER_PROFILE_DB_PASSWORD: ccd
+
