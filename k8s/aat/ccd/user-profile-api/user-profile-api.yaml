@@ -20,10 +20,13 @@ spec:
       applicationInsightsInstrumentKey: "f61ab34c-07da-42fc-ac7e-3f8cdadfd5a1"
       image: hmcts.azurecr.io/hmcts/ccd-user-profile-api:latest
       ingressHost: ccd-user-profile-api.service.core-compute-aat.internal
+      keyVaults:
+        ccd:
+          resourceGroup: ccd-shared-aat
+          secrets:
+            - ccd-user-profile-api-POSTGRES-PASS
       environment:
         USER_PROFILE_DB_USE_SSL: true
-        USER_PROFILE_DB_HOST: ${SERVICE_NAME}-postgres
+        USER_PROFILE_DB_HOST: ccd-user-profile-api-postgres-db-aat.postgres.database.azure.com
         USER_PROFILE_DB_NAME: ccd_user_profile
-        USER_PROFILE_DB_USERNAME: ccd
-        #USER_PROFILE_DB_PASSWORD: ccd
-
+        USER_PROFILE_DB_USERNAME: ccd@ccd-user-profile-api-postgres-db-aat
