@@ -4,12 +4,14 @@ kind: HelmRelease
 metadata:
   name: neuvector
   namespace: admin
+  annotations:
+    flux.weave.works/ignore: "false"
 spec:
   releaseName: neuvector
   chart:
-    git: ssh://git@github.com/neuvector/neuvector-helm
-    ref: master
-    path: /
+    git: ssh://git@github.com/hmcts/neuvector-helm
+    ref: static-pv
+    path: ""
   values:
     registry: hmcts.azurecr.io
     tag: 2.3.0
@@ -21,6 +23,7 @@ spec:
       pvc:
         enabled: true
         storageClass: nv-sc
+        volumeName: nv-data-aat
     enforcer:
       image:
         repository:
