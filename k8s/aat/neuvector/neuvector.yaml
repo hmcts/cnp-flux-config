@@ -5,12 +5,12 @@ metadata:
   name: neuvector
   namespace: admin
   annotations:
-    flux.weave.works/ignore: "true"
+    flux.weave.works/ignore: "false"
 spec:
   releaseName: neuvector
   chart:
     git: ssh://git@github.com/hmcts/neuvector-helm
-    ref: static-pv
+    ref: azure-files
     path: ""
   values:
     registry: hmcts.azurecr.io
@@ -20,10 +20,10 @@ spec:
         repository:
           neuvector/controller
       replicas: 3
-      pvc:
+      staticAzureFileShare:
         enabled: true
-        storageClass: nv-sc
-        volumeName: nv-data-aat
+        secretName: nv-storage-secret
+        shareName: nv-data
     enforcer:
       image:
         repository:
