@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+   name:  vsts
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vsts-aks-agent
+  namespace: vsts
+  labels:
+    app: vsts-aks-agent
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vsts-aks-agent
+  template:
+    metadata:
+      labels:
+        app: vsts-aks-agent
+    spec:
+      containers:
+      - name: vsts-aks-agent
+        image: hmcts.azurecr.io/hmcts/vsts-agent:db16s5
+        env:
+        - name: VSTS_POOL
+          value: hmcts-agent-pool
+        - name: VSTS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vsts-token
+              key: token
+        - name: VSTS_ACCOUNT
+          value: hmcts
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "25m"
