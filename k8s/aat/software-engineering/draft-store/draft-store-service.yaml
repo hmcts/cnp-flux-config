@@ -12,9 +12,11 @@ spec:
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 0.0.2
+    version: 0.0.3
   values:
     java:
+      replicas: '2'
+      useInterpodAntiAffinity: 'true'
       applicationInsightsInstrumentKey: "a2e12f21-e77a-4b9f-91f3-6e7b3867892e"
       image: hmcts.azurecr.io/hmcts/draft-store-service:latest
       ingressHost: draft-store-service.service.core-compute-aat.internal
