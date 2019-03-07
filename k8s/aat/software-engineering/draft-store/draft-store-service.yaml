@@ -18,7 +18,7 @@ spec:
       replicas: '2'
       useInterpodAntiAffinity: 'true'
       applicationInsightsInstrumentKey: "a2e12f21-e77a-4b9f-91f3-6e7b3867892e"
-      image: hmcts.azurecr.io/hmcts/draft-store-service:latest
+      image: hmcts.azurecr.io/hmcts/draft-store-service:latest-db16q7
       ingressHost: draft-store-service.service.core-compute-aat.internal
       environment:
         DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
@@ -28,10 +28,10 @@ spec:
         DRAFT_STORE_DB_USER_NAME: draftstore@rpe-draft-store-aat
         RUN_DB_MIGRATION_ON_STARTUP: 'false'
       keyVaults:
-        "rpe-ft-api":
+        "draft-store":
           resourceGroup: draft-store-service
           secrets:
-            - service-POSTGRES-PASS
+          - service-POSTGRES-PASS
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
