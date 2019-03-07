@@ -18,11 +18,11 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "f61ab34c-07da-42fc-ac7e-3f8cdadfd5a1"
-      image: hmcts.azurecr.io/hmcts/ccd-user-profile-api:latest-db16ar
+      image: hmcts.azurecr.io/hmcts/ccd-user-profile-api:latest-db16qu
       ingressHost: ccd-user-profile-api.service.core-compute-aat.internal
       keyVaults:
         ccd:
-          resourceGroup: ccd-shared-aat
+          resourceGroup: ccd-shared
           secrets:
           - ccd-user-profile-api-POSTGRES-PASS
       environment:
@@ -30,3 +30,11 @@ spec:
         USER_PROFILE_DB_HOST: ccd-user-profile-api-postgres-db-aat.postgres.database.azure.com
         USER_PROFILE_DB_NAME: ccd_user_profile
         USER_PROFILE_DB_USERNAME: ccd@ccd-user-profile-api-postgres-db-aat
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    tags:
+      postgresql-pod: false
+
+
