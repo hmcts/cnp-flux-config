@@ -1,0 +1,17 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: fluxcloud
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "true"
+spec:
+  releaseName: fluxcloud
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: fluxcloud
+    version: 0.0.1
+  valueFileSecrets:
+  - name: "fluxcloud-values"
+  values: {}
