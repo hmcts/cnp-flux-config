@@ -1,0 +1,26 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: redis
+  namespace: redis
+  annotations:
+    flux.weave.works/automated: "true"
+spec:
+  releaseName: redis
+  chart:
+    git: https://github.com/hmcts/charts
+    ref: master
+    path: stable/redis
+  values:
+    image:
+      registry: docker.io
+      repository: bitnami/redis
+      tag: 4.0.6
+      pullPolicy: IfNotPresent
+    cluster:
+      enabled: false
+    password: redis
+    master:
+      persistence:
+        enabled: false
+
