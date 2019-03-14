@@ -14,7 +14,7 @@ spec:
     name: cmc-claim-store
     version: 0.0.4
   values:
-    claim-store:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "4d7922fc-7d37-4278-b542-6ac8fe0408e2"
@@ -27,6 +27,11 @@ spec:
           - claim-store-db-password
           - cmc-db-password
       environment:
+        IDAM_S2S_AUTH_URL: TODO -> aat aks
+        SEND_LETTER_URL: TODO -> aat aks
+        IDAM_API_URL: TODO -> aat aks
+        PDF_SERVICE_URL: TODO -> aat aks
+        DOCUMENT_MANAGEMENT_URL: TODO -> aat aks
         CLAIM_STORE_DB_HOST: cmc-claim-store-postgres-db-aat.postgres.database.azure.com
         CLAIM_STORE_DB_CONNECTION_OPTIONS: '?sslmode=require'
         CMC_DB_HOST: cmc-claim-store-postgres-db-aat.postgres.database.azure.com
@@ -39,3 +44,4 @@ spec:
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
     tags:
       postgresql-pod: false
+      cmc-citizen-frontend: false
