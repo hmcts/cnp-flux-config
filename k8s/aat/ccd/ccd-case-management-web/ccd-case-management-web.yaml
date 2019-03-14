@@ -1,0 +1,39 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccd-case-management-web
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:latest-*
+spec:
+  releaseName: ccd-case-management-web
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: ccd-case-management-web
+    version: 0.0.2
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "f61ab34c-07da-42fc-ac7e-3f8cdadfd5a1"
+      image: hmcts.azurecr.io/hmcts/ccd-case-management-web:latest
+      ingressHost: ccd-case-management-web.service.core-compute-aat.internal
+      environment:
+        IDAM_LOGIN_URL: https://idam.preprod.ccidam.reform.hmcts.net/login
+        CCD_GW_LOGOUT_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/logout
+        CCD_API_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/aggregated
+        CCD_DATA_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/data
+        CCD_GW_OAUTH2_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/oauth2
+        DM_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/documents
+        DM_URL_REMOTE: ^https?://(?:api-gateway\\.preprod\\.dm\\.reform\\.hmcts\\.net|dm-store-aat\\.service\\.core-compute-aat\\.internal(?::\\d+)?)/documents
+        POSTCODE_LOOKUP_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/addresses?postcode=$${postcode}
+        PRINT_SERVICE_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/print
+        PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd.nonprod.platform.hmcts.net
+        CCD_ACTIVITY_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/activity
+        PAYMENTS_URL: https://ccd-api-gateway-web.service.core-compute-aat.internal/payments
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
