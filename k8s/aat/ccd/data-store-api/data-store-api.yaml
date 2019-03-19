@@ -12,7 +12,7 @@ spec:
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: ccd-data-store-api
-    version: 0.0.2
+    version: 0.0.3
   values:
     java:
       replicas: 2
@@ -32,7 +32,7 @@ spec:
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-aat.postgres.database.azure.com
         DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-aat
         DATA_STORE_DB_NAME: ccd_data_store
-        DATA_STORE_DB_USE_SSL: 'true'
+        DATA_STORE_DB_OPTIONS: "?stringtype=unspecified&sslmode=require"
 
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         DEFINITION_STORE_HOST: http://ccd-definition-store-api.service.core-compute-aat.internal

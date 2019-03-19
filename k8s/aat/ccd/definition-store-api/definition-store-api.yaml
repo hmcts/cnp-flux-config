@@ -12,7 +12,7 @@ spec:
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: ccd-definition-store-api
-    version: 0.0.2
+    version: 0.0.3
   values:
     java:
       replicas: 2
@@ -32,11 +32,10 @@ spec:
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-aat.postgres.database.azure.com
         DEFINITION_STORE_DB_NAME: ccd_definition_store
         DEFINITION_STORE_DB_USERNAME: ccd@ccd-definition-store-api-postgres-db-aat
-        DEFINITION_STORE_DB_USE_SSL: 'true'
+        DEFINITION_STORE_DB_OPTIONS: '?sslmode=require'
 
         AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: 'true'
-        AZURE_STORAGE_CONNECTION_STRING: ''
-        AZURE_STORAGE_BLOB_CONTAINER_REFERENCE: ''
+        AZURE_STORAGE_BLOB_CONTAINER_REFERENCE: 'ccd-definition-store-api-imports-aat'
 
         ELASTIC_SEARCH_ENABLED: 'true'
         ELASTIC_SEARCH_FAIL_ON_IMPORT: 'true'
