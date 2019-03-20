@@ -28,12 +28,15 @@ spec:
         LETTER_TRACKING_DB_NAME: send_letter
         LETTER_TRACKING_DB_USER_NAME: "send_letter@rpe-send-letter-service-db-aat"
         S2S_URL: http://rpe-service-auth-provider
-      secrets:
-      - test-s2s-secret
-      - test-ftp-user
-      - test-ftp-private-key
-      - test-ftp-public-key
-      - send-letter-service-POSTGRES-PASS
+      keyVaults:
+        "rpe-send-letter":
+          resourceGroup: rpe-send-letter-service
+          secrets:
+            - test-s2s-secret
+            - test-ftp-user
+            - test-ftp-private-key
+            - test-ftp-public-key
+            - send-letter-service-POSTGRES-PASS
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
