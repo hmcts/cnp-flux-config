@@ -1,13 +1,13 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: plum-recipe-backend-rc
+  name: plum-recipe-backend-aat
   namespace: cnp
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:aat-rc-*
+    flux.weave.works/tag.java: glob:aat-*
 spec:
-  releaseName: plum-recipe-backend-rc
+  releaseName: plum-recipe-backend-aat
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: plum-recipe-backend
@@ -17,8 +17,8 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "2700c28a-aa8c-4669-8718-1e4239dee797"
-      image: hmcts.azurecr.io/hmcts/plum-recipe-backend:aat-rc-301f251eab1904d382467433160c23db77fb1ad3
-      ingressHost: plum-recipe-backend.service.core-compute-aat-rc.internal
+      image: hmcts.azurecr.io/hmcts/plum-recipe-backend:aat-301f251eab1904d382467433160c23db77fb1ad3
+      ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       applicationPort: 4550
       keyVaults:
         "plumsi-aat":
