@@ -17,13 +17,13 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "2700c28a-aa8c-4669-8718-1e4239dee797"
-      image: hmcts.azurecr.io/hmcts/plum-recipe-backend:prod-301f251eab1904d382467433160c23db77fb1ad3
+      image: hmctssandbox.azurecr.io/hmcts/crumble-recipe-backend:prod-4f13f5c8
       ingressHost: plum-recipe-backend.service.core-compute-prod.internal
       applicationPort: 4550
       keyVaults:
-        "plumsi-saat":
-          excludeEnvironmentSuffix: true
-          resourceGroup: plum-shared-infrastructure-saat
+        "plumsi":
+          excludeEnvironmentSuffix: false
+          resourceGroup: plum-shared-infrastructure
           secrets:
             - recipe-backend-POSTGRES-DATABASE
             - recipe-backend-POSTGRES-HOST
@@ -33,6 +33,6 @@ spec:
     tags:
       postgresql-pod: false
     global:
-      environment: aat
+      environment: saat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
