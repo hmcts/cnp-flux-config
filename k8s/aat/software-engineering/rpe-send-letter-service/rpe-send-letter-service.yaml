@@ -20,6 +20,10 @@ spec:
       applicationInsightsInstrumentKey: "71df5a0f-ebbe-445c-b1d1-d10d349f0970"
       image: hmcts.azurecr.io/hmcts/rpe-send-letter-service:latest-87e88ed3
       ingressHost: rpe-send-letter-service.service.core-compute-aat.internal
+      cpuRequests: "1000m"
+      cpuLimits: "2500m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
       environment:
         FILE_CLEANUP_ENABLED: true
         FLYWAY_URL: "jdbc:postgresql://rpe-send-letter-service-db-aat.postgres.database.azure.com:5432/send_letter?sslmode=require"
@@ -28,6 +32,7 @@ spec:
         LETTER_TRACKING_DB_NAME: send_letter
         LETTER_TRACKING_DB_USER_NAME: "send_letter@rpe-send-letter-service-db-aat"
         S2S_URL: http://rpe-service-auth-provider-java
+        JAVA_TOOL_OPTIONS: "-XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC"
       keyVaults:
         "rpe-send-letter":
           resourceGroup: rpe-send-letter-service
