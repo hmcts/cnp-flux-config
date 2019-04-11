@@ -1,3 +1,4 @@
+---
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
@@ -17,7 +18,7 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "2700c28a-aa8c-4669-8718-1e4239dee797"
-      image: hmctssandbox.azurecr.io/hmcts/crumble-recipe-backend:prod-4f13f5c8
+      image: hmctssandbox.azurecr.io/hmcts/crumble-recipe-backend:prod-35a6aab7
       ingressHost: plum-recipe-backend.service.core-compute-prod.internal
       applicationPort: 4550
       environment:
@@ -27,11 +28,11 @@ spec:
           excludeEnvironmentSuffix: false
           resourceGroup: plum-shared-infrastructure
           secrets:
-            - recipe-backend-POSTGRES-DATABASE
-            - recipe-backend-POSTGRES-HOST
-            - recipe-backend-POSTGRES-PASS
-            - recipe-backend-POSTGRES-PORT
-            - recipe-backend-POSTGRES-USER
+          - recipe-backend-POSTGRES-DATABASE
+          - recipe-backend-POSTGRES-HOST
+          - recipe-backend-POSTGRES-PASS
+          - recipe-backend-POSTGRES-PORT
+          - recipe-backend-POSTGRES-USER
     tags:
       postgresql-pod: false
     global:
