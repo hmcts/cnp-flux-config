@@ -12,7 +12,7 @@ spec:
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 0.0.8
+    version: 1.0.0
   values:
     java:
       replicas: 2
@@ -35,8 +35,8 @@ spec:
           - system-update-password
           - notify-api-key
       environment:
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-java.software-engineering
-        IDAM_API_URL: https://preprod-idamapi.reform.hmcts.net:3511
         PDF_SERVICE_URL: http://cmc-pdf-service-java.software-engineering
         SEND_LETTER_URL: http://rpe-send-letter-service-java.software-engineering
         DOCUMENT_MANAGEMENT_URL: http://dm-store-java.ccd
