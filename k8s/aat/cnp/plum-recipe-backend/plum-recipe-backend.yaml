@@ -22,15 +22,15 @@ spec:
       image: hmcts.azurecr.io/hmcts/plum-recipe-backend:latest
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       environment:
-        POSTGRES_DATABASE: rhubarb
-        POSTGRES_HOST: plum-aat.postgres.database.azure.com
         POSTGRES_PORT: '5422'
-        POSTGRES_USER: rhubarbadmin@plum-aat
         POSTGRES_SSL_MODE: require
       keyVaults:
         "plumsi":
           resourceGroup: plum-shared-infrastructure
           secrets:
+            - recipe-backend-POSTGRES-DATABASE
+            - recipe-backend-POSTGRES-HOST
+            - recipe-backend-POSTGRES-USER
             - recipe-backend-POSTGRES-PASS
       global:
         environment: aat
