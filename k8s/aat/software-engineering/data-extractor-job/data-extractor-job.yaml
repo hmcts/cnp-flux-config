@@ -1,0 +1,18 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: data-extractor-job
+  namespace: software-engineering
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: data-extractor-job
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: data-extractor-job
+    version: 0.0.1
+  values:
+    java:
+      image: hmcts.azurecr.io/hmcts/data-extractor-job:prod-5b129b06
