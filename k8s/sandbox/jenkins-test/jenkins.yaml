@@ -2,13 +2,14 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: kured
-  namespace: kured
+  name: jenkins-test
+  namespace: jenkins-test
   annotations:
     flux.weave.works/ignore: "false"
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:latest-*
 spec:
-  releaseName: kured
+  releaseName: jenkins-test
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: jenkins
