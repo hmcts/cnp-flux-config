@@ -2,9 +2,9 @@ apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
   name: kured
-  namespace: admin
+  namespace: kured
   annotations:
-    flux.weave.works/ignore: "true"
+    flux.weave.works/ignore: "false"
     flux.weave.works/automated: "true"
 spec:
   releaseName: kured
@@ -13,7 +13,9 @@ spec:
     name: kured
     version: 1.1.1
   values:
-    image.repository: docker.io/weaveworks/kured
-    image.tag: 1.1.0
+    image:
+      repository: docker.io/weaveworks/kured
+      tag: 1.1.0
+      pullSecrets:
   valueFileSecrets:
   - name: "kured-values"
