@@ -22,7 +22,7 @@ spec:
       cpuLimits: '2500m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "b6ed9359-a81f-4e54-8147-a8e3182e08a4"
-      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-b482e225
+      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-work-flux-3
       ingressHost: draft-store-service.service.core-compute-sprod.internal
       environment:
         DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
@@ -34,7 +34,8 @@ spec:
         IDAM_URL: http://idam-api-idam-sprod.service.core-compute-idam-sprod.internal
         S2S_URL: http://rpe-service-auth-provider-sprod.service.core-compute-sprod.internal
         SPRING_APPLICATION_NAME: "HMCTS Draft Store AKS"
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       keyVaults:
         "draft-store":
           resourceGroup: draft-store-service
