@@ -1,0 +1,21 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: draft-store-service
+  namespace: software-engineering
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: draft-store-service
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: draft-store-service
+    version: 1.0.2
+  values:
+    java:
+      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-7cf6dbc9
+      ingressHost: draft-store-service.service.core-compute-demo.internal
+      environment:
+        SPRING_APPLICATION_NAME: "HMCTS Draft Store AKS"
