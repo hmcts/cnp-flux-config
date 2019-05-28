@@ -1,0 +1,37 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+  annotations:
+    #flux.weave.works/ignore: "true"
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: traefik
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: traefik
+    version: 1.61.1
+  values:
+    imageTag: 1.7.9
+    loadBalancerIP: 10.11.31.250
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 1000m
+        memory: 300Mi
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    rbac:
+      enabled: true
+    dashboard:
+      enabled: true
+      domain: traefik.service.core-compute-saat.internal
+    ssl:
+      enabled: true
+    startupArguments:
+      - "--ping"
+      - "--ping.entrypoint=http"
