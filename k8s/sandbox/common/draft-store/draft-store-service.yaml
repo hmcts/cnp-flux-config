@@ -15,8 +15,9 @@ spec:
     version: 1.0.3
   values:
     java:
-      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-c727f2ef
+      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-c5684303
       ingressHost: draft-store-service.service.core-compute-sandbox.internal
+      aadIdentityName: rpe
       environment:
         DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
         DRAFT_STORE_DB_HOST: rpe-draft-store-sandbox.postgres.database.azure.com
@@ -29,7 +30,6 @@ spec:
         SPRING_APPLICATION_NAME: "HMCTS Draft Store AKS"
       keyVaults:
         "draft-store":
-          usePodIdentity: true
           resourceGroup: draft-store-service
           secrets:
           - service-POSTGRES-PASS
