@@ -1,0 +1,21 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: sscs-tribunals
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: sscs-tribunals
+    version: 0.0.1
+  values:
+    java:
+      image: hmcts.azurecr.io/hmcts/sscs-tribunals:prod-c5684303
+      ingressHost: 29thMay-sscs-tribunals.demo.platform.hmcts.net
+    postgresql:
+      enabled: true
