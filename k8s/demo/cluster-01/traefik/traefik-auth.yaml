@@ -1,0 +1,45 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: traefik-forward-auth
+  namespace: admin
+spec:
+  template:
+    metadata:
+      labels:
+        app: traefik-forward-auth
+    spec:
+      containers:
+      - name: traefik-forward-auth
+        image: thomseddon/traefik-forward-auth:0.1.1
+        resources:          
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+      envFrom:
+        - secretRef:
+          name: traefik-forward-auth-secrets
+      env:
+        - name: COOKIE_SECURE
+          value: true
+        - name: DOMAIN
+          value: HMCTS Demo
+        - name: PROMPT
+          value: select_account
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-forward-auth
+  namespace: admin
+spec:
+  selector:
+    app: traefik-forward-auth
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4181
