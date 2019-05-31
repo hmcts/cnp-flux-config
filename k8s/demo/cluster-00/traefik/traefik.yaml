@@ -12,9 +12,17 @@ spec:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: traefik
     version: 1.61.1
+  valueFileSecrets:
+  - name: "traefik-values"
   values:
     imageTag: 1.7.9
-    loadBalancerIP: 10.11.15.250
+    loadBalancerIP: 51.143.184.251
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+    kubernetes:
+      ingressEndpoint:
+        useDefaultPublishedService: true
     resources:
       requests:
         cpu: 100m
@@ -22,16 +30,17 @@ spec:
       limits:
         cpu: 1000m
         memory: 300Mi
-    service:
-      annotations:
-        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     rbac:
       enabled: true
     dashboard:
       enabled: true
-      domain: traefik00.service.core-compute-demo.internal
+      domain: traefik00.demo.platform.hmcts.net
     ssl:
       enabled: true
+      enforced: true
+      permanentRedirect: true
+      tlsMinVersion: VersionTLS12
+      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
     startupArguments:
       - "--ping"
       - "--ping.entrypoint=http"
