@@ -1,0 +1,30 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: flux
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: flux
+  chart:
+    repository: https://weaveworks.github.io/flux
+    name: flux
+    version: 0.9.5
+  values:
+    git:
+      path: "k8s/sandbox/common,k8s/sandbox/cluster-00,k8s/common"
+      label: "sandbox-cluster-00"
+      email: "hmcts-flux-sandbox@hmcts.net"
+      user: "Flux sandbox"
+      url: git@github.com:hmcts/cnp-flux-config
+      pollInterval: 1m
+    registry:
+      acr:
+        enabled: true
+    helmOperator:
+      create: true
+      chartsSyncInterval: 1m
+      configureRepositories:
+        enable: true
