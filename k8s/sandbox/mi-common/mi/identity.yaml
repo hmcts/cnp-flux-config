@@ -1,0 +1,19 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: mi-sbox
+ namespace: mi-sbox
+spec:
+ type: 0
+ ResourceID: /subscriptions/0c1744f8-9e63-4742-9c28-c066fd2e6eee/resourcegroups/managed-identities-sbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-sbox-mi
+ ClientID: 1461ff03-675c-423c-95a4-fb50d31254ff
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: mi-binding
+  namespace: mi-sbox
+spec:
+  AzureIdentity: mi
+  Selector: mi
