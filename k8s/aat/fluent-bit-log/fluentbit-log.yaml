@@ -12,3 +12,18 @@ spec:
     git: git@github.com:hmcts/chart-fluentbit-log
     path: fluentbit-log
     ref: master
+  values:
+    image:
+      registry: docker.io
+      repository: fluent/fluent-bit
+      tag: 1.0.0
+      imagePullPolicy: IfNotPresent
+    replicaCount: 1
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: 1   
+      enableSecret: false 
