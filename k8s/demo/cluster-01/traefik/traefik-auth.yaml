@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: traefik-forward-auth
-        image: thomseddon/traefik-forward-auth:0.1.1
+        image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
         resources:          
           limits:
             cpu: 100m
@@ -20,16 +20,12 @@ spec:
           requests:
             cpu: 100m
             memory: 128Mi
-      envFrom:
-        - secretRef:
-          name: traefik-forward-auth-secrets
-      env:
-        - name: COOKIE_SECURE
-          value: true
-        - name: DOMAIN
-          value: HMCTS Demo
-        - name: PROMPT
-          value: select_account
+        envFrom:
+          - secretRef:
+              name: traefik-forward-auth-secrets
+        args:
+          - "--provider=azure"
+          - "--email-domain=*"
 ---
 kind: Service
 apiVersion: v1
@@ -42,4 +38,4 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 4181
+    targetPort: 4182
