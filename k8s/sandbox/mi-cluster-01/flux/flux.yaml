@@ -1,0 +1,34 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: flux
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: flux
+  chart:
+    repository: https://weaveworks.github.io/flux
+    name: flux
+    version: 0.9.5
+  values:
+    git:
+      path: "k8s/sandbox/common,k8s/sandbox/mi-cluster-01,k8s/common"
+      label: "mi-sbox-cluster-01"
+      email: "flux-mi-sbox@hmcts.net"
+      user: "Mi Flux sandbox"
+      url: git@github.com:hmcts/cnp-flux-config
+      pollInterval: 1m
+    syncGarbageCollection:
+      enabled: true
+    registry:
+      acr:
+        enabled: true
+    helmOperator:
+      create: true
+      chartsSyncInterval: 1m
+      configureRepositories:
+        enable: true
+    additionalArgs:
+      - --connect=ws://fluxcloud
