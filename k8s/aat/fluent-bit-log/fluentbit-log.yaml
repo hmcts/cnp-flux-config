@@ -9,9 +9,9 @@ metadata:
 spec:
   releaseName: fluentbit-log
   chart:
-    git: git@github.com:hmcts/chart-fluentbit-log
-    path: fluentbit-log
-    ref: master
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: fluentbit-log
+    version: 0.0.1
   values:
     image:
       registry: docker.io
@@ -26,4 +26,6 @@ spec:
       limits:
         memory: "256Mi"
         cpu: 1   
-      enableSecret: false 
+    enableSecret: false
+    enableAzurePlugin: true
+    enableStandardOutput: false
