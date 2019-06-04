@@ -24,8 +24,11 @@ spec:
           resourceGroup: data-extractor
           secrets:
             - aat-ccdro-user
+            - aat-ccdro-password
       environment:
-        ETL_DB_PASSWORD_FILE: aat-ccdro-user
+        ETL_DB_URL: jdbc:postgresql://ccd-data-store-api-postgres-db-aat.postgres.database.azure.com:5432/ccd_data_store
+        ETL_DB_USER_FILE: aat-ccdro-user
+        ETL_DB_PASSWORD_FILE: aat-ccdro-password
         ETL_SQL: >
           SELECT id, created_date, event_id, summary, description, user_id, case_data_id, 
           case_type_id, case_type_version, state_id, user_first_name, user_last_name, 
@@ -38,3 +41,4 @@ spec:
         ETL_CONTAINER: probate
         ETL_FILE_TYPE: jsonlines 
         ETL_FILE_PREFIX: test01
+        ETL_MSI_CLIENT_ID: 1461ff03-675c-423c-95a4-fb50d31254ff
