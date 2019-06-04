@@ -13,7 +13,28 @@ spec:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: data-extractor-job
     version: 0.0.3
+  valueFileSecrets:
+  - name: "data-extractor-values"
   values:
     job:
       image: hmcts.azurecr.io/hmcts/data-extractor-job:prod-f888e665
       suspend: true
+      keyVaults:
+        "rpe-prod":
+          resourceGroup: rpe-prod
+          secrets:
+            - aat-ccdro-user
+      environment:
+        ETL_DB_PASSWORD_FILE: aat-ccdro-user
+        ETL_SQL: >
+          SELECT id, created_date, event_id, summary, description, user_id, case_data_id, 
+          case_type_id, case_type_version, state_id, user_first_name, user_last_name, 
+          event_name, state_name, security_classification
+          FROM case_event
+          WHERE created_date >= (current_date-1 + time '00:00')
+          AND created_date < (current_date + time '00:00')
+          ORDER BY created_date ASC;
+        ETL_ACCOUNT: midatastg
+        ETL_CONTAINER: probate
+        ETL_FILE_TYPE: jsonlines 
+        ETL_FILE_PREFIX: test01
