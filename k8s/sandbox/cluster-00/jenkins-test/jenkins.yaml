@@ -13,13 +13,13 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: jenkins
-    version: 1.1.16
+    version: 1.1.23
   values:
     master:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
       image: "hmcts/jenkins"
-      imageTag: "latest"
+      imageTag: "028b4e5"
       imagePullPolicy: "Always"
 
       jenkinsAdminEmail: noreply@reform.hmcts.net
@@ -35,22 +35,6 @@ spec:
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
-        - name: DNS_SERVER
-          value: "10.99.196.9"
-        - name: JENKINS_AGENT_IMAGE_URI
-          value: '/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/cnp-vmimages-sandbox/providers/Microsoft.Compute/images/moj-centos-agent74-20190415135134'
-        - name: JENKINS_AGENT_VNET
-          value: 'mgmt-infra-sandbox'
-        - name: JENKINS_AGENT_VNET_RG
-          value: 'mgmt-infra-sandbox'
-        - name: JENKINS_AGENT_SUBNET
-          value: 'jenkins-subnet'
-        - name: JENKINS_AGENT_EXECUTORS
-          value: '4'
-        - name: JENKINS_AGENT_MAX
-          value: '10'
-        - name: BFA_HOSTNAME
-          value: sandbox-build-failure-analyzer.platform.hmcts.net
         - name: SECRETS
           value: /kvmnt/secrets
       # Set min/max heap here if needed with:
@@ -81,7 +65,7 @@ spec:
 
       slaveListenerServiceType: "ClusterIP"
 
-      installPlugins: []
+      installPlugins:
 
       # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
       # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
@@ -92,8 +76,6 @@ spec:
       # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.
       JCasC:
         enabled: true
-        pluginVersion: 1.14
-        supportPluginVersion: 1.14
         configScripts:
           welcome-message: |
             jenkins:
@@ -108,11 +90,11 @@ spec:
                       - key: INFRA_VAULT_NAME
                         value: infra-vault-sandbox
                       - key: NONPROD_ENVIRONMENT_NAME
-                        value: saat
+                        value: sandbox
                       - key: NONPROD_SUBSCRIPTION_NAME
                         value: sandbox
                       - key: PROD_ENVIRONMENT_NAME
-                        value: sprod
+                        value: sandbox
                       - key: PROD_SUBSCRIPTION_NAME
                         value: sandbox
                       - key: JAVA_OPTS
@@ -241,16 +223,112 @@ spec:
                 credentialID: jenkinsServicePrincipal
           sonar: |
             unclassified:
-              sonarglobalconfiguration:
+              sonarGlobalConfiguration:
                 installations:
                   - additionalAnalysisProperties: sonar.organization=hmcts
                     name: SonarQube
-                    serverAuthenticationToken: '${sonarcloud-api-token}'
+                    credentialsId: 'sonarcloud-api-token'
                     serverUrl: 'https://sonarcloud.io'
+          build-failure-analyzer: |
+            unclassified:
+              buildFailureAnalyzer:
+                doNotAnalyzeAbortedJob: false
+                gerritTriggerEnabled: true
+                globalEnabled: true
+                graphsEnabled: true
+                knowledgeBase:
+                  mongoDB:
+                    dbName: "build-failure-analyzer"
+                    enableStatistics: true
+                    host: "sandbox-build-failure-analyzer.platform.hmcts.net"
+                    password: "${bfa-user-password}"
+                    port: 27017
+                    successfulLogging: false
+                    userName: "build-failure-analyzer"
+                maxLogSize: 0
+                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
+                nrOfScanThreads: 3
+                testResultCategories: "test-failures"
+                testResultParsingEnabled: true
           timestamper: |
             unclassified:
               timestamperConfig:
                 allPipelines: true
+          azure-vm-agent: |
+            jenkins:
+              clouds:
+                - azureVM:
+                    azureCredentialsId: "jenkinsServicePrincipal"
+                    cloudName: "cnp-azure"
+                    deploymentTimeout: 1200
+                    existingResourceGroupName: "mgmt-vmimg-store-sandbox"
+                    maxVirtualMachinesLimit: 10
+                    resourceGroupReferenceType: "existing"
+                    vmTemplates:
+                      - agentLaunchMethod: "SSH"
+                        agentWorkspace: "/opt/jenkins"
+                        builtInImage: "Windows Server 2016"
+                        credentialsId: "vm_agent_creds"
+                        diskType: "managed"
+                        doNotUseMachineIfInitFails: true
+                        enableMSI: false
+                        executeInitScriptAsRoot: true
+                        existingStorageAccountName: "mgmtvmimgstoresandbox"
+                        imageReference:
+                          id: "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/cnp-vmimages-sandbox/providers/Microsoft.Compute/images/moj-centos-agent74-20181113164555"
+                          version: "latest"
+                        imageTopLevelType: "advanced"
+                        initScript: |
+                          usermod -a -G docker jenkinsssh
+                          umount /mnt/resource
+                          mkdir -pv /opt/jenkins
+                          mount /dev/sdb1 /opt/jenkins
+                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                          mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
+                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
+                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
+                          cat > /etc/dnsmasq.d/10-internal-forwarding<<EOF
+                          server=/#/10.99.196.9
+                          EOF
+                          systemctl restart dnsmasq
+                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
+                          jenkinsssh soft nofile 40960
+                          jenkinsssh hard nofile 40960
+                          jenkinsssh soft
+                          proc 32768
+                          jenkinsssh hard nproc 32768
+                          EOF
+                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
+                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                        installDocker: false
+                        installGit: false
+                        installMaven: false
+                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
+                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
+                      \ -XX:G1SummarizeRSetStatsPeriod=1"
+                        location: "UK South"
+                        noOfParallelJobs: 1
+                        osDiskSize: 0
+                        osType: "Linux"
+                        preInstallSsh: true
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
+                        shutdownOnIdle: false
+                        storageAccountNameReferenceType: "existing"
+                        storageAccountType: "Standard_LRS"
+                        subnetName: "jenkins-subnet"
+                        templateDesc: "Jenkins build agents for HMCTS"
+                        templateDisabled: false
+                        templateName: "cnp-jenkins-builders"
+                        usageMode: "Use this node as much as possible"
+                        usePrivateIP: true
+                        virtualMachineSize: "Standard_D4_v3"
+                        virtualNetworkName: "mgmt-infra-sandbox"
+                        virtualNetworkResourceGroupName: "mgmt-infra-sandbox"
+
           credentials: |
             credentials:
               system:
@@ -267,6 +345,11 @@ spec:
                           id: jenkins-github-hmcts-api-token-text
                           secret: '${hmcts-github-apikey-cnp}'
                           description: CNP jenkins github token
+                      - string:
+                          scope: GLOBAL
+                          id: sonarcloud-api-token
+                          secret: '${sonarcloud-api-token}'
+                          description: SonarCloud API token
                       - string:
                           scope: GLOBAL
                           id: slack-token
