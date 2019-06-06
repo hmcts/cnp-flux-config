@@ -26,7 +26,7 @@ kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 
 ## Bootstrapping sealed secrets for a new cluster
 
-### Adding public cert to the cluster (TODO: automate)
+### Adding public cert to the cluster (TODO: automate)
 The public cert is used by consumers of the cluster to encrypt secrets
 
 Connect to the cluster you deployed something like:
@@ -44,7 +44,7 @@ Grab the public cert from the startup logs and place it in:
 k8s/<env-name>/pub-cert.pem
 ```
 
-### Flux cloud
+### Flux cloud
 
 Log into sandbox as an admin:
 ```
