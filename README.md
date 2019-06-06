@@ -80,3 +80,17 @@ Run:
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
 $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-00/kured/kured-values.yaml
 ```
+
+### Neuvector
+We install Neuvector on prod like or path-to-live environments
+
+It requires a sealed secret that contains the azure storage account name and key
+
+
+
+```bash
+$ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-ithc --name sa-connection-string --query value -o tsv | cut -d ';' -f 4 | cut -d '=' -f 2)
+
+$ kubectl create secret generic storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftappsithc --namespace neuvector --dry-run -o json > /tmp/neuvector.json
+$ kubeseal --format=yaml --cert=k8s/ithc/pub-cert.pem < /tmp/neuvector.json > k8s/ithc/common/neuvector/storage-secret.yaml
+```
