@@ -94,3 +94,25 @@ $ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-ithc --name
 $ kubectl create secret generic storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftappsithc --namespace neuvector --dry-run -o json > /tmp/neuvector.json
 $ kubeseal --format=yaml --cert=k8s/ithc/pub-cert.pem < /tmp/neuvector.json > k8s/ithc/common/neuvector/storage-secret.yaml
 ```
+
+#### Neuvector logging to Log Analytics
+
+We use fluentbit to ship logs to a Log Analytics workspace
+
+It requires a sealed secret that contains the workspace id and key in it
+
+This can only be retrieved from powershell or lots of clicking in the Azure Portal
+The "CustomerId" is your workspace ID
+```powershell
+$ Connect-AzAccount
+$ Select-AzSubscription  DCD-CFTAPPS-<env>
+$ $oms = Get-AzOperationalInsightsWorkspace
+$ $workspaceId = $oms.CustomerId.Guid
+
+$ $keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation-rg -Name hmcts-ithc-law
+$ $primaryKey = $keys.PrimarySharedKey
+
+$ kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run -o json > /tmp/fluentbit-log.json
+
+$ kubeseal --format=yaml --cert=k8s/ithc/pub-cert.pem < /tmp/fluentbit-log.json > k8s/ithc/common/neuvector/fluentbit-log.yaml
+```
