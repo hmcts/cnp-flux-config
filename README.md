@@ -104,15 +104,15 @@ It requires a sealed secret that contains the workspace id and key in it
 This can only be retrieved from powershell or lots of clicking in the Azure Portal
 The "CustomerId" is your workspace ID
 ```powershell
-$ Connect-AzAccount
-$ Select-AzSubscription  DCD-CFTAPPS-<env>
-$ $oms = Get-AzOperationalInsightsWorkspace
-$ $workspaceId = $oms.CustomerId.Guid
+Connect-AzAccount
+Select-AzSubscription  DCD-CFTAPPS-<env>
+$oms = Get-AzOperationalInsightsWorkspace
+$workspaceId = $oms.CustomerId.Guid
 
-$ $keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation-rg -Name hmcts-<env>-law
-$ $primaryKey = $keys.PrimarySharedKey
+$keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation-rg -Name hmcts-<env>-law
+$primaryKey = $keys.PrimarySharedKey
 
-$ kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run -o json > /tmp/fluentbit-log.json
+kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run -o json > /tmp/fluentbit-log.json
 
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json > k8s/<env>/common/neuvector/fluentbit-log.yaml
+kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json > k8s/<env>/common/neuvector/fluentbit-log.yaml
 ```
