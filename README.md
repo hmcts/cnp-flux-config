@@ -59,7 +59,7 @@ $ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.
 Run:
 ```bash
 $ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-01/fluxcloud/fluxcloud-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-#/fluxcloud/fluxcloud-values.yaml
 ```
 
 Repeat for cluster01
@@ -78,15 +78,15 @@ $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml
 Run:
 ```bash
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-00/kured/kured-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-#/kured/kured-values.yaml
 ```
+
+Repeat for cluster01
 
 ### Neuvector
 We install Neuvector on prod like or path-to-live environments
 
 It requires a sealed secret that contains the azure storage account name and key
-
-
 
 ```bash
 $ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-ithc --name storage-account-key --query value -o tsv)
