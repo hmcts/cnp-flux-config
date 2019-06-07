@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: cnp
+ namespace: cnp
+spec:
+ type: 0
+ ResourceID: /subscriptions/b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb/resourceGroups/managed-identities-sbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cnp-sandbox-mi
+ ClientID: accebe4f-9e5a-47ba-a75e-6174b99abcd1
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: cnp-binding
+  namespace: cnp
+spec:
+  AzureIdentity: cnp
+  Selector: cnp
