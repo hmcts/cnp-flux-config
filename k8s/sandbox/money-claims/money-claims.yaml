@@ -1,0 +1,57 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: money-claims
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: money-claims
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: money-claims
+    version: 0.0.1
+  values:
+    ### CMC SERVICES ###
+    cmc-claim-store:
+      java:
+        environment:
+          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+      ccd:
+        ingressHost: money-claims  # chart wont install without but what do we want here?
+        ingressIP: 0.0.0.0  # chart wont install but do we need?
+        consulIP: 0.0.0.0  # chart wont install but do we need?
+        idamApiUrl: https://idam-api.demo.platform.hmcts.net
+        idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+        apiGateway:
+          s2sKey: 2SL33JSNZF3IAO7I
+          idamClientSecret: vUstam6brAsT38ranuwRut65rakec4u6
+        dataStoreApi:
+          s2sKey: KRUM7VO6WVA3BGBG
+        definitionStoreApi:
+          s2sKey: TXEPBQPCMACANXKO
+        adminWeb:
+          s2sKey: 43Z7RGIWRI4UIQ4Z
+          idamClientSecret: HoxnBugNkz9jE9QK0pvMVGjgEhBtN9Zv
+
+    cmc-citizen-frontend:
+      nodejs:
+        environment:
+          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+          IDAM_URL: https://idam-api.demo.platform.hmcts.net
+          IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.demo.platform.hmcts.net
+    ########################
+
+    ##### DEPENDENCIES #####
+    dm-store:
+      java:
+        environment:
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+
+    draft-store-service:
+      java:
+        environment:
+          IDAM_URL: https://idam-api.demo.platform.hmcts.net
+    ########################
