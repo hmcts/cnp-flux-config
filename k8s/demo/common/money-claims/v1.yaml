@@ -1,0 +1,191 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: cmc-demo
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: cmc-demo
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: chart-cmc
+    version: 0.0.1
+  values:
+    ### CMC SERVICES ###
+    cmc-claim-store:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-cmc-claimstore
+        environment:
+          GOV_NOTIFY_API_KEY: ""  # make-a-sealedsecret
+          OAUTH2_CLIENT_SECRET: "12345678"  # make-a-sealedsecret
+          SPRING_MAIL_HOST: mailhog 
+          SPRING_MAIL_PORT: 1025
+          CLAIM_STORE_DB_HOST: demo-v1-postgres
+          CMC_DB_HOST: demo-v1-postgres
+          CORE_CASE_DATA_API_URL: http://demo-v1-data-store-api
+          FEATURE_TOGGLES_CCD_ENABLED: true
+          FEATURE_TOGGLES_CCD_ASYNC_ENABLED: false
+          FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+          FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
+          FEATURE_TOGGLES_EMAILTOSTAFF: true
+          IDAM_CASEWORKER_ANONYMOUS_USERNAME: civilmoneyclaims+anonymouscitizen@gmail.com  # make-a-sealedsecret
+          IDAM_CASEWORKER_ANONYMOUS_PASSWORD: Password12
+          IDAM_CASEWORKER_SYSTEM_USERNAME: civilmoneyclaims+systemupdate@gmail.com  # make-a-sealedsecret
+          IDAM_CASEWORKER_SYSTEM_PASSWORD: Password12
+          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_AUTH_URL: http://demo-v1-s2s
+          PDF_SERVICE_URL: http://demo-v1-pdf
+          SEND_LETTER_URL: http://demo-v1-sendletter
+          DOCUMENT_MANAGEMENT_URL: http://demo-v1-dmstore
+          FRONTEND_BASE_URL: https://cmc-citizen-frontend.localhost
+          RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.localhost/first-contact/start
+      ccd:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        ingressHost: cmc-ccd-v1.demo.platform.hmcts.net
+        idamApiUrl: https://idam-api.demo.platform.hmcts.net
+        idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+        s2sUrl: http://demo-v1-s2s
+        draftStoreUrl: http://demo-v1-draftstore
+        paymentsUrl: http://demo-v1-payments
+        apiGateway:
+          s2sKey: AAAAAAAAAAAAAAAA
+          idamClientSecret: "12345678"  # make-a-sealedsecret
+        dataStoreApi:
+          s2sKey: AAAAAAAAAAAAAAAA
+        definitionStoreApi:
+          s2sKey: AAAAAAAAAAAAAAAA
+        adminWeb:
+          s2sKey: AAAAAAAAAAAAAAAA
+          idamClientSecret: "12345678"  # make-a-sealedsecret
+        importer:
+          userprofile:
+            userProfileDatabaseHost: demo-v1-postgres
+          definition:
+            redirectUri: "http://case-management-web-cmc-v1.demo.platform.hmcts.net/oauth2redirect"
+        postgresql:
+          nameOverride: postgres
+
+    cmc-citizen-frontend:
+      nodejs:
+        ingressHost: cmc-v1.demo.platform.hmcts.net
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 30
+        livenessPeriod: 30
+        releaseNameOverride: demo-v1-cmc-citizen-web
+        environment:
+          FEATURE_MOCK_PAY: "true"
+          OAUTH_CLIENT_SECRET: "12345678"  # make-a-sealedsecret
+          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+          IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.demo.platform.hmcts.net
+          FEATURE_TOGGLES_API_URL: http://demo-v1-ftrtgl
+          CLAIM_STORE_URL: http://demo-v1-cmc-claimstore
+          IDAM_S2S_AUTH: http://demo-v1-s2s
+          PAY_URL: http://demo-v1-payments
+          FEES_URL: http://demo-v1-fees
+          DRAFT_STORE_URL: http://demo-v1-draftstore
+      rpe-feature-toggle-api:
+        importer:
+          apiUrl: http://demo-v1-ftrtgl/api/ff4j/store/features/
+        java:
+          readinessDelay: 180
+          livenessDelay: 180
+          readinessPeriod: 60
+          livenessPeriod: 60
+          releaseNameOverride: demo-v1-ftrtgl
+          environment:
+            FEATURES_DB_HOST: demo-v1-postgres
+    ########################
+
+    ##### DEPENDENCIES #####
+    rpe-send-letter-service:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-sendletter
+        environment:
+          FLYWAY_URL: "jdbc:postgresql://demo-v1-postgres:5432/send_letter"
+          LETTER_TRACKING_DB_HOST: demo-v1-postgres
+          S2S_URL: http://demo-v1-s2s
+
+    dm-store:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-dmstore
+        environment:
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://demo-v1-s2s
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/evidence"
+
+    cmc-pdf-service:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-pdf
+
+    draft-store-service:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-draftstore
+        environment:
+          IDAM_URL: https://idam-api.demo.platform.hmcts.net
+          S2S_URL: http://demo-v1-s2s
+          DRAFT_STORE_DB_HOST: demo-v1-postgres
+
+    fees-register-api:
+      java:
+        readinessDelay: 120
+        livenessDelay: 120
+        readinessPeriod: 30
+        livenessPeriod: 30
+        releaseNameOverride: demo-v1-fees
+        environment:
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/fees_register"
+
+    payment-api:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-payments
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
+          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://demo-v1-s2s
+          FEES_REGISTER_URL: http://demo-v1-fees
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/payment_api"
+          GOV_PAY_AUTH_KEY_CMC: "5p5vulb56tcqf3ennki3cbnic8ct9l7ir9i8oogkodcml83lqlgd0qau26" #make-a-sealedsecret
+          SPRING_MAIL_HOST: mailhog
+          SPRING_MAIL_PORT: 1025
+
+    rpe-service-auth-provider:
+      java:
+        readinessDelay: 180
+        livenessDelay: 180
+        readinessPeriod: 60
+        livenessPeriod: 60
+        releaseNameOverride: demo-v1-s2s
+
+    postgresql:
+      nameOverride: postgres
+    ########################
