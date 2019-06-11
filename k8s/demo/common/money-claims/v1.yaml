@@ -17,10 +17,6 @@ spec:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-cmc-claimstore
         environment:
           GOV_NOTIFY_API_KEY: ""  # make-a-sealedsecret
@@ -47,10 +43,6 @@ spec:
           FRONTEND_BASE_URL: https://cmc-citizen-frontend.localhost
           RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.localhost/first-contact/start
       ccd:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         ingressHost: cmc-ccd-v1.demo.platform.hmcts.net
         idamApiUrl: https://idam-api.demo.platform.hmcts.net
         idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -78,13 +70,8 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         ingressHost: cmc-v1.demo.platform.hmcts.net
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 30
-        livenessPeriod: 30
         releaseNameOverride: demo-v1-cmc-citizen-web
         environment:
-          FEATURE_MOCK_PAY: "true"
           OAUTH_CLIENT_SECRET: "12345678"  # make-a-sealedsecret
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
           IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.demo.platform.hmcts.net
@@ -98,10 +85,6 @@ spec:
         importer:
           apiUrl: http://demo-v1-ftrtgl/api/ff4j/store/features/
         java:
-          readinessDelay: 180
-          livenessDelay: 180
-          readinessPeriod: 60
-          livenessPeriod: 60
           releaseNameOverride: demo-v1-ftrtgl
           environment:
             FEATURES_DB_HOST: demo-v1-postgres
@@ -110,10 +93,6 @@ spec:
     ##### DEPENDENCIES #####
     rpe-send-letter-service:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-sendletter
         environment:
           FLYWAY_URL: "jdbc:postgresql://demo-v1-postgres:5432/send_letter"
@@ -122,10 +101,6 @@ spec:
 
     dm-store:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-dmstore
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
@@ -134,18 +109,10 @@ spec:
 
     cmc-pdf-service:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-pdf
 
     draft-store-service:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-draftstore
         environment:
           IDAM_URL: https://idam-api.demo.platform.hmcts.net
@@ -154,20 +121,12 @@ spec:
 
     fees-register-api:
       java:
-        readinessDelay: 120
-        livenessDelay: 120
-        readinessPeriod: 30
-        livenessPeriod: 30
         releaseNameOverride: demo-v1-fees
         environment:
           SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/fees_register"
 
     payment-api:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-payments
         environment:
           AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
@@ -180,10 +139,6 @@ spec:
 
     rpe-service-auth-provider:
       java:
-        readinessDelay: 180
-        livenessDelay: 180
-        readinessPeriod: 60
-        livenessPeriod: 60
         releaseNameOverride: demo-v1-s2s
 
     postgresql:
