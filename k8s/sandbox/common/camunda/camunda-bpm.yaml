@@ -17,28 +17,7 @@ spec:
       subscriptionId:  "bf308a5c-0624-4334-8ff8-8dca9fd43783"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: "sandbox"
-    applicationPort: 8080
-    memoryRequests: '512Mi'
-    cpuRequests: '100m'
-    memoryLimits: '1024Mi'
-    cpuLimits: '2500m'
     ingressHost: camunda.service.core-compute-sandbox.internal
-    readinessPath: '/engine-rest/version'
-    readinessDelay: 30
-    readinessTimeout: 3
-    readinessPeriod: 15
-    livenessPath: '/engine-rest/version'
-    livenessDelay: 30
-    livenessTimeout: 3
-    livenessPeriod: 15
-    livenessFailureThreshold: 3
     replicas: 1
     aadIdentityName: camunda
     databaseType: external   # external or pod. Note: for pod the 'postgresql-pod' tag below needs to be true
-    tags:
-      postgresql-pod: false
-    postgresqlServerName: "camunda-db-sandbox"
-    postgresqlHost: "camunda-db-sandbox.postgres.database.azure.com"
-    postgresqlDatabase: "camunda"
-    resourceGroup: camunda-sandbox   # osba only
-
