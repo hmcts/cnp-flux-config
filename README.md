@@ -116,3 +116,32 @@ kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_i
 
 kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json > k8s/<env>/common/neuvector/fluentbit-log.yaml
 ```
+### Traefik
+
+In case you are enforcing ssl on Traefik with an existing pfx in keyvault ,extract the certificate and key using below: 
+
+```bash
+mkdir tmp
+cd tmp
+KEY_VAULT=${1} # infra-vault-sandbox
+SECRET_NAME=${2} #STAR-sandbox-platform-hmcts-net
+
+az keyvault secret show --vault-name ${KEY_VAULT} --name ${SECRET_NAME} --query value -o tsv | base64 -D > ${SECRET_NAME}.pfx
+openssl pkcs12 -in ${SECRET_NAME}.pfx -nokeys -nodes -passin pass:"" | base64 > ${SECRET_NAME}.crt
+openssl pkcs12 -in ${SECRET_NAME}.pfx -nocerts -nodes -passin pass:"" | base64 > ${SECRET_NAME}.key
+
+```
+
+Create a values.yaml file like below in tmp directory
+```yaml
+ssl:
+  defaultCert: <pbcopy the content of ${SECRET_NAME}.crt file created above"
+  defaultKey: <pbcopy the content of ${SECRET_NAME}.key file created above"
+```
+Create traefik-values sealed secret from the values.yaml 
+
+```bash
+kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run -o yaml > tmp/traefiksecret.yaml
+kubeseal --format=yaml --cert=k8s/mgmt-sandbox/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/<env>/common/traefik/traefik-values.yaml
+```
+
