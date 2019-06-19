@@ -118,7 +118,7 @@ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json >
 ```
 ### Traefik
 
-In case you are enforcing ssl on Traefik( Refer Demo for flux config)  with an existing pfx in keyvault ,extract the certificate and key using below: 
+In case you are enforcing ssl on Traefik( Refer Demo for flux config) with an existing pfx in keyvault, extract the certificate and key using below: 
 
 ```bash
 mkdir tmp
