@@ -67,7 +67,7 @@ Repeat for cluster01
 ### Kured values
 Log into sandbox as an admin:
 ```
-$ az aks get-credentials --name sbox-00-aks -g sboz-00-rg --subscription DCD-CFTAPPS-SBOX
+$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
 ```
 
 Retrieve the existing secret (replace `<env>` with your cluster name):
@@ -150,7 +150,7 @@ To add Kube-Slack for Slack monitoring on AKS cluster, change the SLACK_CHANNEL 
 
 Log into sandbox as an admin:
 ```
-$ az aks get-credentials --name sbox-00-aks -g sboz-00-rg --subscription DCD-CFTAPPS-SBOX
+$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
 ```
 
 Retrieve the existing secret (replace `<env>` with your cluster name):
