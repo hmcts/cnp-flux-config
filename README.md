@@ -67,7 +67,7 @@ Repeat for cluster01
 ### Kured values
 Log into sandbox as an admin:
 ```
-$ az aks get-credentials --name sbox-00-aks -g sboz-00-rg --subscription DCD-CFTAPPS-SBOX
+$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
 ```
 
 Retrieve the existing secret (replace `<env>` with your cluster name):
@@ -145,3 +145,23 @@ kubectl create secret generic traefik-values --namespace=admin --from-file=value
 kubeseal --format=yaml --cert=k8s/mgmt-sandbox/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/<env>/common/traefik/traefik-values.yaml
 ```
 
+### Kube-Slack
+To add Kube-Slack for Slack monitoring on AKS cluster, change the SLACK_CHANNEL in HelmRelease to env specific slack channel.
+
+Log into sandbox as an admin:
+```
+$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
+```
+
+Retrieve the existing secret (replace `<env>` with your cluster name):
+```bash
+$ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D | sed -e 's/sbox-00-aks/<env>-00-aks/' > /tmp/values.yaml
+```
+
+Run:
+```bash
+$ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-#/kube-slack/kube-slack-values.yaml
+```
+
+Repeat for cluster -01
