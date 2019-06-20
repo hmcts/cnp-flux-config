@@ -1,0 +1,19 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: kube-slack
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: kube-slack
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: kube-slack
+    version: 1.1.0
+  valueFileSecrets:
+    - name: "kube-slack-values"
+  values:
+    envVars:
+      SLACK_CHANNEL: aks-monitor-mi
