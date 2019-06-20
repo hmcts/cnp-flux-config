@@ -53,7 +53,7 @@ $ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFT
 
 Retrieve the existing secret (replace `<env>` with your cluster name):
 ```bash
-$ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.yaml']}" | base64 -D | sed -e 's/sbox-00-aks/<env>-01-aks/' > /tmp/values.yaml
+$ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.yaml']}" | base64 -D | sed -e 's/sbox-00-aks/<env>-00-aks/' -e 's/aks-monitor-sbox/aks-monitor-<env>/' > /tmp/values.yaml
 ```
 
 Run:
