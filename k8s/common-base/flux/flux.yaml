@@ -1,0 +1,31 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: flux
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: flux
+  chart:
+    repository: https://weaveworks.github.io/flux
+    name: flux
+    version: 0.10.1
+  values:
+    git:
+      url: git@github.com:hmcts/cnp-flux-config
+      pollInterval: 1m
+    syncGarbageCollection:
+      enabled: true
+    registry:
+      acr:
+        enabled: true
+    helmOperator:
+      create: true
+      chartsSyncInterval: 1m
+      configureRepositories:
+        enable: true
+    additionalArgs:
+      - --connect=ws://fluxcloud
+      - --manifest-generation=true
