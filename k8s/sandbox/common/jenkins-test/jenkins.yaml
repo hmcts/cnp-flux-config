@@ -257,6 +257,77 @@ spec:
           azure-vm-agent: |
             jenkins:
               clouds:
+                - azureVM:	
+                    azureCredentialsId: "jenkinsServicePrincipal"	
+                    cloudName: "cnp-azure"	
+                    deploymentTimeout: 1200	
+                    existingResourceGroupName: "mgmt-vmimg-store-cnptest"	
+                    maxVirtualMachinesLimit: 10	
+                    resourceGroupReferenceType: "existing"	
+                    vmTemplates:	
+                      - agentLaunchMethod: "SSH"	
+                        agentWorkspace: "/opt/jenkins"	
+                        builtInImage: "Windows Server 2016"	
+                        credentialsId: "vm_agent_creds"	
+                        diskType: "managed"	
+                        doNotUseMachineIfInitFails: true	
+                        enableMSI: false	
+                        executeInitScriptAsRoot: true	
+                        existingStorageAccountName: "mgmtvmimgstoresandbox"	
+                        imageReference:	
+                          id: "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/cnp-vmimages-sandbox/providers/Microsoft.Compute/images/moj-centos-agent74-20181113164555"	
+                          version: "latest"	
+                        imageTopLevelType: "advanced"	
+                        initScript: |	
+                          usermod -a -G docker jenkinsssh	
+                          umount /mnt/resource	
+                          mkdir -pv /opt/jenkins	
+                          mount /dev/sdb1 /opt/jenkins	
+                          chown -R jenkinsssh:jenkinsssh /opt/jenkins	
+                          mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa	
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa	
+                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa	
+                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties	
+                          cat > /etc/dnsmasq.d/10-internal-forwarding<<EOF	
+                          server=/#/10.99.196.9	
+                          EOF	
+                          systemctl restart dnsmasq	
+                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF	
+                          jenkinsssh soft nofile 40960	
+                          jenkinsssh hard nofile 40960	
+                          jenkinsssh soft	
+                          proc 32768	
+                          jenkinsssh hard nproc 32768	
+                          EOF	
+                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts	
+                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed	
+                        installDocker: false	
+                        installGit: false	
+                        installMaven: false	
+                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\	
+                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\	
+                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\	
+                      \ -XX:G1SummarizeRSetStatsPeriod=1"	
+                        location: "UK South"	
+                        noOfParallelJobs: 1	
+                        osDiskSize: 0	
+                        osType: "Linux"	
+                        preInstallSsh: true	
+                        retentionStrategy:	
+                          azureVMCloudRetentionStrategy:	
+                            idleTerminationMinutes: 60	
+                        shutdownOnIdle: false	
+                        storageAccountNameReferenceType: "existing"	
+                        storageAccountType: "Standard_LRS"	
+                        subnetName: "jenkins"	
+                        templateDesc: "Jenkins build agents for HMCTS"	
+                        templateDisabled: false	
+                        templateName: "cnp-jenkins-builders"	
+                        usageMode: "Use this node as much as possible"	
+                        usePrivateIP: true	
+                        virtualMachineSize: "Standard_D4_v3"	
+                        virtualNetworkName: "mgmt-infra-cnptest"	
+                        virtualNetworkResourceGroupName: "mgmt-infra-cnptest"
                 # test line
                 - azureVM:
                     azureCredentialsId: "jenkinsServicePrincipal"
