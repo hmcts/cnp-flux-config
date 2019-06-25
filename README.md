@@ -100,7 +100,7 @@ $ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.
 ```
 You have a slack channel with name aks-monitor-<env>.
 
-Run (replace `<env>` with your cluster name ):
+Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
 $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/fluxcloud-values.yaml
@@ -117,7 +117,7 @@ Retrieve the existing secret:
 $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
 
-Run (replace `<env>` with your cluster name ):
+Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
 $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/kured-values.yaml
