@@ -1,7 +1,7 @@
 # cnp-flux-config
 Weave Flux config for AKS clusters
 
-##Folder Structure
+## Folder Structure
 
 
     k8s
