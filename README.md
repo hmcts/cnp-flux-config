@@ -198,7 +198,7 @@ Retrieve the existing secret:
 $ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
 
-Run (replace `<env>` with your cluster name ):
+Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
 $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/kube-slack-values.yaml
