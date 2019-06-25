@@ -1,6 +1,49 @@
 # cnp-flux-config
 Weave Flux config for AKS clusters
 
+##Folder Structure
+
+
+    k8s
+    ├── common                                          # Workloads which are not Kustomized and applied across all environments.
+    │   └── ...                                         # One folder per namespace containing workloads.
+    │       └── namespace.yaml
+    ├── common-base                                     # Kustomization base for common workloads applied across all environments. Used for Admin workloads.
+    │   ├── namespace
+    │   │   └── ...                                     # One folder per namespace containing base resources.
+    │   │       ├── kustomization.yaml                  # Kustomization per name space to be able to override them individually 
+    │   │       └── ...                                 # Resources
+    │   └── kustomization.yaml                          # Kustomize file for common-base referring to nested directories
+    ├── env(sandbox)                                     
+    │   ├── cluster-xx                                  # Folder per cluster
+    │   │   └── automated-overlay                       # Directory containing Kustomized workloads having image automation.
+    │   │       └── .flux.yaml                          # Flux Kustomize file with patch.
+    │   │       └── overlay
+    │   │           ├── kustomization.yaml              # kustomization file. 
+    │   │           └── ...                             # Folder per namespace containing patch workloads.
+    │   │               └── ...
+    │   │   ├── static                                  # Directory containing workloads which aren't overlays / Kustomized.
+    │   │   │   └── ...                                 # Folder per namespace.
+    │   │   │       └── ...
+    │   │   └── static-overlay                          # Directory containing Kustomized workloads not having image automation.
+    │   │       └── .flux.yaml                          # Flux Kustomize file.
+    │   │       └── static
+    │   │           ├── kustomization.yaml              # kustomization file referring to env base and overrides. 
+    │   │           └── ...                             # Folder per namespace containing patch workloads.
+    │   │               └── ...
+    │   │
+    │   ├── common                                      # Common workloads applied across all clusters in environment.
+    │   │   └── ...                                     # Folder per namespace containing common workloads.
+    │   │       └── ...
+    │   ├── env-base                                    # Kustomization directory overlaying common-base.                                
+    │   │   ├── ...                                     # Folder per namespace containing overriding patches / additional resources on top of basic resources.
+    │   │   │   └── ...
+    │   │   └── kustomization.yaml                      
+    │   └── pub-cert.pem                                # pem file for sealed-secrets
+    └── ...
+    
+
+
 ## Creating Sealed Secrets
 
 Install version 0.5.1 from https://github.com/bitnami-labs/sealed-secrets/releases
@@ -51,19 +94,17 @@ Log into sandbox as an admin:
 $ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX
 ```
 
-Retrieve the existing secret (replace `<env>` with your cluster name ):
+Retrieve the existing secret :
 ```bash
-$ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.yaml']}" | base64 -D | sed -e 's/sbox-00-aks/<env>-00-aks/' -e 's/aks-monitor-sbox/aks-monitor-<env>/' > /tmp/values.yaml
+$ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
 You have a slack channel with name aks-monitor-<env>.
 
-Run:
+Run (replace `<env>` with your cluster name ):
 ```bash
 $ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-#/fluxcloud/fluxcloud-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/fluxcloud-values.yaml
 ```
-
-Repeat for cluster01
 
 ### Kured values
 Log into sandbox as an admin:
@@ -71,18 +112,16 @@ Log into sandbox as an admin:
 $ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
 ```
 
-Retrieve the existing secret (replace `<env>` with your cluster name):
+Retrieve the existing secret:
 ```bash
-$ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D | sed -e 's/sbox-00-aks/<env>-00-aks/' > /tmp/values.yaml
+$ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
 
-Run:
+Run (replace `<env>` with your cluster name ):
 ```bash
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-#/kured/kured-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/kured-values.yaml
 ```
-
-Repeat for cluster01
 
 ### Neuvector
 We install Neuvector on prod like or path-to-live environments
@@ -154,15 +193,13 @@ Log into sandbox as an admin:
 $ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
 ```
 
-Retrieve the existing secret (replace `<env>` with your cluster name):
+Retrieve the existing secret:
 ```bash
-$ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D | sed -e 's/sbox-00-aks/<env>-00-aks/' > /tmp/values.yaml
+$ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
 
-Run:
+Run (replace `<env>` with your cluster name ):
 ```bash
 $ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/cluster-#/kube-slack/kube-slack-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/kube-slack-values.yaml
 ```
-
-Repeat for cluster -01
