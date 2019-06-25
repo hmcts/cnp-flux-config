@@ -20,35 +20,35 @@ spec:
         releaseNameOverride: demo-v1-cmc-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
-              secretRef: cmc-demo-notify-api-key
+              secretRef: cmc-notify-api-key
               key: key
           OAUTH2_CLIENT_SECRET:
-              secretRef: cmc-demo-oauth-client-secret
+              secretRef: cmc-oauth-client-secret
               key: key
           IDAM_CASEWORKER_ANONYMOUS_USERNAME:
-              secretRef: cmc-demo-anonymous-caseworker-username
+              secretRef: cmc-anonymous-caseworker-username
               key: key
           IDAM_CASEWORKER_ANONYMOUS_PASSWORD:
-              secretRef: cmc-demo-anonymous-caseworker-password
+              secretRef: cmc-anonymous-caseworker-password
               key: key
           IDAM_CASEWORKER_SYSTEM_USERNAME:
-              secretRef: cmc-demo-system-update-username
+              secretRef: cmc-system-update-username
               key: key
           IDAM_CASEWORKER_SYSTEM_PASSWORD:
-              secretRef: cmc-demo-system-update-password
+              secretRef: cmc-system-update-password
               key: key
         environment:
+          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
           SPRING_MAIL_HOST: mta.reform.hmcts.net 
           SPRING_MAIL_PORT: 25
-          CLAIM_STORE_DB_HOST: demo-v1-postgres
-          CMC_DB_HOST: demo-v1-postgres
-          CORE_CASE_DATA_API_URL: http://demo-v1-data-store-api
           FEATURE_TOGGLES_CCD_ENABLED: true
           FEATURE_TOGGLES_CCD_ASYNC_ENABLED: false
           FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
           FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
           FEATURE_TOGGLES_EMAILTOSTAFF: true
-          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+          CLAIM_STORE_DB_HOST: demo-v1-postgres
+          CMC_DB_HOST: demo-v1-postgres
+          CORE_CASE_DATA_API_URL: http://demo-v1-data-store-api
           IDAM_S2S_AUTH_URL: http://demo-v1-s2s
           PDF_SERVICE_URL: http://demo-v1-pdf
           SEND_LETTER_URL: http://demo-v1-sendletter
@@ -56,9 +56,9 @@ spec:
           FRONTEND_BASE_URL: https://cmc-citizen-frontend-v1.demo.platform.hmcts.net
           RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend-v1.demo.platform.hmcts.net/first-contact/start
       ccd:
-        ingressHost: ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net
         idamApiUrl: https://idam-api.demo.platform.hmcts.net
         idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+        ingressHost: ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net
         s2sUrl: http://demo-v1-s2s
         draftStoreUrl: http://demo-v1-draftstore
         paymentsUrl: http://demo-v1-payments
@@ -66,7 +66,7 @@ spec:
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
-            secretKeyRefName: ccd-demo-ccd-api-gateway-oauth2-client-secret
+            secretKeyRefName: ccd-api-gateway-oauth2-client-secret
             secretKeyRefKey: key
         dataStoreApi:
           s2sKey: AAAAAAAAAAAAAAAA
@@ -76,7 +76,7 @@ spec:
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
-            secretKeyRefName: ccd-demo-ccd-admin-web-oauth2-client-secret
+            secretKeyRefName: ccd-admin-web-oauth2-client-secret
             secretKeyRefKey: key
         idam-pr:
           releaseNameOverride: demo-v1-ccd-idam-pr
@@ -91,10 +91,10 @@ spec:
           definition:
             importerFromSecret: true
             importerUsername: 
-              secretKeyRefName: cmc-demo-ccd-importer-username
+              secretKeyRefName: cmc-ccd-importer-username
               secretKeyRefKey: key
             importerPassword: 
-              secretKeyRefName: cmc-demo-ccd-importer-password
+              secretKeyRefName: cmc-ccd-importer-password
               secretKeyRefKey: key
             redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net/oauth2redirect"
         postgresql:
@@ -106,7 +106,7 @@ spec:
         releaseNameOverride: demo-v1-cmc-citizen-web
         secrets:
           OAUTH_CLIENT_SECRET:
-              secretRef: cmc-demo-citizen-oauth-client-secret
+              secretRef: cmc-citizen-oauth-client-secret
               key: key
         environment:
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
@@ -169,7 +169,7 @@ spec:
         releaseNameOverride: demo-v1-payments
         secrets: 
           GOV_PAY_AUTH_KEY_CMC:
-              secretRef: ccpay-demo-gov-pay-keys-cmc
+              secretRef: ccpay-gov-pay-keys-cmc
               key: key
         environment:
           AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
