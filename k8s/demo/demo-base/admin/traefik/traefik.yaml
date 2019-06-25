@@ -1,0 +1,19 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  valueFileSecrets:
+    - name: "traefik-values"
+  values:
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+    kubernetes:
+      ingressEndpoint:
+        useDefaultPublishedService: true
+    ssl:
+      enabled: true
+      enforced: true
+      permanentRedirect: true
