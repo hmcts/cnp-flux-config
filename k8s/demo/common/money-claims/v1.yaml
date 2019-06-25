@@ -20,22 +20,22 @@ spec:
         releaseNameOverride: demo-v1-cmc-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
-              secretRef: cmc-aat-notify-api-key
+              secretRef: cmc-demo-notify-api-key
               key: key
           OAUTH2_CLIENT_SECRET:
-              secretRef: cmc-aat-oauth-client-secret
+              secretRef: cmc-demo-oauth-client-secret
               key: key
           IDAM_CASEWORKER_ANONYMOUS_USERNAME:
-              secretRef: cmc-aat-anonymous-caseworker-username
+              secretRef: cmc-demo-anonymous-caseworker-username
               key: key
           IDAM_CASEWORKER_ANONYMOUS_PASSWORD:
-              secretRef: cmc-aat-anonymous-caseworker-password
+              secretRef: cmc-demo-anonymous-caseworker-password
               key: key
           IDAM_CASEWORKER_SYSTEM_USERNAME:
-              secretRef: cmc-aat-system-update-username
+              secretRef: cmc-demo-system-update-username
               key: key
           IDAM_CASEWORKER_SYSTEM_PASSWORD:
-              secretRef: cmc-aat-system-update-password
+              secretRef: cmc-demo-system-update-password
               key: key
         environment:
           SPRING_MAIL_HOST: mta.reform.hmcts.net 
@@ -66,7 +66,7 @@ spec:
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
-            secretKeyRefName: ccd-aat-ccd-api-gateway-oauth2-client-secret
+            secretKeyRefName: ccd-demo-ccd-api-gateway-oauth2-client-secret
             secretKeyRefKey: key
         dataStoreApi:
           s2sKey: AAAAAAAAAAAAAAAA
@@ -76,7 +76,7 @@ spec:
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
-            secretKeyRefName: ccd-aat-ccd-admin-web-oauth2-client-secret
+            secretKeyRefName: ccd-demo-ccd-admin-web-oauth2-client-secret
             secretKeyRefKey: key
         idam-pr:
           releaseNameOverride: demo-v1-ccd-idam-pr
@@ -91,10 +91,10 @@ spec:
           definition:
             importerFromSecret: true
             importerUsername: 
-              secretKeyRefName: cmc-aat-ccd-importer-username
+              secretKeyRefName: cmc-demo-ccd-importer-username
               secretKeyRefKey: key
             importerPassword: 
-              secretKeyRefName: cmc-aat-ccd-importer-password
+              secretKeyRefName: cmc-demo-ccd-importer-password
               secretKeyRefKey: key
             redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net/oauth2redirect"
         postgresql:
@@ -106,7 +106,7 @@ spec:
         releaseNameOverride: demo-v1-cmc-citizen-web
         secrets:
           OAUTH_CLIENT_SECRET:
-              secretRef: cmc-aat-citizen-oauth-client-secret
+              secretRef: cmc-demo-citizen-oauth-client-secret
               key: key
         environment:
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
@@ -169,7 +169,7 @@ spec:
         releaseNameOverride: demo-v1-payments
         secrets: 
           GOV_PAY_AUTH_KEY_CMC:
-              secretRef: ccpay-aat-gov-pay-keys-cmc
+              secretRef: ccpay-demo-gov-pay-keys-cmc
               key: key
         environment:
           AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
