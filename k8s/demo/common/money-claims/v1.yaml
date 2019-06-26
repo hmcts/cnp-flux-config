@@ -20,22 +20,22 @@ spec:
         releaseNameOverride: demo-v1-cmc-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
-              secretRef: cmc-notify-api-key
+              secretRef: notify-api-key
               key: key
           OAUTH2_CLIENT_SECRET:
-              secretRef: cmc-oauth-client-secret
+              secretRef: oauth-client-secret
               key: key
           IDAM_CASEWORKER_ANONYMOUS_USERNAME:
-              secretRef: cmc-anonymous-caseworker-username
+              secretRef: anonymous-caseworker-username
               key: key
           IDAM_CASEWORKER_ANONYMOUS_PASSWORD:
-              secretRef: cmc-anonymous-caseworker-password
+              secretRef: anonymous-caseworker-password
               key: key
           IDAM_CASEWORKER_SYSTEM_USERNAME:
-              secretRef: cmc-system-update-username
+              secretRef: system-update-username
               key: key
           IDAM_CASEWORKER_SYSTEM_PASSWORD:
-              secretRef: cmc-system-update-password
+              secretRef: system-update-password
               key: key
         environment:
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
@@ -91,10 +91,10 @@ spec:
           definition:
             importerFromSecret: true
             importerUsername: 
-              secretKeyRefName: cmc-ccd-importer-username
+              secretKeyRefName: ccd-importer-username
               secretKeyRefKey: key
             importerPassword: 
-              secretKeyRefName: cmc-ccd-importer-password
+              secretKeyRefName: ccd-importer-password
               secretKeyRefKey: key
             redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net/oauth2redirect"
         postgresql:
@@ -106,7 +106,7 @@ spec:
         releaseNameOverride: demo-v1-cmc-citizen-web
         secrets:
           OAUTH_CLIENT_SECRET:
-              secretRef: cmc-citizen-oauth-client-secret
+              secretRef: citizen-oauth-client-secret
               key: key
         environment:
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
