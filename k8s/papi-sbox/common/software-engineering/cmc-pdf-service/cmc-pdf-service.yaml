@@ -1,0 +1,27 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: cmc-pdf-service
+  namespace: software-engineering
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: cmc-pdf-service
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: cmc-pdf-service
+    version: 0.1.3
+  values:
+    java:
+      applicationPort: 5500
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "cdd56761-038b-49e9-9fdf-b42b10e11ed5"
+      image: hmcts.azurecr.io/hmcts/cmc-pdf-service:prod-de01d44e
+      ingressHost: cmc-pdf-service.service.core-compute-aat.internal
+      #registerAdditionalDns:
+      #  enabled: true
+      #ingressIP: 10.96.160.97
+      #consulIP: 10.96.139.254

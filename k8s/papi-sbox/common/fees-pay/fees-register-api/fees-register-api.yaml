@@ -1,0 +1,39 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: fees-register-api
+  namespace: fees-pay
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: fees-register-api
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: fees-register-api
+    version: 0.0.4
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "3e7db234-c815-4996-95f5-2d10b4f58efd"
+      image: hmcts.azurecr.io/hmcts/fees-register-api:prod-d06018cf
+      ingressHost: fees-register-api.service.core-compute-aat.internal
+      environment:
+        REFORM_ENVIRONMENT: aat
+        SPRING_DATASOURCE_URL: "jdbc:postgresql://fees-register-postgres-db-aat.postgres.database.azure.com:5432/fees_register?sslmode=require"
+        SPRING_DATASOURCE_USERNAME: fees_register@fees-register-postgres-db-aat
+        SPRING_LIQUIBASE_ENABLED: false
+        ENABLE_FEE_LOADER: false
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+          - fees-register-api-POSTGRES-PASS
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    tags:
+      postgresql-pod: false

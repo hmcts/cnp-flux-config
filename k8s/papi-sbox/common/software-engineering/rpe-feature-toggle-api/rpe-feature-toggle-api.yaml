@@ -1,0 +1,42 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: rpe-feature-toggle-api
+  namespace: software-engineering
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: rpe-feature-toggle-api
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: rpe-feature-toggle-api
+    version: 2.0.1
+  values:
+    java:
+      replicas: '2'
+      useInterpodAntiAffinity: 'true'
+      applicationInsightsInstrumentKey: "fac0a65a-a152-4aff-952c-8aec63b83de3"
+      image: hmcts.azurecr.io/hmcts/rpe-feature-toggle-api:prod-3150ba1f
+      ingressHost: rpe-feature-toggle-api.service.core-compute-aat.internal
+      environment:
+        FEATURES_DB_HOST: rpe-feature-toggle-api-db-aat.postgres.database.azure.com
+        FEATURES_DB_USER_NAME: feature_toggler@rpe-feature-toggle-api-db-aat
+        FEATURES_DB_NAME: feature_toggle
+        FEATURES_DB_PORT: '5432'
+        FEATURES_DB_CONN_OPTIONS: ?ssl=true
+        FLYWAY_URL: "jdbc:postgresql://rpe-feature-toggle-api-db-aat.postgres.database.azure.com:5432/feature_toggle?ssl=true"
+        FLYWAY_USER: feature_toggler@rpe-feature-toggle-api-db-aat
+      keyVaults:
+        "rpe-ft-api":
+          resourceGroup: rpe-feature-toggle-api
+          secrets:
+          - feature-toggle-api-POSTGRES-PASS
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    importer:
+      oneoff:
+        enabled: false
