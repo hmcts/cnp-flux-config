@@ -1,0 +1,13 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: draft-store-service
+  namespace: rpe
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  values:
+    java:
+      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-fa081538
