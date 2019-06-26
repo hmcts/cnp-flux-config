@@ -1,0 +1,679 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: jenkins-test
+  namespace: jenkins-test
+  annotations:
+    flux.weave.works/ignore: "false"
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:latest-*
+spec:
+  releaseName: jenkins-test
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: jenkins
+    version: 1.1.23
+  values:
+    master:
+      # Used for label app.kubernetes.io/component
+      componentName: "jenkins-master"
+      image: "hmcts/jenkins"
+      imageTag: "dc5c831"
+      imagePullPolicy: "Always"
+
+      jenkinsAdminEmail: noreply@reform.hmcts.net
+
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "512Mi"
+        limits:
+          cpu: "2000m"
+          memory: "4096Mi"
+
+      containerEnv:
+        - name: ENVIRONMENT
+          value: "sandbox"
+        - name: SECRETS
+          value: /kvmnt/secrets
+      # Set min/max heap here if needed with:
+      #javaOpts: '-Djenkins.install.runSetupWizard=false -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Dhudson.model.DirectoryBrowserSupport.CSP=\"default-src ''self''; script-src ''self'' ''unsafe-inline''; style-src ''self'' ''unsafe-inline''; font-src data:\"'
+
+      usePodSecurityContext: true
+      runAsUser: 1000
+      fsGroup: 1000
+      servicePort: 8080
+      targetPort: 8080
+      serviceType: ClusterIP
+
+      healthProbes: true
+      healthProbesLivenessTimeout: 90
+      healthProbesReadinessTimeout: 60
+      healthProbeReadinessPeriodSeconds: 10
+      healthProbeLivenessFailureThreshold: 12
+      slaveListenerPort: 50000
+      slaveHostPort:
+      disabledAgentProtocols:
+        - JNLP-connect
+        - JNLP2-connect
+      csrf:
+        defaultCrumbIssuer:
+          enabled: true
+          proxyCompatability: true
+      cli: false
+
+      slaveListenerServiceType: "ClusterIP"
+
+      installPlugins:
+
+      # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
+      # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
+      # Keys are only used to give the section a meaningful name.  The only restriction is they may only contain RFC 1123 \ DNS label
+      # characters: lowercase letters, numbers, and hyphens.  The keys become the name of a configuration yaml file on the master in
+      # /var/jenkins_home/casc_configs (by default) and will be processed by the Configuration as Code Plugin.  The lines after each |
+      # become the content of the configuration yaml file.  The first line after this is a JCasC root element, eg jenkins, credentials,
+      # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.
+      JCasC:
+        enabled: true
+        configScripts:
+          welcome-message: |
+            jenkins:
+              systemMessage: >-
+                  This jenkins is managed by configuration as code, update <a
+                  href="https://github.com/hmcts/cnp-jenkins-config/blob/master/cac-test.yml">here</a>
+          env-vars: |
+            jenkins:
+              globalNodeProperties:
+                - envVars:
+                    env:
+                      - key: INFRA_VAULT_NAME
+                        value: infra-vault-sandbox
+                      - key: NONPROD_ENVIRONMENT_NAME
+                        value: sandbox
+                      - key: NONPROD_SUBSCRIPTION_NAME
+                        value: sandbox
+                      - key: PROD_ENVIRONMENT_NAME
+                        value: sandbox
+                      - key: PROD_SUBSCRIPTION_NAME
+                        value: sandbox
+                      - key: JAVA_OPTS
+                        value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+                      - key: GRADLE_OPTS
+                        value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+          misc-jenkins-settings: |
+            jenkins:
+              crumbIssuer:
+                standard:
+                  excludeClientIPFromCrumb: false
+              markupFormatter:
+                rawHtml:
+                  disableSyntaxHighlighting: false
+              numExecutors: 0
+          views: |
+            jenkins:
+              primaryView:
+                all:
+                  name: all
+              views:
+                - all:
+                    name: all
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|feature-toggle-api|private-beta-invitation-service|service-auth-provider-app|spring-boot-template|cnp-rhubarb-recipes-service|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
+                    name: Platform
+                    recurse: true
+                    title: Platform
+          auth: |
+            jenkins:
+              securityRealm:
+                saml:
+                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
+                  idpMetadataConfiguration:
+                    period: 15
+                    url: "https://login.microsoftonline.com/a0d77fc4-df1e-4b0d-8e35-46750ca5a672/federationmetadata/2007-06/federationmetadata.xml?appid=6c3ebbf6-f0e2-4e2b-9b10-0d8275a0aa02"
+                    #url: "https://login.microsoftonline.com/hmcts.net/FederationMetadata/2007-06/FederationMetadata.xml"
+                  maximumAuthenticationLifetime: 1209600
+                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                  usernameCaseConversion: "none"
+              authorizationStrategy:
+                globalMatrix:
+                  permissions:
+                    - "Overall/Administer:authenticated"
+                    - "Overall/Administer:300e771f-856c-45cc-b899-40d78281e9c1"
+                    - "Overall/Read:authenticated"
+                    - "View/Create:authenticated"
+                    - "View/Read:authenticated"
+                    - "View/Configure:authenticated"
+                    - "View/Delete:authenticated"
+                    - "Agent/Create:authenticated"
+                    - "Agent/Build:authenticated"
+                    - "Agent/Connect:authenticated"
+                    - "Agent/Delete:authenticated"
+                    - "Agent/Configure:authenticated"
+                    - "Agent/Disconnect:authenticated"
+                    - "Run/Delete:authenticated"
+                    - "Run/Replay:authenticated"
+                    - "Run/Update:authenticated"
+                    - "Job/Configure:authenticated"
+                    - "Job/Cancel:authenticated"
+                    - "Job/Read:authenticated"
+                    - "Job/Build:authenticated"
+                    - "Job/Move:authenticated"
+                    - "Job/Discover:authenticated"
+                    - "Job/Discover:anonymous"
+                    - "Job/Create:authenticated"
+                    - "Job/Workspace:authenticated"
+                    - "Job/Delete:authenticated"
+                    - "Credentials/View:authenticated"
+                    - "Build Failure Analyzer/RemoveCause:authenticated"
+                    - "Build Failure Analyzer/UpdateCauses:authenticated"
+                    - "Build Failure Analyzer/ViewCauses:authenticated"
+                    - "Lockable Resources/Unlock:authenticated"
+                    - "Lockable Resources/Reserve:authenticated"
+                    - "SCM/Tag:authenticated"
+          location: |
+            unclassified:
+              location:
+                adminAddress: jenkins-reform@hmcts.net
+                url: 'https://test-build.service.core-compute-sandbox.internal'
+          global-library: |
+            unclassified:
+              globalLibraries:
+                libraries:
+                  - name: 'Infrastructure'
+                    includeInChangesets: false
+                    defaultVersion: master
+                    retriever:
+                      modernSCM:
+                        scm:
+                          github:
+                            credentialsId: jenkins-github-hmcts-api-token
+                            repoOwner: hmcts
+                            repository: cnp-jenkins-library
+                  - name: 'Pipeline'
+                    includeInChangesets: false
+                    defaultVersion: master
+                    retriever:
+                      modernSCM:
+                        scm:
+                          github:
+                            credentialsId: jenkins-github-hmcts-api-token
+                            repoOwner: hmcts
+                            repository: cnp-jenkins-library
+          slack: |
+            unclassified:
+              slackNotifier:
+                teamDomain: hmcts-reform
+                tokenCredentialId: slack-token
+          github: |
+            unclassified:
+              githubpluginconfig:
+                configs:
+                  - name: "GitHub"
+                    apiUrl: "https://api.github.com"
+                    credentialsId: "jenkins-github-hmcts-api-token-text"
+                    manageHooks: false
+          azure-key-vault: |
+            unclassified:
+              azureKeyVault:
+                keyVaultURL: https://infra-vault-sandbox.vault.azure.net
+                credentialID: jenkinsServicePrincipal
+          sonar: |
+            unclassified:
+              sonarGlobalConfiguration:
+                installations:
+                  - additionalAnalysisProperties: sonar.organization=hmcts
+                    name: SonarQube
+                    credentialsId: 'sonarcloud-api-token'
+                    serverUrl: 'https://sonarcloud.io'
+          build-failure-analyzer: |
+            unclassified:
+              buildFailureAnalyzer:
+                doNotAnalyzeAbortedJob: false
+                gerritTriggerEnabled: true
+                globalEnabled: true
+                graphsEnabled: true
+                knowledgeBase:
+                  mongoDB:
+                    dbName: "build-failure-analyzer"
+                    enableStatistics: true
+                    host: "sandbox-build-failure-analyzer.platform.hmcts.net"
+                    password: "${bfa-user-password}"
+                    port: 27017
+                    successfulLogging: false
+                    userName: "build-failure-analyzer"
+                maxLogSize: 0
+                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
+                nrOfScanThreads: 3
+                testResultCategories: "test-failures"
+                testResultParsingEnabled: true
+          timestamper: |
+            unclassified:
+              timestamperConfig:
+                allPipelines: true
+          azure-vm-agent: |
+            jenkins:
+              clouds:
+                - azureVM:
+                    azureCredentialsId: "jenkinsServicePrincipal"
+                    cloudName: "cnp-azure"
+                    deploymentTimeout: 1200	
+                    existingResourceGroupName: "mgmt-vmimg-store-cnptest"
+                    maxVirtualMachinesLimit: 10	
+                    resourceGroupReferenceType: "existing"
+                    vmTemplates:
+                      - agentLaunchMethod: "SSH"
+                        agentWorkspace: "/opt/jenkins"
+                        builtInImage: "Windows Server 2016"
+                        credentialsId: "vm_agent_creds"
+                        diskType: "managed"
+                        doNotUseMachineIfInitFails: true
+                        enableMSI: false
+                        executeInitScriptAsRoot: true
+                        existingStorageAccountName: "mgmtvmimgstoresandbox"
+                        imageReference:
+                          id: "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/cnp-vmimages-sandbox/providers/Microsoft.Compute/images/moj-centos-agent74-20181113164555"
+                          version: "latest"
+                        imageTopLevelType: "advanced"
+                        initScript: |
+                          usermod -a -G docker jenkinsssh
+                          umount /mnt/resource
+                          mkdir -pv /opt/jenkins
+                          mount /dev/sdb1 /opt/jenkins
+                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                          mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
+                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
+                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
+                          cat > /etc/dnsmasq.d/10-internal-forwarding<<EOF
+                          server=/#/10.99.196.9
+                          EOF
+                          systemctl restart dnsmasq
+                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
+                          jenkinsssh soft nofile 40960
+                          jenkinsssh hard nofile 40960
+                          jenkinsssh soft
+                          proc 32768
+                          jenkinsssh hard nproc 32768
+                          EOF
+                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
+                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                        installDocker: false
+                        installGit: false
+                        installMaven: false
+                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
+                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
+                      \ -XX:G1SummarizeRSetStatsPeriod=1"
+                        location: "UK South"
+                        noOfParallelJobs: 1
+                        osDiskSize: 0
+                        osType: "Linux"
+                        preInstallSsh: true
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
+                        shutdownOnIdle: false	
+                        storageAccountNameReferenceType: "existing"
+                        storageAccountType: "Standard_LRS"
+                        subnetName: "jenkins-subnet"
+                        templateDesc: "Jenkins build agents for HMCTS"
+                        templateDisabled: false
+                        templateName: "cnp-jenkins-builders"
+                        usageMode: "Use this node as much as possible"
+                        usePrivateIP: true
+                        virtualMachineSize: "Standard_D4_v3"
+                        virtualNetworkName: "core-sbox-vnet"
+                        virtualNetworkResourceGroupName: "aks-infra-sbox-rg"
+                # test line
+                - azureVM:
+                    azureCredentialsId: "jenkinsServicePrincipal"
+                    cloudName: "cnp-azure-team-a"
+                    deploymentTimeout: 1200
+                    existingResourceGroupName: "mgmt-vmimg-store-cnptest"
+                    maxVirtualMachinesLimit: 40
+                    resourceGroupReferenceType: "existing"
+                    vmTemplates:
+                    - agentLaunchMethod: "SSH"
+                      agentWorkspace: "/opt/jenkins"
+                      builtInImage: "Windows Server 2016"
+                      credentialsId: "vm_agent_creds"
+                      diskType: "managed"
+                      doNotUseMachineIfInitFails: true
+                      enableMSI: false
+                      enableUAMI: true
+                      executeInitScriptAsRoot: true
+                      existingStorageAccountName: "mgmtvmimgstoresandboxrpe"
+                      imageReference:
+                        id: "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/cnp-vmimages-sandbox/providers/Microsoft.Compute/images/moj-centos-agent74-20190415135134"
+                        version: "latest"
+                      imageTopLevelType: "advanced"
+                      initScript: | 
+                        usermod -a -G docker jenkinsssh
+                        umount /mnt/resource
+                        mkdir -pv /opt/jenkins
+                        mount /dev/sdc1 /opt/jenkins
+                        chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                        mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                        chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
+                        chmod 0600 /home/jenkinsssh/.ssh/id_rsa
+                        mv /tmp/vault-token /home/jenkinsssh/.vault-token
+                        chown -R jenkinsssh:jenkinsssh /home/jenkinsssh/.vault-token
+                        chmod 0600 /home/jenkinsssh/.vault-token
+                        mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' >/opt/jenkins/.gradle/gradle.properties
+                        cat > /etc/dnsmasq.d/10-internal-forwarding<<EOF
+                        server=/#/10.99.196.4
+                        EOF
+                        systemctl restart dnsmasq
+                        cat >/etc/security/limits.d/30-jenkins.conf<<EOF
+                        jenkinsssh soft nofile 40960
+                        jenkinsssh hard nofile 40960
+                        jenkinsssh soft
+                        proc 32768
+                        jenkinsssh hard nproc 32768
+                        EOF
+                        ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
+                        ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                      installDocker: false
+                      installGit: false
+                      installMaven: false
+                      jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                        \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
+                        \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
+                        \ -XX:G1SummarizeRSetStatsPeriod=1 "
+                      labels: "teama"
+                      location: "UK South"
+                      noOfParallelJobs: 1
+                      osDiskSize: 0
+                      osType: "Linux"
+                      preInstallSsh: true
+                      retentionStrategy:
+                        azureVMCloudRetentionStrategy:
+                          idleTerminationMinutes: 60
+                      shutdownOnIdle: false
+                      storageAccountNameReferenceType: "existing"
+                      storageAccountType: "Standard_LRS"
+                      subnetName: "jenkins-subnet"
+                      templateDesc: "Jenkins build agents for HMCTS"
+                      templateDisabled: false
+                      templateName: "cnp-jenkins-builders-team-a"
+                      uamiID: "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/rgcnptestsandbox/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cnpmitestinga"
+                      usageMode: "Only build jobs with label expressions matching this node"
+                      usePrivateIP: true
+                      virtualMachineSize: "Standard_D4_v3"
+                      virtualNetworkName: "core-sbox-vnet"
+                      virtualNetworkResourceGroupName: "aks-infra-sbox-rg"
+          credentials: |
+            credentials:
+              system:
+                domainCredentials:
+                  - credentials:
+                      - usernamePassword:
+                          scope: GLOBAL
+                          id: jenkins-github-hmcts-api-token
+                          username: jenkins-reform-cnp
+                          password: '${hmcts-github-apikey-cnp}'
+                          description: CNP jenkins github token
+                      - string:
+                          scope: GLOBAL
+                          id: jenkins-github-hmcts-api-token-text
+                          secret: '${hmcts-github-apikey-cnp}'
+                          description: CNP jenkins github token
+                      - string:
+                          scope: GLOBAL
+                          id: sonarcloud-api-token
+                          secret: '${sonarcloud-api-token}'
+                          description: SonarCloud API token
+                      - string:
+                          scope: GLOBAL
+                          id: slack-token
+                          secret: '${slack-token}'
+                          description: Slack token
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token"
+                          password: "${hmcts-github-apikey}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-hmcts3"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_cmc"
+                          password: "${hmcts-github-apikey-cmc}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-cmc"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_div"
+                          password: "${hmcts-github-apikey-div}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-div"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_finrem"
+                          password: "${hmcts-github-apikey-finrem}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-finrem"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_cdm"
+                          password: "${hmcts-github-apikey-cdm}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-cdm"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_iac"
+                          password: "${hmcts-github-apikey-iac}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-iac"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_platform"
+                          password: "${hmcts-github-apikey-platform}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-platform"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_rpa"
+                          password: "${hmcts-github-apikey-rpa}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-rpa"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_sscs"
+                          password: "${hmcts-github-apikey-sscs}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-sscs"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_probate"
+                          password: "${hmcts-github-apikey-probate}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-probate"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_feepay"
+                          password: "${hmcts-github-apikey-feepay}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-feepay"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_sl"
+                          password: "${hmcts-github-apikey-sl}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-sl"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_cnp"
+                          password: "${hmcts-github-apikey-cnp}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-cnp"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_idam"
+                          password: "${hmcts-github-apikey-idam}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-idam"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_cet"
+                          password: "${hmcts-github-apikey-cet}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-cet"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_fpl"
+                          password: "${hmcts-github-apikey-fpl}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-fpl"
+                      - usernamePassword:
+                          description: "SSH credentials for Jenkins agents"
+                          id: "vm_agent_creds"
+                          password: "${mgmt-bastion-creds-password}"
+                          scope: GLOBAL
+                          username: "jenkinsssh"
+                      - string:
+                          description: "Read/Write Key To Publish CosmosDB Metrics"
+                          id: "COSMOSDB_TOKEN_KEY"
+                          scope: GLOBAL
+                          secret: "${pipelinemetrics-cosmosdb-key}"
+                      - usernamePassword:
+                          description: "Username and password for the OWASP vulnerability database"
+                          id: "owasp-db-login"
+                          password: "${OWASPDb-Password}"
+                          scope: GLOBAL
+                          username: "owasp_administrator"
+                      - usernamePassword:
+                          description: "Storage account name and access key for storing build reports"
+                          id: "buildlog-storage-account"
+                          password: "${jenkins-build-logs-key}"
+                          scope: GLOBAL
+                          username: "mgmtbuildlogstoresandbox"
+                      - sauce:
+                          apiKey: "${sauce-access-key}"
+                          description: "Sauce Labs Reform Key"
+                          id: "reform_tunnel"
+                          scope: GLOBAL
+                          username: "reform"
+                      - azure:
+                          azureEnvironmentName: "Azure"
+                          clientId: "${jenkins-sp-client-id}"
+                          clientSecret: "${jenkins-sp-client-secret}"
+                          description: "Jenkins Service Principal - only has access to infra key vault"
+                          id: "jenkinsServicePrincipal"
+                          scope: GLOBAL
+                          subscriptionId: "${jenkins-sp-subscription-id}"
+                          tenant: "${jenkins-sp-tenant-id}"
+                      - usernamePassword:
+                          description: "Jenkins-reform-am GitHub API token"
+                          id: "jenkins-github-hmcts-api-token_am"
+                          password: "${hmcts-github-apikey-am}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-am"
+                      - usernamePassword:
+                          description: "Jenkins-reform-ctsc GitHub API token"
+                          id: "jenkins-github-hmcts-api-token_ctsc"
+                          password: "${hmcts-github-apikey-ctsc}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-ctsc"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_ethos"
+                          password: "${hmcts-github-apikey-ethos}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-ethos"
+                      - usernamePassword:
+                          description: "Jenkins HMCTS GitHub credentials (Username/password format)"
+                          id: "jenkins-github-hmcts-api-token_rd"
+                          password: "${hmcts-github-apikey-rd}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-rd"
+          jobs: |
+            jobs:
+              - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-cnptest.groovy
+
+      sidecars:
+        configAutoReload:
+          # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
+          # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
+          # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
+          # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
+          enabled: true
+          image: shadwell/k8s-sidecar:0.0.2
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          # SSH port value can be set to any unused TCP port.  The default, 1044, is a non-standard SSH port that has been chosen at random.
+          # Is only used to reload jcasc config from the sidecar container running in the Jenkins master pod.
+          # This TCP port will not be open in the pod (unless you specifically configure this), so Jenkins will not be
+          # accessible via SSH from outside of the pod.  Note if you use non-root pod privileges (runAsUser & fsGroup),
+          # this must be > 1024:
+          sshTcpPort: 1044
+          # folder in the pod that should hold the collected dashboards:
+          folder: "/var/jenkins_home/casc_configs"
+          # If specified, the sidecar will search for JCasC config-maps inside this namespace.
+          # Otherwise the namespace in which the sidecar is running will be used.
+          # It's also possible to specify ALL to search in all namespaces:
+          # searchNamespace:
+
+      ingress:
+        enabled: true
+        # For Kubernetes v1.14+, use 'networking.k8s.io/v1beta1'
+        apiVersion: "extensions/v1beta1"
+        labels: {}
+        annotations:
+          kubernetes.io/ingress.class: traefik
+        hostName: test-build.service.core-compute-sandbox.internal
+
+    agent:
+      enabled: false
+
+    persistence:
+      enabled: true
+      ## A manually managed Persistent Volume and Claim
+      ## Requires persistence.enabled: true
+      ## If defined, PVC must be created manually before volume will be bound
+      existingClaim: "jenkins-disk-claim"
+      ## jenkins data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass:
+      annotations: {}
+      accessMode: "ReadWriteOnce"
+      size: "8Gi"
+      volumes:
+      - name: secrets
+        flexVolume:
+          driver: "azure/kv"
+          secretRef:
+            name: kvcreds # mounting point to the pod
+          options:
+            usepodidentity: "false"
+            keyvaultname: "infra-vault-sandbox"
+            keyvaultobjectnames: "slack-token;hmcts-github-apikey-cmc;hmcts-github-apikey-div;hmcts-github-apikey-finrem;hmcts-github-apikey-cdm;hmcts-github-apikey-iac;hmcts-github-apikey-platform;hmcts-github-apikey-rpa;hmcts-github-apikey-sscs;hmcts-github-apikey-probate;hmcts-github-apikey-feepay;hmcts-github-apikey-sl;hmcts-github-apikey-cnp;hmcts-github-apikey-idam;hmcts-github-apikey-cet;hmcts-github-apikey-fpl;hmcts-github-apikey-am;hmcts-github-apikey-ethos;hmcts-github-apikey-ctsc;hmcts-github-apikey-rd;hmcts-github-apikey;mgmt-bastion-creds-password;sonarcloud-api-token;pipelinemetrics-cosmosdb-key;OWASPDb-Password;jenkins-build-logs-key;sauce-access-key;bfa-user-password;jenkins-sp-subscription-id;jenkins-sp-client-id;jenkins-sp-client-secret;jenkins-sp-tenant-id"
+            keyvaultobjecttypes: "secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret" # OPTIONS: secret, key, cert
+            resourcegroup: "cnp-core-infra"
+            subscriptionid: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
+            tenantid: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      mounts:
+      - mountPath: /kvmnt/secrets
+        name: secrets
+        readOnly: true
+
+    ## Install Default RBAC roles and bindings
+    rbac:
+      create: true
+
+    checkDeprecation: true
+

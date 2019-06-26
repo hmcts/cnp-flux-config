@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: papi
+ namespace: papi
+spec:
+ type: 0
+ ResourceID: /subscriptions/66b77db2-54fb-4639-9164-caf2635620b3/resourcegroups/managed-identities-papi-sbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/papi-sbox-mi
+ ClientID: 19ac08fd-e3ac-4021-98b6-d63ce51c6e49
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: papi-binding
+  namespace: papi
+spec:
+  AzureIdentity: papi
+  Selector: papi
+

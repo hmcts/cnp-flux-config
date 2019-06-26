@@ -1,0 +1,15 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  valueFileSecrets:
+    - name: "traefik-values"
+  values:
+    loadBalancerIP: 10.10.9.250
+    dashboard:
+      domain: traefik00.sandbox.platform.hmcts.net
+    ssl:
+      enforced: true
+      permanentRedirect: true

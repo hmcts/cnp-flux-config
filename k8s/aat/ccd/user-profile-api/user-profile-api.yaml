@@ -12,13 +12,13 @@ spec:
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: ccd-user-profile-api
-    version: 0.0.4
+    version: 0.0.5
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "f61ab34c-07da-42fc-ac7e-3f8cdadfd5a1"
-      image: hmcts.azurecr.io/hmcts/ccd-user-profile-api:prod-7c9577e7
+      image: hmcts.azurecr.io/hmcts/ccd-user-profile-api:prod-2e29bffc
       ingressHost: ccd-user-profile-api.service.core-compute-aat.internal
       keyVaults:
         ccd:
@@ -30,6 +30,7 @@ spec:
         USER_PROFILE_DB_HOST: ccd-user-profile-api-postgres-db-aat.postgres.database.azure.com
         USER_PROFILE_DB_NAME: ccd_user_profile
         USER_PROFILE_DB_USERNAME: ccd@ccd-user-profile-api-postgres-db-aat
+        ENABLE_DB_MIGRATE: "false"
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

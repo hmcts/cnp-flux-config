@@ -1,0 +1,23 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: camunda-bpm
+  namespace: camunda
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: camunda-bpm
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: camunda
+    version: 1.2.0
+  values:
+    global:
+      subscriptionId:  "bf308a5c-0624-4334-8ff8-8dca9fd43783"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: "sandbox"
+    ingressHost: camunda.service.core-compute-sandbox.internal
+    replicas: 1
+    aadIdentityName: camunda
+    databaseType: external   # external or pod. Note: for pod the 'postgresql-pod' tag below needs to be true
