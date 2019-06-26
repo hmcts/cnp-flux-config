@@ -2,13 +2,13 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: demo-v1
+  name: demo
   namespace: money-claims
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: demo-v1
+  releaseName: demo
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: cmc
@@ -17,7 +17,7 @@ spec:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        releaseNameOverride: demo-v1-cmc-claimstore
+        releaseNameOverride: demo-cmc-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
               secretRef: notify-api-key
@@ -44,24 +44,24 @@ spec:
           FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
           FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
           FEATURE_TOGGLES_EMAILTOSTAFF: true
-          CLAIM_STORE_DB_HOST: demo-v1-postgres
-          CMC_DB_HOST: demo-v1-postgres
-          CORE_CASE_DATA_API_URL: http://demo-v1-data-store-api
-          IDAM_S2S_AUTH_URL: http://demo-v1-s2s
-          PDF_SERVICE_URL: http://demo-v1-pdf
-          SEND_LETTER_URL: http://demo-v1-sendletter
-          DOCUMENT_MANAGEMENT_URL: http://demo-v1-dmstore
-          FRONTEND_BASE_URL: https://cmc-citizen-frontend-v1.demo.platform.hmcts.net
-          RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend-v1.demo.platform.hmcts.net/first-contact/start
+          CLAIM_STORE_DB_HOST: demo-postgres
+          CMC_DB_HOST: demo-postgres
+          CORE_CASE_DATA_API_URL: http://demo-data-store-api
+          IDAM_S2S_AUTH_URL: http://demo-s2s
+          PDF_SERVICE_URL: http://demo-pdf
+          SEND_LETTER_URL: http://demo-sendletter
+          DOCUMENT_MANAGEMENT_URL: http://demo-dmstore
+          FRONTEND_BASE_URL: https://cmc-citizen-frontend.demo.platform.hmcts.net
+          RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.demo.platform.hmcts.net/first-contact/start
           SPRING_MAIL_HOST: mailhog
           SPRING_MAIL_PORT: 1025
       ccd:
         idamApiUrl: https://idam-api.demo.platform.hmcts.net
         idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-        ingressHost: ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net
-        s2sUrl: http://demo-v1-s2s
-        draftStoreUrl: http://demo-v1-draftstore
-        paymentsUrl: http://demo-v1-payments
+        ingressHost: ccd-cmc-citizen-frontend.demo.platform.hmcts.net
+        s2sUrl: http://demo-s2s
+        draftStoreUrl: http://demo-draftstore
+        paymentsUrl: http://demo-payments
         apiGateway:
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
@@ -83,15 +83,15 @@ spec:
             url: https://idam-api.demo.platform.hmcts.net
           web_public:
             url: https://idam-web-public.demo.platform.hmcts.net
-          releaseNameOverride: demo-v1-ccd-idam-pr
+          releaseNameOverride: demo-ccd-idam-pr
           redirect_uris:
             CCD:
-              - https://case-management-web-ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net/oauth2redirect
+              - https://case-management-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect
             CCD Admin:
-              - https://admin-web-ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net/oauth2redirect
+              - https://admin-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect
         importer:
           userprofile:
-            userProfileDatabaseHost: demo-v1-postgres
+            userProfileDatabaseHost: demo-postgres
           definition:
             importerFromSecret: true
             importerUsername: 
@@ -100,14 +100,14 @@ spec:
             importerPassword: 
               secretKeyRefName: ccd-importer-password
               secretKeyRefKey: key
-            redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend-v1.demo.platform.hmcts.net/oauth2redirect"
+            redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect"
         postgresql:
           nameOverride: postgres
 
     cmc-citizen-frontend:
       nodejs:
-        ingressHost: cmc-citizen-frontend-v1.demo.platform.hmcts.net
-        releaseNameOverride: demo-v1-cmc-citizen-web
+        ingressHost: cmc-citizen-frontend.demo.platform.hmcts.net
+        releaseNameOverride: demo-cmc-citizen-web
         secrets:
           OAUTH_CLIENT_SECRET:
               secretRef: citizen-oauth-client-secret
@@ -115,81 +115,81 @@ spec:
         environment:
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
           IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.demo.platform.hmcts.net
-          FEATURE_TOGGLES_API_URL: http://demo-v1-ftrtgl
-          CLAIM_STORE_URL: http://demo-v1-cmc-claimstore
-          IDAM_S2S_AUTH: http://demo-v1-s2s
-          PAY_URL: http://demo-v1-payments
-          FEES_URL: http://demo-v1-fees
-          DRAFT_STORE_URL: http://demo-v1-draftstore
+          FEATURE_TOGGLES_API_URL: http://demo-ftrtgl
+          CLAIM_STORE_URL: http://demo-cmc-claimstore
+          IDAM_S2S_AUTH: http://demo-s2s
+          PAY_URL: http://demo-payments
+          FEES_URL: http://demo-fees
+          DRAFT_STORE_URL: http://demo-draftstore
       idam-pr:
         api:
           url: https://idam-api.demo.platform.hmcts.net
         web_public:
           url: https://idam-web-public.demo.platform.hmcts.net
         service:
-          redirect_uri: https://cmc-citizen-frontend-v1.demo.platform.hmcts.net/receiver
+          redirect_uri: https://cmc-citizen-frontend.demo.platform.hmcts.net/receiver
       rpe-feature-toggle-api:
         importer:
-          apiUrl: http://demo-v1-ftrtgl/api/ff4j/store/features/
+          apiUrl: http://demo-ftrtgl/api/ff4j/store/features/
         java:
-          releaseNameOverride: demo-v1-ftrtgl
+          releaseNameOverride: demo-ftrtgl
           environment:
-            FEATURES_DB_HOST: demo-v1-postgres
+            FEATURES_DB_HOST: demo-postgres
     ########################
 
     ##### DEPENDENCIES #####
     rpe-send-letter-service:
       java:
-        releaseNameOverride: demo-v1-sendletter
+        releaseNameOverride: demo-sendletter
         environment:
-          FLYWAY_URL: "jdbc:postgresql://demo-v1-postgres:5432/send_letter"
-          LETTER_TRACKING_DB_HOST: demo-v1-postgres
-          S2S_URL: http://demo-v1-s2s
+          FLYWAY_URL: "jdbc:postgresql://demo-postgres:5432/send_letter"
+          LETTER_TRACKING_DB_HOST: demo-postgres
+          S2S_URL: http://demo-s2s
 
     dm-store:
       java:
-        releaseNameOverride: demo-v1-dmstore
+        releaseNameOverride: demo-dmstore
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
-          IDAM_S2S_BASE_URI: http://demo-v1-s2s
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/evidence"
+          IDAM_S2S_BASE_URI: http://demo-s2s
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-postgres:5432/evidence"
 
     cmc-pdf-service:
       java:
-        releaseNameOverride: demo-v1-pdf
+        releaseNameOverride: demo-pdf
 
     draft-store-service:
       java:
-        releaseNameOverride: demo-v1-draftstore
+        releaseNameOverride: demo-draftstore
         environment:
           IDAM_URL: https://idam-api.demo.platform.hmcts.net
-          S2S_URL: http://demo-v1-s2s
-          DRAFT_STORE_DB_HOST: demo-v1-postgres
+          S2S_URL: http://demo-s2s
+          DRAFT_STORE_DB_HOST: demo-postgres
 
     fees-register-api:
       java:
-        releaseNameOverride: demo-v1-fees
+        releaseNameOverride: demo-fees
         environment:
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/fees_register"
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-postgres:5432/fees_register"
 
     payment-api:
       java:
-        releaseNameOverride: demo-v1-payments
+        releaseNameOverride: demo-payments
         secrets: 
           GOV_PAY_AUTH_KEY_CMC:
               secretRef: gov-pay-keys-cmc
               key: key
         environment:
           AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
-          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://demo-v1-s2s
-          FEES_REGISTER_URL: http://demo-v1-fees
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-v1-postgres:5432/payment_api"
+          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://demo-s2s
+          FEES_REGISTER_URL: http://demo-fees
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-postgres:5432/payment_api"
           SPRING_MAIL_HOST: mailhog
           SPRING_MAIL_PORT: 1025
 
     rpe-service-auth-provider:
       java:
-        releaseNameOverride: demo-v1-s2s
+        releaseNameOverride: demo-s2s
 
     postgresql:
       nameOverride: postgres
