@@ -19,7 +19,7 @@ spec:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        releaseNameOverride: demo-cmc-claimstore
+        releaseNameOverride: papi-sbox-cmc-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
               secretRef: notify-api-key
@@ -46,15 +46,15 @@ spec:
           FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
           FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
           FEATURE_TOGGLES_EMAILTOSTAFF: true
-          CLAIM_STORE_DB_HOST: demo-postgres
-          CMC_DB_HOST: demo-postgres
-          CORE_CASE_DATA_API_URL: http://demo-data-store-api
-          IDAM_S2S_AUTH_URL: http://demo-s2s
-          PDF_SERVICE_URL: http://demo-pdf
-          SEND_LETTER_URL: http://demo-sendletter
-          DOCUMENT_MANAGEMENT_URL: http://demo-dmstore
-          FRONTEND_BASE_URL: https://cmc-citizen-frontend.demo.platform.hmcts.net
-          RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.demo.platform.hmcts.net/first-contact/start
+          CLAIM_STORE_DB_HOST: papi-sbox-postgres
+          CMC_DB_HOST: papi-sbox-postgres
+          CORE_CASE_DATA_API_URL: http://papi-sbox-data-store-api
+          IDAM_S2S_AUTH_URL: http://papi-sbox-s2s
+          PDF_SERVICE_URL: http://papi-sbox-pdf
+          SEND_LETTER_URL: http://papi-sbox-sendletter
+          DOCUMENT_MANAGEMENT_URL: http://papi-sbox-dmstore
+          FRONTEND_BASE_URL: https://cmc-citizen-frontend.papi-sbox.platform.hmcts.net
+          RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.papi-sbox.platform.hmcts.net/first-contact/start
           SPRING_MAIL_HOST: mailhog
           SPRING_MAIL_PORT: 1025
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mailhog
@@ -63,10 +63,10 @@ spec:
       ccd:
         idamApiUrl: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
         idamWebUrl: http://idam-web-public-idam-sandbox.service.core-compute-idam-sandbox.internal
-        ingressHost: ccd-cmc-citizen-frontend.demo.platform.hmcts.net
-        s2sUrl: http://demo-s2s
-        draftStoreUrl: http://demo-draftstore
-        paymentsUrl: http://demo-payments
+        ingressHost: ccd-cmc-citizen-frontend.papi-sbox.platform.hmcts.net
+        s2sUrl: http://papi-sbox-s2s
+        draftStoreUrl: http://papi-sbox-draftstore
+        paymentsUrl: http://papi-sbox-payments
         apiGateway:
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
@@ -88,15 +88,15 @@ spec:
             url: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
           web_public:
             url: http://idam-web-public-idam-sandbox.service.core-compute-idam-sandbox.internal
-          releaseNameOverride: demo-ccd-idam-pr
+          releaseNameOverride: papi-sbox-ccd-idam-pr
           redirect_uris:
             CCD:
-              - https://case-management-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect
+              - https://case-management-web-ccd-cmc-citizen-frontend.papi-sbox.platform.hmcts.net/oauth2redirect
             CCD Admin:
-              - https://admin-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect
+              - https://admin-web-ccd-cmc-citizen-frontend.papi-sbox.platform.hmcts.net/oauth2redirect
         importer:
           userprofile:
-            userProfileDatabaseHost: demo-postgres
+            userProfileDatabaseHost: papi-sbox-postgres
           definition:
             importerFromSecret: true
             importerUsername: 
@@ -105,14 +105,14 @@ spec:
             importerPassword: 
               secretKeyRefName: ccd-importer-password
               secretKeyRefKey: key
-            redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect"
+            redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend.papi-sbox.platform.hmcts.net/oauth2redirect"
         postgresql:
           nameOverride: postgres
 
     cmc-citizen-frontend:
       nodejs:
-        ingressHost: cmc-citizen-frontend.demo.platform.hmcts.net
-        releaseNameOverride: demo-cmc-citizen-web
+        ingressHost: cmc-citizen-frontend.papi-sbox.platform.hmcts.net
+        releaseNameOverride: papi-sbox-cmc-citizen-web
         secrets:
           OAUTH_CLIENT_SECRET:
               secretRef: citizen-oauth-client-secret
@@ -120,81 +120,81 @@ spec:
         environment:
           IDAM_API_URL: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
           IDAM_AUTHENTICATION_WEB_URL: http://idam-web-public-idam-sandbox.service.core-compute-idam-sandbox.internal
-          FEATURE_TOGGLES_API_URL: http://demo-ftrtgl
-          CLAIM_STORE_URL: http://demo-cmc-claimstore
-          IDAM_S2S_AUTH: http://demo-s2s
-          PAY_URL: http://demo-payments
-          FEES_URL: http://demo-fees
-          DRAFT_STORE_URL: http://demo-draftstore
+          FEATURE_TOGGLES_API_URL: http://papi-sbox-ftrtgl
+          CLAIM_STORE_URL: http://papi-sbox-cmc-claimstore
+          IDAM_S2S_AUTH: http://papi-sbox-s2s
+          PAY_URL: http://papi-sbox-payments
+          FEES_URL: http://papi-sbox-fees
+          DRAFT_STORE_URL: http://papi-sbox-draftstore
       idam-pr:
         api:
           url: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
         web_public:
           url: http://idam-web-public-idam-sandbox.service.core-compute-idam-sandbox.internal
         service:
-          redirect_uri: https://cmc-citizen-frontend.demo.platform.hmcts.net/receiver
+          redirect_uri: https://cmc-citizen-frontend.papi-sbox.platform.hmcts.net/receiver
       rpe-feature-toggle-api:
         importer:
-          apiUrl: http://demo-ftrtgl/api/ff4j/store/features/
+          apiUrl: http://papi-sbox-ftrtgl/api/ff4j/store/features/
         java:
-          releaseNameOverride: demo-ftrtgl
+          releaseNameOverride: papi-sbox-ftrtgl
           environment:
-            FEATURES_DB_HOST: demo-postgres
+            FEATURES_DB_HOST: papi-sbox-postgres
     ########################
 
     ##### DEPENDENCIES #####
     rpe-send-letter-service:
       java:
-        releaseNameOverride: demo-sendletter
+        releaseNameOverride: papi-sbox-sendletter
         environment:
-          FLYWAY_URL: "jdbc:postgresql://demo-postgres:5432/send_letter"
-          LETTER_TRACKING_DB_HOST: demo-postgres
-          S2S_URL: http://demo-s2s
+          FLYWAY_URL: "jdbc:postgresql://papi-sbox-postgres:5432/send_letter"
+          LETTER_TRACKING_DB_HOST: papi-sbox-postgres
+          S2S_URL: http://papi-sbox-s2s
 
     dm-store:
       java:
-        releaseNameOverride: demo-dmstore
+        releaseNameOverride: papi-sbox-dmstore
         environment:
           IDAM_USER_BASE_URI: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
-          IDAM_S2S_BASE_URI: http://demo-s2s
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-postgres:5432/evidence"
+          IDAM_S2S_BASE_URI: http://papi-sbox-s2s
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://papi-sbox-postgres:5432/evidence"
 
     cmc-pdf-service:
       java:
-        releaseNameOverride: demo-pdf
+        releaseNameOverride: papi-sbox-pdf
 
     draft-store-service:
       java:
-        releaseNameOverride: demo-draftstore
+        releaseNameOverride: papi-sbox-draftstore
         environment:
           IDAM_URL: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
-          S2S_URL: http://demo-s2s
-          DRAFT_STORE_DB_HOST: demo-postgres
+          S2S_URL: http://papi-sbox-s2s
+          DRAFT_STORE_DB_HOST: papi-sbox-postgres
 
     fees-register-api:
       java:
-        releaseNameOverride: demo-fees
+        releaseNameOverride: papi-sbox-fees
         environment:
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-postgres:5432/fees_register"
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://papi-sbox-postgres:5432/fees_register"
 
     payment-api:
       java:
-        releaseNameOverride: demo-payments
+        releaseNameOverride: papi-sbox-payments
         secrets: 
           GOV_PAY_AUTH_KEY_CMC:
               secretRef: gov-pay-keys-cmc
               key: key
         environment:
           AUTH_IDAM_CLIENT_BASEURL: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
-          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://demo-s2s
-          FEES_REGISTER_URL: http://demo-fees
-          SPRING_DATASOURCE_URL: "jdbc:postgresql://demo-postgres:5432/payment_api"
+          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://papi-sbox-s2s
+          FEES_REGISTER_URL: http://papi-sbox-fees
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://papi-sbox-postgres:5432/payment_api"
           SPRING_MAIL_HOST: mailhog
           SPRING_MAIL_PORT: 1025
 
     rpe-service-auth-provider:
       java:
-        releaseNameOverride: demo-s2s
+        releaseNameOverride: papi-sbox-s2s
 
     postgresql:
       nameOverride: postgres
