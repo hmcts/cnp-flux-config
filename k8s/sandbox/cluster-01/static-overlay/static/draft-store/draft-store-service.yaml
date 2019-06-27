@@ -2,7 +2,7 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: draft-store-service-another
+  name: draft-store-service-other
   namespace: rpe
   annotations:
     flux.weave.works/automated: "true"
@@ -10,6 +10,7 @@ metadata:
 spec:
   values:
     java:
+      image: hmcts.azurecr.io/hmcts/draft-store-service:pr-314
       ingressHost: draft-store-service.service.core-compute-sandbox.internal
       environment:
         DRAFT_STORE_DB_HOST: rpe-draft-store-sandbox.postgres.database.azure.com
