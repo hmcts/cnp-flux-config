@@ -16,12 +16,6 @@ Weave Flux config for AKS clusters
     │   └── kustomization.yaml                          # Kustomize file for common-base referring to nested directories
     ├── env(sandbox)                                     
     │   ├── cluster-xx                                  # Folder per cluster
-    │   │   └── automated-overlay                       # Directory containing Kustomized workloads having image automation.
-    │   │       └── .flux.yaml                          # Flux Kustomize file with patch.
-    │   │       └── overlay
-    │   │           ├── kustomization.yaml              # kustomization file. 
-    │   │           └── ...                             # Folder per namespace containing patch workloads.
-    │   │               └── ...
     │   │   ├── static                                  # Directory containing workloads which aren't overlays / Kustomized.
     │   │   │   └── ...                                 # Folder per namespace.
     │   │   │       └── ...
