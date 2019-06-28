@@ -275,8 +275,11 @@ spec:
                         executeInitScriptAsRoot: true
                         existingStorageAccountName: "mgmtvmimgstoresbox"
                         imageReference:
-                          id: "/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/cnp-image-gallery-rg/providers/Microsoft.Compute/galleries/cnpimagegallery/images/jenkins-agent/versions/1.0.0"
-                          version: "latest"
+                          galleryImageDefinition: "jenkins-agent"
+                          galleryImageVersion: "1.0.0"
+                          galleryName: "cnpimagegallery"
+                          galleryResourceGroup: "cnp-image-gallery-rg"
+                          gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
                         imageTopLevelType: "advanced"
                         initScript: |
                           usermod -a -G docker jenkinsssh
@@ -564,7 +567,7 @@ spec:
                           description: "Jenkins Service Principal - only has access to infra key vault"
                           id: "jenkinsServicePrincipal"
                           scope: GLOBAL
-                          subscriptionId: "b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb"
+                          subscriptionId: "${jenkins-aks-sp-subscription-id}"
                           tenant: "${jenkins-sp-tenant-id}"
                       - usernamePassword:
                           description: "Jenkins-reform-am GitHub API token"
