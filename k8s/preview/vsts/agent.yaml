@@ -30,15 +30,6 @@ spec:
         - mountPath: /var/run/docker.sock
           name: docker-sock-volume
         env:
-        - name: VSTS_POOL
-          value: hmcts-agent-pool
-        - name: VSTS_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: vsts-token
-              key: token
-        - name: VSTS_ACCOUNT
-          value: hmcts
         - name: AZP_URL
           value: https://dev.azure.com/hmcts
         - name: AZP_TOKEN
@@ -46,8 +37,6 @@ spec:
             secretKeyRef:
               name: vsts-token
               key: token
-        - name: AZP_AGENT_NAME
-          value: vsts-aks-agent
         - name: AZP_POOL
           value: hmcts-agent-pool
         resources:
