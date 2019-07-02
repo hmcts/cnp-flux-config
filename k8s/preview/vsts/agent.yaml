@@ -39,6 +39,15 @@ spec:
               key: token
         - name: VSTS_ACCOUNT
           value: hmcts
+        - name: AZP_URL
+          value: https://dev.azure.com/hmcts
+        - name: AZP_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vsts-token
+              key: token
+        - name: AZP_AGENT_NAME
+          value: vsts-aks-agent
         resources:
           requests:
             memory: "512Mi"
