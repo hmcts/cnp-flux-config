@@ -18,9 +18,17 @@ spec:
       labels:
         app: vsts-aks-agent
     spec:
+      volumes:
+      - name: docker-sock-volume
+        hostPath:
+          path: /var/run/docker.sock
+          type: File
       containers:
       - name: vsts-aks-agent
         image: hmcts.azurecr.io/hmcts/vsts-agent:db2bsp
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock-volume
         env:
         - name: VSTS_POOL
           value: hmcts-agent-pool
@@ -35,3 +43,6 @@ spec:
           requests:
             memory: "512Mi"
             cpu: "25m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
