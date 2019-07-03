@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vsts-aks-agent
+  namespace: vsts
+  labels:
+    app: vsts-aks-agent
+  annotations:
+    flux.weave.works/automated: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vsts-aks-agent
+  template:
+    metadata:
+      labels:
+        app: vsts-aks-agent
+    spec:
+      volumes:
+      - name: docker-sock-volume
+        hostPath:
+          path: /var/run/docker.sock
+          type: File
+      containers:
+      - name: vsts-aks-agent
+        image: hmcts.azurecr.io/hmcts/vsts-agent:db2bsp
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock-volume
+        env:
+        - name: AZP_URL
+          value: https://dev.azure.com/hmcts
+        - name: AZP_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vsts-token
+              key: token
+        - name: AZP_POOL
+          value: hmcts-sandbox-agent-pool
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "25m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
