@@ -1,0 +1,32 @@
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: "jenkinspv"
+spec:
+  capacity:
+    storage: "1024Gi"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: managed-premium
+  persistentVolumeReclaimPolicy: Retain
+  azureDisk:
+    kind: Managed
+    diskName: jenkins-disk
+    diskURI: /subscriptions/5709598c-3a1c-4535-8979-f10948b9a031/resourceGroups/aks-infra-mgmt-sbox-rg/providers/Microsoft.Compute/disks/jenkins-disk
+    cachingMode: ReadWrite 
+    fsType: ext4 
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-disk-claim
+  namespace: jenkins-test
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 1024Gi
+  volumeName: "jenkinspv"
