@@ -4,15 +4,15 @@ metadata:
   name: "jenkinspv"
 spec:
   capacity:
-    storage: "20Gi"
+    storage: "1024Gi"
   accessModes:
     - "ReadWriteOnce"
   storageClassName: managed-premium
   persistentVolumeReclaimPolicy: Retain
   azureDisk:
     kind: Managed
-    diskName: test-disk
-    diskURI: /subscriptions/b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb/resourceGroups/aks-infra-sbox-rg/providers/Microsoft.Compute/disks/test-disk
+    diskName: jenkins-disk
+    diskURI: /subscriptions/b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb/resourceGroups/aks-infra-sbox-rg/providers/Microsoft.Compute/disks/jenkins-disk
     cachingMode: ReadWrite 
     fsType: ext4 
     readOnly: false
@@ -28,5 +28,5 @@ spec:
   storageClassName: managed-premium
   resources:
     requests:
-      storage: 20Gi
+      storage: 1024Gi
   volumeName: "jenkinspv"
