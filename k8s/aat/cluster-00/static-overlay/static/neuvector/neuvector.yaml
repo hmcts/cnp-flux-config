@@ -1,0 +1,15 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  values:
+    controller:
+      azureFileShare:
+        secretName: nv-storage-secret
+        shareName: neuvector-data-00
+    manager:
+      ingress:
+        host: neuvector00.service.core-compute-aat.internal
