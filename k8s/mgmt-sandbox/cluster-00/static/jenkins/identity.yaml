@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: jenkins
+ namespace: jenkins
+spec:
+ type: 0
+ ResourceID: /subscriptions/5709598c-3a1c-4535-8979-f10948b9a031/resourceGroups/managed-identities-mgmt-sbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-mgmt-sbox
+ ClientID:  8f47d04b-0aea-45cb-acd2-07506412315f
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: jenkins-binding
+  namespace: jenkins
+spec:
+  AzureIdentity: jenkins
+  Selector: jenkins
