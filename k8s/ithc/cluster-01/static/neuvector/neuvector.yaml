@@ -9,12 +9,12 @@ metadata:
 spec:
   releaseName: neuvector
   chart:
-    git: https://github.com/neuvector/neuvector-helm
-    ref: master
+    git: https://github.com/hmcts/neuvector-helm
+    ref: config-map
     path: "."
   values:
-    registry: hmcts.azurecr.io
-    tag: 2.4.2
+    registry: hmctsprivate.azurecr.io
+    tag: 2.5.0
     controller:
       image:
         repository:
@@ -25,6 +25,7 @@ spec:
         secretName: storage-secret
         shareName: neuvector-data-01
       configmap:
+        enabled: true
         data:
           samlinitcfg.yaml: |
             SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
