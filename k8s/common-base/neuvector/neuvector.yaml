@@ -11,7 +11,7 @@ spec:
   timeout: 600
   chart:
     git: https://github.com/hmcts/neuvector-helm
-    ref: master
+    ref: config-map
     path: "."
   values:
     registry: hmctsprivate.azurecr.io
@@ -24,6 +24,8 @@ spec:
       azureFileShare:
         enabled: true
         secretName: nv-storage-secret
+      configmap:
+        enabled: true
     enforcer:
       image:
         repository:
