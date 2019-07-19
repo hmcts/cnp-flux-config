@@ -1,0 +1,34 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: plum-recipe-backend
+  namespace: rpe
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: plum-recipe-backend
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: 
+    version: 0.1.1
+  values:
+    java:
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-c9899b2b
+      ingressHost: plum-recipe-backend.service.core-compute-sandbox.internal
+      aadIdentityName: cnp
+      environment:
+        POSTGRES_SSL_MODE: require
+      keyVaults:
+        "plumsi":
+          resourceGroup: plum-shared-infrastructure
+          secrets:
+            - recipe-backend-POSTGRES-DATABASE
+            - recipe-backend-POSTGRES-HOST
+            - recipe-backend-POSTGRES-USER
+            - recipe-backend-POSTGRES-PASS
+    global:
+      environment: sandbox
+      subscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
