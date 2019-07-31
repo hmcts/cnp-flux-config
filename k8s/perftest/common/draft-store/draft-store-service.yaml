@@ -1,0 +1,39 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: draft-store-service
+  namespace: rpe
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: draft-store-service
+  chart:
+    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    name: draft-store-service
+    version: 1.0.3
+  values:
+    java:
+      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-cda19f30
+      ingressHost: draft-store-service.service.core-compute-perftest.internal
+      aadIdentityName: rpe
+      environment:
+        DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
+        DRAFT_STORE_DB_HOST: rpe-draft-store-perftest.postgres.database.azure.com
+        DRAFT_STORE_DB_NAME: draftstore
+        DRAFT_STORE_DB_PORT: '5432'
+        DRAFT_STORE_DB_USER_NAME: draftstore@rpe-draft-store-perftest
+        RUN_DB_MIGRATION_ON_STARTUP: 'false'
+        IDAM_URL: https://idam-api.perftest.platform.hmcts.net
+        S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        SPRING_APPLICATION_NAME: "HMCTS Draft Store AKS"
+      keyVaults:
+        "draft-store":
+          resourceGroup: draft-store-service
+          secrets:
+          - service-POSTGRES-PASS
+    global:
+      environment: perftest
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
