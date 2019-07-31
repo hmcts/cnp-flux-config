@@ -2,7 +2,7 @@
 
 eval "$(curl -q -s https://raw.githubusercontent.com/coryb/osht/master/osht.sh)"
 
-PLAN 2
+PLAN 1
 
 prod_check_present=$(grep -c "k8s/prod/ @hmcts/production-apps-approvals" CODEOWNERS)
 
