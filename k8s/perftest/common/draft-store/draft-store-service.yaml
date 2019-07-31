@@ -12,12 +12,16 @@ spec:
   chart:
     repository: https://hmcts.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.0.3
+    version: 1.0.4
   values:
+    rollback:
+      enable: true
     java:
-      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-cda19f30
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "88e9f6bc-d5ca-4bae-b408-03c271caa4a0"
+      image: hmctspublic.azurecr.io/draft-store/service:prod-6a5fa243
       ingressHost: draft-store-service.service.core-compute-perftest.internal
-      aadIdentityName: rpe
       environment:
         DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
         DRAFT_STORE_DB_HOST: rpe-draft-store-perftest.postgres.database.azure.com
@@ -28,6 +32,7 @@ spec:
         IDAM_URL: https://idam-api.perftest.platform.hmcts.net
         S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
         SPRING_APPLICATION_NAME: "HMCTS Draft Store AKS"
+      aadIdentityName: rpe
       keyVaults:
         "draft-store":
           resourceGroup: draft-store-service
@@ -35,5 +40,6 @@ spec:
           - service-POSTGRES-PASS
     global:
       environment: perftest
-      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      subscriptionId: "8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
