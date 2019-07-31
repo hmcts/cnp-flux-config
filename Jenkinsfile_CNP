@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    stages {
+        stage('Validate') {
+            steps {
+                sh "./tests/run.sh --verbose --junit"
+            }
+            post {
+                always {
+                    junit "tests/*.xml"
+                }
+            }
+        }
+    }
+    libraries {
+        lib('Pipeline')
+    }
+}
