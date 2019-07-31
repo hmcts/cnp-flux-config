@@ -17,5 +17,8 @@ If you're adding the application to AAT or prod then then add a line referring t
 
 ```
 k8s/aat/common/cmc/claim-store.yaml @hmcts/cmc
-k8s/prod/common/cmc/claim-store.yaml @hmcts/cmc
+```
+
+If you're adding it to prod then  it can be in any environment so change it to `**` in the env portion
+k8s/**/common/cmc/claim-store.yaml @hmcts/cmc
 ```
