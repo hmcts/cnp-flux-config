@@ -15,4 +15,12 @@ pipeline {
     libraries {
         lib('Pipeline')
     }
+    post {
+        unsuccessful {
+            notifyBuildFailure channel: "rpe-build-notices"
+        }
+        fixed {
+            notifyBuildFixed channel: "rpe-build-notices"
+        }
+    }
 }
