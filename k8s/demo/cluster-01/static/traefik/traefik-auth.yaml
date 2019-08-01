@@ -13,19 +13,43 @@ spec:
       containers:
       - name: traefik-forward-auth
         image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
-        resources:          
+        resources:
           limits:
             cpu: 100m
             memory: 256Mi
           requests:
             cpu: 100m
             memory: 128Mi
-        envFrom:
-          - secretRef:
-              name: traefik-forward-auth-secrets
+
+        env:
+          - name: OAUTH2_PROXY_CLIENT_ID
+            value: "azure_app_uuid"
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-proxy-creds
+                key: oauth2-client-id
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-cookie-secret
+                key: oauth-cookie-secret
         args:
           - "--provider=azure"
           - "--email-domain=*"
+          - "--http-address=:4180"
+          - "--https-address=:4443"
+          - "--azure-tenant=21ae17a1-694c-4005-8e0f-6a0e51c35a5f"
+          - "--skip-provider-button"
+          - "--cookie-secure=true"
+          - "--cookie-httponly=false"
+          - "--pass-host-header=true"
+          - "--standard-logging"
+          - "--auth-logging"
+          - "--request-logging"
+          - "--upstream=http://traefik:80/"
+          - "--tls-cert=/fullcert.pem"
+          - "--tls-key=/key.pem"
 ---
 kind: Service
 apiVersion: v1
