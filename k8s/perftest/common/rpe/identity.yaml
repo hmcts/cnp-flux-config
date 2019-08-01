@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: rpe
+ namespace: rpe
+spec:
+ type: 0
+ ResourceID: /subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/rpe-perftest-mi
+ ClientID: 8f249875-d9b5-4969-94c3-6a17ff2c3e59
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: rpe-binding
+  namespace: rpe
+spec:
+  AzureIdentity: rpe
+  Selector: rpe
