@@ -1,0 +1,70 @@
+# helm repo add codecentric https://codecentric.github.io/helm-charts
+# helm install --name mailhog --namespace namespace stable/mailhog
+# helm get mailhog > mailhog.yaml
+---
+# Source: mailhog/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailhog
+  namespace: money-claims
+  labels:
+    app: mailhog
+spec:
+  ports:
+    - name: http
+      port: 8025
+      protocol: TCP
+      targetPort: http
+    - name: smtp
+      port: 1025
+      protocol: TCP
+      targetPort: smtp
+  selector:
+    app: mailhog
+---
+# Source: mailhog/templates/deployment.yaml
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mailhog
+  namespace: money-claims
+  labels:
+    app: mailhog
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.mailhog: regexp:^v1.*
+spec:
+  template:
+    metadata:
+      labels:
+        app: mailhog
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: mailhog
+          image: "mailhog/mailhog:v1.0.0"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: MH_HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - name: http
+              containerPort: 8025
+              protocol: TCP
+            - name: smtp
+              containerPort: 1025
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: smtp
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+          readinessProbe:
+            tcpSocket:
+              port: smtp
+          resources:
+            {}
