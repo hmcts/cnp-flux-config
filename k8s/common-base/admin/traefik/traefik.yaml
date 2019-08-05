@@ -34,3 +34,18 @@ spec:
     startupArguments:
       - "--ping"
       - "--ping.entrypoint=http"
+    autoscaling:
+      minReplicas: 2
+      maxReplicas: 4
+    podDisruptionBudget:
+      maxUnavailable: 50%
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+                - traefik
+          topologyKey: "kubernetes.io/hostname"

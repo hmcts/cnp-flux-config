@@ -4,11 +4,13 @@ metadata:
   name: traefik
   namespace: admin
 spec:
+  forceUpgrade: true
   valueFileSecrets:
     - name: "traefik-values"
   values:
     service:
       annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "false"
         service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
     kubernetes:
       ingressEndpoint:
@@ -17,3 +19,5 @@ spec:
       enabled: true
       enforced: true
       permanentRedirect: true
+    env:
+      TEST : delete-me
