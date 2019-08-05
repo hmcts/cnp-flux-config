@@ -10,6 +10,10 @@ spec:
       labels:
         app: traefik-forward-auth
     spec:
+      volumes:
+      - name: oauth2-certs
+        secret:
+          secretName: oauth2-cert-key
       containers:
       - name: traefik-forward-auth
         image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
@@ -24,10 +28,6 @@ spec:
            - mountPath: "/var/oauth2"
              name: "oauth2-certs"
              readOnly: true
-        volumes:
-        - name: oauth2-certs
-          secret:
-            secretName: oauth2-cert-key
         env:
           - name: OAUTH2_PROXY_CLIENT_ID
             valueFrom:
