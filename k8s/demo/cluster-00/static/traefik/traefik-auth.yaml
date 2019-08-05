@@ -1,0 +1,85 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: traefik-forward-auth
+  namespace: admin
+spec:
+  template:
+    metadata:
+      labels:
+        app: traefik-forward-auth
+    spec:
+      containers:
+      - name: traefik-forward-auth
+        image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+         volumeMounts:
+           - mountPath: "/var/oauth2"
+             name: oauth2-certs
+             readOnly: true
+
+       volumes:
+       - name: oauth2-certs
+         secret:
+           secretName: oauth2-cert-key
+
+        env:
+          - name: OAUTH2_PROXY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-client-secret
+                key: oauth2-proxy-client-id
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-client-secret
+                key: oauth2-proxy-client-secret
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-client-secret
+                key: oauth2-proxy-cookie-secret
+        args:
+          - "--LogLevel=DEBUG"
+          - "--provider=azure"
+          - "--email-domain=*"
+          - "--http-address=:4180"
+          - "--https-address=:4443"
+          - "--azure-tenant=21ae17a1-694c-4005-8e0f-6a0e51c35a5f"
+          - "--skip-provider-button"
+          - "--cookie-secure=true"
+          - "--cookie-httponly=false"
+          - "--pass-host-header=true"
+          - "--standard-logging"
+          - "--auth-logging"
+          - "--request-logging"
+          - "--upstream=http://traefik:80/"
+          - "--tls-cert=/var/oauth2/hmctsdemo-platform-crt.pem"
+          - "--tls-key=/var/oauth2/hmctsdemo-platform-key.pem"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-forward-auth
+  namespace: admin
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+spec:
+  loadBalancerIP: 51.143.184.251
+  type: LoadBalancer
+  selector:
+    app: traefik-forward-auth
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4180
+  - protocol: TCP
+    port: 443
+    targetPort: 4443
