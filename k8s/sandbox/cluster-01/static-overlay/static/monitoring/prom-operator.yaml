@@ -1,0 +1,38 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: prom-operator
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/ignore: "false"
+spec:
+  releaseName: prom-operator
+  forceUpgrade: true
+  chart:
+    git: https://github.com/hmcts/charts
+    ref: master
+    path: stable/prometheus-operator
+  values:
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubePrometheusNodeAlerting: true
+        kubePrometheusNodeRecording: true
+        kubernetesAbsent: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: true
+        network: true
+        node: true
+        prometheus: true
+        prometheusOperator: true
+        time: true
