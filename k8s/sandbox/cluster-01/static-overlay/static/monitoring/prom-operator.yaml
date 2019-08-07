@@ -1,0 +1,50 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: prom-operator
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/ignore: "false"
+spec:
+  releaseName: prom-operator
+  forceUpgrade: true
+  chart:
+    git: https://github.com/hmcts/charts
+    ref: master
+    path: stable/prometheus-operator
+  values:
+    additionalPrometheusRules:
+      - name: custom-rules
+        groups:
+          - name: draft_store_pod_group
+            rules:
+            - alert: HighRequestLatency
+              expr: job:request_latency_seconds:mean5m{job="myjob"} > 0.5
+              for: 10m
+              labels:
+                severity: page
+              annotations:
+                summary: High request latency
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubePrometheusNodeAlerting: true
+        kubePrometheusNodeRecording: true
+        kubernetesAbsent: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: true
+        network: true
+        node: true
+        prometheus: true
+        prometheusOperator: true
+        time: true
