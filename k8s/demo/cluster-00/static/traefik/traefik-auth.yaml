@@ -17,6 +17,13 @@ spec:
       containers:
       - name: traefik-forward-auth
         image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
+        ports:
+         - name: http
+           containerPort: 4180
+           protocol: TCP         
+         - name: https
+           containerPort: 4443
+           protocol: TCP
         resources:
           limits:
             cpu: 100m
