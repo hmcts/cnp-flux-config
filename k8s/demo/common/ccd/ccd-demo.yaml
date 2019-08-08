@@ -1,0 +1,68 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccd-demo
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: ccd-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccd
+    version: 3.0.3
+  values:
+    ### CCD SERVICES ###
+    userProfileApi:
+      java:
+        environment:
+          IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_URL: http://ccd-demo-s2s
+          
+    dataStoreApi:
+          s2sKey: AAAAAAAAAAAAAAAA
+    definitionStoreApi:
+          s2sKey: AAAAAAAAAAAAAAAA
+    caseManagementWeb:
+
+    adminWeb:
+        environment:
+          s2sKey: AAAAAAAAAAAAAAAA
+          idamClientSecret: 
+            fromSecret: true
+            secretKeyRefName: ccd-admin-web-oauth2-client-secret
+            secretKeyRefKey: key
+    apiGateway:
+        environemnt:   
+          s2sKey: AAAAAAAAAAAAAAAA
+          idamClientSecret: 
+            fromSecret: true
+            secretKeyRefName: ccd-api-gateway-oauth2-client-secret
+            secretKeyRefKey: key
+    importer:
+          userprofile:
+            userProfileDatabaseHost: ccd-demo-postgres
+          definition:
+            importerFromSecret: true
+            importerUsername: 
+              secretKeyRefName: ccd-importer-username
+              secretKeyRefKey: key
+            importerPassword: 
+              secretKeyRefName: ccd-importer-password
+              secretKeyRefKey: key
+            redirectUri: "https://case-management-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect"
+        
+    rpe-service-auth-provider:
+      java:
+        releaseNameOverride: ccd-demo-s2s
+    
+    postgresql:
+      nameOverride: postgres
+    
