@@ -57,19 +57,14 @@ spec:
           - "--upstream=http://traefik:80/"
           - "--tls-cert=/var/oauth2/demo-platform-hmcts-crt.pem"
           - "--tls-key=/var/oauth2/demo-platform-hmcts-key.pem"
-          - "--ssl-insecure-skip-verify=true"
-          = "--ssl-upstream-insecure-skip-verify=true"
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: traefik-forward-auth
   namespace: admin
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
 spec:
-  loadBalancerIP: 51.143.184.251
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: traefik-forward-auth
   ports:
