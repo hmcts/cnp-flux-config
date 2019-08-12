@@ -125,7 +125,7 @@ It requires a sealed secret that contains the azure storage account name and key
 ```bash
 $ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-<env> --name storage-account-key --query value -o tsv)
 
-$ kubectl create secret generic storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps<env> --namespace neuvector --dry-run -o json > /tmp/neuvector.json
+$ kubectl create secret generic nv-storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps<env> --namespace neuvector --dry-run -o json > /tmp/neuvector.json
 $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/neuvector.json > k8s/<env>/common/neuvector/nv-storage-secret.yaml
 ```
 
