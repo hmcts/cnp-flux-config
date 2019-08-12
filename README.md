@@ -97,7 +97,7 @@ You have a slack channel with name aks-monitor-<env>.
 Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/fluxcloud-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealed-secrets/fluxcloud-values.yaml
 ```
 
 ### Kured values
@@ -114,7 +114,7 @@ $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml
 Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/kured-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealed-secrets/kured-values.yaml
 ```
 
 ### Neuvector
@@ -126,7 +126,7 @@ It requires a sealed secret that contains the azure storage account name and key
 $ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-<env> --name storage-account-key --query value -o tsv)
 
 $ kubectl create secret generic storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps<env> --namespace neuvector --dry-run -o json > /tmp/neuvector.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/neuvector.json > k8s/<env>/common/neuvector/storage-secret.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/neuvector.json > k8s/<env>/common/neuvector/nv-storage-secret.yaml
 ```
 
 #### Neuvector logging to Log Analytics
@@ -147,9 +147,12 @@ $keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-autom
 $primaryKey = $keys.PrimarySharedKey
 
 kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run -o json > /tmp/fluentbit-log.json
+```
 
+```bash
 kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json > k8s/<env>/common/neuvector/fluentbit-log.yaml
 ```
+
 ### Traefik
 
 In case you are enforcing ssl on Traefik( Refer Demo for flux config) with an existing pfx in keyvault, extract the certificate and key using below: 
@@ -195,5 +198,5 @@ $ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\
 Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealedsecrets/kube-slack-values.yaml
+$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealed-secrets/kube-slack-values.yaml
 ```
