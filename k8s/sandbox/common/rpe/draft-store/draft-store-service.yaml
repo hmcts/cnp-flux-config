@@ -10,12 +10,12 @@ metadata:
 spec:
   releaseName: draft-store-service-test
   chart:
-    repository: https://hmcts.azurecr.io/helm/v1/repo/
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.0.3
+    version: 1.0.7
   values:
     java:
-      image: hmcts.azurecr.io/hmcts/draft-store-service:prod-cda19f30
+      image: hmctspublic.azurecr.io/draft-store/service:prod-47fcd7e9
       ingressHost: draft-store-service.service.core-compute-sandbox.internal
       aadIdentityName: rpe
       environment:
@@ -33,6 +33,8 @@ spec:
           resourceGroup: draft-store-service
           secrets:
           - service-POSTGRES-PASS
+      prometheus:
+        enabled: true
     global:
       environment: sandbox
       subscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"

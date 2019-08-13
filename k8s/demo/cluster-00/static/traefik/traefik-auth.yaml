@@ -17,6 +17,13 @@ spec:
       containers:
       - name: traefik-forward-auth
         image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
+        ports:
+         - name: http
+           containerPort: 4180
+           protocol: TCP         
+         - name: https
+           containerPort: 4443
+           protocol: TCP
         resources:
           limits:
             cpu: 100m
@@ -54,6 +61,7 @@ spec:
           - "--cookie-secure=true"
           - "--cookie-httponly=false"
           - "--pass-host-header=true"
+          - "--request-logging"
           - "--upstream=http://traefik:80/"
           - "--tls-cert=/var/oauth2/demo-platform-hmcts-crt.pem"
           - "--tls-key=/var/oauth2/demo-platform-hmcts-key.pem"
@@ -63,8 +71,11 @@ apiVersion: v1
 metadata:
   name: traefik-forward-auth
   namespace: admin
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
 spec:
-  type: ClusterIP
+  loadBalancerIP: 51.143.184.251
+  type: LoadBalancer
   selector:
     app: traefik-forward-auth
   ports:
