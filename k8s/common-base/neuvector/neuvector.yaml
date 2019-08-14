@@ -10,39 +10,42 @@ spec:
   releaseName: neuvector
   timeout: 600
   chart:
-    git: https://github.com/hmcts/neuvector-helm
-    ref: master
-    path: "."
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: neuvector-azure-keyvault
+    version: 0.0.2
   values:
-    registry: hmctsprivate.azurecr.io
-    tag: 2.5.0
-    controller:
-      image:
-        repository:
-          neuvector/controller
-      replicas: 3
-      azureFileShare:
-        enabled: true
-        secretName: nv-storage-secret
-      configmap:
-        enabled: true
-    enforcer:
-      image:
-        repository:
-          neuvector/enforcer
-    manager:
-      image:
-        repository:
-          neuvector/manager
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
-    cve:
-      updater:
-        # If false, cve updater will not be installed
-        enabled: true
+    keyvault:
+      aadpodidbinding: neuvector
+      licensececretname: neuvector-license
+    neuvector:
+      tag: 2.5.0
+      controller:
         image:
-          repository: neuvector/updater
-          tag: latest
-        schedule: "0 0 * * *"
+          repository:
+            neuvector/controller
+        replicas: 3
+        azureFileShare:
+          enabled: true
+          secretName: nv-storage-secret
+        configmap:
+          enabled: true
+      enforcer:
+        image:
+          repository:
+            neuvector/enforcer
+      manager:
+        image:
+          repository:
+            neuvector/manager
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+      cve:
+        updater:
+          # If false, cve updater will not be installed
+          enabled: true
+          image:
+            repository: neuvector/updater
+            tag: latest
+          schedule: "0 0 * * *"
