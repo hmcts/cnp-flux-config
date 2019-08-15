@@ -14,6 +14,8 @@ spec:
     name: cmc-claim-store
     version: 1.1.5
   values:
+    rollback:
+      enable: true
     java:
       replicas: 2
       useInterpodAntiAffinity: true
@@ -55,6 +57,12 @@ spec:
         FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
         FEATURE_TOGGLES_EMAILTOSTAFF: true
         FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: false
+    tags:
+      cmc-claim-store-postgresql-pod: false
+      cmc-citizen-frontend-pod: false
+      cmc-ccd-stack: false
+      ccd-idam-pr: false
+      postgresql-pod: false  # stop any subcharts starting their own postgres instance
     global:
       environment: perftest
       subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
