@@ -35,12 +35,23 @@ spec:
           secretKeyRefName: ccd-admin-web-oauth2-client-secret
           secretKeyRefKey: key
     apiGateway:
-      environemnt:
+      environment:
         s2sKey: AAAAAAAAAAAAAAAA
         idamClientSecret:
           fromSecret: true
           secretKeyRefName: ccd-api-gateway-oauth2-client-secret
           secretKeyRefKey: key
+    idam-pr:
+      api:
+        url: https://idam-api.demo.platform.hmcts.net
+      web_public:
+        url: https://idam-web-public.demo.platform.hmcts.net
+      releaseNameOverride: ccd-demo-idam-pr
+      redirect_uris:
+        CCD:
+          - https://ccd-case-management-web/oauth2redirect
+        CCD Admin:
+          - https://admin-web-ccd.demo.platform.hmcts.net/oauth2redirect      
     importer:
       userprofile:
         userProfileDatabaseHost: ccd-demo-postgres
@@ -52,12 +63,48 @@ spec:
         importerPassword:
           secretKeyRefName: ccd-importer-password
           secretKeyRefKey: key
-        redirectUri: 'https://case-management-web-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/oauth2redirect'
+        redirectUri: 'https://ccd-case-management-web/oauth2redirect'
+    
+
+  #CCD Front-end
+    caseManagementWeb:
+      releaseNameOverride: ccd-case-management-web
+      environment:
+        IDAM_LOGIN_URL: https://idam-api.demo.platform.hmcts.net
+
+  #Dependencies
+    draft-store-service:
+      java:
+        releaseNameOverride: ccd-demo-draftstore
+        environment:
+          IDAM_URL: https://idam-api.demo.platform.hmcts.net
+          S2S_URL: http://ccd-demo-s2s
+          DRAFT_STORE_DB_HOST: ccd-demo-postgres
     rpe-service-auth-provider:
       java:
         releaseNameOverride: ccd-demo-s2s
+
+    payment-api:
+      java:
+        releaseNameOverride: ccd-demo-payments
+        secrets: 
+          GOV_PAY_AUTH_KEY_CCD:
+              secretRef: gov-pay-keys-ccd
+              key: key
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
+          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://ccd-demo-s2s
+          FEES_REGISTER_URL: http://ccd-demo-fees
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://ccd-demo-postgres:5432/payment_api"
+          SPRING_MAIL_HOST: mailhog
+          SPRING_MAIL_PORT: 1025    
+
     ingressHost: chart-ccd.demo.platform.hmcts.net
     idamApiUrl: https://idam-api.demo.platform.hmcts.net
     idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+    redirectUri: "https://ccd-case-management-web/oauth2redirect"
+    s2sUrl: http://ccd-demo-s2s
+    draftStoreUrl: http://ccd-demo-draftstore
+    paymentsUrl: http://ccd-demo-payments
     postgresql:
       nameOverride: postgres
