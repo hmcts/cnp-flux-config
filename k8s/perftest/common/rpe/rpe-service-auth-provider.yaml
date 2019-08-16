@@ -23,6 +23,9 @@ spec:
       image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-9b79e227
       ingressHost: rpe-service-auth-provider.service.core-compute-perftest.internal
       aadIdentityName: rpe
+      environment:
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
   global:
     environment: perftest
     subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
