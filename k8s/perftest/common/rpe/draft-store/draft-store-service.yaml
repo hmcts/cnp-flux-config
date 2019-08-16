@@ -18,6 +18,10 @@ spec:
       enable: true
     java:
       replicas: 2
+      memoryRequests: '768Mi'
+      cpuRequests: '500m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "88e9f6bc-d5ca-4bae-b408-03c271caa4a0"
       image: hmctspublic.azurecr.io/draft-store/service:prod-e640b1d7
@@ -31,6 +35,8 @@ spec:
         RUN_DB_MIGRATION_ON_STARTUP: 'false'
         IDAM_URL: https://idam-api.perftest.platform.hmcts.net
         S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: rpe
       keyVaults:
         "draft-store":
