@@ -20,9 +20,12 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "ed3c45ae-01e1-4263-b57f-178a1ba004be"
-      image: hmctspublic.azurecr.io/hmcts/rpe-service-auth-provider:prod-9b79e227
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-9b79e227
       ingressHost: rpe-service-auth-provider.service.core-compute-aat.internal
       aadIdentityName: rpe
+      environment:
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
   global:
     environment: aat
     subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
