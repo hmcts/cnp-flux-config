@@ -1,0 +1,23 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: fluxcloud
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "true"
+spec:
+  releaseName: fluxcloud
+  forceUpgrade: true
+  chart:
+    git: https://github.com/hmcts/charts
+    ref: master
+    path: incubator/fluxcloud
+  valueFileSecrets:
+  - name: "fluxcloud-values"
+  values:
+    imageTag: v0.3.6
+    environment:
+      SLACK_ICON_EMOJI: ":flux:"
+      GITHUB_URL: "https://github.com/hmcts/cnp-flux-config/"
+      LISTEN_ADDRESS: ":3032"
