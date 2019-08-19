@@ -1,0 +1,66 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccd-papi-sbox
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: 'true'
+    flux.weave.works/tag.java: 'glob:prod-*'
+spec:
+  releaseName: ccd-papi-sbox
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    name: ccd
+    version: 3.0.4
+  values:
+    userProfileApi:
+      java:
+        environment:
+          IDAM_API_URL: 'http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal'
+          IDAM_S2S_URL: 'http://ccd-papi-sbox-s2s'
+          
+    dataStoreApi:
+          s2sKey: AAAAAAAAAAAAAAAA
+    definitionStoreApi:
+          s2sKey: AAAAAAAAAAAAAAAA
+
+    adminWeb:
+        environment:
+          s2sKey: AAAAAAAAAAAAAAAA
+          idamClientSecret: 
+            fromSecret: true
+            secretKeyRefName: ccd-admin-web-oauth2-client-secret
+            secretKeyRefKey: key
+    apiGateway:
+        environemnt:   
+          s2sKey: AAAAAAAAAAAAAAAA
+          idamClientSecret: 
+            fromSecret: true
+            secretKeyRefName: ccd-api-gateway-oauth2-client-secret
+            secretKeyRefKey: key
+    importer:
+          userprofile:
+            userProfileDatabaseHost: ccd-papi-sbox-postgres
+          definition:
+            importerFromSecret: true
+            importerUsername: 
+              secretKeyRefName: ccd-importer-username
+              secretKeyRefKey: key
+            importerPassword: 
+              secretKeyRefName: ccd-importer-password
+              secretKeyRefKey: key
+            redirectUri: 'http://case-management-web-ccd-cmc-citizen-frontend.service.core-compute-papi-sbox.internal/oauth2redirect'
+        
+    rpe-service-auth-provider:
+      java:
+        releaseNameOverride: ccd-demo-s2s
+        ingressHost: chart-ccd.service.core-compute-papi-sbox.internal
+        idamApiUrl: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
+        idamWebUrl: http://idam-web-public-idam-sandbox.service.core-compute-idam-sandbox.internal
+    postgresql:
+      nameOverride: postgres

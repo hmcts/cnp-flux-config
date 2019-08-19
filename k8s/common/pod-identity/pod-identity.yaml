@@ -109,6 +109,8 @@ spec:
           - "--host-ip=$(HOST_IP)"
           - "--node=$(NODE_NAME)"
         env:
+          - name: FORCENAMESPACED
+            value: "true"
           - name: HOST_IP
             valueFrom:
               fieldRef:
@@ -193,6 +195,9 @@ spec:
           - mic
           - "--cloudconfig=/etc/kubernetes/azure.json"
           - "--logtostderr"
+        env:
+          - name: FORCENAMESPACED
+            value: "true"
         volumeMounts:
         - name: k8s-azure-file
           mountPath: /etc/kubernetes/azure.json
