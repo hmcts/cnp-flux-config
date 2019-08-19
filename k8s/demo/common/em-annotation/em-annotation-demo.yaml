@@ -23,7 +23,7 @@ spec:
     em-anno:
       releaseNameOverride: em-annotation-em-anno
       environment:
-        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-release-1-postgres-db:5432/emannotationapp'
+        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/emannotationapp'
         IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
         S2S_BASE_URI: http://rpe-s2s
         DM_STORE_APP_URL: http://dm-store
@@ -31,7 +31,7 @@ spec:
     em-npa:
       releaseNameOverride: em-annotation-em-npa
       environment:
-        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-release-1-postgres-db:5432/emnpa'
+        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/emnpa'
         IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
         DM_STORE_APP_URL: http://dm-store
         EM_ANNO_APP_URL: http://em-annotation-em-anno
@@ -46,13 +46,11 @@ spec:
       java:
         releaseNameOverride: dm-store
         environment:
-          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-release-1-postgres-db:5432/evidence'
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/evidence'
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
           IDAM_S2S_BASE_URI: http://rpe-s2s
           ENABLE_DB_MIGRATE: 'true'
           ENABLE_TTL: 'false'
-          CCD_DM_STORE_STORAGE_ACC_PRIMARY_CONN_STRING: 'dm-store-storage-account-primary-connection-string'
-          CCD_DM_STORE_STORAGE_ACC_SECONDARY_CONN_STRING: 'dm-store-storage-account-secondary-connection-string'
 
     postgresql:
       nameOverride: postgres
