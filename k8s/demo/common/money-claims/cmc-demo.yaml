@@ -49,6 +49,7 @@ spec:
           FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
           FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
           FEATURE_TOGGLES_EMAILTOSTAFF: true
+          FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: true
           CLAIM_STORE_DB_HOST: cmc-demo-postgres
           CMC_DB_HOST: cmc-demo-postgres
           CORE_CASE_DATA_API_URL: http://cmc-demo-data-store-api
@@ -62,7 +63,6 @@ spec:
           SPRING_MAIL_PORT: 1025
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mailhog
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
-
       ccd:
         idamApiUrl: https://idam-api.demo.platform.hmcts.net
         idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -121,6 +121,9 @@ spec:
               secretRef: citizen-oauth-client-secret
               key: key
         environment:
+          FEATURE_MEDIATION: true
+          FEATURE_MEDIATION_PILOT: true
+          FEATURE_DIRECTIONS_QUESTIONNAIRE: true
           IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
           IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.demo.platform.hmcts.net
           FEATURE_TOGGLES_API_URL: http://cmc-demo-ftrtgl
