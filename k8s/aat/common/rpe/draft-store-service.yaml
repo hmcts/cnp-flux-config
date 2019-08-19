@@ -18,10 +18,14 @@ spec:
       enable: true
     java:
       replicas: 2
+      memoryRequests: '768Mi'
+      cpuRequests: '500m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "a2e12f21-e77a-4b9f-91f3-6e7b3867892e"
-      image: hmctspublic.azurecr.io/draft-store/service:prod-957471b1
-      ingressHost: draft-store-service.service.core-compute-aat.internal
+      image: hmctspublic.azurecr.io/draft-store/service:prod-ce1af948
+      ingressHost: draft-store-service-aat.service.core-compute-aat.internal
       environment:
         DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
         DRAFT_STORE_DB_HOST: rpe-draft-store-aat.postgres.database.azure.com
@@ -31,6 +35,8 @@ spec:
         RUN_DB_MIGRATION_ON_STARTUP: 'false'
         IDAM_URL: https://idam-api.aat.platform.hmcts.net
         S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: rpe
       keyVaults:
         "draft-store":

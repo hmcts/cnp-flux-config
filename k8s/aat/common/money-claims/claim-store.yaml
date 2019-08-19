@@ -1,0 +1,69 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: cmc-claim-store
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: cmc-claim-store
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: cmc-claim-store
+    version: 1.1.5
+  values:
+    rollback:
+      enable: true
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      aadIdentityName: money-claims
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-1d38924d
+      ingressHost: cmc-claim-store.service.core-compute-aat.internal
+      keyVaults:
+        cmc:
+          resourceGroup: cmc
+          secrets:
+          - claim-store-db-password
+          - cmc-db-password
+          - AppInsightsInstrumentationKey
+          - citizen-oauth-client-secret
+          - claim-store-s2s-secret
+          - anonymous-caseworker-username
+          - anonymous-caseworker-password
+          - system-update-username
+          - system-update-password
+          - notify-api-key
+      environment:
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        PDF_SERVICE_URL: http://cmc-pdf-service-aat.service.core-compute-aat.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-aat.service.core-compute-aat.internal
+        DOC_ASSEMBLY_URL: false
+        FRONTEND_BASE_URL: https://cmc-citizen-frontend.service.core-compute-aat.internal
+        RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.service.core-compute-aat.internal/first-contact/start
+        CLAIM_STORE_DB_HOST: preprod-data-lb.moneyclaim.reform.hmcts.net
+        CLAIM_STORE_DB_CONNECTION_OPTIONS: '?sslmode=require'
+        CMC_DB_HOST: cmc-aat.postgres.database.azure.com
+        CMC_DB_USERNAME: 'cmc@cmc-aat'
+        CMC_DB_CONNECTION_OPTIONS: '?sslmode=require'
+        FEATURE_TOGGLES_CCD_ENABLED: true
+        FEATURE_TOGGLES_CCD_ASYNC_ENABLED: false
+        FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+        FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
+        FEATURE_TOGGLES_EMAILTOSTAFF: true
+        FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: false
+    tags:
+      cmc-claim-store-postgresql-pod: false
+      cmc-citizen-frontend-pod: false
+      cmc-ccd-stack: false
+      postgresql-pod: false  # stop any subcharts starting their own postgres instance
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
