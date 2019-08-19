@@ -6,50 +6,83 @@ metadata:
   namespace: neuvector
 spec:
   values:
-    controller:
-      azureFileShare:
-        secretName: nv-storage-secret
-        shareName: neuvector-data-01
-      configmap:
-        data:
-          samlinitcfg.yaml: |
-            SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
-            Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
-            X509_Cert: |
-              -----BEGIN CERTIFICATE-----
-              MIIC8DCCAdigAwIBAgIQM5jeqPVxOJRJnOcIUIXGhTANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
-              EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0xOTA3MDkxNDE4
-              MzlaFw0yMjA3MDkxNDE4MzlaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
-              U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi5706bz2a8iw
-              WGYZH3qCX5PWWJ2U/M9aDiTsGNJB2Jiq8jKV4vK24JEbH9KwCOFMz4j5gkNFxW/wpamx6u6/vzBH
-              fNWSIYLjh/uFYv6aHPj+z5f6UKajPhMqbHRnvWrTONa1UVCSxLhIOsEvkhi90edhXMbwb01Z39Mq
-              Pu9tWpKO7SIJ6mmEP8gFtVriSVwLbSgJ1FgNBhoX5B3OMCgpPj5NAoqmkgPrpnR3cEBNfGRBJgAa
-              3GPSDPZ1ah52gfo+hcbqVPzCwSA7XkCiltWEOIDYRiSYHS4Yp3yrDkoXM4JvCXPMPvWlur2mYS8l
-              DXbmaoTKnmGm5Gw6VLuRDC+ePQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAccBOlKqhM9Qz5XbtF
-              C9NvT2AN0RO7nfmT/An8Zr9q98XZ9GFXhw/jBYdKUZSLj6SRVfMF6AX0JlqCWSOxidPFXoiyaanY
-              kXK2xb9cn389bbcSXa0AyVloIQNeeaphZ8VDby77sYPnrTjNumza++8d6jnDYpQGq9ZllI4bD9U/
-              IYiyd1cgB+pIC6fSe19IRu2onkJt8qGjg3GNZNNMxkjJfzdpJp88Yg9p7eEl6c/m9Y8Pal5jehp5
-              Y9pTTVRYToFqFSr2jHAM4lC0SythDqJPFwVDa/XwlgnTciJrmK1Yc3SOpHw/+Q7uqvHOw0QcDYIw
-              aXz8qWRhcbGcTvhKwPr1
-              -----END CERTIFICATE-----
-            Enable: true
-            Default_Role: reader
-            Role_Groups:
-              admin:
-                - 300e771f-856c-45cc-b899-40d78281e9c1 
-                - c36eaede-a0ae-4967-8fed-0a02960b1370
-          sysinitcfg.yaml: |
-            New_Service_Policy_Mode: Discover
-            Syslog_ip: fluentbit-log
-            Syslog_IP_Proto: 6
-            Syslog_Port: 5140
-            Syslog_Level: Warning
-            Syslog_status: true
-            Syslog_Categories:
-              - event
-              - security-event
-              - audit
-            Cluster_Name: aat01
-    manager:
-      ingress:
-        host: neuvector01.service.core-compute-aat.internal
+    keyvault:
+      name: cftapps-stg
+      resourcegroup: core-infra-stg-rg
+      subscriptionid: 96c274ce-846d-4e48-89a7-d528432298a7
+      tenantid: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
+      aadpodidbinding: nv
+      licensececretname: neuvector-license-dev
+    rules:
+      admission:
+        enable: true
+        mode: "protect" # one of: monitor, protect
+        deny: 
+          - '{"config":{"id":1002,"category":"Kubernetes","comment":"Default deny","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://localhost/,https://*.*/"}],"disable":false,"actions":[]}}'
+        exception: 
+          - '{"config":{"id":1,"category":"Kubernetes","comment":"Allow deployments in system namespaces.","criteria":[{"name":"namespace","op":"containsAny","value":"kube-system,kube-public,istio-system"}],"disable":false,"actions":[]}}'
+          - '{"config":{"id":2,"category":"Kubernetes","comment":"Allow deployments in NeuVector namespace","criteria":[{"name":"namespace","op":"containsAny","value":"neuvector"}],"disable":false,"actions":[]}}'
+          - '{"config":{"id":1000,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kured"}],"disable":false,"actions":[]}}'
+          - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow HMCTS registries","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/"}],"disable":false,"actions":[]}}'
+        defaultAction: "allow"
+        admClientmMde: "service"
+        service: "neuvector"
+      response:
+        policies:
+          - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
+          - '{"insert":{"after":1,"rules":[{"group":null,"conditions":[],"actions":["webhook"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":2,"rules":[{"group":null,"conditions":[{"type":"level","value":"Error"}],"actions":["webhook"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":3,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Privilege.Escalation"}],"actions":["quarantine"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
+          - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
+          - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"number","value":"5.4"}],"actions":["webhook"],"event":"benchmark","disable":true}]}}'
+    neuvector:
+      controller:
+        azureFileShare:
+          secretName: nv-storage-secret
+          shareName: neuvector-data-01
+        ingress:
+          host:  neuvector01-api.service.core-compute-aat.internal
+        configmap:
+          data:
+            samlinitcfg.yaml: |
+              SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
+              Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              X509_Cert: |
+                -----BEGIN CERTIFICATE-----
+                MIIC8DCCAdigAwIBAgIQM5jeqPVxOJRJnOcIUIXGhTANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
+                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0xOTA3MDkxNDE4
+                MzlaFw0yMjA3MDkxNDE4MzlaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
+                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi5706bz2a8iw
+                WGYZH3qCX5PWWJ2U/M9aDiTsGNJB2Jiq8jKV4vK24JEbH9KwCOFMz4j5gkNFxW/wpamx6u6/vzBH
+                fNWSIYLjh/uFYv6aHPj+z5f6UKajPhMqbHRnvWrTONa1UVCSxLhIOsEvkhi90edhXMbwb01Z39Mq
+                Pu9tWpKO7SIJ6mmEP8gFtVriSVwLbSgJ1FgNBhoX5B3OMCgpPj5NAoqmkgPrpnR3cEBNfGRBJgAa
+                3GPSDPZ1ah52gfo+hcbqVPzCwSA7XkCiltWEOIDYRiSYHS4Yp3yrDkoXM4JvCXPMPvWlur2mYS8l
+                DXbmaoTKnmGm5Gw6VLuRDC+ePQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAccBOlKqhM9Qz5XbtF
+                C9NvT2AN0RO7nfmT/An8Zr9q98XZ9GFXhw/jBYdKUZSLj6SRVfMF6AX0JlqCWSOxidPFXoiyaanY
+                kXK2xb9cn389bbcSXa0AyVloIQNeeaphZ8VDby77sYPnrTjNumza++8d6jnDYpQGq9ZllI4bD9U/
+                IYiyd1cgB+pIC6fSe19IRu2onkJt8qGjg3GNZNNMxkjJfzdpJp88Yg9p7eEl6c/m9Y8Pal5jehp5
+                Y9pTTVRYToFqFSr2jHAM4lC0SythDqJPFwVDa/XwlgnTciJrmK1Yc3SOpHw/+Q7uqvHOw0QcDYIw
+                aXz8qWRhcbGcTvhKwPr1
+                -----END CERTIFICATE-----
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - 300e771f-856c-45cc-b899-40d78281e9c1 
+                  - c36eaede-a0ae-4967-8fed-0a02960b1370
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Cluster_Name: aat01
+      manager:
+        ingress:
+          host: neuvector01.service.core-compute-aat.internal
