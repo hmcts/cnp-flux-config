@@ -25,30 +25,30 @@ spec:
       environment:
         SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-release-1-postgres-db:5432/emannotationapp'
         IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
-        S2S_BASE_URI: http://em-annotation-rpe-s2s
-        DM_STORE_APP_URL: http://em-annotation-dm-store
+        S2S_BASE_URI: http://rpe-s2s
+        DM_STORE_APP_URL: http://dm-store
 
     em-npa:
       releaseNameOverride: em-annotation-em-npa
       environment:
         SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-release-1-postgres-db:5432/emnpa'
         IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
-        DM_STORE_APP_URL: http://em-annotation-dm-store
+        DM_STORE_APP_URL: http://dm-store
         EM_ANNO_APP_URL: http://em-annotation-em-anno
-        S2S_BASE_URI: http://em-annotation-rpe-s2s
+        S2S_BASE_URI: http://rpe-s2s
 
     ##### DEPENDENCIES #####
     rpe-service-auth-provider:
       java:
-        releaseNameOverride: em-annotation-rpe-s2s
+        releaseNameOverride: rpe-s2s
 
     dm-store:
       java:
-        releaseNameOverride: em-annotation-dm-store
+        releaseNameOverride: dm-store
         environment:
           SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-release-1-postgres-db:5432/evidence'
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
-          IDAM_S2S_BASE_URI: http://em-annotation-rpe-s2s
+          IDAM_S2S_BASE_URI: http://rpe-s2s
           ENABLE_DB_MIGRATE: 'true'
           ENABLE_TTL: 'false'
           CCD_DM_STORE_STORAGE_ACC_PRIMARY_CONN_STRING: 'dm-store-storage-account-primary-connection-string'
