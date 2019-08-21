@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: divorce
+ namespace: divorce
+spec:
+ type: 0
+ ResourceID: /subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/div-aat-mi
+ ClientID: 859d3727-9d6a-412a-ac4a-66ec780e5ac0
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: divorce-binding
+  namespace: divorce
+spec:
+  AzureIdentity: divorce
+  Selector: divorce
