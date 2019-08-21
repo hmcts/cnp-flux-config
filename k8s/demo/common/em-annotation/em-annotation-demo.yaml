@@ -1,0 +1,57 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-annotation-demo
+  namespace: em-annotation
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: em-annotation-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-annotation
+    version: 0.0.1
+  values:
+    ### EM-ANNOTATION SERVICES ###
+    em-anno:
+      releaseNameOverride: em-annotation-em-anno
+      environment:
+        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/emannotationapp'
+        IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
+        S2S_BASE_URI: http://em-annotation-rpe-s2s
+        DM_STORE_APP_URL: http://em-annotation-dm-store
+
+    em-npa:
+      releaseNameOverride: em-annotation-em-npa
+      environment:
+        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/emnpa'
+        IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
+        DM_STORE_APP_URL: http://em-annotation-dm-store
+        EM_ANNO_APP_URL: http://em-annotation-em-anno
+        S2S_BASE_URI: http://em-annotation-rpe-s2s
+
+    ##### DEPENDENCIES #####
+    rpe-service-auth-provider:
+      java:
+        releaseNameOverride: em-annotation-rpe-s2s
+
+    dm-store:
+      java:
+        releaseNameOverride: em-annotation-dm-store
+        environment:
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/evidence'
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://em-annotation-rpe-s2s
+          ENABLE_DB_MIGRATE: 'true'
+          ENABLE_TTL: 'false'
+
+    postgresql:
+      nameOverride: postgres
+    ########################
