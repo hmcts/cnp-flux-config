@@ -19,15 +19,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "a2e12f21-e77a-4b9f-91f3-6e7b3867892e"
+      applicationInsightsInstrumentKey: "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
       image: hmctspublic.azurecr.io/div/emca:prod-dcc8107b
-      ingressHost: div-emca-aat.service.core-compute-aat.internal
+      ingressHost: div-emca-perftest.service.core-compute-perftest.internal
       environment:
         AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE: divorce_document_generator
-        EVIDENCE_MANAGEMENT_HEALTH_URL: http://dm-store-aat.service.core-compute-aat.internal/health
-        EVIDENCE_MANAGEMENT_UPLOAD_FILE_URL: http://dm-store-aat.service.core-compute-aat.internal/documents
-        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
-        AZURE_APPLICATIONINSIGHTS_INSTRUMENTATIONKEY: 63c30ef9-a27b-4d38-8afc-4c180fb6ac33
+        EVIDENCE_MANAGEMENT_HEALTH_URL: http://dm-store-perftest.service.core-compute-perftest.internal/health
+        EVIDENCE_MANAGEMENT_UPLOAD_FILE_URL: http://dm-store-perftest.service.core-compute-perftest.internal/documents
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-perftest.service.core-compute-perftest.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
@@ -39,7 +38,7 @@ spec:
       prometheus:
         enabled: true
     global:
-      environment: aat
-      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      environment: perftest
+      subscriptionId: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
