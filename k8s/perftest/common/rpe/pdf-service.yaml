@@ -1,0 +1,28 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: pdf-service
+  namespace: rpe
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: pdf-service
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: cmc-pdf-service
+    version: 0.2.0
+  values:
+    rollback:
+      enable: true
+    java:
+      replicas: 2
+      cpuRequests: '250m'
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "50d6eba8-ffa5-4628-9622-87a8a8b8ab4f"
+      image: hmctspublic.azurecr.io/cmc/pdf-service:prod-213f2c28
+      ingressHost: cmc-pdf-service-perftest.service.core-compute-perftest.internal
+      environment:
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
