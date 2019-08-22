@@ -1,0 +1,50 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: dg-docassembly-demo
+  namespace: dg-docassembly
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: dg-docassembly-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: dg-docassembly
+    version: 0.0.1
+  values:
+    ### EM SERVICES ###
+    dg-docassembly:
+      docassembly-api:
+        image: hmctspublic.azurecr.io/dg/docassembly:latest
+        environment:
+          DM_STORE_APP_URL: http://dg-docassembly-dm-store
+          IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          S2S_BASE_URI: http://dg-docassembly-rpe-s2s
+          DOCMOSIS_TEMPLATES_ENDPOINT: https://docmosis-development.platform.hmcts.net
+          DOCMOSIS_ENDPOINT: https://docmosis-development.platform.hmcts.net/rs/render
+
+    ##### DEPENDENCIES #####
+    rpe-service-auth-provider:
+      java:
+        releaseNameOverride: dg-docassembly-rpe-s2s
+
+    dm-store:
+      java:
+        releaseNameOverride: dg-docassembly-dm-store
+        environment:
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://dg-docassembly-demo-postgres:5432/evidence'
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://dg-docassembly-rpe-s2s
+          ENABLE_DB_MIGRATE: 'true'
+          ENABLE_TTL: 'false'
+
+    postgresql:
+      nameOverride: postgres
+    ########################
