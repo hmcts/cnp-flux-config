@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../admin/flux
+  - ../../admin/fluxcloud
+  - ../../admin/kube-slack
+  - ../../admin/traefik
+  - ../../kured
+
+patchesStrategicMerge:
+  #flux patches
+  - ../../admin/flux/patches/ithc/flux.yaml
+  - ../../admin/flux/patches/ithc/cluster-01/flux.yaml
+
+  #fluxcloud patch
+  - ../../admin/fluxcloud/patches/ithc/cluster-01/fluxcloud.yaml
+
+  #kube-slack patch
+  - ../../admin/kube-slack/patches/ithc/cluster-01/kube-slack.yaml
+
+  #traefik patches
+  - ../../admin/traefik/patches/ithc/traefik.yaml
+  - ../../admin/traefik/patches/ithc/cluster-01/traefik.yaml
+
+  #kured patch
+  - ../../kured/patches/ithc/cluster-01/kured.yaml
+
