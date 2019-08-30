@@ -11,7 +11,7 @@ metadata:
     flux.weave.works/tag.apiGateway: glob:prod-*
     flux.weave.works/tag.dataStoreApi: glob:prod-*
     flux.weave.works/tag.definitionStoreApi: glob:prod-*
-    flux.weave.works/tag.caseManagementWeb: glob:prod-*
+    # flux.weave.works/tag.caseManagementWeb: glob:prod-*
     flux.weave.works/tag.adminWeb: glob:prod-*
     flux.weave.works/tag.definition: semver:~1.2
 spec:
@@ -94,7 +94,7 @@ spec:
         userProfileApi:
           image: hmctspublic.azurecr.io/ccd/user-profile-api:latest
         caseManagementWeb:
-          image: hmctspublic.azurecr.io/ccd/case-management-web:latest
+          image: hmctspublic.azurecr.io/ccd/case-management-web:pr-241
         adminWeb:
           image: hmctspublic.azurecr.io/ccd/admin-web:latest
           s2sKey: AAAAAAAAAAAAAAAA
@@ -180,7 +180,7 @@ spec:
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:pr-334  # fix for postgres bug
+        # image: hmctspublic.azurecr.io/dm/store:pr-334  # comment here so flux doesnt update, pinned in chart-cmc
         releaseNameOverride: cmc-demo-dmstore
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
