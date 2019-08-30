@@ -7,6 +7,13 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:prod-*
+    # flux.weave.works/tag.apiGateway: glob:prod-*
+    flux.weave.works/tag.dataStoreApi: glob:prod-*
+    flux.weave.works/tag.definitionStoreApi: glob:prod-*
+    flux.weave.works/tag.caseManagementWeb: glob:prod-*
+    flux.weave.works/tag.adminWeb: glob:prod-*
+    flux.weave.works/tag.definition: semver:~1.2
 spec:
   releaseName: cmc-demo
   timeout: 900
@@ -22,6 +29,7 @@ spec:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
+        image: hmctspublic.azurecr.io/cmc/claim-store:latest
         releaseNameOverride: cmc-demo-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
@@ -71,16 +79,24 @@ spec:
         draftStoreUrl: http://cmc-demo-draftstore
         paymentsUrl: http://cmc-demo-payments
         apiGateway:
+          image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-241
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
             secretKeyRefName: ccd-api-gateway-oauth2-client-secret
             secretKeyRefKey: key
         dataStoreApi:
+          image: hmctspublic.azurecr.io/ccd/data-store-api:latest
           s2sKey: AAAAAAAAAAAAAAAA
         definitionStoreApi:
+          image: hmctspublic.azurecr.io/ccd/definition-store-api:latest
           s2sKey: AAAAAAAAAAAAAAAA
+        userProfileApi:
+          image: hmctspublic.azurecr.io/ccd/user-profile-api:latest
+        caseManagementWeb:
+          image: hmctspublic.azurecr.io/ccd/case-management-web:latest
         adminWeb:
+          image: hmctspublic.azurecr.io/ccd/admin-web:latest
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
@@ -101,6 +117,7 @@ spec:
           userprofile:
             userProfileDatabaseHost: cmc-demo-postgres
           definition:
+            image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.2.26
             waitHosts: cmc-demo-definition-store-api:80
             waitHostsTimeout: 300
             importerFromSecret: true
@@ -116,6 +133,7 @@ spec:
 
     cmc-citizen-frontend:
       nodejs:
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:latest
         ingressHost: cmc-citizen-frontend.demo.platform.hmcts.net
         releaseNameOverride: cmc-demo-citizen-web
         secrets:
@@ -153,6 +171,7 @@ spec:
     ##### DEPENDENCIES #####
     rpe-send-letter-service:
       java:
+        image: hmctspublic.azurecr.io/rpe/send-letter-service:latest
         releaseNameOverride: cmc-demo-sendletter
         environment:
           FLYWAY_URL: "jdbc:postgresql://cmc-demo-postgres:5432/send_letter"
@@ -161,6 +180,7 @@ spec:
 
     dm-store:
       java:
+        # image: hmctspublic.azurecr.io/dm/store:pr-334  # comment here so flux doesnt update, pinned in chart-cmc
         releaseNameOverride: cmc-demo-dmstore
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
@@ -169,10 +189,12 @@ spec:
 
     cmc-pdf-service:
       java:
+        image: hmctspublic.azurecr.io/cmc/pdf-service:latest
         releaseNameOverride: cmc-demo-pdf
 
     draft-store-service:
       java:
+        image: hmctspublic.azurecr.io/draft-store/service:latest
         releaseNameOverride: cmc-demo-draftstore
         environment:
           IDAM_URL: https://idam-api.demo.platform.hmcts.net
@@ -181,12 +203,14 @@ spec:
 
     fees-register-api:
       java:
+        image: hmctspublic.azurecr.io/fees-register/api:latest
         releaseNameOverride: cmc-demo-fees
         environment:
           SPRING_DATASOURCE_URL: "jdbc:postgresql://cmc-demo-postgres:5432/fees_register"
 
     payment-api:
       java:
+        image: hmctspublic.azurecr.io/payment/api:latest
         releaseNameOverride: cmc-demo-payments
         secrets: 
           GOV_PAY_AUTH_KEY_CMC:
@@ -204,6 +228,7 @@ spec:
 
     rpe-service-auth-provider:
       java:
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
         releaseNameOverride: cmc-demo-s2s
 
     postgresql:
