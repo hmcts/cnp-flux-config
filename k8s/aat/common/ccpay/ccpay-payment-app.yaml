@@ -18,19 +18,10 @@ spec:
       enable: true
     java:
       replicas: 2
-      memoryRequests: '768Mi'
-      cpuRequests: '500m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1000m'
-      readinessDelay: 45
-      readinessTimeout: 5
-      readinessPeriod: 15
-      useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "a2e12f21-e77a-4b9f-91f3-6e7b3867892e"
-      image: hmctspublic.azurecr.io/draft-store/service:prod-d9a0836c
-      ingressHost: draft-store-service-aat.service.core-compute-aat.internal
+      image: ${IMAGE_NAME}
+      ingressHost: ${SERVICE_FQDN}
+      applicationInsightsInstrumentKey: "280b07a1-f1a1-4369-8e21-0bb2c2995f1e"
       environment:
-        DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
         SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-postgres-db-aat.postgres.database.azure.com:5432/payment"
         SPRING_DATASOURCE_USERNAME: payment@payment-postgres-db-aat
         SPRING_LIQUIBASE_ENABLED: 'true'
@@ -59,7 +50,6 @@ spec:
             - liberata-keys-oauth2-client-secret
             - liberata-keys-oauth2-username
             - liberata-keys-oauth2-password
-
       prometheus:
         enabled: true
     global:
