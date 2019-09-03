@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: sscs
+  namespace: sscs
+spec:
+  type: 0
+  ResourceID: /subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sscs-perftest-mi
+  ClientID: d981aee8-65be-4a18-a0cc-f487e5e99e47
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: sscs-binding
+  namespace: sscs
+spec:
+  AzureIdentity: sscs
+  Selector: sscs
