@@ -1,0 +1,51 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: fpl-case-service
+  namespace: family-public-law
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: fpl-case-service
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: fpl-case-service
+    version: 1.0.1
+  values:
+    rollback:
+      enable: true
+    tags:
+      fpl-ccd-stack: false
+      ccd-idam-pr: false
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-c8ebeff9
+      ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
+      environment:
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-perftest.service.core-compute-perftest.internal
+        CCD_UI_BASE_URL: https://ccd-case-management-web-perftest.service.core-compute-perftest.internal
+      aadIdentityName: family-public-law
+      keyVaults:
+        fpl:
+          resourceGroup: fpl-case-service
+          secrets:
+            - notify-api-key
+            - fpl-case-service-s2s-secret
+            - local-authority-email-to-code-mapping
+            - local-authority-code-to-name-mapping
+            - local-authority-user-mapping
+            - local-authority-code-to-hmcts-court-mapping
+            - local-authority-code-to-cafcass-mapping
+      prometheus:
+        enabled: true
+    global:
+      environment: aat
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
