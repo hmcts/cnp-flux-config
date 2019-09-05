@@ -2,16 +2,16 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: div-cms
+  name: div-fps
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: div-cms
+  releaseName: div-fps
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-cms
+    name: div-fps
     version: 1.1.0
   values:
     rollback:
@@ -20,29 +20,21 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
-      image: hmctspublic.azurecr.io/div/cms:prod-f40a32fa
-      ingressHost: div-cms-perftest.service.core-compute-perftest.internal
+      image: hmctspublic.azurecr.io/div/fps:prod-a83387db
+      ingressHost: div-fps-perftest.service.core-compute-perftest.internal
       environment:
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
-        DRAFT_STORE_API_BASEURL: "http://draft-store-service-perftest.service.core-compute-perftest.internal"
-        IDAM_CASEWORKER_USERNAME: "DivCaseWorker@AAT.com"
-        CASE_FORMATTER_SERVICE_API_BASEURL: "http://div-cfs-perftest.service.core-compute-perftest.internal"
-        IDAM_API_BASEURL: "https://idam-api.perftest.platform.hmcts.net"
-        IDAM_API_REDIRECT_URL: "https://div-pfe-perftest.service.core-compute-perftest.internal/authenticated"
-        CASE_DATA_STORE_BASEURL: "http://ccd-data-store-api-perftest.service.core-compute-perftest.internal"
+        EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL: "http://div-emca-perftest.service.core-compute-perftest.internal"
+        IDAM_S2S_URL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
+        PDF_SERVICE_BASEURL: "http://cmc-pdf-service-perftest.service.core-compute-perftest.internal"
+        DOCMOSIS_SERVICE_BASE_URL: "https://docmosis-development.platform.hmcts.net"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
-        DOCUMENTATION_SWAGGER_ENABLED: "true"
+        FEATURE_RESP_SOLICITOR_DETAILS: "true"
+        DOCMOSIS_SERVICE_DEV_MODE_FLAG: "true"
+        PDF_TEST_ENABLED: "true"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
-      keyVaults:
-        "div":
-          resourceGroup: div
-          secrets:
-          - ccd-submission-s2s-auth-secret
-          - idam-secret
-          - draft-store-api-encryption-key
-          - idam-caseworker-password
       prometheus:
         enabled: true
     global:
