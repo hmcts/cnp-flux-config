@@ -1,0 +1,72 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: div-cos
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: div-cos
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div-cos
+    version: 1.1.0
+  values:
+    rollback:
+      enable: true
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
+      image: hmctspublic.azurecr.io/div/cos:prod-b875e99a
+      ingressHost: div-cos-perftest.service.core-compute-perftest.internal
+      environment:
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+        UK_GOV_NOTIFY_API_KEY: "divorce_preprod_live_key-b86e6469-4927-4f50-a029-6ddb523330cf-2409ba37-b5e6-4f03-b052-7d0f0986888d"
+        CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-perftest.service.core-compute-perftest.internal"
+        IDAM_CITIZEN_USERNAME: "DivCitizenUser@AAT.com"
+        PAYMENT_API_BASEURL: "http://payment-api-perftest.service.core-compute-perftest.internal"
+        FEATURE_TOGGLE_SERVICE_API_BASEURL: "http://rpe-feature-toggle-api-perftest.service.core-compute-perftest.internal"
+        SEND_LETTER_SERIVCE_BASEURL: "http://rpe-send-letter-service-perftest.service.core-compute-perftest.internal"
+        IDAM_API_REDIRECT_URL: "https://div-pfe-perftest.service.core-compute-perftest.internal/authenticated"
+        IDAM_CASEWORKER_USERNAME: "DivCaseWorkerUser@AAT.com"
+        CASE_FORMATTER_SERVICE_API_BASEURL: "http://div-cfs-perftest.service.core-compute-perftest.internal"
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
+        CASE_VALIDATION_SERVICE_API_BASEURL: "http://div-vs-perftest.service.core-compute-perftest.internal"
+        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-perftest.service.core-compute-perftest.internal"
+        FEES_AND_PAYMENTS_SERVICE_API_BASEURL: "http://div-fps-perftest.service.core-compute-perftest.internal"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+        FEATURE_DN_REFUSAL: "true"
+
+        DIV_SCHEDULER_DB_HOST : "div-cos-perftest.postgres.database.azure.com"
+        DIV_SCHEDULER_DB_PORT : "5432"
+        DIV_SCHEDULER_DB_NAME : "div_scheduler"
+        DIV_SCHEDULER_DB_USER_NAME : "div_scheduler@div-cos-perftest"
+        FLYWAY_URL : "jdbc:postgresql://div-cos-perftest.postgres.database.azure.com:5432/div_scheduler"
+        SCHEDULER_SCHEDULES_CREATE_BULK_CASES_ENABLED: false
+        SCHEDULER_RE_CREATE: true
+        SCHEDULER_ENABLED: true
+        FEATURE_RESP_SOLICITOR_DETAILS: "true"
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: divorce
+      keyVaults:
+        "div":
+          resourceGroup: div
+          secrets:
+          - ccd-submission-s2s-auth-secret
+          - div-doc-s2s-auth-secret
+          - frontend-secret
+          - idam-secret
+          - idam-citizen-password
+          - idam-caseworker-password
+          - cos-postgresql-password
+      prometheus:
+        enabled: true
+    global:
+      environment: perftest
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

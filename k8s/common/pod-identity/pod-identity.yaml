@@ -41,23 +41,39 @@ spec:
     plural: azureidentities
   scope: Namespaced
 ---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: azurepodidentityexceptions.aadpodidentity.k8s.io
+spec:
+  group: aadpodidentity.k8s.io
+  version: v1
+  names:
+    kind: AzurePodIdentityException
+    singular: azurepodidentityexception
+    plural: azurepodidentityexceptions
+  scope: Namespaced
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: aad-pod-id-nmi-role
 rules:
-- apiGroups: ["apiextensions.k8s.io"]
-  resources: ["customresourcedefinitions"]
-  verbs: ["get", "list"]
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list"]
-- apiGroups: ["aadpodidentity.k8s.io"]
-  resources: ["azureidentitybindings", "azureidentities"]
-  verbs: ["get", "list"]
-- apiGroups: ["aadpodidentity.k8s.io"]
-  resources: ["azureassignedidentities"]
-  verbs: ["get", "list"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+  - apiGroups: ["aadpodidentity.k8s.io"]
+    resources: ["azureidentitybindings", "azureidentities", "azurepodidentityexceptions"]
+    verbs: ["get", "list"]
+  - apiGroups: ["aadpodidentity.k8s.io"]
+    resources: ["azureassignedidentities"]
+    verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -66,9 +82,9 @@ metadata:
   labels:
     k8s-app: aad-pod-id-nmi-binding
 subjects:
-- kind: ServiceAccount
-  name: aad-pod-id-nmi-service-account
-  namespace: admin
+  - kind: ServiceAccount
+    name: aad-pod-id-nmi-service-account
+    namespace: admin
 roleRef:
   kind: ClusterRole
   name: aad-pod-id-nmi-role
@@ -96,19 +112,18 @@ spec:
       serviceAccountName: aad-pod-id-nmi-service-account
       hostNetwork: true
       volumes:
-      - hostPath:
-          path: /run/xtables.lock
-          type: FileOrCreate
-        name: iptableslock
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: iptableslock
       containers:
-      - name: nmi
-        image: "mcr.microsoft.com/k8s/aad-pod-identity/nmi:1.4"
-        imagePullPolicy: Always
-        args:
-          - nmi
-          - "--host-ip=$(HOST_IP)"
-          - "--node=$(NODE_NAME)"
-        env:
+        - name: nmi
+          image: "mcr.microsoft.com/k8s/aad-pod-identity/nmi:1.5.2"
+          imagePullPolicy: Always
+          args:
+            - "--host-ip=$(HOST_IP)"
+            - "--node=$(NODE_NAME)"
+          env:
           - name: FORCENAMESPACED
             value: "true"
           - name: HOST_IP
@@ -119,14 +134,20 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
-        securityContext:
-          privileged: true
-          capabilities:
-            add:
-            - NET_ADMIN
-        volumeMounts:
-        - mountPath: /run/xtables.lock
-          name: iptableslock
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - mountPath: /run/xtables.lock
+              name: iptableslock
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -141,21 +162,24 @@ kind: ClusterRole
 metadata:
   name: aad-pod-id-mic-role
 rules:
-- apiGroups: ["apiextensions.k8s.io"]
-  resources: ["customresourcedefinitions"]
-  verbs: ["*"]
-- apiGroups: [""]
-  resources: ["pods", "nodes"]
-  verbs: [ "list", "watch" ]
-- apiGroups: [""]
-  resources: ["events"]
-  verbs: ["create", "patch"]
-- apiGroups: ["aadpodidentity.k8s.io"]
-  resources: ["azureidentitybindings", "azureidentities"]
-  verbs: ["get", "list", "watch", "post"]
-- apiGroups: ["aadpodidentity.k8s.io"]
-  resources: ["azureassignedidentities"]
-  verbs: ["*"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["pods", "nodes"]
+    verbs: [ "list", "watch" ]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "patch"]
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["create", "get","update"]
+  - apiGroups: ["aadpodidentity.k8s.io"]
+    resources: ["azureidentitybindings", "azureidentities"]
+    verbs: ["get", "list", "watch", "post"]
+  - apiGroups: ["aadpodidentity.k8s.io"]
+    resources: ["azureassignedidentities"]
+    verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -164,9 +188,9 @@ metadata:
   labels:
     k8s-app: aad-pod-id-mic-binding
 subjects:
-- kind: ServiceAccount
-  name: aad-pod-id-mic-service-account
-  namespace: admin
+  - kind: ServiceAccount
+    name: aad-pod-id-mic-service-account
+    namespace: admin
 roleRef:
   kind: ClusterRole
   name: aad-pod-id-mic-role
@@ -181,30 +205,34 @@ metadata:
   name: mic
   namespace: admin
 spec:
+  replicas: 2
   template:
     metadata:
       labels:
         component: mic
+        app: mic
     spec:
       serviceAccountName: aad-pod-id-mic-service-account
       containers:
-      - name: mic
-        image: "mcr.microsoft.com/k8s/aad-pod-identity/mic:1.3"
-        imagePullPolicy: Always
-        args:
-          - mic
-          - "--cloudconfig=/etc/kubernetes/azure.json"
-          - "--logtostderr"
-        env:
-          - name: FORCENAMESPACED
-            value: "true"
-        volumeMounts:
-        - name: k8s-azure-file
-          mountPath: /etc/kubernetes/azure.json
-          readOnly: true
+        - name: mic
+          image: "mcr.microsoft.com/k8s/aad-pod-identity/mic:1.5.2"
+          imagePullPolicy: Always
+          args:
+            - "--cloudconfig=/etc/kubernetes/azure.json"
+            - "--logtostderr"
+          volumeMounts:
+            - name: k8s-azure-file
+              mountPath: /etc/kubernetes/azure.json
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
       volumes:
-      - name: k8s-azure-file
-        hostPath:
-          path: /etc/kubernetes/azure.json
+        - name: k8s-azure-file
+          hostPath:
+            path: /etc/kubernetes/azure.json
       nodeSelector:
         beta.kubernetes.io/os: linux
