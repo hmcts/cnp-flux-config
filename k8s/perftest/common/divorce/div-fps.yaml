@@ -1,0 +1,36 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: div-fps
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: div-fps
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div-fps
+    version: 1.1.0
+  values:
+    rollback:
+      enable: true
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
+      image: hmctspublic.azurecr.io/div/fps:prod-a83387db
+      ingressHost: div-fps-perftest.service.core-compute-perftest.internal
+      environment:
+        FEE_API_URL: "http://fees-register-api-aat.service.core-compute-aat.internal"
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: divorce
+      prometheus:
+        enabled: true
+    global:
+      environment: perftest
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
