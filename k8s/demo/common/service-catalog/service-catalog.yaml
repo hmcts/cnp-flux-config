@@ -1,0 +1,28 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: svc-cat
+  namespace: catalog
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: svc-cat
+  chart:
+    repository: https://svc-catalog-charts.storage.googleapis.com/
+    name: catalog
+    version: 0.2.2
+  values:
+    apiserver:
+      resources:
+        limits:
+          memory: 1000Mi
+      storage:
+        etcd:
+          useEmbedded: false
+          servers: http://etcd.etcd:2379
+      healthcheck:
+        enabled: true
+    controllermanager:
+      healthcheck:
+        enabled: false
