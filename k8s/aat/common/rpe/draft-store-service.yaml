@@ -12,7 +12,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.0.7
+    version: 1.1.0
   values:
     rollback:
       enable: true
@@ -30,22 +30,9 @@ spec:
       image: hmctspublic.azurecr.io/draft-store/service:prod-c63d5561
       ingressHost: draft-store-service-aat.service.core-compute-aat.internal
       environment:
-        DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
-        DRAFT_STORE_DB_HOST: rpe-draft-store-aat.postgres.database.azure.com
-        DRAFT_STORE_DB_NAME: draftstore
-        DRAFT_STORE_DB_PORT: '5432'
-        DRAFT_STORE_DB_USER_NAME: draftstore@rpe-draft-store-aat
-        RUN_DB_MIGRATION_ON_STARTUP: 'false'
-        IDAM_URL: https://idam-api.aat.platform.hmcts.net
-        S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: rpe
-      keyVaults:
-        "draft-store":
-          resourceGroup: draft-store-service
-          secrets:
-          - service-POSTGRES-PASS
       prometheus:
         enabled: true
     global:
