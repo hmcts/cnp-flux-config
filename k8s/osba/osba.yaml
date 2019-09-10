@@ -1,0 +1,23 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: osba
+  namespace: osba
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: osba
+  chart:
+    repository: https://kubernetescharts.blob.core.windows.net/azure/
+    name: open-service-broker-azure
+    version: 1.8.2
+  valueFileSecrets:
+  - name: "osba-values"
+  values:
+    image:
+      repository: microsoft/azure-service-broker
+      tag: v1.8.2
+    modules:
+      minStability: EXPERIMENTAL
+    logLevel: DEBUG
