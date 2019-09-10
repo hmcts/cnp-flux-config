@@ -2,33 +2,35 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: probate-business-service
+  name: probate-submit-service
   namespace: probate
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: probate-business-service
+  releaseName: probate-submit-service
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-business-service
+    name: probate-submit-service
     version: 0.0.3
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-4e0f5415
-      ingressHost: probate-business-service-aat.service.core-compute-aat.internal
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-0b824204
+      ingressHost: probate-submit-service-aat.service.core-compute-aat.internal
       environment:
         SERVICES_PERSISTENCE_BASEURL : http://probate-persistence-service-aat.service.core-compute-aat.internal
-        SERVICES_NOTIFY_INVITEDATA_INVITELINK : http://probate-frontend-aat.service.core-compute-aat.internal/executors/invitation/
-        SERVICES_PDF_SERVICE_URL : http://cmc-pdf-service-aat.service.core-compute-aat.internal
-        SERVICES_AUTH_PROVIDER_BASEURL : http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-        DOCUMENT_MANAGEMENT_URL : http://dm-store-aat.service.core-compute-aat.internal
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL : http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        SERVICES_CORECASEDATA_BASEURL : http://ccd-data-store-api-aat.service.core-compute-aat.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.aat.platform.hmcts.net
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      configmap:
+        SPRING_APPLICATION_JSON : '{"registries":[{"address":"Principal Registry of the Family Division (PRFD)\nHMCTS Probate\nPO Box 12625\nHarlow\nCM20 9QE","name":"ctsc"}]}'
+
       aadIdentityName: probate
     global:
       environment: aat
