@@ -22,6 +22,11 @@ spec:
       image: hmctspublic.azurecr.io/probate/business-service:prod-4e0f5415
       ingressHost: probate-business-service-perftest.service.core-compute-perftest.internal
       environment:
+        SERVICES_PERSISTENCE_BASEURL : http://probate-persistence-service-perftest.service.core-compute-perftest.internal
+        SERVICES_NOTIFY_INVITEDATA_INVITELINK : http://probate-frontend-perftest.service.core-compute-perftest.internal/executors/invitation/
+        SERVICES_PDF_SERVICE_URL : http://cmc-pdf-service-perftest.service.core-compute-perftest.internal
+        SERVICES_AUTH_PROVIDER_BASEURL : http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        DOCUMENT_MANAGEMENT_URL : http://dm-store-perftest.service.core-compute-perftest.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: probate
