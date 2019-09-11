@@ -1,0 +1,22 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: flux-web
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  values:
+    frontend:
+      env:
+        BASE_URL: //flux-web-01.service.core-compute-sandbox.internal
+        API_EXTERNAL_URL: //flux-web-01.service.core-compute-sandbox.internal/api/v1
+        WS_URL: flux-web-01.service.core-compute-sandbox.internal/ws/v1
+    ingress:
+      hosts:
+        - host: flux-web-01.service.core-compute-sandbox.internal
+          paths:
+            - frontend: /
+            - backend: /api
+            - backend: /ws

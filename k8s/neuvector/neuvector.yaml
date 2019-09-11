@@ -11,38 +11,61 @@ spec:
   timeout: 600
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: neuvector
-    version: 1.3.2
+    name: neuvector-azure-keyvault
+    version: 0.0.5
   values:
-    registry: hmctsprivate.azurecr.io
-    tag: 2.5.0
-    controller:
-      image:
-        repository:
-          neuvector/controller
-      replicas: 3
-      azureFileShare:
-        enabled: true
-        secretName: nv-storage-secret
-      configmap:
-        enabled: true
-    enforcer:
-      image:
-        repository:
-          neuvector/enforcer
-    manager:
-      image:
-        repository:
-          neuvector/manager
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
-    cve:
-      updater:
-        # If false, cve updater will not be installed
-        enabled: true
+    rules:
+      admission:
+        enable: true
+        mode: "protect" # one of: monitor, protect
+        deny: 
+          - '{"config":{"id":1002,"category":"Kubernetes","comment":"Default deny","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://localhost/,https://*.*/"}],"disable":false,"actions":[]}}'
+        exception: 
+          - '{"config":{"id":1,"category":"Kubernetes","comment":"Allow deployments in system namespaces.","criteria":[{"name":"namespace","op":"containsAny","value":"kube-system,kube-public,istio-system"}],"disable":false,"actions":[]}}'
+          - '{"config":{"id":2,"category":"Kubernetes","comment":"Allow deployments in NeuVector namespace","criteria":[{"name":"namespace","op":"containsAny","value":"neuvector"}],"disable":false,"actions":[]}}'
+          - '{"config":{"id":1000,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kured"}],"disable":false,"actions":[]}}'
+          - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow HMCTS registries","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/"}],"disable":false,"actions":[]}}'
+        defaultAction: "allow"
+        admClientmMde: "service"
+        service: "neuvector"
+      response:
+        policies:
+          - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
+          - '{"insert":{"after":1,"rules":[{"group":null,"conditions":[],"actions":["webhook"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":2,"rules":[{"group":null,"conditions":[{"type":"level","value":"Error"}],"actions":["webhook"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":3,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Privilege.Escalation"}],"actions":["quarantine"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
+          - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
+          - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"number","value":"5.4"}],"actions":["webhook"],"event":"benchmark","disable":true}]}}'
+    neuvector:
+      tag: 2.5.0
+      controller:
         image:
-          repository: neuvector/updater
-          tag: latest
-        schedule: "0 0 * * *"
+          repository:
+            neuvector/controller
+        replicas: 3
+        azureFileShare:
+          enabled: true
+          secretName: nv-storage-secret
+        configmap:
+          enabled: true
+      enforcer:
+        image:
+          repository:
+            neuvector/enforcer
+      manager:
+        image:
+          repository:
+            neuvector/manager
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+      cve:
+        updater:
+          # If false, cve updater will not be installed
+          enabled: true
+          image:
+            repository: neuvector/updater
+            tag: latest
+          schedule: "0 0 * * *"
