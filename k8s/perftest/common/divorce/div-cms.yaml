@@ -9,18 +9,18 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-cms
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-cms
     version: 1.1.0
   values:
-    rollback:
-      enable: true
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
-      image: hmctspublic.azurecr.io/div/cms:prod-717a926d
+      image: hmctspublic.azurecr.io/div/cms:prod-3783919e
       ingressHost: div-cms-perftest.service.core-compute-perftest.internal
       environment:
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"

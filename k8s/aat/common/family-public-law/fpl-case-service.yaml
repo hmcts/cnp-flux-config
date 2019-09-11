@@ -9,13 +9,13 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: fpl-case-service
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
     version: 1.0.1
   values:
-    rollback:
-      enable: true
     tags:
       fpl-ccd-stack: false
       ccd-idam-pr: false
@@ -23,7 +23,7 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "dbc74f76-124d-4cb4-b3d2-87dc696dd5f2"
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-c8ebeff9
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-ea88b774
       ingressHost: fpl-case-service-aat.service.core-compute-aat.internal
       environment:
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
@@ -36,13 +36,13 @@ spec:
         fpl:
           resourceGroup: fpl-case-service
           secrets:
-            - notify-api-key
-            - fpl-case-service-s2s-secret
-            - local-authority-email-to-code-mapping
-            - local-authority-code-to-name-mapping
-            - local-authority-user-mapping
-            - local-authority-code-to-hmcts-court-mapping
-            - local-authority-code-to-cafcass-mapping
+          - notify-api-key
+          - fpl-case-service-s2s-secret
+          - local-authority-email-to-code-mapping
+          - local-authority-code-to-name-mapping
+          - local-authority-user-mapping
+          - local-authority-code-to-hmcts-court-mapping
+          - local-authority-code-to-cafcass-mapping
       prometheus:
         enabled: true
     global:
