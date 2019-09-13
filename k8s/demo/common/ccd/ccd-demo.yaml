@@ -18,71 +18,51 @@ spec:
     name: ccd
     version: 3.1.0
   values:
-    userProfileApi:
-      java:
-        environment:
-          IDAM_API_URL: 'https://idam-api.demo.platform.hmcts.net'
-          IDAM_S2S_URL: 'http://ccd-demo-s2s'
-    dataStoreApi:
-      s2sKey: AAAAAAAAAAAAAAAA
-    definitionStoreApi:
-      s2sKey: AAAAAAAAAAAAAAAA
-    adminWeb:
-      environment:
-        s2sKey: AAAAAAAAAAAAAAAA
-        idamClientSecret:
-          fromSecret: true
-          secretKeyRefName: ccd-admin-web-oauth2-client-secret
-          secretKeyRefKey: key
-    apiGateway:
-      environment:
-        s2sKey: AAAAAAAAAAAAAAAA
-        idamClientSecret:
-          fromSecret: true
-          secretKeyRefName: ccd-api-gateway-oauth2-client-secret
-          secretKeyRefKey: key
+    ccd-api-gateway-web:
+      enabled: true
+      nodejs:
+        ingressHost: gateway-ccd-aks.service.core-compute-demo.internal
+    
     idam-pr:
-      api:
-        url: https://idam-api.demo.platform.hmcts.net
-      web_public:
-        url: https://idam-web-public.demo.platform.hmcts.net
       releaseNameOverride: ccd-demo-idam-pr
       redirect_uris:
         CCD:
-          - https://ccd-case-management-web/oauth2redirect
+          - https://ccd-demo-case-management-web/oauth2redirect
         CCD Admin:
           - https://admin-web-ccd.demo.platform.hmcts.net/oauth2redirect      
-    importer:
-      userprofile:
-        userProfileDatabaseHost: ccd-demo-postgres
-      definition:
-        importerFromSecret: true
-        importerUsername:
-          secretKeyRefName: ccd-importer-username
-          secretKeyRefKey: key
-        importerPassword:
-          secretKeyRefName: ccd-importer-password
-          secretKeyRefKey: key
-        redirectUri: 'https://ccd-case-management-web/oauth2redirect'
+    
     
 
   #CCD Front-end
-    caseManagementWeb:
+    ccd-case-management-web:
       enabled: true
-      releaseNameOverride: ccd-case-management-web
-      environment:
-        IDAM_LOGIN_URL: https://idam-api.demo.platform.hmcts.net
+      releaseNameOverride: ccd-demo-case-management-web
+      nodejs:
+        ingressHost: www-ccd-aks.service.core-compute-demo.internal
+
+    ccd-user-profile-api:
+      enabled: true 
+
+    ccd-admin-web:
+      enabled: true        
 
   #Dependencies
     rpe-service-auth-provider:
+      enabled: true
       java:
         releaseNameOverride: ccd-demo-s2s
 
+    draft-store-service:
+      enabled: true
+      java:
+        ingressHost: ""
+ 
+  #Global variables for the product chart
     ingressHost: chart-ccd.demo.platform.hmcts.net
     idamApiUrl: https://idam-api.demo.platform.hmcts.net
     idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-    redirectUri: "https://ccd-case-management-web/oauth2redirect"
+    redirectUri: "https://ccd-demo-case-management-web/oauth2redirect"
     s2sUrl: http://ccd-demo-s2s
-    
-    postgresql:
-      nameOverride: postgres
+    apiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
+    caseManagementIngress: www-ccd-aks.service.core-compute-demo.internal
+  
