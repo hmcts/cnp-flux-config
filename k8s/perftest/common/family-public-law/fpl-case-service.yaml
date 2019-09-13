@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.1.0
+    version: 1.2.0
   values:
     java:
       replicas: 2
@@ -22,6 +22,9 @@ spec:
       cpuRequests: 250m
       memoryLimits: 2048Mi
       cpuLimits: 1000m
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/fpl/case-service:prod-48e67722
       ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
