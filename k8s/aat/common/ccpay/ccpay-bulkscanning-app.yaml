@@ -20,12 +20,14 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "280b07a1-f1a1-4369-8e21-0bb2c2995f1e"
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-*
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-718aea76
       ingressHost: ccpay-bulkscanning-api-aat.service.core-compute-aat.internal
       environment:
-       POSTGRES_HOST: ccpay-bulkscanning-api-postgres-db-aat.postgres.database.azure.com
-       POSTGRES_NAME: bspayment
-       POSTGRES_USER: bspayment@ccpay-bulkscanning-api-postgres-db-aat
+        POSTGRES_HOST: ccpay-bulkscanning-api-postgres-db-aat.postgres.database.azure.com
+        POSTGRES_NAME: bspayment
+        POSTGRES_USERNAME: bspayment@ccpay-bulkscanning-api-postgres-db-aat
+        POSTGRES_CONNECTION_OPTIONS: ?sslmode=require
+        SPRING_LIQUIBASE_ENABLED: false
       aadIdentityName: ccpay
       keyVaults:
         "ccpay":
@@ -33,6 +35,8 @@ spec:
           secrets:
             - bulkscanning-api-POSTGRES-PASS
             - AppInsightsInstrumentationKey
+
+
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
