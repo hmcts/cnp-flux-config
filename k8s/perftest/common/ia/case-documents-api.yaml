@@ -9,13 +9,13 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ia-case-documents-api
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-documents-api
     version: 0.0.2
   values:
-    rollback:
-      enable: true
     java:
       replicas: 2
       memoryRequests: '768Mi'
@@ -24,7 +24,7 @@ spec:
       cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "4315969c-54e6-43eb-b1c7-2be6fd411b82"
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-92add82e
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-c2801b6d
       ingressHost: case-documents-api-perftest.service.core-compute-perftest.internal
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0

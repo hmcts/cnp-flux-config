@@ -9,18 +9,18 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
     version: 1.1.5
   values:
-    rollback:
-      enable: true
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       aadIdentityName: money-claims
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-cba2c740
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-f0da2b17
       ingressHost: cmc-claim-store.service.core-compute-perftest.internal
       keyVaults:
         cmc:

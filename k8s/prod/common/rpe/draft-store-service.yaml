@@ -9,13 +9,13 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: draft-store-service
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.0.7
+    version: 1.2.0
   values:
-    rollback:
-      enable: true
     java:
       replicas: 2
       memoryRequests: '768Mi'
@@ -24,25 +24,12 @@ spec:
       cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "8f606ba7-5c09-4fbd-8763-80168d5d339a"
-      image: hmctspublic.azurecr.io/draft-store/service:prod-ce1af948
-      ingressHost: draft-store-service-prod.service.core-compute-prod.internal
+      image: hmctspublic.azurecr.io/draft-store/service:prod-135b972a
       environment:
-        DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
-        DRAFT_STORE_DB_HOST: rpe-draft-store-prod.postgres.database.azure.com
-        DRAFT_STORE_DB_NAME: draftstore
-        DRAFT_STORE_DB_PORT: '5432'
-        DRAFT_STORE_DB_USER_NAME: draftstore@rpe-draft-store-prod
-        RUN_DB_MIGRATION_ON_STARTUP: 'false'
         IDAM_URL: https://idam-api.platform.hmcts.net
-        S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: rpe
-      keyVaults:
-        "draft-store":
-          resourceGroup: draft-store-service
-          secrets:
-          - service-POSTGRES-PASS
       prometheus:
         enabled: true
     global:

@@ -1,0 +1,77 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: div-cos
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: div-cos
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div-cos
+    version: 1.2.0
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
+      image: hmctspublic.azurecr.io/div/cos:prod-aed712be
+      ingressHost: div-cos-aat.service.core-compute-aat.internal
+      environment:
+        IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
+        UK_GOV_NOTIFY_API_KEY: "divorce_preprod_live_key-b86e6469-4927-4f50-a029-6ddb523330cf-2409ba37-b5e6-4f03-b052-7d0f0986888d"
+        CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-aat.service.core-compute-aat.internal"
+        IDAM_CITIZEN_USERNAME: "DivCitizenUser@AAT.com"
+        PAYMENT_API_BASEURL: "http://payment-api-aat.service.core-compute-aat.internal"
+        FEATURE_TOGGLE_SERVICE_API_BASEURL: "http://rpe-feature-toggle-api-aat.service.core-compute-aat.internal"
+        SEND_LETTER_SERIVCE_BASEURL: "http://rpe-send-letter-service-aat.service.core-compute-aat.internal"
+        IDAM_API_REDIRECT_URL: "https://div-pfe-aat.service.core-compute-aat.internal/authenticated"
+        IDAM_CASEWORKER_USERNAME: "DivCaseWorkerUser@AAT.com"
+        CASE_FORMATTER_SERVICE_API_BASEURL: "http://div-cfs-aat.service.core-compute-aat.internal"
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+        CASE_VALIDATION_SERVICE_API_BASEURL: "http://div-vs-aat.service.core-compute-aat.internal"
+        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-aat.service.core-compute-aat.internal"
+        FEES_AND_PAYMENTS_SERVICE_API_BASEURL: "http://div-fps-aat.service.core-compute-aat.internal"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+        FEATURE_DN_REFUSAL: "true"
+        SPRING_MAIL_HOST: mta.reform.hmcts.net
+        SPRING_MAIL_PORT: 25
+        SPRING_MAIL_TEST_CONNECTION: false
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
+        DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
+
+        DIV_SCHEDULER_DB_HOST: "div-cos-aat.postgres.database.azure.com"
+        DIV_SCHEDULER_DB_PORT: "5432"
+        DIV_SCHEDULER_DB_NAME: "div_scheduler"
+        DIV_SCHEDULER_DB_USER_NAME: "div_scheduler@div-cos-aat"
+        FLYWAY_URL: "jdbc:postgresql://div-cos-aat.postgres.database.azure.com:5432/div_scheduler"
+        SCHEDULER_SCHEDULES_CREATE_BULK_CASES_ENABLED: false
+        SCHEDULER_RE_CREATE: true
+        SCHEDULER_ENABLED: true
+        FEATURE_RESP_SOLICITOR_DETAILS: "true"
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: divorce
+      keyVaults:
+        "div":
+          resourceGroup: div
+          secrets:
+          - ccd-submission-s2s-auth-secret
+          - div-doc-s2s-auth-secret
+          - frontend-secret
+          - idam-secret
+          - idam-citizen-password
+          - idam-caseworker-password
+          - cos-postgresql-password
+      prometheus:
+        enabled: true
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

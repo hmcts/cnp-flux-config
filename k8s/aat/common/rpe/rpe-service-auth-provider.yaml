@@ -9,18 +9,18 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: rpe-service-auth-provider
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rpe-service-auth-provider
     version: 0.2.0
   values:
-    rollback:
-      enable: true
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "ed3c45ae-01e1-4263-b57f-178a1ba004be"
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-5fd35c46
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-e5008b9a
       ingressHost: rpe-service-auth-provider.service.core-compute-aat.internal
       aadIdentityName: rpe
       environment:
