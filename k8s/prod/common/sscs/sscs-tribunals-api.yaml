@@ -21,7 +21,7 @@ spec:
       memoryRequests: '512Mi'
       cpuRequests: '250m'
       memoryLimits: '2048Mi'
-      cpuLimits: '1000m'
+      cpuLimits: '1500m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "d6c3dd58-af16-425d-8c4a-f491e895e35d"
       image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-5564c891
@@ -31,6 +31,7 @@ spec:
         CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-prod.service.core-compute-prod.internal"
         IDAM_OAUTH2_REDIRECT_URL: "https://sscs-case-loader-prod.service.core-compute-prod.internal"
         DOCUMENT_MANAGEMENT_URL: "http://dm-store-prod.service.core-compute-prod.internal"
+        IDAM_S2S_AUTH: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: sscs
@@ -48,7 +49,6 @@ spec:
           - idam-sscs-systemupdate-user
           - idam-sscs-systemupdate-password
           - idam-sscs-oauth2-client-secret
-          - idam-s2s-api
           - sscs-s2s-secret
           - s2s-micro
     global:
