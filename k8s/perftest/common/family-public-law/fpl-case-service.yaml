@@ -14,17 +14,23 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.0.1
+    version: 1.1.0
   values:
-    tags:
-      fpl-ccd-stack: false
-      ccd-idam-pr: false
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1000m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-ea88b774
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-5f4fd2ee
       ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
       environment:
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MinRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.3.jar
         IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
         CORE_CASE_DATA_API_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
