@@ -14,29 +14,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-cos
-    version: 1.2.0
+    version: 1.3.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
       image: hmctspublic.azurecr.io/div/cos:prod-aed712be
-      ingressHost: div-cos-prod.service.core-compute-prod.internal
       environment:
         IDAM_API_URL: "https://idam-api.prod.platform.hmcts.net"
         UK_GOV_NOTIFY_API_KEY: "divorce_preprod_live_key-b86e6469-4927-4f50-a029-6ddb523330cf-2409ba37-b5e6-4f03-b052-7d0f0986888d"
-        CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-prod.service.core-compute-prod.internal"
         IDAM_CITIZEN_USERNAME: "DivCitizenUser@AAT.com"
-        PAYMENT_API_BASEURL: "http://payment-api-prod.service.core-compute-prod.internal"
-        FEATURE_TOGGLE_SERVICE_API_BASEURL: "http://rpe-feature-toggle-api-prod.service.core-compute-prod.internal"
-        SEND_LETTER_SERIVCE_BASEURL: "http://rpe-send-letter-service-prod.service.core-compute-prod.internal"
-        IDAM_API_REDIRECT_URL: "https://div-pfe-prod.service.core-compute-prod.internal/authenticated"
         IDAM_CASEWORKER_USERNAME: "DivCaseWorkerUser@AAT.com"
-        CASE_FORMATTER_SERVICE_API_BASEURL: "http://div-cfs-prod.service.core-compute-prod.internal"
-        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
-        CASE_VALIDATION_SERVICE_API_BASEURL: "http://div-vs-prod.service.core-compute-prod.internal"
-        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-prod.service.core-compute-prod.internal"
-        FEES_AND_PAYMENTS_SERVICE_API_BASEURL: "http://div-fps-prod.service.core-compute-prod.internal"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
         FEATURE_DN_REFUSAL: "true"
         SPRING_MAIL_HOST: mta.reform.hmcts.net

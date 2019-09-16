@@ -14,21 +14,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-emca
-    version: 1.1.0
+    version: 1.2.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
       image: hmctspublic.azurecr.io/div/emca:prod-a5def1f9
-      ingressHost: div-emca-perftest.service.core-compute-perftest.internal
       environment:
         AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE: divorce_document_generator
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
         IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
-        EVIDENCE_MANAGEMENT_HEALTH_URL: http://dm-store-perftest.service.core-compute-perftest.internal/health
-        EVIDENCE_MANAGEMENT_UPLOAD_FILE_URL: http://dm-store-perftest.service.core-compute-perftest.internal/documents
-        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-perftest.service.core-compute-perftest.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
