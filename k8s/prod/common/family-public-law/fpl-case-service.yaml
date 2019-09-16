@@ -26,17 +26,17 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 955cb39e-48d4-4f0b-b8b8-69415513731d
+      applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
       image: hmctspublic.azurecr.io/fpl/case-service:prod-a0dcf4f4
-      ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
+      ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MinRAMPercentage=30.0
           -XX:MaxRAMPercentage=65.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.3.jar
-        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-perftest.service.core-compute-perftest.internal
-        CCD_UI_BASE_URL: https://ccd-case-management-web-perftest.service.core-compute-perftest.internal
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-prod.service.core-compute-prod.internal
+        CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
       aadIdentityName: family-public-law
       keyVaults:
         fpl:
@@ -52,7 +52,7 @@ spec:
       prometheus:
         enabled: true
     global:
-      environment: perftest
-      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
