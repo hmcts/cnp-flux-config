@@ -1,0 +1,52 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: div-cms
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: div-cms
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div-cms
+    version: 1.1.0
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
+      image: hmctspublic.azurecr.io/div/cms:prod-33c59844
+      ingressHost: div-cms-prod.service.core-compute-prod.internal
+      environment:
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
+        DRAFT_STORE_API_BASEURL: "http://draft-store-service-prod.service.core-compute-prod.internal"
+        IDAM_CASEWORKER_USERNAME: "DivCaseWorker@AAT.com"
+        CASE_FORMATTER_SERVICE_API_BASEURL: "http://div-cfs-prod.service.core-compute-prod.internal"
+        IDAM_API_BASEURL: "https://idam-api.prod.platform.hmcts.net"
+        IDAM_API_REDIRECT_URL: "https://div-pfe-prod.service.core-compute-prod.internal/authenticated"
+        CASE_DATA_STORE_BASEURL: "http://ccd-data-store-api-prod.service.core-compute-prod.internal"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+        DOCUMENTATION_SWAGGER_ENABLED: "true"
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: divorce
+      keyVaults:
+        "div":
+          resourceGroup: div
+          secrets:
+          - ccd-submission-s2s-auth-secret
+          - idam-secret
+          - draft-store-api-encryption-key
+          - idam-caseworker-password
+      prometheus:
+        enabled: true
+    global:
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
