@@ -18,13 +18,13 @@ spec:
       enable: true
     java:
       replicas: 2
-      image: ${IMAGE_NAME}
-      ingressHost: ${SERVICE_FQDN}
+      image: hmctspublic.azurecr.io/ccpay/payment-api:prod-*
+      ingressHost: ccpay-payment-api-aat.service.core-compute-aat.internal
       applicationInsightsInstrumentKey: "280b07a1-f1a1-4369-8e21-0bb2c2995f1e"
       environment:
         SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-postgres-db-aat.postgres.database.azure.com:5432/payment"
         SPRING_DATASOURCE_USERNAME: payment@payment-postgres-db-aat
-        SPRING_LIQUIBASE_ENABLED: 'true'
+        SPRING_LIQUIBASE_ENABLED: 'false'
         RUN_DB_MIGRATION_ON_STARTUP: 'false'
         IDAM_URL: https://idam-api.aat.platform.hmcts.net
         S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
