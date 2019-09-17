@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-dgs
-    version: 1.1.0
+    version: 1.2.0
   values:
     java:
       replicas: 2
@@ -28,13 +28,7 @@ spec:
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
       image: hmctspublic.azurecr.io/div/dgs:prod-d730ffbc
-      ingressHost: div-dgs-perftest.service.core-compute-perftest.internal
       environment:
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
-        EVIDENCE_MANAGEMENT_CLIENT_API_BASEURL: "http://div-emca-perftest.service.core-compute-perftest.internal"
-        IDAM_S2S_URL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
-        PDF_SERVICE_BASEURL: "http://cmc-pdf-service-perftest.service.core-compute-perftest.internal"
-        DOCMOSIS_SERVICE_BASE_URL: "https://docmosis-development.platform.hmcts.net"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"
         DOCMOSIS_SERVICE_DEV_MODE_FLAG: "true"
@@ -42,12 +36,6 @@ spec:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
-      keyVaults:
-        "div":
-          resourceGroup: div
-          secrets:
-          - div-doc-s2s-auth-secret
-          - docmosis-api-key
       prometheus:
         enabled: true
     global:
