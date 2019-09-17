@@ -31,17 +31,10 @@ spec:
       ingressHost: finrem-ns-aat.service.core-compute-aat.internal
       environment:
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-        SLOT: 'PRODUCTION'
-        AUTH_PROVIDER_SERVICE_CLIENT_MICROSERVICE: 'finrem-notification-service'
-        REFORM_SERVICE_NAME: 'ns'
-        AUTH_PROVIDER_SERVICE_CLIENT_TOKENTIMETOLIVEINSECONDS: '900'
-        REFORM_TEAM: 'finrem'
-      aadIdentityName: finrem
-      keyVaults:
-        sscs:
-          resourceGroup: finrem
-          secrets:
-            - gov-uk-notification-key
+        REFORM_ENVIRONMENT: aat
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+    aadIdentityName: finrem
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
