@@ -29,6 +29,9 @@ spec:
       applicationInsightsInstrumentKey: "162CD82F0363F36E81218AD218C3C19F862CD479"
       image: https://hmctspublic.azurecr.io/ethos/repl-docmosis-backend:latest
       ingressHost: ethos-repl-docmosis-backend-aat.service.core-compute-aat.internal
+      environment:
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       prometheus:
         enabled: true
     global:
