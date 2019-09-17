@@ -2,19 +2,19 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: sscs-tribunals-api
-  namespace: sscs
+  name: finrem-ns
+  namespace: financial-remedy
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: sscs-tribunals-api
+  releaseName: finrem-ns
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tribunals-api
-    version: 0.0.5
+    name: finrem-ns
+    version: 0.0.2
   values:
     java:
       replicas: 2
@@ -26,13 +26,15 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-26abb78a
+      applicationInsightsInstrumentKey: "97f6a0e1-6be6-44b0-97bf-d03852b7791f"
+      image: hmctspublic.azurecr.io/finrem/ns:prod-c1d98360
+      ingressHost: finrem-ns-aat.service.core-compute-aat.internal
       environment:
-        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        REFORM_ENVIRONMENT: aat
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.5.jar
-      aadIdentityName: sscs
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+    aadIdentityName: finrem
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
