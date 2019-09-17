@@ -29,29 +29,6 @@ spec:
       applicationInsightsInstrumentKey: "162CD82F0363F36E81218AD218C3C19F862CD479"
       image: https://hmctspublic.azurecr.io/ethos/repl-docmosis-backend:latest
       ingressHost: ethos-repl-docmosis-backend-aat.service.core-compute-aat.internal
-      environment:
-        REPL_DOCMOSIS_BACKEND_URL: "http://ethos-repl-docmosis-service-aat.service.core-compute-aat.internal"
-        TORNADO_URL: "https://docmosis-development.platform.hmcts.net/rs/render"
-        IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
-        CCD_DATA_STORE_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
-        DOCUMENT_MANAGEMENT_URL: "http://dm-store-aat.service.core-compute-aat.internal"
-        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-        CCD_GATEWAY_BASE_URL: "https://gateway-ccd.aat.platform.hmcts.net"
-        MICRO_SERVICE: "ethos_repl_service"
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
-      keyVaults:
-        ethos:
-          resourceGroup: ethos
-          secrets:
-            - AppInsightsInstrumentationKey
-            - tornado-access-key
-            - ethos-repl-service-s2s-secret
-            - service-POSTGRES-PASS
-            - service-POSTGRES-DATABASE
-            - service-POSTGRES-HOST
-            - service-POSTGRES-PORT
-            - service-POSTGRES-USER
       prometheus:
         enabled: true
     global:
