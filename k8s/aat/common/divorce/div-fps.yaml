@@ -18,9 +18,16 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
-      image: hmctspublic.azurecr.io/div/fps:prod-5e7d4935
+      image: hmctspublic.azurecr.io/div/fps:prod-5e4711bb
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar

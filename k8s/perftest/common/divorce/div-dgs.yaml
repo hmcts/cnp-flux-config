@@ -18,9 +18,16 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
-      image: hmctspublic.azurecr.io/div/dgs:prod-a92b89de
+      image: hmctspublic.azurecr.io/div/dgs:prod-d730ffbc
       environment:
         DOCMOSIS_SERVICE_BASE_URL: "https://docmosis-development.platform.hmcts.net"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
