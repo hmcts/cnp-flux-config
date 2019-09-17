@@ -22,18 +22,9 @@ spec:
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
       image: hmctspublic.azurecr.io/div/cos:prod-aed712be
       environment:
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
-        FEATURE_DN_REFUSAL: "false"
-        SPRING_MAIL_HOST: mta.reform.hmcts.net
-        SPRING_MAIL_PORT: 25
-        SPRING_MAIL_TEST_CONNECTION: false
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
         DATAEXTRACTION_STATUS_DA_EMAILTO: StokeCTSC4.Auto@justice.gov.uk
-
-        SCHEDULER_SCHEDULES_CREATE_BULK_CASES_ENABLED: false
-        SCHEDULER_RE_CREATE: true
-        SCHEDULER_ENABLED: true
-        FEATURE_RESP_SOLICITOR_DETAILS: "false"
         DOCUMENTATION_SWAGGER_ENABLED: "false"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
