@@ -1,0 +1,42 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-bulkscanning-api
+  namespace: fees-pay
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: ccpay-bulkscanning-api
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccpay-bulkscanning-api
+    version: 0.0.4
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "280b07a1-f1a1-4369-8e21-0bb2c2995f1e"
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-7781a140
+      ingressHost: ccpay-bulkscanning-api-perftest.service.core-compute-perftest.internal
+      environment:
+        POSTGRES_HOST: ccpay-bulkscanning-api-postgres-db-perftest.postgres.database.azure.com
+        POSTGRES_NAME: bspayment
+        POSTGRES_USERNAME: bspayment@ccpay-bulkscanning-api-postgres-db-perftest
+        POSTGRES_CONNECTION_OPTIONS: ?sslmode=require
+        SPRING_LIQUIBASE_ENABLED: false
+      aadIdentityName: ccpay
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+          - bulkscanning-api-POSTGRES-PASS
+          - AppInsightsInstrumentationKey
+    global:
+      environment: perftest
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
