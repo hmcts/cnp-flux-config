@@ -2,19 +2,19 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: sscs-tribunals-api
-  namespace: sscs
+  name: dg-docassembly
+  namespace: dg
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: sscs-tribunals-api
+  releaseName: dg-docassembly
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tribunals-api
-    version: 0.0.5
+    name: dg-docassembly
+    version: 0.2.4
   values:
     java:
       replicas: 2
@@ -22,17 +22,12 @@ spec:
       cpuRequests: '250m'
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
-      readinessDelay: 45
-      readinessTimeout: 5
-      readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-bf5ff419
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-dd274558
+      ingressHost: dg-docassembly-api-aat.service.core-compute-aat.internal
       environment:
-        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.5.jar
-      aadIdentityName: sscs
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
