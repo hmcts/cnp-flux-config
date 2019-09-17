@@ -27,10 +27,11 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-435e9b24
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-6f8d9094
       environment:
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.5.jar
       aadIdentityName: sscs
     global:
       environment: aat

@@ -2,19 +2,19 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: div-emca
-  namespace: divorce
+  name: probate-business-service
+  namespace: probate
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: div-emca
+  releaseName: probate-business-service
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-emca
-    version: 1.2.0
+    name: probate-business-service
+    version: 0.0.3
   values:
     java:
       replicas: 2
@@ -26,16 +26,17 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/emca:prod-b547e922
+      image: hmctspublic.azurecr.io/probate/business-service:prod-4e0f5415
+      ingressHost: probate-business-service-prod.service.core-compute-prod.internal
       environment:
-        IDAM_API_HEALTH_URI: https://idam-api.platform.hmcts.net/health
-        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        SERVICES_PERSISTENCE_BASEURL : http://probate-persistence-service-prod.service.core-compute-prod.internal
+        SERVICES_NOTIFY_INVITEDATA_INVITELINK : http://probate-frontend-prod.service.core-compute-prod.internal/executors/invitation/
+        SERVICES_PDF_SERVICE_URL : http://cmc-pdf-service-prod.service.core-compute-prod.internal
+        SERVICES_AUTH_PROVIDER_BASEURL : http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        DOCUMENT_MANAGEMENT_URL : http://dm-store-prod.service.core-compute-prod.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
-      aadIdentityName: divorce
-      prometheus:
-        enabled: true
+      aadIdentityName: probate
     global:
       environment: prod
       subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"

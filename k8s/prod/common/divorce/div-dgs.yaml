@@ -18,14 +18,22 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/dgs:prod-a92b89de
+      image: hmctspublic.azurecr.io/div/dgs:prod-d730ffbc
       environment:
-        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
-        FEATURE_RESP_SOLICITOR_DETAILS: "true"
-        DOCMOSIS_SERVICE_DEV_MODE_FLAG: "true"
-        PDF_TEST_ENABLED: "true"
+        DOCMOSIS_SERVICE_BASE_URL: "https://docmosis.platform.hmcts.net"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "5000"
+        FEATURE_RESP_SOLICITOR_DETAILS: "false"
+        DOCMOSIS_SERVICE_DEV_MODE_FLAG: "false"
+        PDF_TEST_ENABLED: "false"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
