@@ -14,16 +14,21 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-fps
-    version: 1.1.0
+    version: 1.2.1
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
-      image: hmctspublic.azurecr.io/div/fps:prod-5e7d4935
-      ingressHost: div-fps-aat.service.core-compute-aat.internal
+      image: hmctspublic.azurecr.io/div/fps:prod-dbee8d4b
       environment:
-        FEE_API_URL: "http://fees-register-api-aat.service.core-compute-aat.internal"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce

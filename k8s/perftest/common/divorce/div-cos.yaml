@@ -18,9 +18,16 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
-      image: hmctspublic.azurecr.io/div/cos:prod-aed712be
+      image: hmctspublic.azurecr.io/div/cos:prod-135ec6cc
       ingressHost: div-cos-perftest.service.core-compute-perftest.internal
       environment:
         IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
