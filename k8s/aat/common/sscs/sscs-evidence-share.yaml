@@ -18,9 +18,16 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-806fee69
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-bb75a137
       ingressHost: sscs-evidence-share-aat.service.core-compute-aat.internal
       environment:
         IDAM_OAUTH2_REDIRECT_URL: "https://evidence-sharing-preprod.sscs.reform.hmcts.net"
@@ -28,8 +35,8 @@ spec:
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-aat.service.core-compute-aat.internal"
         SEND_LETTER_SERVICE_ENABLED: "true"
         DOCUMENT_MANAGEMENT_URL: "http://dm-store-aat.service.core-compute-aat.internal"
-        SUBSCRIPTION_NAME: "sscs-evidenceshare-subscription-demo"
-        TOPIC_NAME: "sscs-evidenceshare-topic-demo"
+        SUBSCRIPTION_NAME: "sscs-evidenceshare-subscription-aat"
+        TOPIC_NAME: "sscs-evidenceshare-topic-aat"
         AMQP_HOST: "sscs-servicebus-aat.servicebus.windows.net"
         AMQP_USERNAME: "SendAndListenSharedAccessKey"
         IDAM_OAUTH2_CLIENT_ID: "sscs"
@@ -59,8 +66,6 @@ spec:
           - robotics-email-to
           - robotics-email-from
           - robotics-email-scottish-to
-      prometheus:
-        enabled: true
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

@@ -1,0 +1,55 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: probate-business-service
+  namespace: probate
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: probate-business-service
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: probate-business-service
+    version: 0.0.3
+  values:
+    java:
+      replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/business-service:prod-78b0d74c
+      ingressHost: probate-business-service-prod.service.core-compute-prod.internal
+      environment:
+        REFORM_TEAM: probate
+        REFORM_SERVICE_NAME: business-service
+        SERVICES_PERSISTENCE_BASEURL: http://probate-persistence-service-prod.service.core-compute-prod.internal
+        SERVICES_NOTIFY_INVITEDATA_INVITELINK: http://probate-frontend-prod.service.core-compute-prod.internal/executors/invitation/
+        SERVICES_PDF_SERVICE_URL: http://cmc-pdf-service-prod.service.core-compute-prod.internal
+        SERVICES_AUTH_PROVIDER_BASEURL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-prod.service.core-compute-prod.internal
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: probate
+      keyVaults:
+        "probate":
+          resourceGroup: probate
+          secrets:
+            - probate-notify-invite-apikey
+            - business-services-notify-invitedata-templateId
+            - business-services-notify-pin-templateId
+            - s2s-probate-backend
+            - AppInsightsInstrumentationKey
+    global:
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
