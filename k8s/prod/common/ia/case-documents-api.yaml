@@ -1,0 +1,40 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: case-documents-api
+  namespace: ia
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: ia-case-documents-api
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ia-case-documents-api
+    version: 0.0.2
+  values:
+    java:
+      replicas: 2
+      memoryRequests: '768Mi'
+      cpuRequests: '500m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1000m'
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "71f1292c-eadf-4ea9-8444-b82a6b09405a"
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-b6b4877a
+      ingressHost: ia-case-documents-api-prod.service.core-compute-prod.internal
+      environment:
+        IDAM_URL: https://idam-api.platform.hmcts.net
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: ia
+      prometheus:
+        enabled: true
+    global:
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
