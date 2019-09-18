@@ -29,6 +29,8 @@ spec:
       image: hmctspublic.azurecr.io/probate/business-service:prod-78b0d74c
       ingressHost: probate-business-service-prod.service.core-compute-prod.internal
       environment:
+        REFORM_TEAM: probate
+        REFORM_SERVICE_NAME: business-service
         SERVICES_PERSISTENCE_BASEURL: http://probate-persistence-service-prod.service.core-compute-prod.internal
         SERVICES_NOTIFY_INVITEDATA_INVITELINK: http://probate-frontend-prod.service.core-compute-prod.internal/executors/invitation/
         SERVICES_PDF_SERVICE_URL: http://cmc-pdf-service-prod.service.core-compute-prod.internal
@@ -39,13 +41,13 @@ spec:
       aadIdentityName: probate
       keyVaults:
         "probate":
-        resourceGroup: probate
-        secrets:
-          - probate-notify-invite-apikey
-          - business-services-notify-invitedata-templateId
-          - business-services-notify-pin-templateId
-          - s2s-probate-backend
-          - AppInsightsInstrumentationKey
+          resourceGroup: probate
+          secrets:
+            - probate-notify-invite-apikey
+            - business-services-notify-invitedata-templateId
+            - business-services-notify-pin-templateId
+            - s2s-probate-backend
+            - AppInsightsInstrumentationKey
     global:
       environment: prod
       subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
