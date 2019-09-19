@@ -2,22 +2,22 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: r-shiny-geyser
-  namespace: rshiny
+  name: wso2is
+  namespace: wso2is
   annotations:
     flux.weave.works/automated: "false"
     flux.weave.works/tag.chart-image: glob:l*
 spec:
-  releaseName: r-shiny-geyser
+  releaseName: wso2is
   chart:
     git: git@github.com:hmcts/cnp-flux-config
-    path: k8s/mi-sbox/common/mi/charts/r-shiny-geyser
+    path: k8s/mi-sbox/common/mi/charts/wso2is
     ref: master
   values:
-    image: misandboxcontainerreg.azurecr.io/r-shiny-geyser
+    image: wso2/wso2is:5.7.0
     replicaCount: 1
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
       hosts:
-      - 'r-shiny-geyser.aks-service.core-compute-sandbox.internal'
+      - 'wso2is.aks-service.core-compute-sandbox.internal'
