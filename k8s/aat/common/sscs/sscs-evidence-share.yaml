@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-evidence-share
-    version: 0.0.4
+    version: 0.0.6
   values:
     java:
       replicas: 2
@@ -27,45 +27,11 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-bb75a137
-      ingressHost: sscs-evidence-share-aat.service.core-compute-aat.internal
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-a339862a
       environment:
-        IDAM_OAUTH2_REDIRECT_URL: "https://evidence-sharing-preprod.sscs.reform.hmcts.net"
-        CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
-        SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-aat.service.core-compute-aat.internal"
-        SEND_LETTER_SERVICE_ENABLED: "true"
-        DOCUMENT_MANAGEMENT_URL: "http://dm-store-aat.service.core-compute-aat.internal"
-        SUBSCRIPTION_NAME: "sscs-evidenceshare-subscription-aat"
-        TOPIC_NAME: "sscs-evidenceshare-topic-aat"
-        AMQP_HOST: "sscs-servicebus-aat.servicebus.windows.net"
-        AMQP_USERNAME: "SendAndListenSharedAccessKey"
-        IDAM_OAUTH2_CLIENT_ID: "sscs"
-        BUNDLE_STITCHING_ENABLED: "false"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.5.jar
       aadIdentityName: sscs
-      keyVaults:
-        sscs:
-          resourceGroup: sscs
-          secrets:
-          - idam-api
-          - idam-oauth-user
-          - idam-redirect
-          - idam-sscs-systemupdate-user
-          - idam-sscs-systemupdate-password
-          - idam-sscs-oauth2-client-secret
-          - ccd-api
-          - ccd-jid
-          - ccd-tid
-          - idam-s2s-api
-          - sscs-s2s-secret
-          - s2s-micro
-          - sscs-asb-primary-send-and-listen-shared-access-key
-          - docmosis-endpoint
-          - docmosis-api-key
-          - robotics-email-to
-          - robotics-email-from
-          - robotics-email-scottish-to
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

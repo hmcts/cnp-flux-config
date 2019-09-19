@@ -14,20 +14,24 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rpe-service-auth-provider
-    version: 0.2.0
+    version: 0.2.1
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "b067da96-6355-4322-aa44-5b88f73273de"
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-e5008b9a
-      ingressHost: rpe-service-auth-provider.service.core-compute-perftest.internal
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-5cfb8085
+      ingressHost: rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
       aadIdentityName: rpe
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
-  global:
-    environment: perftest
-    subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
-    tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-    enableKeyVaults: true
+    global:
+      environment: perftest
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

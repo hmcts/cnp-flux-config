@@ -18,18 +18,36 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-4e0f5415
+      image: hmctspublic.azurecr.io/probate/business-service:prod-8348c7fc
       ingressHost: probate-business-service-aat.service.core-compute-aat.internal
       environment:
-        SERVICES_PERSISTENCE_BASEURL : http://probate-persistence-service-aat.service.core-compute-aat.internal
-        SERVICES_NOTIFY_INVITEDATA_INVITELINK : http://probate-frontend-aat.service.core-compute-aat.internal/executors/invitation/
-        SERVICES_PDF_SERVICE_URL : http://cmc-pdf-service-aat.service.core-compute-aat.internal
-        SERVICES_AUTH_PROVIDER_BASEURL : http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-        DOCUMENT_MANAGEMENT_URL : http://dm-store-aat.service.core-compute-aat.internal
+        REFORM_TEAM: probate
+        REFORM_SERVICE_NAME: business-service
+        SERVICES_PERSISTENCE_BASEURL: http://probate-persistence-service-aat.service.core-compute-aat.internal
+        SERVICES_NOTIFY_INVITEDATA_INVITELINK: http://probate-frontend-aat.service.core-compute-aat.internal/executors/invitation/
+        SERVICES_PDF_SERVICE_URL: http://cmc-pdf-service-aat.service.core-compute-aat.internal
+        SERVICES_AUTH_PROVIDER_BASEURL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-aat.service.core-compute-aat.internal
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: probate
+      keyVaults:
+        "probate":
+          resourceGroup: probate
+          secrets:
+          - probate-notify-invite-apikey
+          - business-services-notify-invitedata-templateId
+          - business-services-notify-pin-templateId
+          - s2s-probate-backend
+          - AppInsightsInstrumentationKey
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
