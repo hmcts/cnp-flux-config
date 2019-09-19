@@ -27,6 +27,18 @@ spec:
             - name: http
               containerPort: 9443
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /carbon
+              port: 9443
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /carbon
+              port: 9443
+            initialDelaySeconds: 50
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
