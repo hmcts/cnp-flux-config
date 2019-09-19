@@ -1,0 +1,23 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: r-shiny-geyser
+  namespace: r-shiny-geyser
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.chart-image: glob:l*
+spec:
+  releaseName: r-shiny-geyser
+  chart:
+    git: git@github.com:hmcts/cnp-flux-config
+    path: k8s/mi-sbox/common/mi/charts/r-shiny-geyser
+    ref: master
+  values:
+    image: misandboxcontainerreg.azurecr.io/r-shiny-geyser
+    replicaCount: 1
+    ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik
+      hosts:
+      - 'r-shiny-geyser.aks-service.core-compute-sandbox.internal'
