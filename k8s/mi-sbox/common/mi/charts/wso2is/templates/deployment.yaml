@@ -27,18 +27,6 @@ spec:
             - name: http
               containerPort: 9443
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 9443
-            initialDelaySeconds: 15
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 9443
-            initialDelaySeconds: 20
-            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
