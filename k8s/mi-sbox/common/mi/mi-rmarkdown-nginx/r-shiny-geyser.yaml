@@ -1,0 +1,23 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: mi-rmarkdown-nginx
+  namespace: mi-rmarkdown-nginx
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.chart-image: glob:l*
+spec:
+  releaseName: mi-rmarkdown-nginx
+  chart:
+    git: git@github.com:hmcts/cnp-flux-config
+    path: k8s/mi-sbox/common/mi/charts/mi-rmarkdown-nginx
+    ref: master
+  values:
+    image: misandboxcontainerreg.azurecr.io/mi-rmarkdown-nginx
+    replicaCount: 1
+    ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik
+      hosts:
+      - 'mi-rmarkdown-nginx.aks-service.core-compute-sandbox.internal'
