@@ -26,17 +26,19 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
+      applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
       image: hmctspublic.azurecr.io/div/cms:prod-d2b80c6c
       environment:
-        IDAM_API_BASEURL: "https://idam-api.perftest.platform.hmcts.net"
+        IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
+        DOCUMENTATION_SWAGGER_ENABLED: "false"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
       prometheus:
         enabled: true
     global:
-      environment: perftest
-      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

@@ -2,19 +2,19 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: div-cms
+  name: div-cos
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: div-cms
+  releaseName: div-cos
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-cms
-    version: 1.2.0
+    name: div-cos
+    version: 1.3.0
   values:
     java:
       replicas: 2
@@ -26,17 +26,21 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
-      image: hmctspublic.azurecr.io/div/cms:prod-d2b80c6c
+      applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
+      image: hmctspublic.azurecr.io/div/cos:prod-192fa2e2
       environment:
-        IDAM_API_BASEURL: "https://idam-api.perftest.platform.hmcts.net"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
+        DATAEXTRACTION_STATUS_DA_EMAILTO: StokeCTSC4.Auto@justice.gov.uk
+        DOCUMENTATION_SWAGGER_ENABLED: "false"
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: divorce
       prometheus:
         enabled: true
     global:
-      environment: perftest
-      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
