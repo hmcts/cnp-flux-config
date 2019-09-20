@@ -28,15 +28,17 @@ spec:
               containerPort: 9443
               protocol: TCP
           livenessProbe:
-            httpGet:
+            httpsGet:
               path: /carbon/admin/login.jsp
               port: 9443
+              scheme: HTTPS
             initialDelaySeconds: 100
             periodSeconds: 5
           readinessProbe:
-            httpGet:
+            httpsGet:
               path: /carbon/admin/login.jsp
               port: 9443
+              scheme: HTTPS
             initialDelaySeconds: 120
             periodSeconds: 10
           resources:
