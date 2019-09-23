@@ -14,16 +14,25 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-orchestrator-service
-    version: 0.0.7
+    version: 0.0.8
   values:
     tags:
       idam-pr: false
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-1465a252
       ingressHost: probate-orchestrator-service-aat.service.core-compute-aat.internal
       environment:
+        REFORM_TEAM: probate
+        REFORM_SERVICE_NAME: orchestrator-service
         SERVICES_PERSISTENCE_BASEURL: http://probate-persistence-service-aat.service.core-compute-aat.internal
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
         SERVICES_CORECASEDATA_BASEURL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
@@ -32,7 +41,6 @@ spec:
         SUBMIT_SERVICE_API_URL: "http://probate-submit-service-aat.service.core-compute-aat.internal"
         BUSINESS_SERVICE_API_URL: "http://probate-business-service-aat.service.core-compute-aat.internal"
         BACK_OFFICE_API_URL: "http://probate-back-office-aat.service.core-compute-aat.internal"
-        LOG_LEVEL: DEBUG
         MAIL_JAVAMAILPROPERTIES_MAIL_SMTP_SSL_ENABLE: false
         MAIL_JAVAMAILPROPERTIES_MAIL_SMTP_AUTH: false
         SERVICES_CORECASEDATA_ENABLED: true
