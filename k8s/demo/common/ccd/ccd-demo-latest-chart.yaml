@@ -7,7 +7,7 @@ metadata:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
 spec:
-  releaseName: ccd-demo
+  releaseName: ccd-demo-latest-chart
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -28,14 +28,12 @@ spec:
         CCD:
           - https://ccd-demo-case-management-web/oauth2redirect
   
-          #CCD Front-end
+    #CCD Front-end
     ccd-case-management-web:
       enabled: true
       releaseNameOverride: ccd-demo-case-management-web
       nodejs:
         ingressHost: www-ccd-aks.service.core-compute-demo.internal
-    ccd-user-profile-api:
-      enabled: true
 
     ccd-admin-web:
       enabled: true
@@ -53,9 +51,7 @@ spec:
 
     payment-api:
       enabled: true
-      
-    dm-store:
-      enabled: true
+ 
 
     ccd-case-activity-api:
       enabled: true
