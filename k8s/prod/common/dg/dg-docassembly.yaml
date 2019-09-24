@@ -6,7 +6,7 @@ metadata:
   namespace: dg
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.docassembly-api: glob:prod-*
 spec:
   releaseName: dg-docassembly
   rollback:
@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 0.2.4
+    version: 1.0.0
   values:
     docassembly-api:
       replicas: 2
@@ -24,7 +24,7 @@ spec:
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dg/docassembly:aat-ddfabbf6
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-21ad4a40
       environment:
         DOCMOSIS_TEMPLATES_ENDPOINT: "https://docmosis.platform.hmcts.net"
         DOCMOSIS_ENDPOINT: "https://docmosis.platform.hmcts.net/rs/render"
