@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.6
+    version: 0.1.7
   values:
     em-anno:
       replicas: 2
@@ -26,6 +26,8 @@ spec:
       image: hmctspublic.azurecr.io/em/anno:prod-5d413b0b
       ingressHost: em-anno-aat.service.core-compute-aat.internal
       environment:
+        SPRING_DATASOURCE_URL: "jdbc:postgresql://em-anno-postgres-db-aat.postgres.database.azure.com:5432/annotation"
+        SPRING_DATASOURCE_USERNAME: annotation@em-anno-postgres-db-aat
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
     global:
