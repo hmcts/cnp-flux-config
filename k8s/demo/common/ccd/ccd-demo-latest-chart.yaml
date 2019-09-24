@@ -19,22 +19,19 @@ spec:
     path: ccd
   values:
     ccd-api-gateway-web:
-      enabled: true
       nodejs:
         ingressHost: gateway-ccd-aks.service.core-compute-demo.internal
-    idam-pr:
-      enabled: true
-      releaseNameOverride: 'ccd-demo-idam-pr'
-      redirect_uris:
-        CCD:
-          - https://ccd-demo-case-management-web/oauth2redirect
+    
   
     #CCD Front-end
     ccd-case-management-web:
-      enabled: true
       releaseNameOverride: ccd-demo-case-management-web
       nodejs:
         ingressHost: www-ccd-aks.service.core-compute-demo.internal
+    idam-pr:
+      redirect_uris:
+        CCD:
+          - https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
 
     ccd-admin-web:
       enabled: true
