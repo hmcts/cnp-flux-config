@@ -1,0 +1,88 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: oauth2_proxy
+  namespace: admin
+spec:
+  template:
+    metadata:
+      labels:
+        app: oauth2_proxy
+    spec:
+      volumes:
+      - name: oauth2-certs
+        secret:
+          secretName: oauth2-cert-key
+      containers:
+      - name: oauth2_proxy
+        image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
+        ports:
+         - name: http
+           containerPort: 4180
+           protocol: TCP         
+         - name: https
+           containerPort: 4443
+           protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
+        volumeMounts:
+           - mountPath: "/var/oauth2"
+             name: "oauth2-certs"
+             readOnly: true
+        env:
+          - name: OAUTH2_PROXY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-client-secret
+                key: oauth2-proxy-client-id
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-client-secret
+                key: oauth2-proxy-client-secret
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth2-client-secret
+                key: oauth2-proxy-cookie-secret
+        args:
+          - "--provider=oidc"
+          - "--email-domain=*"
+          - "--http-address=:4180"
+          - "--https-address=:4443"
+          - "--oidc_issuer_url = "http://wso2is.wso2is:9443/oauth2/authorize"
+          - "--skip-provider-button = true"
+          - "--cookie-secure=true"
+          - "--cookie-httponly=false"
+          - "--pass-host-header=true"
+          - "--pass_access_token=true"
+          - "--request-logging"
+          - "--upstream=http://traefik:80/"
+          - "--tls-cert=/var/oauth2/aks-sandbox-internal-crt.pem"
+          - "--tls-key=/var/oauth2/aks-sandbox-internal-key.pem"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: oauth2_proxy
+  namespace: admin
+spec:
+  loadBalancerIP: 10.10.89.251
+  type: LoadBalancer
+  selector:
+    app: oauth2_proxy
+  ports:
+  - protocol: TCP
+    port: 80
+    name: http
+    targetPort: 4180
+  - protocol: TCP
+    port: 443
+    name: https
+    targetPort: 4443
