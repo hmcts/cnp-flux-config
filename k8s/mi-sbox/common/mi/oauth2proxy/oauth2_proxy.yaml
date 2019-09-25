@@ -36,31 +36,29 @@ spec:
              name: "oauth2-certs"
              readOnly: true
         env:
-          - name: OAUTH2_PROXY_CLIENT_ID
+          - name: OKTA_PROXY_CLIENT_ID
             valueFrom:
               secretKeyRef:
-                name: oauth2-client-secret
-                key: oauth2-proxy-client-id
-          - name: OAUTH2_PROXY_CLIENT_SECRET
+                name: okta-client-secret
+                key: okta-proxy-client-id
+          - name: OKTA_PROXY_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: oauth2-client-secret
-                key: oauth2-proxy-client-secret
-          - name: OAUTH2_PROXY_COOKIE_SECRET
+                name: okta-client-secret
+                key: okta-proxy-client-secret
+          - name: OKTA_PROXY_COOKIE_SECRET
             valueFrom:
               secretKeyRef:
-                name: oauth2-client-secret
-                key: oauth2-proxy-cookie-secret
+                name: okta-client-secret
+                key: okta-proxy-cookie-secret
         args:
           - "--provider=oidc"
           - "--email-domain=*"
           - "--http-address=:4180"
           - "--https-address=:4443"
           - "--ssl-insecure-skip-verify=true"
-          - "--oidc-issuer-url=https://wso2is.wso2is:9443"
+          - "--oidc-issuer-url=https://outlookcpreda.okta.com"
           - "--skip-provider-button=true"
-          - "--cookie-secure=true"
-          - "--cookie-httponly=false"
           - "--pass-host-header=true"
           - "--pass-access-token=true"
           - "--request-logging"
