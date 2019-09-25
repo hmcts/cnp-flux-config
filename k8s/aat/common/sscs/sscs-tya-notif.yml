@@ -18,8 +18,6 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
       readinessDelay: 45
@@ -28,9 +26,6 @@ spec:
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
       image: hmctspublic.azurecr.io/sscs/tya-notif:prod-e07d0898
-      environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.5.jar
       aadIdentityName: sscs
     global:
       environment: aat
