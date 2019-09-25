@@ -21,13 +21,9 @@ spec:
     ccd-api-gateway-web:
       nodejs:
         ingressHost: gateway-ccd-aks.service.core-compute-demo.internal
-    
-  
-    #CCD Front-end
-    ccd-case-management-web:
-      nodejs:
-        ingressHost: www-ccd-aks.service.core-compute-demo.internal
-        releaseNameOverride: ccd-demo-case-management-web
+    ccd-case-management-web:
+      nodejs:
+        releaseNameOverride: ccd-demo-case-management-web
     idam-pr:
       api:
         url: https://idam-api.demo.platform.hmcts.net
@@ -36,37 +32,29 @@ spec:
       redirect_uris:
         CCD:
           - https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
-
     ccd-admin-web:
       enabled: true
-  
+
   #Dependencies
     rpe-service-auth-provider:
-      enabled: true
       java:
-        releaseNameOverride: ccd-demo-s2s
-
+      releaseNameOverride: ccd-demo-s2s
     draft-store-service:
       enabled: true
       java:
-        ingressHost: ""
-
+        ingressHost: ''
     payment-api:
       enabled: true
- 
-
     ccd-case-activity-api:
       enabled: true
-
     ccd-case-print-service:
       enabled: true
-
-  global:     
+  global:
+    apiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
+    caseManagementIngress: www-ccd-aks.service.core-compute-demo.internal   
     ingressHost: chart-ccd.demo.platform.hmcts.net
     idamApiUrl: https://idam-api.demo.platform.hmcts.net
     idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-    redirectUri: "https://ccd-case-management-web/oauth2redirect"
+    redirectUri: https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
     s2sUrl: http://ccd-demo-s2s
-    apiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
-    caseManagementIngress: www-ccd-aks.service.core-compute-demo.internal
     
