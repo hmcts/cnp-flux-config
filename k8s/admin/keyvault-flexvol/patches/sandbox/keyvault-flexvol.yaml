@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    app: keyvault-flexvolume
+  name: keyvault-flexvolume
+  namespace: admin
+spec:
+  template:
+    spec:
+      tolerations:
+      containers:
+      - name: flexvol-driver-installer
+        image: "mcr.microsoft.com/k8s/flexvolume/keyvault-flexvolume:v0.0.14"
