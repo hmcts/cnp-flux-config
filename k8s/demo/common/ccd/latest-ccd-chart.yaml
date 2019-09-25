@@ -1,13 +1,13 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: ccd-demo-latest-chart
+  name: latest-ccd-chart
   namespace: ccd
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
 spec:
-  releaseName: ccd-demo-latest-chart
+  releaseName: latest-ccd-chart
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -49,12 +49,11 @@ spec:
       enabled: true
     ccd-case-print-service:
       enabled: true
-  global:
-    apiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
-    caseManagementIngress: www-ccd-aks.service.core-compute-demo.internal   
-    ingressHost: chart-ccd.demo.platform.hmcts.net
-    idamApiUrl: https://idam-api.demo.platform.hmcts.net
-    idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-    redirectUri: https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
-    s2sUrl: http://ccd-demo-s2s
-    
+    global:
+      apiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
+      caseManagementIngress: www-ccd-aks.service.core-compute-demo.internal
+      ingressHost: chart-ccd.demo.platform.hmcts.net
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      redirectUri: https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
+      s2sUrl: http://ccd-demo-s2s
