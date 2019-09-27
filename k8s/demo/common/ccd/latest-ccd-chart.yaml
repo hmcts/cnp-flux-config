@@ -14,9 +14,9 @@ spec:
     enable: true
     force: true
   chart:
-    git: 'https://github.com/hmcts/chart-ccd'
-    ref: RDM-5326
-    path: ccd
+    git: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    version: 4.0.0-alpha
+    name: ccd
   values:
     ccd-api-gateway-web:
       nodejs:
@@ -50,8 +50,8 @@ spec:
     ccd-case-print-service:
       enabled: true
     global:
-      apiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
-      caseManagementIngress: www-ccd-aks.service.core-compute-demo.internal
+      ccdApiGatewayIngress: gateway-ccd-aks.service.core-compute-demo.internal
+      ccdCaseManagementWebIngress: www-ccd-aks.service.core-compute-demo.internal
       ingressHost: chart-ccd.demo.platform.hmcts.net
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
