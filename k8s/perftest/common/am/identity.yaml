@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: am
+  namespace: am
+spec:
+  type: 0
+  ResourceID: "/subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/am-perftest-mi"
+  ClientID: "258d259c-ec7e-4599-973d-066a62fc88b6"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: am-binding
+  namespace: am
+spec:
+  AzureIdentity: am
+  Selector: am
