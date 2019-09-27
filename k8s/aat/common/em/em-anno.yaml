@@ -6,7 +6,7 @@ metadata:
   namespace: em
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.em-anno: glob:prod-*
 spec:
   releaseName: em-anno
   rollback:
@@ -14,18 +14,20 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.3
+    version: 0.1.9
   values:
-    java:
+    em-anno:
       replicas: 2
       memoryRequests: '512Mi'
       cpuRequests: '250m'
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-5d413b0b
+      image: hmctspublic.azurecr.io/em/anno:prod-49a527f4
       ingressHost: em-anno-aat.service.core-compute-aat.internal
       environment:
+        SPRING_DATASOURCE_URL: "jdbc:postgresql://em-anno-postgres-db-aat.postgres.database.azure.com:5432/annotation"
+        SPRING_DATASOURCE_USERNAME: annotation@em-anno-postgres-db-aat
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
     global:

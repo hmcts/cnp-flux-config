@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.3.0
+    version: 1.3.2
   values:
     java:
       replicas: 2
@@ -23,10 +23,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "d75ab8b7-b0bd-4fa5-82de-bc0ce24690a7"
-      image: hmctspublic.azurecr.io/draft-store/service:prod-b2d6063a
-      environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      image: hmctspublic.azurecr.io/draft-store/service:prod-5deedf88
       aadIdentityName: rpe
       prometheus:
         enabled: true
