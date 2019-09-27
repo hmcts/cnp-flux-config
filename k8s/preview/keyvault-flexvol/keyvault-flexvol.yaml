@@ -6,6 +6,8 @@ metadata:
   name: keyvault-flexvolume
   namespace: admin
 spec:
+  updateStrategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -14,7 +16,7 @@ spec:
       tolerations:
       containers:
       - name: flexvol-driver-installer
-        image: "mcr.microsoft.com/k8s/flexvolume/keyvault-flexvolume:v0.0.9"
+        image: "mcr.microsoft.com/k8s/flexvolume/keyvault-flexvolume:v0.0.14"
         imagePullPolicy: Always
         resources:
           requests:
@@ -22,7 +24,7 @@ spec:
             memory: 10Mi
           limits:
             cpu: 50m
-            memory: 10Mi
+            memory: 50Mi
         env:
           # if you have used flex before on your cluster, use same directory
           # set TARGET_DIR env var and mount the same directory to to the container
