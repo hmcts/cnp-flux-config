@@ -14,22 +14,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rpe-service-auth-provider
-    version: 0.2.1
+    version: 0.2.3
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "86016f43-d42f-4c0e-b348-c0206dbd60cf"
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-ff68c468
-      ingressHost: rpe-service-auth-provider-prod.service.core-compute-prod.internal
-      aadIdentityName: rpe
-      environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-c1d29261
     global:
       environment: prod
       subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"

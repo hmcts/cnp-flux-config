@@ -6,7 +6,7 @@ metadata:
   namespace: dg
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.docassembly-api: glob:prod-*
 spec:
   releaseName: dg-docassembly
   rollback:
@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 0.2.4
+    version: 1.0.0
   values:
     docassembly-api:
       replicas: 2
@@ -23,7 +23,7 @@ spec:
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dg/docassembly:aat-c0681129
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-cd8c136d
       ingressHost: dg-docassembly-aat.service.core-compute-aat.internal
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
