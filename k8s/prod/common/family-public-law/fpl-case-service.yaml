@@ -14,24 +14,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.1.0
+    version: 1.2.0
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-aa631d01
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-b3f55895
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MinRAMPercentage=30.0
-          -XX:MaxRAMPercentage=65.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.0-BETA.3.jar
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
         CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal

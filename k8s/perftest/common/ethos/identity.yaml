@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ethos
+  namespace: ethos
+spec:
+  type: 0
+  ResourceID: "/subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ethos-perftest-mi"
+  ClientID: "38130545-d887-4c9c-a76c-c87e5b808dc4"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ethos-binding
+  namespace: ethos
+spec:
+  AzureIdentity: ethos
+  Selector: ethos
