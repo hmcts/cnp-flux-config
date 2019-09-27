@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-stitching
-    version: 0.1.4
+    version: 0.1.5
   values:
     stitching:
       replicas: 2
@@ -26,8 +26,8 @@ spec:
       image: hmctspublic.azurecr.io/em/stitching:prod-464c8e27
       ingressHost: em-stitching-aat.service.core-compute-aat.internal
       environment:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-aat.postgres.database.azure.com/stitching
-        SPRING_DATASOURCE_USERNAME: stitching@em-stitching-postgres-db-aat
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-aat.postgres.database.azure.com:5432/stitching
+        SPRING_DATASOURCE_USERNAME: annotation@em-stitching-postgres-db-aat
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
     global:
