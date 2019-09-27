@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+data:
+  test.server: |
+    service.core-compute-perftest.internal:53 {
+        errors
+        rewrite name  draft-store-service-perftest.service.core-compute-perftest.internal  draft-store-service-java.rpe.svc.cluster.local
+        rewrite name  fpl-case-service-perftest.service.core-compute-perftest.internal     fplcase-service-java.family-public-law.svc.cluster.local
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+          pods insecure
+          upstream
+          fallthrough in-addr.arpa ip6.arpa
+        }
+        proxy .  /etc/resolv.conf
+        cache 30
+    }
