@@ -4,7 +4,7 @@ apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
   name: traefik-no-proxy
-  namespace: traefik-no-proxy
+  namespace: admin
   annotations:
     flux.weave.works/automated: "false"
 spec:
@@ -12,4 +12,53 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: traefik
-    version: 1.75.0
+    version: 1.78.2
+  valueFileSecrets:
+    - name: "traefik-values"
+  values:
+    imageTag: 1.7.14
+    loadBalancerIP: 51.145.22.48
+    kubernetes:
+      ingressClass: traefik-no-proxy
+      ingressEndpoint:
+        useDefaultPublishedService: true
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+    dashboard:
+      domain: traefik00-no-proxy.demo.platform.hmcts.net
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 1000m
+        memory: 300Mi
+    rbac:
+      enabled: true
+    dashboard:
+      enabled: true
+    ssl:
+      enabled: true
+      tlsMinVersion: VersionTLS12
+      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
+      enforced: true
+      permanentRedirect: true
+    startupArguments:
+      - "--ping"
+      - "--ping.entrypoint=http"
+    autoscaling:
+      minReplicas: 2
+      maxReplicas: 4
+    podDisruptionBudget:
+      maxUnavailable: 50%
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: release
+              operator: In
+              values:
+                - traefik-no-proxy
+          topologyKey: "kubernetes.io/hostname"
