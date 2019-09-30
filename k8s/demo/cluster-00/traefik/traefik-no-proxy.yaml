@@ -12,19 +12,19 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: traefik
-    version: 1.78.2
-  valueFileSecrets:
-    - name: "traefik-values"
+    version: 1.75.0
+  # valueFileSecrets:
+  #   - name: "traefik-values"
   values:
-    imageTag: 1.7.14
-    loadBalancerIP: 51.145.22.48
+    imageTag: 1.7.12
+    #loadBalancerIP: 51.145.22.48
     kubernetes:
       ingressClass: traefik-no-proxy
       ingressEndpoint:
         useDefaultPublishedService: true
     service:
-      annotations:
-        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+      # annotations:
+      #   service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
     dashboard:
       domain: traefik00-no-proxy.demo.platform.hmcts.net
     resources:
@@ -50,15 +50,15 @@ spec:
     autoscaling:
       minReplicas: 2
       maxReplicas: 4
-    podDisruptionBudget:
-      maxUnavailable: 50%
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: release
-              operator: In
-              values:
-                - traefik-no-proxy
-          topologyKey: "kubernetes.io/hostname"
+    # podDisruptionBudget:
+    #   maxUnavailable: 50%
+    # affinity:
+    #   podAntiAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #     - labelSelector:
+    #         matchExpressions:
+    #         - key: release
+    #           operator: In
+    #           values:
+    #             - traefik-no-proxy
+    #       topologyKey: "kubernetes.io/hostname"
