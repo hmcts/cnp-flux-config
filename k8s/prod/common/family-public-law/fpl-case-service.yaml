@@ -23,7 +23,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-367c72ef
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-5e7aaaf4
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -31,12 +31,14 @@ spec:
         CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         DOCUMENT_MANAGEMENT_URL: http://dm-store-prod.service.core-compute-prod.internal
         CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
+        DOCMOSIS_TORNADO_URL: https://docmosis.platform.hmcts.net
       aadIdentityName: family-public-law
       keyVaults:
         fpl:
           resourceGroup: fpl-case-service
           secrets:
           - notify-api-key
+          - docmosis-api-key
           - fpl-case-service-s2s-secret
           - local-authority-email-to-code-mapping
           - local-authority-code-to-name-mapping
