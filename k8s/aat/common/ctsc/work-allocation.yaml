@@ -2,23 +2,25 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: draft-store-service
-  namespace: rpe
+  name: ctsc-work-allocation
+  namespace: ctsc
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: draft-store-service
+  releaseName: ctsc-work-allocation
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: draft-store-service
-    version: 1.4.1
+    name: ctsc-work-allocation
+    version: 0.0.4
   values:
     java:
-      image: hmctspublic.azurecr.io/draft-store/service:prod-70aedf1a
-      prometheus:
-        enabled: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ctsc/work-allocation:prod-f53d62ce
     global:
-      environment: ithc
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
