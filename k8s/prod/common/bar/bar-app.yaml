@@ -1,0 +1,26 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: bar-app
+  namespace: bar
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: bar-api
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: bar-api
+    version: 0.2.0
+  values:
+    rollback:
+      enable: true
+    java:
+      replicas: 2
+      image: hmctspublic.azurecr.io/bar/api:prod-4ec01ed4
+      applicationInsightsInstrumentKey: "52125c3c-ea7b-4954-a872-fe6987780a88"
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
