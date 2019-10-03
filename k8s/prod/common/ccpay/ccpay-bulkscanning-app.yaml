@@ -18,18 +18,27 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "724b2f84-235d-4448-adff-5fa1dc1b3864"
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-68c4ec77
-      ingressHost: ccpay-bulkscanning-api-perftest.service.core-compute-perftest.internal
+      applicationInsightsInstrumentKey: "f0e045d3-c9e4-49bc-87da-c63f05e82cfa"
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-7781a140
+      ingressHost: ccpay-bulkscanning-api-prod.service.core-compute-prod.internal
       environment:
-        POSTGRES_HOST: ccpay-bulkscanning-api-postgres-db-perftest.postgres.database.azure.com
+        POSTGRES_HOST: ccpay-bulkscanning-api-postgres-db-prod.postgres.database.azure.com
         POSTGRES_NAME: bspayment
-        POSTGRES_USERNAME: bspayment@ccpay-bulkscanning-api-postgres-db-perftest
+        POSTGRES_USERNAME: bspayment@ccpay-bulkscanning-api-postgres-db-prod
         POSTGRES_CONNECTION_OPTIONS: ?sslmode=require
+        SPRING_LIQUIBASE_ENABLED: false
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
         AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.aat.platform.hmcts.net"
-        SPRING_LIQUIBASE_ENABLED: false
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       aadIdentityName: ccpay
       keyVaults:
         "ccpay":
@@ -38,7 +47,7 @@ spec:
           - bulkscanning-api-POSTGRES-PASS
           - AppInsightsInstrumentationKey
     global:
-      environment: perftest
-      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      environment: prod
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
