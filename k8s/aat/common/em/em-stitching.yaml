@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-stitching
-    version: 0.1.8
+    version: 0.1.9
   values:
     stitching:
       replicas: 2
@@ -30,6 +30,7 @@ spec:
         SPRING_DATASOURCE_USERNAME: annotation@em-stitching-postgres-db-aat
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+        TASK_ENV: documentTaskLock-aat
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
