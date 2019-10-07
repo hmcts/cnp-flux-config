@@ -7,6 +7,7 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.job: glob:test-*
 spec:
   releaseName: plum-recipe-backend
   chart:
@@ -32,12 +33,14 @@ spec:
         smoke:
           once:
             enabled: true
+            image: hmctspublic.azurecr.io/plum/recipe-backend:test-latest
             environment:
               TEST_URL: http://plum-recipe-backend-java
               TASK: smoke
         functional:
           once:
             enabled: true
+            image: hmctspublic.azurecr.io/plum/recipe-backend:test-latest
             environment:
               TEST_URL: http://plum-recipe-backend-java
               TASK: functional
