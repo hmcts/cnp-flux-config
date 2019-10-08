@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: bar
+  namespace: bar
+spec:
+  type: 0
+  ResourceID: "/subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/bar-perftest-mi"
+  ClientID: "354c0852-2576-4149-929c-d095d8182473"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: bar-binding
+  namespace: bar
+spec:
+  AzureIdentity: bar
+  Selector: bar

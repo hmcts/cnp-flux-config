@@ -2,7 +2,7 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: case-documents-api
+  name: ia-case-documents-api
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
@@ -24,11 +24,11 @@ spec:
       cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "bf7eeffe-bd72-4350-b336-cf4020806c02"
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-0d6b65d5
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-4fc6dc5a
       ingressHost: ia-case-documents-api-aat.service.core-compute-aat.internal
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.4.1.jar
       aadIdentityName: ia
     global:
       environment: aat
