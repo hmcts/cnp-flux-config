@@ -2,25 +2,25 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: rd-user-profile-api
+  name: rd-professional-api
   namespace: rd
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: rd-user-profile-api
+  releaseName: rd-professional-api
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: rd-user-profile-api
+    name: rd-professional-api
     version: 0.0.4
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/user-profile-api:prod-d8542f7f
+      image: hmctspublic.azurecr.io/rd/professional-api:prod-1321f2b7
     global:
-      environment: aat
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
