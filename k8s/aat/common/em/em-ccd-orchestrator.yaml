@@ -6,7 +6,7 @@ metadata:
   namespace: em
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.stitching: glob:prod-*
+    flux.weave.works/tag.ccd-orchestrator: glob:prod-*
 spec:
   releaseName: ccd-orchestrator
   rollback:
@@ -19,7 +19,7 @@ spec:
     ccd-orchestrator:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/stitching:latest
+      image: hmctspublic.azurecr.io/em/ccd-orchestrator:latest
       ingressHost: em-ccd-orchestrator-aat.service.core-compute-aat.internal
       environment:
         IDAM_API_BASE_URI: https://idam-api.aat.platform.hmcts.net
