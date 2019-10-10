@@ -7,10 +7,10 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.cmc-demo-admin-web: glob:prod-*
-    # flux.weave.works/tag.cmc-demo-api-gateway: glob:prod-*
+    flux.weave.works/tag.cmc-demo-api-gateway: glob:prod-*
     flux.weave.works/tag.cmc-demo-case-management-web: glob:prod-*
-    flux.weave.works/tag.cmc-demo-citizen-web: glob:prod-*
-    flux.weave.works/tag.cmc-demo-claimstore: glob:prod-*
+    flux.weave.works/tag.cmc-citizen-frontend.nodejs: glob:prod-*
+    flux.weave.works/tag.cmc-claim-store.java: glob:prod-*
     flux.weave.works/tag.cmc-demo-data-store-api: glob:prod-*
     flux.weave.works/tag.cmc-demo-definition-store-api: glob:prod-*
     flux.weave.works/tag.cmc-demo-dmstore: glob:prod-*
@@ -33,12 +33,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 0.0.13
+    version: 0.0.14
   values:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        image: hmctspublic.azurecr.io/cmc/claim-store:latest
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-5441e475
         releaseNameOverride: cmc-demo-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
@@ -80,6 +80,8 @@ spec:
           SPRING_MAIL_PORT: 1025
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mailhog
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
+          PAY_URL: false
+          FEES_URL: false
       ccd:
         idamApiUrl: https://idam-api.demo.platform.hmcts.net
         idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -88,7 +90,8 @@ spec:
         draftStoreUrl: http://cmc-demo-draftstore
         paymentsUrl: http://cmc-demo-payments
         apiGateway:
-          image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-241
+          image: hmctspublic.azurecr.io/ccd/api-gateway-web:latest
+          ingressClass: traefik-no-proxy
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
@@ -104,6 +107,8 @@ spec:
           image: hmctspublic.azurecr.io/ccd/user-profile-api:latest
         caseManagementWeb:
           image: hmctspublic.azurecr.io/ccd/case-management-web:latest
+          DM_URL: https://cmc-demo-dmstore/documents
+          DM_URL_REMOTE: https://gateway-ccd-cmc-citizen-frontend\\.demo\\.platform\\.hmcts\\.net/documents
         adminWeb:
           image: hmctspublic.azurecr.io/ccd/admin-web:latest
           s2sKey: AAAAAAAAAAAAAAAA
@@ -125,6 +130,9 @@ spec:
         importer:
           userprofile:
             userProfileDatabaseHost: cmc-demo-postgres
+            users:
+              - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
+              - timja@kainos.com|CMC|MoneyClaimCase|open
           definition:
             image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.2.26
             waitHosts: cmc-demo-definition-store-api:80
@@ -142,7 +150,7 @@ spec:
 
     cmc-citizen-frontend:
       nodejs:
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:latest
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-f5d03382
         ingressHost: cmc-citizen-frontend.demo.platform.hmcts.net
         releaseNameOverride: cmc-demo-citizen-web
         secrets:
