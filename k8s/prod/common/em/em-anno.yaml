@@ -1,0 +1,29 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-anno
+  namespace: em
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.em-anno: glob:prod-*
+spec:
+  releaseName: em-anno
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-anno
+    version: 0.1.11
+  values:
+    anno:
+      replicas: 2
+      applicationInsightsInstrumentKey: "039faf8c-4682-432e-8fc5-f9735bb4b962"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/anno:prod-ad59cc6e
+      ingressHost: em-anno-prod.service.core-compute-prod.internal
+    global:
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
