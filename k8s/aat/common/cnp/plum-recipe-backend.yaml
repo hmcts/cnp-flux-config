@@ -8,10 +8,10 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/smokeonce: java.tests.smoke.once.image
-    filter.fluxcd.io/smokeonce: glob:test-*
-    repository.fluxcd.io/functionalonce: java.tests.functional.once.image
-    filter.fluxcd.io/functionalonce: glob:test-*
+    repository.fluxcd.io/smokecron: java.tests.smoke.cron.image
+    filter.fluxcd.io/smokecron: glob:test-*
+    repository.fluxcd.io/functionalcron: java.tests.functional.cron.image
+    filter.fluxcd.io/functionalcron: glob:test-*
 spec:
   releaseName: plum-recipe-backend
   chart:
@@ -35,16 +35,18 @@ spec:
           - recipe-backend-POSTGRES-PASS
       tests:
         smoke:
-          once:
+          cron:
             enabled: true
             image: hmctspublic.azurecr.io/plum/recipe-backend:test-aa8cc60f
+            schedule: "0/10 * * * *"
             environment:
               TEST_URL: http://plum-recipe-backend-java
               TASK: smoke
         functional:
-          once:
+          cron:
             enabled: true
             image: hmctspublic.azurecr.io/plum/recipe-backend:test-aa8cc60f
+            schedule: "0/12 * * * *"
             environment:
               TEST_URL: http://plum-recipe-backend-java
               TASK: functional
