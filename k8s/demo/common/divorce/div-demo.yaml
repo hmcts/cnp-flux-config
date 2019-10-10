@@ -1,0 +1,100 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: div-demo
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.div-fps: glob:prod-*
+    flux.weave.works/tag.div-hm: glob:prod-*
+    flux.weave.works/tag.div-demo-fees: glob:prod-*
+spec:
+  releaseName: div-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div
+    version: 1.0.4
+  values:
+    ########################
+    ##### DEPENDENCIES #####
+    div-hm:
+      nodejs:
+        image: hmctspublic.azurecr.io/div/hm:latest
+        releaseNameOverride: div-hm
+        environment:
+          DEPLOYMENT_ENV: "demo"
+          MONITOR_ENVIRONMENT: "demo"
+    rpe-send-letter-service:
+      java:
+        image: hmctspublic.azurecr.io/rpe/send-letter-service:latest
+        releaseNameOverride: div-demo-sendletter
+        environment:
+          FLYWAY_URL: "jdbc:postgresql://div-demo-postgres:5432/send_letter"
+          LETTER_TRACKING_DB_HOST: div-demo-postgres
+          S2S_URL: http://div-demo-s2s
+
+    dm-store:
+      java:
+        # image: hmctspublic.azurecr.io/dm/store:pr-334  # comment here so flux doesnt update, pinned in chart-cmc
+        releaseNameOverride: div-demo-dmstore
+        environment:
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://div-demo-s2s
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://div-demo-postgres:5432/evidence"
+
+    cmc-pdf-service:
+      java:
+        image: hmctspublic.azurecr.io/cmc/pdf-service:latest
+        releaseNameOverride: div-demo-pdf
+
+    draft-store-service:
+      java:
+        image: hmctspublic.azurecr.io/draft-store/service:latest
+        releaseNameOverride: div-demo-draftstore
+        environment:
+          IDAM_URL: https://idam-api.demo.platform.hmcts.net
+          S2S_URL: http://div-demo-s2s
+          DRAFT_STORE_DB_HOST: div-demo-postgres
+
+    fees-register-api:
+      java:
+        image: hmctspublic.azurecr.io/fees-register/api:latest
+        releaseNameOverride: div-demo-fees
+        environment:
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://div-demo-postgres:5432/fees_register"
+
+    payment-api:
+      java:
+        image: hmctspublic.azurecr.io/payment/api:latest
+        releaseNameOverride: div-demo-payments
+        secrets:
+          GOV_PAY_AUTH_KEY_CMC:
+            secretRef: gov-pay-keys-cmc
+            key: key
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
+          AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://div-demo-s2s
+          FEES_REGISTER_URL: http://div-demo-fees
+          CORE_CASE_DATA_API_URL: http://div-demo-data-store-api
+          CCD_CLIENT_URL: http://div-demo-data-store-api
+          SPRING_DATASOURCE_URL: "jdbc:postgresql://div-demo-postgres:5432/payment_api"
+          SPRING_MAIL_HOST: mailhog
+          SPRING_MAIL_PORT: 1025
+
+    rpe-service-auth-provider:
+      java:
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
+        releaseNameOverride: div-demo-s2s
+
+    postgresql:
+      nameOverride: postgres
+      # extraEnv:
+      # - name: RESTARTPOD
+      #   value: "true"
+    ########################
