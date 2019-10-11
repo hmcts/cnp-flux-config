@@ -19,7 +19,7 @@ spec:
     version: 4.0.1-alpha
   values:
     tags:
-      idam-pr: false
+      idam-pr: true
     global:
       ccdApiGatewayIngress: gateway-ccd-aks.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-ccd-aks.demo.platform.hmcts.net
@@ -27,6 +27,7 @@ spec:
       ingressHost: chart-ccd.demo.platform.hmcts.net
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      # can redirectUri be removed?
       redirectUri: https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
       s2sUrl: http://latest-ccd-chart-s2s
     ccd-api-gateway-web:
@@ -38,13 +39,10 @@ spec:
         releaseNameOverride: latest-ccd-chart-case-management-web
         ingressHost: www-ccd-aks.demo.platform.hmcts.net
     idam-pr:
-      api:
-        url: https://idam-api.demo.platform.hmcts.net
-      web_public:
-        url: https://idam-web-public.demo.platform.hmcts.net
+      releaseNameOverride: ccd-idam-pr
       redirect_uris:
       CCD:
-        - https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
+        - https://www-ccd-aks.demo.platform.hmcts.net/oauth2redirect
     ccd-admin-web:
       enabled: true
     ccd-case-activity-api:
