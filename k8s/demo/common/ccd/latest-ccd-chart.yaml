@@ -20,7 +20,17 @@ spec:
   values:
     tags:
       idam-pr: false
+    global:
+      ccdApiGatewayIngress: gateway-ccd-aks.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-ccd-aks.demo.platform.hmcts.net
+      ingressHost: chart-ccd.demo.platform.hmcts.net
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      redirectUri: https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
+      s2sUrl: http://latest-ccd-chart-s2s
     ccd-api-gateway-web:
+      //TODO move ingressClass to chart ccd?
+      ingressClass: traefik-no-proxy
       nodejs:
         ingressHost: gateway-ccd-aks.demo.platform.hmcts.net
     ccd-case-management-web:
@@ -35,8 +45,22 @@ spec:
       redirect_uris:
       CCD:
         - https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
+    //TODO enable these by default on chart ccd
     ccd-admin-web:
       enabled: true
+    ccd-case-activity-api:
+      enabled: true
+    ccd-case-print-service:
+      enabled: true
+    //TODO move ccd-test-stubs-service defaults to chart ccd
+    ccd-test-stubs-service:
+      enabled: true
+      java:
+        ingressHost: test-stubs-service-ccd-aks.demo.platform.hmcts.net
+        livenessPath: '/health'
+        releaseNameOverride: ccd-test-stubs-service
+        environment:
+          MANAGEMENT_WEB_URL: www-ccd-aks.demo.platform.hmcts.net
 #Dependencies
     rpe-service-auth-provider:
       java:
@@ -47,15 +71,3 @@ spec:
         ingressHost:
     payment-api:
       enabled: true
-    ccd-case-activity-api:
-      enabled: true
-    ccd-case-print-service:
-      enabled: true
-    global:
-      ccdApiGatewayIngress: gateway-ccd-aks.demo.platform.hmcts.net
-      ccdCaseManagementWebIngress: www-ccd-aks.demo.platform.hmcts.net
-      ingressHost: chart-ccd.demo.platform.hmcts.net
-      idamApiUrl: https://idam-api.demo.platform.hmcts.net
-      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-      redirectUri: https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
-      s2sUrl: http://latest-ccd-chart-s2s
