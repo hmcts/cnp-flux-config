@@ -18,10 +18,14 @@ spec:
   values:
     anno:
       replicas: 2
+      applicationInsightsInstrumentKey: "039faf8c-4682-432e-8fc5-f9735bb4b962"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/em/anno:prod-52288c9f
-      ingressHost: em-anno-aat.service.core-compute-aat.internal
+      ingressHost: em-anno-prod.service.core-compute-prod.internal
+      environment:
+        S2S_BASE_URI: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
+        IDAM_API_BASE_URI: "https://idam-api.platform.hmcts.net"
     global:
-      environment: aat
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

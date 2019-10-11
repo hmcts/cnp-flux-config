@@ -1,13 +1,13 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: latest-ccd-chart
+  name: ccd-demo
   namespace: ccd
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
 spec:
-  releaseName: latest-ccd-chart
+  releaseName: ccd-demo
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -19,7 +19,7 @@ spec:
     version: 4.0.1-alpha
   values:
     tags:
-      idam-pr: false
+      idam-pr: true
     global:
       ccdApiGatewayIngress: gateway-ccd-aks.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-ccd-aks.demo.platform.hmcts.net
@@ -27,7 +27,8 @@ spec:
       ingressHost: chart-ccd.demo.platform.hmcts.net
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-      redirectUri: https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
+      # can redirectUri be removed?
+      redirectUri: https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
       s2sUrl: http://latest-ccd-chart-s2s
     ccd-api-gateway-web:
       nodejs:
@@ -35,16 +36,17 @@ spec:
         ingressHost: gateway-ccd-aks.demo.platform.hmcts.net
     ccd-case-management-web:
       nodejs:
-        releaseNameOverride: latest-ccd-chart-case-management-web
+        releaseNameOverride: ccd-demo-case-management-web
         ingressHost: www-ccd-aks.demo.platform.hmcts.net
-    idam-pr:
-      api:
-        url: https://idam-api.demo.platform.hmcts.net
-      web_public:
-        url: https://idam-web-public.demo.platform.hmcts.net
-      redirect_uris:
-      CCD:
-        - https://latest-ccd-chart-case-management-web.demo.platform.hmcts.net/oauth2redirect
+      idam-pr:
+        releaseNameOverride: ccd-idam-pr
+        api:
+          url: https://idam-api.demo.platform.hmcts.net
+        web_public:
+          url: https://idam-web-public.demo.platform.hmcts.net
+        redirect_uris:
+          CCD:
+          - https://www-ccd-aks.demo.platform.hmcts.net/oauth2redirect
     ccd-admin-web:
       enabled: true
     ccd-case-activity-api:
@@ -60,10 +62,11 @@ spec:
 #Dependencies
     rpe-service-auth-provider:
       java:
-        releaseNameOverride: latest-ccd-chart-s2s
+        releaseNameOverride: ccd-demo-s2s
     draft-store-service:
       enabled: true
       java:
         ingressHost:
+    #TODO reenable
     payment-api:
-      enabled: true
+      enabled: false
