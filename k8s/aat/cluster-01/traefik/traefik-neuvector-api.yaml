@@ -1,0 +1,57 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: traefik-neuvector-api
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: traefik-neuvector-api
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: traefik
+    version: 1.78.2
+  values:
+    imageTag: 1.7.14
+    loadBalancerIP: 10.10.23.251
+    kubernetes:
+      ingressClass: traefik-neuvector-api
+      ingressEndpoint:
+        useDefaultPublishedService: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 1000m
+        memory: 300Mi
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    rbac:
+      enabled: true
+    dashboard:
+      enabled: true
+    ssl:
+      enabled: true
+      tlsMinVersion: VersionTLS12
+      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
+    startupArguments:
+      - "--ping"
+      - "--ping.entrypoint=http"
+      - "--insecureskipverify"
+    autoscaling:
+      minReplicas: 2
+      maxReplicas: 4
+    podDisruptionBudget:
+      maxUnavailable: 50%
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+                - traefik-neuvector-api
+          topologyKey: "kubernetes.io/hostname"
