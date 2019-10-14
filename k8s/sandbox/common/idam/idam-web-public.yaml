@@ -1,0 +1,25 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:preview-*
+spec:
+  releaseName: idam-web-public
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: idam-web-public
+    version: 0.1.0
+  values:
+    java:
+      image: 'hmctspublic.azurecr.io/idam/api:preview'
+      replicas: 2
+    global:
+      environment: sandbox
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
