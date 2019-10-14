@@ -1,0 +1,27 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: sscs-ccd-callback-orchestrator
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: sscs-ccd-callback-orchestrator
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: sscs-ccd-callback-orchestrator
+    version: 0.0.2
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:latest
+    global:
+      environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
