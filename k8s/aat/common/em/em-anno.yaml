@@ -6,7 +6,7 @@ metadata:
   namespace: em
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.em-anno: glob:prod-*
+    flux.weave.works/tag.anno: glob:prod-*
 spec:
   releaseName: em-anno
   rollback:
@@ -14,20 +14,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.11
+    version: 0.1.12
   values:
-    em-anno:
+    anno:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-7f5e5964
+      image: hmctspublic.azurecr.io/em/anno:prod-5b107ea0
       ingressHost: em-anno-aat.service.core-compute-aat.internal
-      environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
