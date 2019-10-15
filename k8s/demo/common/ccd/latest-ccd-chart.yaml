@@ -18,6 +18,7 @@ spec:
     name: ccd
     version: 4.0.2-alpha
   values:
+#    TODO: enable persistent db
     tags:
       idam-pr: true
     global:
@@ -45,7 +46,6 @@ spec:
         releaseNameOverride: ccd-demo-case-management-web
         ingressHost: www-ccd-aks.demo.platform.hmcts.net
     ccd-admin-web:
-      enabled: true
       nodejs:
         ingressHost: ccd-admin-web-aks.demo.platform.hmcts.net
         secrets:
@@ -68,6 +68,7 @@ spec:
           ADMINWEB_IMPORT_AUDITS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/import-audits'
           ADMINWEB_AUTHORIZATION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/adminweb/authorization'
     ccd-case-activity-api:
+#      TODO this has changed to activityApi
       enabled: true
     ccd-case-print-service:
       enabled: true
