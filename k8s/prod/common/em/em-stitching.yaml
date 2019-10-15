@@ -1,0 +1,33 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-stitching
+  namespace: em
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.stitching: glob:prod-*
+spec:
+  releaseName: em-stitching
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-stitching
+    version: 0.1.10
+  values:
+    stitching:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/stitching:prod-8975c810
+      ingressHost: em-stitching-prod.service.core-compute-prod.internal
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-prod.postgres.database.azure.com:5432/emstitch?ssl=disable
+        SPRING_DATASOURCE_USERNAME: annotation@em-stitching-postgres-db-prod
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+        TASK_ENV: documentTaskLock-prod
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
