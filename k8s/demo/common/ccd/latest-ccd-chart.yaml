@@ -23,6 +23,7 @@ spec:
     global:
       ccdApiGatewayIngress: gateway-ccd-aks.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-ccd-aks.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-web-aks.demo.platform.hmcts.net
       # can ingressHost be removed?
       ingressHost: chart-ccd.demo.platform.hmcts.net
 #     TODO remove protocol to allow better reusability?
@@ -43,26 +44,8 @@ spec:
       nodejs:
         releaseNameOverride: ccd-demo-case-management-web
         ingressHost: www-ccd-aks.demo.platform.hmcts.net
-      idam-pr:
-        releaseNameOverride: ccd-idam-pr
-        api:
-          url: https://idam-api.demo.platform.hmcts.net
-        web_public:
-          url: https://idam-web-public.demo.platform.hmcts.net
-        redirect_uris:
-          CCD:
-          - https://www-ccd-aks.demo.platform.hmcts.net/oauth2redirect
     ccd-admin-web:
       enabled: true
-      idam-pr:
-        releaseNameOverride: ccd-admin-web-idam-pr
-        api:
-          url: https://idam-api.demo.platform.hmcts.net
-        web_public:
-          url: https://idam-web-public.demo.platform.hmcts.net
-        redirect_uris:
-          CCD Admin:
-            - ccd-admin-web-aks.demo.platform.hmcts.net
       nodejs:
         ingressHost: ccd-admin-web-aks.demo.platform.hmcts.net
         secrets:
