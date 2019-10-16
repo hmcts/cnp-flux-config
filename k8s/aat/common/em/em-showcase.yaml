@@ -2,24 +2,25 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: ccd-data-store-api
-  namespace: ccd
+  name: em-showcase
+  namespace: em
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:aat-*
 spec:
-  releaseName: ccd-data-store-api
+  releaseName: em-showcase
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-data-store-api
-    version: 1.2.4
+    name: em-showcase
+    version: 0.0.2
   values:
     java:
-      replicas: 2
+      replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-6607c181
+      image: hmctspublic.azurecr.io/em/showcase:aat-6bdd615b
+      ingressHost: em-showcase-aat.service.core-compute-aat.internal
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
