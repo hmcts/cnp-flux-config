@@ -17,7 +17,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: plum-recipe-backend
-    version: 0.4.0
+    version: 0.4.1
   values:
     java:
       image: hmctspublic.azurecr.io/plum/recipe-backend:prod-82461e95
@@ -33,15 +33,13 @@ spec:
           - recipe-backend-POSTGRES-HOST
           - recipe-backend-POSTGRES-USER
           - recipe-backend-POSTGRES-PASS
-      smokeTestsCronJob:
-        releaseNameOverride: plum-recipe-backend-smoke-cron
+      smoketestscron:
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
         schedule: "0/10 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
-      functionalTestsCronJob:
-        releaseNameOverride: plum-recipe-backend-functional-cron
+      functionaltestscron:
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
         schedule: "0/12 * * * *"
         environment:
@@ -55,7 +53,7 @@ spec:
       job:
         kind: "CronJob"
 
-    smokeTestsCronJob:
+    smoketestscron:
       enabled: true
-    functionalTestsCronJob:
+    functionaltestscron:
       enabled: true
