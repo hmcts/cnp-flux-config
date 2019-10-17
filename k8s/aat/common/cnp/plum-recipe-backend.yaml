@@ -20,7 +20,7 @@ spec:
     version: 0.4.0
   values:
     java:
-      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-fafd5c2a
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-82461e95
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       aadIdentityName: cnp
       environment:
@@ -35,14 +35,14 @@ spec:
           - recipe-backend-POSTGRES-PASS
       smokeTestsCronJob:
         releaseNameOverride: plum-recipe-backend-smoke-cron
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-fafd5c2a
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
         schedule: "0/10 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
       functionalTestsCronJob:
         releaseNameOverride: plum-recipe-backend-functional-cron
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-fafd5c2a
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
         schedule: "0/12 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
