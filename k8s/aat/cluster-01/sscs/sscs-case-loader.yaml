@@ -1,0 +1,26 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: sscs-case-loader
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.job: glob:prod-*
+spec:
+  releaseName: sscs-case-loader
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: sscs-case-loader
+    version: 0.0.1
+  values:
+    job:
+      schedule: "* * 2/4 * * ?"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/case-loader:latest
+    global:
+      environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
