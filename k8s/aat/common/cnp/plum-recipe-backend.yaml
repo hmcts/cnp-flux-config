@@ -45,6 +45,16 @@ spec:
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
+      smoketests:
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
+        environment:
+          TEST_URL: http://plum-recipe-backend-java
+          TASK: smoke
+      functionaltests:
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
+        environment:
+          TEST_URL: http://plum-recipe-backend-java
+          TASK: functional
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
@@ -56,4 +66,8 @@ spec:
     smoketestscron:
       enabled: true
     functionaltestscron:
+      enabled: true
+    smoketests:
+      enabled: true
+    functionaltests:
       enabled: true
