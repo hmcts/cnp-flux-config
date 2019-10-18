@@ -73,6 +73,16 @@ spec:
           ADMINWEB_WHOAMI_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/profile'
           ADMINWEB_IMPORT_AUDITS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/import-audits'
           ADMINWEB_AUTHORIZATION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/adminweb/authorization'
+#      todo: move idam-pr config to chart-ccd
+      idam-pr:
+        releaseNameOverride: ccd-admin-web-idam-pr
+        api:
+          url: '{{ .Values.global.idamApiUrl }}'
+        web_public:
+          url: '{{ .Values.global.idamWebUrl }}'
+        redirect_uris:
+          CCD Admin:
+            - 'http://{{.Values.global.ccdAdminWebIngress}}/oauth2redirect'
     ccd-case-activity-api:
 #      TODO this has changed to activityApi
       enabled: true
