@@ -8,10 +8,14 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/smokecron: java.smokeTestsCronJob.image
+    repository.fluxcd.io/smokecron: java.smoketestscron.image
     filter.fluxcd.io/smokecron: glob:test-prod-*
-    repository.fluxcd.io/functionalcron: java.functionalTestsCronJob.image
+    repository.fluxcd.io/functionalcron: java.functionaltestscron.image
     filter.fluxcd.io/functionalcron: glob:test-prod-*
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:test-prod-*
+    repository.fluxcd.io/functional: java.functionaltests.image
+    filter.fluxcd.io/functional: glob:test-prod-*
 spec:
   releaseName: plum-recipe-backend
   chart:
@@ -34,14 +38,24 @@ spec:
           - recipe-backend-POSTGRES-USER
           - recipe-backend-POSTGRES-PASS
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-89eff58a
         schedule: "0/10 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-82461e95
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-89eff58a
         schedule: "0/12 * * * *"
+        environment:
+          TEST_URL: http://plum-recipe-backend-java
+          TASK: functional
+      smoketests:
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-89eff58a
+        environment:
+          TEST_URL: http://plum-recipe-backend-java
+          TASK: smoke
+      functionaltests:
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-89eff58a
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
@@ -56,4 +70,8 @@ spec:
     smoketestscron:
       enabled: true
     functionaltestscron:
+      enabled: true
+    smoketests:
+      enabled: true
+    functionaltests:
       enabled: true

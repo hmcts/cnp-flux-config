@@ -2,27 +2,24 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: ia-case-documents-api
-  namespace: ia
+  name: sscs-case-loader
+  namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.job: glob:prod-*
 spec:
-
-  releaseName: ia-case-documents-api
+  releaseName: sscs-case-loader
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-case-documents-api
-    version: 0.0.4
+    name: sscs-case-loader
+    version: 0.0.1
   values:
-    java:
-      replicas: 2
+    job:
+      schedule: "* * 0/4 * * ?"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-7eea95b6
-      ingressHost: ia-case-documents-api-aat.service.core-compute-aat.internal
-      aadIdentityName: ia
+      image: hmctspublic.azurecr.io/sscs/case-loader:latest
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
