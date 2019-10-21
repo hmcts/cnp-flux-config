@@ -57,7 +57,7 @@ spec:
         environment:
 #         TODO move this to ccd-chart
           ADMINWEB_LOGIN_URL: https://idam-web-public.demo.platform.hmcts.net/login
-#          ADMINWEB_ROLES_WHITELIST: 'ccd-import,ccd-import-validate'
+          ADMINWEB_ROLES_WHITELIST: 'ccd-import,ccd-import-validate'
 #          TODO update IDAM_BASE_URL, IDAM_OAUTH2_TOKEN_ENDPOINT, IDAM_OAUTH2_LOGOUT_ENDPOINT in ccd-chart and remove it from here
           IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
           IDAM_OAUTH2_TOKEN_ENDPOINT: '{{ .Values.global.idamApiUrl }}/oauth2/token'
@@ -75,16 +75,6 @@ spec:
           ADMINWEB_WHOAMI_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/profile'
           ADMINWEB_IMPORT_AUDITS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/import-audits'
           ADMINWEB_AUTHORIZATION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/adminweb/authorization'
-#      todo: move idam-pr config to chart-ccd
-      idam-pr:
-        releaseNameOverride: ccd-admin-web-idam-pr
-        api:
-          url: '{{ .Values.global.idamApiUrl }}'
-        web_public:
-          url: '{{ .Values.global.idamWebUrl }}'
-        redirect_uris:
-          CCD Admin:
-            - 'http://{{.Values.global.ccdAdminWebIngress}}/oauth2redirect'
     ccd-case-activity-api:
 #      TODO this has changed to activityApi
       enabled: true
