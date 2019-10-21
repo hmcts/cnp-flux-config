@@ -14,17 +14,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-web-admin
-    version: 0.1.0
+    version: 0.2.0
   values:
     java:
       image: hmctspublic.azurecr.io/idam/web-admin:preview
       ingressHost: idam-web-admin.service.core-compute-preview.internal
-      aadIdentityName: {}
+      aadIdentityName: null
     environment:
       STRATEGIC_SERVICE_URL: https://idam-api.service.core-compute-preview.internal
       STRATEGIC_PUBLIC_URL: https://idam-web-public.service.core-compute-preview.internal
     global:
       environment: preview
-      subscriptionId: "remove me after base chart update"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
