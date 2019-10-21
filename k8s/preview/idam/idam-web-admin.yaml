@@ -1,0 +1,30 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: idam-web-admin
+  namespace: idam
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: idam-web-admin
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: idam-web-admin
+    version: 0.1.0
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-admin:preview
+      ingressHost: idam-web-admin.service.core-compute-preview.internal
+      aadIdentityName: {}
+    environment:
+      STRATEGIC_SERVICE_URL: https://idam-api.service.core-compute-preview.internal
+      STRATEGIC_PUBLIC_URL: https://idam-web-public.service.core-compute-preview.internal
+    global:
+      environment: preview
+      subscriptionId: "remove me after base chart update"
+      tenantId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      enableKeyVaults: true
