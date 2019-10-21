@@ -1,0 +1,60 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: bsp-demo
+  namespace: bsp
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.div-fps: glob:prod-*
+spec:
+  releaseName: bsp-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: bulk-scan
+    version: 0.1.2
+  values:
+    global:
+      idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
+      idamWebUrl: idam-web-public.demo.platform.hmcts.net
+      ccdDataStoreUrl: "http://ccd-data-store"
+    ccd:
+      postgresql:
+        enabled: false
+      rpeServiceAuthProvider:
+        enabled: true
+      draftStoreService:
+        enabled: false
+      dmStore:
+        enabled: false
+      paymentApi:
+        enabled: false
+      managementWeb:
+        enabled: false
+      apiGatewayWeb:
+        enabled: false
+      adminWeb:
+        enabled: false
+      printService:
+        enabled: false
+      activityApi:
+        enabled: false
+      testStubsService:
+        enabled: false
+    bulkscan:
+      ccd:
+        enabled: true
+    postgresql:
+      initdbScripts:
+        init.sql: |-
+          CREATE DATABASE "data-store" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+          CREATE DATABASE "definition-store" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+          CREATE DATABASE "user-profile" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+          CREATE DATABASE "draftstore" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+          CREATE DATABASE "payment_api" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+          CREATE DATABASE "evidence" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
