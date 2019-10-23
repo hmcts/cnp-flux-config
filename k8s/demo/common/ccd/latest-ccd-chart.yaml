@@ -74,14 +74,25 @@ spec:
           ADMINWEB_WHOAMI_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/profile'
           ADMINWEB_IMPORT_AUDITS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/import-audits'
           ADMINWEB_AUTHORIZATION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/adminweb/authorization'
-    ccd-case-activity-api:
-#      TODO this has changed to activityApi
-      enabled: true
-    ccd-case-print-service:
-      enabled: true
-      nodejs:
-        ingressClass: 
-        ingressHost: 
+    
+    # CCD Supporting services
+    ccd:
+      printService:
+        enabled: true
+        nodejs:
+          ingressClass: 
+          ingressHost:
+        environment:  
+          IDAM_API_URL: {{ .Values.global.idamApiUrl }}
+          IDAM_AUTHENTICATION_WEB_URL: {{ .Values.global.idamWebUrl }}
+          IDAM_S2S_URL: {{ .Values.global.s2sUrl }}
+          CASE_DATA_STORE_URL: {{ .Values.global.ccdDataStoreUrl }}
+      activityApi:
+        enabled: true
+        nodejs:
+          CORS_ORIGIN_WHITELIST: {{ .Values.global.ccdCaseManagementWebIngress }}
+          IDAM_BASE_URL: {{ .Values.global.idamApiUrl }}
+
     #TODO move ccd-test-stubs-service defaults to chart ccd
     ccd-test-stubs-service:
       java:
