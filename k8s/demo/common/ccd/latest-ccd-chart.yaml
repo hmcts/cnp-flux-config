@@ -81,16 +81,18 @@ spec:
         enabled: true
       activityApi:
         enabled: true
+      dmStore:
+        enabled: true  
     ccd-case-print-service:
       nodejs:
         ingressHost:
         environment:
-          CASE_DATA_STORE_URL: {{ .Values.global.ccdDataStoreUrl }}
+          CASE_DATA_STORE_URL: '{{ .Values.global.ccdDataStoreUrl }}'
     ccd-case-activity-api:
       nodejs:
         environment:
-          CORS_ORIGIN_WHITELIST: {{ .Values.global.ccdCaseManagementWebIngress }}
-          IDAM_BASE_URL: {{ .Values.global.idamApiUrl }}
+          CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
+          IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
 
     #TODO move ccd-test-stubs-service defaults to chart ccd
     ccd-test-stubs-service:
