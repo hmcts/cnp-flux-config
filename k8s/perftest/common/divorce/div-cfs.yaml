@@ -1,0 +1,42 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: div-cfs
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: div-cfs
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div-cfs
+    version: 1.3.0
+  values:
+    java:
+      replicas: 2
+      memoryRequests: '512Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '1500m'
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "eddbcec4-6ebc-4507-9f22-38d53a92e761"
+      image: hmctspublic.azurecr.io/div/cfs:prod-f3004785
+      environment:
+        REFORM_SERVICE_NAME: "cfs"
+        REFORM_TEAM: "div"
+        SLOT: "PRODUCTION"
+      aadIdentityName: divorce
+      prometheus:
+        enabled: true
+    global:
+      environment: perftest
+      subscriptionId: "7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
