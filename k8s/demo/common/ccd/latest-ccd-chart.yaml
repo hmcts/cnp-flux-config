@@ -79,17 +79,16 @@ spec:
     ccd:
       printService:
         enabled: true
-        nodejs:
-          ingressClass: 
-          ingressHost:
-        environment:  
-          IDAM_API_URL: {{ .Values.global.idamApiUrl }}
-          IDAM_AUTHENTICATION_WEB_URL: {{ .Values.global.idamWebUrl }}
-          IDAM_S2S_URL: {{ .Values.global.s2sUrl }}
-          CASE_DATA_STORE_URL: {{ .Values.global.ccdDataStoreUrl }}
       activityApi:
         enabled: true
-        nodejs:
+    ccd-case-print-service:
+      nodejs:
+        ingressHost:
+        environment:
+          CASE_DATA_STORE_URL: {{ .Values.global.ccdDataStoreUrl }}
+    ccd-case-activity-api:
+      nodejs:
+        environment:
           CORS_ORIGIN_WHITELIST: {{ .Values.global.ccdCaseManagementWebIngress }}
           IDAM_BASE_URL: {{ .Values.global.idamApiUrl }}
 
