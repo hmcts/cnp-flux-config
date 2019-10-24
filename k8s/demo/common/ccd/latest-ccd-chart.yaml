@@ -33,6 +33,15 @@ spec:
       # can redirectUri be removed?
       redirectUri: https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
       s2sUrl: http://ccd-demo-s2s
+
+    # Enable support services tags 
+    # TODO to be enabled these in product chart instead of here 
+    ccd:
+      printService:
+        enabled: true
+      activityApi:
+        enabled: true
+
     ccd-api-gateway-web:
       nodejs:
         ingressClass: traefik-no-proxy
@@ -76,21 +85,19 @@ spec:
           ADMINWEB_AUTHORIZATION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/adminweb/authorization'
     
     # CCD Supporting services
-    ccd:
-      printService:
-        enabled: true
-      activityApi:
-        enabled: true
     ccd-case-print-service:
       nodejs:
         ingressHost:
         environment:
-          CASE_DATA_STORE_URL: {{ .Values.global.ccdDataStoreUrl }}
+        # TO DO move this to chart-ccd
+          CASE_DATA_STORE_URL: '{{ .Values.global.ccdDataStoreUrl }}'
     ccd-case-activity-api:
       nodejs:
         environment:
-          CORS_ORIGIN_WHITELIST: {{ .Values.global.ccdCaseManagementWebIngress }}
-          IDAM_BASE_URL: {{ .Values.global.idamApiUrl }}
+        # TO DO move IDAM_BASE_URL to chart-ccd
+          CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
+          IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
+
 
     #TODO move ccd-test-stubs-service defaults to chart ccd
     ccd-test-stubs-service:
@@ -106,6 +113,4 @@ spec:
       enabled: true
       java:
         ingressHost:
-    #TODO reenable
-    payment-api:
-      enabled: false
+
