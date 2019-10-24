@@ -14,15 +14,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-web-public
-    version: 0.2.1
+    version: 0.2.2
   values:
     java:
       image: hmctspublic.azurecr.io/idam/web-public:preview
-      ingressHost: idam-web-public-aks.sandbox.platform.hmcts.net
-      replicas: 2
+      ingressHost: idam-web-public.service.core-compute-sandbox.internal
       aadIdentityName: idam
-    environment:
-      STRATEGIC_SERVICE_URL: https://idam-api-aks.sandbox.platform.hmcts.net
+      replicas: 1
     global:
       environment: sandbox
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
