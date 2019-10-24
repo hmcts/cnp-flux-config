@@ -39,7 +39,9 @@ spec:
       printService:
         enabled: true
       activityApi:
-        enabled: true  
+        enabled: true
+      paymentApi:
+        enabled: true
 
     ccd-api-gateway-web:
       nodejs:
@@ -97,6 +99,7 @@ spec:
           CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
           IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
 
+
     #TODO move ccd-test-stubs-service defaults to chart ccd
     ccd-test-stubs-service:
       java:
@@ -111,6 +114,4 @@ spec:
       enabled: true
       java:
         ingressHost:
-    #TODO reenable
-    payment-api:
-      enabled: false
+
