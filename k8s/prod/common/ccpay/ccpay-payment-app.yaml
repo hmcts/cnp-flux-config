@@ -1,0 +1,54 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-payment-app
+  namespace: fees-pay
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: ccpay-payment-api
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: payment-api
+    version: 0.1.4
+  values:
+    rollback:
+      enable: true
+    java:
+      replicas: 2
+      image: hmctspublic.azurecr.io/payment/api:prod-a4872e81
+      ingressHost: payment-api-prod.service.core-compute-prod.internal
+      applicationInsightsInstrumentKey: "f0e045d3-c9e4-49bc-87da-c63f05e82cfa"
+      environment:
+        SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-postgres-db-prod.postgres.database.azure.com:5432/payment"
+        SPRING_DATASOURCE_USERNAME: payment@payment-postgres-db-prod
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
+      aadIdentityName: ccpay
+      keyVaults:
+        "ccpay":
+          secrets:
+          - api-POSTGRES-PASS
+          - sb-primary-connection-string
+          - pci-pal-account-id-cmc
+          - pci-pal-account-id-probate
+          - pci-pal-account-id-divorce
+          - pci-pal-api-url
+          - pci-pal-api-key
+          - gov-pay-keys-reference
+          - gov-pay-keys-cmc
+          - gov-pay-keys-divorce
+          - gov-pay-keys-probate
+          - liberata-keys-oauth2-client-id
+          - liberata-keys-oauth2-client-secret
+          - liberata-keys-oauth2-username
+          - liberata-keys-oauth2-password
+        enabled: true
+    global:
+      environment: prod
+      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
