@@ -55,12 +55,26 @@ spec:
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
+          SLACK_CHANNEL: "#rpe-build-notices"
+          SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
+        keyVaults:
+          "plumsi":
+          resourceGroup: plum-shared-infrastructure
+          secrets:
+          - recipe-slack-webhook
       functionaltests:
         enabled: true
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-ebb6e16c
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
+          SLACK_CHANNEL: "#rpe-build-notices"
+          SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
+        keyVaults:
+          "plumsi":
+          resourceGroup: plum-shared-infrastructure
+          secrets:
+          - recipe-slack-webhook
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
