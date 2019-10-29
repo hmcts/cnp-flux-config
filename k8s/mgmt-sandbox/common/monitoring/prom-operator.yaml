@@ -5,15 +5,15 @@ metadata:
   name: prom-operator
   namespace: monitoring
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/ignore: "false"
 spec:
   releaseName: prom-operator
   forceUpgrade: true
   chart:
-    git: https://github.com/hmcts/charts
-    ref: master
-    path: stable/prometheus-operator
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-operator
+    version: 6.21.0
   values:
     defaultRules:
       create: true
@@ -36,10 +36,6 @@ spec:
         prometheus: true
         prometheusOperator: true
         time: true
-
     kubelet:
       serviceMonitor:
         https: false
-
-    grafana:
-      enabled: false

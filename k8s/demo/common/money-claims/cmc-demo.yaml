@@ -33,7 +33,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 0.0.15
+    version: 0.0.17
   values:
     ### CMC SERVICES ###
     cmc-claim-store:
@@ -73,7 +73,7 @@ spec:
           IDAM_S2S_AUTH_URL: http://cmc-demo-s2s
           PDF_SERVICE_URL: http://cmc-demo-pdf
           SEND_LETTER_URL: http://cmc-demo-sendletter
-          DOCUMENT_MANAGEMENT_URL: http://cmc-demo-dmstore
+          DOCUMENT_MANAGEMENT_URL: http://dm-store.demo.platform.hmcts.net
           FRONTEND_BASE_URL: https://cmc-citizen-frontend.demo.platform.hmcts.net
           RESPOND_TO_CLAIM_URL: https://cmc-citizen-frontend.demo.platform.hmcts.net/first-contact/start
           SPRING_MAIL_HOST: mailhog
@@ -110,7 +110,6 @@ spec:
         caseManagementWeb:
           image: hmctspublic.azurecr.io/ccd/case-management-web:pr-802
           environment:
-            DM_URL_REMOTE: https://dm-store-demo.service.core-compute-demo.internal/documents
             ANNOTATION_API_URL: https://gateway-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/em-anno          
         adminWeb:
           image: hmctspublic.azurecr.io/ccd/admin-web:latest
@@ -191,17 +190,20 @@ spec:
     ##### DEPENDENCIES #####
     rpe-send-letter-service:
       java:
-        image: hmctspublic.azurecr.io/rpe/send-letter-service:latest
+        image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-118d00fd
         releaseNameOverride: cmc-demo-sendletter
+        ingressHost: 
         environment:
           FLYWAY_URL: "jdbc:postgresql://cmc-demo-postgres:5432/send_letter"
           LETTER_TRACKING_DB_HOST: cmc-demo-postgres
           S2S_URL: http://cmc-demo-s2s
+          APPINSIGHTS_INSTRUMENTATIONKEY: 00000000-0000-0000-0000-000000000000
 
     dm-store:
       java:
         # image: hmctspublic.azurecr.io/dm/store:pr-334  # comment here so flux doesnt update, pinned in chart-cmc
         releaseNameOverride: cmc-demo-dmstore
+        ingressHost: dm-store.demo.platform.hmcts.net
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
           IDAM_S2S_BASE_URI: http://cmc-demo-s2s
