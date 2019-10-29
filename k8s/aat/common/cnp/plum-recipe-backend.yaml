@@ -46,7 +46,10 @@ spec:
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
           SLACK_NOTIFY_SUCCESS: "false"
-          SLACK_MESSAGE_FAILURE: "Gradle Build Failure. TASK: smoke aat cron; TEST_URL: http://plum-recipe-backend-java"
+          SLACK_MESSAGE_FAILURE: >
+            Gradle Build Failure. 
+            TASK = smoke aat cron; 
+            TEST_URL = http://plum-recipe-backend-java
       functionaltestscron:
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
         schedule: "20 0/3 * * *"
@@ -56,7 +59,10 @@ spec:
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
           SLACK_NOTIFY_SUCCESS: "false"
-          SLACK_MESSAGE_FAILURE: "Gradle Build Failure. TASK: functional aat cron; TEST_URL: http://plum-recipe-backend-java"
+          SLACK_MESSAGE_FAILURE: >
+            Gradle Build Failure. 
+            TASK = functional aat cron; 
+            TEST_URL = http://plum-recipe-backend-java
       smoketests:
         enabled: true
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
@@ -65,7 +71,10 @@ spec:
           TASK: smoke
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
-          SLACK_MESSAGE_FAILURE: "Gradle Build Failure. TASK: smoke aat; TEST_URL: http://plum-recipe-backend-java"
+          SLACK_MESSAGE_FAILURE: >
+            Gradle Build Failure. 
+            TASK = smoke aat; 
+            TEST_URL = http://plum-recipe-backend-java
         keyVaults:
           "plumsi":
             resourceGroup: plum-shared-infrastructure
@@ -80,7 +89,10 @@ spec:
           TASK: functional
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
-          SLACK_MESSAGE_FAILURE: "Gradle Build Failure. TASK: functional aat; TEST_URL: http://plum-recipe-backend-java"
+          SLACK_MESSAGE_FAILURE: >
+            Gradle Build Failure. 
+            TASK = functional aat;  
+            TEST_URL = http://plum-recipe-backend-java
         keyVaults:
           "plumsi":
             resourceGroup: plum-shared-infrastructure
