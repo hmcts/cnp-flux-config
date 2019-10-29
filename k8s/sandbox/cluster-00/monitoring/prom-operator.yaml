@@ -11,9 +11,9 @@ spec:
   releaseName: prom-operator
   forceUpgrade: true
   chart:
-    git: https://github.com/hmcts/charts
-    ref: master
-    path: stable/prometheus-operator
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-operator
+    version: 6.21.0
   values:
     defaultRules:
       create: true
@@ -43,3 +43,7 @@ spec:
 
     grafana:
       enabled: false
+
+    ingress: 
+      enabled: true
+      hosts: prometheus-00.service.core-compute-sandbox.internal
