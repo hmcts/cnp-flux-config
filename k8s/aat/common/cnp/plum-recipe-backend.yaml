@@ -38,20 +38,20 @@ spec:
           - recipe-backend-POSTGRES-USER
           - recipe-backend-POSTGRES-PASS
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-abae3966
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-875acdca
         schedule: "0/10 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-abae3966
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-875acdca
         schedule: "0/12 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-abae3966
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-875acdca
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
@@ -65,7 +65,7 @@ spec:
             - recipe-slack-webhook
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-abae3966
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-875acdca
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
