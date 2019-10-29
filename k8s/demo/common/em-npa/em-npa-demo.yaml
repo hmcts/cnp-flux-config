@@ -1,0 +1,43 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-npa-demo
+  namespace: em-npa
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: em-npa-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-npa
+    version: 0.1.7
+  values:
+    ### EM-NPA SERVICES ###
+    em-anno:
+      releaseNameOverride: em-npa-demo-em-anno
+      environment:
+        SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-annotation-demo-postgres:5432/emannotationapp'
+        IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
+        S2S_BASE_URI: http://em-npa-demo-rpe-s2s
+        DM_STORE_APP_URL: http://em-npa-demo-dmstore
+
+    dm-store:
+      java:
+        releaseNameOverride: em-npa-demo-dm-store
+        environment:
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-npa-demo-postgres:5432/evidence'
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://em-npa-demo-rpe-s2s
+          ENABLE_DB_MIGRATE: 'true'
+          ENABLE_TTL: 'false'
+
+    postgresql:
+      nameOverride: postgres
+    ########################

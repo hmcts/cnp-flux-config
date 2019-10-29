@@ -1,0 +1,40 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-stitching-demo
+  namespace: em-stitching
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: em-stitching-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-stitching
+    version: 0.1.12
+  values:
+    ### EM-STITCHING SERVICES ###
+    dm-store:
+      java:
+        releaseNameOverride: em-stitching-demo-dmstore
+        environment:
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-stitching-demo-postgres:5432/evidence'
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://em-stitching-demo-s2s
+          ENABLE_DB_MIGRATE: 'true'
+          ENABLE_TTL: 'false'
+
+    rpe-service-auth-provider:
+      java:
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
+        releaseNameOverride: em-stitching-demo-s2s
+
+    postgresql:
+      nameOverride: postgres
+    ########################

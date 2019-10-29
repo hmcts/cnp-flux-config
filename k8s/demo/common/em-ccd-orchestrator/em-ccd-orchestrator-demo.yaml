@@ -1,0 +1,54 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-ccd-orchestrator-demo
+  namespace: em-ccd-orchestrator
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: em-ccd-orchestrator-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-ccd-orchestrator
+    version: 0.1.4
+  values:
+    ### EM-CCD-ORCHESTRATOR SERVICES ###
+    em-stitching:
+      java:
+        releaseNameOverride: em-ccd-orchestrator-demo-stitching
+        environment:
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-ccd-orchestrator-demo-postgres-db:5432/postgres?ssl=disable'
+          S2S_BASE_URI: http://em-ccd-orchestrator-demo-s2s
+          DM_STORE_APP_URL: http://em-ccd-orchestrator-demo-dmstore
+          IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
+
+    dm-store:
+      java:
+        releaseNameOverride: em-ccd-orchestrator-demo-dmstore
+        environment:
+          SPRING_DATASOURCE_URL: 'jdbc:postgresql://em-ccd-orchestrator-demo-postgres:5432/evidence'
+          IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
+          IDAM_S2S_BASE_URI: http://em-ccd-orchestrator-demo-s2s
+          ENABLE_DB_MIGRATE: 'true'
+          ENABLE_TTL: 'false'
+
+    ccd-case-management-web:
+      nodejs:
+        releaseNameOverride: em-ccd-orchestrator-demo-case-management-web
+        ingressHost: www-ccd-aks.demo.platform.hmcts.net
+
+    rpe-service-auth-provider:
+      java:
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
+        releaseNameOverride: em-ccd-orchestrator-demo-s2s
+
+    postgresql:
+      nameOverride: postgres
+    ########################
