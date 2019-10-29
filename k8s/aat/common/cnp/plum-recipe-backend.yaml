@@ -24,7 +24,7 @@ spec:
     version: 0.4.4
   values:
     java:
-      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-1d9170d1
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-b71cb775
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       aadIdentityName: cnp
       environment:
@@ -38,20 +38,20 @@ spec:
           - recipe-backend-POSTGRES-USER
           - recipe-backend-POSTGRES-PASS
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-1d9170d1
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-b71cb775
         schedule: "0/10 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-1d9170d1
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-b71cb775
         schedule: "0/12 * * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-1d9170d1
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-b71cb775
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
@@ -65,7 +65,7 @@ spec:
             - recipe-slack-webhook
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-1d9170d1
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-b71cb775
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
