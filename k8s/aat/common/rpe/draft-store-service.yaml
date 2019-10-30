@@ -25,7 +25,73 @@ spec:
       image: hmctspublic.azurecr.io/draft-store/service:prod-d64c182c
       prometheus:
         enabled: true
+      smoketestscron:
+        image: hmctspublic.azurecr.io/draft-store/service:test-prod-d64c182c
+        schedule: "15 0/1 * * *"
+        environment:
+          TEST_URL: http://draft-store-service-java
+          TASK: smoke
+          SLACK_CHANNEL: "rpe-build-notices"
+          SLACK_WEBHOOK: "draft-store/slack-webhook"
+          SLACK_NOTIFY_SUCCESS: "false"
+        keyVaults:
+          "draft-store":
+            resourceGroup: draft-store-service
+            excludeEnvironmentSuffix: false
+            secrets:
+            - slack-webhook
+      functionaltestscron:
+        image: hmctspublic.azurecr.io/draft-store/service:test-prod-d64c182c
+        schedule: "25 0/3 * * *"
+        environment:
+          TEST_URL: http://draft-store-service-java
+          TASK: functional
+          SLACK_CHANNEL: "rpe-build-notices"
+          SLACK_WEBHOOK: "draft-store/slack-webhook"
+          SLACK_NOTIFY_SUCCESS: "false"
+        keyVaults:
+          "draft-store":
+            resourceGroup: draft-store-service
+            excludeEnvironmentSuffix: false
+            secrets:
+            - slack-webhook
+      smoketests:
+        enabled: true
+        image: hmctspublic.azurecr.io/draft-store/service:test-prod-d64c182c
+        environment:
+          TEST_URL: http://draft-store-service-java
+          TASK: smoke
+          SLACK_CHANNEL: "rpe-build-notices"
+          SLACK_WEBHOOK: "draft-store/slack-webhook"
+        keyVaults:
+          "draft-store":
+            resourceGroup: draft-store-service
+            excludeEnvironmentSuffix: false
+            secrets:
+            - slack-webhook
+      functionaltests:
+        enabled: true
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
+        environment:
+          TEST_URL: http://draft-store-service-java
+          TASK: functional
+          SLACK_CHANNEL: "rpe-build-notices"
+          SLACK_WEBHOOK: "draft-store/slack-webhook"
+          SLACK_MESSAGE_FAILURE: >
+            Gradle Build Failure. 
+            TASK = functional aat;  
+            TEST_URL = http://plum-recipe-backend-java
+        keyVaults:
+          "draft-store":
+            resourceGroup: draft-store-service
+            excludeEnvironmentSuffix: false
+            secrets:
+            - slack-webhook
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+    smoketestscron:
+      enabled: true
+    functionaltestscron:
+      enabled: true
