@@ -90,7 +90,7 @@ spec:
         draftStoreUrl: http://cmc-demo-draftstore
         paymentsUrl: http://cmc-demo-payments
         apiGateway:
-          image: hmctspublic.azurecr.io/ccd/api-gateway-web:latest
+          image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eb4b1675
           environment: 
             PROXY_DOCUMENT_MANAGEMENT: http://cmc-demo-dmstore
           ingressClass: traefik-no-proxy
@@ -100,19 +100,19 @@ spec:
             secretKeyRefName: ccd-api-gateway-oauth2-client-secret
             secretKeyRefKey: key
         dataStoreApi:
-          image: hmctspublic.azurecr.io/ccd/data-store-api:latest
+          image: hmctspublic.azurecr.io/ccd/data-store-api:prod-002f2875
           s2sKey: AAAAAAAAAAAAAAAA
         definitionStoreApi:
-          image: hmctspublic.azurecr.io/ccd/definition-store-api:latest
+          image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-e2611b6c
           s2sKey: AAAAAAAAAAAAAAAA
         userProfileApi:
-          image: hmctspublic.azurecr.io/ccd/user-profile-api:latest
+          image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-37d6198b
         caseManagementWeb:
           image: hmctspublic.azurecr.io/ccd/case-management-web:pr-802
           environment:
             ANNOTATION_API_URL: https://gateway-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/em-anno          
         adminWeb:
-          image: hmctspublic.azurecr.io/ccd/admin-web:latest
+          image: hmctspublic.azurecr.io/ccd/admin-web:prod-b2401981
           s2sKey: AAAAAAAAAAAAAAAA
           idamClientSecret: 
             fromSecret: true
@@ -136,7 +136,7 @@ spec:
               - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
               - timja@kainos.com|CMC|MoneyClaimCase|open
           definition:
-            image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.2.26
+            image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.4.7
             waitHosts: cmc-demo-definition-store-api:80
             waitHostsTimeout: 300
             importerFromSecret: true
@@ -211,12 +211,12 @@ spec:
 
     cmc-pdf-service:
       java:
-        image: hmctspublic.azurecr.io/cmc/pdf-service:latest
+        image: hmctspublic.azurecr.io/cmc/pdf-service:prod-a239c805
         releaseNameOverride: cmc-demo-pdf
 
     draft-store-service:
       java:
-        image: hmctspublic.azurecr.io/draft-store/service:latest
+        image: hmctspublic.azurecr.io/draft-store/service:prod-f0db29c5
         releaseNameOverride: cmc-demo-draftstore
         environment:
           IDAM_URL: https://idam-api.demo.platform.hmcts.net
@@ -225,14 +225,14 @@ spec:
 
     fees-register-api:
       java:
-        image: hmctspublic.azurecr.io/fees-register/api:latest
+        image: hmctspublic.azurecr.io/fees-register/api:prod-8b089c28
         releaseNameOverride: cmc-demo-fees
         environment:
           SPRING_DATASOURCE_URL: "jdbc:postgresql://cmc-demo-postgres:5432/fees_register"
 
     payment-api:
       java:
-        image: hmctspublic.azurecr.io/payment/api:latest
+        image: hmctspublic.azurecr.io/payment/api:prod-9c30dc6e
         releaseNameOverride: cmc-demo-payments
         secrets: 
           GOV_PAY_AUTH_KEY_CMC:
@@ -250,7 +250,7 @@ spec:
 
     rpe-service-auth-provider:
       java:
-        image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-9e3213ad
         releaseNameOverride: cmc-demo-s2s
 
     postgresql:
