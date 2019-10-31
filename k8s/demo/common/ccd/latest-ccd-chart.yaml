@@ -18,7 +18,6 @@ spec:
     name: ccd
     version: 4.0.4-alpha
   values:
-#    TODO: enable persistent db
     tags:
       idam-pr: true
     global:
@@ -89,7 +88,6 @@ spec:
       java:
         memoryRequests: "1G"
         memoryLimits: "2G"
-
     # CCD Supporting services
     ccd-case-print-service:
       nodejs:
@@ -103,20 +101,25 @@ spec:
         # TO DO move IDAM_BASE_URL to chart-ccd
           CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
           IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
-
-
     #TODO move ccd-test-stubs-service defaults to chart ccd
     ccd-test-stubs-service:
       java:
         ingressHost: test-stubs-service-ccd-aks.demo.platform.hmcts.net
         environment:
           MANAGEMENT_WEB_URL: www-ccd-aks.demo.platform.hmcts.net
-#Dependencies
-#    TODO enable persist by default on chart-ccd and remove it here
+
+    #Dependencies
+#    TODO enable persistence on chart-ccd and remove it here
     postgresql:
       persistence:
         enabled: true
-
+#    TODO move dm-store on chart-ccd and remove it here
+    dm-store:
+      java:
+        environment:
+          MAX_FILE_SIZE: '100MB'
+          ENABLE_AZURE_STORAGE_CONTAINER: 'true'
+          POSTGRES_STORAGE_ENABLED: 'false'
     rpe-service-auth-provider:
       java:
         releaseNameOverride: ccd-demo-s2s
