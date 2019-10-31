@@ -1,0 +1,31 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-npa
+  namespace: em
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.npa: glob:prod-*
+spec:
+  releaseName: em-npa
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-npa
+    version: 0.1.7
+  values:
+    npa:
+      replicas: 2
+      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/npa:prod-39c86832
+      ingressHost: em-npa-ithc.service.core-compute-ithc.internal
+      environment:
+        S2S_BASE_URI: "http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal"
+        IDAM_API_BASE_URI: "https://idam-api.ithc.platform.hmcts.net"
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
