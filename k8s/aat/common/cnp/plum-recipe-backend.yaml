@@ -24,7 +24,7 @@ spec:
     version: 0.4.6
   values:
     java:
-      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-84abb0b4
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-c4a17b1f
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       aadIdentityName: cnp
       environment:
@@ -38,7 +38,7 @@ spec:
           - recipe-backend-POSTGRES-USER
           - recipe-backend-POSTGRES-PASS
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
         schedule: "10 0/1 * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
@@ -47,11 +47,9 @@ spec:
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
           SLACK_NOTIFY_SUCCESS: "false"
           SLACK_MESSAGE_FAILURE: >
-            Gradle Build Failure. 
-            TASK = smoke aat cron; 
-            TEST_URL = http://plum-recipe-backend-java
+            Gradle Build Failure.  TASK = smoke aat cron;  TEST_URL = http://plum-recipe-backend-java
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
         schedule: "20 0/3 * * *"
         environment:
           TEST_URL: http://plum-recipe-backend-java
@@ -60,21 +58,17 @@ spec:
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
           SLACK_NOTIFY_SUCCESS: "false"
           SLACK_MESSAGE_FAILURE: >
-            Gradle Build Failure. 
-            TASK = functional aat cron; 
-            TEST_URL = http://plum-recipe-backend-java
+            Gradle Build Failure.  TASK = functional aat cron;  TEST_URL = http://plum-recipe-backend-java
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: smoke
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
           SLACK_MESSAGE_FAILURE: >
-            Gradle Build Failure. 
-            TASK = smoke aat; 
-            TEST_URL = http://plum-recipe-backend-java
+            Gradle Build Failure.  TASK = smoke aat;  TEST_URL = http://plum-recipe-backend-java
         keyVaults:
           "plumsi":
             resourceGroup: plum-shared-infrastructure
@@ -83,16 +77,14 @@ spec:
             - recipe-slack-webhook
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
+        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
         environment:
           TEST_URL: http://plum-recipe-backend-java
           TASK: functional
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
           SLACK_MESSAGE_FAILURE: >
-            Gradle Build Failure. 
-            TASK = functional aat;  
-            TEST_URL = http://plum-recipe-backend-java
+            Gradle Build Failure.  TASK = functional aat;   TEST_URL = http://plum-recipe-backend-java
         keyVaults:
           "plumsi":
             resourceGroup: plum-shared-infrastructure
