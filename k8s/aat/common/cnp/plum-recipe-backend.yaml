@@ -48,7 +48,7 @@ spec:
           TEST_URL: http://plum-recipe-backend-java
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_WEBHOOK: "plumsi/recipe-slack-webhook"
-          SLACK_NOTIFY_SUCCESS: "true"
+          SLACK_NOTIFY_SUCCESS: '"true"'
       smoketestscron:
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
         enabled: false
@@ -58,10 +58,10 @@ spec:
         enabled: false
         schedule: "20 0/3 * * *"
       smoketests:
-        enabled: false
+        enabled: true
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
       functionaltests:
-        enabled: false
+        enabled: true
         image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-c4a17b1f
     global:
       environment: aat
