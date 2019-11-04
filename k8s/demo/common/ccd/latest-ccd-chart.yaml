@@ -1,3 +1,4 @@
+---
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
@@ -75,11 +76,14 @@ spec:
           ADMINWEB_IMPORT_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/import'
           ADMINWEB_JURISDICTIONS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/data/jurisdictions'
           ADMINWEB_USER_PROFILE_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/users'
-          ADMINWEB_SAVE_USER_PROFILE_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/users/save'
+          ADMINWEB_SAVE_USER_PROFILE_URL: '{{ .Values.global.ccdDefinitionStoreUrl
+            }}/users/save'
           ADMINWEB_USER_ROLE_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/user-role'
           ADMIN_ALL_USER_ROLES_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/user-roles'
-          ADMINWEB_CREATE_DEFINITION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/draft'
-          ADMINWEB_UPDATE_DEFINITION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/draft/save'
+          ADMINWEB_CREATE_DEFINITION_URL: '{{ .Values.global.ccdDefinitionStoreUrl
+            }}/api/draft'
+          ADMINWEB_UPDATE_DEFINITION_URL: '{{ .Values.global.ccdDefinitionStoreUrl
+            }}/api/draft/save'
           ADMINWEB_DEFINITIONS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/drafts'
           ADMINWEB_WHOAMI_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/profile'
           ADMINWEB_IMPORT_AUDITS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/import-audits'
@@ -115,7 +119,7 @@ spec:
         enabled: true
 #    TODO move dm-store on chart-ccd and remove it here
     dm-store:
-      image: hmctspublic.azurecr.io/dm/store:pr-334  # using temporarily until blob-storage for dm-store in aks-demo works
+      image: hmctspublic.azurecr.io/dm/store:pr-408  # using temporarily until blob-storage for dm-store in aks-demo works
       java:
         environment:
           MAX_FILE_SIZE: '100MB'
