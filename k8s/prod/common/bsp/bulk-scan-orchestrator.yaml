@@ -14,16 +14,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-orchestrator
-    version: 0.2.0
+    version: 0.2.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/bulk-scan/orchestrator:latest
       environment:
-        CCD_LOG_LEVEL: none
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
-        IDAM_CLIENT_REDIRECT_URI: "https://rpe-bulk-scan-processor-prod.service.core-compute-prod.internal/oauth2/callback"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
