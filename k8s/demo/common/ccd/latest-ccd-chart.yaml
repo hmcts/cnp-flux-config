@@ -119,12 +119,11 @@ spec:
         enabled: true
 #    TODO move dm-store on chart-ccd and remove it here
     dm-store:
-      image: hmctspublic.azurecr.io/dm/store:pr-410          # using temporarily until blob-storage for dm-store in aks-demo works
       java:
         environment:
           MAX_FILE_SIZE: '100MB'
-          ENABLE_AZURE_STORAGE_CONTAINER: 'false'
-          POSTGRES_STORAGE_ENABLED: 'true'
+          ENABLE_AZURE_STORAGE_CONTAINER: 'true'
+          POSTGRES_STORAGE_ENABLED: 'false'
           STORAGEACCOUNT_PRIMARY_CONNECTION_STRING: 'DefaultEndpointsProtocol=https;AccountName=dmstoredocdemo;AccountKey=RK7IN2qBfW3gX6K9SG+6SCqY2gzUvUIFA2W0dhu46tIlWtFHu2SE7kAdNTP01TG6Tt//baBspWSlsoVJZJGAvw==;EndpointSuffix=core.windows.net'
       blobstorage:
         enabled: true
