@@ -2,29 +2,27 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: sscs-tribunals-api
-  namespace: sscs
+  name: bulk-scan-orchestrator
+  namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: sscs-tribunals-api
+  releaseName: bulk-scan-orchestrator
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tribunals-api
-    version: 0.0.7
+    name: bulk-scan-orchestrator
+    version: 0.2.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-793a12b1
-      aadIdentityName: sscs
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-b70bc1e7
       environment:
-        READY_TO_LIST_OFFICES: DWP PIP (3)
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
     global:
-      environment: aat
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
