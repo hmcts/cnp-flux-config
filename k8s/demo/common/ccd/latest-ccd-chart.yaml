@@ -120,12 +120,21 @@ spec:
 #    TODO move dm-store on chart-ccd and remove it here
     dm-store:
       java:
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            secretRef: storage-secret-dm-store
+            key: storageAccountName
+          STORAGE_ACCOUNT_KEY:
+            secretRef: storage-secret-dm-store
+            key: accessKey
+          STORAGE_CONTAINER_DOCUMENT_CONTAINER_NAME:
+            secretRef: container-secret-dm-store-dm-docstore
+            key: containerName
         environment:
           MAX_FILE_SIZE: '100MB'
           ENABLE_AZURE_STORAGE_CONTAINER: 'true'
           POSTGRES_STORAGE_ENABLED: 'false'
-          STORAGEACCOUNT_PRIMARY_CONNECTION_STRING: 'DefaultEndpointsProtocol=https;AccountName=dmstoredocdemo;AccountKey=RK7IN2qBfW3gX6K9SG+6SCqY2gzUvUIFA2W0dhu46tIlWtFHu2SE7kAdNTP01TG6Tt//baBspWSlsoVJZJGAvw==;EndpointSuffix=core.windows.net'
-          DUMMY_PARAM: 'dummy'
+          STORAGEACCOUNT_PRIMARY_CONNECTION_STRING: "DefaultEndpointsProtocol=https;AccountName=$(STORAGE_ACCOUNT_NAME);AccountKey=$(STORAGE_ACCOUNT_KEY);EndpointSuffix=core.windows.net"
       blobstorage:
         enabled: true
     rpe-service-auth-provider:
