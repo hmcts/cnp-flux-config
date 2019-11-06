@@ -1,0 +1,46 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-demo
+  namespace: fees-pay
+  annotations:
+    flux.weave.works/automated: "true"
+spec:
+  releaseName: ccpay-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccpay
+    version: 0.1.0-alpha
+  values:
+    global:
+      idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
+    payment-api:
+      ingressHost: payment-api.demo.platform.hmcts.net
+      java:
+        environment:
+          #TODO use CCD Chart instead
+          CORE_CASE_DATA_API_URL: "http://ccd-data-store.ccd"
+        secrets:
+          PCI_PAL_ACCOUNT_ID_CMC:
+            disabled: true
+          PCI_PAL_ACCOUNT_ID_PROBATE:
+            disabled: true
+          PCI_PAL_ACCOUNT_ID_DIVORCE:
+            disabled: true
+          PCI_PAL_API_URL:
+            disabled: true
+          PCI_PAL_API_KEY:
+            disabled: true
+          GOV_PAY_ACCOUNT_PROBATE:
+            disabled: true
+          GOV_PAY_ACCOUNT_DIVORCE:
+            disabled: true
+    rpe-service-auth-provider:
+      java:
+        ingressHost: s2s-payment-api.demo.platform.hmcts.net
