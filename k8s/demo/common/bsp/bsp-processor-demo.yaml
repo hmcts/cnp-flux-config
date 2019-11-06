@@ -2,12 +2,12 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: bsp-demo-public-processor
+  name: standalone-processor
   namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
 spec:
-  releaseName: bsp-demo-public
+  releaseName: standalone-processor
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -21,7 +21,7 @@ spec:
     bulk-scan-processor:
       java:
         ingressHost: ""
-        releaseNameOverride: "{{ .Release.Name }}-processor"
+        releaseNameOverride: "{{ .Release.Name }}-bsp"
         environment:
           FLYWAY_NOOP_STRATEGY: "true"
     bulkscan:
