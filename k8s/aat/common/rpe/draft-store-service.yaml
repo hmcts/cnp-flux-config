@@ -5,8 +5,17 @@ metadata:
   name: draft-store-service
   namespace: rpe
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/smokecron: java.smoketestscron.image
+    filter.fluxcd.io/smokecron: glob:prod-*
+    repository.fluxcd.io/functionalcron: java.functionaltestscron.image
+    filter.fluxcd.io/functionalcron: glob:prod-*
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:prod-*
+    repository.fluxcd.io/functional: java.functionaltests.image
+    filter.fluxcd.io/functional: glob:prod-*
 spec:
   releaseName: draft-store-service
   rollback:
@@ -14,7 +23,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.4.2
+    version: 1.5.0
   values:
     java:
       replicas: 2
@@ -25,14 +34,11 @@ spec:
       image: hmctspublic.azurecr.io/draft-store/service:prod-46774a01
       prometheus:
         enabled: true
-      smoketestscron:
-        image: hmctspublic.azurecr.io/draft-store/service:test-prod-d64c182c
-        schedule: "15 0/1 * * *"
+      testsConfig:
         environment:
           TEST_URL: http://draft-store-service-java
-          TASK: smoke
           SLACK_CHANNEL: "rpe-build-notices"
-          SLACK_WEBHOOK: "draft-store/slack-webhook"
+          CLUSTER_NAME: "aat-01-aks"
           SLACK_NOTIFY_SUCCESS: "false"
           USE_IDAM_TESTING_SUPPORT: "true"
           S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
@@ -41,59 +47,21 @@ spec:
           IDAM_USER_EMAIL_FOR_TESTS: "reformplatformengineering+tests@gmail.com"
           IDAM_CLIENT_ID_FOR_TESTS: "cmc_citizen"
           IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
-        keyVaults:
-          "draft-store":
-            excludeEnvironmentSuffix: false
-            secrets:
-            - slack-webhook
+      smoketestscron:
+        enabled: true
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d64c182c
+        schedule: "15 0/1 * * *"
       functionaltestscron:
-        image: hmctspublic.azurecr.io/draft-store/service:test-prod-d64c182c
-        schedule: "25 0/3 * * *"
-        environment:
-          TEST_URL: http://draft-store-service-java
-          TASK: functional
-          SLACK_CHANNEL: "rpe-build-notices"
-          SLACK_WEBHOOK: "draft-store/slack-webhook"
-          SLACK_NOTIFY_SUCCESS: "false"
-        keyVaults:
-          "draft-store":
-            excludeEnvironmentSuffix: false
-            secrets:
-            - slack-webhook
+        enabled: true
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d64c182c
+        schedule: "25 0/6 * * *"
       smoketests:
-        enabled: false
-        image: hmctspublic.azurecr.io/draft-store/service:test-prod-d64c182c
-        environment:
-          TEST_URL: http://draft-store-service-java
-          TASK: smoke
-          SLACK_CHANNEL: "rpe-build-notices"
-          SLACK_WEBHOOK: "draft-store/slack-webhook"
-        keyVaults:
-          "draft-store":
-            resourceGroup: draft-store-service
-            excludeEnvironmentSuffix: false
-            secrets:
-            - slack-webhook
+        enabled: true
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d64c182c
       functionaltests:
-        enabled: false
-        image: hmctspublic.azurecr.io/plum/recipe-backend:test-prod-84abb0b4
-        environment:
-          TEST_URL: http://draft-store-service-java
-          TASK: functional
-          SLACK_CHANNEL: "rpe-build-notices"
-          SLACK_WEBHOOK: "draft-store/slack-webhook"
-          SLACK_MESSAGE_FAILURE: >
-            Gradle Build Failure.  TASK = functional aat;   TEST_URL = http://plum-recipe-backend-java
-        keyVaults:
-          "draft-store":
-            excludeEnvironmentSuffix: false
-            secrets:
-            - slack-webhook
+        enabled: true
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-84abb0b4
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
-    smoketestscron:
-      enabled: false
-    functionaltestscron:
-      enabled: false
