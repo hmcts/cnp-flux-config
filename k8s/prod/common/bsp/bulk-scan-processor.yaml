@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.2.12
+    version: 0.2.13
   values:
     java:
       replicas: 2
@@ -23,6 +23,7 @@ spec:
       cpuLimits: '2500m'
       image: hmctspublic.azurecr.io/bulk-scan/processor:prod-937066a8
       environment:
+        STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
         PROCESS_PAYMENTS_ENABLED: false
         SMTP_HOST: smtp.office365.com

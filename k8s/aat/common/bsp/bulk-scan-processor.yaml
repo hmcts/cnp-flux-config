@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.2.12
+    version: 0.2.13
   values:
     java:
       replicas: 2
@@ -22,6 +22,8 @@ spec:
       cpuRequests: '500m'
       cpuLimits: '2500m'
       image: hmctspublic.azurecr.io/bulk-scan/processor:prod-937066a8
+      environment:
+        STORAGE_BLOB_SELECTED_CONTAINER: ALL
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
