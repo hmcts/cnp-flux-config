@@ -16,7 +16,7 @@ spec:
   chart:
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
     name: ccd
-    version: 4.0.5-alpha
+    version: 4.0.6-alpha
   values:
     tags:
       idam-pr: true
@@ -54,28 +54,19 @@ spec:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             secretRef: ccd-admin-web-oauth2-client-secret
             key: key
-        environment:
-          ADMINWEB_ROLES_WHITELIST: 'ccd-import,ccd-import-validate'
-          IDAM_ADMIN_WEB_SERVICE_KEY: AAAAAAAAAAAAAAAA
     ccd-case-activity-api:
       nodejs:
         environment:
           CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
           
-
-
     #TODO move ccd-test-stubs-service defaults to chart ccd
     ccd-test-stubs-service:
       java:
         ingressHost: test-stubs-service-ccd-aks.demo.platform.hmcts.net
         environment:
           MANAGEMENT_WEB_URL: www-ccd-aks.demo.platform.hmcts.net
-#Dependencies
+    #Dependencies
     rpe-service-auth-provider:
       java:
         releaseNameOverride: ccd-demo-s2s
-    draft-store-service:
-      enabled: true
-      java:
-        ingressHost:
 
