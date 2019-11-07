@@ -25,6 +25,7 @@ spec:
       ccdApiGatewayIngress: gateway-ccd-aks.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-ccd-aks.demo.platform.hmcts.net
       ccdAdminWebIngress: ccd-admin-web-aks.demo.platform.hmcts.net
+      dmStoreIngress: dm-store-ccd-aks.demo.platform.hmcts.net
       # can ingressHost be removed?
       ingressHost: chart-ccd.demo.platform.hmcts.net
 #     TODO remove protocol to allow better reusability?
@@ -52,6 +53,8 @@ spec:
           IDAM_OAUTH2_CLIENT_SECRET:
             secretRef: ccd-api-gateway-oauth2-client-secret
             key: key
+        environment:
+          PROXY_DOCUMENT_MANAGEMENT: '{{ .Values.global.dmStoreIngress }}'
     ccd-case-management-web:
       nodejs:
         releaseNameOverride: ccd-demo-case-management-web
@@ -120,6 +123,8 @@ spec:
 #    TODO move dm-store on chart-ccd and remove it here
     dm-store:
       java:
+        ingressClass: traefik-no-proxy
+        ingressHost: dm-store-ccd-aks.demo.platform.hmcts.net
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
