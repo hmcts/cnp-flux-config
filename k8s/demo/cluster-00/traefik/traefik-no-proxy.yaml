@@ -17,7 +17,7 @@ spec:
     - name: "traefik-values"
   values:
     imageTag: 1.7.14
-    loadBalancerIP: 51.145.22.48
+    loadBalancerIP: 51.11.5.163
     kubernetes:
       ingressClass: traefik-no-proxy
       ingressEndpoint:
@@ -26,6 +26,7 @@ spec:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
     dashboard:
+      enabled: true
       domain: traefik00-no-proxy.demo.platform.hmcts.net
     resources:
       requests:
@@ -35,8 +36,6 @@ spec:
         cpu: 1000m
         memory: 300Mi
     rbac:
-      enabled: true
-    dashboard:
       enabled: true
     ssl:
       enabled: true

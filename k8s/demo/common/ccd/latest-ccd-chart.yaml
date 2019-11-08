@@ -1,3 +1,4 @@
+---
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
@@ -16,9 +17,8 @@ spec:
   chart:
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
     name: ccd
-    version: 4.0.4-alpha
+    version: 4.0.6-alpha
   values:
-#    TODO: enable persistent db
     tags:
       idam-pr: true
     global:
@@ -34,16 +34,6 @@ spec:
       redirectUri: https://ccd-demo-case-management-web.demo.platform.hmcts.net/oauth2redirect
       s2sUrl: http://ccd-demo-s2s
 
-    # Enable support services tags 
-    # TODO to be enabled these in product chart instead of here 
-    ccd:
-      printService:
-        enabled: true
-      activityApi:
-        enabled: true
-      dmStore:
-        enabled: true
-
     ccd-api-gateway-web:
       nodejs:
         ingressClass: traefik-no-proxy
@@ -56,6 +46,9 @@ spec:
       nodejs:
         releaseNameOverride: ccd-demo-case-management-web
         ingressHost: www-ccd-aks.demo.platform.hmcts.net
+        environment:
+          # TODO move this to ccd-chart
+          DM_URL_REMOTE: "^https?://(?:dm-store(?::\\d+)?)/documents"
     ccd-admin-web:
       nodejs:
         ingressClass: traefik-no-proxy
@@ -65,58 +58,51 @@ spec:
             secretRef: ccd-admin-web-oauth2-client-secret
             key: key
         environment:
-#         TODO move this to ccd-chart
           ADMINWEB_LOGIN_URL: https://idam-web-public.demo.platform.hmcts.net/login
-          ADMINWEB_ROLES_WHITELIST: 'ccd-import,ccd-import-validate'
-#          TODO update IDAM_BASE_URL, IDAM_OAUTH2_TOKEN_ENDPOINT, IDAM_OAUTH2_LOGOUT_ENDPOINT in ccd-chart and remove it from here
-          IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
-          IDAM_OAUTH2_TOKEN_ENDPOINT: '{{ .Values.global.idamApiUrl }}/oauth2/token'
-          IDAM_OAUTH2_LOGOUT_ENDPOINT: '{{ .Values.global.idamApiUrl }}/session/:token'
-          IDAM_ADMIN_WEB_SERVICE_KEY: AAAAAAAAAAAAAAAA
-          ADMINWEB_IMPORT_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/import'
-          ADMINWEB_JURISDICTIONS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/data/jurisdictions'
-          ADMINWEB_USER_PROFILE_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/users'
-          ADMINWEB_SAVE_USER_PROFILE_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/users/save'
-          ADMINWEB_USER_ROLE_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/user-role'
-          ADMIN_ALL_USER_ROLES_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/user-roles'
-          ADMINWEB_CREATE_DEFINITION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/draft'
-          ADMINWEB_UPDATE_DEFINITION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/draft/save'
-          ADMINWEB_DEFINITIONS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/drafts'
-          ADMINWEB_WHOAMI_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/profile'
-          ADMINWEB_IMPORT_AUDITS_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/import-audits'
-          ADMINWEB_AUTHORIZATION_URL: '{{ .Values.global.ccdDefinitionStoreUrl }}/api/idam/adminweb/authorization'
     ccd-definition-store-api:
       java:
         memoryRequests: "1G"
         memoryLimits: "2G"
-
     # CCD Supporting services
-    ccd-case-print-service:
-      nodejs:
-        ingressHost:
-        environment:
-        # TO DO move this to chart-ccd
-          CASE_DATA_STORE_URL: '{{ .Values.global.ccdDataStoreUrl }}'
     ccd-case-activity-api:
       nodejs:
         environment:
-        # TO DO move IDAM_BASE_URL to chart-ccd
           CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
-          IDAM_BASE_URL: '{{ .Values.global.idamApiUrl }}'
-
-
-    #TODO move ccd-test-stubs-service defaults to chart ccd
+    
     ccd-test-stubs-service:
       java:
         ingressHost: test-stubs-service-ccd-aks.demo.platform.hmcts.net
         environment:
           MANAGEMENT_WEB_URL: www-ccd-aks.demo.platform.hmcts.net
-#Dependencies
-#    TODO enable persist by default on chart-ccd and remove it here
+
+    #Dependencies
+#    TODO enable persistence on chart-ccd and remove it here
     postgresql:
       persistence:
         enabled: true
-
+#    TODO move dm-store on chart-ccd and remove it here
+    dm-store:
+      java:
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            disabled: false
+            secretRef: storage-secret-ccd-demo
+            key: storageAccountName
+          STORAGE_ACCOUNT_KEY:
+            disabled: false
+            secretRef: storage-secret-ccd-demo
+            key: accessKey
+          STORAGE_CONTAINER_DOCUMENT_CONTAINER_NAME:
+            disabled: false
+            secretRef: container-secret-ccd-demo-dm-docstore
+            key: containerName
+        environment:
+          MAX_FILE_SIZE: '100MB'
+          ENABLE_AZURE_STORAGE_CONTAINER: 'true'
+          POSTGRES_STORAGE_ENABLED: 'false'
+          STORAGEACCOUNT_PRIMARY_CONNECTION_STRING: "DefaultEndpointsProtocol=https;AccountName=$(STORAGE_ACCOUNT_NAME);AccountKey=$(STORAGE_ACCOUNT_KEY);EndpointSuffix=core.windows.net"
+      blobstorage:
+        enabled: true
     rpe-service-auth-provider:
       java:
         releaseNameOverride: ccd-demo-s2s

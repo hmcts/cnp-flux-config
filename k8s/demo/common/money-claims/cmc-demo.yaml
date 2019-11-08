@@ -33,7 +33,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 0.0.18
+    version: 0.0.21
   values:
     ### CMC SERVICES ###
     cmc-claim-store:
@@ -80,8 +80,6 @@ spec:
           SPRING_MAIL_PORT: 1025
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mailhog
           SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
-          PAY_URL: false
-          FEES_URL: false
           APPINSIGHTS_INSTRUMENTATIONKEY: 00000000-0000-0000-0000-000000000000
       ccd:
         idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -193,17 +191,13 @@ spec:
       java:
         image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-9bc42394
         releaseNameOverride: cmc-demo-sendletter
-        ingressHost: 
         environment:
-          FLYWAY_URL: "jdbc:postgresql://cmc-demo-postgres:5432/send_letter"
+          FLYWAY_URL: "jdbc:postgresql://cmc-demo-postgres:5432/send_letter"          
           LETTER_TRACKING_DB_HOST: cmc-demo-postgres
           S2S_URL: http://cmc-demo-s2s
-          APPINSIGHTS_INSTRUMENTATIONKEY: 00000000-0000-0000-0000-000000000000
-          SCHEDULING_ENABLED: false
 
     dm-store:
       java:
-        # image: hmctspublic.azurecr.io/dm/store:pr-334  # comment here so flux doesnt update, pinned in chart-cmc
         releaseNameOverride: cmc-demo-dmstore
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
