@@ -1,14 +1,14 @@
-# required for apps that can't handle oauth-proxy
-# i.e. ccd-api-gateway
+# required for apps that can't handle oauth-proxy and not public
+# i.e. bulks-scan-processor
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: traefik-no-proxy
+  name: traefik-private
   namespace: admin
   annotations:
     flux.weave.works/automated: "false"
 spec:
-  releaseName: traefik-no-proxy
+  releaseName: traefik-private
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: traefik
@@ -17,17 +17,18 @@ spec:
     - name: "traefik-values"
   values:
     imageTag: 1.7.14
-    loadBalancerIP: 51.11.5.163
+    loadBalancerIP: 10.11.15.221
     kubernetes:
-      ingressClass: traefik-no-proxy
+      ingressClass: traefik-private
       ingressEndpoint:
         useDefaultPublishedService: true
     service:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     dashboard:
       enabled: true
-      domain: traefik00-no-proxy.demo.platform.hmcts.net
+      domain: traefik00-private.demo.platform.hmcts.net
     resources:
       requests:
         cpu: 100m
@@ -59,5 +60,5 @@ spec:
             - key: release
               operator: In
               values:
-                - traefik-no-proxy
+                - traefik-private
           topologyKey: "kubernetes.io/hostname"
