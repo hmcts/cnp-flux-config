@@ -51,7 +51,10 @@ spec:
           - prometheus-01.service.core-compute-sandbox.internal
 
     alertmanager:
-      alertmanagerSpec: 
-        secrets:
-          - slackapi-url-secret   
+      config:
+        global:
+          valueFileSecrets:
+          - name: "prometheus-values"
+
+
 
