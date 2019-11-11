@@ -14,6 +14,8 @@ spec:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
     version: 6.21.0
+  valueFileSecrets:
+  - name: "prometheus-values"
   values:
     defaultRules:
       create: true
@@ -52,13 +54,11 @@ spec:
 
     alertmanager:
       config:
-        global:
-          valueFileSecrets:
-          - name: "prometheus-values"
         receivers:
         - name: slack_alerting
           slack_configs:
           - channel: prometheus-alerting
+
 
 
 
