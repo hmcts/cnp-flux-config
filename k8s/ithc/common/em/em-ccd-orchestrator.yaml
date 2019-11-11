@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccd-orchestrator
-    version: 0.1.5
+    version: 0.1.6
   values:
     java:
       replicas: 2
@@ -22,12 +22,6 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-105aa18b
       ingressHost: em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
-      environment:
-        IDAM_API_BASE_URI: https://idam-api.ithc.platform.hmcts.net
-        S2S_BASE_URI: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
-        EM_STITCHING_API_URL: http://em-stitching-ithc.service.core-compute-ithc.internal
-        DM_STORE_APP_URL: http://dm-store-ithc.service.core-compute-ithc.internal
-        CALLBACK_DOMAIN: em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
