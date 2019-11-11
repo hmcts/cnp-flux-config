@@ -51,7 +51,17 @@ spec:
           - prometheus-01.service.core-compute-sandbox.internal
 
     alertmanager:
-      alertmanagerSpec: 
-        secrets:
-          - slackapi-url-secret   
+      config:
+        global:
+          valueFileSecrets:
+          - name: "prometheus-values"
+        receivers:
+        - name: slack_alerting
+          slack_configs:
+          - channel: prometheus-alerting
+
+
+
+
+
 
