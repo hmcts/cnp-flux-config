@@ -60,6 +60,10 @@ spec:
       config:
         route:
           receiver: 'slack_alerting'
+          routes:
+          - match:
+              alertname: Watchdog
+            receiver: "slack-alerting"        
         receivers:
           - name: 'slack_alerting'
             slack_configs:
