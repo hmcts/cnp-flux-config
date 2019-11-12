@@ -17,12 +17,25 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan
-    version: 0.1.2
+    version: 0.1.5
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
       idamWebUrl: idam-web-public.demo.platform.hmcts.net
       ccdDataStoreUrl: "http://ccd-data-store"
+    bulk-scan-processor:
+      java:
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-732e2ec3
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            secretRef: bsp-storage-account-creds
+            key: storageAccountName
+          STORAGE_KEY:
+            secretRef: bsp-storage-account-creds
+            key: accessKey
+        environment:
+          STORAGE_URL: "https://bulk-scanning.demo.platform.hmcts.net"
+          STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
     ccd:
       postgresql:
         enabled: false
@@ -58,3 +71,6 @@ spec:
           CREATE DATABASE "draftstore" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "payment_api" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "evidence" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+bsp:
+  blobstorage:
+    enabled: false
