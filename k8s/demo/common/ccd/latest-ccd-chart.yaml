@@ -17,7 +17,7 @@ spec:
   chart:
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
     name: ccd
-    version: 4.0.7-alpha
+    version: 4.0.8-alpha
   values:
     tags:
       idam-pr: true
@@ -77,29 +77,11 @@ spec:
 
     #Dependencies
 
-#    TODO move dm-store on chart-ccd and remove it here
     dm-store:
       java:
-        secrets:
-          STORAGE_ACCOUNT_NAME:
-            disabled: false
-            secretRef: storage-secret-ccd-demo
-            key: storageAccountName
-          STORAGE_ACCOUNT_KEY:
-            disabled: false
-            secretRef: storage-secret-ccd-demo
-            key: accessKey
-          STORAGE_CONTAINER_DOCUMENT_CONTAINER_NAME:
-            disabled: false
-            secretRef: container-secret-ccd-demo-dm-docstore
-            key: containerName
         environment:
           MAX_FILE_SIZE: '100MB'
-          ENABLE_AZURE_STORAGE_CONTAINER: 'true'
-          POSTGRES_STORAGE_ENABLED: 'false'
-          STORAGEACCOUNT_PRIMARY_CONNECTION_STRING: "DefaultEndpointsProtocol=https;AccountName=$(STORAGE_ACCOUNT_NAME);AccountKey=$(STORAGE_ACCOUNT_KEY);EndpointSuffix=core.windows.net"
-      blobstorage:
-        enabled: true
+
     rpe-service-auth-provider:
       java:
         releaseNameOverride: ccd-demo-s2s
