@@ -33,7 +33,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 0.0.22
+    version: 0.0.24
   values:
     ### CMC SERVICES ###
     cmc-claim-store:
@@ -109,7 +109,8 @@ spec:
         caseManagementWeb:
           image: hmctspublic.azurecr.io/ccd/case-management-web:pr-802
           environment:
-            ANNOTATION_API_URL: https://gateway-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/em-anno          
+            ANNOTATION_API_URL: https://gateway-ccd-cmc-citizen-frontend.demo.platform.hmcts.net/em-anno
+            DM_URL_REMOTE: ^https?://(?:cmc-demo-dmstore(?::\\d+)?)/documents         
         adminWeb:
           image: hmctspublic.azurecr.io/ccd/admin-web:prod-b2401981
           s2sKey: AAAAAAAAAAAAAAAA
@@ -133,7 +134,6 @@ spec:
             userProfileDatabaseHost: cmc-demo-postgres
             users:
               - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
-              - timja@kainos.com|CMC|MoneyClaimCase|open
           definition:
             image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.4.7
             waitHosts: cmc-demo-definition-store-api:80
