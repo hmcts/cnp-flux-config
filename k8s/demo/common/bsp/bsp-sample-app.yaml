@@ -60,6 +60,16 @@ spec:
     bulk-scan-processor:
       java:
         image: hmctspublic.azurecr.io/bulk-scan/processor:prod-732e2ec3
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            secretRef: bsp-storage-account-creds
+            key: storageAccountName
+          STORAGE_KEY:
+            secretRef: bsp-storage-account-creds
+            key: accessKey
+        environment:
+          STORAGE_URL: "https://bulk-scanning.demo.platform.hmcts.net"
+          STORAGE_BLOB_SELECTED_CONTAINER: "ALL"
     bulk-scan-orchestrator:
       java:
         image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-5cdc3187
@@ -78,3 +88,11 @@ spec:
           CREATE DATABASE "draftstore" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "payment_api" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "evidence" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+bsp:
+  servicebus:
+    enabled: true
+  blobstorage:
+    enabled: false
+bso:
+  servicebus:
+    enabled: false
