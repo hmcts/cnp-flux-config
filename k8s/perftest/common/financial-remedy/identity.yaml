@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: finrem
+  namespace: financial-remedy
+spec:
+  type: 0
+  ResourceID: "/subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/finrem-perftest-mi"
+  ClientID: "2e38e504-a4d8-4f94-af84-ebb9c30d38a9"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: finrem-binding
+  namespace: financial-remedy
+spec:
+  AzureIdentity: finrem
+  Selector: finrem

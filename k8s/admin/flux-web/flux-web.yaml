@@ -1,0 +1,25 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: flux-web
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: flux-web
+  chart:
+    git: https://github.com/flux-web/flux-web
+    ref: master
+    path: chart/flux-web
+  values:
+    namespace: admin
+    frontend:
+      env:
+        READ_ONLY: true
+    backend:
+      env:
+        READ_ONLY: true
+    ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik

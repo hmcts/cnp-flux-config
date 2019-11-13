@@ -1,0 +1,26 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: em-ccd-orchestrator
+  namespace: em
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: em-ccd-orchestrator
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-ccd-orchestrator
+    version: 0.1.6
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-105aa18b
+      ingressHost: em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
+    global:
+      environment: perftest
+      enableKeyVaults: true

@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: probate
+ namespace: probate
+spec:
+ type: 0
+ ResourceID: /subscriptions/8a07fdcd-6abd-48b3-ad88-ff737a4b9e3c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/probate-perftest-mi
+ ClientID: 03b0576c-bf09-4e64-9902-d9792a46aebc
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: probate-binding
+  namespace: probate
+spec:
+  AzureIdentity: probate
+  Selector: probate

@@ -1,0 +1,32 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: repl-docmosis-service
+  namespace: ethos
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: repl-docmosis-service
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ethos-repl-docmosis-backend
+    version: 0.1.6
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-3286b4a6
+      ingressHost: ethos-repl-docmosis-backend-prod.service.core-compute-prod.internal
+      environment:
+        TORNADO_URL: https://docmosis.platform.hmcts.net/rs/render
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        CCD_GATEWAY_BASE_URL: https://gateway.ccd.platform.hmcts.net
+    global:
+      environment: prod
+      subscriptionId: "abcd"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

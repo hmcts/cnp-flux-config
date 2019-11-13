@@ -5,38 +5,20 @@ metadata:
   name: draft-store-service-test
   namespace: rpe
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: draft-store-service-test
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.0.7
+    version: 1.4.1
   values:
     java:
-      image: hmctspublic.azurecr.io/draft-store/service:prod-ce1af948
-      ingressHost: draft-store-service.service.core-compute-sandbox.internal
-      aadIdentityName: rpe
-      environment:
-        DRAFT_STORE_DB_CONN_OPTIONS: ?sslmode=require
-        DRAFT_STORE_DB_HOST: rpe-draft-store-sandbox.postgres.database.azure.com
-        DRAFT_STORE_DB_NAME: draftstore
-        DRAFT_STORE_DB_PORT: '5432'
-        DRAFT_STORE_DB_USER_NAME: draftstore@rpe-draft-store-sandbox
-        RUN_DB_MIGRATION_ON_STARTUP: 'false'
-        IDAM_URL: http://idam-api-idam-sandbox.service.core-compute-idam-sandbox.internal
-        S2S_URL: http://rpe-service-auth-provider-sandbox.service.core-compute-sandbox.internal
-        SPRING_APPLICATION_NAME: "HMCTS Draft Store AKS"
-      keyVaults:
-        "draft-store":
-          resourceGroup: draft-store-service
-          secrets:
-          - service-POSTGRES-PASS
+      image: hmctspublic.azurecr.io/draft-store/service:prod-ab9b5deb
       prometheus:
         enabled: true
     global:
       environment: sandbox
-      subscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
