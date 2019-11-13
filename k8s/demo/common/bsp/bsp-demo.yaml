@@ -32,12 +32,12 @@ spec:
       ccdDataStoreUrl: "http://ccd-data-store"
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-732e2ec3
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-54aba8f0
         environment:
           STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
     bulk-scan-orchestrator:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-5cdc3187
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-6e76bf8b
     rpe-service-auth-provider:
       java:
         image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-aea1a2bd
@@ -79,3 +79,6 @@ spec:
           CREATE DATABASE "draftstore" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "payment_api" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "evidence" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+bsp:
+  blobstorage:
+    enabled: false
