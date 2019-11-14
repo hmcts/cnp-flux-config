@@ -36,9 +36,11 @@ spec:
         prometheus: true
         prometheusOperator: true
         time: true
+
     kubelet:
       serviceMonitor:
         https: false
+
     grafana:
       ingress:
         enabled: true
@@ -46,3 +48,8 @@ spec:
           kubernetes.io/ingress.class: traefik
         hosts:
           - grafana.service.core-compute-sandbox.internal
+      additionalDatasources:
+        - name: prometheus-00
+          url: http://prometheus-00.service.core-compute-sandbox.internal/
+        - name: prometheus-01
+          url: http://prometheus-01.service.core-compute-sandbox.internal/
