@@ -71,6 +71,8 @@ spec:
         - name: 'slack_alerting'
           slack_configs:
           - channel: prometheus-alerting
+            title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+            text: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
 
 
 
