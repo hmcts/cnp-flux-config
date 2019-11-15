@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: draft-store-service-test
+  namespace: monitoring
+  labels:
+    team: rpe
+    heritage: Tiller
+spec:
+  namespaceSelector:
+    matchNames:
+    - rpe
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: draft-store-service-test-java
+  endpoints:
+  - port: http
+    path: /prometheus
