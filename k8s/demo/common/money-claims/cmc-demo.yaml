@@ -130,8 +130,12 @@ spec:
             userProfileDatabaseHost: cmc-demo-postgres
             users:
               - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
+              - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
+              - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
           definition:
             image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.0
+            environment:
+              CCD_DEF_CLAIM_STORE_BASE_URL: http://cmc-demo-claimstore
             waitHosts: cmc-demo-definition-store-api:80
             waitHostsTimeout: 300
             importerFromSecret: true
