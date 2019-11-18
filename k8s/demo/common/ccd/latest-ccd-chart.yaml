@@ -66,6 +66,21 @@ spec:
         ingressHost: test-stubs-service-ccd-aks.demo.platform.hmcts.net
         environment:
           MANAGEMENT_WEB_URL: '{{ .Values.global.ccdCaseManagementWebIngress }}'
+    
+    # Enabling importers in Demo, this may move to base chart at a later date.
+    ccd:
+      userProfileImporter:
+        enabled: true
+      definitionImporter:
+        enabled: true
+   
+    ccd-user-profile-importer:
+        users:
+          - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+
+    ccd-definition-importer:
+        definitions: 
+        - https://github.com/hmcts/ccd-definition-store-api/blob/master/aat/src/resource/CCD_CNP_27.xlsx
 
     #Dependencies
     dm-store:
