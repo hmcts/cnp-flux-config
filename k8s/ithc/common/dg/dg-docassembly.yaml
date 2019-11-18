@@ -6,7 +6,7 @@ metadata:
   namespace: dg
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.docassembly-api: glob:prod-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: dg-docassembly
   rollback:
@@ -14,21 +14,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 1.0.1
+    version: 1.0.3
   values:
     java:
       replicas: 2
       applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dg/docassembly:ithc
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-a2850460
       environment:
-        DOCMOSIS_TEMPLATES_ENDPOINT: "https://docmosis.ithc.platform.hmcts.net"
-        DOCMOSIS_ENDPOINT: "https://docmosis.ithc.platform.hmcts.net/rs/render"
-        S2S_BASE_URI: "http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal"
-        DM_STORE_APP_URL: "http://dm-store-ithc.service.core-compute-ithc.internal"
         ENABLE_FORM_DEFINITION_ENDPOINT: "false"
         ENABLE_TEMPLATE_RENDITION_ENDPOINT: "true"
-        IDAM_API_BASE_URI: "https://idam-api.ithc.platform.hmcts.net"
       ingressHost: dg-docassembly-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc

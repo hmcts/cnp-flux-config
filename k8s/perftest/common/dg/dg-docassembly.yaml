@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 1.0.2
+    version: 1.0.3
   values:
     java:
       replicas: 2
@@ -23,11 +23,8 @@ spec:
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dg/docassembly:prod-33358097
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-a2850460
       ingressHost: dg-docassembly-perftest.service.core-compute-perftest.internal
-      environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
     global:
       environment: perftest
       enableKeyVaults: true

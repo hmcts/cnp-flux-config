@@ -45,13 +45,15 @@ spec:
 
     grafana:
       enabled: false
-
     prometheus:
       ingress: 
         enabled: true
         hosts: 
           - prometheus-01.sandbox.platform.hmcts.net
-
+      prometheusSpec:
+        serviceMonitorSelector:
+          matchLabels:
+            heritage: Tiller
     prometheusOperator:
       enabled: true
       createCustomResource: false
@@ -68,6 +70,8 @@ spec:
         - name: 'slack_alerting'
           slack_configs:
           - channel: prometheus-alerting
+            title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+            text: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
 
 
 
