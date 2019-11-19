@@ -46,10 +46,9 @@ spec:
             rules: 
             - alert: TestAlert
               expr: up{job="kube-state-metrics"} > 0.5
-              for: 2m
+              for: 1m
               annotations:
-                summary: "Job {{ $labels.job }} up"
-                description: "{{ $labels.job }} has been up in the last minute."  
+                message: "Job {{ $labels.job }} has been up in the last minute."  
 
 
     kubelet:
@@ -83,8 +82,7 @@ spec:
         - name: 'slack_alerting'
           slack_configs:
           - channel: prometheus-alerting
-            title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
-            text: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
+            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
 
 
 
