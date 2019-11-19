@@ -38,6 +38,19 @@ spec:
         prometheus: true
         prometheusOperator: true
         time: true
+    
+    additionalPrometheusRules:
+      - name: test-alert-file
+        groups:
+          - name: my_group 
+            rules: 
+            - alert: TestAlert
+              expr: up{job="kube-state-metrics"} > 0.5
+              for: 2m
+              annotations:
+                summary: "Job {{ $labels.job }} up"
+                description: "{{ $labels.job }} has been up in the last minute."  
+
 
     kubelet:
       serviceMonitor:
