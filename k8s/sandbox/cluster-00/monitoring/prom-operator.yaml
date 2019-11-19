@@ -14,6 +14,8 @@ spec:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
     version: 8.2.0
+  valueFileSecrets:
+  - name: "prometheus-values"
   values:
     defaultRules:
       create: true
@@ -57,3 +59,21 @@ spec:
         serviceMonitorSelector:
           matchLabels:
             heritage: Tiller
+
+    alertmanager:
+      ingress:
+        enabled: true
+        hosts:
+          - alertmanager-00.sandbox.platform.hmcts.net
+      config:
+        route:
+          receiver: 'slack_alerting'
+          routes:
+          - match:
+              alertname: Watchdog
+            receiver: "slack_alerting"        
+        receivers:
+        - name: 'slack_alerting'
+          slack_configs:
+          - channel: prometheus-alerting
+            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
