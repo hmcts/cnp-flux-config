@@ -2,28 +2,27 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: sscs-bulk-scan
-  namespace: sscs
+  name: ccpay-bulkscanning-api
+  namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: sscs-bulk-scan
+  releaseName: ccpay-bulkscanning-api
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-bulk-scan
-    version: 0.0.5
+    name: ccpay-bulkscanning-api
+    version: 0.0.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-cd3a9ee3
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-cce4db1c
       environment:
-        READY_TO_LIST_OFFICES: 3
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
     global:
-      environment: aat
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
