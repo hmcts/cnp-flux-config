@@ -59,7 +59,7 @@ spec:
         enabled: true
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-54aba8f0
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-d006554d
         secrets:
           STORAGE_ACCOUNT_NAME:
             secretRef: bsp-storage-account-creds
@@ -75,17 +75,17 @@ spec:
           STORAGE_BLOB_SELECTED_CONTAINER: "ALL"
     bulk-scan-orchestrator:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-ff50e6aa
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-074f6e19
         secrets:
           SB_CONN_STRING:
             secretRef: servicebus-secret-namespace-{{ .Release.Name }}-sb
             key: connectionString
     rpe-service-auth-provider:
       java:
-        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-aea1a2bd
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-8d41c2be
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-2a59d711
+        image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2
     postgresql:
       initdbScripts:
         init.sql: |-
