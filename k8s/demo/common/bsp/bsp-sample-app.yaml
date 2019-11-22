@@ -43,10 +43,10 @@ spec:
       java:
         ingressHost: ""
         releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-54aba8f0
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-14ddc403
     bulk-scan-orchestrator:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-6592a8e9
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-dfabaef1
         environment:
           TRANSFORMATION_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
           UPDATE_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
@@ -69,8 +69,8 @@ spec:
         location: ukwest
         setup:
           containers:
-            - dm-store
-            - definition-store
+          - dm-store
+          - definition-store
     ccd:
       postgresql:
         enabled: false
