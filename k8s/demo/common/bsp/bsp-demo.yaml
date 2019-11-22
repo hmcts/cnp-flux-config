@@ -26,7 +26,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan
-    version: 0.1.13
+    version: 0.1.14
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
@@ -46,6 +46,9 @@ spec:
     rpe-service-auth-provider:
       java:
         image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-8d41c2be
+        environment:
+          MICROSERVICEKEYS_CCD_DATA: AAAAAAAAAAAAAAAA
+          MICROSERVICEKEYS_CCD_DEFINITION: AAAAAAAAAAAAAAAA
     dm-store:
       java:
         image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2
