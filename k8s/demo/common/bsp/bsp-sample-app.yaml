@@ -14,6 +14,10 @@ metadata:
     filter.fluxcd.io/rpe-service-auth-provider: glob:prod-*
     repository.fluxcd.io/dm-store: dm-store.java.image
     filter.fluxcd.io/dm-store: glob:prod-*
+    repository.fluxcd.io/bulk-scan-payment-processor: bulk-scan-payment-processor.java.image
+    filter.fluxcd.io/bulk-scan-payment-processor: glob:prod-*
+    repository.fluxcd.io/bulk-scan-sample-app: bulk-scan-sample-app.java.image
+    filter.fluxcd.io/bulk-scan-sample-app: glob:prod-*
 spec:
   releaseName: bsp-sample-app
   timeout: 900
@@ -24,18 +28,55 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-sample-app
-    version: 1.0.1
+    version: 1.0.2
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
       idamWebUrl: idam-web-public.demo.platform.hmcts.net
-      ccdDataStoreUrl: "http://ccd-data-store"
+      devMode: true
+    bulk-scan-processor:
+      java:
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-14ddc403
+        environment:
+          STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
+    bulk-scan-sample-app:
+      java:
+        ingressHost: ""
+        releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-54aba8f0
+    bulk-scan-orchestrator:
+      java:
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-6592a8e9
+        environment:
+          TRANSFORMATION_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
+          UPDATE_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
+    bulk-scan-payment-processor:
+      java:
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-d767cc21
+    rpe-service-auth-provider:
+      java:
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-8d41c2be
+        environment:
+          MICROSERVICEKEYS_CCD_DATA: AAAAAAAAAAAAAAAA
+          MICROSERVICEKEYS_CCD_DEFINITION: AAAAAAAAAAAAAAAA
+    dm-store:
+      java:
+        image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2
+      blobstorage:
+        enabled: true
+        resourceGroup: bulk-scan-aks
+        teamName: "Software Engineering"
+        location: ukwest
+        setup:
+          containers:
+            - dm-store
+            - definition-store
     ccd:
       postgresql:
         enabled: false
-      rpeServiceAuthProvider:
-        enabled: true
-      draftStoreService:
+      s2s:
+        enabled: false
+      draftStore:
         enabled: false
       dmStore:
         enabled: false
@@ -53,39 +94,35 @@ spec:
         enabled: false
       testStubsService:
         enabled: false
+      definitionImporter:
+        enabled: false
+      userProfileImporter:
+        enabled: false
+      blobstorage:
+        enabled: false
+      emAnnotation:
+        enabled: false
+      ccpay:
+        enabled: false
+      ccd-definition-store-api:
+        java:
+          secrets:
+            STORAGE_ACCOUNT_NAME:
+              secretRef: storage-secret-{{ .Release.Name }}
+              key: storageAccountName
+            STORAGE_ACCOUNT_KEY:
+              secretRef: storage-secret-{{ .Release.Name }}
+              key: accessKey
+    ccpay:
+      payment-api:
+        java:
+          environment:
+            GOV_PAY_AUTH_KEY_CMC: la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
+            GOV_PAY_AUTH_KEY_DIVORCE_FRONTEND: la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
+            GOV_PAY_AUTH_KEY_PROBATE_FRONTEND: la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
     bulkscan:
-      enabled: true
       ccd:
         enabled: true
-    bulk-scan-processor:
-      java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-14ddc403
-        secrets:
-          STORAGE_ACCOUNT_NAME:
-            secretRef: bsp-storage-account-creds
-            key: storageAccountName
-          STORAGE_KEY:
-            secretRef: bsp-storage-account-creds
-            key: accessKey
-          SB_CONN_STRING:
-            secretRef: servicebus-secret-namespace-{{ .Release.Name }}-sb
-            key: connectionString
-        environment:
-          STORAGE_URL: "https://bulk-scanning.demo.platform.hmcts.net"
-          STORAGE_BLOB_SELECTED_CONTAINER: "ALL"
-    bulk-scan-orchestrator:
-      java:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-dfabaef1
-        secrets:
-          SB_CONN_STRING:
-            secretRef: servicebus-secret-namespace-{{ .Release.Name }}-sb
-            key: connectionString
-    rpe-service-auth-provider:
-      java:
-        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-8d41c2be
-    dm-store:
-      java:
-        image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2
     postgresql:
       initdbScripts:
         init.sql: |-
@@ -93,13 +130,8 @@ spec:
           CREATE DATABASE "definition-store" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "user-profile" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "draftstore" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
-          CREATE DATABASE "payment_api" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+          CREATE DATABASE "payment" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
           CREATE DATABASE "evidence" WITH OWNER = hmcts ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
 bsp:
-  servicebus:
-    enabled: true
   blobstorage:
-    enabled: false
-bso:
-  servicebus:
     enabled: false
