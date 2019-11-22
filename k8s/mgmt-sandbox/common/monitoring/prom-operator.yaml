@@ -37,6 +37,18 @@ spec:
         prometheusOperator: true
         time: true
 
+    prometheus:
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
     prometheusOperator:
       enabled: true
       createCustomResource: false
@@ -112,4 +124,6 @@ spec:
         - name: 'slack_alerting'
           slack_configs:
           - channel: prometheus-alerting
-            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"         
+            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"       
+
+          
