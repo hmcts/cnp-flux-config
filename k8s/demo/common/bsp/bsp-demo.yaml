@@ -26,7 +26,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan
-    version: 0.1.13
+    version: 0.1.15
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
@@ -34,18 +34,21 @@ spec:
       devMode: true
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-72cab928
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-14ddc403
         environment:
           STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
     bulk-scan-orchestrator:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-f6415d26
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-6592a8e9
     bulk-scan-payment-processor:
       java:
         image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-d767cc21
     rpe-service-auth-provider:
       java:
         image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-8d41c2be
+        environment:
+          MICROSERVICEKEYS_CCD_DATA: AAAAAAAAAAAAAAAA
+          MICROSERVICEKEYS_CCD_DEFINITION: AAAAAAAAAAAAAAAA
     dm-store:
       java:
         image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2

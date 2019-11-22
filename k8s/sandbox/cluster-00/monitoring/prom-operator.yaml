@@ -58,6 +58,17 @@ spec:
           matchLabels:
             heritage: Tiller
 
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
     alertmanager:
       ingress:
         enabled: true
@@ -74,5 +85,4 @@ spec:
         - name: 'slack_alerting'
           slack_configs:
           - channel: prometheus-alerting
-            title: 'sbox-00-aks - {{ template "slack.default.title" . }}'
             text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
