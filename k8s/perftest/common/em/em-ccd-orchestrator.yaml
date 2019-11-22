@@ -19,6 +19,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
+      keyVaults:
+        em-ccdorc:
+          resourceGroup: em-ccd-orchestrator
+          secrets:
+            - AppInsightsInstrumentationKey
+            - microservicekey-em-ccd-orchestrator
       image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-e9f5d0d3
       ingressHost: em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
     global:
