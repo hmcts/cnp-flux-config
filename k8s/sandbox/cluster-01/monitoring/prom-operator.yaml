@@ -66,6 +66,19 @@ spec:
         serviceMonitorSelector:
           matchLabels:
             heritage: Tiller
+
+      prometheus:
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
     prometheusOperator:
       enabled: true
       createCustomResource: false
