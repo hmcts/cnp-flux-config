@@ -113,18 +113,6 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net
-      config:
-        route:
-          receiver: 'slack_alerting'
-          routes:
-          - match:
-              alertname: Watchdog
-            receiver: "slack_alerting"        
-        receivers:
-        - name: 'slack_alerting'
-          slack_configs:
-          - channel: prometheus-alerting
-            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"       
+          - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net    
 
           
