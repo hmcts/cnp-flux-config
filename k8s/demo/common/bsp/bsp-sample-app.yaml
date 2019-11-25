@@ -36,10 +36,10 @@ spec:
     java:
       image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-1c61df4a
       ingressHost: ""
+      releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
     bulk-scan:
       bulk-scan-processor:
         java:
-          releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
           image: hmctspublic.azurecr.io/bulk-scan/processor:prod-14ddc403
           environment:
             STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
