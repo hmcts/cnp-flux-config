@@ -9,12 +9,10 @@ metadata:
 spec:
   releaseName: flux
   chart:
-    repository: https://charts.fluxcd.io
+    repository: https://fluxcd.github.io/flux
     name: flux
-    version: 0.15.0
+    version: 0.14.1
   values:
-    image:
-      tag: 1.16.0
     git:
       url: git@github.com:hmcts/cnp-flux-config
       pollInterval: 1m
@@ -24,6 +22,12 @@ spec:
     registry:
       acr:
         enabled: true
+    helmOperator:
+      workers: 6
+      create: true
+      chartsSyncInterval: 1m
+      configureRepositories:
+        enable: true
     additionalArgs:
       - --connect=ws://fluxcloud
       - --manifest-generation=true
