@@ -1,10 +1,12 @@
 ---
+# it is not getting deployed. keeping it as an example, later it will be deleted.
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: bsp-demo
+  name: bsp-demo-ignore
   namespace: bsp
   annotations:
+    flux.weave.works/ignore: "true"
     flux.weave.works/automated: "true"
     repository.fluxcd.io/bulk-scan-processor: bulk-scan-processor.java.image
     filter.fluxcd.io/bulk-scan-processor: glob:prod-*
@@ -26,7 +28,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan
-    version: 0.1.14
+    version: 0.1.15
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
@@ -34,12 +36,12 @@ spec:
       devMode: true
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-72cab928
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-c7ecda00
         environment:
           STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
     bulk-scan-orchestrator:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-7e0e27c7
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-dfabaef1
     bulk-scan-payment-processor:
       java:
         image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-d767cc21
@@ -51,7 +53,7 @@ spec:
           MICROSERVICEKEYS_CCD_DEFINITION: AAAAAAAAAAAAAAAA
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2
+        image: hmctspublic.azurecr.io/dm/store:prod-cafb4282
       blobstorage:
         enabled: true
         resourceGroup: bulk-scan-aks

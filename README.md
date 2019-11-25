@@ -96,8 +96,10 @@ You have a slack channel with name aks-monitor-<env>.
 
 Run (replace `<env>` with your env name ):
 ```bash
+$ ENV=<your-env>
 $ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealed-secrets/fluxcloud-values.yaml
+$ mkdir -p k8s/$ENV/common/sealed-secrets
+$ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/fluxcloud-values.yaml
 ```
 
 ### Kured values
@@ -114,7 +116,7 @@ $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml
 Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealed-secrets/kured-values.yaml
+$ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/kured-values.yaml
 ```
 
 ### Neuvector
@@ -172,14 +174,15 @@ openssl pkcs12 -in ${SECRET_NAME}.pfx -nocerts -nodes -passin pass:"" | base64 >
 Create a values.yaml file like below in tmp directory
 ```yaml
 ssl:
-  defaultCert: <pbcopy the content of ${SECRET_NAME}.crt file created above"
-  defaultKey: <pbcopy the content of ${SECRET_NAME}.key file created above"
+  defaultCert: <pbcopy the content of ${SECRET_NAME}.crt file created above>
+  defaultKey: <pbcopy the content of ${SECRET_NAME}.key file created above>
 ```
 Create traefik-values sealed secret from the values.yaml 
 
 ```bash
 kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run -o yaml > tmp/traefiksecret.yaml
-kubeseal --format=yaml --cert=k8s/mgmt-sandbox/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/<env>/common/traefik/traefik-values.yaml
+mkdir -p k8s/$ENV/common/traefik/
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/$ENV/common/traefik/traefik-values.yaml
 ```
 
 ### Kube-Slack
@@ -198,7 +201,7 @@ $ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\
 Run (replace `<env>` with your env name ):
 ```bash
 $ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/<env>/common/sealed-secrets/kube-slack-values.yaml
+$ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/kube-slack-values.yaml
 ```
 
 ### Azure DevOps
@@ -207,5 +210,6 @@ $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/values.json > k8s/
 ENV=mgmt-sandbox
 AZ_DEVOPS_TOKEN=$(az keyvault secret show --vault-name infra-vault-nonprod --name azure-devops-token --query value -o tsv)
 kubectl create secret generic vsts-token --from-literal=token=$AZ_DEVOPS_TOKEN --namespace vsts --dry-run -o json > /tmp/values.json
+mkdir -p k8s/$ENV/common/vsts/
 kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/vsts/vsts-token.yaml
 ```
