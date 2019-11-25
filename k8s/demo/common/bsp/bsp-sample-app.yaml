@@ -63,8 +63,6 @@ spec:
       dm-store:
         java:
           image: hmctspublic.azurecr.io/dm/store:prod-37ae0fb2
-        blobstorage:
-          enabled: true
           resourceGroup: bulk-scan-aks
           teamName: "Software Engineering"
           location: ukwest
@@ -73,38 +71,6 @@ spec:
             - dm-store
             - definition-store
       ccd:
-        postgresql:
-          enabled: false
-        s2s:
-          enabled: false
-        draftStore:
-          enabled: false
-        dmStore:
-          enabled: false
-        paymentApi:
-          enabled: false
-        managementWeb:
-          enabled: false
-        apiGatewayWeb:
-          enabled: false
-        adminWeb:
-          enabled: false
-        printService:
-          enabled: false
-        activityApi:
-          enabled: false
-        testStubsService:
-          enabled: false
-        definitionImporter:
-          enabled: false
-        userProfileImporter:
-          enabled: false
-        blobstorage:
-          enabled: false
-        emAnnotation:
-          enabled: false
-        ccpay:
-          enabled: false
         ccd-definition-store-api:
           java:
             secrets:
@@ -121,9 +87,6 @@ spec:
               GOV_PAY_AUTH_KEY_CMC: la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
               GOV_PAY_AUTH_KEY_DIVORCE_FRONTEND: la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
               GOV_PAY_AUTH_KEY_PROBATE_FRONTEND: la0ohpqa9er1bub2hddieeesc6sabbbqn4smkkve7s9ailn3n9d3hbnhc3
-      bulkscan:
-        ccd:
-          enabled: true
       postgresql:
         initdbScripts:
           init.sql: |-
@@ -138,3 +101,41 @@ spec:
         enabled: false
     bulkscan:
       enabled: true
+      ccd:
+        enabled: true
+    ccd:
+      postgresql:
+        enabled: false
+      s2s:
+        enabled: false
+      draftStore:
+        enabled: false
+      dmStore:
+        enabled: false
+      paymentApi:
+        enabled: false
+      managementWeb:
+        enabled: false
+      apiGatewayWeb:
+        enabled: false
+      adminWeb:
+        enabled: false
+      printService:
+        enabled: false
+      activityApi:
+        enabled: false
+      testStubsService:
+        enabled: false
+      definitionImporter:
+        enabled: false
+      userProfileImporter:
+        enabled: false
+      blobstorage:
+        enabled: false
+      emAnnotation:
+        enabled: false
+      ccpay:
+        enabled: false
+    dm-store:
+      blobstorage:
+        enabled: true
