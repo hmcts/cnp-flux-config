@@ -37,6 +37,8 @@ spec:
       image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-1c61df4a
       ingressHost: ""
       releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
+      environment:
+        S2S_URL: "http://{{ .Release.Name }}-s2s"
     bulk-scan:
       bulk-scan-processor:
         java:
@@ -134,3 +136,5 @@ spec:
     bsp:
       blobstorage:
         enabled: false
+    bulkscan:
+      enabled: true
