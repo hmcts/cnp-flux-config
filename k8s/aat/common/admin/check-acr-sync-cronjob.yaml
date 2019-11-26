@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: check-acr-sync
+  namespace: admin
+  labels:
+    app: check-acr-sync
+spec:
+  schedule: "*/15 * * * *"
+  template:
+    metadata:
+      labels:
+        app: check-acr-sync
+    spec:
+        restartPolicy: Never
+        containers:
+        - name: check-acr-sync
+          image: hmctspublic.azurecr.io/check-acr-sync:db1rse
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SLACK_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: monitoring-values
+                  key: slack-webhook
+            - name: SLACK_CHANNEL
+              value: aks-monitor-aat
+            - name: AKS_CLUSTER
+              value: aat
+            - name: SLACK_ICON
+              value: tim-webster
+  backoffLimit: 1
