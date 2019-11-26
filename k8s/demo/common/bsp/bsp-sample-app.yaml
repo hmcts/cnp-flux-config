@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bsp-sample-app
@@ -35,7 +35,7 @@ spec:
       bsoIdamRedirectUrl: "https://bulk-scan-orchestrator-demo.service.core-compute-demo.internal/oauth2/callback"
       devMode: true
     java:
-      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-1c61df4a
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-fad17f41
       ingressHost: ""
       releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
       environment:
@@ -43,18 +43,18 @@ spec:
     bulk-scan:
       bulk-scan-processor:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/processor:prod-c7ecda00
+          image: hmctspublic.azurecr.io/bulk-scan/processor:prod-e487eb94
           environment:
             STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
       bulk-scan-orchestrator:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-dfabaef1
+          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-abcc28ea
           environment:
             TRANSFORMATION_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
             UPDATE_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
       bulk-scan-payment-processor:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-d767cc21
+          image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-de8bfbc3
       rpe-service-auth-provider:
         java:
           image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-8d41c2be

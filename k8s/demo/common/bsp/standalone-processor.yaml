@@ -1,6 +1,6 @@
 ---
 # this chart for Exela to get SAS token, always keep it running in demo standalone
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: standalone-processor
@@ -23,7 +23,7 @@ spec:
   values:
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-c7ecda00
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-e487eb94
         ingressClass: traefik-private
         ingressHost: bsp-standalone-processor.demo.platform.hmcts.net
         releaseNameOverride: "{{ .Release.Name }}-bsp"
