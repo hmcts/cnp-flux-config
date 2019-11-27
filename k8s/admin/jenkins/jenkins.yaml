@@ -107,6 +107,7 @@ spec:
                   permissions:
                     - "Overall/Administer:300e771f-856c-45cc-b899-40d78281e9c1"
                     - "Overall/Administer:c36eaede-a0ae-4967-8fed-0a02960b1370"
+                    - "Overall/Administer:3830f73c-22c0-436c-893d-e1869d2bc551" # platform engineering in RPE899 tenant
                     - "Overall/Read:authenticated"
                     - "View/Read:authenticated"
                     - "Run/Replay:authenticated"
@@ -174,9 +175,16 @@ spec:
               sonarGlobalConfiguration:
                 installations:
                   - additionalAnalysisProperties: sonar.organization=hmcts
+                    additionalProperties: "blah=blah" # remove when 2.11 of sonar plugin is released
                     name: SonarQube
                     credentialsId: 'sonarcloud-api-token'
                     serverUrl: 'https://sonarcloud.io'
+                    mojoVersion: "mojoVersion" # remove when 2.11 of sonar plugin is released
+                    serverAuthenticationToken: "" # remove when 2.11 of sonar plugin is released
+                    triggers: # remove when 2.11 of sonar plugin is released
+                      skipScmCause: true
+                      skipUpstreamCause: true
+                      envVar: "envVar"
           timestamper: |
             unclassified:
               timestamperConfig:
@@ -427,7 +435,7 @@ spec:
       ## A manually managed Persistent Volume and Claim
       ## Requires persistence.enabled: true
       ## If defined, PVC must be created manually before volume will be bound
-      #existingClaim: "jenkins-disk-claim"
+      existingClaim: "jenkins"
       ## jenkins data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
