@@ -6,6 +6,7 @@ bases:
 - ../../admin/kube-slack
 - ../../admin/keyvault-flexvol
 - ../../admin/traefik
+- ../../admin/jenkins
 - ../../kured
 
 patchesStrategicMerge:
@@ -23,6 +24,17 @@ patchesStrategicMerge:
 #traefik patch
 - ../../admin/traefik/patches/cftptl/cluster-00/traefik.yaml
 
+# jenkins
+- ../../admin/jenkins/patches/cftptl/cluster-00/identity.yaml
+
 #kured patch
 - ../../kured/patches/cftptl/cluster-00/kured.yaml
 
+patchesJson6902:
+- target:
+    group: helm.fluxcd.io
+    version: v1
+    kind: HelmRelease
+    name: jenkins
+    namespace: jenkins
+  path: ../../admin/jenkins/patches/cftptl/cluster-00/jenkins-flexvolume.yaml
