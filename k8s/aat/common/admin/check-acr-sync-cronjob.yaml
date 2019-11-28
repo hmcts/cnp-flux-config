@@ -20,6 +20,13 @@ spec:
           - name: check-acr-sync
             image: hmctspublic.azurecr.io/check-acr-sync:db1s71
             imagePullPolicy: IfNotPresent
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "250m"
+              limits:
+                memory: "256Mi"
+                cpu: "500m"
             env:
               - name: SLACK_WEBHOOK
                 valueFrom:
@@ -32,3 +39,5 @@ spec:
                 value: aat
               - name: SLACK_ICON
                 value: tim-webster
+              - name: ACR_MAX_RESULTS
+                value: 1000
