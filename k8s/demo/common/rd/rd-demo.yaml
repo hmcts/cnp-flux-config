@@ -21,12 +21,15 @@ spec:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
       idamWebUrl: "https://idam-web-public.demo.platform.hmcts.net"
-      AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.demo.platform.hmcts.net"
+
     rd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/rd/user-profile-api:pr-204-45b7e6d8
         ingressHost: rd-user-profile-api.demo.platform.hmcts.net
         ingressClass: traefik-no-proxy
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.demo.platform.hmcts.net"
+
     rpe-service-auth-provider:
       java:
         ingressHost: rd-s2s-api.demo.platform.hmcts.net
