@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-injector-webhook-deployment
+  namespace: admin
+  labels:
+    app: env-injector
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: env-injector
+  template:
+    metadata:
+      labels:
+        app: env-injector
+    spec:
+      containers:
+        - name: env-injector
+          image: hmctspublic.azurecr.io/k8s-env-injector:db1t99
+          imagePullPolicy: IfNotPresent
+          args:
+            - -envCfgFile=/etc/webhook/config/envconfig.yaml
+            - -tlsCertFile=/etc/webhook/certs/cert.pem
+            - -tlsKeyFile=/etc/webhook/certs/key.pem
+            - -alsologtostderr
+            - -v=4
+            - 2>&1
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: webhook-certs
+              mountPath: /etc/webhook/certs
+              readOnly: true
+            - name: webhook-config
+              mountPath: /etc/webhook/config
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: env-injector-webhook-certs
+        - name: webhook-config
+          configMap:
+            name: env-injector-webhook-configmap
