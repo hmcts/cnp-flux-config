@@ -1,0 +1,99 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-demo
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: 'true'
+    flux.weave.works/tag.java: 'glob:prod-*'
+spec:
+  releaseName: ccd-demo
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    name: ccd
+    version: 4.0.0-rc.13
+  values:
+    tags:
+      idam-pr: true
+   
+    ccd:  
+      managementWeb:
+        enabled: true
+      apiGatewayWeb:
+        enabled: true
+      emAnnotation:
+        enabled: true
+      ccpay:
+        enabled: true
+      draftStore:
+        enabled: true
+      dmStore:
+        enabled: true
+      activityApi:
+        enabled: true
+      blobstorage:
+        enabled: true
+      printService:
+        enabled: true  
+
+    global:
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      devMode: true
+      
+    ccd-admin-web:
+      nodejs:
+        ingressClass: traefik-no-proxy
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_AW_CLIENT_SECRET:
+            secretRef: ccd-admin-web-oauth2-client-secret
+            key: key
+    
+    ccd-case-management-web:
+      nodejs:
+        ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
+    
+    ccd-api-gateway-web:
+      nodejs:
+        ingressClass: traefik-no-proxy
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_CLIENT_SECRET:
+            secretRef: ccd-api-gateway-oauth2-client-secret
+            key: key
+            
+    ccd-definition-store-api:
+      java:
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            disabled: false
+          STORAGE_ACCOUNT_KEY:
+            disabled: false
+        environment:
+          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+    
+    ccd-case-activity-api:
+      nodejs:
+        environment:
+          CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
+    
+    ccd-user-profile-importer:
+      users:
+       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+    
+    ccd-definition-importer:
+      definitions:
+       - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+      userRoles:
+       - caseworker-autotest1     
+          
