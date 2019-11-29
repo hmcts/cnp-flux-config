@@ -1,0 +1,80 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-demo-3
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: 'true'
+    flux.weave.works/tag.java: 'glob:prod-*'
+spec:
+  releaseName: ccd-demo-3
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    name: ccd
+    version: 4.0.0-rc.10
+  values:
+    tags:
+      idam-pr: true
+    global:
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+#     TODO remove protocol to allow better reusability?
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      devMode: true
+
+    ccd:
+      managementWeb:
+        enabled: true
+      apiGatewayWeb:
+        enabled: true  
+    
+    ccd-api-gateway-web:
+      nodejs:
+        ingressClass: traefik-no-proxy
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_CLIENT_SECRET:
+            secretRef: ccd-api-gateway-oauth2-client-secret
+            key: key
+    ccd-case-management-web:
+      nodejs:
+        ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
+    ccd-admin-web:
+      nodejs:
+        ingressClass: traefik-no-proxy
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_AW_CLIENT_SECRET:
+            secretRef: ccd-admin-web-oauth2-client-secret
+            key: key
+        environment:
+          ADMINWEB_LOGIN_URL: '{{ .Values.global.idamWebUrl }}/login'
+    ccd-definition-store-api:
+      java:
+        memoryRequests: "1G"
+        memoryLimits: "2G"
+    # CCD Supporting services
+    ccd-case-activity-api:
+      nodejs:
+        environment:
+          CORS_ORIGIN_WHITELIST: '{{ .Values.global.ccdCaseManagementWebIngress }}'
+    
+    ccd-test-stubs-service:
+      java:
+        ingressHost: test-stubs-service-ccd-aks.demo.platform.hmcts.net
+        environment:
+          MANAGEMENT_WEB_URL: '{{ .Values.global.ccdCaseManagementWebIngress }}'
+
+    #Dependencies
+    dm-store:
+      java:
+        environment:
+          MAX_FILE_SIZE: '100MB'
