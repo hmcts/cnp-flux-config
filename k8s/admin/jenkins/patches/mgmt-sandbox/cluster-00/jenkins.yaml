@@ -34,12 +34,28 @@ spec:
                         value: sandbox
                       - key: PROD_ENVIRONMENT_NAME
                         value: sandbox
+                      - key: PREVIEW_ENVIRONMENT_NAME
+                        value: saat
                       - key: PROD_SUBSCRIPTION_NAME
                         value: sandbox
                       - key: JAVA_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: GRADLE_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+                      - key: SANDBOX_AKS_CLUSTER_NAME
+                        value: sbox-00-aks
+                      - key: SANDBOX_AKS_RESOURCE_GROUP
+                        value: sbox-00-rg
+                      - key: AKS_PREVIEW_SUBSCRIPTION_NAME
+                        value: DCD-CFTAPPS-SBOX
+                      - key: AKS_AAT_SUBSCRIPTION_NAME
+                        value: DCD-CFTAPPS-SBOX
+                      - key: AAT_AKS_KEY_VAULT
+                        value: cftapps-sbox
+                      - key: AKS_PROD_SUBSCRIPTION_NAME
+                        value: DCD-CFTAPPS-SBOX
+                      - key: PROD_AKS_KEY_VAULT
+                        value: cftapps-sbox
           views: |
             jenkins:
               views:
@@ -60,7 +76,7 @@ spec:
             unclassified:
               azureKeyVault:
                 keyVaultURL: https://cftsbox-intsvc.vault.azure.net
-                credentialID: jenkinsServicePrincipal
+                credentialID: jenkins-managed-identity
           build-failure-analyzer: |
             unclassified:
               buildFailureAnalyzer:
@@ -106,7 +122,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "1.0.0"
+                          galleryImageVersion: "1.2.2"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
@@ -159,6 +175,6 @@ spec:
                         uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
                         usageMode: "Use this node as much as possible"
                         usePrivateIP: true
-                        virtualMachineSize: "Standard_D4_v3"
+                        virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftsbox-intsvc-vnet"
                         virtualNetworkResourceGroupName: "aks-infra-cftsbox-intsvc-rg"

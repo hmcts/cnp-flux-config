@@ -35,7 +35,7 @@ spec:
       bsoIdamRedirectUrl: "https://bulk-scan-orchestrator-demo.service.core-compute-demo.internal/oauth2/callback"
       devMode: true
     java:
-      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-fad17f41
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-5d15525d
       ingressHost: ""
       releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
       environment:
@@ -43,18 +43,18 @@ spec:
     bulk-scan:
       bulk-scan-processor:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/processor:prod-01a5ac83
+          image: hmctspublic.azurecr.io/bulk-scan/processor:prod-3eb129fc
           environment:
             STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
       bulk-scan-orchestrator:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-b5879bf0
+          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-31e61601
           environment:
             TRANSFORMATION_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
             UPDATE_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
       bulk-scan-payment-processor:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-fb9efa75
+          image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-8db01333
       rpe-service-auth-provider:
         java:
           image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-cdeda753

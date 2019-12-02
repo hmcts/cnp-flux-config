@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db1sr1"
+      imageTag: "db1ubp"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -165,26 +165,21 @@ spec:
                     apiUrl: "https://api.github.com"
                     credentialsId: "jenkins-github-hmcts-api-token-text"
                     manageHooks: false
-          azure-key-vault: |
-            unclassified:
-              azureKeyVault:
-                keyVaultURL: https://infra-vault-sandbox.vault.azure.net
-                credentialID: jenkinsServicePrincipal
-          sonar: |
-            unclassified:
-              sonarGlobalConfiguration:
-                installations:
-                  - additionalAnalysisProperties: sonar.organization=hmcts
-                    additionalProperties: "blah=blah" # remove when 2.11 of sonar plugin is released
-                    name: SonarQube
-                    credentialsId: 'sonarcloud-api-token'
-                    serverUrl: 'https://sonarcloud.io'
-                    mojoVersion: "mojoVersion" # remove when 2.11 of sonar plugin is released
-                    serverAuthenticationToken: "" # remove when 2.11 of sonar plugin is released
-                    triggers: # remove when 2.11 of sonar plugin is released
-                      skipScmCause: true
-                      skipUpstreamCause: true
-                      envVar: "envVar"
+          # sonar: |
+            # unclassified:
+              # sonarGlobalConfiguration:
+              #   installations:
+              #     - additionalAnalysisProperties: sonar.organization=hmcts
+              #       additionalProperties: "blah=blah" # remove when 2.11 of sonar plugin is released
+              #       name: SonarQube
+              #       credentialsId: 'sonarcloud-api-token'
+              #       serverUrl: 'https://sonarcloud.io'
+              #       mojoVersion: "mojoVersion" # remove when 2.11 of sonar plugin is released
+              #       serverAuthenticationToken: "" # remove when 2.11 of sonar plugin is released
+              #       triggers: # remove when 2.11 of sonar plugin is released
+              #         skipScmCause: true
+              #         skipUpstreamCause: true
+              #         envVar: "envVar"
           timestamper: |
             unclassified:
               timestamperConfig:
@@ -346,6 +341,11 @@ spec:
                           id: "reform_tunnel"
                           scope: GLOBAL
                           username: "reform"
+                      - azureImds:
+                          azureEnvName: "Azure"
+                          description: "Jenkins Azure identity"
+                          id: "jenkins-managed-identity"
+                          scope: GLOBAL
                       - azure:
                           azureEnvironmentName: "Azure"
                           clientId: "${sp-app-id}"
