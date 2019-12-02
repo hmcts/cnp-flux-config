@@ -17,7 +17,7 @@ spec:
   chart:
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
     name: ccd
-    version: 4.0.0-rc.14
+    version: 4.0.0-rc.16
   values:
     tags:
       idam-pr: true
@@ -34,8 +34,7 @@ spec:
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
-            secretRef: ccd-admin-web-oauth2-client-secret
-            key: key
+            disabled: false
 
     ccd-user-profile-importer:
       users:
@@ -44,6 +43,5 @@ spec:
     ccd-definition-importer:
       definitions:
        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
-      redirectUri: '{{ .Values.global.ccdDefinitionStoreUrl }}' 
       userRoles:
        - caseworker-autotest1 
