@@ -2,13 +2,13 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-full-2
+  name: ccd-full-with-pay
   namespace: ccd
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
 spec:
-  releaseName: ccd-full-2
+  releaseName: ccd-full-with-pay
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -29,8 +29,6 @@ spec:
         enabled: true
       emAnnotation:
         enabled: true
-      ccpay:
-        enabled: true
       draftStore:
         enabled: true
       dmStore:
@@ -41,6 +39,19 @@ spec:
         enabled: true
       printService:
         enabled: true
+      ccpay:
+        enabled: true
+        # TODO: investigate s2s conflict issue and need to disable again here
+        rpe-service-auth-provider:
+          enabled: false
+        fees-register-api:
+          enabled: false
+        postgresql:
+          enabled: false
+        ccpay-bubble-frontend:
+          enabled: false
+        ccpay-bulkscanning-api:
+          enabled: false
 
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -60,6 +71,7 @@ spec:
     
     ccd-case-management-web:
       nodejs:
+        ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
     
     ccd-api-gateway-web:

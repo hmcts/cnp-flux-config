@@ -2,18 +2,18 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-full
-  namespace: ccd
+  name: ccd-full-luigi
+  namespace: rpe
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
 spec:
-  releaseName: ccd-full
+  releaseName: ccd-full-luigi
   timeout: 900
-  forceUpgrade: true
-  rollback:
-    enable: true
-    force: true
+  #forceUpgrade: true
+  #rollback:
+  #  enable: true
+  #  force: true
   chart:
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
     name: ccd
@@ -39,6 +39,20 @@ spec:
         enabled: true
       printService:
         enabled: true
+      ccpay:
+        enabled: true
+
+    ccpay:
+      postgresql:
+        enabled: false
+      fees-register-api:
+        enabled: false
+      rpe-service-auth-provider:
+        enabled: false
+      ccpay-bubble-frontend:
+        enabled: false
+      ccpay-bulkscanning-api:
+        enabled: false        
 
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -88,4 +102,3 @@ spec:
        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
       userRoles:
        - caseworker-autotest1
-   
