@@ -39,16 +39,6 @@ spec:
         enabled: true
       printService:
         enabled: true
-      ccpay:
-        enabled: true
-        rpe-service-auth-provider:
-          enabled: false
-        ccpay-bubble-frontend:
-          enabled: false
-        fees-register-api:
-          enabled: false
-        ccpay-bulkscanning-api:
-          enabled: false    
 
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -68,6 +58,7 @@ spec:
     
     ccd-case-management-web:
       nodejs:
+        ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
     
     ccd-api-gateway-web:
