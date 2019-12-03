@@ -2,13 +2,13 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-full-2
+  name: ccd-full-with-pay
   namespace: ccd
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
 spec:
-  releaseName: ccd-full-2
+  releaseName: ccd-full-with-pay
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -41,12 +41,12 @@ spec:
         enabled: true
       ccpay:
         enabled: true
-        # TODO: investigate why we've to disable again here though they're disabled in chart-ccd by default
-        postgresql:
+        # TODO: investigate s2s conflict issue and need to disable again here
+        rpe-service-auth-provider:
           enabled: false
         fees-register-api:
           enabled: false
-        rpe-service-auth-provider:
+        postgresql:
           enabled: false
         ccpay-bubble-frontend:
           enabled: false
