@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-business-service
@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-business-service
-    version: 0.0.7
+    version: 0.0.8
   values:
     java:
       replicas: 2
@@ -26,7 +26,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:aat-2a945586
+      image: hmctspublic.azurecr.io/probate/business-service:aat-4c63ba6a
       ingressHost: probate-business-service-aat.service.core-compute-aat.internal
       environment:
         REFORM_TEAM: probate

@@ -1,0 +1,36 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: idam
+  namespace: idam
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.idam-api: glob:demo-*
+    flux.weave.works/tag.idam-web-public: glob:demo-*
+    flux.weave.works/tag.idam-web-admin: glob:demo-*
+spec:
+  releaseName: idam
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: idam
+    version: 0.1.1
+  values:
+    global:
+      environment: demo
+    idam-api:
+      java:
+        image: hmctspublic.azurecr.io/idam/api:demo
+    idam-web-public:
+      java:
+        image: hmctspublic.azurecr.io/idam/web-public:demo
+    idam-web-admin:
+      java:
+        image: hmctspublic.azurecr.io/idam/web-admin:demo

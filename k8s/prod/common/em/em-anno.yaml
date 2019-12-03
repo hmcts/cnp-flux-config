@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-anno
@@ -14,13 +14,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.14
+    version: 0.1.15
   values:
     java:
       replicas: 2
       applicationInsightsInstrumentKey: "039faf8c-4682-432e-8fc5-f9735bb4b962"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-4a37840d
+      image: hmctspublic.azurecr.io/em/anno:prod-eeb3524c
       ingressHost: em-anno-prod.service.core-compute-prod.internal
       environment:
         IDAM_API_BASE_URI: "https://idam-api.platform.hmcts.net"

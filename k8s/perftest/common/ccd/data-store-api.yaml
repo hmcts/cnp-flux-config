@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-data-store-api
@@ -19,7 +19,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-3ce7bef8
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-bea059c2
       ingressHost: ccd-data-store-api-aks-perftest.service.core-compute-perftest.internal
       environment:
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"

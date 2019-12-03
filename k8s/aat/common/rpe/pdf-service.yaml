@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: pdf-service
@@ -29,26 +29,26 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "cdd56761-038b-49e9-9fdf-b42b10e11ed5"
-      image: hmctspublic.azurecr.io/cmc/pdf-service:prod-748fe869
+      image: hmctspublic.azurecr.io/cmc/pdf-service:prod-a7a7caf6
       testsConfig:
+        memoryLimits: '3072Mi'
         environment:
           TEST_URL: http://pdf-service-java
           SLACK_CHANNEL: "rpe-build-notices"
-          CLUSTER_NAME: "aat-01-aks"
           SLACK_NOTIFY_SUCCESS: "false"
       smoketestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-748fe869
+        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-a7a7caf6
         schedule: "35 0/1 * * *"
       functionaltestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-748fe869
+        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-a7a7caf6
         schedule: "45 0/6 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-748fe869
+        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-a7a7caf6
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-748fe869
+        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-a7a7caf6
     global:
       environment: aat

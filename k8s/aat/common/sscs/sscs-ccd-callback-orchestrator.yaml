@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-ccd-callback-orchestrator
@@ -14,13 +14,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-ccd-callback-orchestrator
-    version: 0.0.5
+    version: 0.0.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "e2300a5f-a16f-4657-a63b-41913805661e"
-      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-7e241193
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-97e1328b
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

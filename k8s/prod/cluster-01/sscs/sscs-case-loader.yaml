@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-case-loader
@@ -19,7 +19,7 @@ spec:
     job:
       schedule: "0 2 31 2 *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/case-loader:prod-48b12cb6
+      image: hmctspublic.azurecr.io/sscs/case-loader:prod-361fe92a
       startingDeadlineSeconds: 1800
       concurrencyPolicy: Forbid
       memoryRequests: '768Mi'
@@ -28,6 +28,7 @@ spec:
       cpuLimits: '2500m'
       environment:
         IDAM_OAUTH2_REDIRECT_URL: https://sscs-case-loader-prod.service.core-compute-prod.internal
+        IGNORE_CASES_BEFORE_DATE: 2018-07-26
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,0 +1,304 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  values:
+    master:
+      ingress:
+        hostName: build-beta.platform.hmcts.net
+      containerEnv:
+        - name: ENVIRONMENT
+          value: "prod"
+        - name: SECRETS
+          value: /kvmnt/secrets
+      JCasC:
+        configScripts:
+          welcome-message: |
+            jenkins:
+              systemMessage: >-
+                  This jenkins is managed by configuration as code, update <a
+                  href="https://github.com/hmcts/cnp-flux-config/blob/master/k8s/admin/jenkins/patches/cftptl/cluster-00/jenkins.yaml">here</a>
+          env-vars: |
+            jenkins:
+              globalNodeProperties:
+                - envVars:
+                    env:
+                      - key: INFRA_VAULT_NAME
+                        value: infra-vault-prod
+                      - key: JAVA_OPTS
+                        value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+                      - key: GRADLE_OPTS
+                        value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+                      - key: REGISTRY_NAME
+                        value: hmcts
+                      - key: AAT_AKS_CLUSTER_NAME
+                        value: aat-00-aks
+                      - key: AAT_AKS_RESOURCE_GROUP
+                        value: aat-00-rg
+                      - key: PREVIEW_AKS_CLUSTER_NAME
+                        value : cnp-aks-cluster
+                      - key : PREVIEW_AKS_RESOURCE_GROUP
+                        value: cnp-aks-rg
+                      - key: AKS_PREVIEW_SUBSCRIPTION_NAME
+                        value: DCD-CNP-DEV
+                      - key: AKS_AAT_SUBSCRIPTION_NAME
+                        value: DCD-CFTAPPS-STG
+                      - key : AAT_AKS_KEY_VAULT
+                        value: cftapps-stg
+          views: |
+            jenkins:
+              views:
+                - all:
+                    name: all
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|feature-toggle-api|private-beta-invitation-service|service-auth-provider-app|spring-boot-template|cnp-rhubarb-recipes-service|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
+                    name: Platform
+                    recurse: true
+                    title: Platform
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-*|send-letter-client|send-letter-service)\/master
+                    name: BSP
+                    recurse: true
+                    title: BSP
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(prd-.*)\/(master|demo)
+                    name: PRD
+                    recurse: true
+                    title: PRD
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(prd-.*)\/(.*PR-.*)
+                    name: PRD-PR
+                    recurse: true
+                    title: PRD-PR
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(rpa-.*)\/(master|demo)
+                    name: RPA
+                    recurse: true
+                    title: RPA
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(rpa-.*)\/(.*PR-.*)
+                    name: RPA-PR
+                    recurse: true
+                    title: RPA-PR
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(rpx-.*)\/(master|demo)
+                    name: RPX
+                    recurse: true
+                    title: RPX
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(rpx-.*)\/(.*PR-.*)
+                    name: RPX-PR
+                    recurse: true
+                    title: RPX-PR
+                - buildMonitor:
+                    includeRegex: >-
+                      HMCTS_CDM.+\/master
+                    name: CDM
+                    recurse: true
+                    title: CDM master Builds
+                - buildMonitor:
+                    includeRegex: >-
+                      HMCTS_CDM.+\/demo
+                    name: CDM demo
+                    recurse: true
+                    title: CDM demo Builds
+                - buildMonitor:
+                    includeRegex: >-
+                      HMCTS_Nightly_CDM.+\/master
+                    name: CDM Nightly
+                    recurse: true
+                    title: CDM Nightly Builds
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-backend|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
+                    name: SSCS
+                    recurse: true
+                    title: SSCS Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*IAC.*\/.+\/master
+                    name: IA
+                    recurse: true
+                    title: I & A Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*Probate.*\/(probate-frontend|probate-persistence-service|probate-business-service|probate-submit-service|probate-back-office)\/(master|demo|cnp)
+                    name: PROBATE
+                    recurse: true
+                    title: PROBATE Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*Intestacy.*\/(intestacy-frontend|intestacy-orchestrator-service)\/(master|demo|cnp)
+                    name: INTESTACY
+                    recurse: true
+                    title: INTESTACY Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      HMCTS_DIV/(?!div-ansible|div-case-progression-service|div-feature-toggle-client|div-frontend-boilerplate).+\/master
+                    name: DIV
+                    recurse: true
+                    title: Divorce Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(am-.*)\/(master|demo)
+                    name: AM
+                    recurse: true
+                    title: AM
+                - buildMonitor:
+                    includeRegex: >-
+                      .+\/(am-.*)\/(.*PR-.*)
+                    name: AM-PR
+                    recurse: true
+                    title: AM-PR
+                - buildMonitor:
+                    includeRegex: >-
+                      HMCTS_.*CTSC\/.+\/master
+                    name: CTSC
+                    recurse: true
+                    title: CTSC
+                - buildMonitor:
+                    includeRegex: >-
+                      HMCTS_.*ETHOS\/.+\/master
+                    name: ETHOS
+                    recurse: true
+                    title: ETHOS
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*(CMC).*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure)\/master
+                    name: CMC
+                    recurse: true
+                    title: CMC
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*RD.*\/.+\/master
+                    name: RD
+                    recurse: true
+                    title: Ref Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*(MI).*\/(mi-integration-service|mi-staging-service|mi-presentation-service|mi-housekeeping-service|mi-shared-infrastructure)\/master
+                    name: MI
+                    recurse: true
+                    title: Management Information Dashboard
+          location: |
+            unclassified:
+              location:
+                adminAddress: jenkins-reform@hmcts.net
+                url: 'https://build-beta.platform.hmcts.net'
+          azure-key-vault: |
+            unclassified:
+              azureKeyVault:
+                keyVaultURL: https://cftptl-intsvc.vault.azure.net
+                credentialID: jenkinsServicePrincipal
+          build-failure-analyzer: |
+            unclassified:
+              buildFailureAnalyzer:
+                doNotAnalyzeAbortedJob: false
+                gerritTriggerEnabled: true
+                globalEnabled: true
+                graphsEnabled: true
+                knowledgeBase:
+                  mongoDB:
+                    dbName: "build-failure-analyzer"
+                    enableStatistics: true
+                    host: "build-failure-analyzer.platform.hmcts.net"
+                    password: "${bfa-user-password}"
+                    port: 27017
+                    successfulLogging: false
+                    userName: "build-failure-analyzer"
+                maxLogSize: 0
+                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
+                nrOfScanThreads: 3
+                testResultCategories: "test-failures"
+                testResultParsingEnabled: true
+          azure-vm-agent: |
+            jenkins:
+              clouds:
+                - azureVM:
+                    azureCredentialsId: "jenkinsServicePrincipal"
+                    cloudName: "cnp-azure"
+                    deploymentTimeout: 1200	
+                    existingResourceGroupName: "aks-infra-cftptl-intsvc-rg" 
+                    maxVirtualMachinesLimit: 10	
+                    resourceGroupReferenceType: "existing"
+                    vmTemplates:
+                      - agentLaunchMethod: "SSH"
+                        agentWorkspace: "/opt/jenkins"
+                        builtInImage: "Windows Server 2016"
+                        credentialsId: "vm_agent_creds"
+                        diskType: "managed"
+                        doNotUseMachineIfInitFails: true
+                        enableMSI: false
+                        enableUAMI: true
+                        ephemeralOSDisk: true
+                        executeInitScriptAsRoot: true
+                        existingStorageAccountName: "hmctsjenkinssbox"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-agent"
+                          galleryImageVersion: "1.2.2"
+                          galleryName: "cnpimagegallery"
+                          galleryResourceGroup: "cnp-image-gallery-rg"
+                          gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
+                        imageTopLevelType: "advanced"
+                        initScript: |
+                          usermod -a -G docker jenkinsssh
+                          umount /mnt/resource
+                          mkdir -pv /opt/jenkins
+                          mount /dev/sdb1 /opt/jenkins
+                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                          mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
+                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
+                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
+                          cat > /etc/dnsmasq.d/10-internal-forwarding<<EOF
+                          server=/#/172.16.0.10
+                          EOF
+                          systemctl restart dnsmasq
+                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
+                          jenkinsssh soft nofile 40960
+                          jenkinsssh hard nofile 40960
+                          jenkinsssh soft
+                          proc 32768
+                          jenkinsssh hard nproc 32768
+                          EOF
+                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
+                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                        installDocker: false
+                        installGit: false
+                        installMaven: false
+                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
+                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
+                      \ -XX:G1SummarizeRSetStatsPeriod=1"
+                        location: "UK South"
+                        noOfParallelJobs: 1
+                        osDiskSize: 0
+                        osType: "Linux"
+                        preInstallSsh: true
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
+                        shutdownOnIdle: false	
+                        storageAccountNameReferenceType: "existing"
+                        storageAccountType: "Standard_LRS"
+                        subnetName: "iaas"
+                        templateDesc: "Jenkins build agents for HMCTS"
+                        templateDisabled: false
+                        templateName: "cnp-jenkins-builders"
+                        uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
+                        usageMode: "Use this node as much as possible"
+                        usePrivateIP: true
+                        virtualMachineSize: "Standard_D4s_v3"
+                        virtualNetworkName: "core-cftptl-intsvc-vnet"
+                        virtualNetworkResourceGroupName: "aks-infra-cftptl-intsvc-rg"

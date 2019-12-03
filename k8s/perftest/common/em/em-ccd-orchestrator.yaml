@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
@@ -14,13 +14,21 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccd-orchestrator
-    version: 0.1.6
+    version: 0.1.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-c963c471
+      keyVaults:
+        em-ccdorc:
+          resourceGroup: em-ccd-orchestrator
+          secrets:
+          - AppInsightsInstrumentationKey
+          - microservicekey-em-ccd-orchestrator
+      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-5a5f039e
       ingressHost: em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
+
     global:
       environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

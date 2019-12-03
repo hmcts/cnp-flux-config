@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: plum-recipe-backend
@@ -24,7 +24,7 @@ spec:
     version: 0.5.0
   values:
     java:
-      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-50116ec0
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-365f30ed
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       aadIdentityName: cnp
       environment:
@@ -41,22 +41,21 @@ spec:
         environment:
           TEST_URL: http://plum-recipe-backend-java
           SLACK_CHANNEL: "rpe-build-notices"
-          CLUSTER_NAME: "aat-01-aks"
           SLACK_NOTIFY_SUCCESS: "false"
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-50116ec0
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-365f30ed
         enabled: true
         schedule: "10 0/1 * * *"
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-50116ec0
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-365f30ed
         enabled: true
         schedule: "20 0/3 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-50116ec0
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-365f30ed
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-50116ec0
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-365f30ed
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

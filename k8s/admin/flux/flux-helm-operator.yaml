@@ -1,0 +1,29 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: flux-helm-operator
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: flux-helm-operator
+  chart:
+    repository: https://charts.fluxcd.io
+    name: helm-operator
+    version: 0.3.0
+  values:
+    tls:
+      enable: true
+    workers: 6
+    git:
+      pollInterval: 1m
+      ssh:
+        secretName: flux-git-deploy
+    configureRepositories:
+      enable: true
+      repositories:
+        - name: stable
+          url: https://kubernetes-charts.storage.googleapis.com
+        - name: hmctspublic
+          url: https://hmctspublic.azurecr.io/helm/v1/repo

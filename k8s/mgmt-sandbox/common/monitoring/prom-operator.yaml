@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: prom-operator
@@ -13,7 +13,7 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
-    version: 8.2.0
+    version: 8.3.0
   values:
     defaultRules:
       create: true
@@ -37,6 +37,18 @@ spec:
         prometheusOperator: true
         time: true
 
+    prometheus:
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
     prometheusOperator:
       enabled: true
       createCustomResource: false
@@ -48,6 +60,7 @@ spec:
     grafana:
       plugins:
         - grafana-kubernetes-app
+        - camptocamp-prometheus-alertmanager-datasource
       ingress:
         enabled: true
         annotations:
@@ -63,6 +76,16 @@ spec:
           type: prometheus
           url: https://prometheus-01.sandbox.platform.hmcts.net
           access: proxy
+        - name: alertmanager-00
+          type: camptocamp-prometheus-alertmanager-datasource
+          url: https://alertmanager-00.sandbox.platform.hmcts.net
+          access: proxy
+        - name: alertmanager-01
+          type: camptocamp-prometheus-alertmanager-datasource
+          url: https://alertmanager-01.sandbox.platform.hmcts.net
+          access: proxy
+        
+        
       dashboardProviders: 
         dashboardproviders.yaml:
           apiVersion: 1
@@ -100,16 +123,6 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net
-      config:
-        route:
-          receiver: 'slack_alerting'
-          routes:
-          - match:
-              alertname: Watchdog
-            receiver: "slack_alerting"        
-        receivers:
-        - name: 'slack_alerting'
-          slack_configs:
-          - channel: prometheus-alerting
-            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"         
+          - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net    
+
+          

@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
@@ -14,12 +14,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccd-orchestrator
-    version: 0.1.6
+    version: 0.1.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-c963c471
+      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-5a5f039e
       ingressHost: em-ccd-orchestrator-aat.service.core-compute-aat.internal
     global:
       environment: aat

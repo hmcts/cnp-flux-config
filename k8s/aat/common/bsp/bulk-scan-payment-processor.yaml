@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-payment-processor
@@ -14,13 +14,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-payment-processor
-    version: 0.1.5
+    version: 0.1.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "f666440f-43c0-4abb-9c20-2ce175a374f0"
-      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-f1798633
+      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-8db01333
       environment:
         RESTART_ME: "Update due to vault change"
     global:

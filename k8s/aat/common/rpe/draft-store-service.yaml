@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: draft-store-service
@@ -31,10 +31,11 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:prod-dc052022
+      image: hmctspublic.azurecr.io/draft-store/service:prod-01e924ba
       prometheus:
         enabled: true
       testsConfig:
+        memoryLimits: '3072Mi'
         keyVaults:
           "draft-store":
             resourceGroup: draft-store-service
@@ -45,7 +46,6 @@ spec:
         environment:
           TEST_URL: http://draft-store-service-java
           SLACK_CHANNEL: "rpe-build-notices"
-          CLUSTER_NAME: "aat-01-aks"
           SLACK_NOTIFY_SUCCESS: "false"
           USE_IDAM_TESTING_SUPPORT: "true"
           S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
@@ -56,18 +56,18 @@ spec:
           IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
       smoketestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-dc052022
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-01e924ba
         schedule: "15 0/1 * * *"
       functionaltestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-dc052022
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-01e924ba
         schedule: "25 0/6 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-dc052022
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-01e924ba
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-dc052022
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-01e924ba
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

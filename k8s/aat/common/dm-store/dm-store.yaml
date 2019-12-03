@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
@@ -14,12 +14,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.7
+    version: 2.0.9
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-2a59d711
+      image: hmctspublic.azurecr.io/dm/store:prod-7536b14e
       ingressHost: dm-store-aat.service.core-compute-aat.internal
     global:
       environment: aat

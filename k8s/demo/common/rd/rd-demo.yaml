@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rd-demo
@@ -16,8 +16,22 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rd
-    version: 0.1.0
+    version: 0.1.9
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
       idamWebUrl: "https://idam-web-public.demo.platform.hmcts.net"
+
+    rd-user-profile-api:
+      java:
+        image: hmctspublic.azurecr.io/rd/user-profile-api:pr-208-74e06aab
+        ingressHost: rd-user-profile-api.demo.platform.hmcts.net
+        ingressClass: traefik-no-proxy
+        devApplicationInsightsInstrumentKey: 05e3fead-38f4-41f5-948d-f7b70a0a7fbe
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: "{{ .Values.global.idamApiUrl }}"
+
+    rpe-service-auth-provider:
+      java:
+        ingressHost: rd-s2s-api.demo.platform.hmcts.net
+        ingressClass: traefik-no-proxy

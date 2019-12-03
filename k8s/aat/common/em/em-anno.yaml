@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-anno
@@ -14,12 +14,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.14
+    version: 0.1.15
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-4a37840d
+      image: hmctspublic.azurecr.io/em/anno:prod-eeb3524c
       ingressHost: em-anno-aat.service.core-compute-aat.internal
     global:
       environment: aat
