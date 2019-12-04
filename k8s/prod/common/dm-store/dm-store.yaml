@@ -2,23 +2,26 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: draft-store-service
-  namespace: rpe
+  name: dm-store
+  namespace: dm-store
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: draft-store-service
+  releaseName: dm-store
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: draft-store-service
-    version: 1.4.1
+    name: dm-store
+    version: 2.0.9
   values:
     java:
-      image: hmctspublic.azurecr.io/draft-store/service:prod-d89b78ab
-      prometheus:
-        enabled: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/dm/store:prod-7536b14e
+      ingressHost: dm-store-prod.service.core-compute-prod.internal
     global:
-      environment: ithc
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
