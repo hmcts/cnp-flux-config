@@ -22,20 +22,19 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
+      applicationInsightsInstrumentKey: 4d1483ce-676e-4647-b22e-5e30f72cfa7e
       image: hmctspublic.azurecr.io/fpl/case-service:prod-416efbe4
-      ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
+      ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
-        DUMMY: trigger_release
-        IDAM_API_URL: https://idam-api.platform.hmcts.net
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-prod.service.core-compute-prod.internal
-        CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
-        DOCMOSIS_TORNADO_URL: https://docmosis.platform.hmcts.net
+        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-ithc.service.core-compute-ithc.internal
+        CCD_UI_BASE_URL: https://www-ccd.ithc.platform.hmcts.net
+        DOCMOSIS_TORNADO_URL: https://docmosis-development.platform.hmcts.net
         IDAM_CLIENT_ID: fpl_case_service
-        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-prod.service.core-compute-prod.internal/oauth2/callback
-        GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
+        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-ithc.service.core-compute-ithc.internal/oauth2/callback
+        GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
       aadIdentityName: family-public-law
       keyVaults:
         fpl:
@@ -57,7 +56,7 @@ spec:
       prometheus:
         enabled: true
     global:
-      environment: prod
-      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      environment: ithc
+      subscriptionId: "62864d44-5da9-4ae9-89e7-0cf33942fa09"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
