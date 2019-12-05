@@ -5,8 +5,11 @@ metadata:
   name: dm-store
   namespace: dm-store
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:prod-*
 spec:
   releaseName: dm-store
   rollback:
@@ -14,13 +17,22 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.9
+    version: 2.0.10
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-7536b14e
+      image: hmctspublic.azurecr.io/dm/store:prod-323b5ffd
       ingressHost: dm-store-aat.service.core-compute-aat.internal
+      testsConfig:
+        memoryLimits: '3072Mi'
+        environment:
+          TEST_URL: http://dm-store-java
+          SLACK_CHANNEL: "em-dev-chat"
+          SLACK_NOTIFY_SUCCESS: "true"
+      smoketests:
+        enabled: true
+        image: hmctspublic.azurecr.io/dm/store-test:prod-323b5ffd
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
