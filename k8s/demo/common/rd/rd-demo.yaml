@@ -16,7 +16,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rd
-    version: 0.2.1
+    version: 0.2.7
 
   values:
     global:
@@ -35,11 +35,19 @@ spec:
 
     rd-professional-api:
       java:
-        image: hmctspublic.azurecr.io/rd/professional-api:latest
+        image: hmctspublic.azurecr.io/rd/professional-api:demo
         ingressHost: rd-professional-api.demo.platform.hmcts.net
         ingressClass: traefik-no-proxy
-      environment:
-        AUTH_IDAM_CLIENT_BASEURL: "{{ .Values.global.idamApiUrl }}"
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: "{{ .Values.global.idamApiUrl }}"
+
+    rd-profile-sync:
+      java:
+        image: hmctspublic.azurecr.io/rd/profile-sync:demo
+        ingressHost: rd-profile-sync.demo.platform.hmcts.net
+        ingressClass: traefik-no-proxy
+        environment:
+          AUTH_IDAM_CLIENT_BASEURL: "{{ .Values.global.idamApiUrl }}"
 
     rpe-service-auth-provider:
       java:

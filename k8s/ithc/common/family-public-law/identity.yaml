@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: family-public-law
+  namespace: family-public-law
+spec:
+  type: 0
+  ResourceID: /subscriptions/62864d44-5da9-4ae9-89e7-0cf33942fa09/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/fpl-ithc-mi
+  ClientID: a893282c-f3b2-4cb2-9e9a-e9bdcbd72463
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: family-public-law-binding
+  namespace: family-public-law
+spec:
+  AzureIdentity: family-public-law
+  Selector: family-public-law
