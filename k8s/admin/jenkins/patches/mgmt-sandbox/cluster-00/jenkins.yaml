@@ -67,6 +67,19 @@ spec:
                     name: Platform
                     recurse: true
                     title: Platform
+          authentication: |
+            jenkins:
+              securityRealm:
+                saml:
+                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
+                  idpMetadataConfiguration:
+                    period: 15
+                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=0c70bee1-6f46-40f3-8e6e-756e912f8d73
+                  maximumAuthenticationLifetime: 7862400
+                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                  usernameCaseConversion: "none"
           location: |
             unclassified:
               location:
