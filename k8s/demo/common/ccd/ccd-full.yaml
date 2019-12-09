@@ -7,6 +7,19 @@ metadata:
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
+    repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
+    filter.fluxcd.io/ccd-admin-web: glob:prod-*
+    repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
+    filter.fluxcd.io/ccd-case-management-web: glob:prod-*
+    repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
+    filter.fluxcd.io/ccd-api-gateway-web: glob:prod-*
+    repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
+    filter.fluxcd.io/ccd-definition-store-api: glob:prod-*
+    repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
+    filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
+    repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
+    filter.fluxcd.io/ccd-data-store-api: glob:prod-*
+
 spec:
   releaseName: ccd-full
   timeout: 900
@@ -47,10 +60,10 @@ spec:
       ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
-      dummy: dummy
-      
+
     ccd-admin-web:
       nodejs:
+        image: hmctspublic.azurecr.io/ccd/admin-web:latest
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -59,11 +72,13 @@ spec:
     
     ccd-case-management-web:
       nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-management-web:latest
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
     
     ccd-api-gateway-web:
       nodejs:
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:latest
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -72,6 +87,7 @@ spec:
             
     ccd-definition-store-api:
       java:
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:latest
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -79,7 +95,15 @@ spec:
             disabled: false
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
-    
+
+    ccd-data-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/data-store-api:latest
+
+    ccd-user-profile-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:latest
+
     ccd-user-profile-importer:
       users:
        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
