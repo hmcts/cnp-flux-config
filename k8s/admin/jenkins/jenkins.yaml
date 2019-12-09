@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db1ubu"
+      imageTag: "db1x50"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -90,18 +90,6 @@ spec:
                   name: all
           auth: |
             jenkins:
-              securityRealm:
-                saml:
-                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
-                  idpMetadataConfiguration:
-                    period: 15
-                    #url: "https://login.microsoftonline.com/a0d77fc4-df1e-4b0d-8e35-46750ca5a672/federationmetadata/2007-06/federationmetadata.xml?appid=6c3ebbf6-f0e2-4e2b-9b10-0d8275a0aa02"
-                    url: "https://login.microsoftonline.com/hmcts.net/FederationMetadata/2007-06/FederationMetadata.xml"
-                  maximumAuthenticationLifetime: 7862400
-                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  usernameCaseConversion: "none"
               authorizationStrategy:
                 globalMatrix:
                   permissions:
@@ -165,21 +153,14 @@ spec:
                     apiUrl: "https://api.github.com"
                     credentialsId: "jenkins-github-hmcts-api-token-text"
                     manageHooks: false
-          # sonar: |
-            # unclassified:
-              # sonarGlobalConfiguration:
-              #   installations:
-              #     - additionalAnalysisProperties: sonar.organization=hmcts
-              #       additionalProperties: "blah=blah" # remove when 2.11 of sonar plugin is released
-              #       name: SonarQube
-              #       credentialsId: 'sonarcloud-api-token'
-              #       serverUrl: 'https://sonarcloud.io'
-              #       mojoVersion: "mojoVersion" # remove when 2.11 of sonar plugin is released
-              #       serverAuthenticationToken: "" # remove when 2.11 of sonar plugin is released
-              #       triggers: # remove when 2.11 of sonar plugin is released
-              #         skipScmCause: true
-              #         skipUpstreamCause: true
-              #         envVar: "envVar"
+          sonar: |
+            unclassified:
+              sonarGlobalConfiguration:
+                installations:
+                  - additionalAnalysisProperties: sonar.organization=hmcts
+                    name: SonarQube
+                    credentialsId: 'sonarcloud-api-token'
+                    serverUrl: 'https://sonarcloud.io'
           timestamper: |
             unclassified:
               timestamperConfig:

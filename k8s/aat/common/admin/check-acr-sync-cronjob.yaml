@@ -8,17 +8,17 @@ metadata:
 spec:
   schedule: "*/15 * * * *"
   concurrencyPolicy: "Forbid"
-  failedJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
-      backoffLimit: 1
+      backoffLimit: 2
       template:
         spec:
           restartPolicy: Never
           containers:
           - name: check-acr-sync
-            image: hmctspublic.azurecr.io/check-acr-sync:db1wqa
+            image: hmctspublic.azurecr.io/check-acr-sync:db1x8f
             imagePullPolicy: IfNotPresent
             resources:
               requests:
