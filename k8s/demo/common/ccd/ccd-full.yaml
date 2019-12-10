@@ -34,8 +34,8 @@ spec:
   values:
     tags:
       idam-pr: true
-   
-    ccd:  
+
+    ccd:
       managementWeb:
         enabled: true
       apiGatewayWeb:
@@ -69,22 +69,22 @@ spec:
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
-    
+
     ccd-case-management-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/case-management-web:prod-2d26bd79
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
-    
+
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-a0d40445
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-50688f3e
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
-            
+
     ccd-definition-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3f9e11e0
@@ -106,11 +106,11 @@ spec:
 
     ccd-user-profile-importer:
       users:
-       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
-    
+      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+
     ccd-definition-importer:
       definitions:
-       - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+      - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
       userRoles:
-       - caseworker-autotest1
-   
+      - caseworker-autotest1
+
