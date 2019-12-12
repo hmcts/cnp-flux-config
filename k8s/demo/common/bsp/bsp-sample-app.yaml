@@ -43,18 +43,18 @@ spec:
     bulk-scan:
       bulk-scan-processor:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/processor:prod-9fb3e9bc
+          image: hmctspublic.azurecr.io/bulk-scan/processor:prod-fc32ae37
           environment:
             STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
       bulk-scan-orchestrator:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-4cd30fa8
+          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-8e25b636
           environment:
             TRANSFORMATION_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
             UPDATE_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
       bulk-scan-payment-processor:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-44918b03
+          image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-ab31d8d9
       rpe-service-auth-provider:
         java:
           image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-63e957ea
@@ -63,7 +63,7 @@ spec:
             MICROSERVICEKEYS_CCD_DEFINITION: AAAAAAAAAAAAAAAA
       dm-store:
         java:
-          image: hmctspublic.azurecr.io/dm/store:prod-323b5ffd
+          image: hmctspublic.azurecr.io/dm/store:prod-e1666f98
           resourceGroup: bulk-scan-aks
           teamName: "Software Engineering"
           location: ukwest

@@ -2,29 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ctsc-work-allocation
-  namespace: ctsc
+  name: rd-profile-sync
+  namespace: rd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:perftest
+    flux.weave.works/tag.java: glob:ithc-*
 spec:
-  releaseName: ctsc-work-allocation
+  releaseName: rd-profile-sync
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ctsc-work-allocation
-    version: 0.0.14
+    name: rd-profile-sync
+    version: 0.0.4
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ctsc/work-allocation:perftest
-      environment:
-        TEST_ENDPOINTS_ENABLED: true
-        SMTP_ENABLED: true
-        CCD_DRY_RUN: false
+      image: hmctspublic.azurecr.io/rd/profile-sync:ithc
     global:
-      environment: perftest
+      environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
