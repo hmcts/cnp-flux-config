@@ -23,9 +23,8 @@ spec:
       ingressHost: dm-store-perftest.service.core-compute-perftest.internal
       environment:
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 
-          -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar -Dfile.encoding=UTF-8 
+          -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar -Dfile.encoding=UTF-8 
           -Xlog:gc*=debug:file="gc.log":tags,time,uptime,level
-          -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
