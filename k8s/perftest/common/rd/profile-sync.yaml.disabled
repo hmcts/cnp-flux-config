@@ -2,25 +2,24 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: rd-professional-api
+  name: rd-profile-sync
   namespace: rd
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: rd-professional-api
+  releaseName: rd-profile-sync
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: rd-professional-api
+    name: rd-profile-sync
     version: 0.0.4
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/professional-api:prod-0e3d31f1
+      applicationInsightsInstrumentKey: "2d1b3c8b-e6a0-4114-9a89-e585d1410c43"
+      image: hmctspublic.azurecr.io/rd/profile-sync:prod-2a68a6f9
     global:
-      environment: aat
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+      environment: perftest
