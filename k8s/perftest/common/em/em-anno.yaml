@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-anno
@@ -19,8 +19,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-4a37840d
+      image: hmctspublic.azurecr.io/em/anno:prod-eeb3524c
       ingressHost: em-anno-perftest.service.core-compute-perftest.internal
     global:
       environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

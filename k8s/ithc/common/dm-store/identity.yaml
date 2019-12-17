@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: dm-store
+  namespace: dm-store
+spec:
+  type: 0
+  ResourceID: "/subscriptions/62864d44-5da9-4ae9-89e7-0cf33942fa09/resourcegroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/dm-store-ithc-mi"
+  ClientID: "d73db849-aff7-4812-a3d4-c1b8be5cacd3"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: dm-store-binding
+  namespace: dm-store
+spec:
+  AzureIdentity: dm-store
+  Selector: dm-store

@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bar-api
@@ -12,13 +12,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bar-api
-    version: 0.2.1
+    version: 0.2.2
   values:
     rollback:
       enable: true
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/bar/api:prod-db742d67
+      image: hmctspublic.azurecr.io/bar/api:prod-009331a3
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: prom-operator
@@ -13,7 +13,7 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
-    version: 8.2.0
+    version: 8.3.0
   valueFileSecrets:
   - name: "prometheus-values"
   values:
@@ -66,6 +66,18 @@ spec:
         serviceMonitorSelector:
           matchLabels:
             heritage: Tiller
+
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
     prometheusOperator:
       enabled: true
       createCustomResource: false
@@ -86,7 +98,6 @@ spec:
         - name: 'slack_alerting'
           slack_configs:
           - channel: prometheus-alerting
-            title_link: "http://alertmanager-01.sandbox.platform.hmcts.net/#/alerts"
             text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
 
 

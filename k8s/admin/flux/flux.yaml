@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: flux
@@ -9,10 +9,12 @@ metadata:
 spec:
   releaseName: flux
   chart:
-    repository: https://fluxcd.github.io/flux
+    repository: https://charts.fluxcd.io
     name: flux
-    version: 0.14.1
+    version: 0.15.0
   values:
+    image:
+      tag: 1.16.0
     git:
       url: git@github.com:hmcts/cnp-flux-config
       pollInterval: 1m
@@ -22,12 +24,6 @@ spec:
     registry:
       acr:
         enabled: true
-    helmOperator:
-      workers: 6
-      create: true
-      chartsSyncInterval: 1m
-      configureRepositories:
-        enable: true
     additionalArgs:
       - --connect=ws://fluxcloud
       - --manifest-generation=true
