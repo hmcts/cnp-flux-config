@@ -20,6 +20,11 @@ spec:
       admission:
         enable: true
         mode: "protect" # one of: monitor, protect
+        rules:
+          - '{"config":{"id":1000,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kured"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
+          - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow HMCTS registries","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
+          - '{"config":{"id":1002,"category":"Kubernetes","comment":"Default deny","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://localhost/,https://*.*/"}],"disable":false,"rule_type": "deny","cfg_type":"user_created"}}'
+        # TODO remove deny and exception once chart upgraded in all envs
         deny: 
           - '{"config":{"id":1002,"category":"Kubernetes","comment":"Default deny","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://localhost/,https://*.*/"}],"disable":false,"actions":[]}}'
         exception: 
@@ -38,7 +43,10 @@ spec:
           - '{"insert":{"after":3,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Privilege.Escalation"}],"actions":["quarantine"],"event":"security-event","disable":true}]}}'
           - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
-          - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"number","value":"5.4"}],"actions":["webhook"],"event":"benchmark","disable":true}]}}'
+          # TODO remove when upgraded to 3.1
+          #- '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"number","value":"5.4"}],"actions":["webhook"],"event":"benchmark","disable":true}]}}'
+          # TODO enable when upgraded to 3.1
+          #- '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
       network: # IDs must match array index + 1
         - create: '{"insert":{"after":0,"rules":[{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false,"learned": false}]}}'
           update: '{"config":{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false}}'
