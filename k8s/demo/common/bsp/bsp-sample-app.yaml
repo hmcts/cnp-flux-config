@@ -35,7 +35,7 @@ spec:
       bsoIdamRedirectUrl: "https://bulk-scan-orchestrator-demo.service.core-compute-demo.internal/oauth2/callback"
       devMode: true
     java:
-      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-48e38c8b
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-0c1932a2
       ingressHost: ""
       releaseNameOverride: "{{ .Release.Name}}-bulk-scan-sample-app"
       environment:
@@ -48,7 +48,7 @@ spec:
             STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
       bulk-scan-orchestrator:
         java:
-          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-18fa8916
+          image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-e2c0b1d5
           environment:
             TRANSFORMATION_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
             UPDATE_URL_BULKSCAN: "http://{{ .Release.Name }}-bulk-scan-sample-app"
