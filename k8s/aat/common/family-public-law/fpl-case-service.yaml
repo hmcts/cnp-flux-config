@@ -36,6 +36,11 @@ spec:
         IDAM_CLIENT_ID: fpl_case_service
         IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-*.service.core-compute-aat.internal/oauth2/callback
         GATEWAY_URL: https://gateway-ccd.aat.platform.hmcts.net
+        SPRING_MAIL_HOST: mta.reform.hmcts.net
+        SPRING_MAIL_PORT: 25
+        SPRING_MAIL_TEST_CONNECTION: false
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
       aadIdentityName: family-public-law
       keyVaults:
         fpl:
@@ -54,6 +59,8 @@ spec:
           - system-update-user-username
           - system-update-user-password
           - local-authority-fallback-inbox
+          - robotics-notifications-sender
+          - robotics-notifications-recipient
       prometheus:
         enabled: true
     global:
