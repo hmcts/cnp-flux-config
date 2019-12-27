@@ -2,27 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: repl-docmosis-service
-  namespace: ethos
+  name: ccd-definition-store-api
+  namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: repl-docmosis-service
+  releaseName: ccd-definition-store-api
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ethos-repl-docmosis-backend
-    version: 0.1.6
+    name: ccd-definition-store-api
+    version: 1.1.2
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-a2ccdc57
-      ingressHost: ethos-repl-docmosis-backend-aat.service.core-compute-aat.internal
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-63a82b17
+      environment:
+        DEFINITION_STORE_DB_MAX_POOL_SIZE: 25
     global:
-      environment: aat
-      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
