@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-stitching
@@ -14,20 +14,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-stitching
-    version: 0.1.13
+    version: 0.1.15
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/stitching:prod-b7476b6a
+      image: hmctspublic.azurecr.io/em/stitching:prod-06a53746
       ingressHost: em-stitching-prod.service.core-compute-prod.internal
       environment:
         DOCMOSIS_ENDPOINT: https://docmosis.platform.hmcts.net/rs/convert
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
-        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-prod.postgres.database.azure.com:5432/emstitch?ssl=disable
-        SPRING_DATASOURCE_USERNAME: annotation@em-stitching-postgres-db-prod
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
         TASK_ENV: documentTaskLock-prod
     global:
       environment: prod

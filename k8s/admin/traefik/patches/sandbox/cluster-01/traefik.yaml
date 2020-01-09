@@ -1,9 +1,11 @@
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: traefik
   namespace: admin
 spec:
+  valueFileSecrets:
+    - name: "traefik-values"
   values:
     loadBalancerIP: 10.10.3.250
     dashboard:

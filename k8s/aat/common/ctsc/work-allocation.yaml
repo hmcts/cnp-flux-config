@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ctsc-work-allocation
@@ -14,15 +14,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ctsc-work-allocation
-    version: 0.0.11
+    version: 0.0.14
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ctsc/work-allocation:prod-9026ea38
+      image: hmctspublic.azurecr.io/ctsc/work-allocation:prod-a9a28552
       environment:
         TEST_ENDPOINTS_ENABLED: true
         SMTP_ENABLED: true
+        CCD_DRY_RUN: false
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

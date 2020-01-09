@@ -1,12 +1,12 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-anno
   namespace: em
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.anno: glob:prod-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: em-anno
   rollback:
@@ -14,17 +14,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.12
+    version: 0.1.14
   values:
     java:
       replicas: 2
-      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
+#      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:pr-93
+      image: hmctspublic.azurecr.io/em/anno:prod-eeb3524c
       ingressHost: em-anno-ithc.service.core-compute-ithc.internal
-      environment:
-        S2S_BASE_URI: "http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal"
-        IDAM_API_BASE_URI: "https://idam-api.ithc.platform.hmcts.net"
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -17,6 +17,7 @@ secrets=(
     'liberata-keys-oauth2-client-secret'
     'liberata-keys-oauth2-username'
     'liberata-keys-oauth2-password'
+    'paybubble-idam-client-secret'
 )
 
 for name in "${secrets[@]}"; do

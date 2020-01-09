@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: prom-operator
@@ -13,7 +13,7 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
-    version: 6.21.0
+    version: 8.3.0
   values:
     defaultRules:
       create: true
@@ -36,6 +36,96 @@ spec:
         prometheus: true
         prometheusOperator: true
         time: true
+
+    prometheus:
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
+    prometheusOperator:
+      enabled: true
+      createCustomResource: false
+
     kubelet:
       serviceMonitor:
         https: false
+
+    grafana:
+      plugins:
+        - grafana-kubernetes-app
+        - camptocamp-prometheus-alertmanager-datasource
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+        hosts:
+          - grafana.sandbox.platform.hmcts.net
+      additionalDataSources:
+        - name: prometheus-00
+          type: prometheus
+          url: https://prometheus-00.sandbox.platform.hmcts.net
+          access: proxy
+        - name: prometheus-01
+          type: prometheus
+          url: https://prometheus-01.sandbox.platform.hmcts.net
+          access: proxy
+        - name: alertmanager-00
+          type: camptocamp-prometheus-alertmanager-datasource
+          url: https://alertmanager-00.sandbox.platform.hmcts.net
+          access: proxy
+        - name: alertmanager-01
+          type: camptocamp-prometheus-alertmanager-datasource
+          url: https://alertmanager-01.sandbox.platform.hmcts.net
+          access: proxy
+        
+        
+      dashboardProviders: 
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          kubernetes-pod-monitoring:
+            gnetId: 9144
+            revision: 2
+            datasource: Prometheus
+          Kubernetes-Deployment-Statefulset-Daemonset-metrics:
+            gnetId: 8588
+            revision: 1
+            datasource: Prometheus
+          Cluster-Monitoring-for-Kubernetes:
+            gnetId: 10000
+            revision: 1
+            datasource: Prometheus
+          Cluster-cost:
+            gnetId: 8670
+            revision: 5
+            datasource: Prometheus
+          Cluster-Dashboard:
+            gnetId: 11358
+            revision: 1
+          Spring-Boot:
+            url: https://gist.githubusercontent.com/timja/665f0c6cbd33120c88e91af67701954d/raw/eef2718e0d3e007a8476ac2cd34c04ef6724387d/spring-boot-dashboard.json
+
+    alertmanager:
+      ingress:
+        enabled: true
+        hosts:
+          - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net    
+
+          

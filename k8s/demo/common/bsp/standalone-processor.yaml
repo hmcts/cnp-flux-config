@@ -1,12 +1,14 @@
 ---
- # this chart for Exela to get SAS token, always keep it running in demo standalone
-apiVersion: flux.weave.works/v1beta1
+# this chart for Exela to get SAS token, always keep it running in demo standalone
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: standalone-processor
   namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
+    repository.fluxcd.io/bulk-scan-processor: bulk-scan-processor.java.image
+    filter.fluxcd.io/bulk-scan-processor: glob:prod-*
 spec:
   releaseName: standalone-processor
   timeout: 900
@@ -17,20 +19,30 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan
-    version: 0.1.4
+    version: 0.1.10
   values:
     bulk-scan-processor:
       java:
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-4d376f9e
         ingressClass: traefik-private
         ingressHost: bsp-standalone-processor.demo.platform.hmcts.net
         releaseNameOverride: "{{ .Release.Name }}-bsp"
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            secretRef: bsp-storage-account-creds
+            key: storageAccountName
+          STORAGE_KEY:
+            secretRef: bsp-storage-account-creds
+            key: accessKey
         environment:
+          STORAGE_URL: "https://bulk-scanning.demo.platform.hmcts.net"
           FLYWAY_NOOP_STRATEGY: "false"
           SCAN_ENABLED: "false"
           REUPLOAD_ENABLED: "false"
           NOTIFICATIONS_TO_ORCHESTRATOR_TASK_ENABLED: "false"
           STORAGE_BLOB_SELECTED_CONTAINER: "ALL"
           PROCESS_PAYMENTS_ENABLED: "false"
+          SAS_TOKEN_VALIDITY: "86400"
     bulkscan:
       orchestrator:
         enabled: false
@@ -42,3 +54,6 @@ spec:
         enabled: true
       dmStore:
         enabled: true
+bsp:
+  blobstorage:
+    enabled: false

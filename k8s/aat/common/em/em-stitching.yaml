@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-stitching
@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-stitching
-    version: 0.1.13
+    version: 0.1.15
   values:
     java:
       replicas: 2
@@ -23,13 +23,9 @@ spec:
       memoryLimits: '2048Mi'
       cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/stitching:prod-b7476b6a
+      image: hmctspublic.azurecr.io/em/stitching:prod-06a53746
       ingressHost: em-stitching-aat.service.core-compute-aat.internal
       environment:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-aat.postgres.database.azure.com:5432/emstitch?ssl=disable
-        SPRING_DATASOURCE_USERNAME: annotation@em-stitching-postgres-db-aat
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
         TASK_ENV: documentTaskLock-aat
     global:
       environment: aat

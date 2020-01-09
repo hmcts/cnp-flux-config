@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-case-documents-api
@@ -14,15 +14,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-documents-api
-    version: 0.0.4
+    version: 0.0.5
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-9c616e3c
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-af8d6a0f
       ingressHost: ia-case-documents-api-aat.service.core-compute-aat.internal
-      aadIdentityName: ia
-      applicationInsightsInstrumentKey: "bf7eeffe-bd72-4350-b336-cf4020806c02"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

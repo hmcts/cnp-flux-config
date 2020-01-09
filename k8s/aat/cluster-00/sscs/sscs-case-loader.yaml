@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-case-loader
@@ -14,12 +14,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-case-loader
-    version: 0.0.1
+    version: 0.0.4
   values:
     job:
-      schedule: "0/5 * * * *"
+      schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/case-loader:staging-fc6e63ef
+      image: hmctspublic.azurecr.io/sscs/case-loader:staging-60accdf5
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

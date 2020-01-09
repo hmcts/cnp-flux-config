@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-case-notifications-api
@@ -14,20 +14,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-notifications-api
-    version: 0.0.3
+    version: 0.0.4
   values:
     java:
       replicas: 2
-      applicationInsightsInstrumentKey: "71f1292c-eadf-4ea9-8444-b82a6b09405a"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-28ae76f3
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-c65c4712
       ingressHost: ia-case-notifications-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         RESTART_ME: "Update due to vault change"
       prometheus:
         enabled: true
-      aadIdentityName: ia
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,11 +1,12 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: idam-web-admin
   namespace: idam
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:preview-*
 spec:
   releaseName: idam-web-admin
   rollback:

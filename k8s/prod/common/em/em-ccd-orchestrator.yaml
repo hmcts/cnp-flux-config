@@ -1,11 +1,11 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
   namespace: em
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: em-ccd-orchestrator
@@ -14,19 +14,21 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccd-orchestrator
-    version: 0.1.5
+    version: 0.1.9
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-105aa18b
+      keyVaults:
+        em-ccd-orchestrator:
+          resourceGroup: em-ccd-orchestrator
+          secrets:
+          - AppInsightsInstrumentationKey
+          - microservicekey-em-ccd-orchestrator
+      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-dbe1602d
       ingressHost: em-ccd-orchestrator-prod.service.core-compute-prod.internal
       environment:
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
-        S2S_BASE_URI: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
-        EM_STITCHING_API_URL: http://em-stitching-prod.service.core-compute-prod.internal
-        DM_STORE_APP_URL: http://dm-store-prod.service.core-compute-prod.internal
-        CALLBACK_DOMAIN: em-ccd-orchestrator-prod.service.core-compute-prod.internal
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

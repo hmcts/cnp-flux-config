@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-cos
@@ -27,7 +27,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/cos:prod-74b89ddb
+      image: hmctspublic.azurecr.io/div/cos:prod-f2aabc06
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
@@ -41,6 +41,8 @@ spec:
         DOCUMENTATION_SWAGGER_ENABLED: "false"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
+        BSP_SERVICES_ALLOWED_TO_UPDATE:
+        BSP_SERVICES_ALLOWED_TO_VALIDATE:
       aadIdentityName: divorce
       prometheus:
         enabled: true

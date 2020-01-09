@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccpay-payment-app
@@ -9,22 +9,17 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccpay-payment-api
+  rollback:
+    enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: payment-api
-    version: 0.1.5
+    version: 2.0.6
   values:
-    rollback:
-      enable: true
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/payment/api:prod-8e6f384f
-      ingressHost: payment-api-aat.service.core-compute-aat.internal
-      applicationInsightsInstrumentKey: "280b07a1-f1a1-4369-8e21-0bb2c2995f1e"
-      environment:
-        SPRING_DATASOURCE_URL: "jdbc:postgresql://payment-postgres-db-aat.postgres.database.azure.com:5432/payment"
-        SPRING_DATASOURCE_USERNAME: payment@payment-postgres-db-aat
-      aadIdentityName: ccpay
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/payment/api:prod-52407f41
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

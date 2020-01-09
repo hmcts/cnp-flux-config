@@ -1,0 +1,26 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:perftest-*
+spec:
+  releaseName: idam-web-public
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: idam-web-public
+    version: 0.2.2
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-public:perttest
+      ingressHost: idam-web-public.service.core-compute-perftest.internal
+      aadIdentityName: idam
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

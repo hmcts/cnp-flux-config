@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-orchestrator-service
@@ -12,8 +12,8 @@ spec:
   rollback:
     enable: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-orchestrator-service
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     version: 0.0.17
   values:
     tags:
@@ -28,11 +28,11 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:aat-aaa8e0f4
+      image: "hmctspublic.azurecr.io/probate/orchestrator-service:aat-57964e63"
       ingressHost: probate-orchestrator-service-aat.service.core-compute-aat.internal
       environment:
-        REFORM_TEAM: probate
         REFORM_SERVICE_NAME: orchestrator-service
+        REFORM_TEAM: probate
       aadIdentityName: probate
     global:
       environment: aat
