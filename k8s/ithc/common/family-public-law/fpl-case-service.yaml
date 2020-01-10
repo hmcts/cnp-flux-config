@@ -5,7 +5,7 @@ metadata:
   name: fpl-case-service
   namespace: family-public-law
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: fpl-case-service
@@ -23,9 +23,10 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 4d1483ce-676e-4647-b22e-5e30f72cfa7e
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-e4cfdf56
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-9154cd07
       ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
+        DUMMY: "force_release"
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
         CORE_CASE_DATA_API_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
