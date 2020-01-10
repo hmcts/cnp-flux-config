@@ -19,16 +19,16 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:pr-474-09f3d518
+      image: hmctspublic.azurecr.io/dm/store:pr-474-257523d0
       ingressHost: dm-store-perftest.service.core-compute-perftest.internal
       memoryLimits: '2048Mi'
       cpuLimits: '2000m'
       environment:
         ENABLE_TTL: false
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 
-          -XX:+UseConcMarkSweepGC -Dfile.encoding=UTF-8 -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar
-          -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints
-          -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=default
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -Dfile.encoding=UTF-8
+          -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar -XX:+UnlockDiagnosticVMOptions
+          -XX:+DebugNonSafepoints -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=default
           -Xlog:gc*=debug:file="gc.log":tags,time,uptime,level
     global:
       environment: perftest
