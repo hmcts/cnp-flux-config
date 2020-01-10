@@ -202,8 +202,16 @@ spec:
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-cafb4282
+        image: hmctspublic.azurecr.io/dm/store:latest
         releaseNameOverride: cmc-demo-dmstore
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            secretRef: storage-secret-cmc-demo-blobstorage
+            key: storageAccountName
+          STORAGE_ACCOUNT_KEY:
+            secretRef: storage-secret-cmc-demo-blobstorage
+            key: accessKey
+        keyVaults: {}
         environment:
           IDAM_USER_BASE_URI: https://idam-api.demo.platform.hmcts.net
           IDAM_S2S_BASE_URI: http://cmc-demo-s2s
