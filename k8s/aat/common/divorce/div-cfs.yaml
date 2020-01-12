@@ -2,29 +2,24 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: bulk-scan-processor
-  namespace: bsp
+  name: div-cfs
+  namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: bulk-scan-processor
+  releaseName: div-cfs
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: bulk-scan-processor
-    version: 0.2.17
+    name: div-cfs
+    version: 1.2.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      cpuRequests: '500m'
-      cpuLimits: '2500m'
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-892e49c1
-      environment:
-        STORAGE_BLOB_SELECTED_CONTAINER: ALL
-        ERROR_NOTIFICATIONS_ENABLED: true
+      image: hmctspublic.azurecr.io/div/cfs:prod-e6101443
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
