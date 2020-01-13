@@ -22,6 +22,8 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
+      environment:
+        ATRIGGER: rebuild 
       image: hmctspublic.azurecr.io/dm/store:prod-2b952a4b
       ingressHost: dm-store-ithc.service.core-compute-ithc.internal
       testsConfig:
@@ -31,7 +33,7 @@ spec:
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
-        enabled: true
+        enabled: false
         image: hmctspublic.azurecr.io/dm/store-test:prod-2b952a4b
     global:
       environment: ithc
