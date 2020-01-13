@@ -6,7 +6,7 @@ metadata:
   namespace: dm-store
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-474-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: dm-store
   rollback:
@@ -19,17 +19,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:pr-474-2062535e
+      image: hmctspublic.azurecr.io/dm/store:prod-3db8e9e9
       ingressHost: dm-store-perftest.service.core-compute-perftest.internal
-      memoryLimits: '2048Mi'
-      cpuLimits: '2000m'
       environment:
         ENABLE_TTL: false
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -Dfile.encoding=UTF-8
-          -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar -XX:+UnlockDiagnosticVMOptions
-          -XX:+DebugNonSafepoints -XX:StartFlightRecording=disk=true,dumponexit=true,filename=recording.jfr,maxsize=1024m,maxage=1d,settings=profile,path-to-gc-roots=true
-          -Xlog:gc*=debug:file="gc.log":tags,time,uptime,level
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
