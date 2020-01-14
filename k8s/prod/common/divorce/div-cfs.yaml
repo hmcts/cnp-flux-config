@@ -2,28 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: dm-store
-  namespace: dm-store
+  name: div-cfs
+  namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: dm-store
+  releaseName: div-cfs
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: dm-store
-    version: 2.0.12
+    name: div-cfs
+    version: 1.2.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-566d8acb
-      ingressHost: dm-store-perftest.service.core-compute-perftest.internal
-      environment:
-        ENABLE_TTL: false
+      image: hmctspublic.azurecr.io/div/cfs:prod-9a9985e3
     global:
-      environment: perftest
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

@@ -23,7 +23,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-a1cbdf9b
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-509811d9
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
         DUMMY: 'to force reload secrets'
@@ -38,6 +38,12 @@ spec:
         IDAM_CLIENT_ID: fpl_case_service
         IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-prod.service.core-compute-prod.internal/oauth2/callback
         GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
+        SPRING_MAIL_HOST: mta.reform.hmcts.net
+        SPRING_MAIL_PORT: 25
+        SPRING_MAIL_TEST_CONNECTION: false
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
+        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: false
       aadIdentityName: family-public-law
       keyVaults:
         fpl:
@@ -56,6 +62,8 @@ spec:
           - system-update-user-username
           - system-update-user-password
           - local-authority-fallback-inbox
+          - robotics-notification-sender
+          - robotics-notification-recipient
       prometheus:
         enabled: true
     global:
