@@ -9,7 +9,7 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     matchLabels:
       app: vsts-aks-agent
@@ -25,7 +25,7 @@ spec:
           type: File
       containers:
       - name: vsts-aks-agent
-        image: hmctspublic.azurecr.io/hmcts/vsts-agent:db1s76
+        image: hmctspublic.azurecr.io/hmcts/vsts-agent:db238v
         volumeMounts:
         - mountPath: /var/run/docker.sock
           name: docker-sock-volume
@@ -41,8 +41,8 @@ spec:
           value: hmcts-cftptl-agent-pool
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "25m"
+            memory: "1024Mi"
+            cpu: "250m"
           limits:
             memory: "4096Mi"
             cpu: "2000m"
