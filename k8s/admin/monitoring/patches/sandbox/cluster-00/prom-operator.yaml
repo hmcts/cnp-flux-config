@@ -1,0 +1,21 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prom-operator
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/ignore: "false"
+spec:
+  values:
+    prometheus:
+      ingress: 
+        enabled: true
+        hosts: 
+          - prometheus-00.sandbox.platform.hmcts.net
+    alertmanager:
+      ingress:
+        enabled: true
+        hosts:
+          - alertmanager-00.sandbox.platform.hmcts.net

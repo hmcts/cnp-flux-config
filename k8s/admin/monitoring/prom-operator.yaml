@@ -1,0 +1,82 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prom-operator
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/ignore: "false"
+spec:
+  releaseName: prom-operator
+  forceUpgrade: true
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-operator
+    version: 8.3.0
+  valueFileSecrets:
+  - name: "prometheus-values"
+  values:
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubePrometheusNodeAlerting: true
+        kubePrometheusNodeRecording: true
+        kubernetesAbsent: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: true
+        network: true
+        node: true
+        prometheus: true
+        prometheusOperator: true
+        time: true
+
+    prometheus:
+      prometheusSpec:
+        serviceMonitorSelector:
+          matchLabels:
+            heritage: Tiller
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            app: flux
+          namespaceSelector: 
+            matchNames:
+              - admin
+          endpoints: 
+          - targetPort: 3030
+          path: /metrics
+
+    kubelet:
+      serviceMonitor:
+        https: false
+
+    alertmanager:
+      ingress:
+        enabled: true
+      config:
+        route:
+          receiver: 'slack_alerting'
+          routes:
+          - match:
+              alertname: Watchdog
+            receiver: "slack_alerting"        
+        receivers:
+        - name: 'slack_alerting'
+          slack_configs:
+          - channel: prometheus-alerting
+            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"    
+
+
+
+   
+
+          
