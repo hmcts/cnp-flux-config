@@ -8,60 +8,16 @@ spec:
   values:
     prometheus:
       ingress: 
-        enabled: true
         hosts: 
           - prometheus-ptl.sandbox.platform.hmcts.net
 
     alertmanager:
       ingress:
-        enabled: true
         hosts:
           - alertmanager-ptl.sandbox.platform.hmcts.net
 
     grafana:
-      plugins:
-        - grafana-kubernetes-app
-        - camptocamp-prometheus-alertmanager-datasource
+      enabled: true
       ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
         hosts:
           - grafana-ptl.platform.hmcts.net
-      additionalDataSources: []
-
-      dashboardProviders: 
-        dashboardproviders.yaml:
-          apiVersion: 1
-          providers:
-          - name: 'default'
-            orgId: 1
-            folder: ''
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
-      dashboards:
-        default:
-          kubernetes-pod-monitoring:
-            gnetId: 9144
-            revision: 2
-            datasource: Prometheus
-          Kubernetes-Deployment-Statefulset-Daemonset-metrics:
-            gnetId: 8588
-            revision: 1
-            datasource: Prometheus
-          Cluster-Monitoring-for-Kubernetes:
-            gnetId: 10000
-            revision: 1
-            datasource: Prometheus
-          Cluster-cost:
-            gnetId: 8670
-            revision: 5
-            datasource: Prometheus
-          Cluster-Dashboard:
-            gnetId: 11358
-            revision: 1
-          Spring-Boot:
-            url: https://gist.githubusercontent.com/timja/665f0c6cbd33120c88e91af67701954d/raw/eef2718e0d3e007a8476ac2cd34c04ef6724387d/spring-boot-dashboard.json
