@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-747-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -14,15 +14,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccd-data-store-api
-    version: 1.2.9
+    version: 1.3.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1ee8ab8b
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-747-e3a57fcc
+
       environment:
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
         CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-perftest\.service\.core-compute-perftest\.internal(?::\d+)?)
+        DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120 #remove when version 1.3.1 of the chart is available
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

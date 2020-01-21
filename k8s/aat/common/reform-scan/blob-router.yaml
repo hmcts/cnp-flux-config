@@ -14,12 +14,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.6
+    version: 0.0.19
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-79a86fda
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-c14ede82
+      environment:
+        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
