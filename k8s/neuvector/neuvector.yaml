@@ -32,7 +32,7 @@ spec:
         policies:
           - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
           - '{"insert":{"after":1,"rules":[{"group":null,"conditions":[],"actions":["webhook"],"event":"security-event","disable":true}]}}'
-          - '{"insert":{"after":2,"rules":[{"group":null,"conditions":[{"type":"level","value":"Error"}],"actions":["webhook"],"event":"security-event","disable":true}]}}'
+          - '{"insert":{"after":2,"rules":[{"group":null,"conditions":[{"type":"level","value":"Error"}],"actions":["webhook"],"event":"security-event","disable":false}]}}'
           - '{"insert":{"after":3,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Privilege.Escalation"}],"actions":["quarantine"],"event":"security-event","disable":true}]}}'
           - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
@@ -50,6 +50,8 @@ spec:
           update: '{"config":{"id":5,"comment":"","from":"AllPods","to":"GovUkBankHolidays","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
         - create: '{"insert":{"after":5,"rules":[{"id":6,"comment":"","from":"AllPods","to":"ServiceBus","ports":"tcp/5671","action":"allow","applications":["SSL"],"disable":false,"learned": false}]}}'
           update: '{"config":{"id":6,"comment":"","from":"AllPods","to":"ServiceBus","ports":"tcp/5671","action":"allow","applications":["SSL"],"disable":false}}'
+        - create: '{"insert":{"after":6,"rules":[{"id":7,"comment":"","from":"AllPods","to":"Mta","ports":"tcp/25","action":"allow","applications":[],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":7,"comment":"","from":"AllPods","to":"Mta","ports":"tcp/25","action":"allow","applications":[],"disable":false}}'
     groups:
       - '{"config":{"name":"AzurePostgreSQL","criteria":[{"key": "address", "value": "*.postgres.database.azure.com", "op": "="}]}}'
       - '{"config":{"name":"ApplicationInsights","criteria":[{"key": "address", "value": "dc.services.visualstudio.com", "op": "="}, {"key": "address", "value": "rt.services.visualstudio.com", "op": "="}, {"key": "address", "value": "dc.applicationinsights.microsoft.com", "op": "="}, {"key": "address", "value": "euw.rt.prod.applicationinsights.trafficmanager.net", "op": "="}]}}'
@@ -58,6 +60,7 @@ spec:
       - '{"config":{"name":"GovUkBankHolidays","criteria":[{"key": "address", "value": "www.gov.uk", "op": "="}]}}'
       - '{"config":{"name":"AllPods","criteria":[{"key": "namespace", "value": "*", "op": "="}]}}'
       - '{"config":{"name":"ServiceBus","criteria":[{"key": "address", "value": "*.servicebus.windows.net", "op": "="}]}}'
+      - '{"config":{"name":"Mta","criteria":[{"key": "address", "value": "mta.reform.hmcts.net", "op": "="}]}}'
     neuvector:
       tag: 3.1.1
       controller:
