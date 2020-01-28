@@ -21,6 +21,9 @@ spec:
     java:
       postgresql:
         enabled: true #temporary till we get ccd working.
+        initdbScripts:
+          init.sql: |-
+            CREATE DATABASE "send_letter" WITH OWNER = javapostgres ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
       image: hmctspublic.azurecr.io/draft-store/service:prod-a8a68e6d
       ingressHost: ""
       environment:
