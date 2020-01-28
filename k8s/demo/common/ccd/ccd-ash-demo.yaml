@@ -2,7 +2,7 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-full-with-pay
+  name: ccd-ash-demo
   namespace: ccd
   annotations:
     flux.weave.works/automated: 'true'
@@ -10,18 +10,18 @@ metadata:
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
-    filter.fluxcd.io/ccd-case-management-web: glob:prod-*
+    filter.fluxcd.io/ccd-case-management-web: glob:pr-814-*
     repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
-    filter.fluxcd.io/ccd-api-gateway-web: glob:prod-*
+    filter.fluxcd.io/ccd-api-gateway-web: glob:pr-273-*
     repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
-    filter.fluxcd.io/ccd-definition-store-api: glob:prod-*
+    filter.fluxcd.io/ccd-definition-store-api: glob:pr-469-*
     repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
-    filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
+    filter.fluxcd.io/ccd-user-profile-api: glob:pr-224-*
     repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
-    filter.fluxcd.io/ccd-data-store-api: glob:prod-*
+    filter.fluxcd.io/ccd-data-store-api: glob:pr-601-*
 
 spec:
-  releaseName: ccd-full-with-pay
+  releaseName: ccd-ash-demo
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -52,7 +52,7 @@ spec:
         enabled: true
       printService:
         enabled: true
-      ccpay:
+      testStubsService:
         enabled: true
 
     global:
@@ -74,13 +74,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-404df808
+        image: hmctspublic.azurecr.io/ccd/case-management-web:pr-814-ee967f83
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-7f64b352
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-273-b2c7726d
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -89,8 +89,9 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-ad922e1b
-        ingressHost: ""
+        devmemoryRequests: '1024Mi'
+        devmemoryLimits: '2048Mi'
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-469-a802d603
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -101,13 +102,11 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-faaac4a0
-        ingressHost: ""
+        image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-9983c1f3
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-0ef0c718
-        ingressHost: ""
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:pr-224-b3eed08a
 
     ccd-user-profile-importer:
       users:
@@ -118,4 +117,5 @@ spec:
       - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
       userRoles:
       - caseworker-autotest1
-
+      - caseworker-test
+      - caseworker

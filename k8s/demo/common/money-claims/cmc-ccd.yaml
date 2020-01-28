@@ -2,8 +2,8 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-full-with-pay
-  namespace: ccd
+  name: cmc-ccd
+  namespace: money-claims
   annotations:
     flux.weave.works/automated: 'true'
     flux.weave.works/tag.java: 'glob:prod-*'
@@ -19,9 +19,11 @@ metadata:
     filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
     repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
     filter.fluxcd.io/ccd-data-store-api: glob:prod-*
+    repository.fluxcd.io/dm-store: dm-store.java.image
+    filter.fluxcd.io/dm-store: glob:prod-*
 
 spec:
-  releaseName: ccd-full-with-pay
+  releaseName: cmc-ccd
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -36,23 +38,15 @@ spec:
       idam-pr: true
 
     ccd:
+      s2s:
+        enabled: false
       managementWeb:
         enabled: true
       apiGatewayWeb:
         enabled: true
-      emAnnotation:
-        enabled: true
-      draftStore:
-        enabled: true
       dmStore:
         enabled: true
-      activityApi:
-        enabled: true
       blobstorage:
-        enabled: true
-      printService:
-        enabled: true
-      ccpay:
         enabled: true
 
     global:
@@ -62,7 +56,8 @@ spec:
       ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
-
+      draftStoreUrl: "http://cmc-draft-store-java"
+      s2sUrl: "http://cmc-s2s-java"
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-6203394f
@@ -90,7 +85,6 @@ spec:
     ccd-definition-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-ad922e1b
-        ingressHost: ""
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -102,20 +96,27 @@ spec:
     ccd-data-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/data-store-api:prod-faaac4a0
-        ingressHost: ""
 
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-0ef0c718
-        ingressHost: ""
-
+    dm-store:
+      java:
+        image: hmctspublic.azurecr.io/dm/store:prod-2581cc26
     ccd-user-profile-importer:
       users:
-      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+      - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
 
     ccd-definition-importer:
-      definitions:
-      - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.7
+      definitionFilename: cmc-ccd.xlsx
       userRoles:
+      - citizen
+      - caseworker-cmc
+      - caseworker-cmc-solicitor
+      - caseworker-cmc-systemupdate
+      - letter-holder
       - caseworker-autotest1
-
+      - caseworker-cmc-anonymouscitizen
+      - caseworker-cmc-judge
+      - caseworker-cmc-legaladvisor

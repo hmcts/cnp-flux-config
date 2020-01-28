@@ -2,29 +2,30 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: div-da
-  namespace: divorce
+  name: sscs-cor-frontend
+  namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
-  releaseName: div-da
+  releaseName: sscs-cor-frontend
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-da
-    version: 1.1.1
+    name: sscs-cor-frontend
+    version: 0.1.1
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/da:prod-048cbde6
-      ingressHost: decree-absolute-aks.aat.platform.hmcts.net
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-c614afd3
+      ingressHost: sscs-cor.aat.platform.hmcts.net
       environment:
-        PUBLIC_HOSTNAME: https://decree-absolute-aks.aat.platform.hmcts.net
-        PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.aat.platform.hmcts.net
-        DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.aat.platform.hmcts.net
+        NODE_ENV: preprod
+        MYA_FEATURE_FLAG: "true"
+        ADDITIONAL_EVIDENCE_FEATURE_FLAG: "true"
+        EVIDENCE_UPLOAD_QUESTION_PAGE_OVERRIDE_ALLOWED: "true"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

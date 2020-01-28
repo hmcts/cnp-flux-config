@@ -22,21 +22,23 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
+      applicationInsightsInstrumentKey: 4d1483ce-676e-4647-b22e-5e30f72cfa7e
       image: hmctspublic.azurecr.io/fpl/case-service:prod-523618e2
-      ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
+      ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
       environment:
-        FPL_LOCAL_AUTHORITY_CODES_FORBIDDEN_CASE_SUBMISSION: FPLA
-        IDAM_API_URL: https://idam-api.platform.hmcts.net
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-prod.service.core-compute-prod.internal
-        CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
-        DOCMOSIS_TORNADO_URL: https://docmosis.platform.hmcts.net
-        RD_PROFESSIONAL_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-perftest.service.core-compute-perftest.internal
+        CCD_UI_BASE_URL: https://www-ccd.perftest.platform.hmcts.net
+        DOCMOSIS_TORNADO_URL: https://docmosis-perftest.platform.hmcts.net
+        RD_PROFESSIONAL_API_URL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
         IDAM_CLIENT_ID: fpl_case_service
-        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-prod.service.core-compute-prod.internal/oauth2/callback
-        GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
+        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-perftest.service.core-compute-perftest.internal/oauth2/callback
+        GATEWAY_URL: https://gateway-ccd.perftest.platform.hmcts.net
+        SPRING_SECURITY_ENABLED: true
+        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.perftest.platform.hmcts.net/o/jwks
+        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/hmcts
         SPRING_MAIL_HOST: mta.reform.hmcts.net
         SPRING_MAIL_PORT: 25
         SPRING_MAIL_TEST_CONNECTION: false
@@ -44,8 +46,8 @@ spec:
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
         FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
         FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
-        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.perftest.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
       aadIdentityName: family-public-law
       keyVaults:
         fpl:
@@ -64,12 +66,10 @@ spec:
           - system-update-user-username
           - system-update-user-password
           - local-authority-fallback-inbox
-          - robotics-notification-sender
-          - robotics-notification-recipient
       prometheus:
         enabled: true
     global:
-      environment: prod
-      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
+      environment: perftest
+      subscriptionId: "62864d44-5da9-4ae9-89e7-0cf33942fa09"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
