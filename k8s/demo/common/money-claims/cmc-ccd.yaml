@@ -58,7 +58,7 @@ spec:
       devMode: true
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sUrl: "http://cmc-s2s-java"
-      cmcBackendUrl: "http://cmc-demo-claimstore"
+      cmcBackendUrl: "http://cmc-demo-cmc-claim-store-java"
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-6203394f
@@ -100,7 +100,6 @@ spec:
     ccd-data-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/data-store-api:prod-64fe6139
-        releaseNameOverride: {{ .Release.Name }}-data-store-api
 
     ccd-user-profile-api:
       java:
@@ -108,7 +107,6 @@ spec:
     dm-store:
       java:
         image: hmctspublic.azurecr.io/dm/store:prod-9ad50d28
-        releaseNameOverride: {{ .Release.Name }}-dmstore
       environment:
         S2S_NAMES_WHITELIST: ccd_gateway,cmc,cmc_claim_store,ccd_data,dg_docassembly_api
     ccd-user-profile-importer:

@@ -35,17 +35,16 @@ spec:
       s2sUrl: "http://cmc-s2s-java"
       pdfUrl: "http://pdf-service-java"
       paymentUrl: "http://cmc-pay-payment-api"
-      feesUrl: "http://cmc-pay-fees-api"
-      sendLetterUrl: "http://cmc-send-letter-service-java"
-      dmStoreUrl: "http://cmc-ccd-dmstore"
+      feesUrl: "http://cmc-pay-fees-register-api-java"
+      sendLetterUrl: "http://rpe-send-letter-service-java"
+      dmStoreUrl: "http://cmc-ccd-dm-store-java"
       dgAssemblyUrl: ""
-      ccdCaseDataApiUrl: "http://cmc-ccd-data-store-api"
+      ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api-java"
 
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
         image: hmctspublic.azurecr.io/cmc/claim-store:latest
-        releaseNameOverride: {{ .Release.Name }}-claimstore
         secrets: 
           GOV_NOTIFY_API_KEY:
               secretRef: notify-api-key
@@ -91,7 +90,6 @@ spec:
       nodejs:
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:latest
         ingressHost: {{ .Values.global.cmcFrontendUrl }}
-        releaseNameOverride: {{ .Release.Name }}-citizen-web
         secrets:
           OAUTH_CLIENT_SECRET:
               secretRef: citizen-oauth-client-secret
@@ -104,7 +102,7 @@ spec:
           FEATURE_INVERSION_OF_CONTROL: true
           IDAM_API_URL: https://{{ .Values.global.idamApiUrl }}
           IDAM_AUTHENTICATION_WEB_URL: https://{{ .Values.global.idamWebUrl }}
-          FEATURE_TOGGLES_API_URL: http://{{ .Release.Name }}-ftrtgl
+          FEATURE_TOGGLES_API_URL: http://{{ .Release.Name }}-rpe-feature-toggle-api-java
           CLAIM_STORE_URL: http://{{ .Release.Name }}-claimstore
           IDAM_S2S_AUTH: http://{{ .Values.global.s2sUrl }}
           PAY_URL: http://{{ .Values.global.paymentUrl }}
@@ -116,12 +114,11 @@ spec:
         web_public:
           url: {{ .Values.global.idamWebUrl }}
         service:
-          redirect_uri: https://{{ .Values.global.cmcFrontendIngress }}/receiver
+          redirect_uri: https://{{ .Values.global.cmcFrontendUrl }}/receiver
       rpe-feature-toggle-api:
         importer:
-          apiUrl: http://{{ .Release.Name }}-ftrtgl/api/ff4j/store/features/
+          apiUrl: http://{{ .Release.Name }}-rpe-feature-toggle-api-java/api/ff4j/store/features/
         java:
-          releaseNameOverride: {{ .Release.Name }}-ftrtgl
           environment:
             FEATURES_DB_HOST: {{ .Release.Name }}-postgres
 
