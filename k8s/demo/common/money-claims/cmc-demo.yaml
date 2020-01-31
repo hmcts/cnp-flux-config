@@ -44,8 +44,8 @@ spec:
 
     ### CMC SERVICES ###
     cmc-claim-store:
-      releaseNameOverride: "cmc-demo-claim-store"
       java:
+        releaseNameOverride: "cmc-demo-claim-store"
         image: hmctspublic.azurecr.io/cmc/claim-store:prod-eaa3868a
         environment:
           FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
@@ -53,6 +53,7 @@ spec:
 
     cmc-citizen-frontend:
       nodejs:
+        releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-55430450
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         environment:
