@@ -47,26 +47,26 @@ spec:
       java:
         image: hmctspublic.azurecr.io/cmc/claim-store:latest
         environment:
-          FRONTEND_BASE_URL: https://{{ .Values.global.cmcFrontendUrl }}
-          RESPOND_TO_CLAIM_URL: https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start
+          FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
+          RESPOND_TO_CLAIM_URL: "https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start"
 
     cmc-citizen-frontend:
       nodejs:
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:latest
-        ingressHost: {{ .Values.global.cmcFrontendUrl }}
+        ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         environment:
-          FEATURE_TOGGLES_API_URL: http://{{ .Release.Name }}-rpe-feature-toggle-api-java
-          CLAIM_STORE_URL: http://{{ .Release.Name }}-claimstore
+          FEATURE_TOGGLES_API_URL: "http://{{ .Release.Name }}-rpe-feature-toggle-api-java"
+          CLAIM_STORE_URL: "http://{{ .Release.Name }}-claimstore"
       idam-pr:
         api:
-          url: {{ .Values.global.idamApiUrl }}
+          url: "{{ .Values.global.idamApiUrl }}"
         web_public:
-          url: {{ .Values.global.idamWebUrl }}
+          url: "{{ .Values.global.idamWebUrl }}"
         service:
-          redirect_uri: https://{{ .Values.global.cmcFrontendUrl }}/receiver
+          redirect_uri: "https://{{ .Values.global.cmcFrontendUrl }}/receiver"
       rpe-feature-toggle-api:
         importer:
-          apiUrl: http://{{ .Release.Name }}-rpe-feature-toggle-api-java/api/ff4j/store/features/
+          apiUrl: "http://{{ .Release.Name }}-rpe-feature-toggle-api-java/api/ff4j/store/features/"
         java:
           environment:
             FEATURES_DB_HOST: "{{ .Release.Name }}-postgresql"
