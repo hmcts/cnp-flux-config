@@ -35,80 +35,28 @@ spec:
       s2sAuthUrl: "http://cmc-s2s-java"
       pdfServiceUrl: "http://pdf-service-java"
       paymentUrl: "http://cmc-pay-payment-api"
-      feesUrl: "http://cmc-pay-fees-register-api-java"
+      feesUrl: "http://cmc-pay-fees-register"
       sendLetterUrl: "http://rpe-send-letter-service-java"
-      documentManagementUrl: "http://cmc-ccd-dm-store-java"
+      documentManagementUrl: "http://cmc-ccd-dm-store"
       dgAssemblyUrl: ""
-      ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api-java"
-      postgresqlHost: ""
+      ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
+      postgresqlHost: "{{ .Release.Name }}-postgresql"
 
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
         image: hmctspublic.azurecr.io/cmc/claim-store:latest
-        secrets: 
-          GOV_NOTIFY_API_KEY:
-              secretRef: notify-api-key
-              key: key
-          OAUTH2_CLIENT_SECRET:
-              secretRef: oauth-client-secret
-              key: key
-          IDAM_CASEWORKER_ANONYMOUS_USERNAME:
-              secretRef: anonymous-caseworker-username
-              key: key
-          IDAM_CASEWORKER_ANONYMOUS_PASSWORD:
-              secretRef: anonymous-caseworker-password
-              key: key
-          IDAM_CASEWORKER_SYSTEM_USERNAME:
-              secretRef: system-update-username
-              key: key
-          IDAM_CASEWORKER_SYSTEM_PASSWORD:
-              secretRef: system-update-password
-              key: key
         environment:
-          IDAM_API_URL: {{ .Values.global.idamApiUrl }}
-          FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
-          FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: true
-          CMC_DB_HOST: {{ .Release.Name }}-postgres
-          CORE_CASE_DATA_API_URL: http://{{ .Values.global.ccdCaseDataApiUrl }}
-          IDAM_S2S_AUTH_URL: http://{{ .Values.global.s2sAuthUrl }}
-          PDF_SERVICE_URL: http://{{ .Values.global.pdfServiceUrl }}
-          SEND_LETTER_URL: http://{{ .Values.global.sendLetterUrl }}
-          DOCUMENT_MANAGEMENT_URL: http://{{ .Values.global.documentManagementUrl }}
           FRONTEND_BASE_URL: https://{{ .Values.global.cmcFrontendUrl }}
           RESPOND_TO_CLAIM_URL: https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start
-          SPRING_MAIL_HOST: mailhog
-          SPRING_MAIL_PORT: 1025
-          SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mailhog
-          SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
-          APPINSIGHTS_INSTRUMENTATIONKEY: 00000000-0000-0000-0000-000000000000
-          PAY_URL: http://{{ .Values.global.paymentUrl }}
-          FEES_URL: http://{{ .Values.global.feesUrl }}
-          LIVE_SUPPORT_RECIPIENT: civilmoneyclaims+live-support-int-tests@gmail.com
-          LIVE_SUPPORT_SENDER: noreply@reform.hmcts.net
 
     cmc-citizen-frontend:
       nodejs:
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:latest
         ingressHost: {{ .Values.global.cmcFrontendUrl }}
-        secrets:
-          OAUTH_CLIENT_SECRET:
-              secretRef: citizen-oauth-client-secret
-              key: key
         environment:
-          FEATURE_MEDIATION: true
-          FEATURE_MEDIATION_PILOT: true
-          FEATURE_DIRECTIONS_QUESTIONNAIRE: true
-          FEATURE_ADMISSIONS: true
-          FEATURE_INVERSION_OF_CONTROL: true
-          IDAM_API_URL: https://{{ .Values.global.idamApiUrl }}
-          IDAM_AUTHENTICATION_WEB_URL: https://{{ .Values.global.idamWebUrl }}
           FEATURE_TOGGLES_API_URL: http://{{ .Release.Name }}-rpe-feature-toggle-api-java
           CLAIM_STORE_URL: http://{{ .Release.Name }}-claimstore
-          IDAM_S2S_AUTH: http://{{ .Values.global.s2sAuthUrl }}
-          PAY_URL: http://{{ .Values.global.paymentUrl }}
-          FEES_URL: http://{{ .Values.global.feesUrl }}
-          DRAFT_STORE_URL: http://{{ .Values.global.draftStoreUrl }}
       idam-pr:
         api:
           url: {{ .Values.global.idamApiUrl }}
@@ -121,11 +69,4 @@ spec:
           apiUrl: http://{{ .Release.Name }}-rpe-feature-toggle-api-java/api/ff4j/store/features/
         java:
           environment:
-            FEATURES_DB_HOST: {{ .Release.Name }}-postgres
-
-    ########################
-
-    postgresql:
-      nameOverride: postgres
-
-    ########################
+            FEATURES_DB_HOST: {{ .Release.Name }}-postgresql
