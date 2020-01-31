@@ -45,14 +45,14 @@ spec:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        image: hmctspublic.azurecr.io/cmc/claim-store:latest
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-eaa3868a
         environment:
           FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
           RESPOND_TO_CLAIM_URL: "https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start"
 
     cmc-citizen-frontend:
       nodejs:
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:latest
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-55430450
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         environment:
           FEATURE_TOGGLES_API_URL: "http://{{ .Release.Name }}-rpe-feature-toggle-api-java"
