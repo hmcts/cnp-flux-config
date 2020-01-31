@@ -44,6 +44,7 @@ spec:
 
     ### CMC SERVICES ###
     cmc-claim-store:
+      releaseNameOverride: "cmc-demo-claim-store"
       java:
         image: hmctspublic.azurecr.io/cmc/claim-store:prod-eaa3868a
         environment:
@@ -56,7 +57,7 @@ spec:
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         environment:
           FEATURE_TOGGLES_API_URL: "http://{{ .Release.Name }}-rpe-feature-toggle-api-java"
-          CLAIM_STORE_URL: "http://{{ .Release.Name }}-claimstore"
+          CLAIM_STORE_URL: "http://{{ .Release.Name }}-claim-store"
       idam-pr:
         api:
           url: "{{ .Values.global.idamApiUrl }}"
