@@ -58,6 +58,7 @@ spec:
       devMode: true
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sUrl: "http://cmc-s2s-java"
+      cmcBackendUrl: "http://cmc-demo-cmc-claim-store-java"
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-6203394f
@@ -72,6 +73,9 @@ spec:
         image: hmctspublic.azurecr.io/ccd/case-management-web:prod-5d31d7c8
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      environment:
+        ANNOTATION_API_URL: https://gateway-{{ .Release.Name }}.demo.platform.hmcts.net/em-anno
+        DM_URL_REMOTE: ^https?://(?:cmc-ccd-dmstore(?::\\d+)?)/documents
 
     ccd-api-gateway-web:
       nodejs:
@@ -103,6 +107,8 @@ spec:
     dm-store:
       java:
         image: hmctspublic.azurecr.io/dm/store:prod-8381e24c
+        environment:
+          S2S_NAMES_WHITELIST: ccd_gateway,cmc,cmc_claim_store,ccd_data,dg_docassembly_api
     ccd-user-profile-importer:
       users:
       - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
@@ -111,6 +117,8 @@ spec:
 
     ccd-definition-importer:
       image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.7
+      environment:
+        CCD_DEF_CLAIM_STORE_BASE_URL: http://{{ .Values.global.cmcBackendUrl }}
       definitionFilename: cmc-ccd.xlsx
       userRoles:
       - citizen
