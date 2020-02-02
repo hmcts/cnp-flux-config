@@ -75,7 +75,7 @@ spec:
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
       environment:
         ANNOTATION_API_URL: https://gateway-{{ .Release.Name }}.demo.platform.hmcts.net/em-anno
-        DM_URL_REMOTE: ^https?://(?:cmc-ccd-dmstore(?::\\d+)?)/documents
+        DM_URL_REMOTE: ^https?://(?:cmc-ccd-dm-store(?::\\d+)?)/documents
 
     ccd-api-gateway-web:
       nodejs:
@@ -85,6 +85,8 @@ spec:
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
+      environment:
+        PROXY_DOCUMENT_MANAGEMENT: http://cmc-ccd-dm-store
 
     ccd-definition-store-api:
       java:
