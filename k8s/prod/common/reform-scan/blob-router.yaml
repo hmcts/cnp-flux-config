@@ -14,16 +14,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.20
+    version: 0.0.23
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-d47f9e40
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-33a33223
       environment:
+        HANDLE_REJECTED_FILES_CRON: "0 0 7 * * *"
         TASK_SCAN_DELAY: 300000
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 30
         STORAGE_URL: https://reformscan.platform.hmcts.net
+        STORAGE_BLOB_PUBLIC_KEY: "trusted_public_key.der"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

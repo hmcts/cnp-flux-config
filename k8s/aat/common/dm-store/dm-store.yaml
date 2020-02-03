@@ -22,10 +22,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-393dc9de
+      image: hmctspublic.azurecr.io/dm/store:prod-8381e24c
       ingressHost: dm-store-aat.service.core-compute-aat.internal
       environment:
-        ENABLE_TTL: "false"
+        ENABLE_TTL: "true"
       testsConfig:
         memoryLimits: '3072Mi'
         environment:
@@ -34,7 +34,7 @@ spec:
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/dm/store-test:prod-393dc9de
+        image: hmctspublic.azurecr.io/dm/store-test:prod-8381e24c
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
