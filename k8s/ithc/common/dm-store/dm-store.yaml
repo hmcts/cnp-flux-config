@@ -17,14 +17,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.10
+    version: 2.0.12
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       environment:
-        ATRIGGER: rebuild
-      image: hmctspublic.azurecr.io/dm/store:prod-566d8acb
+        ATRIGGER: rebuild3
+        ENABLE_TTL: false
+      image: hmctspublic.azurecr.io/dm/store:prod-3c90bbdd
       ingressHost: dm-store-ithc.service.core-compute-ithc.internal
       testsConfig:
         memoryLimits: '3072Mi'
@@ -34,7 +35,7 @@ spec:
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
         enabled: false
-        image: hmctspublic.azurecr.io/dm/store-test:prod-566d8acb
+        image: hmctspublic.azurecr.io/dm/store-test:prod-3c90bbdd
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
