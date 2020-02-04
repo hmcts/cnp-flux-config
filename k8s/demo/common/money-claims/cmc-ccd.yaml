@@ -58,7 +58,7 @@ spec:
       devMode: true
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sUrl: "http://cmc-s2s-java"
-      cmcBackendUrl: "http://cmc-demo-cmc-claim-store-java"
+      cmcBackendUrl: "http://cmc-claim-store.demo.platform.hmcts.net"
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-6203394f
@@ -73,9 +73,6 @@ spec:
         image: hmctspublic.azurecr.io/ccd/case-management-web:prod-5d31d7c8
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
-      environment:
-        ANNOTATION_API_URL: https://gateway-{{ .Release.Name }}.demo.platform.hmcts.net/em-anno
-        DM_URL_REMOTE: ^https?://(?:cmc-ccd-dm-store(?::\\d+)?)/documents
 
     ccd-api-gateway-web:
       nodejs:
@@ -85,8 +82,6 @@ spec:
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
-      environment:
-        PROXY_DOCUMENT_MANAGEMENT: http://cmc-ccd-dm-store
 
     ccd-definition-store-api:
       java:
@@ -108,10 +103,11 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-0ef0c718
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-0f647b3c
+        image: hmctspublic.azurecr.io/dm/store:prod-3c90bbdd
         environment:
           S2S_NAMES_WHITELIST: ccd_gateway,cmc,cmc_claim_store,ccd_data,dg_docassembly_api
     ccd-user-profile-importer:
+      image: hmctspublic.azurecr.io/ccd/user-profile-importer:db2e6b
       users:
       - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
       - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
