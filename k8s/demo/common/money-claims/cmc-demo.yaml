@@ -47,6 +47,7 @@ spec:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
         image: hmctspublic.azurecr.io/cmc/claim-store:prod-66a09de1
+        ingressHost: cmc-claim-store.demo.platform.hmcts.net
         environment:
           FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
           RESPOND_TO_CLAIM_URL: "https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start"
@@ -58,7 +59,7 @@ spec:
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         environment:
           FEATURE_TOGGLES_API_URL: "http://{{ .Release.Name }}-rpe-feature-toggle-api-java"
-          CLAIM_STORE_URL: "http://{{ .Release.Name }}-claim-store"
+          CLAIM_STORE_URL: "http://cmc-claim-store.demo.platform.hmcts.net"
       idam-pr:
         api:
           url: "https://idam-api.demo.platform.hmcts.net"
