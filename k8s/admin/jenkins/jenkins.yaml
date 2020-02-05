@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db1x50"
+      imageTag: "db2kbx"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -126,7 +126,7 @@ spec:
                       modernSCM:
                         scm:
                           github:
-                            credentialsId: jenkins-github-hmcts-api-token
+                            credentialsId: hmcts-jenkins-cnp
                             repoOwner: hmcts
                             repository: cnp-jenkins-library
                   - name: 'Pipeline'
@@ -136,7 +136,7 @@ spec:
                       modernSCM:
                         scm:
                           github:
-                            credentialsId: jenkins-github-hmcts-api-token
+                            credentialsId: hmcts-jenkins-cnp
                             repoOwner: hmcts
                             repository: cnp-jenkins-library
           slack: |
@@ -145,14 +145,6 @@ spec:
                 teamDomain: hmcts-reform
                 tokenCredentialId: slack-token
                 botUser: true
-          github: |
-            unclassified:
-              githubpluginconfig:
-                configs:
-                  - name: "GitHub"
-                    apiUrl: "https://api.github.com"
-                    credentialsId: "jenkins-github-hmcts-api-token-text"
-                    manageHooks: false
           sonar: |
             unclassified:
               sonarGlobalConfiguration:
@@ -176,17 +168,6 @@ spec:
               system:
                 domainCredentials:
                   - credentials:
-                      - usernamePassword:
-                          scope: GLOBAL
-                          id: jenkins-github-hmcts-api-token
-                          username: jenkins-reform-cnp
-                          password: '${hmcts-github-apikey-cnp}'
-                          description: CNP jenkins github token
-                      - string:
-                          scope: GLOBAL
-                          id: jenkins-github-hmcts-api-token-text
-                          secret: '${hmcts-github-apikey-cnp}'
-                          description: CNP jenkins github token
                       - string:
                           scope: GLOBAL
                           id: sonarcloud-api-token
@@ -381,6 +362,15 @@ spec:
                           privateKeySource:
                             directEntry:
                               privateKey: ${hmcts-jenkins-rpe-ghapp}
+                      - basicSSHUserPrivateKey:
+                          description: "GitHub APP Key - CNP"
+                          id: "hmcts-jenkins-cnp"
+                          scope: GLOBAL
+                          username: "52960"
+                          passphrase: ""
+                          privateKeySource:
+                            directEntry:
+                              privateKey: ${hmcts-jenkins-cnp-ghapp}
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
@@ -448,7 +438,7 @@ spec:
           driver: "azure/kv"
           options:
             usepodidentity: "true"
-            keyvaultobjectnames: "slack-token;hmcts-github-apikey-cmc;hmcts-github-apikey-div;hmcts-github-apikey-finrem;hmcts-github-apikey-cdm;hmcts-github-apikey-iac;hmcts-github-apikey-platform;hmcts-github-apikey-rpa;hmcts-github-apikey-sscs;hmcts-github-apikey-probate;hmcts-github-apikey-feepay;hmcts-github-apikey-sl;hmcts-github-apikey-cnp;hmcts-github-apikey-idam;hmcts-github-apikey-cet;hmcts-github-apikey-fpl;hmcts-github-apikey-am;hmcts-github-apikey-ethos;hmcts-github-apikey-ctsc;hmcts-github-apikey-rd;hmcts-github-apikey;mgmt-bastion-creds-password;sonarcloud-api-token;pipelinemetrics-cosmosdb-key;OWASPDb-Password;jenkins-build-logs-key;sauce-access-key;bfa-user-password;subscription-id;sp-app-id;sp-app-password;jenkins-sp-tenant-id;hmcts-github-apikey-mi;hmcts-github-apikey-bsp;hmcts-jenkins-rpe-ghapp"
+            keyvaultobjectnames: "slack-token;hmcts-github-apikey-cmc;hmcts-github-apikey-div;hmcts-github-apikey-finrem;hmcts-github-apikey-cdm;hmcts-github-apikey-iac;hmcts-github-apikey-platform;hmcts-github-apikey-rpa;hmcts-github-apikey-sscs;hmcts-github-apikey-probate;hmcts-github-apikey-feepay;hmcts-github-apikey-sl;hmcts-github-apikey-idam;hmcts-github-apikey-cet;hmcts-github-apikey-fpl;hmcts-github-apikey-am;hmcts-github-apikey-ethos;hmcts-github-apikey-ctsc;hmcts-github-apikey-rd;hmcts-github-apikey;mgmt-bastion-creds-password;sonarcloud-api-token;pipelinemetrics-cosmosdb-key;OWASPDb-Password;jenkins-build-logs-key;sauce-access-key;bfa-user-password;subscription-id;sp-app-id;sp-app-password;jenkins-sp-tenant-id;hmcts-github-apikey-mi;hmcts-github-apikey-bsp;hmcts-jenkins-rpe-ghapp;hmcts-jenkins-cnp-ghapp"
             keyvaultobjecttypes: "secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret" # OPTIONS: secret, key, cert
             tenantid: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       mounts:
