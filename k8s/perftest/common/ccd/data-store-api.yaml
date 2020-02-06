@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-794-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -19,8 +19,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-794-24524069
-
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-fd588168
       environment:
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
         CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-perftest\.service\.core-compute-perftest\.internal(?::\d+)?)
