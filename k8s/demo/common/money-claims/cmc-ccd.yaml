@@ -70,13 +70,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-5d31d7c8
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-5197e528
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-7f64b352
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-fa830ba2
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-ad922e1b
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-90dfc78f
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -96,11 +96,13 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-64fe6139
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-fd588168
+        environment:
+          CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-0ef0c718
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-dc4794d8
     dm-store:
       java:
         image: hmctspublic.azurecr.io/dm/store:prod-3c90bbdd
