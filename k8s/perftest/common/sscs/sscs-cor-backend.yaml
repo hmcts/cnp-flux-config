@@ -2,25 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: div-cfs
-  namespace: divorce
+  name: sscs-cor-backend
+  namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: div-cfs
+  releaseName: sscs-cor-backend
   rollback:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-cfs
-    version: 1.2.1
+    name: sscs-cor-backend
+    version: 0.0.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cfs:prod-1624e611
+      image: hmctspublic.azurecr.io/sscs-cor/backend:prod-80bd83e8
     global:
-      environment: aat
+      environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
