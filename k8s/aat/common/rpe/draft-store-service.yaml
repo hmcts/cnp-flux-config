@@ -23,7 +23,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
-    version: 1.5.0
+    version: 1.6.1
   values:
     java:
       replicas: 2
@@ -31,11 +31,12 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:prod-d9a9866c
+      image: hmctspublic.azurecr.io/draft-store/service:prod-3a865653
       prometheus:
         enabled: true
       testsConfig:
         memoryLimits: '3072Mi'
+        serviceAccountName: tests-service-account
         keyVaults:
           "draft-store":
             resourceGroup: draft-store-service
@@ -56,18 +57,18 @@ spec:
           IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
       smoketestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d9a9866c
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-3a865653
         schedule: "15 0/1 * * *"
       functionaltestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d9a9866c
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-3a865653
         schedule: "25 0/6 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d9a9866c
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-3a865653
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-d9a9866c
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-3a865653
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

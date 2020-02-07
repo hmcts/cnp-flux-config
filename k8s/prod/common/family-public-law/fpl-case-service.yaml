@@ -23,9 +23,10 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-364ebf05
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-ce60d7a7
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
+        DUMMY: "trigger release"
         FPL_LOCAL_AUTHORITY_CODES_FORBIDDEN_CASE_SUBMISSION: FPLA
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -42,8 +43,8 @@ spec:
         SPRING_MAIL_TEST_CONNECTION: false
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
-        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: false
-        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: false
+        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
+        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
       aadIdentityName: family-public-law

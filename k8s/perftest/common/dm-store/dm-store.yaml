@@ -6,7 +6,7 @@ metadata:
   namespace: dm-store
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-502-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: dm-store
   rollback:
@@ -18,8 +18,10 @@ spec:
   values:
     java:
       replicas: 2
+      memoryLimits: '4096Mi'		
+      cpuLimits: '2000m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:pr-502-4b40c8a9
+      image: hmctspublic.azurecr.io/dm/store:prod-d547d862
       ingressHost: dm-store-perftest.service.core-compute-perftest.internal
       environment:
         ENABLE_TTL: false

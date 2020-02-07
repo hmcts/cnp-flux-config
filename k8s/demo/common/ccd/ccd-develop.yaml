@@ -52,6 +52,8 @@ spec:
         enabled: true
       printService:
         enabled: true
+      testStubsService:
+        enabled: true
 
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -78,7 +80,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-273-192d04d2
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-273-2d4ee45c
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -87,7 +89,9 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-469-adda74fd
+        devmemoryRequests: '1024Mi'
+        devmemoryLimits: '2048Mi'
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-469-c815f5cb
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,11 +102,11 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-0d000ba4
+        image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-8e64cd7e
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:pr-224-526ae0cf
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:pr-224-9be7d03e
 
     ccd-user-profile-importer:
       users:

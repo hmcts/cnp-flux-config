@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccdorc
-    version: 0.1.11
+    version: 0.1.12
   values:
     java:
       replicas: 2
@@ -25,10 +25,12 @@ spec:
           secrets:
           - AppInsightsInstrumentationKey
           - microservicekey-em-ccd-orchestrator
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-f6341b95
+          - notification-api-key
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-2dbf9df5
       ingressHost: em-ccd-orchestrator-prod.service.core-compute-prod.internal
       environment:
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
+        VAR_TA: trigger4
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
