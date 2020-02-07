@@ -1,0 +1,31 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: reform-scan-blob-router
+  namespace: reform-scan
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: reform-scan-blob-router
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: reform-scan-blob-router
+    version: 0.0.25
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-8dc68722
+      environment:
+        HANDLE_REJECTED_FILES_CRON: "0 0 7 * * *"
+        TASK_SCAN_DELAY: 300000
+        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 30
+        STORAGE_BLOB_PUBLIC_KEY: "nonprod_public_key.der"
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
