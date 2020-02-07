@@ -21,13 +21,14 @@ spec:
   values:
     java:
       replicas: 2
+      memoryLimits: '4096Mi'		
+      cpuLimits: '2000m'
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/dm/store:prod-3c90bbdd
       ingressHost: dm-store-prod.service.core-compute-prod.internal
       environment:
         ENABLE_TTL: "false"
       testsConfig:
-        memoryLimits: '4096Mi'
         environment:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
