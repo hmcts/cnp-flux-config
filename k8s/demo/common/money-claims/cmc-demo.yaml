@@ -59,7 +59,7 @@ spec:
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-855c96f9
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         environment:
-          FEATURE_TOGGLES_API_URL: "http://{{ .Release.Name }}-rpe-feature-toggle-api"
+          FEATURE_TOGGLES_API_URL: "http://cmc-demo-rpe-feature-toggle-api"
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
       idam-pr:
         api:
@@ -71,7 +71,7 @@ spec:
       rpe-feature-toggle-api:
         enabled: true
         importer:
-          apiUrl: "http://{{ .Release.Name }}-rpe-feature-toggle-api/api/ff4j/store/features/"
+          apiUrl: "http://cmc-demo-rpe-feature-toggle-api/api/ff4j/store/features/"
         java:
           releaseNameOverride: "cmc-demo-rpe-feature-toggle-api"
           environment:
