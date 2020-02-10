@@ -49,22 +49,26 @@ spec:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
         image: hmctspublic.azurecr.io/cmc/claim-store:prod-73a280fb
+        secrets:
+          IDAM_S2S_AUTH_TOTP_SECRET:
+            secretRef: claim-store-s2s-secret
+            key: key
         environment:
           FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
           RESPOND_TO_CLAIM_URL: "https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start"
-          IDAM_S2S_AUTH_TOTP_SECRET: AAAAAAAAAAAAAAAA
 
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-855c96f9
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
+        secrets:
+          IDAM_S2S_TOTP_SECRET:
+            secretRef: cmc-s2s-secret
+            key: key
         environment:
           FEATURE_TOGGLES_API_URL: "http://cmc-demo-rpe-feature-toggle-api"
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
-          FEATURE_INVERSION_OF_CONTROL: false
-          FEATURE_MOCK_PAY: true
-          IDAM_S2S_TOTP_SECRET: AAAAAAAAAAAAAAAA
       idam-pr:
         api:
           url: "https://idam-api.demo.platform.hmcts.net"
