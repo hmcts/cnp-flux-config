@@ -13,14 +13,21 @@ spec:
     enable: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: em-ccd-orchestrator
-    version: 0.1.6
+    name: em-ccdorc
+    version: 0.1.12
   values:
     java:
       replicas: 2
       applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/ccd-orchestrator:prod-9dc10eb0
+      keyVaults:
+        em-ccdorc:
+          resourceGroup: em-ccdorc
+          secrets:
+          - AppInsightsInstrumentationKey
+          - microservicekey-em-ccd-orchestrator
+          - notification-api-key
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-fd5ac484
       ingressHost: em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc

@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: am
+  namespace: am
+spec:
+  type: 0
+  ResourceID: "/subscriptions/96c274ce-846d-4e48-89a7-d528432298a7/resourcegroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/am-aat-mi"
+  ClientID: "743d709c-e26c-4cb6-9894-fc5fc777881c"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: am-binding
+  namespace: am
+spec:
+  AzureIdentity: am
+  Selector: am

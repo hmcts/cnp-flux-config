@@ -30,7 +30,7 @@ spec:
   chart:
     repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
     name: ccd
-    version: 4.0.2-rc
+    version: 4.1.0
   values:
     tags:
       idam-pr: true
@@ -74,13 +74,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-978e87b1
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-dedca277
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-50688f3e
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-071871ce
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -89,7 +89,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-63a82b17
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-90dfc78f
         ingressHost: ""
         secrets:
           STORAGE_ACCOUNT_NAME:
@@ -101,12 +101,12 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e865841c
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0ec75d05
         ingressHost: ""
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-11d2dd84
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-dc4794d8
         ingressHost: ""
 
     ccd-user-profile-importer:
