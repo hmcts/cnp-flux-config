@@ -14,13 +14,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-documents-api
-    version: 0.0.6
+    version: 0.0.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-3b646bb6
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-396889b0
       ingressHost: ia-case-documents-api-ithc.service.core-compute-ithc.internal
+      environment:
+        DUMMY: "false"
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

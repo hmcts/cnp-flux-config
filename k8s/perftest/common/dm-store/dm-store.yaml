@@ -14,21 +14,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.10
+    version: 2.0.12
   values:
     java:
       replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-2b952a4b
-      ingressHost: dm-store-perftest.service.core-compute-perftest.internal
-      memoryLimits: '2048Mi'
+      memoryLimits: '4096Mi'
       cpuLimits: '2000m'
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/dm/store:prod-d553eb3b
+      ingressHost: dm-store-perftest.service.core-compute-perftest.internal
       environment:
         ENABLE_TTL: false
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
-          -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar
-          -Dfile.encoding=UTF-8 -XX:+DisableExplicitGC -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime
-          -XX:+PrintGCApplicationConcurrentTime -Xloggc:gc.log
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

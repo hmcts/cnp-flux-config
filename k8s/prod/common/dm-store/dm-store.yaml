@@ -21,18 +21,21 @@ spec:
   values:
     java:
       replicas: 2
+      memoryLimits: '4096Mi'
+      cpuLimits: '2000m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-2b952a4b
+      image: hmctspublic.azurecr.io/dm/store:prod-d553eb3b
       ingressHost: dm-store-prod.service.core-compute-prod.internal
+      environment:
+        ENABLE_TTL: "false"
       testsConfig:
-        memoryLimits: '3072Mi'
         environment:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/dm/store-test:prod-2b952a4b
+        image: hmctspublic.azurecr.io/dm/store-test:prod-d553eb3b
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

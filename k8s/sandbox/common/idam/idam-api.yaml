@@ -14,26 +14,26 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.2.2
+    version: 0.2.3
   values:
     java:
       image: hmctspublic.azurecr.io/idam/api:preview
-      ingressHost: idam-api.service.core-compute-sandbox.internal
+      ingressHost: idam-api-sbox.service.core-compute-sandbox.internal
       replicas: 1
       aadIdentityName: idam
       environment:
         TESTING_SUPPORT_ENABLED: true
-        IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-saat.internal:8443/openam
-        IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-saat.internal:8443
-        IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-saat.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
-        IDAM_SPI_FORGEROCK_IDM_ROOT: https://forgerock-idm.service.core-compute-idam-saat.internal:18443/openidm
-        IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-saat.internal:9292
-        IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-saat.internal:9292
-        SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-saat.internal,emailAddress=devops@amido.com
+        IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-sandbox.internal:8443/openam
+        IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-sandbox.internal:8443
+        IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-sandbox.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
+        IDAM_SPI_FORGEROCK_IDM_ROOT: https://forgerock-idm.service.core-compute-idam-sandbox.internal:18443/openidm
+        IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-sandbox.internal:9292
+        IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-sandbox.internal:9292
+        SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-sandbox.internal,emailAddress=devops@amido.com
         SSL_TRUST_DNS_1: C=None,ST=None,L=None,OU=None,O=OpenDJ Self-Signed Certificate,CN=openidm-localhost
-        SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-saat.internal
-        SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-saat.internal
+        SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-sandbox.internal
+        SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-sandbox.internal
     global:
-      environment: saat
+      environment: sandbox
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
