@@ -19,11 +19,15 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-49764caf
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-32ae6fbc
       ingressHost: www.manage.appeal-benefit-decision.service.gov.uk
       environment:
         IDAM_URL: "https://hmcts-access.service.gov.uk"
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        MYA_FEATURE_FLAG: "true"
+        ADDITIONAL_EVIDENCE_FEATURE_FLAG: "true"
+        EVIDENCE_UPLOAD_QUESTION_PAGE_OVERRIDE_ALLOWED: "true"
+        POST_BULK_SCAN: "true"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
