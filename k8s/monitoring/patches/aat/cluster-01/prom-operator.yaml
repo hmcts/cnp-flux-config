@@ -1,0 +1,23 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prom-operator
+  namespace: monitoring
+spec:
+  values:
+    prometheus:
+      ingress: 
+        hosts: 
+          - prometheus-01.aat.platform.hmcts.net
+
+    alertmanager:
+      ingress:
+        hosts:
+          - alertmanager-01.aat.platform.hmcts.net
+
+    grafana:
+      enabled: true
+      ingress:
+        hosts:
+          - grafana-01.aat.platform.hmcts.net
