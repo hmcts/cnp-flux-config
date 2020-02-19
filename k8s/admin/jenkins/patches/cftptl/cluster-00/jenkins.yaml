@@ -189,6 +189,12 @@ spec:
                     title: Ref Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
+                      ^HMCTS_.*ADOPTION.*\/.+\/master
+                    name: ADOPTION
+                    recurse: true
+                    title: Adoption Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
                       ^HMCTS_.*(MI).*\/(mi-integration-service|mi-staging-service|mi-presentation-service|mi-housekeeping-service|mi-shared-infrastructure)\/master
                     name: MI
                     recurse: true
@@ -243,9 +249,9 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkinsServicePrincipal"
                     cloudName: "cnp-azure"
-                    deploymentTimeout: 1200	
-                    existingResourceGroupName: "aks-infra-cftptl-intsvc-rg" 
-                    maxVirtualMachinesLimit: 10	
+                    deploymentTimeout: 1200
+                    existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
+                    maxVirtualMachinesLimit: 10
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -304,7 +310,7 @@ spec:
                         retentionStrategy:
                           azureVMCloudRetentionStrategy:
                             idleTerminationMinutes: 60
-                        shutdownOnIdle: false	
+                        shutdownOnIdle: false
                         storageAccountNameReferenceType: "existing"
                         storageAccountType: "Standard_LRS"
                         subnetName: "iaas"
