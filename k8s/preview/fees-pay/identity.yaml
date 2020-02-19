@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: ccpay
+ namespace: fees-pay
+spec:
+ type: 0
+ ResourceID: /subscriptions/96c274ce-846d-4e48-89a7-d528432298a7/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ccpay-aat-mi
+ ClientID: ef440bfc-2188-42e3-aa3c-302397b8cfbc
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ccpay
+  namespace: fees-pay
+spec:
+  AzureIdentity: ccpay
+  Selector: ccpay

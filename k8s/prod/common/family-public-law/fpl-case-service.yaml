@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.2.0
+    version: 1.3.0
   values:
     java:
       replicas: 2
@@ -23,7 +23,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-49d589d5
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-32fcbe58
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
         FPL_LOCAL_AUTHORITY_CODES_FORBIDDEN_CASE_SUBMISSION: FPLA
@@ -34,6 +34,7 @@ spec:
         CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
         DOCMOSIS_TORNADO_URL: https://docmosis.platform.hmcts.net
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
         IDAM_CLIENT_ID: fpl_case_service
         IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-prod.service.core-compute-prod.internal/oauth2/callback
         GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
@@ -42,8 +43,8 @@ spec:
         SPRING_MAIL_TEST_CONNECTION: false
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
-        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: false
-        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: false
+        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
+        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
       aadIdentityName: family-public-law

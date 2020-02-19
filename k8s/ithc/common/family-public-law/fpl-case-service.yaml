@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.2.0
+    version: 1.3.0
   values:
     java:
       replicas: 2
@@ -33,6 +33,7 @@ spec:
         CCD_UI_BASE_URL: https://www-ccd.ithc.platform.hmcts.net
         DOCMOSIS_TORNADO_URL: https://docmosis-ithc.platform.hmcts.net
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal
         IDAM_CLIENT_ID: fpl_case_service
         IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-ithc.service.core-compute-ithc.internal/oauth2/callback
         GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
@@ -44,8 +45,8 @@ spec:
         SPRING_MAIL_TEST_CONNECTION: false
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
-        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: false
-        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: false
+        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
+        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
         AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
       aadIdentityName: family-public-law

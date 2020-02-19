@@ -1,0 +1,43 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tya-notif
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: sscs-tya-notif
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: sscs-tya-notif
+    version: 0.0.11
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-429e2506
+      environment:
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
+        IDAM_URL: https://idam-api.platform.hmcts.net
+        EVIDENCE_SUBMISSION_INFO_LINK: https://www.track-benefit-appeal.service.gov.uk/evidence/appeal_id
+        SSCS_MANAGE_EMAILS_LINK: https://www.track-benefit-appeal.service.gov.uk/manage-email-notifications/mac
+        SSCS_TRACK_YOUR_APPEAL_LINK: https://www.track-benefit-appeal.service.gov.uk/trackyourappeal/appeal_id
+        MYA_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/sign-in?tya=appeal_id
+        MYA_EVIDENCE_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/support-evidence
+        MYA_HEARING_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/support-hearing
+        MYA_EXPENSES_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/support-hearing-expenses
+        HEARING_INFO_LINK: https://www.track-benefit-appeal.service.gov.uk/abouthearing/appeal_id
+        CLAIMING_EXPENSES_LINK: https://www.track-benefit-appeal.service.gov.uk/expenses/appeal_id
+        IDAM_OAUTH2_REDIRECT_URL: https://sscs-case-loader-prod.service.core-compute-prod.internal
+        ONLINE_HEARING_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/
+        PDF_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net/rs/render
+        PDF_SERVICE_HEALTH_URL: https://docmosis.platform.hmcts.net/rs/status
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
