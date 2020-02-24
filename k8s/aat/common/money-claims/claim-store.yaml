@@ -1,0 +1,54 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-claim-store
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: cmc-claim-store
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: cmc-claim-store
+    version: 3.2.0
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-05825976
+      ingressHost: cmc-claim-store-aat.service.core-compute-aat.internal
+      keyVaults:
+        cmc:
+          resourceGroup: cmc
+          secrets:
+            - AppInsightsInstrumentationKey
+            - cmc-db-password
+            - claim-store-db-password
+            - citizen-oauth-client-secret
+            - claim-store-s2s-secret
+            - anonymous-caseworker-username
+            - anonymous-caseworker-password
+            - system-update-username
+            - system-update-password
+            - notify-api-key
+            - milo-recipient
+      environment:
+        CLAIM_STORE_DB_HOST: preprod-data-lb.moneyclaim.reform.hmcts.net
+        CLAIM_STORE_DB_CONNECTION_OPTIONS: '?sslmode=require'
+        CLAIM_STORE_TEST_SUPPORT_ENABLED: true
+        FEATURE_TOGGLES_CCD_ENABLED: true
+        FEATURE_TOGGLES_CCD_ASYNC_ENABLED: false
+        FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+        FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
+        FEATURE_TOGGLES_EMAILTOSTAFF: true
+        FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: false
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+    global:
+      environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
