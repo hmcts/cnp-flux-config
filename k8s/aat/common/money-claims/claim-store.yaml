@@ -15,14 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 3.2.0
+    version: 3.2.3
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/cmc/claim-store:prod-7db73de2
-      ingressHost: cmc-claim-store-aat.service.core-compute-aat.internal
-      aadIdentityName: money-claims
       keyVaults:
         cmc:
           resourceGroup: cmc
@@ -45,8 +43,6 @@ spec:
         FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
         FEATURE_TOGGLES_EMAILTOSTAFF: true
         FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: false
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
-        CMC_DB_USERNAME: cmc@cmc-aat
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
