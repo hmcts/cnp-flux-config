@@ -25,7 +25,7 @@ metadata:
 spec:
   releaseName: cmc-ccd
   timeout: 900
-  forceUpgrade: false
+  forceUpgrade: true
   rollback:
     enable: true
     force: true
@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-52824a75
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-e007852d
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -76,7 +76,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-802a2a89
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-950c5f63
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -116,7 +116,7 @@ spec:
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.9
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.10
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
