@@ -5,7 +5,7 @@ metadata:
   name: em-showcase
   namespace: em
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/nodejs.java: glob:aat-*
 spec:
   releaseName: em-showcase
@@ -20,8 +20,10 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/showcase:pr-32
+      image: hmctspublic.azurecr.io/em/showcase:latest
       ingressHost: em-showcase-aat.service.core-compute-aat.internal
+      environment:
+        VAR_T: trigger2
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
