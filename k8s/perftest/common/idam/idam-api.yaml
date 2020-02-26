@@ -14,12 +14,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.2.2
+    version: 0.2.3
   values:
     java:
       image: hmctspublic.azurecr.io/idam/api:perftest
-      ingressHost: idam-api.service.core-compute-perftest.internal
+      ingressHost: idam-api-perftest.service.core-compute-perftest.internal
       aadIdentityName: idam
+      environment:
+        TESTING_SUPPORT_ENABLED: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
