@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+ name: money-claims
+ namespace: money-claims
+spec:
+ type: 0
+ ResourceID: /subscriptions/62864d44-5da9-4ae9-89e7-0cf33942fa09/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/money-claims-ithc-mi
+ ClientID: 9e754cae-592f-4a36-b973-a6c00c69c784
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: money-claims-binding
+  namespace: money-claims
+spec:
+  AzureIdentity: money-claims
+  Selector: money-claims
