@@ -15,21 +15,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 3.2.3
+    version: 3.2.6
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-0bd83348
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-9848a99f
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CLAIM_STORE_TEST_SUPPORT_ENABLED: false
-        FEATURE_TOGGLES_CCD_ENABLED: true
-        FEATURE_TOGGLES_CCD_ASYNC_ENABLED: false
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
-        FEATURE_TOGGLES_ASYNC_EVENT_OPERATIONS_ENABLED: true
-        FEATURE_TOGGLES_EMAILTOSTAFF: true
-        FEATURE_TOGGLES_DIRECTIONS_QUESTIONNAIRE_ENABLED: false
+        MILO_CSV_SCHEDULE: "0 0 8 * * ?"
+        CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
