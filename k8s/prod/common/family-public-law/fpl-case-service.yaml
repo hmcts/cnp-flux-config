@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.4.0
+    version: 1.5.0
   values:
     java:
       replicas: 2
@@ -23,9 +23,10 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-24bdef5e
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-b8139982
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
+        DUMMY: "force release"
         FPL_LOCAL_AUTHORITY_CODES_FORBIDDEN_CASE_SUBMISSION: FPLA
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -36,6 +37,7 @@ spec:
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal
         SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
         FEES_REGISTER_API_URL: http://fees-register-api-prod.service.core-compute-prod.internal
+        PAYMENT_API_URL: http://payment-api-prod.service.core-compute-prod.internal
         IDAM_CLIENT_ID: fpl_case_service
         IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-prod.service.core-compute-prod.internal/oauth2/callback
         GATEWAY_URL: https://gateway.ccd.platform.hmcts.net

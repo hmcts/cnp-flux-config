@@ -14,16 +14,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ethos-repl-docmosis-backend
-    version: 0.1.7
+    version: 0.1.8
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-3a6c32a5
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-5dff63e1
       ingressHost: ethos-repl-docmosis-backend-prod.service.core-compute-prod.internal
       environment:
         TORNADO_URL: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
         CCD_GATEWAY_BASE_URL: https://gateway.ccd.platform.hmcts.net
     global:
       environment: prod
