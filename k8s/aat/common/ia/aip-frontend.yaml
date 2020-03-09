@@ -15,13 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-aip-frontend
-    version: 0.0.5
+    version: 0.0.7
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ia/aip-frontend:prod-d614bf73
       ingressHost: immigration-appeal.aat.platform.hmcts.net
+      environment:
+        IDAM_WEB_URL: "https://idam-web-public.aat.platform.hmcts.net"
+        RESTART_ME: "1"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
