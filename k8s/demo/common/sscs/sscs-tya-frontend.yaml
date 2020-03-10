@@ -2,33 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: sscs-cor-frontend
+  name: sscs-tya-frontend
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
-  releaseName: sscs-cor-frontend
+  releaseName: sscs-tya-frontend
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-cor-frontend
-    version: 0.1.11
+    name: sscs-tya-frontend
+    version: 0.1.4
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-cd22d8d2
-      ingressHost: sscs-cor.aat.platform.hmcts.net
-      environment:
-        NODE_ENV: preprod
-        MYA_FEATURE_FLAG: "true"
-        ADDITIONAL_EVIDENCE_FEATURE_FLAG: "true"
-        EVIDENCE_UPLOAD_QUESTION_PAGE_OVERRIDE_ALLOWED: "true"
-        POST_BULK_SCAN: "true"
+      image: hmctspublic.azurecr.io/sscs/tya-frontend:prod-01101c1c
+      ingressHost: track-appeal.demo.platform.hmcts.net
     global:
-      environment: aat
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
