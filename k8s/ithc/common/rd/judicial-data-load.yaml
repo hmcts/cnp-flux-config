@@ -1,4 +1,4 @@
----
+
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -20,7 +20,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/judicial-data-load:prod-95a9d3d8
+      image: hmctspublic.azurecr.io/rd/judicial-data-load:prod-87207c5c
+      environment:
+        IDAM_URL: http://idam-api-ithc.service.core-compute-ithc.internal
 
     global:
       environment: ithc
