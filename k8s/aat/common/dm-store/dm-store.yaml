@@ -8,21 +8,20 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
 spec:
   releaseName: dm-store
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.12
+    version: 2.0.14
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-d553eb3b
+      image: hmctspublic.azurecr.io/dm/store:prod-19dd46c3
       ingressHost: dm-store-aat.service.core-compute-aat.internal
       environment:
         ENABLE_TTL: "true"
@@ -33,8 +32,7 @@ spec:
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
-        enabled: true
-        image: hmctspublic.azurecr.io/dm/store-test:prod-d553eb3b
+        enabled: false
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

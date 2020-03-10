@@ -48,7 +48,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-60a685f9
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-4c116e8c
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -56,11 +56,13 @@ spec:
         environment:
           FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
           RESPOND_TO_CLAIM_URL: "https://{{ .Values.global.cmcFrontendUrl }}/first-contact/start"
+          DOC_ASSEMBLY_TEMPLATEID: CV-CMC-GOR-ENG-0004-1.docx
+          DOC_ASSEMBLY_JUDGETEMPLATEID: CV-CMC-GOR-ENG-00219-1.docx
 
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-3fa285ee
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-10de70df
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
