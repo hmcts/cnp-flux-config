@@ -2,26 +2,28 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: sscs-tya-frontend
+  name: sscs-bulk-scan
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: sscs-tya-frontend
+  releaseName: sscs-bulk-scan
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tya-frontend
-    version: 0.1.4
+    name: sscs-bulk-scan
+    version: 0.0.7
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-frontend:prod-025e67f3
-      ingressHost: www.track-benefit-appeal.service.gov.uk
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-2bf8cb91
+      environment:
+        READY_TO_LIST_OFFICES: 2,3,4,6,7,8,9
     global:
-      environment: prod
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
