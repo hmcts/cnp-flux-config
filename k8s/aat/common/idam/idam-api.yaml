@@ -22,6 +22,24 @@ spec:
       replicas: 1
       ingressHost: idam-api-aat.service.core-compute-aat.internal
       aadIdentityName: idam
+      keyVaults:
+        "idam-idam-aat":
+          resourceGroup: idam-idam-aat
+          excludeEnvironmentSuffix: true
+          secretRef: "kvcreds"
+          secrets:
+            - web-admin-client-secret
+            - notify-api-key
+            - am-password
+            - idm-password
+            - pin-user-pass
+            - event-bus-access-key
+            - idam-api-POSTGRES-HOST
+            - idam-api-POSTGRES-PORT
+            - idam-api-POSTGRES-DATABASE
+            - idam-api-POSTGRES-USER
+            - idam-api-POSTGRES-PASS
+            - AppInsightsInstrumentationKey
       environment:
         TESTING_SUPPORT_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true

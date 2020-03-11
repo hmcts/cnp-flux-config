@@ -21,6 +21,13 @@ spec:
       image: hmctspublic.azurecr.io/idam/web-public:prod-1ebdebd1
       ingressHost: idam-web-public-aat2.aat.platform.hmcts.net
       aadIdentityName: idam
+      keyVaults:
+        "idam-idam-aat":
+          resourceGroup: idam-idam-aat
+          excludeEnvironmentSuffix: false
+          secretRef: "kvcreds"
+          secrets:
+            - AppInsightsInstrumentationKey
       environment:
         STRATEGIC_SERVICE_URL: http://idam-api-aat.service.core-compute-aat.internal
     global:
