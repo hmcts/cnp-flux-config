@@ -23,9 +23,9 @@ spec:
       ingressHost: idam-api-aat.service.core-compute-aat.internal
       aadIdentityName: idam
       keyVaults:
-        "idam-idam-aat":
-          resourceGroup: idam-idam-aat
-          excludeEnvironmentSuffix: true
+        "idam-idam":
+          resourceGroup: idam-idam
+          excludeEnvironmentSuffix: false
           secretRef: "kvcreds"
           secrets:
             - web-admin-client-secret
@@ -46,7 +46,16 @@ spec:
         STRATEGIC_ADMIN_URL: http://idam-web-admin-aat.service.core-compute-aat.internal
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
         STRATEGIC_API_URL: http://idam-api-aat.service.core-compute-aat.internal
+        IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam
+        IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-aat2.internal:8443
+        IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-aat2.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
+        IDAM_SPI_FORGEROCK_IDM_ROOT: https://forgerock-idm.service.core-compute-idam-aat2.internal:18443/openidm
+        IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-aat2.internal:9292
+        IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-aat2.internal:9292
+        SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-aat2.internal,emailAddress=devops@amido.com
+        SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-aat2.internal
+        SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-aat2.internal
     global:
-      environment: aat2
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
