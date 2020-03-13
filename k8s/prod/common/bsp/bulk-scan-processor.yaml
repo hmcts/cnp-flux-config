@@ -14,14 +14,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.2.17
+    version: 0.2.18
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: '500m'
       cpuLimits: '2500m'
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-4c834c9d
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-02c84221
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
@@ -35,6 +35,7 @@ spec:
         # remove following once onboarded
         PUBLICLAW_ENABLED: false
         OCR_VALIDATION_URL_DIVORCE: ""
+        OCR_VALIDATION_URL_FINREM: ""
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
