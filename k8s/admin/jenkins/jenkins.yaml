@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db2m5s"
+      imageTag: "db37h2"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -33,8 +33,8 @@ spec:
         limits:
           cpu: "2000m"
           memory: "4096Mi"
-      # Set min/max heap here if needed with:
-      javaOpts: -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data: 'self'; img-src data: 'self'"
+
+      javaOpts: -Djenkins.azure-keyvault.uami.enabled=true -Djenkins.ui.refresh=true -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data: 'self'; img-src data: 'self'"
 
       usePodSecurityContext: true
       # can't figure out why this no longer works, it works locally, possibly helm version bug?
@@ -162,7 +162,19 @@ spec:
               simple-theme-plugin:
                 elements:
                 - cssUrl:
-                    url: "https://cdn.jsdelivr.net/gh/hmcts/cnp-jenkins-config/jenkins-material-theme.css"
+                    url: ""
+          build-discarders: |
+            unclassified:
+              buildDiscarders:
+                configuredBuildDiscarders:
+                - "jobBuildDiscarder"
+                - simpleBuildDiscarder:
+                    discarder:
+                      logRotator:
+                        artifactDaysToKeepStr: "14"
+                        artifactNumToKeepStr: "20"
+                        daysToKeepStr: "14"
+                        numToKeepStr: "20"
           credentials: |
             credentials:
               system:
@@ -444,15 +456,6 @@ spec:
       annotations: {}
       accessMode: "ReadWriteOnce"
       size: "8Gi"
-      volumes:
-      - name: secrets
-        flexVolume:
-          driver: "azure/kv"
-          options:
-            usepodidentity: "true"
-            keyvaultobjectnames: "slack-token;hmcts-github-apikey-cmc;hmcts-github-apikey-div;hmcts-github-apikey-finrem;hmcts-github-apikey-cdm;hmcts-github-apikey-iac;hmcts-github-apikey-platform;hmcts-github-apikey-rpa;hmcts-github-apikey-sscs;hmcts-github-apikey-probate;hmcts-github-apikey-feepay;hmcts-github-apikey-sl;hmcts-github-apikey-idam;hmcts-github-apikey-cet;hmcts-github-apikey-fpl;hmcts-github-apikey-am;hmcts-github-apikey-ethos;hmcts-github-apikey-ctsc;hmcts-github-apikey-rd;hmcts-github-apikey;mgmt-bastion-creds-password;sonarcloud-api-token;pipelinemetrics-cosmosdb-key;OWASPDb-Password;jenkins-build-logs-key;sauce-access-key;bfa-user-password;subscription-id;sp-app-id;sp-app-password;jenkins-sp-tenant-id;hmcts-github-apikey-mi;hmcts-github-apikey-bsp;hmcts-jenkins-rpe-ghapp;hmcts-jenkins-cnp-ghapp;hmcts-jenkins-pcq-ghapp;hmcts-jenkins-xui-ghapp;hmcts-jenkins-adoption-ghapp;fortify-on-demand"
-            keyvaultobjecttypes: "secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret" # OPTIONS: secret, key, cert
-            tenantid: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       mounts:
       - mountPath: /kvmnt/secrets
         name: secrets
