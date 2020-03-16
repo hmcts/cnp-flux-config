@@ -19,12 +19,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-dc95467b
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-9edd8b42
       ingressHost: immigration-appeal.ithc.platform.hmcts.net
       environment:
         IDAM_WEB_URL: https://idam-web-public-aks.ithc.platform.hmcts.net
         IDAM_API_URL: http://idam-api-ithc.service.core-compute-ithc.internal
         RESTART_ME: "3"
+        TIMELINE_ENABLED: true
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
