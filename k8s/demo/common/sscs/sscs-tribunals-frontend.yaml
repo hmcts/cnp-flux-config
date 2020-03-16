@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-897-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: sscs-tribunals-frontend
   rollback:
@@ -20,7 +20,8 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-897-5d6fdf5f
+      ingressClass: traefik-no-proxy
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-5f75de89
       ingressHost: benefit-appeal.demo.platform.hmcts.net
     global:
       environment: demo
