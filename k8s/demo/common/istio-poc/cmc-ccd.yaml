@@ -2,7 +2,7 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: cmc-ccd
+  name: istio-poc
   namespace: poc
   annotations:
     flux.weave.works/automated: 'true'
@@ -23,7 +23,7 @@ metadata:
     filter.fluxcd.io/dm-store: glob:prod-*
 
 spec:
-  releaseName: cmc-ccd
+  releaseName: istio-poc
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -52,9 +52,9 @@ spec:
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-      ccdAdminWebIngress: ccd2-admin-{{ .Release.Name }}.demo.platform.hmcts.net
-      ccdApiGatewayIngress: gateway2-{{ .Release.Name }}.demo.platform.hmcts.net
-      ccdCaseManagementWebIngress: www2-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sUrl: "http://cmc-s2s-java"
@@ -63,7 +63,7 @@ spec:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-24bd891e
         ingressClass: traefik-no-proxy
-        ingressHost: ccd2-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
@@ -72,13 +72,13 @@ spec:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/case-management-web:prod-97fe26da
         ingressClass: traefik-no-proxy
-        ingressHost: www2-{{ .Release.Name }}.demo.platform.hmcts.net
+        ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-04b89c87
         ingressClass: traefik-no-proxy
-        ingressHost: gateway2-{{ .Release.Name }}.demo.platform.hmcts.net
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
