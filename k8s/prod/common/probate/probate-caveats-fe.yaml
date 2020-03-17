@@ -2,29 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: cmc-claim-store
-  namespace: money-claims
+  name: probate-caveats-fe
+  namespace: probate
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
-  releaseName: cmc-claim-store
+  releaseName: probate-caveats-fe
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc-claim-store
-    version: 3.2.8
+    name: probate-caveats-fe
+    version: 1.1.2
   values:
-    java:
+    nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-b3ab0380
-      environment:
-        CLAIM_STORE_TEST_SUPPORT_ENABLED: true
-        FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-0dd8580a
+      IDAM_API_URL: https://idam-api.platform.hmcts.net
     global:
-      environment: perftest
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
