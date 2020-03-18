@@ -42,12 +42,12 @@ spec:
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
       togglesUrl: "http://cmc-demo-rpe-feature-toggle-api"
-      postgresqlHost: "cmc-demo-postgresql"
+      postgresqlHost: "{{ .Release.Name }}-postgresql"
 
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        releaseNameOverride: "cmc-demo-claim-store"
+        releaseNameOverride: "cmc-demo-istio-claim-store"
         image: hmctspublic.azurecr.io/cmc/claim-store:prod-e70a08eb
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
