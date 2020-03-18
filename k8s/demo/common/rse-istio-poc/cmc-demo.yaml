@@ -2,7 +2,7 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: cmc-demo
+  name: poc
   namespace: poc
   annotations:
     flux.weave.works/automated: "true"
@@ -15,7 +15,7 @@ metadata:
     filter.fluxcd.io/rpe-feature-toggle-api: glob:prod-*
 
 spec:
-  releaseName: cmc-demo
+  releaseName: poc
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -30,7 +30,7 @@ spec:
       devMode: true
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
-      cmcFrontendUrl: cmc-citizen-frontend.demo.platform.hmcts.net
+      cmcFrontendUrl: cmc-citizen-frontend-istio.demo.platform.hmcts.net
       cmcBackendUrl: "http://cmc-demo-claim-store"
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sAuthUrl: "http://cmc-s2s-java"
@@ -47,7 +47,7 @@ spec:
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
-        releaseNameOverride: "cmc-demo-claim-store"
+        releaseNameOverride: "cmc-demo-istio-claim-store"
         image: hmctspublic.azurecr.io/cmc/claim-store:prod-58811bfb
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
@@ -61,7 +61,7 @@ spec:
 
     cmc-citizen-frontend:
       nodejs:
-        releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
+        releaseNameOverride: "cmc-demo-istio-cmc-citizen-frontend"
         image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-46f45891
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
