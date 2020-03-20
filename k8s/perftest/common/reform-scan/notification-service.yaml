@@ -2,26 +2,26 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-case-management-web
-  namespace: ccd
+  name: reform-scan-notification-service
+  namespace: reform-scan
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: ccd-case-management-web
+  releaseName: reform-scan-notification-service
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-case-management-web
-    version: 2.0.1
+    name: reform-scan-notification-service
+    version: 0.0.7
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-97fe26da
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-b2c2984b
     global:
-      environment: aat
+      environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
