@@ -18,7 +18,6 @@ spec:
     version: 4.0.1
   values:
     java:
-      replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/cmc/claim-store:prod-b7c60054
       ingressHost: cmc-claim-store-aks-demo.service.core-compute-demo.internal
@@ -28,6 +27,7 @@ spec:
         MILO_CSV_SCHEDULE: "0 0 8 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
         FRONTEND_BASE_URL: https://citizen-frontend-aks-demo.service.core-compute-demo.internal
+        RESPOND_TO_CLAIM_URL: https://citizen-frontend-aks-demo.service.core-compute-demo.internal/first-contact/start
         REFORM_ENVIRONMENT: demo
     global:
       environment: demo
