@@ -2,14 +2,14 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: jenkins
+  name: jenkins-test
   namespace: jenkins
   annotations:
     flux.weave.works/ignore: "false"
     flux.weave.works/automated: "false"
 
 spec:
-  releaseName: jenkins
+  releaseName: jenkins-test
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: jenkins
@@ -17,9 +17,9 @@ spec:
   values:
     master:
       # Used for label app.kubernetes.io/component 
-      componentName: "jenkins-master"
+      componentName: "jenkins-test"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db3cac"
+      imageTag: "db3dsj"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -521,11 +521,11 @@ spec:
       enabled: false
 
     persistence:
-      enabled: true
+      enabled: false
       ## A manually managed Persistent Volume and Claim
       ## Requires persistence.enabled: true
       ## If defined, PVC must be created manually before volume will be bound
-      existingClaim: "jenkins"
+      #existingClaim: "jenkins"
       ## jenkins data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
       ## If set to "-", storageClassName: "", which disables dynamic provisioning
