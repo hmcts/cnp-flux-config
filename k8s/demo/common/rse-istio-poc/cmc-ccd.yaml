@@ -24,7 +24,7 @@ metadata:
 
 spec:
   releaseName: istio-ccd-poc
-  timeout: 900
+  wait: false
   forceUpgrade: true
   rollback:
     enable: true
@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-istio-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-96435892
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-d3c80bed
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -96,7 +96,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-9abe5693
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1dd37ef3
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
@@ -107,27 +107,3 @@ spec:
     dm-store:
       java:
         image: hmctspublic.azurecr.io/dm/store:prod-cb2b357e
-
-    ccd-user-profile-importer:
-      image: hmctspublic.azurecr.io/ccd/user-profile-importer:db2r9a
-      users:
-      - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
-      - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
-      - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
-
-    ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.10
-      backoffLimit: 50
-      environment:
-        CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
-      definitionFilename: cmc-ccd.xlsx
-      userRoles:
-      - citizen
-      - caseworker-cmc
-      - caseworker-cmc-solicitor
-      - caseworker-cmc-systemupdate
-      - letter-holder
-      - caseworker-autotest1
-      - caseworker-cmc-anonymouscitizen
-      - caseworker-cmc-judge
-      - caseworker-cmc-legaladvisor
