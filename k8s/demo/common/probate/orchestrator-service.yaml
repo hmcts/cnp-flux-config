@@ -2,28 +2,29 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ia-case-api
-  namespace: ia
+  name: probate-orchestrator-service
+  namespace: probate
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: ia-case-api
+  releaseName: probate-orchestrator-service
   rollback:
     enable: true
+    retry: true
   chart:
+    name: probate-orchestrator-service
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-case-api
-    version: 0.0.6
+    version: 1.0.0
   values:
+    tags:
+      idam-pr: false
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-ebd150a9
-      ingressHost: ia-case-api-perftest.service.core-compute-perftest.internal
-      environment:
-        RESTART_ME: "Update due to vault Change"
+      image: "hmctspublic.azurecr.io/probate/orchestrator-service:prod-f758de9f"
+      ingressHost: probate-orchestrator-service-demo.service.core-compute-demo.internal
     global:
-      environment: perftest
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
