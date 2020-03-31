@@ -24,7 +24,8 @@ metadata:
 
 spec:
   releaseName: istio-ccd-poc
-  timeout: 900
+  timeout: 2000
+  wait: false
   forceUpgrade: true
   rollback:
     enable: true
@@ -35,7 +36,7 @@ spec:
     version: 4.2.0
   values:
     tags:
-      idam-pr: true
+      idam-pr: false
 
     ccd:
       s2s:
@@ -61,7 +62,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-istio-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-a6a4e8fa
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-d3c80bed
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +86,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7aeec010
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7e0b4319
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -96,38 +97,14 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-416bdd0e
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1dd37ef3
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-a8205806
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ff5ca4c2
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-cb2b357e
-
-    ccd-user-profile-importer:
-      image: hmctspublic.azurecr.io/ccd/user-profile-importer:db2r9a
-      users:
-      - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
-      - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
-      - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
-
-    ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.10
-      backoffLimit: 50
-      environment:
-        CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
-      definitionFilename: cmc-ccd.xlsx
-      userRoles:
-      - citizen
-      - caseworker-cmc
-      - caseworker-cmc-solicitor
-      - caseworker-cmc-systemupdate
-      - letter-holder
-      - caseworker-autotest1
-      - caseworker-cmc-anonymouscitizen
-      - caseworker-cmc-judge
-      - caseworker-cmc-legaladvisor
+        image: hmctspublic.azurecr.io/dm/store:prod-3ead262b

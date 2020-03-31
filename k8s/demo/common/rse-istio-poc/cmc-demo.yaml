@@ -48,7 +48,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-istio-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-b3498e8b
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-d95f385a
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -73,18 +73,4 @@ spec:
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
           FEATURE_INVERSION_OF_CONTROL: false
           FEATURE_MOCK_PAY: true
-      idam-pr:
-        api:
-          url: "https://idam-api.demo.platform.hmcts.net"
-        web_public:
-          url: "https://idam-web-public.demo.platform.hmcts.net"
-        service:
-          redirect_uri: "https://{{ .Values.global.cmcFrontendUrl }}/receiver"
-      rpe-feature-toggle-api:
-        enabled: true
-        importer:
-          apiUrl: "http://cmc-demo-rpe-feature-toggle-api/api/ff4j/store/features/"
-        java:
-          releaseNameOverride: "cmc-demo-rpe-feature-toggle-api"
-          environment:
-            FEATURES_DB_HOST: "{{ .Release.Name }}-postgresql"
+

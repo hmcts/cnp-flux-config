@@ -2,25 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-case-print-service
-  namespace: ccd
+  name: pcq-frontend
+  namespace: pcq
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
-  releaseName: ccd-case-print-service
+  releaseName: pcq-frontend
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-case-print-service
-    version: 1.0.8
+    name: pcq-frontend
+    version: 1.0.6
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-print-service:prod-aff51d4e
+      image: hmctspublic.azurecr.io/pcq/pcq-frontend:latest
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

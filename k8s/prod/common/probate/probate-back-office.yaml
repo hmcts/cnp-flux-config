@@ -21,7 +21,11 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: "hmctspublic.azurecr.io/probate/back-office:prod-9fd11f82"
+      environment:
+        CCD_GATEWAY_HOST: https://gateway.ccd.platform.hmcts.net
+        IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
+        PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
     global:
-      environment: aat
+      environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
