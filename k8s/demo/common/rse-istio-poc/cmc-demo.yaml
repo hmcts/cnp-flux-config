@@ -2,7 +2,7 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: poc
+  name: istio-cmc-poc
   namespace: poc
   annotations:
     flux.weave.works/automated: "true"
@@ -15,7 +15,7 @@ metadata:
     filter.fluxcd.io/rpe-feature-toggle-api: glob:prod-*
 
 spec:
-  releaseName: poc
+  releaseName: istio-cmc-poc
   timeout: 900
   forceUpgrade: true
   rollback:
@@ -31,24 +31,24 @@ spec:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
       cmcFrontendUrl: cmc-citizen-frontend-istio.demo.platform.hmcts.net
-      cmcBackendUrl: "http://cmc-demo-claim-store"
+      cmcBackendUrl: "http://cmc-demo-istio-claim-store"
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sAuthUrl: "http://cmc-s2s-java"
       pdfServiceUrl: "http://pdf-service-java"
-      paymentUrl: "http://payment-api-demo.service.core-compute-demo.internal"
-      feesUrl: "http://fees-register-api-demo.service.core-compute-demo.internal"
+      paymentUrl: "http://cmc-pay-payment-api"
+      feesUrl: "http://cmc-pay-fee-register"
       sendLetterUrl: "http://rpe-send-letter-service-java"
-      documentManagementUrl: "http://cmc-ccd-dm-store"
+      documentManagementUrl: "http://istio-ccd-poc-dm-store"
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
-      ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
+      ccdCaseDataApiUrl: "http://istio-ccd-poc-ccd-data-store-api"
       togglesUrl: "http://cmc-demo-rpe-feature-toggle-api"
-      postgresqlHost: "{{ .Release.Name }}-postgresql"
+      postgresqlHost: "istio-cmc-poc-postgresql"
 
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-istio-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-e70a08eb
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-484aa47b
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -62,7 +62,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-istio-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-46f45891
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-bd3f6a03
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
@@ -73,18 +73,4 @@ spec:
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
           FEATURE_INVERSION_OF_CONTROL: false
           FEATURE_MOCK_PAY: true
-      idam-pr:
-        api:
-          url: "https://idam-api.demo.platform.hmcts.net"
-        web_public:
-          url: "https://idam-web-public.demo.platform.hmcts.net"
-        service:
-          redirect_uri: "https://{{ .Values.global.cmcFrontendUrl }}/receiver"
-      rpe-feature-toggle-api:
-        enabled: true
-        importer:
-          apiUrl: "http://cmc-demo-rpe-feature-toggle-api/api/ff4j/store/features/"
-        java:
-          releaseNameOverride: "cmc-demo-rpe-feature-toggle-api"
-          environment:
-            FEATURES_DB_HOST: "{{ .Release.Name }}-postgresql"
+

@@ -5,8 +5,8 @@ metadata:
   name: idam-web-admin
   namespace: idam
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.java: glob:aat-*
 spec:
   releaseName: idam-web-admin
   rollback:
@@ -18,11 +18,11 @@ spec:
     version: 0.2.3
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-admin:prod-3f69a75f
-      ingressHost: idam-web-admin-aat.service.core-compute-aat.internal
+      image: hmctspublic.azurecr.io/idam/web-admin:aat-6617b57b
+      ingressHost: idam-web-admin.aat.platform.hmcts.net
       aadIdentityName: idam
       environment:
-        STRATEGIC_SERVICE_URL: http://idam-api-aat.service.core-compute-aat.internal
+        STRATEGIC_SERVICE_URL: https://idam-api.aat.platform.hmcts.net
         STRATEGIC_PUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
     global:
       environment: aat

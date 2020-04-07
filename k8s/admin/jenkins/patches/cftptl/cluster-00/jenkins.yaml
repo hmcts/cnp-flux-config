@@ -14,6 +14,13 @@ spec:
           value: "prod"
         - name: AZURE_KEYVAULT_URL
           value: https://cftptl-intsvc.vault.azure.net
+      resources:
+        requests:
+          cpu: "2"
+          memory: "6Gi"
+        limits:
+          cpu: "4"
+          memory: "10Gi"
       JCasC:
         configScripts:
           welcome-message: |
@@ -257,7 +264,7 @@ spec:
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 10
+                    maxVirtualMachinesLimit: 60
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -304,7 +311,7 @@ spec:
                         installDocker: false
                         installGit: false
                         installMaven: false
-                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                        jvmOptions: "-Xms4G -Xmx6G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
                       \ -XX:G1SummarizeRSetStatsPeriod=1"
@@ -314,8 +321,9 @@ spec:
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:
-                          azureVMCloudRetentionStrategy:
-                            idleTerminationMinutes: 60
+                          azureVMCloudPool:
+                            poolSize: 20
+                            retentionInHours: 72
                         shutdownOnIdle: false
                         storageAccountNameReferenceType: "existing"
                         storageAccountType: "Standard_LRS"
