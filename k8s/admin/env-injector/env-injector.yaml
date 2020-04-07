@@ -5,11 +5,10 @@ metadata:
   name: env-injector-webhook
   namespace: admin
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.job: glob:*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.job: glob:*
 spec:
   releaseName: env-injector-webhook
-  helmVersion: v3
   rollback:
     enable: true
   chart:
@@ -19,5 +18,3 @@ spec:
   values:
     image: hmctspublic.azurecr.io/k8s-env-injector:db2ekm
     replicas: 2
-    environment:
-      CLUSTER_NAME: aat-aks-01
