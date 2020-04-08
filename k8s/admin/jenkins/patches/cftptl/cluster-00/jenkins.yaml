@@ -264,7 +264,7 @@ spec:
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 60
+                    maxVirtualMachinesLimit: 40
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -321,9 +321,8 @@ spec:
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:
-                          azureVMCloudPool:
-                            poolSize: 20
-                            retentionInHours: 72
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
                         shutdownOnIdle: false
                         storageAccountNameReferenceType: "existing"
                         storageAccountType: "Standard_LRS"
