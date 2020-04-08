@@ -3,16 +3,15 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: svc-cat
-  namespace: catalog
+  namespace: osba
   annotations:
     flux.weave.works/automated: "false"
-    #fluxcd.io/ignore: true
 spec:
   releaseName: svc-cat
   chart:
     repository: https://svc-catalog-charts.storage.googleapis.com/
     name: catalog
-    version: 0.1.39
+    version: 0.3.0-beta.2
   values:
     apiserver:
       resources:
@@ -21,9 +20,12 @@ spec:
       storage:
         etcd:
           useEmbedded: false
-          servers: http://etcd.etcd:2379
+          servers: http://etcd-cluster-client:2379
       healthcheck:
         enabled: true
-    controllermanager:
+    controllerManager:
       healthcheck:
         enabled: false
+      resources:
+        limits:
+          memory: 100Mi
