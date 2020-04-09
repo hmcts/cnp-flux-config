@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db3ejm"
+      imageTag: "db3mgy"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -78,6 +78,9 @@ spec:
               markupFormatter:
                 rawHtml:
                   disableSyntaxHighlighting: false
+              disabledAdministrativeMonitors:
+                - "jenkins.security.QueueItemAuthenticatorMonitor"
+                - "jenkins.security.s2m.MasterKillSwitchWarning"
               numExecutors: 0
           default-view: |
             jenkins:

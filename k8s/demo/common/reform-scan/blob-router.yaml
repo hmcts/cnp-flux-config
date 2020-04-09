@@ -2,27 +2,29 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccpay-bulkscanning-api
-  namespace: fees-pay
+  name: reform-scan-blob-router
+  namespace: reform-scan
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: ccpay-bulkscanning-api
+  releaseName: reform-scan-blob-router
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccpay-bulkscanning-api
-    version: 0.0.7
+    name: reform-scan-blob-router
+    version: 0.0.41
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-3fc95f1f
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-2cb90fed
       environment:
-        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
+        CRIME_ENABLED: "true"
     global:
-      environment: prod
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

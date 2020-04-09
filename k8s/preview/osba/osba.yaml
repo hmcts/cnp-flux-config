@@ -10,12 +10,22 @@ metadata:
 spec:
   releaseName: osba
   chart:
-    repository: https://kubernetescharts.blob.core.windows.net/azure/
-    name: open-service-broker-azure
-    version: 1.5.0
+    git: https://github.com/hmcts/open-service-broker-azure
+    ref: master
+    path: contrib/k8s/charts/open-service-broker-azure
   valueFileSecrets:
   - name: "osba-values"
   values:
     image:
-      repository: microsoft/azure-service-broker
-      tag: v1.5.0
+      repository: osbapublicacr.azurecr.io/microsoft/azure-service-broker
+      tag: v1.8.4
+    redis:
+      cluster:
+        enabled: true
+        slaveCount: 1
+      master:
+        persistence:
+          enabled: false
+      slave:
+        persistence:
+          enabled: false
