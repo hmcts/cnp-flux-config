@@ -1,0 +1,33 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: botkube
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: botkube
+  forceUpgrade: true
+  chart:
+    repository: https://infracloudio.github.io/charts
+    name: botkube
+    version: v0.9.1
+  valueFileSecrets:
+  - name: "botkube-values"
+  values:
+    image:
+      tag: v0.9.1
+    communications:
+      # Settings for Slack
+      slack:
+        enabled: true
+        token: 'SLACK_API_TOKEN'
+        notiftype: short
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
