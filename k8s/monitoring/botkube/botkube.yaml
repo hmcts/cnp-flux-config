@@ -19,6 +19,131 @@ spec:
     image:
       tag: v0.9.1
     config:
+      resources:
+        - name: pod                # Name of the resources e.g pod, deployment, ingress, etc. (Resource name must be in singular form)
+          namespaces:
+            include:
+              - all
+            ignore:                 # List of namespaces to be ignored (omitempty), used only with include: all
+              - # example : include [all], ignore [x,y,z] 
+          events:                   # List of lifecycle events you want to receive, e.g create, update, delete, error OR all
+            - error
+        - name: service
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - error
+        - name: deployment
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - update
+            - delete
+            - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.availableReplicas
+        - name: statefulset
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - create
+            - update
+            - delete
+            - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.readyReplicas
+        - name: ingress
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - error
+        - name: node
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - create
+            - delete
+            - error
+        - name: persistentvolume
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - create
+            - delete
+            - error
+        - name: persistentvolumeclaim
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - create
+            - delete
+            - error
+        - name: configmap
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - delete
+            - error
+        - name: daemonset
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - update
+            - delete
+            - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.numberReady
+        - name: job
+          namespaces:
+            include:
+              - all
+            ignore:
+              -
+          events:
+            - update
+            - delete
+            - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.conditions[*].type
       communications:
         # Settings for Slack
         slack:
