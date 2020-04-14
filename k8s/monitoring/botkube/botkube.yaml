@@ -43,10 +43,14 @@ spec:
             ignore:
               -
           events:
-            - create
             - update
             - delete
             - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.availableReplicas
         - name: statefulset
           namespaces:
             include:
@@ -58,6 +62,11 @@ spec:
             - update
             - delete
             - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.readyReplicas
         - name: ingress
           namespaces:
             include:
@@ -103,6 +112,7 @@ spec:
             ignore:
               -
           events:
+            - delete
             - error
         - name: daemonset
           namespaces:
@@ -111,18 +121,29 @@ spec:
             ignore:
               -
           events:
+            - update
+            - delete
             - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.numberReady
         - name: job
           namespaces:
             include:
               - all
             ignore:
-              - admin
+              -
           events:
-            - create
             - update
             - delete
             - error
+          updateSetting:
+            includeDiff: true
+            fields:
+              - spec.template.spec.containers[*].image
+              - status.conditions[*].type
       communications:
         # Settings for Slack
         slack:
