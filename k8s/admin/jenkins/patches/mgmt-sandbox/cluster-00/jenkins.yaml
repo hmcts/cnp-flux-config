@@ -14,6 +14,15 @@ spec:
           value: "sandbox"
         - name: AZURE_KEYVAULT_URL
           value: https://cftsbox-intsvc.vault.azure.net
+      javaOpts: >-
+        -XX:InitialRAMPercentage=20.0 
+        -XX:MaxRAMPercentage=65.0 
+        -XX:MinRAMPercentage=20.0 
+        -XX:+UseParallelOldGC
+        -Djenkins.azure-keyvault.uami.enabled=true 
+        -Djenkins.ui.refresh=true 
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London 
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
       JCasC:
         configScripts:
           welcome-message: |
