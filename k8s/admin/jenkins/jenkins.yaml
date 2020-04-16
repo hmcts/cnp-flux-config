@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db3mgy"
+      imageTag: "db3qfy"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -34,7 +34,15 @@ spec:
           cpu: "2000m"
           memory: "4096Mi"
 
-      javaOpts: -Djenkins.azure-keyvault.uami.enabled=true -Djenkins.ui.refresh=true -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
+      javaOpts: >-
+        -XX:InitialRAMPercentage=20.0
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=20.0
+        -XX:+UseParallelOldGC
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
 
       usePodSecurityContext: true
       # can't figure out why this no longer works, it works locally, possibly helm version bug?
