@@ -18,9 +18,11 @@ kustomizepaths=(
     k8s/perftest/cluster-01-overlay
     k8s/prod/cluster-00-overlay
     k8s/prod/cluster-01-overlay
+    k8s/sandbox/cluster-00-overlay
+    k8s/sandbox/cluster-01-overlay
 )
 
 for path in "${kustomizepaths[@]}"; do
     echo "Checking kustomize $path"
-    ./kustomize build --load_restrictor none $path
+    ./kustomize build --load_restrictor none $path >/dev/null
 done
