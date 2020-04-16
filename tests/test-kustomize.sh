@@ -23,6 +23,5 @@ kustomizepaths=(
 )
 
 for path in "${kustomizepaths[@]}"; do
-    echo "Checking kustomize $path"
     ./kustomize build --load_restrictor none $path >/dev/null
 done
