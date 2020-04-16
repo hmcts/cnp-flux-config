@@ -5,8 +5,9 @@ metadata:
   name: ia-home-office-integration-api
   namespace: ia
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
 spec:
   releaseName: ia-home-office-integration-api
   rollback:
@@ -22,8 +23,6 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-503867d9
       ingressHost: ia-home-office-integration-api-aat.service.core-compute-aat.internal
-      environment:
-        RESTART_ME: "0"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
