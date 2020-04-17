@@ -19,8 +19,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-f22d31ad
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-52b52a7f
       environment:
+        IDAM_USER_URL: "https://idam-api.perftest.platform.hmcts.net"
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
         CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-perftest\.service\.core-compute-perftest\.internal(?::\d+)?)
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120 #remove when version 1.3.1 of the chart is available

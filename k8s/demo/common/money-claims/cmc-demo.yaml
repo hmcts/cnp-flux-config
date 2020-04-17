@@ -35,8 +35,8 @@ spec:
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sAuthUrl: "http://cmc-s2s-java"
       pdfServiceUrl: "http://pdf-service-java"
-      paymentUrl: "http://payment-api-demo.service.core-compute-demo.internal"
-      feesUrl: "http://fees-register-api-demo.service.core-compute-demo.internal"
+      paymentUrl: "http://cmc-pay-payment-api"
+      feesUrl: "http://cmc-pay-fee-register"
       sendLetterUrl: "http://rpe-send-letter-service-java"
       documentManagementUrl: "http://cmc-ccd-dm-store"
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
@@ -48,7 +48,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-4c116e8c
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-e490b2a5
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -62,7 +62,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-10de70df
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-b4fc072c
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:

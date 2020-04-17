@@ -5,7 +5,7 @@ metadata:
   name: ia-aip-frontend
   namespace: ia
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: ia-aip-frontend
@@ -14,17 +14,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-aip-frontend
-    version: 0.0.8
+    version: 0.0.10
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-c40f17fb
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-9edd8b42
       ingressHost: immigration-appeal.ithc.platform.hmcts.net
       environment:
-        IDAM_WEB_URL: https://idam-web-public-aks.ithc.platform.hmcts.net
-        IDAM_API_URL: http://idam-api-ithc.service.core-compute-ithc.internal
-        RESTART_ME: "1"
+        IDAM_WEB_URL: https://idam-web-public.ithc.platform.hmcts.net
+        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
+        RESTART_ME: "3"
+        TIMELINE_ENABLED: true
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

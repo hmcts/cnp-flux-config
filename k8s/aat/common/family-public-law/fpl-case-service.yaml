@@ -15,7 +15,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.6.0
+    version: 1.10.5
   values:
     java:
       replicas: 2
@@ -23,56 +23,13 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: dbc74f76-124d-4cb4-b3d2-87dc696dd5f2
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-bdcf3303
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-7037d067
       ingressHost: fpl-case-service-aat.service.core-compute-aat.internal
       environment:
-        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-aat.service.core-compute-aat.internal
-        CCD_UI_BASE_URL: https://www-ccd.aat.platform.hmcts.net
-        DOCMOSIS_TORNADO_URL: https://docmosis-development.platform.hmcts.net
-        RD_PROFESSIONAL_API_URL: http://rd-professional-api-aat.service.core-compute-aat.internal
-        SEND_LETTER_URL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
-        FEES_REGISTER_API_URL: http://fees-register-api-aat.service.core-compute-aat.internal
-        PAYMENT_API_URL: http://payment-api-aat.service.core-compute-aat.internal
-        IDAM_CLIENT_ID: fpl_case_service
-        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-*.service.core-compute-aat.internal/oauth2/callback
         GATEWAY_URL: https://gateway-ccd.aat.platform.hmcts.net
-        SPRING_MAIL_HOST: mta.reform.hmcts.net
-        SPRING_MAIL_PORT: 25
-        SPRING_MAIL_TEST_CONNECTION: false
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
         FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
         FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.aat.platform.hmcts.net
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-      aadIdentityName: family-public-law
-      keyVaults:
-        fpl:
-          resourceGroup: fpl-case-service
-          secrets:
-          - notify-api-key
-          - docmosis-api-key
-          - fpl-case-service-s2s-secret
-          - fpl-case-service-idam-client-secret
-          - local-authority-email-to-code-mapping
-          - local-authority-code-to-name-mapping
-          - local-authority-user-mapping
-          - local-authority-code-to-hmcts-court-mapping
-          - local-authority-code-to-cafcass-mapping
-          - local-authority-code-to-shared-inbox-mapping
-          - system-update-user-username
-          - system-update-user-password
-          - local-authority-fallback-inbox
-          - robotics-notification-sender
-          - robotics-notification-recipient
-          - ld-sdk-key
-          - ctsc-inbox
-      prometheus:
-        enabled: true
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

@@ -9,6 +9,7 @@ bases:
 - ../../admin/jenkins
 - ../../kured
 - ../../monitoring
+- ../../admin/env-injector
 
 patchesStrategicMerge:
 #flux patches
@@ -35,11 +36,4 @@ patchesStrategicMerge:
 #prom-operator patch
 - ../../monitoring/patches/mgmt-sandbox/cluster-00/prom-operator.yaml
 
-patchesJson6902:
-- target:
-    group: helm.fluxcd.io
-    version: v1
-    kind: HelmRelease
-    name: jenkins
-    namespace: jenkins
-  path: ../../admin/jenkins/patches/mgmt-sandbox/cluster-00/jenkins-flexvolume.yaml
+- ../../admin/env-injector/patches/mgmt-sandbox/cluster-00/env-injector.yaml

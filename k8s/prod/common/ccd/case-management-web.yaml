@@ -1,0 +1,45 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-management-web
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: ccd-case-management-web
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccd-case-management-web
+    version: 2.0.3
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1ba96c70
+      ingressHost: www.ccd.platform.hmcts.net
+      environment:
+        IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
+
+        CCD_GW_LOGOUT_URL: https://gateway.ccd.platform.hmcts.net/logout
+        CCD_API_URL: https://gateway.ccd.platform.hmcts.net/aggregated
+        CCD_DATA_URL: https://gateway.ccd.platform.hmcts.net/data
+        CCD_GW_OAUTH2_URL: https://gateway.ccd.platform.hmcts.net/oauth2
+        DM_URL: https://gateway.ccd.platform.hmcts.net/documents
+        ANNOTATION_API_URL: https://gateway.ccd.platform.hmcts.net/em-anno
+        POSTCODE_LOOKUP_URL: https://gateway.ccd.platform.hmcts.net/addresses?postcode={{
+          .Values.postcodeParam }}
+        PRINT_SERVICE_URL: https://gateway.ccd.platform.hmcts.net/print
+        PRINT_SERVICE_URL_REMOTE: https://return-case-doc.ccd.platform.hmcts.net
+        CCD_ACTIVITY_URL: https://gateway.ccd.platform.hmcts.net/activity
+        PAYMENTS_URL: https://gateway.ccd.platform.hmcts.net/payments
+        PAY_BULKSCAN_URL: https://gateway.ccd.platform.hmcts.net/pay-bulkscan
+
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

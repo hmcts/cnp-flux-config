@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-submit-service
-    version: 0.2.4
+    version: 0.2.6
   values:
     java:
       replicas: 2
@@ -26,16 +26,11 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-7c3240d7
-      ingressHost: probate-submit-service-prod.service.core-compute-prod.internal
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-11875548
       environment:
-        REFORM_TEAM: probate
-        REFORM_SERVICE_NAME: submit-service
         LOG_LEVEL: INFO
         AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.platform.hmcts.net"
-      aadIdentityName: probate
     global:
       environment: prod
-      subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

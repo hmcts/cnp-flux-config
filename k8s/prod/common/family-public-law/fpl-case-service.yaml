@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.5.0
+    version: 1.10.5
   values:
     java:
       replicas: 2
@@ -22,58 +22,18 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-bdcf3303
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-7037d067
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
-        DUMMY: "force release"
         FPL_LOCAL_AUTHORITY_CODES_FORBIDDEN_CASE_SUBMISSION: FPLA
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-prod.service.core-compute-prod.internal
         CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
         DOCMOSIS_TORNADO_URL: https://docmosis.platform.hmcts.net
-        RD_PROFESSIONAL_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal
-        SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
-        FEES_REGISTER_API_URL: http://fees-register-api-prod.service.core-compute-prod.internal
-        PAYMENT_API_URL: http://payment-api-prod.service.core-compute-prod.internal
-        IDAM_CLIENT_ID: fpl_case_service
-        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-prod.service.core-compute-prod.internal/oauth2/callback
         GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
-        SPRING_MAIL_HOST: mta.reform.hmcts.net
-        SPRING_MAIL_PORT: 25
-        SPRING_MAIL_TEST_CONNECTION: false
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
         FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
         FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
       aadIdentityName: family-public-law
-      keyVaults:
-        fpl:
-          resourceGroup: fpl-case-service
-          secrets:
-          - notify-api-key
-          - docmosis-api-key
-          - fpl-case-service-s2s-secret
-          - fpl-case-service-idam-client-secret
-          - local-authority-email-to-code-mapping
-          - local-authority-code-to-name-mapping
-          - local-authority-user-mapping
-          - local-authority-code-to-hmcts-court-mapping
-          - local-authority-code-to-cafcass-mapping
-          - local-authority-code-to-shared-inbox-mapping
-          - system-update-user-username
-          - system-update-user-password
-          - local-authority-fallback-inbox
-          - robotics-notification-sender
-          - robotics-notification-recipient
-          - ld-sdk-key
-          - ctsc-inbox
-      prometheus:
-        enabled: true
     global:
       environment: prod
       subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"

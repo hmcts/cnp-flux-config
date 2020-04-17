@@ -12,8 +12,15 @@ spec:
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
-        - name: SECRETS
-          value: /kvmnt/secrets
+        - name: AZURE_KEYVAULT_URL
+          value: https://cftptl-intsvc.vault.azure.net
+      resources:
+        requests:
+          cpu: "2"
+          memory: "6Gi"
+        limits:
+          cpu: "4"
+          memory: "10Gi"
       JCasC:
         configScripts:
           welcome-message: |
@@ -37,9 +44,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: aat-00-aks
+                        value: aat-01-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: aat-00-rg
+                        value: aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cnp-aks-cluster
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -205,6 +212,12 @@ spec:
                     name: PCQ
                     recurse: true
                     title: PCQ
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*RSE.*\/.+\/master
+                    name: RSE
+                    recurse: true
+                    title: RSE
           authentication: |
             jenkins:
               securityRealm:
@@ -257,7 +270,7 @@ spec:
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 10
+                    maxVirtualMachinesLimit: 40
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -304,7 +317,7 @@ spec:
                         installDocker: false
                         installGit: false
                         installMaven: false
-                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                        jvmOptions: "-Xms4G -Xmx6G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
                       \ -XX:G1SummarizeRSetStatsPeriod=1"

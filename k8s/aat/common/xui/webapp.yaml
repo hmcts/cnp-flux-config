@@ -15,13 +15,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-webapp
-    version: 0.1.0
+    version: 0.2.0
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-11e8d08e
+      image: hmctspublic.azurecr.io/xui/webapp:prod-a109c85b
       ingressHost: manage-case.aat.platform.hmcts.net
+      environment:
+        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

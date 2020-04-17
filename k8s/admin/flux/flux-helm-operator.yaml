@@ -15,7 +15,7 @@ spec:
   values:
     helm:
       versions: v3
-    workers: 6
+    workers: 3
     git:
       pollInterval: 1m
       ssh:
@@ -27,3 +27,10 @@ spec:
           url: https://kubernetes-charts.storage.googleapis.com
         - name: hmctspublic
           url: https://hmctspublic.azurecr.io/helm/v1/repo
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 3072Mi
+      requests:
+        cpu: 500m
+        memory: 1Gi

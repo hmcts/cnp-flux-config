@@ -19,7 +19,7 @@ spec:
       # Used for label app.kubernetes.io/component 
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db2m5s"
+      imageTag: "db3qfy"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -33,8 +33,16 @@ spec:
         limits:
           cpu: "2000m"
           memory: "4096Mi"
-      # Set min/max heap here if needed with:
-      javaOpts: -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data: 'self'; img-src data: 'self'"
+
+      javaOpts: >-
+        -XX:InitialRAMPercentage=20.0
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=20.0
+        -XX:+UseParallelOldGC
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
 
       usePodSecurityContext: true
       # can't figure out why this no longer works, it works locally, possibly helm version bug?
@@ -54,10 +62,6 @@ spec:
       disabledAgentProtocols:
         - JNLP-connect
         - JNLP2-connect
-      csrf:
-        defaultCrumbIssuer:
-          enabled: true
-          proxyCompatability: true
       cli: false
 
       slaveListenerServiceType: "ClusterIP"
@@ -82,6 +86,9 @@ spec:
               markupFormatter:
                 rawHtml:
                   disableSyntaxHighlighting: false
+              disabledAdministrativeMonitors:
+                - "jenkins.security.QueueItemAuthenticatorMonitor"
+                - "jenkins.security.s2m.MasterKillSwitchWarning"
               numExecutors: 0
           default-view: |
             jenkins:
@@ -162,7 +169,19 @@ spec:
               simple-theme-plugin:
                 elements:
                 - cssUrl:
-                    url: "https://cdn.jsdelivr.net/gh/hmcts/cnp-jenkins-config/jenkins-material-theme.css"
+                    url: ""
+          build-discarders: |
+            unclassified:
+              buildDiscarders:
+                configuredBuildDiscarders:
+                - "jobBuildDiscarder"
+                - simpleBuildDiscarder:
+                    discarder:
+                      logRotator:
+                        artifactDaysToKeepStr: "14"
+                        artifactNumToKeepStr: "20"
+                        daysToKeepStr: "14"
+                        numToKeepStr: "20"
           credentials: |
             credentials:
               system:
@@ -308,6 +327,7 @@ spec:
                           id: "reform_tunnel"
                           scope: GLOBAL
                           username: "reform"
+                          restEndpoint: "https://eu-central-1.saucelabs.com/"
                       - azureImds:
                           azureEnvName: "Azure"
                           description: "Jenkins Azure identity"
@@ -383,6 +403,96 @@ spec:
                           description: "GitHub APP Key - adoption"
                           id: "hmcts-jenkins-adoption"
                           privateKey: "${hmcts-jenkins-adoption-ghapp}"
+                      - gitHubApp:
+                          appID: "58060"
+                          description: "GitHub APP Key - am"
+                          id: "hmcts-jenkins-am"
+                          privateKey: "${hmcts-jenkins-am-ghapp}"
+                      - gitHubApp:
+                          appID: "58046"
+                          description: "GitHub APP Key - bsp"
+                          id: "hmcts-jenkins-bsp"
+                          privateKey: "${hmcts-jenkins-bsp-ghapp}"
+                      - gitHubApp:
+                          appID: "58044"
+                          description: "GitHub APP Key - cdm"
+                          id: "hmcts-jenkins-cdm"
+                          privateKey: "${hmcts-jenkins-cdm-ghapp}"
+                      - gitHubApp:
+                          appID: "58041"
+                          description: "GitHub APP Key - cmc"
+                          id: "hmcts-jenkins-cmc"
+                          privateKey: "${hmcts-jenkins-cmc-ghapp}"
+                      - gitHubApp:
+                          appID: "58067"
+                          description: "GitHub APP Key - ctsc"
+                          id: "hmcts-jenkins-ctsc"
+                          privateKey: "${hmcts-jenkins-ctsc-ghapp}"
+                      - gitHubApp:
+                          appID: "58042"
+                          description: "GitHub APP Key - div"
+                          id: "hmcts-jenkins-div"
+                          privateKey: "${hmcts-jenkins-div-ghapp}"
+                      - gitHubApp:
+                          appID: "58064"
+                          description: "GitHub APP Key - ethos"
+                          id: "hmcts-jenkins-ethos"
+                          privateKey: "${hmcts-jenkins-ethos-ghapp}"
+                      - gitHubApp:
+                          appID: "58052"
+                          description: "GitHub APP Key - feepay"
+                          id: "hmcts-jenkins-feepay"
+                          privateKey: "${hmcts-jenkins-feepay-ghapp}"
+                      - gitHubApp:
+                          appID: "58043"
+                          description: "GitHub APP Key - finrem"
+                          id: "hmcts-jenkins-finrem"
+                          privateKey: "${hmcts-jenkins-finrem-ghapp}"
+                      - gitHubApp:
+                          appID: "58059"
+                          description: "GitHub APP Key - fpl"
+                          id: "hmcts-jenkins-fpl"
+                          privateKey: "${hmcts-jenkins-fpl-ghapp}"
+                      - gitHubApp:
+                          appID: "58045"
+                          description: "GitHub APP Key - iac"
+                          id: "hmcts-jenkins-iac"
+                          privateKey: "${hmcts-jenkins-iac-ghapp}"
+                      - gitHubApp:
+                          appID: "58058"
+                          description: "GitHub APP Key - idam"
+                          id: "hmcts-jenkins-idam"
+                          privateKey: "${hmcts-jenkins-idam-ghapp}"
+                      - gitHubApp:
+                          appID: "58069"
+                          description: "GitHub APP Key - mi"
+                          id: "hmcts-jenkins-mi"
+                          privateKey: "${hmcts-jenkins-mi-ghapp}"
+                      - gitHubApp:
+                          appID: "58050"
+                          description: "GitHub APP Key - probate"
+                          id: "hmcts-jenkins-probate"
+                          privateKey: "${hmcts-jenkins-probate-ghapp}"
+                      - gitHubApp:
+                          appID: "58068"
+                          description: "GitHub APP Key - rd"
+                          id: "hmcts-jenkins-rd"
+                          privateKey: "${hmcts-jenkins-rd-ghapp}"
+                      - gitHubApp:
+                          appID: "58048"
+                          description: "GitHub APP Key - rpa"
+                          id: "hmcts-jenkins-rpa"
+                          privateKey: "${hmcts-jenkins-rpa-ghapp}"
+                      - gitHubApp:
+                          appID: "58049"
+                          description: "GitHub APP Key - sscs"
+                          id: "hmcts-jenkins-sscs"
+                          privateKey: "${hmcts-jenkins-sscs-ghapp}"
+                      - gitHubApp:
+                          appID: "60878"
+                          description: "GitHub APP Key - rse"
+                          id: "hmcts-jenkins-rse"
+                          privateKey: "${hmcts-jenkins-rse-ghapp}"                          
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
@@ -444,19 +554,6 @@ spec:
       annotations: {}
       accessMode: "ReadWriteOnce"
       size: "8Gi"
-      volumes:
-      - name: secrets
-        flexVolume:
-          driver: "azure/kv"
-          options:
-            usepodidentity: "true"
-            keyvaultobjectnames: "slack-token;hmcts-github-apikey-cmc;hmcts-github-apikey-div;hmcts-github-apikey-finrem;hmcts-github-apikey-cdm;hmcts-github-apikey-iac;hmcts-github-apikey-platform;hmcts-github-apikey-rpa;hmcts-github-apikey-sscs;hmcts-github-apikey-probate;hmcts-github-apikey-feepay;hmcts-github-apikey-sl;hmcts-github-apikey-idam;hmcts-github-apikey-cet;hmcts-github-apikey-fpl;hmcts-github-apikey-am;hmcts-github-apikey-ethos;hmcts-github-apikey-ctsc;hmcts-github-apikey-rd;hmcts-github-apikey;mgmt-bastion-creds-password;sonarcloud-api-token;pipelinemetrics-cosmosdb-key;OWASPDb-Password;jenkins-build-logs-key;sauce-access-key;bfa-user-password;subscription-id;sp-app-id;sp-app-password;jenkins-sp-tenant-id;hmcts-github-apikey-mi;hmcts-github-apikey-bsp;hmcts-jenkins-rpe-ghapp;hmcts-jenkins-cnp-ghapp;hmcts-jenkins-pcq-ghapp;hmcts-jenkins-xui-ghapp;hmcts-jenkins-adoption-ghapp;fortify-on-demand"
-            keyvaultobjecttypes: "secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret;secret" # OPTIONS: secret, key, cert
-            tenantid: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      mounts:
-      - mountPath: /kvmnt/secrets
-        name: secrets
-        readOnly: true
 
     ## Install Default RBAC roles and bindings
     rbac:

@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.5.0
+    version: 1.10.5
   values:
     java:
       replicas: 2
@@ -22,59 +22,17 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 4d1483ce-676e-4647-b22e-5e30f72cfa7e
       image: hmctspublic.azurecr.io/fpl/case-service:prod-1c9407d7
       ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
-        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
-        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-ithc.service.core-compute-ithc.internal
-        CCD_UI_BASE_URL: https://www-ccd.ithc.platform.hmcts.net
         DOCMOSIS_TORNADO_URL: https://docmosis-ithc.platform.hmcts.net
-        RD_PROFESSIONAL_API_URL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
-        SEND_LETTER_URL: http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal
-        FEES_REGISTER_API_URL: http://fees-register-api-ithc.service.core-compute-ithc.internal
-        PAYMENT_API_URL: http://payment-api-ithc.service.core-compute-ithc.internal
-        IDAM_CLIENT_ID: fpl_case_service
-        IDAM_CLIENT_REDIRECT_URI: https://fpl-case-service-ithc.service.core-compute-ithc.internal/oauth2/callback
         GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
         SPRING_SECURITY_ENABLED: true
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.ithc.platform.hmcts.net/o/jwks
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/hmcts
-        SPRING_MAIL_HOST: mta.reform.hmcts.net
-        SPRING_MAIL_PORT: 25
-        SPRING_MAIL_TEST_CONNECTION: false
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: mta.reform.hmcts.net
         FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
         FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
-        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
-        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
       aadIdentityName: family-public-law
-      keyVaults:
-        fpl:
-          resourceGroup: fpl-case-service
-          secrets:
-          - notify-api-key
-          - docmosis-api-key
-          - fpl-case-service-s2s-secret
-          - fpl-case-service-idam-client-secret
-          - local-authority-email-to-code-mapping
-          - local-authority-code-to-name-mapping
-          - local-authority-user-mapping
-          - local-authority-code-to-hmcts-court-mapping
-          - local-authority-code-to-cafcass-mapping
-          - local-authority-code-to-shared-inbox-mapping
-          - system-update-user-username
-          - system-update-user-password
-          - local-authority-fallback-inbox
-          - robotics-notification-sender
-          - robotics-notification-recipient
-          - ld-sdk-key
-          - ctsc-inbox
-      prometheus:
-        enabled: true
     global:
       environment: ithc
       subscriptionId: "62864d44-5da9-4ae9-89e7-0cf33942fa09"
