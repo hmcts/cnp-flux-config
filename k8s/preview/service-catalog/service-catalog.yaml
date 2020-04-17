@@ -6,13 +6,12 @@ metadata:
   namespace: catalog
   annotations:
     flux.weave.works/automated: "false"
-    #fluxcd.io/ignore: true
 spec:
   releaseName: svc-cat
   chart:
-    repository: https://svc-catalog-charts.storage.googleapis.com/
-    name: catalog
-    version: 0.1.39
+    git: https://github.com/hmcts/service-catalog
+    ref: k8s-116-updates
+    path: charts/catalog-v0.2
   values:
     apiserver:
       resources:
@@ -24,6 +23,9 @@ spec:
           servers: http://etcd.etcd:2379
       healthcheck:
         enabled: true
-    controllermanager:
+    controllerManager:
       healthcheck:
         enabled: false
+      resources:
+        limits:
+          memory: 300Mi

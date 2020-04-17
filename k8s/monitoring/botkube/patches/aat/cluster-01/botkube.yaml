@@ -1,0 +1,18 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: botkube
+  namespace: monitoring
+spec:
+  values:
+    config:
+      settings:
+        clustername: aat-01-aks
+        # Set true to enable kubectl commands execution
+        allowkubectl: true
+        # Set true to enable commands execution from configured channel only
+        restrictAccess: true
+    communications:
+      slack:
+        channel: 'aks-monitor-aat'
