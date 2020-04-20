@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-440-*
 spec:
   releaseName: div-rfe
   rollback:
@@ -20,7 +20,8 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/rfe:prod-58836cfd
+      image: hmctspublic.azurecr.io/div/rfe:pr-440-2c62043f
+      ingressClass: traefik-no-proxy
       ingressHost: respond-divorce-aks.demo.platform.hmcts.net
       environment:
         GOOGLE_ANALYTICS_ID: "UA-93824767-2"
