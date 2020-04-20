@@ -20,13 +20,16 @@ spec:
     java:
       image: hmctspublic.azurecr.io/idam/api:latest
       replicas: 2
-      ingressHost: idam-api.platform.hmcts.net
+      ingressHost: idam-api-prod2.platform.hmcts.net
       aadIdentityName: idam
       environment:
+        TESTING_SUPPORT_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.platform.hmcts.net
+        CACHING_USERS_MAXTHREADS: 3
+        CACHING_USERS_MAXHTTPCALLS: 1
+        STRATEGIC_ADMIN_URL: https://idam-web-admin-prod2.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://hmcts-access.service.gov.uk
-        STRATEGIC_API_URL: https://idam-api.platform.hmcts.net
+        STRATEGIC_API_URL: https://idam-api-prod2.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-prod2.internal:8443
         IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-prod2.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
