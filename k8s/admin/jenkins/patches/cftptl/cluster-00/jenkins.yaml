@@ -44,9 +44,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: aat-00-aks
+                        value: aat-01-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: aat-00-rg
+                        value: aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cnp-aks-cluster
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -212,6 +212,12 @@ spec:
                     name: PCQ
                     recurse: true
                     title: PCQ
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*RSE.*\/.+\/master
+                    name: RSE
+                    recurse: true
+                    title: RSE
           authentication: |
             jenkins:
               securityRealm:
@@ -264,7 +270,7 @@ spec:
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 60
+                    maxVirtualMachinesLimit: 40
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -321,9 +327,8 @@ spec:
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:
-                          azureVMCloudPool:
-                            poolSize: 20
-                            retentionInHours: 72
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
                         shutdownOnIdle: false
                         storageAccountNameReferenceType: "existing"
                         storageAccountType: "Standard_LRS"
