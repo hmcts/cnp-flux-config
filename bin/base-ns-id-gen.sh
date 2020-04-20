@@ -37,7 +37,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: $NAMESPACE
----
+
 EOF
 ) > "${MODULES_DIR}/namespace.yaml"
 # -----------------------------------------------------------
@@ -68,6 +68,7 @@ metadata:
 spec:
   AzureIdentity: $SHORT_NAME
   Selector: $SHORT_NAME
+  
 EOF
 ) > "${MODULES_DIR}/identity.yaml"
 # -----------------------------------------------------------
