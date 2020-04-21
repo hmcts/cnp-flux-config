@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-463-*
 spec:
   releaseName: div-dn
   rollback:
@@ -20,7 +20,8 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-d502462f
+      image: hmctspublic.azurecr.io/div/dn:pr-463-ee1c2f18
+      ingressClass: traefik-no-proxy
       ingressHost: decree-nisi-aks.demo.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://decree-nisi-aks.demo.platform.hmcts.net # looks unused
