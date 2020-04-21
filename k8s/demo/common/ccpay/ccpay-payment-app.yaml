@@ -2,26 +2,26 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-case-print-service
-  namespace: ccd
+  name: ccpay-payment-app
+  namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-220-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: ccd-case-print-service
+  releaseName: ccpay-payment-api
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-case-print-service
-    version: 1.1.0
+    name: payment-api
+    version: 2.0.11
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-print-service:pr-220-35f2f4da
+      image: hmctspublic.azurecr.io/payment/api:prod-b4acfb5b
     global:
-      environment: ithc
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
