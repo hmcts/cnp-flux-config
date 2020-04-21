@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-104-*
 spec:
   releaseName: div-da
   rollback:
@@ -20,7 +20,8 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/da:prod-dcdf3fdd
+      image: hmctspublic.azurecr.io/div/da:pr-104-9a7db303
+      ingressClass: traefik-no-proxy
       ingressHost: decree-absolute-aks.demo.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://decree-absolute-aks.demo.platform.hmcts.net
