@@ -5,6 +5,10 @@ metadata:
   name: jenkins
   namespace: jenkins
 spec:
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: jenkins
+    version: 1.16.1
   values:
     master:
       ingress:
@@ -14,6 +18,12 @@ spec:
           value: "sandbox"
         - name: AZURE_KEYVAULT_URL
           value: https://cftsbox-intsvc.vault.azure.net
+      sidecars:
+         configAutoReload:
+           image: shadwell/k8s-sidecar:0.0.7
+           env:
+             - name: REQ_TIMEOUT
+               value: "60"
       JCasC:
         configScripts:
           welcome-message: |
