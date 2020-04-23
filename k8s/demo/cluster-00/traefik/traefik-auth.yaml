@@ -1,17 +1,14 @@
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: traefik-forward-auth
   namespace: admin
 spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: traefik-forward-auth
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: traefik-forward-auth
+        app: traefik-forward-auth
     spec:
       volumes:
       - name: oauth2-certs
