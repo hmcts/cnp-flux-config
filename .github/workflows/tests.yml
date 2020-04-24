@@ -7,12 +7,12 @@ on:
   push:
     branches:
       - master
-      - refs/tags/*
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Tests
-      run: ./tests/run.sh --verbose
+      run: ./tests/run.sh
+    - name: Kustomize Tests
+      run: ./tests/test-kustomize.sh

@@ -18,7 +18,6 @@ spec:
     name: rd
     version: 0.3.0
 
-
   values:
     global:
       idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
@@ -49,6 +48,18 @@ spec:
         ingressClass: traefik-no-proxy
         environment:
           AUTH_IDAM_CLIENT_BASEURL: "{{ .Values.global.idamApiUrl }}"
+
+    rd-judicial-data-load:
+      java:
+        image: hmctspublic.azurecr.io/rd/judicial-data-load:demo
+        ingressHost: rd-judicial-data-load.demo.platform.hmcts.net
+        ingressClass: traefik-no-proxy
+
+    rd-judicial-api:
+      java:
+        image: hmctspublic.azurecr.io/rd/judicial-api:demo
+        ingressHost: rd-judicial-api.demo.platform.hmcts.net
+        ingressClass: traefik-no-proxy
 
     rpe-service-auth-provider:
       java:

@@ -5,8 +5,8 @@ metadata:
   name: cmc-ccd
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -30,7 +30,7 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
     version: 4.2.0
   values:
@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-2f97040a
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-1f77564f
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -76,7 +76,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-c5ec7e96
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eb012c9f
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-199b0df1
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-77f5956b
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -96,7 +96,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-52b52a7f
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1f9a7531
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
@@ -111,22 +111,22 @@ spec:
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
-      - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
-      - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
-      - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
+        - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
+        - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
+        - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.15
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.15.4
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
       userRoles:
-      - citizen
-      - caseworker-cmc
-      - caseworker-cmc-solicitor
-      - caseworker-cmc-systemupdate
-      - letter-holder
-      - caseworker-autotest1
-      - caseworker-cmc-anonymouscitizen
-      - caseworker-cmc-judge
-      - caseworker-cmc-legaladvisor
+        - citizen
+        - caseworker-cmc
+        - caseworker-cmc-solicitor
+        - caseworker-cmc-systemupdate
+        - letter-holder
+        - caseworker-autotest1
+        - caseworker-cmc-anonymouscitizen
+        - caseworker-cmc-judge
+        - caseworker-cmc-legaladvisor

@@ -5,8 +5,8 @@ metadata:
   name: ccd-full
   namespace: ccd
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -28,9 +28,9 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.1.0
+    version: 4.2.3
   values:
     tags:
       idam-pr: true
@@ -63,7 +63,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-2f97040a
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-1f77564f
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -78,7 +78,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-c5ec7e96
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eb012c9f
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -87,7 +87,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-199b0df1
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-77f5956b
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-52b52a7f
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1f9a7531
 
     ccd-user-profile-api:
       java:
@@ -106,11 +106,10 @@ spec:
 
     ccd-user-profile-importer:
       users:
-      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
     ccd-definition-importer:
       definitions:
-      - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
       userRoles:
-      - caseworker-autotest1
-
+        - caseworker-autotest1

@@ -6,7 +6,7 @@ metadata:
   namespace: money-claims
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/cmc-citizen-frontend: cmc-citizen-frontend.nodejs.image
     filter.fluxcd.io/cmc-citizen-frontend: glob:prod-*
     repository.fluxcd.io/cmc-claim-store: cmc-claim-store.java.image
@@ -48,7 +48,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-ac05f3fc
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-972817bf
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -62,7 +62,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-b4fc072c
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-5e83a809
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:

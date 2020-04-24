@@ -17,27 +17,27 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: check-acr-sync
-            image: hmctspublic.azurecr.io/check-acr-sync:db36dt
-            imagePullPolicy: IfNotPresent
-            resources:
-              requests:
-                memory: "64Mi"
-                cpu: "250m"
-              limits:
-                memory: "256Mi"
-                cpu: "500m"
-            env:
-              - name: SLACK_WEBHOOK
-                valueFrom:
-                  secretKeyRef:
-                    name: monitoring-values
-                    key: slack-webhook
-              - name: SLACK_CHANNEL
-                value: aks-monitor-aat
-              - name: AKS_CLUSTER
-                value: aat
-              - name: SLACK_ICON
-                value: flux
-              - name: ACR_MAX_RESULTS
-                value: "3000"
+            - name: check-acr-sync
+              image: hmctspublic.azurecr.io/check-acr-sync:db36dt
+              imagePullPolicy: IfNotPresent
+              resources:
+                requests:
+                  memory: "64Mi"
+                  cpu: "250m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "500m"
+              env:
+                - name: SLACK_WEBHOOK
+                  valueFrom:
+                    secretKeyRef:
+                      name: monitoring-values
+                      key: slack-webhook
+                - name: SLACK_CHANNEL
+                  value: aks-monitor-aat
+                - name: AKS_CLUSTER
+                  value: aat
+                - name: SLACK_ICON
+                  value: flux
+                - name: ACR_MAX_RESULTS
+                  value: "3000"

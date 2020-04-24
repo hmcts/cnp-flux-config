@@ -19,13 +19,14 @@ spec:
   values:
     java:
       replicas: 2
-      memoryLimits: '4096Mi'
-      cpuLimits: '2000m'
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/dm/store:prod-185f65b7
       ingressHost: dm-store-prod.service.core-compute-prod.internal
       environment:
         ENABLE_TTL: "false"
+        ENABLE_TESTING: "false"
       testsConfig:
         environment:
           TEST_URL: http://dm-store-java
