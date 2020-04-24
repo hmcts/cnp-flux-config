@@ -3,4 +3,4 @@ set -ex
 
 sudo apt-get install yamllint
 
-yamllint .
+yamllint . -c .yamllint.yaml
