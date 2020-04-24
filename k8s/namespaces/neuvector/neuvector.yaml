@@ -19,7 +19,7 @@ spec:
     rules:
       admission:
         enable: true
-        mode: "protect" # one of: monitor, protect
+        mode: "protect"  # one of: monitor, protect
         rules:
           - '{"config":{"id":1000,"category":"Kubernetes","comment":"Allow system namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"neuvector,kube-system,knode-system"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
           - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kured,monitoring"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
@@ -37,7 +37,7 @@ spec:
           - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
           - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
-      network: # IDs must match array index + 1
+      network:  # IDs must match array index + 1
         - create: '{"insert":{"after":0,"rules":[{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false,"learned": false}]}}'
           update: '{"config":{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false}}'
         - create: '{"insert":{"after":1,"rules":[{"id":2,"comment":"","from":"AllPods","to":"ApplicationInsights","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
@@ -75,8 +75,7 @@ spec:
           memory: 5Gi
       controller:
         image:
-          repository:
-            neuvector/controller
+          repository: neuvector/controller
         replicas: 3
         azureFileShare:
           enabled: true
@@ -85,12 +84,10 @@ spec:
           enabled: true
       enforcer:
         image:
-          repository:
-            neuvector/enforcer
+          repository: neuvector/enforcer
       manager:
         image:
-          repository:
-            neuvector/manager
+          repository: neuvector/manager
         env:
           ssl: false
         ingress:

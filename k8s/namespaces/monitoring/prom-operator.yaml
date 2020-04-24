@@ -15,7 +15,7 @@ spec:
     name: prometheus-operator
     version: 8.3.0
   valueFileSecrets:
-  - name: "prometheus-values"
+    - name: "prometheus-values"
   values:
     defaultRules:
       create: true
@@ -44,13 +44,13 @@ spec:
         - name: "flux-monitor"
           selector:
             app: flux
-          namespaceSelector: 
+          namespaceSelector:
             matchNames:
               - admin
-          endpoints: 
-          - targetPort: 3030
+          endpoints:
+            - targetPort: 3030
           path: /metrics
-      ingress: 
+      ingress:
         enabled: true
 
     kubelet:
@@ -62,16 +62,16 @@ spec:
         enabled: true
       config:
         route:
-          receiver: 'slack_alerting'
+          receiver: "slack_alerting"
           routes:
-          - match:
-              alertname: Watchdog
-            receiver: "slack_alerting"        
+            - match:
+                alertname: Watchdog
+              receiver: "slack_alerting"
         receivers:
-        - name: 'slack_alerting'
-          slack_configs:
-          - channel: prometheus-alerting
-            text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
 
     grafana:
       enabled: false
@@ -82,18 +82,18 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: traefik
-      dashboardProviders: 
+      dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-          - name: 'default'
-            orgId: 1
-            folder: ''
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
+            - name: "default"
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
       dashboards:
         default:
           kubernetes-pod-monitoring:
