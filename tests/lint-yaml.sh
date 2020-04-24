@@ -3,4 +3,4 @@ set -ex
 
 sudo apt-get install yamllint
 
-yamllint k8s -c tests/.yamllint.yaml
+yamllint . -c .yamllint.yaml
