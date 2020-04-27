@@ -1,0 +1,19 @@
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: idam
+  namespace: idam
+spec:
+  type: 0
+  ResourceID: /subscriptions/d025fece-ce99-4df2-b7a9-b649d3ff2060/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/idam-demo-mi
+  ClientID: 8b5f6ced-1e3e-4a9d-b894-a539695d0a4b
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: idam-binding
+  namespace: idam
+spec:
+  AzureIdentity: idam
+  Selector: idam
