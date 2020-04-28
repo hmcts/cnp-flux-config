@@ -152,10 +152,6 @@ spec:
                           chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
                           chmod 0600 /home/jenkinsssh/.ssh/id_rsa
                           mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
-                          cat > /etc/dnsmasq.d/10-internal-forwarding<<EOF
-                          server=/#/10.99.196.9
-                          EOF
-                          systemctl restart dnsmasq
                           cat > /etc/security/limits.d/30-jenkins.conf<<EOF
                           jenkinsssh soft nofile 40960
                           jenkinsssh hard nofile 40960
