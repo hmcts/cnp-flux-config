@@ -12,6 +12,7 @@ spec:
   releaseName: dm-store
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
@@ -19,10 +20,10 @@ spec:
   values:
     java:
       replicas: 2
-      memoryLimits: '4096Mi'
-      cpuLimits: '2000m'
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-185f65b7
+      image: hmctspublic.azurecr.io/dm/store:prod-4697db93
       ingressHost: dm-store-prod.service.core-compute-prod.internal
       environment:
         ENABLE_TTL: "false"

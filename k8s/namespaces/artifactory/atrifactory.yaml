@@ -28,7 +28,12 @@ spec:
       initContainers:
         - name: artifactory-init
           image: hmcts/cnp-artifactory-init:0.1
-          command: ['sh', '-c', 'mkdir -p /var/opt/jfrog/artifactory/etc; cp artifactory.config.xml /var/opt/jfrog/artifactory/etc/; chown -R 1030:1030 /var/opt/jfrog/artifactory; chmod -R 0700 /var/opt/jfrog/artifactory;']
+          command:
+            [
+              "sh",
+              "-c",
+              "mkdir -p /var/opt/jfrog/artifactory/etc; cp artifactory.config.xml /var/opt/jfrog/artifactory/etc/; chown -R 1030:1030 /var/opt/jfrog/artifactory; chmod -R 0700 /var/opt/jfrog/artifactory;",
+            ]
           volumeMounts:
             - mountPath: "/var/opt/jfrog/artifactory"
               name: artifactory-data
@@ -37,7 +42,7 @@ spec:
           name: artifactory-oss
           env:
             - name: EXTRA_JAVA_OPTIONS
-              value: '-Xms2g -Xmx8g'
+              value: "-Xms2g -Xmx8g"
           resources:
             requests:
               memory: "1024Mi"
@@ -66,7 +71,7 @@ spec:
     - metadata:
         name: artifactory-data
       spec:
-        accessModes: [ "ReadWriteOnce" ]
+        accessModes: ["ReadWriteOnce"]
         storageClassName: "managed-premium"
         resources:
           requests:

@@ -9,13 +9,16 @@ metadata:
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: draft-store-service
+  rollback:
+    enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: draft-store-service
     version: 1.4.1
   values:
     java:
-      image: hmctspublic.azurecr.io/draft-store/service:prod-eb274480
+      image: hmctspublic.azurecr.io/draft-store/service:prod-a79cdb92
       prometheus:
         enabled: true
     global:

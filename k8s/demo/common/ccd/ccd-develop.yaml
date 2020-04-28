@@ -5,8 +5,8 @@ metadata:
   name: ccd-develop
   namespace: ccd
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -28,7 +28,7 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
     version: 4.1.0
   values:
@@ -89,8 +89,8 @@ spec:
 
     ccd-definition-store-api:
       java:
-        devmemoryRequests: '1024Mi'
-        devmemoryLimits: '2048Mi'
+        devmemoryRequests: "1024Mi"
+        devmemoryLimits: "2048Mi"
         image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-469-33c730c9
         secrets:
           STORAGE_ACCOUNT_NAME:
@@ -102,13 +102,14 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-47315b6d
+        image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-94d4eb15
 
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:pr-224-4a773423
 
     ccd-user-profile-importer:
+      # yamllint disable rule:indentation
       users:
       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
@@ -119,3 +120,4 @@ spec:
       - caseworker-autotest1
       - caseworker-test
       - caseworker
+      # yamllint enable rule:indentation

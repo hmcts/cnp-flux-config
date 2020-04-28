@@ -5,8 +5,8 @@ metadata:
   name: cmc-ccd
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -30,7 +30,7 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
     version: 4.2.0
   values:
@@ -93,10 +93,12 @@ spec:
             disabled: false
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+          IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
+          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-52b52a7f
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1f9a7531
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
@@ -106,20 +108,23 @@ spec:
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-185f65b7
+        image: hmctspublic.azurecr.io/dm/store:prod-4697db93
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
+      # yamllint disable rule:indentation
       users:
       - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
       - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
+      # yamllint enable rule:indentation
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.15.4
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.16
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
+      # yamllint disable rule:indentation
       userRoles:
       - citizen
       - caseworker-cmc
@@ -130,3 +135,4 @@ spec:
       - caseworker-cmc-anonymouscitizen
       - caseworker-cmc-judge
       - caseworker-cmc-legaladvisor
+      # yamllint enable rule:indentation

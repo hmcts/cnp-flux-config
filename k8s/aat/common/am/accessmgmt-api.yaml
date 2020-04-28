@@ -19,10 +19,10 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: '768Mi'
-      cpuRequests: '500m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1000m'
+      memoryRequests: "768Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
@@ -30,7 +30,8 @@ spec:
       applicationInsightsInstrumentKey: "3331dc05-6264-4ea7-9229-c19f8ac55d3e"
       image: hmctspublic.azurecr.io/am/accessmgmt-api:prod-9c8e7171
       environment:
-        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
+        JAVA_TOOL_OPTIONS:
+          -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0
           -XX:MinRAMPercentage=30.0 -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.3.1.jar
       prometheus:
         enabled: true

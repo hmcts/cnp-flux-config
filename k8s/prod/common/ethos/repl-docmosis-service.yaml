@@ -11,6 +11,7 @@ spec:
   releaseName: repl-docmosis-service
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ethos-repl-docmosis-backend
@@ -19,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-1ccf0d26
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-eb96e9bc
       ingressHost: ethos-repl-docmosis-backend-prod.service.core-compute-prod.internal
       environment:
         TORNADO_URL: https://docmosis.platform.hmcts.net/rs/render

@@ -1,5 +1,5 @@
 # required for apps that can't handle oauth-proxy and not public
-# i.e. bulks-scan-processor
+#  i.e. bulks-scan-processor
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -41,7 +41,13 @@ spec:
     ssl:
       enabled: true
       tlsMinVersion: VersionTLS12
-      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
+      cipherSuites:
+        [
+          "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+          "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+        ]
       enforced: true
       permanentRedirect: true
     startupArguments:
@@ -55,10 +61,10 @@ spec:
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: release
-              operator: In
-              values:
-                - traefik-private
-          topologyKey: "kubernetes.io/hostname"
+          - labelSelector:
+              matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                    - traefik-private
+            topologyKey: "kubernetes.io/hostname"

@@ -8,13 +8,16 @@ metadata:
     flux.weave.works/automated: "true"
 spec:
   releaseName: fluxcloud
+  rollback:
+    enable: true
+    retry: true
   forceUpgrade: true
   chart:
     git: https://github.com/hmcts/charts
     ref: master
     path: incubator/fluxcloud
   valueFileSecrets:
-  - name: "fluxcloud-values"
+    - name: "fluxcloud-values"
   values:
     imageTag: v0.3.8
     resources:

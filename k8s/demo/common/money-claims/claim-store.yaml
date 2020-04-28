@@ -15,15 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 4.1.0
+    version: 4.1.2
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-aeba4c4f
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-9ce96ff4
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+        FEATURE_TOGGLES_CTSC_ENABLED: true
         MILO_CSV_SCHEDULE: "0 0 8 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
         REFORM_ENVIRONMENT: demo

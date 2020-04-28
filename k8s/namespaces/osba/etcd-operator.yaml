@@ -7,6 +7,9 @@ metadata:
     flux.weave.works/automated: "false"
 spec:
   releaseName: etcd-operator
+  rollback:
+    enable: true
+    retry: true
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: etcd-operator
@@ -19,7 +22,7 @@ spec:
       createEtcdClusterCRD: true
     etcdOperator:
       #emptying as full name is appending same thing a lot of times.
-      name : ""
+      name: ""
       image:
         tag: v0.9.4
     etcdCluster:

@@ -9,13 +9,13 @@ kind: ClusterRole
 metadata:
   name: dynatrace-monitoring-cluster
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  - pods
-  verbs:
-  - list
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - pods
+    verbs:
+      - list
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -26,6 +26,6 @@ roleRef:
   kind: ClusterRole
   name: dynatrace-monitoring-cluster
 subjects:
-- kind: ServiceAccount
-  name: dynatrace-monitoring
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: dynatrace-monitoring
+    namespace: monitoring

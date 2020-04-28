@@ -11,15 +11,16 @@ spec:
   releaseName: xui-terms-and-conditions
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-terms-and-conditions
-    version: 0.1.32
+    version: 0.2.0
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/terms-and-conditions:prod-fbcf7f0c
+      image: hmctspublic.azurecr.io/xui/terms-and-conditions:prod-4ebc21eb
       ingressHost: xui-terms-and-conditions-perftest.service.core-compute-perftest.internal
     global:
       environment: perftest
