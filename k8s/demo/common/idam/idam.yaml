@@ -6,9 +6,9 @@ metadata:
   namespace: idam
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.idam-api: glob:aat-*
-    flux.weave.works/tag.idam-web-public: glob:aat-*
-    flux.weave.works/tag.idam-web-admin: glob:aat-*
+    flux.weave.works/tag.idam-api: glob:demo-*
+    flux.weave.works/tag.idam-web-public: glob:demo-*
+    flux.weave.works/tag.idam-web-admin: glob:demo-*
 spec:
   releaseName: idam
   timeout: 900
@@ -27,7 +27,7 @@ spec:
       enableKeyVaults: true
     idam-api:
       java:
-        image: hmctspublic.azurecr.io/idam/api:aat-ac5c073f
+        image: hmctspublic.azurecr.io/idam/api:demo
         imagePullPolicy: Always
         ingressClass: traefik-private
         ingressHost: idam-api.demo.platform.hmcts.net
@@ -53,7 +53,7 @@ spec:
           SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-demo.internal
     idam-web-public:
       java:
-        image: hmctspublic.azurecr.io/idam/web-public:aat-bb506f19
+        image: hmctspublic.azurecr.io/idam/web-public:demo
         imagePullPolicy: Always
         ingressClass: traefik-no-proxy
         ingressHost: idam-web-public.demo.platform.hmcts.net
@@ -62,7 +62,7 @@ spec:
           STRATEGIC_SERVICE_URL: https://idam-api.demo.platform.hmcts.net
     idam-web-admin:
       java:
-        image: hmctspublic.azurecr.io/idam/web-admin:aat-cbf2c21e
+        image: hmctspublic.azurecr.io/idam/web-admin:demo
         imagePullPolicy: Always
         ingressClass: traefik-no-proxy
         ingressHost: idam-web-admin.demo.platform.hmcts.net
