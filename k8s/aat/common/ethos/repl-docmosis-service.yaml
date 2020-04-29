@@ -6,20 +6,21 @@ metadata:
   namespace: ethos
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:aat-*
 spec:
   releaseName: repl-docmosis-service
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ethos-repl-docmosis-backend
-    version: 0.1.6
+    version: 0.1.8
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-a2ccdc57
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:aat-eb96e9bc
       ingressHost: ethos-repl-docmosis-backend-aat.service.core-compute-aat.internal
     global:
       environment: aat

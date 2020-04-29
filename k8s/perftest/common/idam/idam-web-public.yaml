@@ -11,15 +11,19 @@ spec:
   releaseName: idam-web-public
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-web-public
-    version: 0.2.2
+    version: 0.2.3
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:perttest
-      ingressHost: idam-web-public.service.core-compute-perftest.internal
+      image: hmctspublic.azurecr.io/idam/web-public:perftest
+      imagePullPolicy: Always
+      ingressHost: idam-web-public.perftest.platform.hmcts.net
       aadIdentityName: idam
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.perftest.platform.hmcts.net
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,0 +1,47 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: flux
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: flux
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://charts.fluxcd.io
+    name: flux
+    version: 1.1.0
+  values:
+    image:
+      tag: 1.17.1
+    git:
+      url: git@github.com:hmcts/cnp-flux-config
+      pollInterval: 1m
+      secretName: flux-git-deploy
+    syncGarbageCollection:
+      enabled: true
+    registry:
+      acr:
+        enabled: true
+    additionalArgs:
+      - --connect=ws://fluxcloud
+      - --manifest-generation=true
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 3072Mi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    memcached:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi

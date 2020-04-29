@@ -1,0 +1,21 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  values:
+    loadBalancerIP: 10.11.15.220
+    kubernetes:
+      ingressEndpoint:
+        ip: 51.11.25.221
+        useDefaultPublishedService: false
+    forwardedHeaders:
+      enabled: true
+      trustedIPs:
+        - 0.0.0.0
+    dashboard:
+      domain: traefik00.demo.platform.hmcts.net
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg

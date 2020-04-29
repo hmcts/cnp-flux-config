@@ -5,8 +5,9 @@ metadata:
   name: ccd-pr-846
   namespace: ccd
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    fluxcd.io/ignore: true
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -28,9 +29,9 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.0.0-rc.16
+    version: 4.1.0
   values:
     tags:
       idam-pr: true
@@ -78,7 +79,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-50688f3e
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-7a71440c
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -87,7 +88,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-6ba69b10
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-4ae38192
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -102,14 +103,14 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-11d2dd84
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-92fb8ff7
 
     ccd-user-profile-importer:
       users:
-      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
     ccd-definition-importer:
       definitions:
-      - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
       userRoles:
-      - caseworker-autotest1
+        - caseworker-autotest1

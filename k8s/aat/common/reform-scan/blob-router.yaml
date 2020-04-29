@@ -11,17 +11,19 @@ spec:
   releaseName: reform-scan-blob-router
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.11
+    version: 0.0.42
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-fe4abb54
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-28d73a05
       environment:
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
+        CRIME_ENABLED: "true"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

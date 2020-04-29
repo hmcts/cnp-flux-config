@@ -11,16 +11,19 @@ spec:
   releaseName: em-anno
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.14
+    version: 0.1.18
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-637845eb
+      image: hmctspublic.azurecr.io/em/anno:prod-0811e56a
       ingressHost: em-anno-perftest.service.core-compute-perftest.internal
+      environment:
+        VAR_TA: trigger1
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

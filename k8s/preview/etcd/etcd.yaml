@@ -1,20 +1,21 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: etcd 
+  name: etcd
   namespace: etcd
   annotations:
     flux.weave.works/automated: "false"
 spec:
   releaseName: etcd
+  timeout: 1800
   chart:
-    repository: http://storage.googleapis.com/kubernetes-charts-incubator
-    name: etcd
-    version: 0.6.2
+    git: https://github.com/hmcts/charts
+    ref: master
+    path: incubator/etcd
   values:
     image:
       repository: "k8s.gcr.io/etcd-amd64"
-      tag: "3.3.10" # "v3.3.8-0-gke.1"
+      tag: "3.3.10"  # "v3.3.8-0-gke.1"
     pullPolicy: "IfNotPresent"
     replicas: 3
     resources:

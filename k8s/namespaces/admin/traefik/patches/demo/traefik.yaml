@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  forceUpgrade: true
+  # valueFileSecrets:
+  #   - name: "traefik-values"
+  values:
+    ssl:
+      enabled: true
+      # enforced: true
+      # permanentRedirect: true
+    debug:
+      enabled: true
