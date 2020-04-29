@@ -121,6 +121,8 @@ spec:
 
     ccd-definition-importer:
       image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.16
+      waitHosts: {{ .Release.Name }}-ccd-definition-store:80
+      waitHostsTimeout: 600
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
