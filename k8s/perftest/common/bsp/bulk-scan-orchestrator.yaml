@@ -6,7 +6,7 @@ metadata:
   namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-952-*
 spec:
   releaseName: bulk-scan-orchestrator
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-orchestrator
-    version: 0.2.8
+    version: 0.2.9
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-b82c2b05
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-952-fa78c69d
       environment:
         IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
     global:
