@@ -58,19 +58,19 @@ data:
         }
         reload
         loop
-        bind 169.254.20.10 10.0.0.10
+        bind 169.254.24.24 10.0.0.10
         forward . __PILLAR__CLUSTER__DNS__ {
                 force_tcp
         }
         prometheus :9253
-        health 169.254.20.10:8080
+        health 169.254.24.24:12808
         }
     in-addr.arpa:53 {
         errors
         cache 30
         reload
         loop
-        bind 169.254.20.10 10.0.0.10
+        bind 169.254.24.24 10.0.0.10
         forward . __PILLAR__CLUSTER__DNS__ {
                 force_tcp
         }
@@ -81,7 +81,7 @@ data:
         cache 30
         reload
         loop
-        bind 169.254.20.10 10.0.0.10
+        bind 169.254.24.24 10.0.0.10
         forward . __PILLAR__CLUSTER__DNS__ {
                 force_tcp
         }
@@ -92,7 +92,7 @@ data:
         cache 30
         reload
         loop
-        bind 169.254.20.10 10.0.0.10
+        bind 169.254.24.24 10.0.0.10
         forward . __PILLAR__UPSTREAM__SERVERS__ {
                 force_tcp
         }
@@ -135,7 +135,7 @@ spec:
               memory: 5Mi
           args:
             - "-localip"
-            - "169.254.20.10,10.0.0.10"
+            - "169.254.24.24,10.0.0.10"
             - "-conf"
             - "/etc/Corefile"
             - "-upstreamsvc"
@@ -154,9 +154,9 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              host: 169.254.20.10
+              host: 169.254.24.24
               path: /health
-              port: 8080
+              port: 12808
             initialDelaySeconds: 60
             timeoutSeconds: 5
           volumeMounts:
