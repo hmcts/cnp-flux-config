@@ -2,26 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: probate-back-office
-  namespace: probate
+  name: xui-webapp
+  namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1081-*
+    fluxcd.io/tag.nodejs: glob:prod-*
 spec:
-  releaseName: probate-back-office
+  releaseName: xui-webapp
   rollback:
     enable: true
     retry: true
   chart:
-    name: probate-back-office
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 1.0.1
+    name: xui-webapp
+    version: 0.2.0
   values:
-    java:
+    nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: "hmctspublic.azurecr.io/probate/back-office:pr-1081-553cbc25"
+      image: hmctspublic.azurecr.io/xui/webapp:prod-a109c85b
+      ingressHost: manage-case.demo.platform.hmcts.net
     global:
-      environment: ithc
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

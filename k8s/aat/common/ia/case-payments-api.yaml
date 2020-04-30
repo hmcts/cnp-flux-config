@@ -2,26 +2,28 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: probate-back-office
-  namespace: probate
+  name: ia-case-payments-api
+  namespace: ia
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1081-*
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
 spec:
-  releaseName: probate-back-office
+  releaseName: ia-case-payments-api
   rollback:
     enable: true
     retry: true
   chart:
-    name: probate-back-office
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 1.0.1
+    name: ia-case-payments-api
+    version: 0.0.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: "hmctspublic.azurecr.io/probate/back-office:pr-1081-553cbc25"
+      image: hmctspublic.azurecr.io/ia/case-payments-api:prod-410b8757
+      ingressHost: ia-case-payments-api-aat.service.core-compute-aat.internal
     global:
-      environment: ithc
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

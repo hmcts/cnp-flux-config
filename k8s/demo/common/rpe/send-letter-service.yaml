@@ -2,25 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: probate-frontend
-  namespace: probate
+  name: rpe-send-letter-service
+  namespace: rpe
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-1167-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: probate-frontend
+  releaseName: rpe-send-letter-service
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-frontend
-    version: 2.0.9
+    name: rpe-send-letter-service
+    version: 0.0.10
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:pr-1167-2793ed34
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-bc4203ea
+      environment:
+        FILE_CLEANUP_ENABLED: "true"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
