@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.function: glob:prod-*
 spec:
   releaseName: ccpay-callback-function
   rollback:
@@ -22,10 +22,10 @@ spec:
       environment:
         SERVICE_CALLBACK_RETRY_QUEUE: servicecallbackretryqueue
         SERVICE_CALLBACK_SUBSCRIPTION: defaultServiceCallbackSubscription
-        secrets:
-          SERVICE_CALLBACK_BUS_CONNECTION:
-            secretRef: ccpay-callback-function
-            key: SERVICE_CALLBACK_BUS_CONNECTION
-          AzureWebJobsStorage:
-            secretRef: ccpay-callback-function
-            key: AzureWebJobsStorage
+      secrets:
+        SERVICE_CALLBACK_BUS_CONNECTION:
+          secretRef: ccpay-callback-function
+          key: SERVICE_CALLBACK_BUS_CONNECTION
+        AzureWebJobsStorage:
+          secretRef: ccpay-callback-function
+          key: AzureWebJobsStorage
