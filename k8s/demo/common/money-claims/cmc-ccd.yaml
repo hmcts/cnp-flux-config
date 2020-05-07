@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1f9a7531
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-73b64ead
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
@@ -108,7 +108,7 @@ spec:
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-4697db93
+        image: hmctspublic.azurecr.io/dm/store:prod-09242790
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
@@ -121,6 +121,8 @@ spec:
 
     ccd-definition-importer:
       image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.16
+      waitHosts: "cmc-ccd-ccd-definition-store:80"
+      waitHostsTimeout: 600
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx

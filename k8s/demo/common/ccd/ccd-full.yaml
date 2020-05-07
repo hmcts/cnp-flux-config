@@ -30,7 +30,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.2.3
+    version: 4.2.4
   values:
     tags:
       idam-pr: true
@@ -60,6 +60,7 @@ spec:
       ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
+      environment: demo
 
     ccd-admin-web:
       nodejs:
@@ -85,6 +86,17 @@ spec:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
 
+    ccd-case-activity-api:
+      nodejs:
+        ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          REDIS_HOST: "{{ .Release.Name }}-redis-master"
+          REDIS_PASSWORD: fake-password
+          REDIS_SSL_ENABLED: false
+        keyVaults:
+      redis:
+        enabled: true
+
     ccd-definition-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-77f5956b
@@ -98,7 +110,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1f9a7531
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-73b64ead
 
     ccd-user-profile-api:
       java:
@@ -110,6 +122,6 @@ spec:
 
     ccd-definition-importer:
       definitions:
-        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/valid/CCD_CNP_27.xlsx
       userRoles:
         - caseworker-autotest1
