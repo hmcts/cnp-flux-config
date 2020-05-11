@@ -2,26 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: sscs-cor-backend
-  namespace: sscs
+  name: pcq-consolidation-service
+  namespace: pcq
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.job: glob:prod-*
 spec:
-  releaseName: sscs-cor-backend
+  releaseName: pcq-consolidation-service
   rollback:
     enable: true
-    retry: true
   chart:
+    name: pcq-consolidation-service
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-cor-backend
-    version: 0.0.8
+    version: 0.0.15
   values:
-    java:
-      replicas: 2
+    job:
+      schedule: "0/45 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/backend:prod-003e1af1
+      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-3d4631f7
     global:
-      environment: demo
+      environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
