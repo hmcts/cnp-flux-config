@@ -12,12 +12,12 @@ spec:
   rollback:
     enable: true
   chart:
-    name: rd-judicial-data-load
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 0.1.4
+    git: https://github.com/hmcts/rd-judicial-data-load
+    ref: demo
+    path: charts/rd-judicial-data-load
   values:
     job:
-      schedule: "0/10 * * * *"
+      schedule: "0 11 * * *"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/rd/judicial-data-load:prod-6a797de7
     global:

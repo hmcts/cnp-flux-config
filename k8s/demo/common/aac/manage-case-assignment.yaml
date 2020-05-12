@@ -2,28 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ia-case-api
-  namespace: ia
+  name: manage-case-assignment
+  namespace: aac
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: ia-case-api
+  releaseName: manage-case-assignment
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-case-api
-    version: 0.0.8
+    name: aac-manage-case-assignment
+    version: 0.0.3
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-436c81aa
-      ingressHost: ia-case-api-demo.service.core-compute-demo.internal
-      environment:
-        RESTART_ME: "Update due to vault Change"
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-bc7988a1
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
