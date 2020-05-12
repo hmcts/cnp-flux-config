@@ -10,9 +10,9 @@ spec:
   releaseName: botkube
   forceUpgrade: true
   chart:
-    git: https://github.com/infracloudio/botkube
-    ref: develop
-    path: helm/botkube
+    repository: https://infracloudio.github.io/charts
+    name: botkube
+    version: v0.10.0
   valueFileSecrets:
     - name: "botkube-values"
   values:
@@ -20,10 +20,13 @@ spec:
       tag: latest
     config:
       settings:
-        # Set true to enable kubectl commands execution
-        allowkubectl: true
-        # Set true to enable commands execution from configured channel only
-        restrictAccess: true
+        kubectl:
+          # Set true to enable kubectl commands execution
+          enabled: true
+          # set Namespace to execute botkube kubectl commands by default
+          defaultNamespace: admin
+          # Set true to enable commands execution from configured channel only
+          restrictAccess: true
       resources:
         - name: pod  # Name of the resources e.g pod, deployment, ingress, etc. (Resource name must be in singular form)
           namespaces:
@@ -124,6 +127,7 @@ spec:
               "replicasets",
               "jobs",
               "configmaps",
+              "helmreleases",
             ]
           verbs: ["get", "watch", "list"]
     resources:

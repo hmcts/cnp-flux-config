@@ -22,7 +22,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db3v47"
+      imageTag: "db4228"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -44,6 +44,7 @@ spec:
         -XX:+UseParallelOldGC
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
 

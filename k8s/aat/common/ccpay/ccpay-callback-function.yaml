@@ -1,0 +1,32 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-callback-function
+  namespace: fees-pay
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.function: glob:prod-*
+spec:
+  releaseName: ccpay-callback-function
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccpay-callback-function
+    version: 0.1.0
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-cc5f135c
+      environment:
+        SERVICE_CALLBACK_RETRY_QUEUE: servicecallbackretryqueue
+        SERVICE_CALLBACK_SUBSCRIPTION: defaultServiceCallbackSubscription
+        APPINSIGHTS_INSTRUMENTATIONKEY: 124e39c3-6dad-49ef-aede-d2cddac865c2
+      secrets:
+        SERVICE_CALLBACK_BUS_CONNECTION:
+          secretRef: ccpay-callback-function
+          key: SERVICE_CALLBACK_BUS_CONNECTION
+        AzureWebJobsStorage:
+          secretRef: ccpay-callback-function
+          key: AzureWebJobsStorage

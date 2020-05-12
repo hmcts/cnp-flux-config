@@ -1,0 +1,31 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-cos
+  namespace: financial-remedy
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+spec:
+  releaseName: finrem-cos
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: finrem-cos
+    version: 0.0.3
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/cos:prod-46ecff0b
+      environment:
+        FEATURE_APPROVED_CONSENT_ORDER_NOTIFICATION_LETTER: true
+        FEATURE_HWF_SUCCESSFUL_NOTIFICATION_LETTER: true
+        FEATURE_ASSIGNED_TO_JUDGE_NOTIFICATION_LETTER: true
+    global:
+      environment: demo
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

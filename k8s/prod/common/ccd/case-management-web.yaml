@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccd-case-management-web
-    version: 2.0.3
+    version: 2.0.4
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-bf0dfa67
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-7c5b90ef
       ingressHost: www.ccd.platform.hmcts.net
       environment:
         IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
@@ -31,8 +31,7 @@ spec:
         CCD_GW_OAUTH2_URL: https://gateway.ccd.platform.hmcts.net/oauth2
         DM_URL: https://gateway.ccd.platform.hmcts.net/documents
         ANNOTATION_API_URL: https://gateway.ccd.platform.hmcts.net/em-anno
-        POSTCODE_LOOKUP_URL:
-          https://gateway.ccd.platform.hmcts.net/addresses?postcode={{
+        POSTCODE_LOOKUP_URL: https://gateway.ccd.platform.hmcts.net/addresses?postcode={{
           .Values.postcodeParam }}
         PRINT_SERVICE_URL: https://gateway.ccd.platform.hmcts.net/print
         PRINT_SERVICE_URL_REMOTE: https://return-case-doc.ccd.platform.hmcts.net

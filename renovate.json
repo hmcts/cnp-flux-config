@@ -1,0 +1,22 @@
+{
+  "extends": ["config:base","docker:disable", ":disableRateLimiting"],
+  "kubernetes": {
+    "fileMatch": ["\\.yaml$"]
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["\\.yaml$"],
+      "matchStrings": [
+        "chart:\n *repository: .*?\n *name: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    }
+  ],
+  "packageRules": [
+    {
+      "datasources": ["helm"],
+      "managers": ["regex"],
+      "registryUrls": ["https://hmctspublic.azurecr.io/helm/v1/repo/"]
+    }
+  ]
+}
