@@ -18,10 +18,11 @@ spec:
     version: 0.1.0
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-10b4e00b
+      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-cc5f135c
       environment:
         SERVICE_CALLBACK_RETRY_QUEUE: servicecallbackretryqueue
         SERVICE_CALLBACK_SUBSCRIPTION: defaultServiceCallbackSubscription
+        APPINSIGHTS_INSTRUMENTATIONKEY: 124e39c3-6dad-49ef-aede-d2cddac865c2
       secrets:
         SERVICE_CALLBACK_BUS_CONNECTION:
           secretRef: ccpay-callback-function
@@ -29,6 +30,3 @@ spec:
         AzureWebJobsStorage:
           secretRef: ccpay-callback-function
           key: AzureWebJobsStorage
-        APPINSIGHTS_INSTRUMENTATIONKEY:
-          secretRef: ccpay-callback-function
-          key: APPINSIGHTS_INSTRUMENTATIONKEY

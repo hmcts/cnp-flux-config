@@ -7,6 +7,11 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:prod-*
 spec:
   releaseName: bulk-scan-processor
   rollback:
@@ -22,7 +27,7 @@ spec:
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-7495f325
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-aaf13ccb
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
@@ -37,6 +42,23 @@ spec:
         OCR_VALIDATION_URL_FINREM: ""
         DELETE_COMPLETE_FILES_CRON: "0 0/10 * * * *"
         STORAGE_BLOB_LEASE_TIMEOUT: 60
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            resourceGroup: bulk-scan
+            secrets:
+              test-s2s-secret: TEST_S2S_SECRET
+        environment:
+          TEST_URL: "http://bulk-scan-processor-prod.service.core-compute-prod.internal"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: true
+          TEST_S2S_NAME: "bulk_scan_processor_tests"
+          TEST_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
+      smoketests:
+        enabled: true
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-aaf13ccb
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

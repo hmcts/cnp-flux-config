@@ -5,7 +5,7 @@ metadata:
   name: cmc-claim-store
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 4.1.2
+    version: 4.1.3
   values:
     java:
       replicas: 3
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-b98e6d38
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-9fa1ddb1
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CLAIM_STORE_TEST_SUPPORT_ENABLED: false
