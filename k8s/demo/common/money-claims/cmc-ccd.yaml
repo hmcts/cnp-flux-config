@@ -76,7 +76,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e6774505
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-9bd905cb
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -112,12 +112,10 @@ spec:
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
-      # yamllint disable rule:indentation
       users:
       - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
       - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
-      # yamllint enable rule:indentation
 
     ccd-definition-importer:
       image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.16
@@ -126,7 +124,6 @@ spec:
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
-      # yamllint disable rule:indentation
       userRoles:
       - citizen
       - caseworker-cmc
@@ -137,4 +134,3 @@ spec:
       - caseworker-cmc-anonymouscitizen
       - caseworker-cmc-judge
       - caseworker-cmc-legaladvisor
-      # yamllint enable rule:indentation
