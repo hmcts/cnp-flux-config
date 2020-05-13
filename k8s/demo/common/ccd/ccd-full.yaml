@@ -80,7 +80,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eb012c9f
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e6774505
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -117,15 +117,16 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-a7b8709b
-
+  # yamllint disable rule:indentation
     ccd-user-profile-importer:
       users:
-        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
     ccd-definition-importer:
       waitHosts: "ccd-full-ccd-definition-store:80"
       waitHostsTimeout: 600
       definitions:
-        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+      - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
       userRoles:
-        - caseworker-autotest1
+      - caseworker-autotest1
+# yamllint enable rule:indentation
