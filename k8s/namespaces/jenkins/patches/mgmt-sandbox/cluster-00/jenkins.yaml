@@ -7,6 +7,17 @@ metadata:
 spec:
   values:
     master:
+      javaOpts: >-
+        -XX:InitialRAMPercentage=20.0
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=20.0
+        -XX:+UseParallelOldGC
+        -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
       ingress:
         hostName: sandbox-build-beta.platform.hmcts.net
       containerEnv:
