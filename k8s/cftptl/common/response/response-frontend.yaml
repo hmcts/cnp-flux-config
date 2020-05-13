@@ -6,7 +6,7 @@ metadata:
   namespace: response
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:*
+    fluxcd.io/tag: glob:*
 spec:
   releaseName: rpe-response-frontend
   rollback:
@@ -17,11 +17,10 @@ spec:
     name: nodejs
     version: 1.10.1
   values:
-    nodejs:
-      replicas: 2
-      image: hmctspublic.azurecr.io/rpe/response-frontend:db433k
-      ingressHost: response.platform.hmcts.net
-      livenessPath: /
-      readinessPath: /
-      environment:
-        RESPONSE_URL: 'http://rpe-response-api-nodejs'
+    replicas: 2
+    image: hmctspublic.azurecr.io/rpe/response-frontend:db433k
+    ingressHost: response.platform.hmcts.net
+    livenessPath: /
+    readinessPath: /
+    environment:
+      RESPONSE_URL: 'http://rpe-response-api-nodejs'
