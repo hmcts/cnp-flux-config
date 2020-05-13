@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-bf8e0c17
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-7a3bb20f
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
@@ -38,6 +38,10 @@ spec:
         ONLINE_HEARING_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/
         PDF_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net/rs/render
         PDF_SERVICE_HEALTH_URL: https://docmosis.platform.hmcts.net/rs/status
+        JOB_SCHEDULER_DB_USERNAME: notification@sscs-tya-notif-postgres-v11-db-prod
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v11-db-prod.postgres.database.azure.com
+        TEST_PARAM: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

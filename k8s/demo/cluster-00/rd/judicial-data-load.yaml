@@ -6,7 +6,7 @@ metadata:
   namespace: rd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.job: glob:prod-*
+    flux.weave.works/tag.job: glob:pr-117-*
 spec:
   releaseName: rd-judicial-data-load
   rollback:
@@ -17,9 +17,9 @@ spec:
     path: charts/rd-judicial-data-load
   values:
     job:
-      schedule: "40 17 * * *"
+      schedule: "0/30 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/judicial-data-load:prod-6a797de7
+      image: hmctspublic.azurecr.io/rd/judicial-data-load:pr-117-75ce74a7
     global:
       environment: demo
 

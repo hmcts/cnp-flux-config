@@ -74,13 +74,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1ba96c70
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-7c5b90ef
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eb012c9f
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-9bd905cb
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -113,19 +113,20 @@ spec:
     ccd-data-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/data-store-api:prod-73b64ead
+        environment:
+          CCD_DM_DOMAIN: https?://.*dm-store.*
 
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-a7b8709b
-
     ccd-user-profile-importer:
       users:
-        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
     ccd-definition-importer:
       waitHosts: "ccd-full-ccd-definition-store:80"
       waitHostsTimeout: 600
       definitions:
-        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+      - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
       userRoles:
-        - caseworker-autotest1
+      - caseworker-autotest1
