@@ -39,9 +39,12 @@ spec:
         image: hmctspublic.azurecr.io/bulk-scan/processor:prod-c7ecda00
         environment:
           STORAGE_BLOB_SELECTED_CONTAINER: "bulkscan"
+          OCR_VALIDATION_URL_SSCS: http://sscs-bulk-scan-demo.service.core-compute-demo.internal
     bulk-scan-orchestrator:
       java:
         image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-dfabaef1
+        environment:
+          TRANSFORMATION_URL_SSCS: http://sscs-bulk-scan-demo.service.core-compute-demo.internal
     bulk-scan-payment-processor:
       java:
         image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-d767cc21
