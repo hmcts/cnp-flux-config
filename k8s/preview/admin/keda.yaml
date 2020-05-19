@@ -1,0 +1,30 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: keda
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: keda
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://kedacore.github.io/charts
+    name: keda
+    version: 1.4.1
+  values:
+    image:
+      pullPolicy: IfNotPresent
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1024Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi

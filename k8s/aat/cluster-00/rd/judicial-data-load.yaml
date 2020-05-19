@@ -2,26 +2,25 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: bulk-scan-payment-processor
-  namespace: bsp
+  name: rd-judicial-data-load
+  namespace: rd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.job: glob:prod-*
 spec:
-  releaseName: bulk-scan-payment-processor
+  releaseName: rd-judicial-data-load
   rollback:
     enable: true
-    retry: true
   chart:
+    name: rd-judicial-data-load
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: bulk-scan-payment-processor
-    version: 0.1.9
+    version: 0.1.5
   values:
-    java:
-      replicas: 2
+    job:
+      schedule: "30 16 * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-5dbbbcfc
+      image: hmctspublic.azurecr.io/rd/judicial-data-load:prod-644581ce
     global:
-      environment: demo
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
