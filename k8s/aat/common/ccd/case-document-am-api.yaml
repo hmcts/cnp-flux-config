@@ -15,12 +15,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: case-document-am-api
-    version: 0.2.9
+    version: 0.3.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-document-am-api:prod-23d46b6f
+      image: hmctspublic.azurecr.io/ccd/case-document-am-api:prod-2c0b20e7
+      environment:
+        IDAM_URL: https://idam-api.aat.platform.hmcts.net
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
