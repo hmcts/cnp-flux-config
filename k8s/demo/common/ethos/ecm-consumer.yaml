@@ -6,7 +6,7 @@ metadata:
   namespace: ethos
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:aat-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ecm-consumer
   forceUpgrade: true
@@ -15,13 +15,13 @@ spec:
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ecm-consumer
-    version: 0.0.3
+    name: ethos-ecm-consumer
+    version: 0.0.16
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/ecm-consumer:aat-e58d6dde
+      image: hmctspublic.azurecr.io/ethos/ecm-consumer:prod-744085af
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

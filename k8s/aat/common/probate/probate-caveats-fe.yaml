@@ -6,7 +6,7 @@ metadata:
   namespace: probate
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-263-*
 spec:
   releaseName: probate-caveats-fe
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-caveats-fe
-    version: 1.1.7
+    version: 1.1.10
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-dd7e37b9
+      image: hmctspublic.azurecr.io/probate/caveats-fe:pr-263-cea1974a
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

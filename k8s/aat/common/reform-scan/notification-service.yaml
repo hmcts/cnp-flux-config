@@ -7,6 +7,13 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:prod-*
+    repository.fluxcd.io/functional: java.functionaltests.image
+    filter.fluxcd.io/functional: glob:prod-*
 spec:
   releaseName: reform-scan-notification-service
   rollback:
@@ -20,9 +27,31 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-ba9e2a54
-      environment:
-        FORCE_RESTART: "true"
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-f87f95da
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            resourceGroup: bulk-scan
+            secrets:
+              s2s-secret: S2S_SECRET
+          reform-scan:
+            resourceGroup: reform-scan
+            secrets:
+              notifications-queue-listen-connection-string: NOTIFICATION_QUEUE_CONN_STRING_READ
+              notifications-queue-send-connection-string: NOTIFICATION_QUEUE_CONN_STRING_WRITE
+        environment:
+          TEST_URL: "http://reform-scan-notification-service-aat.service.core-compute-aat.internal"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: true
+          S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+      smoketests:
+        enabled: true
+        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:latest
+      functionaltests:
+        enabled: true
+        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:latest
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
