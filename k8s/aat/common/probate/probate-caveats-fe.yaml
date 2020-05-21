@@ -15,11 +15,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-caveats-fe
-    version: 1.1.10
+    version: 1.1.9
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
+      environment:
+        EQUALITY_URL: https://pcq.aat.platform.hmcts.net
       image: hmctspublic.azurecr.io/probate/caveats-fe:pr-263-cea1974a
     global:
       environment: aat
