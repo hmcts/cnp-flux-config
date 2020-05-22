@@ -2,13 +2,13 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: bar-csv-report
+  name: status-update
   namespace: fees-pay
   annotations:
     fluxcd.io/automated: "true"
     fluxcd.io/tag.job: glob:prod-*
 spec:
-  releaseName: bar-csv-report
+  releaseName: status-update
   rollback:
     enable: true
     retry: true
@@ -18,10 +18,10 @@ spec:
     version: 0.0.6
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:pr-14-7020e2d0"
-      schedule: "30 2 * * *"
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-8ae29329"
+      schedule: "*/30 * * * *"
       environment:
-        REPORT_NAME: bar-csv-report
+        REPORT_NAME: status-update
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
