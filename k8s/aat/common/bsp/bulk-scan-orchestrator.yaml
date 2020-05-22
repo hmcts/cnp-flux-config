@@ -6,14 +6,14 @@ metadata:
   namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-978-*
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
-    filter.fluxcd.io/java: glob:prod-*
+    filter.fluxcd.io/java: glob:pr-978-*
     repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
+    filter.fluxcd.io/smoke: glob:pr-978-*
     repository.fluxcd.io/functional: java.functionaltests.image
-    filter.fluxcd.io/functional: glob:prod-*
+    filter.fluxcd.io/functional: glob:pr-978-*
 spec:
   releaseName: bulk-scan-orchestrator
   timeout: 900
@@ -28,7 +28,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-85a89ad2
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-978-ca63004a
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
