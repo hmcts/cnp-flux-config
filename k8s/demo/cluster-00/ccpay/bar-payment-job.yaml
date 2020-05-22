@@ -5,12 +5,13 @@ metadata:
   name: payment-jobs
   namespace: fees-pay
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/ignore: "false"
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.job: glob:prod-*
 spec:
   releaseName: payment-jobs
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: payment-jobs
