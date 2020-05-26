@@ -6,14 +6,14 @@ metadata:
   namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-223-*
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
-    filter.fluxcd.io/java: glob:prod-*
+    filter.fluxcd.io/java: glob:pr-223-*
     repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
+    filter.fluxcd.io/smoke: glob:pr-223-*
     repository.fluxcd.io/functional: java.functionaltests.image
-    filter.fluxcd.io/functional: glob:prod-*
+    filter.fluxcd.io/functional: glob:pr-223-*
 spec:
   releaseName: bulk-scan-payment-processor
   rollback:
@@ -28,7 +28,9 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "f666440f-43c0-4abb-9c20-2ce175a374f0"
-      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-470a112f
+      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:pr-223-603f6031
+      environment:
+        FORCE_RESTART: true
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -44,7 +46,7 @@ spec:
         environment:
           TEST_URL: "http://bulk-scan-payment-processor-aat.service.core-compute-aat.internal"
           SLACK_CHANNEL: "bsp-test-notices"
-          SLACK_NOTIFY_SUCCESS: true
+          SLACK_NOTIFY_SUCCESS: false
           S2S_NAME: "bulk_scan_payment_processor"
           S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
           CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
@@ -52,10 +54,10 @@ spec:
           IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-470a112f
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-d676268e
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-470a112f
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-d676268e
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
