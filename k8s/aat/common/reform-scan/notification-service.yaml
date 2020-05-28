@@ -22,7 +22,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-notification-service
-    version: 0.0.13
+    version: 0.1.0
   values:
     java:
       replicas: 2
@@ -32,15 +32,12 @@ spec:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
         keyVaults:
-          bulk-scan:
-            resourceGroup: bulk-scan
-            secrets:
-              s2s-secret: S2S_SECRET
           reform-scan:
             resourceGroup: reform-scan
             secrets:
               notifications-queue-listen-connection-string: NOTIFICATION_QUEUE_CONN_STRING_READ
               notifications-queue-send-connection-string: NOTIFICATION_QUEUE_CONN_STRING_WRITE
+              test-s2s-secret: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://reform-scan-notification-service-aat.service.core-compute-aat.internal"
           SLACK_CHANNEL: "bsp-test-notices"
