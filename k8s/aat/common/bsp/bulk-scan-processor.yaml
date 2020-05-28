@@ -10,8 +10,6 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/functionalcron: java.functionaltestscron.image
-    filter.fluxcd.io/functionalcron: glob:prod-*
     repository.fluxcd.io/smoke: java.smoketests.image
     filter.fluxcd.io/smoke: glob:prod-*
     repository.fluxcd.io/functional: java.functionaltests.image
@@ -56,10 +54,6 @@ spec:
           TEST_STORAGE_ACCOUNT_URL: "https://bulkscan.aat.platform.hmcts.net"
           PROXYOUT_ENABLED: true
           RUN_END_TO_END_TESTS: true
-      functionaltestscron:
-        enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-fdff1dec
-        schedule: "15/30 6-19 * * mon-fri"
       smoketests:
         enabled: true
         image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-fdff1dec
