@@ -10,8 +10,6 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/functionalcron: java.functionaltestscron.image
-    filter.fluxcd.io/functionalcron: glob:prod-*
     repository.fluxcd.io/smoke: java.smoketests.image
     filter.fluxcd.io/smoke: glob:prod-*
     repository.fluxcd.io/functional: java.functionaltests.image
@@ -24,14 +22,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.2.26
+    version: 0.2.29
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-b96ae843
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-923d1f1f
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
       testsConfig:
@@ -56,16 +54,12 @@ spec:
           TEST_STORAGE_ACCOUNT_URL: "https://bulkscan.aat.platform.hmcts.net"
           PROXYOUT_ENABLED: true
           RUN_END_TO_END_TESTS: true
-      functionaltestscron:
-        enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-b96ae843
-        schedule: "15/30 6-19 * * mon-fri"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-b96ae843
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-923d1f1f
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-b96ae843
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-923d1f1f
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

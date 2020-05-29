@@ -20,12 +20,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.43
+    version: 0.0.44
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-88e4f62c
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-c44be3c7
       environment:
         HANDLE_REJECTED_FILES_CRON: "0 0 7 * * *"
         REJECT_DUPLICATES_CRON: "0 0 6 * * *"
@@ -38,6 +38,7 @@ spec:
         CRIME_ENABLED: true
         SEND_DAILY_REPORT_ENABLED: true
         SMTP_HOST: smtp.office365.com
+        INCLUDE_WRITE_PERMISSION_IN_STORAGE_SAS_TOKEN: false
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -64,7 +65,6 @@ spec:
           TEST_STORAGE_CONTAINER_NAME: "bulkscan"
           TEST_STORAGE_ACCOUNT_URL: "https://reformscan.blob.core.windows.net"
           API_GATEWAY_URL: "https://core-api-mgmt-prod.azure-api.net/reform-scan"
-          RUN_END_TO_END_TESTS: true
       smoketests:
         enabled: true
         image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-88e4f62c

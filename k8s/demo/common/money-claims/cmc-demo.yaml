@@ -11,9 +11,6 @@ metadata:
     filter.fluxcd.io/cmc-citizen-frontend: glob:prod-*
     repository.fluxcd.io/cmc-claim-store: cmc-claim-store.java.image
     filter.fluxcd.io/cmc-claim-store: glob:prod-*
-    repository.fluxcd.io/rpe-feature-toggle-api: rpe-feature-toggle-api.java.image
-    filter.fluxcd.io/rpe-feature-toggle-api: glob:prod-*
-
 spec:
   releaseName: cmc-demo
   timeout: 900
@@ -24,7 +21,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 2.0.0
+    version: 2.0.1
   values:
     global:
       devMode: true
@@ -42,14 +39,13 @@ spec:
       documentManagementUrl: "http://cmc-ccd-dm-store"
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
-      togglesUrl: "http://cmc-demo-rpe-feature-toggle-api"
       postgresqlHost: "cmc-demo-postgresql"
 
     ### CMC SERVICES ###
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-a982c5b3
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-a8a96d15
         ingressHost: cmc-demo-claim-store-demo.service.core-compute-demo.internal
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
@@ -65,14 +61,16 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-44d0ea54
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-48afc71f
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
             secretRef: cmc-s2s-secret
             key: key
+          LAUNCHDARKLY_SDK_KEY:
+            secretRef: launchdarkly-sdk-key
+            key: key
         environment:
-          FEATURE_TOGGLES_API_URL: "http://cmc-demo-rpe-feature-toggle-api"
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
           FEATURE_INVERSION_OF_CONTROL: false
           FEATURE_MOCK_PAY: true
@@ -83,11 +81,3 @@ spec:
           url: "https://idam-web-public.demo.platform.hmcts.net"
         service:
           redirect_uri: "https://{{ .Values.global.cmcFrontendUrl }}/receiver"
-      rpe-feature-toggle-api:
-        enabled: true
-        importer:
-          apiUrl: "http://cmc-demo-rpe-feature-toggle-api/api/ff4j/store/features/"
-        java:
-          releaseNameOverride: "cmc-demo-rpe-feature-toggle-api"
-          environment:
-            FEATURES_DB_HOST: "{{ .Release.Name }}-postgresql"

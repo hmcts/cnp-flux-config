@@ -10,8 +10,6 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/functionalcron: java.functionaltestscron.image
-    filter.fluxcd.io/functionalcron: glob:prod-*
     repository.fluxcd.io/smoke: java.smoketests.image
     filter.fluxcd.io/smoke: glob:prod-*
     repository.fluxcd.io/functional: java.functionaltests.image
@@ -29,10 +27,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-88e4f62c
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-c44be3c7
       environment:
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: "true"
+        INCLUDE_WRITE_PERMISSION_IN_STORAGE_SAS_TOKEN: false
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -57,19 +56,15 @@ spec:
           SLACK_CHANNEL: "bsp-test-notices"
           SLACK_NOTIFY_SUCCESS: true
           TEST_STORAGE_CONTAINER_NAME: "bulkscan"
-          TEST_STORAGE_ACCOUNT_URL: "https://reformscanaat.blob.core.windows.net"
+          TEST_STORAGE_ACCOUNT_URL: "https://reformscan.aat.platform.hmcts.net"
           API_GATEWAY_URL: "https://core-api-mgmt-aat.azure-api.net/reform-scan"
-          RUN_END_TO_END_TESTS: true
-      functionaltestscron:
-        enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-88e4f62c
-        schedule: "5/30 6-19 * * mon-fri"
+          TEST_USE_PROXY_FOR_SOURCE_STORAGE: "true"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-88e4f62c
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-c44be3c7
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-88e4f62c
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-c44be3c7
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

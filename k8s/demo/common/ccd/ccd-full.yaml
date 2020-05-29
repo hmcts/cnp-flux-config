@@ -83,6 +83,8 @@ spec:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-9bd905cb
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          PROXY_CASE_ACTIVITY: http://ccd-full-ccd-case-activity-api
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
@@ -94,7 +96,7 @@ spec:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
           REDIS_PORT: 6379
           REDIS_PASSWORD: fake-password
-          REDIS_SSL_ENABLED: false
+          REDIS_SSL_ENABLED: ""
         keyVaults:
       redis:
         enabled: true
