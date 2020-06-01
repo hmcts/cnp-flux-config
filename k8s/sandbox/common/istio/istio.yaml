@@ -1,0 +1,37 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: istio-system
+  namespace: istio
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: istio
+  chart:
+    repository: https://storage.googleapis.com/istio-release/releases/1.1.0/charts/
+    name: istio
+    version: 1.1.0
+  values:
+    global:
+      environment: sandbox
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      hub: docker.io/istio
+      tag: 1.1.0
+    rbacEnabled: true
+    mtls:
+      enabled: false
+    ingress:
+      enabled: true
+    gateways:
+      istio-egressgateway:
+        enabled: true 
+    sidecarInjectorWebhook:
+      enabled: true
+    kiali:
+      enabled: true
+      dashboard:
+        grafanaURL: http://grafana:3000
+    grafana:
+      enabled: true
