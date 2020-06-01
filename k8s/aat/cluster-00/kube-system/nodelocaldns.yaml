@@ -19,8 +19,6 @@ kind: ServiceAccount
 metadata:
   name: node-local-dns
   namespace: kube-system
-  labels:
-    kubernetes.io/cluster-service: "true"
 
 ---
 apiVersion: v1
@@ -30,7 +28,6 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: kube-dns
-    kubernetes.io/cluster-service: "true"
     kubernetes.io/name: "KubeDNSUpstream"
 spec:
   ports:
@@ -114,7 +111,6 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: node-local-dns
-    kubernetes.io/cluster-service: "true"
 spec:
   updateStrategy:
     rollingUpdate:
