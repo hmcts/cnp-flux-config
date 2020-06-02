@@ -14,9 +14,32 @@
 #
 
 apiVersion: v1
+kind: Service
+metadata:
+  name: kube-dns-upstream
+  namespace: kube-system
+  labels:
+    k8s-app: kube-dns
+    kubernetes.io/name: "KubeDNSUpstream"
+spec:
+  ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+  selector:
+    k8s-app: kube-dns
+
+---
+
+apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: node-local-dns-secondary
+  name: node-local-dns
   namespace: kube-system
 data:
   Corefile: |
@@ -33,8 +56,8 @@ data:
         forward . __PILLAR__CLUSTER__DNS__ {
                 force_tcp
         }
-        prometheus :9254
-        health 169.254.20.10:28081
+        prometheus :9253
+        health 169.254.20.10:28080
         }
     in-addr.arpa:53 {
         log
@@ -46,7 +69,7 @@ data:
         forward . __PILLAR__CLUSTER__DNS__ {
                 force_tcp
         }
-        prometheus :9254
+        prometheus :9253
         }
     ip6.arpa:53 {
         log
@@ -58,7 +81,7 @@ data:
         forward . __PILLAR__CLUSTER__DNS__ {
                 force_tcp
         }
-        prometheus :9254
+        prometheus :9253
         }
     .:53 {
         log
@@ -70,30 +93,30 @@ data:
         forward . __PILLAR__UPSTREAM__SERVERS__ {
                 force_tcp
         }
-        prometheus :9254
+        prometheus :9253
         }
 
 ---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: node-local-dns-secondary
+  name: node-local-dns
   namespace: kube-system
   labels:
-    k8s-app: node-local-dns-secondary
+    k8s-app: node-local-dns
 spec:
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 10%
   selector:
     matchLabels:
-      k8s-app: node-local-dns-secondary
+      k8s-app: node-local-dns
   template:
     metadata:
       labels:
-        k8s-app: node-local-dns-secondary
+        k8s-app: node-local-dns
       annotations:
-        prometheus.io/port: "9254"
+        prometheus.io/port: "9253"
         prometheus.io/scrape: "true"
     spec:
       priorityClassName: system-node-critical
@@ -118,14 +141,20 @@ spec:
           securityContext:
             privileged: true
           ports:
-            - containerPort: 9254
+            - containerPort: 53
+              name: dns
+              protocol: UDP
+            - containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 9253
               name: metrics
               protocol: TCP
           livenessProbe:
             httpGet:
               host: 169.254.20.10
               path: /health
-              port: 28081
+              port: 28080
             initialDelaySeconds: 60
             timeoutSeconds: 5
           volumeMounts:
@@ -147,7 +176,7 @@ spec:
             optional: true
         - name: config-volume
           configMap:
-            name: node-local-dns-secondary
+            name: node-local-dns
             items:
               - key: Corefile
                 path: Corefile.base
