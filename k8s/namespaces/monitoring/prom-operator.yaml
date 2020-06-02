@@ -53,6 +53,7 @@ spec:
           endpoints:
             - targetPort: 3030
           path: /metrics
+      additionalPodMonitors:
         - name: "nodelocaldns"
           selector:
             matchLabels:
@@ -60,9 +61,9 @@ spec:
           namespaceSelector:
             matchNames:
               - kube-system
-          endpoints:
-            - targetPort: 9253
-          path: /metrics
+          podMetricsEndpoints:
+            - port: 9253
+              path: /metrics
       ingress:
         enabled: true
 
