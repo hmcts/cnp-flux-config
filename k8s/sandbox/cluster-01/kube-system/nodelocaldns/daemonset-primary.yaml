@@ -13,39 +13,6 @@
 # limitations under the License.
 #
 
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: node-local-dns
-  namespace: kube-system
-  labels:
-    kubernetes.io/cluster-service: "true"
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kube-dns-upstream
-  namespace: kube-system
-  labels:
-    k8s-app: kube-dns
-    kubernetes.io/cluster-service: "true"
-    kubernetes.io/name: "KubeDNSUpstream"
-spec:
-  ports:
-    - name: dns
-      port: 53
-      protocol: UDP
-      targetPort: 53
-    - name: dns-tcp
-      port: 53
-      protocol: TCP
-      targetPort: 53
-  selector:
-    k8s-app: kube-dns
-
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -114,7 +81,6 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: node-local-dns
-    kubernetes.io/cluster-service: "true"
 spec:
   updateStrategy:
     rollingUpdate:
@@ -148,6 +114,7 @@ spec:
             - "/etc/Corefile"
             - "-upstreamsvc"
             - "kube-dns-upstream"
+            - -skipteardown
           securityContext:
             privileged: true
           ports:
