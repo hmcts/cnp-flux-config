@@ -74,7 +74,7 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-7c5b90ef
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-78e9386f
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
@@ -83,6 +83,8 @@ spec:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-9bd905cb
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          PROXY_CASE_ACTIVITY: http://ccd-full-ccd-case-activity-api
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false

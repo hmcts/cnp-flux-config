@@ -6,7 +6,7 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
+    fluxcd.io/tag.nodejs: glob:aat-*
 spec:
   releaseName: xui-mo-webapp
   rollback:
@@ -20,11 +20,10 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-f1b3470c
+      image: hmctspublic.azurecr.io/xui/mo-webapp:aat-e2d61d20
       ingressHost: manage-org.aat.platform.hmcts.net
       environment:
         FEATURE_TERMS_AND_CONDITIONS_ENABLED: true
-        DUMMY_VAR: true
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
