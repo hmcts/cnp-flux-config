@@ -10,17 +10,6 @@ spec:
       ingress:
         hosts:
           - prometheus-00.perftest.platform.hmcts.net
-      additionalPodMonitors:
-        - name: "dns-drone"
-          selector:
-            matchLabels:
-              app: dnsdrone
-          namespaceSelector:
-            matchNames:
-              - kube-system
-          podMetricsEndpoints:
-            - port: metrics
-              path: /metrics
 
     alertmanager:
       ingress:
