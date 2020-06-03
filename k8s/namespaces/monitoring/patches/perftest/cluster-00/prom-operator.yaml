@@ -11,16 +11,6 @@ spec:
         hosts:
           - prometheus-00.perftest.platform.hmcts.net
       additionalPodMonitors:
-        - name: "nodelocaldns"
-          selector:
-            matchLabels:
-              k8s-app: node-local-dns
-          namespaceSelector:
-            matchNames:
-              - kube-system
-          podMetricsEndpoints:
-            - port: metrics
-              path: /metrics
         - name: "dns-drone"
           selector:
             matchLabels:
