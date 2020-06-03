@@ -21,15 +21,15 @@ spec:
       repository: hmctspublic.azurecr.io/k8s/node-problem-detector
       tag: v0.8.2-db4cph
     extraVolumes:
-        - name: custom-plugins
-          configMap:
-            name: node-problem-detector-custom-config
-            defaultMode: 0555
+      - name: custom-plugins
+        configMap:
+          name: node-problem-detector-custom-config
+          defaultMode: 0555
 
     extraVolumeMounts:
-        - name: custom-plugins
-          mountPath: /custom-plugins
-          readOnly: true
+      - name: custom-plugins
+        mountPath: /custom-plugins
+        readOnly: true
     settings:
       custom_plugin_monitors:
         - /custom-config/local-dns-resolver-config.json
