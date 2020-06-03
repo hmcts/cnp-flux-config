@@ -53,6 +53,17 @@ spec:
           endpoints:
             - targetPort: 3030
           path: /metrics
+      additionalPodMonitors:
+        - name: "nodelocaldns"
+          selector:
+            matchLabels:
+              k8s-app: node-local-dns
+          namespaceSelector:
+            matchNames:
+              - kube-system
+          podMetricsEndpoints:
+            - port: metrics
+              path: /metrics
       ingress:
         enabled: true
 
