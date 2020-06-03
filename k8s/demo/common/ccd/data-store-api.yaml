@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-964-*
+    flux.weave.works/tag.java: glob:pr-965-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -20,8 +20,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-964-7b0ed02a
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-965-c678207d
       environment:
+      IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
         DEFINITION_CACHE_LATEST_VERSION_TTL_SEC: 30
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 30
         CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-demo\.service\.core-compute-demo\.internal(?::\d+)?)
