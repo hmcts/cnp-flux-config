@@ -78,7 +78,7 @@ spec:
         global:
           resolve_timeout: "5m"
         route:
-          group_by: 
+          group_by:
             - alertname
             - cluster
             - service
@@ -95,14 +95,14 @@ spec:
                 receiver: "null"
             - match:
                 severity: critical
-                receiver: "slack_alerting"        
+                receiver: "slack_alerting"
         # Mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
-        - source_match:
-            severity: 'critical'
-          target_match:
-            severity: 'warning'
-          equal: ['alertname', 'cluster', 'service']
+          - source_match:
+              severity: 'critical'
+            target_match:
+              severity: 'warning'
+            equal: ['alertname', 'cluster', 'service']
         receivers:
           - name: "slack_alerting"
             slack_configs:
