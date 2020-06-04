@@ -23,7 +23,7 @@ spec:
     defaultRules:
       create: true
       rules:
-        alertmanager: true
+        alertmanager: false
         etcd: true
         general: true
         k8s: true
@@ -75,12 +75,34 @@ spec:
       ingress:
         enabled: true
       config:
+        global:
+          resolve_timeout: "5m"
         route:
-          receiver: "slack_alerting"
+          group_by:
+            - alertname
+            - cluster
+            - service
+          group_wait: "30s"
+          group_interval: "5m"
+          repeat_interval: "2h"
+          receiver: null  # default receiver
           routes:
             - match:
                 alertname: Watchdog
-              receiver: "slack_alerting"
+                receiver: "null"
+            - match:
+                severity: warning
+                receiver: "null"
+            - match:
+                severity: critical
+                receiver: "slack_alerting"
+        # Mute any warning-level notifications if the same alert is already critical.
+        inhibit_rules:
+          - source_match:
+              severity: 'critical'
+            target_match:
+              severity: 'warning'
+            equal: ['alertname', 'cluster', 'service']
         receivers:
           - name: "slack_alerting"
             slack_configs:
