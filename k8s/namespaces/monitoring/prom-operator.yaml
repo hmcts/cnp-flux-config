@@ -87,15 +87,15 @@ spec:
           repeat_interval: "2h"
           receiver: slack_alerting  # default receiver
           routes:
-            - match:
-                alertname: Watchdog
-                receiver: "null"
-            - match:
-                severity: warning
-                receiver: "null"
+            # - match:
+            #     alertname: Watchdog
+            #     receiver: "null"
+            # - match:
+            #     severity: warning
+            #     receiver: "null"
             - match:
                 severity: critical
-                receiver: "slack_alerting"
+                receiver: slack_critical
         # Mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
           - source_match:
@@ -107,6 +107,10 @@ spec:
           - name: "slack_alerting"
             slack_configs:
               - channel: prometheus-alerting
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
 
     grafana:
