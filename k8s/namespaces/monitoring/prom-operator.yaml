@@ -90,6 +90,9 @@ spec:
             - receiver: slack_critical
               match:
                 severity: critical
+            - receiver: "null"
+              match_re:
+                alertname: KubeletDown|KubeControllerManagerDown|KubeSchedulerDown
         # Mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
           - source_match:
