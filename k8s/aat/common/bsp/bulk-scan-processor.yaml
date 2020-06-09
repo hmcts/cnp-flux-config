@@ -22,14 +22,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.2.30
+    version: 0.3.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-0d764dae
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-696d6c3c
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
       testsConfig:
@@ -56,10 +56,10 @@ spec:
           RUN_END_TO_END_TESTS: true
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0d764dae
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-696d6c3c
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0d764dae
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-696d6c3c
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

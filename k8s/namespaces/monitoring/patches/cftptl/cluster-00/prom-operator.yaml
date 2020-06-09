@@ -15,6 +15,18 @@ spec:
       ingress:
         hosts:
           - alertmanager-ptl.platform.hmcts.net
+      config:
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting
+                title: 'CFTPTL - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
+                title: 'CFTPTL - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
 
     grafana:
       enabled: true

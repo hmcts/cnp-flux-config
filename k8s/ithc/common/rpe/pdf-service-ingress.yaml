@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: rpe-pdf-service
+  namespace: rpe
+spec:
+  rules:
+  - host: cmc-pdf-service-ithc.service.core-compute-ithc.internal
+    http:
+      paths:
+      - backend:
+          serviceName: pdf-service-java
+          servicePort: 80
+        path: /
