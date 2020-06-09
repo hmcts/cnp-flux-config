@@ -10,14 +10,14 @@ spec:
       ingress:
         hosts:
           - prometheus-01.perftest.platform.hmcts.net
+      prometheusSpec:
+        configMaps:
+          - prometheus-prom-operator-prometheus-o-prometheus-rulefiles-nodelocaldns
 
     alertmanager:
       ingress:
         hosts:
           - alertmanager-01.perftest.platform.hmcts.net
-      alertmanagerSpec:
-        configMaps:
-          - prometheus-prom-operator-prometheus-o-prometheus-rulefiles-nodelocaldns
       config:
         receivers:
           - name: "slack_alerting"
