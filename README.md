@@ -112,6 +112,7 @@ Retrieve the existing secret:
 ```bash
 $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
+Update this /tmp/values.yaml file with the slack hook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
@@ -197,6 +198,7 @@ Retrieve the existing secret:
 ```bash
 $ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
+Update this /tmp/values.yaml file with the slack hook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
