@@ -96,10 +96,10 @@ spec:
         # Mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
           - source_match:
-              severity: 'critical'
+              severity: "critical"
             target_match:
-              severity: 'warning'
-            equal: ['alertname', 'cluster', 'service']
+              severity: "warning"
+            equal: ["alertname", "cluster", "service"]
         receivers:
           - name: "slack_alerting"
             slack_configs:
@@ -109,6 +109,7 @@ spec:
             slack_configs:
               - channel: prometheus-critical
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"
 
     grafana:
       enabled: false
