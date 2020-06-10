@@ -45,8 +45,9 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-2c1dc671
-        ingressHost: cmc-demo-claim-store-demo.service.core-compute-demo.internal
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-e87f177e
+        ingressClass: traefik-private
+        ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -61,7 +62,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-48afc71f
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-d97190f0
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:

@@ -23,7 +23,7 @@ spec:
     defaultRules:
       create: true
       rules:
-        alertmanager: true
+        alertmanager: false
         etcd: true
         general: true
         k8s: true
@@ -53,6 +53,17 @@ spec:
           endpoints:
             - targetPort: 3030
           path: /metrics
+      additionalPodMonitors:
+        - name: "nodelocaldns"
+          selector:
+            matchLabels:
+              k8s-app: node-local-dns
+          namespaceSelector:
+            matchNames:
+              - kube-system
+          podMetricsEndpoints:
+            - port: metrics
+              path: /metrics
       ingress:
         enabled: true
 
@@ -64,17 +75,41 @@ spec:
       ingress:
         enabled: true
       config:
+        global:
+          resolve_timeout: "5m"
         route:
-          receiver: "slack_alerting"
+          receiver: slack_alerting  # default receiver
+          group_by:
+            - alertname
+            - cluster
+            - service
+          group_wait: "30s"
+          group_interval: "5m"
+          repeat_interval: "2h"
           routes:
-            - match:
-                alertname: Watchdog
-              receiver: "slack_alerting"
+            - receiver: slack_critical
+              match:
+                severity: critical
+            - receiver: "null"
+              match_re:
+                alertname: KubeletDown|KubeControllerManagerDown|KubeSchedulerDown
+        # Mute any warning-level notifications if the same alert is already critical.
+        inhibit_rules:
+          - source_match:
+              severity: "critical"
+            target_match:
+              severity: "warning"
+            equal: ["alertname", "cluster", "service"]
         receivers:
           - name: "slack_alerting"
             slack_configs:
               - channel: prometheus-alerting
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"
 
     grafana:
       enabled: false

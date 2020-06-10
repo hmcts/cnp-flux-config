@@ -10,8 +10,24 @@ spec:
       ingress:
         hosts:
           - prometheus-01.perftest.platform.hmcts.net
+      prometheusSpec:
+        configMaps:
+          - prometheus-prom-operator-prometheus-o-prometheus-rulefiles-nodelocaldns
 
     alertmanager:
       ingress:
         hosts:
           - alertmanager-01.perftest.platform.hmcts.net
+      config:
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting-perftest
+                title: 'Perftest-01 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical-perftest
+                title: 'Perftest-01 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"
