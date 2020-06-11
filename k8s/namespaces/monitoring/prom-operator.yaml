@@ -87,12 +87,12 @@ spec:
           group_interval: "5m"
           repeat_interval: "2h"
           routes:
-            - receiver: slack_critical
-              match:
+            - match_re:
+                alertname: KubeletDown|KubeControllerManagerDown|KubeSchedulerDown
+              receiver: "null"
+            - match:
                 severity: critical
-            - receiver: "null"
-              match_re:
-                message: (Kubelet|KubeControllerManager|KubeScheduler) has disappeared
+              receiver: slack_critical
         # Mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
           - source_match:
