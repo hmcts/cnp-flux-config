@@ -7,8 +7,21 @@ metadata:
 spec:
   values:
     master:
+      javaOpts: >-
+        -XX:InitialRAMPercentage=30.0
+        -XX:MaxRAMPercentage=60.0
+        -XX:MinRAMPercentage=20.0
+        -XX:+UseParallelOldGC
+        -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/workspace/gc.log::filecount=5,filesize=40M
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
+
       ingress:
-        hostName: sandbox-build-beta.platform.hmcts.net
+        hostName: sandbox-build.platform.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -78,7 +91,7 @@ spec:
                   groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
                   idpMetadataConfiguration:
                     period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=0c70bee1-6f46-40f3-8e6e-756e912f8d73
+                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/FederationMetadata/2007-06/FederationMetadata.xml?appid=001b73bc-0fae-46fa-bb7f-2296a655ba33
                   maximumAuthenticationLifetime: 7862400
                   usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                   usernameCaseConversion: "none"
@@ -86,7 +99,7 @@ spec:
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://sandbox-build-beta.platform.hmcts.net'
+                url: 'https://sandbox-build.platform.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:
@@ -101,13 +114,14 @@ spec:
                 graphsEnabled: true
                 knowledgeBase:
                   mongoDB:
-                    dbName: "build-failure-analyzer"
+                    dbName: "build-failure-analyzer-sbox"
                     enableStatistics: true
-                    host: "sandbox-build-failure-analyzer.platform.hmcts.net"
-                    password: "${bfa-user-password}"
-                    port: 27017
+                    host: "build-failure-analyzer-ptl.documents.azure.com"
+                    password: "${bfa-jenkins-pass}"
+                    port: 10255
                     successfulLogging: false
-                    userName: "build-failure-analyzer"
+                    userName: "build-failure-analyzer-ptl"
+                    tls: true
                 maxLogSize: 0
                 noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
                 nrOfScanThreads: 3
@@ -190,3 +204,29 @@ spec:
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftsbox-intsvc-vnet"
                         virtualNetworkResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
+
+    persistence:
+      enabled: true
+      ## A manually managed Persistent Volume and Claim
+      ## Requires persistence.enabled: true
+      ## If defined, PVC must be created manually before volume will be bound
+      existingClaim: "jenkins"
+      ## jenkins data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass:
+      annotations: {}
+      accessMode: "ReadWriteOnce"
+      size: "8Gi"
+      volumes:
+        - name: workspace
+          hostPath:
+            path: /mnt
+            type: DirectoryOrCreate
+      mounts:
+        - mountPath: /var/jenkins_home/workspace
+          name: workspace

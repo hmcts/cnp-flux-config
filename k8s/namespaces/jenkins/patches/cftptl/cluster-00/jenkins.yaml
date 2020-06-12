@@ -8,7 +8,7 @@ spec:
   values:
     master:
       ingress:
-        hostName: build-beta.platform.hmcts.net
+        hostName: build.platform.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
@@ -16,11 +16,11 @@ spec:
           value: https://cftptl-intsvc.vault.azure.net
       resources:
         requests:
-          cpu: "2"
-          memory: "4Gi"
-        limits:
           cpu: "4"
-          memory: "7Gi"
+          memory: "20Gi"
+        limits:
+          cpu: "6"
+          memory: "20Gi"
       JCasC:
         configScripts:
           welcome-message: |
@@ -44,9 +44,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: aat-01-aks
+                        value: aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: aat-01-rg
+                        value: aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cnp-aks-cluster
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -64,13 +64,13 @@ spec:
                     name: all
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|feature-toggle-api|service-auth-provider-app|spring-boot-template|cnp-rhubarb-recipes-service|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
+                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
                     name: Platform
                     recurse: true
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-*|send-letter-client|send-letter-service)\/master
+                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-.*|send-letter-client|send-letter-service)\/master
                     name: BSP
                     recurse: true
                     title: BSP
@@ -224,6 +224,12 @@ spec:
                     name: Evidence
                     recurse: true
                     title: Evidence Management
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*UCMC.*\/.+\/master
+                    name: UCMC
+                    recurse: true
+                    title: UCMC Data Dashboard
           authentication: |
             jenkins:
               securityRealm:
@@ -233,7 +239,7 @@ spec:
                   groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
                   idpMetadataConfiguration:
                     period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=f51ea833-3992-44a6-899e-16257b3e4fd1
+                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=b2391616-ba63-4676-ad17-0d8fa49c4f44
                   maximumAuthenticationLifetime: 7862400
                   usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                   usernameCaseConversion: "none"
@@ -241,7 +247,7 @@ spec:
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://build-beta.platform.hmcts.net'
+                url: 'https://build.platform.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:
@@ -256,13 +262,14 @@ spec:
                 graphsEnabled: true
                 knowledgeBase:
                   mongoDB:
-                    dbName: "build-failure-analyzer"
+                    dbName: "build-failure-analyzer-ptl"
                     enableStatistics: true
-                    host: "build-failure-analyzer.platform.hmcts.net"
-                    password: "${bfa-user-password}"
-                    port: 27017
+                    host: "build-failure-analyzer-ptl.documents.azure.com"
+                    password: "${bfa-pri-key}"
+                    port: 10255
                     successfulLogging: false
-                    userName: "build-failure-analyzer"
+                    userName: "build-failure-analyzer-ptl"
+                    tls: true
                 maxLogSize: 0
                 noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
                 nrOfScanThreads: 3
