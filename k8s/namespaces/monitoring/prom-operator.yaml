@@ -64,6 +64,16 @@ spec:
           podMetricsEndpoints:
             - port: metrics
               path: /metrics
+        - name: "node-problem-monitor"
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: node-problem-detector
+          namespaceSelector:
+            matchNames:
+              - monitoring
+          podMetricsEndpoints:
+            - port: exporter
+              path: /metrics
       ingress:
         enabled: true
 
