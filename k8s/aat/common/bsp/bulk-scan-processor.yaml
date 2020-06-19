@@ -22,7 +22,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.3.0
+    version: 0.3.1
   values:
     java:
       replicas: 2
@@ -30,8 +30,6 @@ spec:
       cpuRequests: "500m"
       cpuLimits: "2500m"
       image: hmctspublic.azurecr.io/bulk-scan/processor:prod-ee1a0360
-      environment:
-        STORAGE_BLOB_SELECTED_CONTAINER: ALL
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -54,6 +52,7 @@ spec:
           TEST_STORAGE_ACCOUNT_URL: "https://bulkscan.aat.platform.hmcts.net"
           PROXYOUT_ENABLED: true
           RUN_END_TO_END_TESTS: true
+          STORAGE_BLOB_SELECTED_CONTAINER: ALL
       smoketests:
         enabled: true
         image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-ee1a0360
