@@ -64,6 +64,16 @@ spec:
           podMetricsEndpoints:
             - port: metrics
               path: /metrics
+        - name: "node-problem-monitor"
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: node-problem-detector
+          namespaceSelector:
+            matchNames:
+              - monitoring
+          podMetricsEndpoints:
+            - port: exporter
+              path: /metrics
       ingress:
         enabled: true
 
@@ -87,12 +97,12 @@ spec:
           group_interval: "5m"
           repeat_interval: "2h"
           routes:
-            - receiver: slack_critical
-              match:
-                severity: critical
-            - receiver: "null"
-              match_re:
+            - match_re:
                 alertname: KubeletDown|KubeControllerManagerDown|KubeSchedulerDown
+              receiver: "null"
+            - match:
+                severity: critical
+              receiver: slack_critical
         # Mute any warning-level notifications if the same alert is already critical.
         inhibit_rules:
           - source_match:
@@ -161,3 +171,7 @@ spec:
           JVM-Micrometer:
             gnetId: 4701
             revision: 9
+          NodeLocalDNS:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/nodelocaldns.json
+          CoreDNS-Cluster:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/coredns_cluster.json
