@@ -20,14 +20,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.3.0
+    version: 0.3.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-9962c474
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-f3a03b49
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
@@ -58,7 +58,7 @@ spec:
           TEST_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-9962c474
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-f3a03b49
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
