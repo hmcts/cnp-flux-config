@@ -1,0 +1,15 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: flux-helm-operator
+  namespace: admin
+spec:
+  values:
+    nodeSelector:
+      agentpool: adminpool
+    tolerations:
+      - key: "pods"
+        operator: "Equal"
+        value: "admin"
+        effect: "NoSchedule"

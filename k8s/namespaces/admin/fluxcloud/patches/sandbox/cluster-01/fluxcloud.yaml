@@ -6,6 +6,13 @@ metadata:
   namespace: admin
 spec:
   values:
+    nodeSelector:
+      agentpool: adminpool
+    tolerations:
+      - key: "pods"
+        operator: "Equal"
+        value: "admin"
+        effect: "NoSchedule"
     environment:
       SLACK_CHANNEL: "#aks-monitor-sbox"
       SLACK_USERNAME: "sbox-01-aks"
