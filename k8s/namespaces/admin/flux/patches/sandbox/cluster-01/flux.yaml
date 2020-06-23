@@ -6,6 +6,14 @@ metadata:
   namespace: admin
 spec:
   values:
+    memcached:
+      nodeSelector:
+        agentpool: adminpool
+      tolerations:
+        - key: "pods"
+          operator: "Equal"
+          value: "admin"
+          effect: "NoSchedule"
     nodeSelector:
       agentpool: adminpool
     tolerations:
