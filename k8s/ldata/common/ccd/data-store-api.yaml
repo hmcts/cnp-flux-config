@@ -23,9 +23,14 @@ spec:
       image: hmctspublic.azurecr.io/ccd/data-store-api:pr-964-b0bb384e
       environment:
         IDAM_USER_URL: https://idam-web-public-ethosldata.platform.hmcts.net
-        CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-ethosldata.service.core-compute-ethosldata.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
-        CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-ethosldata\.service\.core-compute-ethosldata\.internal(?::\d+)?)
-        DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120  #remove when version 1.3.1 of the chart is available.
+        CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-ldata.service.core-compute-ethosldata.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
+        CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-ldata\.service\.core-compute-ethosldata\.internal(?::\d+)?)
+        CCD_DRAFT_STORE_URL: http://draft-store-service-ldata.service.core-compute-ethosldata.internal
+        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-ethosldata.postgres.database.azure.com
+        DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-ethosldata
+        DEFINITION_STORE_HOST: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal
+        IDAM_S2S_URL: http://rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal
+        USER_PROFILE_HOST: http://ccd-user-profile-api-ldata.service.core-compute-ethosldata.internal
     global:
       environment: ldata
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

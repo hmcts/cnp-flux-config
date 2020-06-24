@@ -22,6 +22,17 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-bfae6115
+      environment:
+        CCD_DATA_STORE_API_URL: http://ccd-data-store-api-ldata.service.core-compute-ethosldata.internal
+        CCD_GATEWAY_BASE_URL: https://gateway-ccd-ethosldata.platform.hmcts.net
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-ldata.service.core-compute-ethosldata.internal
+        ETHOS_REPL_DB_CONN_OPTIONS: ?sslmode=require
+        ETHOS_REPL_DB_HOST: ethos-postgres-db-ethosldata.postgres.database.azure.com
+        ETHOS_REPL_DB_USER_NAME: ethos@ethos-postgres-db-ethosldata
+        IDAM_API_JWK_URL: https://idam-api-ethosldata.platform.hmcts.net/jwks
+        IDAM_API_URL: https://idam-api-ethosldata.platform.hmcts.net
+        REPL_DOCMOSIS_BACKEND_URL: http://ethos-repl-docmosis-service-ldata.service.core-compute-ethosldata.internal
+        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal
     global:
       environment: ldata
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
