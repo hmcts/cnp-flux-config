@@ -21,8 +21,8 @@ spec:
     master:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
-      image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db4k5c"
+      image: "hmctspublic.azurecr.io/jenkins/jenkins"
+      imageTag: "db4n0a"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -517,6 +517,11 @@ spec:
                           description: "GitHub APP Key - em"
                           id: "hmcts-jenkins-em"
                           privateKey: "${hmcts-jenkins-em-ghapp}"
+                      - gitHubApp:
+                          appID: "69800"
+                          description: "GitHub APP Key - hmi"
+                          id: "hmcts-jenkins-hmi"
+                          privateKey: "${hmcts-jenkins-hmi-ghapp}"
 
           jobs: |
             jobs:

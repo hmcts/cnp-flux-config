@@ -22,12 +22,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.44
+    version: 0.1.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-7538a7dd
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-d5473a38
       environment:
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: "true"
@@ -60,10 +60,10 @@ spec:
           TEST_USE_PROXY_FOR_SOURCE_STORAGE: "true"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7538a7dd
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-d5473a38
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7538a7dd
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-d5473a38
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
