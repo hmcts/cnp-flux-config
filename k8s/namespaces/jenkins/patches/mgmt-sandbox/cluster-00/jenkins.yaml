@@ -13,6 +13,7 @@ spec:
         -XX:MinRAMPercentage=20.0
         -XX:+UseParallelOldGC
         -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/workspace/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
@@ -228,6 +229,11 @@ spec:
           hostPath:
             path: /mnt
             type: DirectoryOrCreate
+        - name: logging
+          configMap:
+            name: jenkins-logging-configmap
       mounts:
         - mountPath: /var/jenkins_home/workspace
           name: workspace
+        - mountPath: /var/jenkins_home/userconf
+          name: jenkins-logging-configmap
