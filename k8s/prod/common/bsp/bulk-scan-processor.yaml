@@ -27,7 +27,7 @@ spec:
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-f3a03b49
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-ccb8ee07
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
@@ -38,7 +38,6 @@ spec:
         STORAGE_BLOB_PUBLIC_KEY: trusted_public_key.der
         NO_NEW_ENVELOPES_TASK_ENABLED: true
         OCR_VALIDATION_URL_DIVORCE: ""
-        OCR_VALIDATION_URL_FINREM: ""
         OCR_VALIDATION_URL_SSCS: ""
         DELETE_COMPLETE_FILES_CRON: "0 0/10 * * * *"
         STORAGE_BLOB_LEASE_TIMEOUT: 60
@@ -58,7 +57,7 @@ spec:
           TEST_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-f3a03b49
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-ccb8ee07
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
