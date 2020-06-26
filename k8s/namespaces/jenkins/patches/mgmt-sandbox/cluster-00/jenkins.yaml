@@ -134,7 +134,6 @@ spec:
               - kubernetes:
                   name: agent-as-k8s-pod
                   skipTlsVerify: true
-                  credentialsId: jenkins-k8s-id
                   namespace: jenkins
                   jenkinsUrl: http://sandbox-build.platform.hmcts.net/
                   containerCapStr: 42
@@ -143,15 +142,6 @@ spec:
                   connectTimeout: 10
                   readTimeout: 20
                   templates:
-                    - name: jenkins-sa
-                      serviceAccount: jenkins
-                      instanceCap: 1234
-                      idleMinutes: 0
-                      label: "label"
-                      volumes:
-                        - hostPathVolume:
-                            mountPath: "mountPath"
-                            hostPath: "hostPath"
                     - name: "k8s-inbound-agent"
                       namespace: "jenkins"
                       label: "agent"
