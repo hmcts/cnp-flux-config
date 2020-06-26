@@ -128,6 +128,51 @@ spec:
                 nrOfScanThreads: 3
                 testResultCategories: "test-failures"
                 testResultParsingEnabled: true
+          kubernetes-agent: |
+           jenkins:
+            clouds:
+              - kubernetes:
+                  name: agent-as-k8s-pod
+                  skipTlsVerify: true
+                  credentialsId: jenkins-k8s-id
+                  namespace: jenkins
+                  jenkinsUrl: http://sandbox-build.platform.hmcts.net/
+                  containerCapStr: 42
+                  maxRequestsPerHostStr: 64
+                  retentionTimeout: 5
+                  connectTimeout: 10
+                  readTimeout: 20
+                  templates:
+                    - name: jenkins-sa
+                      serviceAccount: jenkins
+                      instanceCap: 1234
+                      idleMinutes: 0
+                      label: "label"
+                      volumes:
+                        - hostPathVolume:
+                            mountPath: "mountPath"
+                            hostPath: "hostPath"
+                    - name: "k8s-inbound-agent"
+                      namespace: "jenkins"
+                      label: "agent"
+                      nodeUsageMode: EXCLUSIVE
+                      containers:
+                        - name: "inbound-agent"
+                          image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4q68"
+                          alwaysPullImage: true
+                          workingDir: "/opt/jenkins"
+                          ttyEnabled: true
+                          resourceRequestCpu: "500m"
+                          resourceLimitCpu: "1000m"
+                          resourceRequestMemory: "1Gi"
+                          resourceLimitMemory: "2Gi"
+                      volumes:
+                        - emptyDirVolume:
+                            memory: false
+                            mountPath: "/tmp"
+                      idleMinutes: "1"
+                      activeDeadlineSeconds: "120"
+                      slaveConnectTimeout: "1000"   
           azure-vm-agent: |
             jenkins:
               clouds:
