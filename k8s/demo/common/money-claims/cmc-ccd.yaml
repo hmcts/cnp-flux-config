@@ -5,8 +5,8 @@ metadata:
   name: cmc-ccd
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -30,9 +30,9 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.2.0
+    version: 4.3.2
   values:
     tags:
       idam-pr: true
@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-021a3cb3
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-125bc392
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -70,13 +70,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1ba96c70
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1b97a222
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-78187ca9
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0cd9ec1a
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-4a29f36c
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-da38d576
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -93,30 +93,34 @@ spec:
             disabled: false
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+          IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
+          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-50bc4fb7
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-8be557a1
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-86315c01
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ee0dde47
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-19dd46c3
+        image: hmctspublic.azurecr.io/dm/store:prod-d1500396
 
     ccd-user-profile-importer:
-      image: hmctspublic.azurecr.io/ccd/user-profile-importer:db2r9a
+      image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
       - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
       - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.10
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.2
+      waitHosts: "cmc-ccd-ccd-definition-store:80"
+      waitHostsTimeout: 600
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx

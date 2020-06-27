@@ -11,16 +11,19 @@ spec:
   releaseName: xui-mo-webapp
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-mo-webapp
-    version: 0.1.35
+    version: 1.0.1
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-47b0ded7
+      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-b9288868
       ingressHost: manage-org.perftest.platform.hmcts.net
+      environment:
+        TEST_VAR: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

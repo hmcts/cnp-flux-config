@@ -5,8 +5,8 @@ metadata:
   name: istio-ccd-poc
   namespace: poc
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -24,18 +24,19 @@ metadata:
 
 spec:
   releaseName: istio-ccd-poc
-  timeout: 900
+  timeout: 2000
+  wait: false
   forceUpgrade: true
   rollback:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
     version: 4.2.0
   values:
     tags:
-      idam-pr: true
+      idam-pr: false
 
     ccd:
       s2s:
@@ -45,9 +46,9 @@ spec:
       apiGatewayWeb:
         enabled: true
       dmStore:
-        enabled: false
+        enabled: true
       blobstorage:
-        enabled: false
+        enabled: true
 
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -61,7 +62,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-istio-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-021a3cb3
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-125bc392
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -76,7 +77,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-78187ca9
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0cd9ec1a
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +86,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-4a29f36c
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-da38d576
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -96,37 +97,14 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-50bc4fb7
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-8be557a1
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-86315c01
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ee0dde47
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-19dd46c3
-
-    ccd-user-profile-importer:
-      image: hmctspublic.azurecr.io/ccd/user-profile-importer:db2r9a
-      users:
-      - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
-      - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
-      - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
-
-    ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.5.10
-      environment:
-        CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
-      definitionFilename: cmc-ccd.xlsx
-      userRoles:
-      - citizen
-      - caseworker-cmc
-      - caseworker-cmc-solicitor
-      - caseworker-cmc-systemupdate
-      - letter-holder
-      - caseworker-autotest1
-      - caseworker-cmc-anonymouscitizen
-      - caseworker-cmc-judge
-      - caseworker-cmc-legaladvisor
+        image: hmctspublic.azurecr.io/dm/store:prod-d1500396

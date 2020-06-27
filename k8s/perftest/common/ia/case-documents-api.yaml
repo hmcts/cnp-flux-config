@@ -11,17 +11,19 @@ spec:
   releaseName: ia-case-documents-api
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-documents-api
-    version: 0.0.9
+    version: 0.0.14
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-8976f5ce
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-06c01d58
       ingressHost: ia-case-documents-api-perftest.service.core-compute-perftest.internal
       environment:
+        DOCMOSIS_ENDPOINT: https://docmosis-testing.platform.hmcts.net
         RESTART_ME: "Update due to vault Change"
     global:
       environment: perftest

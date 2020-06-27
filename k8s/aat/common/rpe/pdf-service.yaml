@@ -23,33 +23,34 @@ spec:
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc-pdf-service
-    version: 0.4.0
+    name: rpe-pdf-service
+    version: 0.6.1
   values:
     java:
       replicas: 2
-      useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "cdd56761-038b-49e9-9fdf-b42b10e11ed5"
-      image: hmctspublic.azurecr.io/cmc/pdf-service:prod-96f1ad7a
+      image: hmctspublic.azurecr.io/rpe/pdf-service:prod-eb5c0115
       testsConfig:
-        memoryLimits: '3072Mi'
+        memoryLimits: "3072Mi"
         environment:
           TEST_URL: http://pdf-service-java
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_NOTIFY_SUCCESS: "false"
       smoketestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-96f1ad7a
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-eb5c0115
         schedule: "35 0/1 * * *"
       functionaltestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-96f1ad7a
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-eb5c0115
         schedule: "45 0/6 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-96f1ad7a
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-eb5c0115
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/cmc/pdf-service-test:prod-96f1ad7a
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-eb5c0115
     global:
       environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

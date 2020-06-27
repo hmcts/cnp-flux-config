@@ -5,16 +5,17 @@ metadata:
   name: fpl-case-service
   namespace: family-public-law
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: fpl-case-service
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.8.0
+    version: 1.11.3
   values:
     java:
       replicas: 2
@@ -22,17 +23,15 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 4d1483ce-676e-4647-b22e-5e30f72cfa7e
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-96ea41a3
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-e0c6167b
       ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
       environment:
+        DUMMY: "trigger release for AppInsight"
+        SCHEDULER_ENABLED: false
         DOCMOSIS_TORNADO_URL: https://docmosis-testing.platform.hmcts.net
         GATEWAY_URL: https://gateway-ccd.perftest.platform.hmcts.net
         SPRING_SECURITY_ENABLED: true
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.perftest.platform.hmcts.net/o/jwks
-        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/hmcts
-        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
-        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
       aadIdentityName: family-public-law
     global:
       environment: perftest

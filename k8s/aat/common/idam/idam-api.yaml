@@ -15,21 +15,23 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.2.4
+    version: 0.2.6
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:aat-12ef2ed0
-      replicas: 2
-      ingressHost: idam-api-aat2.aat.platform.hmcts.net
+      image: hmctspublic.azurecr.io/idam/api:aat-0502c6f9
+      replicas: 4
+      ingressHost: idam-api.aat.platform.hmcts.net
       aadIdentityName: idam
+      cpuLimits: 3000m
       environment:
         TESTING_SUPPORT_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
-        CACHING_USERS_MAXTHREADS: 3
+        CACHING_USERS_MAXTHREADS: 2
         CACHING_USERS_MAXHTTPCALLS: 1
-        STRATEGIC_ADMIN_URL: https://idam-web-admin-aat2.aat.platform.hmcts.net
-        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public-aat2.aat.platform.hmcts.net
-        STRATEGIC_API_URL: https://idam-api-aat2.aat.platform.hmcts.net
+        CACHING_USERS_RECACHEINTERVAL: "1800000"
+        STRATEGIC_ADMIN_URL: https://idam-web-admin.aat.platform.hmcts.net
+        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
+        STRATEGIC_API_URL: https://idam-api.aat.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-aat2.internal:8443
         IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-aat2.internal:8080/openam/oauth2/hmcts/connect/jwk_uri

@@ -6,7 +6,7 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
+    fluxcd.io/tag.nodejs: glob:aat-*
 spec:
   releaseName: xui-ao-webapp
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-ao-webapp
-    version: 0.1.54
+    version: 0.2.1
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/ao-webapp:prod-5a4826e7
+      image: hmctspublic.azurecr.io/xui/ao-webapp:aat-74d81270
       ingressHost: administer-orgs.aat.platform.hmcts.net
     global:
       environment: aat

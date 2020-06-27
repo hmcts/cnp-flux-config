@@ -1,39 +1,46 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-  - ../../admin/flux
-  - ../../admin/fluxcloud
-  - ../../admin/kube-slack
-  - ../../admin/keyvault-flexvol
-  - ../../admin/traefik
-  - ../../kured
-  - ../../neuvector
-  - ../../admin/flux-web
-  - ../../monitoring
+  - ../../namespaces/admin/flux
+  - ../../namespaces/admin/fluxcloud
+  - ../../namespaces/admin/kube-slack
+  - ../../namespaces/admin/keyvault-flexvol
+  - ../../namespaces/monitoring/node-problem-detector
+  - ../../namespaces/admin/traefik
+  - ../../namespaces/kube-system/nodelocaldns
+  - ../../namespaces/kured
+  - ../../namespaces/neuvector
+  - ../../namespaces/monitoring
+  - ../../namespaces/admin/env-injector
+  - ../../namespaces/monitoring/botkube
+  - ../../namespaces/knode-system
+  - ../../namespaces/admin/keda
 
 patchesStrategicMerge:
-  #flux patches
-  - ../../admin/flux/patches/prod/flux.yaml
-  - ../../admin/flux/patches/prod/cluster-00/flux.yaml
+  # flux patches
+  - ../../namespaces/admin/flux/patches/prod/flux.yaml
+  - ../../namespaces/admin/flux/patches/prod/cluster-00/flux.yaml
 
-  #fluxcloud patch
-  - ../../admin/fluxcloud/patches/prod/cluster-00/fluxcloud.yaml
+  # fluxcloud patch
+  - ../../namespaces/admin/fluxcloud/patches/prod/cluster-00/fluxcloud.yaml
 
-  #kube-slack patch
-  - ../../admin/kube-slack/patches/prod/cluster-00/kube-slack.yaml
+  # kube-slack patch
+  - ../../namespaces/admin/kube-slack/patches/prod/cluster-00/kube-slack.yaml
 
-  #traefik patch
-  - ../../admin/traefik/patches/prod/cluster-00/traefik.yaml
+  # traefik patch
+  - ../../namespaces/admin/traefik/patches/prod/cluster-00/traefik.yaml
 
-  #kured patch
-  - ../../kured/patches/prod/cluster-00/kured.yaml
+  # kured patch
+  - ../../namespaces/kured/patches/prod/cluster-00/kured.yaml
 
-  #neuvector patch
-  - ../../neuvector/patches/prod/neuvector.yaml
-  - ../../neuvector/patches/prod/cluster-00/neuvector.yaml
+  # neuvector patch
+  - ../../namespaces/neuvector/patches/prod/neuvector.yaml
+  - ../../namespaces/neuvector/patches/prod/cluster-00/neuvector.yaml
 
-  #flux-web patch
-  - ../../admin/flux-web/patches/prod/cluster-00/flux-web.yaml
+  # prom-operator patch
+  - ../../namespaces/monitoring/patches/prod/cluster-00/prom-operator.yaml
 
-  #prom-operator patch
-  - ../../monitoring/patches/prod/cluster-00/prom-operator.yaml
+  - ../../namespaces/admin/env-injector/patches/prod/cluster-00/env-injector.yaml
+
+  # botkube patch
+  - ../../namespaces/monitoring/botkube/patches/prod/cluster-00/botkube.yaml

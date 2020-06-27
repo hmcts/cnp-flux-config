@@ -11,6 +11,7 @@ spec:
   releaseName: probate-business-service
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-business-service
@@ -19,7 +20,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-69a3fde2
+      image: hmctspublic.azurecr.io/probate/business-service:prod-60e30d8f
+      environment:
+        SERVICES_NOTIFY_INVITEDATA_INVITELINK: https://www.apply-for-probate.service.gov.uk/executors/invitation/
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -15,15 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-dn
-    version: 1.2.0
+    version: 1.2.3
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-3a07d254
+      image: hmctspublic.azurecr.io/div/dn:prod-7341e8d0
+      ingressClass: traefik-no-proxy
       ingressHost: decree-nisi-aks.demo.platform.hmcts.net
       environment:
-        PUBLIC_HOSTNAME: https://decree-nisi-aks.demo.platform.hmcts.net # looks unused
+        PUBLIC_HOSTNAME: https://decree-nisi-aks.demo.platform.hmcts.net  #looks unused
         BASE_URL: https://decree-nisi-aks.demo.platform.hmcts.net
         RESPONDENT_FRONTEND_URL: https://respond-divorce-aks.demo.platform.hmcts.net
         PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.demo.platform.hmcts.net

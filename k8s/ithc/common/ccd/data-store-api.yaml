@@ -6,23 +6,24 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:pr-835-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccd-data-store-api
-    version: 1.5.1
+    version: 1.5.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-835-bc87739c
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-8be557a1
       environment:
         CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-ithc\.service\.core-compute-ithc\.internal(?::\d+)?)
-        IDAM_USER_URL: http://idam-api-ithc.service.core-compute-ithc.internal
+        IDAM_USER_URL: https://idam-api.ithc.platform.hmcts.net
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

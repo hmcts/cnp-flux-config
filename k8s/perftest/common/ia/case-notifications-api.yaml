@@ -11,15 +11,16 @@ spec:
   releaseName: ia-case-notifications-api
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-notifications-api
-    version: 0.0.11
+    version: 0.0.16
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-a2e6b41e
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-41f358bf
       ingressHost: ia-case-notifications-api-perftest.service.core-compute-perftest.internal
       environment:
         RESTART_ME: "Update due to vault Change"

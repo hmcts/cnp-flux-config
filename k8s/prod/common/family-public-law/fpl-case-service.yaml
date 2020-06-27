@@ -11,10 +11,11 @@ spec:
   releaseName: fpl-case-service
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.8.0
+    version: 1.11.4
   values:
     java:
       replicas: 2
@@ -22,17 +23,16 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 1dfa1cca-46c8-4f9a-a4d9-adea4a7f3ed6
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-96ea41a3
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-74bca05c
       ingressHost: fpl-case-service-prod.service.core-compute-prod.internal
       environment:
+        DUMMY: RELEASE_NOW
         FPL_LOCAL_AUTHORITY_CODES_FORBIDDEN_CASE_SUBMISSION: FPLA
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CCD_UI_BASE_URL: https://www.ccd.platform.hmcts.net
+        MANAGE_CASE_UI_BASE_URL: https://manage-case.platform.hmcts.net
         DOCMOSIS_TORNADO_URL: https://docmosis.platform.hmcts.net
         GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
-        FEATURE_TOGGLE_ROBOTICS_CASE_NUMBER_NOTIFICATION_ENABLED: true
-        FEATURE_TOGGLE_ROBOTICS_SUPPORT_API_ENABLED: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
       aadIdentityName: family-public-law
     global:

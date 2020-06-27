@@ -11,6 +11,7 @@ spec:
   releaseName: probate-submit-service
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-submit-service
@@ -18,15 +19,15 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-6352959b
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-c2a936fd
       environment:
         LOG_LEVEL: INFO
         AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.platform.hmcts.net"

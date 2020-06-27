@@ -11,19 +11,21 @@ spec:
   releaseName: ia-case-api
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-api
-    version: 0.0.6
+    version: 0.0.11
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-60b3333a
+      image: hmctspublic.azurecr.io/ia/case-api:prod-b6e3d9dd
       ingressHost: ia-case-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
-        RESTART_ME: "Update due to vault change"
+        IA_TIMED_EVENT_SERVICE_ENABLED: "true"
+        RESTART_ME: "Update due to vault Change"
       prometheus:
         enabled: true
     global:

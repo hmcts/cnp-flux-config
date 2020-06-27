@@ -11,20 +11,21 @@ spec:
   releaseName: xui-mo-webapp
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-mo-webapp
-    version: 0.1.35
+    version: 1.0.1
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-47b0ded7
+      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-b9288868
       ingressHost: manage-org.ithc.platform.hmcts.net
       environment:
-        IDAM_WEB_SERVICE: https://idam-web-public-aks.ithc.platform.hmcts.net
-        IDAM_API_SERVICE: http://idam-api-ithc.service.core-compute-ithc.internal
-        FEATURE_TERMS_AND_CONDITIONS_ENABLED: true
+        IDAM_WEB_SERVICE: https://idam-web-public.ithc.platform.hmcts.net
+        IDAM_API_SERVICE: https://idam-api.ithc.platform.hmcts.net
+        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

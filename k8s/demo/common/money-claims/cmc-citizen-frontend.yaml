@@ -1,0 +1,32 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: cmc-citizen-frontend
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: cmc-citizen-frontend
+    version: 3.3.7
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-ab4f5296
+      ingressHost: moneyclaims.demo.platform.hmcts.net
+      environment:
+        FEATURE_TESTING_SUPPORT: true
+        FEATURE_RETURN_ERROR_TO_USER: true
+        FEATURE_WEB_CHAT: true
+    global:
+      environment: demo
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

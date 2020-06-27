@@ -5,24 +5,25 @@ metadata:
   name: div-dn
   namespace: divorce
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-dn
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-dn
-    version: 1.2.0
+    version: 1.2.3
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-3a07d254
+      image: hmctspublic.azurecr.io/div/dn:prod-e273aaff
       ingressHost: www.decree-nisi.apply-divorce.service.gov.uk
       environment:
-        PUBLIC_HOSTNAME: https://www.decree-nisi.apply-divorce.service.gov.uk # looks unused
+        PUBLIC_HOSTNAME: https://www.decree-nisi.apply-divorce.service.gov.uk  # looks unused
         BASE_URL: https://www.decree-nisi.apply-divorce.service.gov.uk
         RESPONDENT_FRONTEND_URL: https://www.respond-divorce.service.gov.uk
         PETITIONER_FRONTEND_URL: https://www.apply-divorce.service.gov.uk

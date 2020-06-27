@@ -11,17 +11,18 @@ spec:
   releaseName: em-npa
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-npa
-    version: 0.1.11
+    version: 0.1.12
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      cpuRequests: '500m'
-      cpuLimits: '2500m'
-      image: hmctspublic.azurecr.io/em/npa:prod-5b7bc27f
+      cpuRequests: "500m"
+      cpuLimits: "2500m"
+      image: hmctspublic.azurecr.io/em/npa:prod-7c93f5e3
       ingressHost: em-npa-perftest.service.core-compute-perftest.internal
       environment:
         TRIGGER: "trigger1"

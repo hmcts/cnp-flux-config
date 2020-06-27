@@ -11,18 +11,19 @@ spec:
   releaseName: xui-terms-and-conditions
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-terms-and-conditions
-    version: 0.1.31
+    version: 0.2.1
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/terms-and-conditions:prod-362877c7
+      image: hmctspublic.azurecr.io/xui/terms-and-conditions:prod-a7d9c17b
       ingressHost: xui-terms-and-conditions-ithc.service.core-compute-ithc.internal
       environment:
-        IDAM_SERVICE_URL:  http://idam-api-ithc.service.core-compute-ithc.internal
+        IDAM_SERVICE_URL: https://idam-api.ithc.platform.hmcts.net
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

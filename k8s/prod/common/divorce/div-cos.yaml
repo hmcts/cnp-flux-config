@@ -11,27 +11,29 @@ spec:
   releaseName: div-cos
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-cos
-    version: 1.3.0
+    version: 1.3.3
   values:
     java:
       replicas: 2
-      memoryRequests: '768Mi'
-      cpuRequests: '1000m'
-      memoryLimits: '3072Mi'
-      cpuLimits: '2500m'
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/cos:prod-2b555db0
+      image: hmctspublic.azurecr.io/div/cos:prod-ce3d860f
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
         FEATURE_DN_REFUSAL: "true"
+        FEATURE_PAPER_UPDATE: false
         DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true

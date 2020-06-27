@@ -11,21 +11,22 @@ spec:
   releaseName: sscs-tya-notif
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-tya-notif
-    version: 0.0.11
+    version: 0.0.16
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-2dfda8b1
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-ec8db836
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
         IDAM_URL: https://idam-api.platform.hmcts.net
         EVIDENCE_SUBMISSION_INFO_LINK: https://www.track-benefit-appeal.service.gov.uk/evidence/appeal_id
-        SSCS_MANAGE_EMAILS_LINK: https://www.track-benefit-appeal.service.gov.uk/manage-email-notifications/mac
+        SSCS_MANAGE_EMAILS_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/manage-email-notifications/mac
         SSCS_TRACK_YOUR_APPEAL_LINK: https://www.track-benefit-appeal.service.gov.uk/trackyourappeal/appeal_id
         MYA_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/sign-in?tya=appeal_id
         MYA_EVIDENCE_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/support-evidence
@@ -37,6 +38,10 @@ spec:
         ONLINE_HEARING_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/
         PDF_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net/rs/render
         PDF_SERVICE_HEALTH_URL: https://docmosis.platform.hmcts.net/rs/status
+        JOB_SCHEDULER_DB_USERNAME: notification@sscs-tya-notif-postgres-v11-db-prod
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v11-db-prod.postgres.database.azure.com
+        TEST_PARAM: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

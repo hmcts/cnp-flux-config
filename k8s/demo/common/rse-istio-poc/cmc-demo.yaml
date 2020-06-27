@@ -6,7 +6,7 @@ metadata:
   namespace: poc
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/cmc-citizen-frontend: cmc-citizen-frontend.nodejs.image
     filter.fluxcd.io/cmc-citizen-frontend: glob:prod-*
     repository.fluxcd.io/cmc-claim-store: cmc-claim-store.java.image
@@ -24,19 +24,19 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 1.1.7
+    version: 2.0.3
   values:
     global:
       devMode: true
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
       cmcFrontendUrl: cmc-citizen-frontend-istio.demo.platform.hmcts.net
-      cmcBackendUrl: "http://cmc-demo-claim-store"
+      cmcBackendUrl: "http://cmc-demo-istio-claim-store"
       draftStoreUrl: "http://cmc-draft-store-java"
       s2sAuthUrl: "http://cmc-s2s-java"
       pdfServiceUrl: "http://pdf-service-java"
-      paymentUrl: "http://payment-api-demo.service.core-compute-demo.internal"
-      feesUrl: "http://fees-register-api-demo.service.core-compute-demo.internal"
+      paymentUrl: "http://cmc-pay-payment-api"
+      feesUrl: "http://cmc-pay-fee-register"
       sendLetterUrl: "http://rpe-send-letter-service-java"
       documentManagementUrl: "http://istio-ccd-poc-dm-store"
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
@@ -48,7 +48,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-istio-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-e70a08eb
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-c9257194
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -62,7 +62,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-istio-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-46f45891
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-ab4f5296
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
@@ -73,18 +73,3 @@ spec:
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
           FEATURE_INVERSION_OF_CONTROL: false
           FEATURE_MOCK_PAY: true
-      idam-pr:
-        api:
-          url: "https://idam-api.demo.platform.hmcts.net"
-        web_public:
-          url: "https://idam-web-public.demo.platform.hmcts.net"
-        service:
-          redirect_uri: "https://{{ .Values.global.cmcFrontendUrl }}/receiver"
-      rpe-feature-toggle-api:
-        enabled: true
-        importer:
-          apiUrl: "http://cmc-demo-rpe-feature-toggle-api/api/ff4j/store/features/"
-        java:
-          releaseNameOverride: "cmc-demo-rpe-feature-toggle-api"
-          environment:
-            FEATURES_DB_HOST: "{{ .Release.Name }}-postgresql"

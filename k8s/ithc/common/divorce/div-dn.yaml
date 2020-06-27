@@ -11,15 +11,16 @@ spec:
   releaseName: div-dn
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-dn
-    version: 1.2.0
+    version: 1.2.3
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-3a07d254
+      image: hmctspublic.azurecr.io/div/dn:prod-7341e8d0
       ingressHost: decree-nisi-aks.ithc.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://decree-nisi-aks.ithc.platform.hmcts.net

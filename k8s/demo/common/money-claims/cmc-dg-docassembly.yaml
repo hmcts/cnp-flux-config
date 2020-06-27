@@ -14,10 +14,10 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 1.0.4
+    version: 1.0.7
   values:
     java:
-      image: hmctspublic.azurecr.io/dg/docassembly:prod-2c7a2be5
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-24a0f937
       secrets:
         DOCMOSIS_ACCESS_KEY:
           secretRef: docmosis-secret
@@ -26,7 +26,6 @@ spec:
           secretRef: docmosis-secret
           key: templatesAuth
       environment:
-        IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
         S2S_BASE_URI: http://cmc-s2s-java
         IDAM_WEBSHOW_WHITELIST: https://em-show-demo.service.core-compute-demo.internal/oauth2/callback
         DM_STORE_APP_URL: "http://cmc-ccd-dm-store"
@@ -34,3 +33,4 @@ spec:
 
     global:
       devMode: true
+      environment: demo

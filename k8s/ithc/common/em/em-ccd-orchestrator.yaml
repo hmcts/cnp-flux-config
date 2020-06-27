@@ -11,24 +11,21 @@ spec:
   releaseName: em-ccd-orchestrator
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccdorc
-    version: 0.1.16
+    version: 0.1.19
   values:
     java:
       replicas: 2
-      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
+      applicationInsightsInstrumentKey: "85dcdcdd-f333-47b1-9e2b-bd8fea0b00ce"
       useInterpodAntiAffinity: true
-      keyVaults:
-        em-ccdorc:
-          resourceGroup: em-ccdorc
-          secrets:
-          - AppInsightsInstrumentationKey
-          - microservicekey-em-ccd-orchestrator
-          - notification-api-key
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-bf925841
-      ingressHost: em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-15514732
+      environment:
+        CALLBACK_DOMAIN: em-ccdorc-ithc.service.core-compute-ithc.internal
+        VAR_TA: trigger5
+      ingressHost: em-ccdorc-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

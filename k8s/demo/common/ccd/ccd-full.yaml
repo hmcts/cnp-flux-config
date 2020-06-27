@@ -5,8 +5,8 @@ metadata:
   name: ccd-full
   namespace: ccd
   annotations:
-    flux.weave.works/automated: 'true'
-    flux.weave.works/tag.java: 'glob:prod-*'
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
     repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
@@ -28,9 +28,9 @@ spec:
     enable: true
     force: true
   chart:
-    repository: 'https://hmctspublic.azurecr.io/helm/v1/repo/'
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.1.0
+    version: 4.2.4
   values:
     tags:
       idam-pr: true
@@ -60,10 +60,12 @@ spec:
       ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
+      environment: demo
+      dummy: true
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-021a3cb3
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-125bc392
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -72,22 +74,36 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1ba96c70
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1b97a222
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-78187ca9
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0cd9ec1a
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          PROXY_CASE_ACTIVITY: http://ccd-full-ccd-case-activity-api
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
 
+    ccd-case-activity-api:
+      nodejs:
+        ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          REDIS_HOST: "{{ .Release.Name }}-redis-master"
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: fake-password
+          REDIS_SSL_ENABLED: ""
+        keyVaults:
+      redis:
+        enabled: true
+
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-4a29f36c
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-da38d576
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,19 +114,21 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-50bc4fb7
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-8be557a1
+        environment:
+          CCD_DM_DOMAIN: https?://.*dm-store.*
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-86315c01
-
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ee0dde47
     ccd-user-profile-importer:
       users:
       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
     ccd-definition-importer:
+      waitHosts: "ccd-full-ccd-definition-store:80"
+      waitHostsTimeout: 600
       definitions:
-      - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+      - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
       userRoles:
       - caseworker-autotest1
-

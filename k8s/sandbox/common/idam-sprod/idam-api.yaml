@@ -5,7 +5,7 @@ metadata:
   name: idam-api
   namespace: idam-sprod
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:preview-*
 spec:
   releaseName: idam-api
@@ -15,18 +15,22 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.2.4
+    version: 0.2.6
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:preview
-      ingressHost: idam-api-sprod-sbox.service.core-compute-sandbox.internal
+      image: hmctspublic.azurecr.io/idam/api:pr-660
+      imagePullPolicy: Always
+      ingressHost: idam-api-sprod.sandbox.platform.hmcts.net
       replicas: 3
       aadIdentityName: idam-sprod
       environment:
-        STRATEGIC_ADMIN_URL: http://idam-web-admin-sprod-sbox.service.core-compute-sandbox.internal
-        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public-sprod-aks.sandbox.platform.hmcts.net
-        STRATEGIC_API_URL: http://idam-api-sprod-sbox.service.core-compute-sandbox.internal
         TESTING_SUPPORT_ENABLED: true
+        ENDPOINTS_INFO_ENABLED: true
+        CACHING_USERS_MAXTHREADS: 3
+        CACHING_USERS_MAXHTTPCALLS: 1
+        STRATEGIC_ADMIN_URL: https://idam-web-admin-sprod.sandbox.platform.hmcts.net
+        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public-sprod.sandbox.platform.hmcts.net
+        STRATEGIC_API_URL: https://idam-api-sprod.sandbox.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-sprod.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-sprod.internal:8443
         IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-sprod.internal:8080/openam/oauth2/hmcts/connect/jwk_uri

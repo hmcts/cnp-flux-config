@@ -11,16 +11,17 @@ spec:
   releaseName: rpe-service-auth-provider
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rpe-service-auth-provider
-    version: 0.2.9
+    version: 0.3.4
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "86016f43-d42f-4c0e-b348-c0206dbd60cf"
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-c74e6dc7
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-e4ff2426
     global:
       environment: prod
       subscriptionId: "8999dec3-0104-4a27-94ee-6588559729d1"

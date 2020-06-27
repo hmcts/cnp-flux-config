@@ -11,22 +11,26 @@ spec:
   releaseName: div-pfe
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-pfe
-    version: 1.1.3
+    version: 1.1.9
   values:
     nodejs:
       replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-a7dc8b53
+      image: hmctspublic.azurecr.io/div/pfe:prod-5d06ef68
       ingressHost: www.apply-divorce.service.gov.uk
       environment:
         PUBLIC_HOSTNAME: https://www.apply-divorce.service.gov.uk
         DECREE_NISI_FRONTEND_URL: https://www.decree-nisi.apply-divorce.service.gov.uk
         IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        PAYMENT_SERVICE_URL: https://payment.platform.hmcts.net
         GOOGLE_ANALYTICS_ID: UA-93824767-3
         FEATURE_WEBCHAT: "true"
         WEBCHAT_CHAT_ID: 10308349715d949f6bd7a989.00577994

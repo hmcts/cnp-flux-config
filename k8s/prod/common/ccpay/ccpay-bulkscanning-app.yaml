@@ -11,15 +11,16 @@ spec:
   releaseName: ccpay-bulkscanning-api
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccpay-bulkscanning-api
-    version: 0.0.7
+    version: 1.0.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-3fc95f1f
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-bd68cd0d
       environment:
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
     global:

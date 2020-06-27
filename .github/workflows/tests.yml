@@ -1,5 +1,6 @@
 name: Flux sanity checks
 
+# yamllint disable-line
 on:
   pull_request:
     branches:
@@ -7,12 +8,16 @@ on:
   push:
     branches:
       - master
-      - refs/tags/*
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Tests
-      run: ./tests/run.sh --verbose
+      - uses: actions/checkout@v1
+      - name: Tests
+        run: ./tests/run.sh
+      - name: Kustomize Tests
+        run: ./tests/test-kustomize.sh
+      - name: Install pre-reqs
+        run: 'sudo apt-get install -y yamllint'
+      - name: Lint Tests
+        run: ./tests/lint-yaml.sh

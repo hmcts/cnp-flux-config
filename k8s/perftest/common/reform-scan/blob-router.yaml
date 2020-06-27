@@ -11,21 +11,22 @@ spec:
   releaseName: reform-scan-blob-router
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.40
+    version: 0.1.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-a49ba3b6
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-0a543378
       environment:
         # settings should be as prod-like as possible
         HANDLE_REJECTED_FILES_CRON: "0 0 7 * * *"
         REJECT_DUPLICATES_CRON: "0 0 6 * * *"
         TASK_SCAN_DELAY: 300000
-        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 30
+        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: true
     global:
       environment: perftest

@@ -5,32 +5,26 @@ metadata:
   name: em-ccd-orchestrator
   namespace: em
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: em-ccd-orchestrator
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-ccdorc
-    version: 0.1.16
+    version: 0.1.19
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      keyVaults:
-        em-ccdorc:
-          resourceGroup: em-ccdorc
-          secrets:
-          - AppInsightsInstrumentationKey
-          - microservicekey-em-ccd-orchestrator
-          - notification-api-key
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-bf925841
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-30b60b01
       ingressHost: em-ccd-orchestrator-prod.service.core-compute-prod.internal
       environment:
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
-        OPEN_ID_API_BASE_URI: https://idam-api.platform.hmcts.net/o
+        OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
         VAR_TA: trigger4
     global:
       environment: prod

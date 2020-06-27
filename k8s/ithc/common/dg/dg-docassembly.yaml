@@ -11,16 +11,17 @@ spec:
   releaseName: dg-docassembly
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 1.0.6
+    version: 1.0.7
   values:
     java:
       replicas: 2
-#      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
+      #      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dg/docassembly:prod-2c7a2be5
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-24a0f937
       environment:
         ENABLE_FORM_DEFINITION_ENDPOINT: "false"
         ENABLE_TEMPLATE_RENDITION_ENDPOINT: "true"

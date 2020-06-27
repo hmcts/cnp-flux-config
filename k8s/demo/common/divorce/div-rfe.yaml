@@ -15,14 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-rfe
-    version: 1.1.2
+    version: 1.1.6
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/rfe:prod-043d8cdb
+      image: hmctspublic.azurecr.io/div/rfe:prod-9ba1cc2e
+      ingressClass: traefik-no-proxy
       ingressHost: respond-divorce-aks.demo.platform.hmcts.net
       environment:
+        PUBLIC_HOSTNAME: https://petitioner-frontend-aks.demo.platform.hmcts.net
         GOOGLE_ANALYTICS_ID: "UA-93824767-2"
         DECREE_NISI_FRONTEND_URL: "https://decree-nisi-aks.demo.platform.hmcts.net"
         DECREE_ABSOLUTE_FRONTEND_URL: https://decree-absolute-aks.demo.platform.hmcts.net

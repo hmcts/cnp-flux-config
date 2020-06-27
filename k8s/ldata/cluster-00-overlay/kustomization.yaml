@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../namespaces/admin/flux
+  - ../../namespaces/admin/fluxcloud
+  - ../../namespaces/admin/kube-slack
+  - ../../namespaces/admin/keyvault-flexvol
+  - ../../namespaces/admin/traefik
+  - ../../namespaces/kube-system/nodelocaldns
+  - ../../namespaces/kured
+  - ../../namespaces/neuvector
+  - ../../namespaces/monitoring
+  - ../../namespaces/admin/env-injector
+  - ../../namespaces/monitoring/botkube
+  - ../../namespaces/knode-system
+  - ../../namespaces/admin/keda
+
+patchesStrategicMerge:
+  # flux patches
+  - ../../namespaces/admin/flux/patches/ldata/flux.yaml
+  - ../../namespaces/admin/flux/patches/ldata/cluster-00/flux.yaml
+
+  # fluxcloud patch
+  - ../../namespaces/admin/fluxcloud/patches/ldata/cluster-00/fluxcloud.yaml
+
+  # kube-slack patch
+  - ../../namespaces/admin/kube-slack/patches/ldata/cluster-00/kube-slack.yaml
+
+  # traefik patch
+  - ../../namespaces/admin/traefik/patches/ldata/cluster-00/traefik.yaml
+
+  # kured patch
+  - ../../namespaces/kured/patches/ldata/cluster-00/kured.yaml
+
+  # neuvector patch
+  - ../../namespaces/neuvector/patches/ldata/neuvector.yaml
+  - ../../namespaces/neuvector/patches/ldata/cluster-00/neuvector.yaml

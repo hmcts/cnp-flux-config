@@ -1,31 +1,36 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-  - ../../admin/flux
-  - ../../admin/fluxcloud
-  - ../../admin/kube-slack
-  - ../../admin/keyvault-flexvol
-  - ../../admin/traefik
-  - ../../kured
-  - ../../osba
+  - ../../namespaces/admin/flux
+  - ../../namespaces/admin/fluxcloud
+  - ../../namespaces/admin/kube-slack
+  - ../../namespaces/admin/keyvault-flexvol
+  - ../../namespaces/admin/traefik
+  - ../../namespaces/kube-system/nodelocaldns
+  - ../../namespaces/kured
+  - ../../namespaces/osba
+  - ../../namespaces/admin/env-injector
+  - ../../namespaces/knode-system
 
 patchesStrategicMerge:
   #flux patches
-  - ../../admin/flux/patches/demo/flux.yaml
-  - ../../admin/flux/patches/demo/cluster-01/flux.yaml
+  - ../../namespaces/admin/flux/patches/demo/flux.yaml
+  - ../../namespaces/admin/flux/patches/demo/cluster-01/flux.yaml
 
   #fluxcloud patch
-  - ../../admin/fluxcloud/patches/demo/cluster-01/fluxcloud.yaml
+  - ../../namespaces/admin/fluxcloud/patches/demo/cluster-01/fluxcloud.yaml
 
   #kube-slack patch
-  - ../../admin/kube-slack/patches/demo/cluster-01/kube-slack.yaml
+  - ../../namespaces/admin/kube-slack/patches/demo/cluster-01/kube-slack.yaml
 
   #traefik patches
-  - ../../admin/traefik/patches/demo/traefik.yaml
-  - ../../admin/traefik/patches/demo/cluster-01/traefik.yaml
+  - ../../namespaces/admin/traefik/patches/demo/traefik.yaml
+  - ../../namespaces/admin/traefik/patches/demo/cluster-01/traefik.yaml
 
   #kured patch
-  - ../../kured/patches/demo/cluster-01/kured.yaml
+  - ../../namespaces/kured/patches/demo/cluster-01/kured.yaml
 
   #osba patch
-  - ../../osba/patches/demo/osba.yaml
+  - ../../namespaces/osba/patches/demo/osba.yaml
+
+  - ../../namespaces/admin/env-injector/patches/demo/cluster-01/env-injector.yaml

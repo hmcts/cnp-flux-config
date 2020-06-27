@@ -14,10 +14,11 @@ spec:
   releaseName: dm-store
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.14
+    version: 2.0.15
   values:
     java:
       replicas: 2
@@ -25,17 +26,17 @@ spec:
       environment:
         ATRIGGER: rebuild3
         ENABLE_TTL: false
-      image: hmctspublic.azurecr.io/dm/store:prod-19dd46c3
+      image: hmctspublic.azurecr.io/dm/store:prod-d1500396
       ingressHost: dm-store-ithc.service.core-compute-ithc.internal
       testsConfig:
-        memoryLimits: '3072Mi'
+        memoryLimits: "3072Mi"
         environment:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
         enabled: false
-        image: hmctspublic.azurecr.io/dm/store-test:prod-19dd46c3
+        image: hmctspublic.azurecr.io/dm/store-test:prod-d1500396
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

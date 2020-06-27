@@ -11,6 +11,7 @@ spec:
   releaseName: div-hm
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-hm
@@ -18,16 +19,16 @@ spec:
   values:
     nodejs:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/hm:prod-53e0c750
+      image: hmctspublic.azurecr.io/div/hm:prod-6bdc2f48
       environment:
         DEPLOYMENT_ENV: "prod"
         MONITOR_ENVIRONMENT: "prod"

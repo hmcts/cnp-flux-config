@@ -15,21 +15,20 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: xui-webapp
-    version: 0.1.31
+    version: 0.2.1
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-fe3bbd29
+      image: hmctspublic.azurecr.io/xui/webapp:prod-1ce197af
       ingressHost: manage-case.platform.hmcts.net
       environment:
-        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
-        NOW: true
-        FEATURE_SECURE_COOKIE_ENABLED: false
         HEALTH_CCD_COMPONENT_API: https://gateway.ccd.platform.hmcts.net/health
         SERVICES_CCD_COMPONENT_API: https://gateway.ccd.platform.hmcts.net
         SERVICES_IDAM_API_URL: https://idam-api.platform.hmcts.net
         SERVICES_IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk
+        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
+        DUMMY_VAR: false
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

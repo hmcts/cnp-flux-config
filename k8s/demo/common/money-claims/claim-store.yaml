@@ -1,0 +1,36 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-claim-store
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: cmc-claim-store
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: cmc-claim-store
+    version: 4.1.9
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-c9257194
+      environment:
+        CLAIM_STORE_TEST_SUPPORT_ENABLED: true
+        FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: false
+        FEATURE_TOGGLES_CTSC_ENABLED: true
+        MILO_CSV_SCHEDULE: "0 0 8 * * ?"
+        CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
+        SCHEDULE_STATE_TRANSITION_WAITING_TRANSFER: ""
+        REFORM_ENVIRONMENT: demo
+    global:
+      environment: demo
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

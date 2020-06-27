@@ -11,23 +11,24 @@ spec:
   releaseName: finrem-ns
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: finrem-ns
-    version: 0.0.4
+    version: 0.0.6
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eb08d1ca-cf60-4744-854d-b0e6a94b99e2"
-      image: hmctspublic.azurecr.io/finrem/ns:prod-d0cb81b1
+      image: hmctspublic.azurecr.io/finrem/ns:prod-0134d7f2
       environment:
         SWAGGER_ENABLED: false
     global:

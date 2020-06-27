@@ -11,6 +11,7 @@ spec:
   releaseName: div-dgs
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-dgs
@@ -18,16 +19,16 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "a4744b45-c8de-4b9d-aaad-f99dc84bec93"
-      image: hmctspublic.azurecr.io/div/dgs:prod-0411af6c
+      image: hmctspublic.azurecr.io/div/dgs:prod-c6cbef4e
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"

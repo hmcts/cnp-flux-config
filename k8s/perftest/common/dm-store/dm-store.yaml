@@ -5,23 +5,24 @@ metadata:
   name: dm-store
   namespace: dm-store
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: dm-store
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.0.14
+    version: 2.0.15
   values:
     java:
       replicas: 2
-      memoryLimits: '4096Mi'
-      cpuLimits: '2000m'
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-19dd46c3
+      image: hmctspublic.azurecr.io/dm/store:prod-09242790
       ingressHost: dm-store-perftest.service.core-compute-perftest.internal
       environment:
         ENABLE_TTL: false

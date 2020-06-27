@@ -9,27 +9,27 @@ kind: ClusterRole
 metadata:
   name: dynatrace-monitoring-cluster
 rules:
-- apiGroups:
-  - ""
-  - batch
-  - apps
-  - apps.openshift.io
-  resources:
-  - nodes
-  - pods
-  - namespaces
-  - deployments
-  - replicasets
-  - deploymentconfigs
-  - replicationcontrollers
-  - jobs
-  - cronjobs
-  - statefulsets
-  - daemonsets
-  - events
-  verbs:
-  - list
-  - watch
+  - apiGroups:
+      - ""
+      - batch
+      - apps
+    resources:
+      - nodes
+      - pods
+      - namespaces
+      - deployments
+      - replicasets
+      - deploymentconfigs
+      - replicationcontrollers
+      - jobs
+      - cronjobs
+      - statefulsets
+      - daemonsets
+      - events
+    verbs:
+      - list
+      - watch
+      - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -40,6 +40,6 @@ roleRef:
   kind: ClusterRole
   name: dynatrace-monitoring-cluster
 subjects:
-- kind: ServiceAccount
-  name: dynatrace-monitoring
-  namespace: monitoring
+  - kind: ServiceAccount
+    name: dynatrace-monitoring
+    namespace: monitoring

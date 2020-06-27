@@ -11,16 +11,17 @@ spec:
   releaseName: rpe-service-auth-provider
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rpe-service-auth-provider
-    version: 0.2.9
+    version: 0.3.4
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "b067da96-6355-4322-aa44-5b88f73273de"
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-c74e6dc7
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-e4ff2426
       JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0
         -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar
         -Dfile.encoding=UTF-8 -Djava.security.egd=file:/dev/./urandom

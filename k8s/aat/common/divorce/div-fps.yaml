@@ -19,19 +19,21 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: '512Mi'
-      cpuRequests: '250m'
-      memoryLimits: '2048Mi'
-      cpuLimits: '1500m'
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "63c30ef9-a27b-4d38-8afc-4c180fb6ac33"
-      image: hmctspublic.azurecr.io/div/fps:prod-a02792ad
+      image: hmctspublic.azurecr.io/div/fps:prod-95c4f476
       aadIdentityName: divorce
       prometheus:
         enabled: true
+      environment:
+        GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD: "GeneralAppWithoutNotice"
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

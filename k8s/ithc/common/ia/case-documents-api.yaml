@@ -11,18 +11,21 @@ spec:
   releaseName: ia-case-documents-api
   rollback:
     enable: true
+    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-documents-api
-    version: 0.0.9
+    version: 0.0.14
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-8976f5ce
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-06c01d58
       ingressHost: ia-case-documents-api-ithc.service.core-compute-ithc.internal
       environment:
-        RESTART_ME: "Update due to vault change"
+        DOCMOSIS_ENDPOINT: https://docmosis-ithc.platform.hmcts.net
+        EM_BUNDLER_URL: "http://em-ccdorc-ithc.service.core-compute-ithc.internal"
+        RESTART_ME: "Update due to vault Change"
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

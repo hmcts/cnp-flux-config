@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  values:
+    loadBalancerIP: 10.10.41.250
+    dashboard:
+      domain: traefik00.service.core-compute-perftest.internal
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-perftest-rg

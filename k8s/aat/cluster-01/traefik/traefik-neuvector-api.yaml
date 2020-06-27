@@ -21,6 +21,7 @@ spec:
       ingressEndpoint:
         useDefaultPublishedService: true
     dashboard:
+      enabled: true
       domain: traefik01-neuvector-api.service.core-compute-aat.internal
     resources:
       requests:
@@ -34,12 +35,10 @@ spec:
         service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     rbac:
       enabled: true
-    dashboard:
-      enabled: true
     ssl:
       enabled: true
       tlsMinVersion: VersionTLS12
-      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
+      cipherSuites: ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"]
       enforced: true
       permanentRedirect: true
     startupArguments:
@@ -54,10 +53,10 @@ spec:
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-                - traefik-neuvector-api
-          topologyKey: "kubernetes.io/hostname"
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - traefik-neuvector-api
+            topologyKey: "kubernetes.io/hostname"
