@@ -22,15 +22,21 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-blob-router
-    version: 0.0.44
+    version: 0.1.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-7136caaf
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-cce6f8ce
       environment:
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: "true"
+        SCHEDULING_TASK_DELETE_DISPATCHED_FILES_ENABLED: "false"
+        SCHEDULING_TASK_HANDLE_REJECTED_FILES_ENABLED: "false"
+        SCHEDULING_TASK_REJECT_DUPLICATES_ENABLED: "false"
+        SCHEDULING_TASK_DELETE_REJECTED_FILES_ENABLED: "false"
+        SCHEDULING_TASK_CHECK_NEW_ENVELOPES_ENABLED: "false"
+        SCHEDULING_TASK_SCAN_ENABLED: "false"
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -59,11 +65,11 @@ spec:
           API_GATEWAY_URL: "https://core-api-mgmt-aat.azure-api.net/reform-scan"
           TEST_USE_PROXY_FOR_SOURCE_STORAGE: "true"
       smoketests:
-        enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7136caaf
+        enabled: false
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-cce6f8ce
       functionaltests:
-        enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7136caaf
+        enabled: false
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-cce6f8ce
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

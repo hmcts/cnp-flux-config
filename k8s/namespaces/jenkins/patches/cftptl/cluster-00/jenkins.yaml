@@ -48,11 +48,11 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cnp-aks-cluster
+                        value : preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cnp-aks-rg
+                        value: preview-00-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
-                        value: DCD-CNP-DEV
+                        value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-STG
                       - key : AAT_AKS_KEY_VAULT
@@ -130,7 +130,7 @@ spec:
                     title: CDM Nightly Builds
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-backend|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
+                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -230,6 +230,12 @@ spec:
                     name: UCMC
                     recurse: true
                     title: UCMC Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*HMI.*\/.+\/master
+                    name: HMI
+                    recurse: true
+                    title: HMI
           authentication: |
             jenkins:
               securityRealm:
@@ -253,28 +259,6 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftptl-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
-          build-failure-analyzer: |
-            unclassified:
-              buildFailureAnalyzer:
-                doNotAnalyzeAbortedJob: false
-                gerritTriggerEnabled: true
-                globalEnabled: true
-                graphsEnabled: true
-                knowledgeBase:
-                  mongoDB:
-                    dbName: "build-failure-analyzer-ptl"
-                    enableStatistics: true
-                    host: "build-failure-analyzer-ptl.documents.azure.com"
-                    password: "${bfa-pri-key}"
-                    port: 10255
-                    successfulLogging: false
-                    userName: "build-failure-analyzer-ptl"
-                    tls: true
-                maxLogSize: 0
-                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
-                nrOfScanThreads: 3
-                testResultCategories: "test-failures"
-                testResultParsingEnabled: true
           azure-vm-agent: |
             jenkins:
               clouds:

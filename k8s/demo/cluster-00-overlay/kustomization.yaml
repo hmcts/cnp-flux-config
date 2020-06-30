@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
+  - ../../namespaces/admin/external-dns
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/kube-slack
@@ -10,6 +11,7 @@ bases:
   - ../../namespaces/kured
   - ../../namespaces/monitoring
   - ../../namespaces/monitoring/node-problem-detector
+  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/osba
   - ../../namespaces/admin/env-injector
   - ../../namespaces/knode-system
@@ -38,3 +40,4 @@ patchesStrategicMerge:
 
   - ../../namespaces/admin/env-injector/patches/demo/cluster-00/env-injector.yaml
   - ../../namespaces/monitoring/patches/demo/cluster-00/prom-operator.yaml
+  - ../../namespaces/admin/external-dns/patches/demo/cluster-00/external-dns-deployment.yaml

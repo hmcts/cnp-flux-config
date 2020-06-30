@@ -7,16 +7,20 @@ bases:
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
   - ../../namespaces/monitoring/node-problem-detector
-  - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/knode-system
+  - ../../namespaces/kube-system/nodelocaldns
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/sandbox/flux.yaml
   - ../../namespaces/admin/flux/patches/sandbox/cluster-01/flux.yaml
+
+  #Helm operator patches
+  - ../../namespaces/admin/flux/patches/sandbox/cluster-01/flux-helm-operator.yaml
 
   #fluxcloud patches
   - ../../namespaces/admin/fluxcloud/patches/sandbox/cluster-01/fluxcloud.yaml
@@ -36,6 +40,4 @@ patchesStrategicMerge:
 
   - ../../namespaces/admin/env-injector/patches/sandbox/cluster-01/env-injector.yaml
 
-  #knode patches
-  - ../../namespaces/knode-system/patches/sandbox/cluster-01/configmap.yaml
-  - ../../namespaces/knode-system/patches/sandbox/cluster-01/daemonset.yaml
+  - ../../namespaces/kube-system/nodelocaldns/patches/sandbox/cluster-01/nodelocaldns.yaml
