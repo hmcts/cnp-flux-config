@@ -31,6 +31,12 @@ spec:
       environment:
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: "true"
+        SCHEDULING_TASK_DELETE_DISPATCHED_FILES_ENABLED: "false"
+        SCHEDULING_TASK_HANDLE_REJECTED_FILES_ENABLED: "false"
+        SCHEDULING_TASK_REJECT_DUPLICATES_ENABLED: "false"
+        SCHEDULING_TASK_DELETE_REJECTED_FILES_ENABLED: "false"
+        SCHEDULING_TASK_CHECK_NEW_ENVELOPES_ENABLED: "false"
+        SCHEDULING_TASK_SCAN_ENABLED: "false"
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -59,10 +65,10 @@ spec:
           API_GATEWAY_URL: "https://core-api-mgmt-aat.azure-api.net/reform-scan"
           TEST_USE_PROXY_FOR_SOURCE_STORAGE: "true"
       smoketests:
-        enabled: true
+        enabled: false
         image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-cce6f8ce
       functionaltests:
-        enabled: true
+        enabled: false
         image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-cce6f8ce
     global:
       environment: aat
