@@ -25,11 +25,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-93be1d85
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-aab061e1
       environment:
         NOTIFICATIONS_CONSUME_TASK_DELAY_IN_MS: "600000"
         PENDING_NOTIFICATIONS_TASK_DELAY_IN_MS: "1800000"
-        PENDING_NOTIFICATIONS_TASK_ENABLED: false
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -39,7 +38,7 @@ spec:
           SLACK_NOTIFY_SUCCESS: false
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:prod-93be1d85
+        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:prod-aab061e1
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

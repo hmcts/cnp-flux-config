@@ -20,10 +20,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-5f323acb
+      image: hmctspublic.azurecr.io/ia/case-api:prod-b6e3d9dd
       ingressHost: ia-case-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
+        IA_TIMED_EVENT_SERVICE_ENABLED: "true"
         RESTART_ME: "Update due to vault Change"
       prometheus:
         enabled: true

@@ -24,7 +24,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 2.0.1
+    version: 2.0.3
   values:
     global:
       devMode: true
@@ -48,7 +48,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-istio-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-73908639
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-c9257194
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -62,7 +62,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-istio-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-c04d152b
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-ab4f5296
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
