@@ -132,19 +132,21 @@ spec:
            jenkins:
             clouds:
               - kubernetes:
-                  name: agent-as-k8s-pod
+                  name: kubernetes
                   skipTlsVerify: true
                   namespace: jenkins
-                  jenkinsUrl: http://sandbox-build.platform.hmcts.net/
-                  containerCapStr: 42
-                  maxRequestsPerHostStr: 64
-                  retentionTimeout: 5
-                  connectTimeout: 10
-                  readTimeout: 20
+                  jenkinsUrl: http://jenkins:8080
+                  jenkinsTunnel: jenkins-agent:50000
+                  connectTimeout: 5
+                  readTimeout: 15
+                  podLabels:
+                    cloud: kubernetes
+                    aadpodidbinding: jenkins
+                  addMasterProxyEnvVars: true
                   templates:
                     - name: "k8s-inbound-agent"
                       namespace: "jenkins"
-                      label: "k8s-agent"
+                      label: "kubernetes"
                       nodeUsageMode: EXCLUSIVE
                       containers:
                         - name: "inbound-agent"
@@ -160,6 +162,7 @@ spec:
                         - emptyDirVolume:
                             memory: false
                             mountPath: "/tmp"
+                      serviceAccount: jenkins
                       idleMinutes: "1"
                       activeDeadlineSeconds: "120"
                       slaveConnectTimeout: "1000"
