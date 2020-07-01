@@ -20,8 +20,6 @@ spec:
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
-
-      imageTag: "db4pw4"
       ingress:
         hostName: sandbox-build.platform.hmcts.net
       containerEnv:
@@ -107,28 +105,6 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftsbox-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
-          build-failure-analyzer: |
-            unclassified:
-              buildFailureAnalyzer:
-                doNotAnalyzeAbortedJob: false
-                gerritTriggerEnabled: true
-                globalEnabled: true
-                graphsEnabled: true
-                knowledgeBase:
-                  mongoDB:
-                    dbName: "build-failure-analyzer-sbox"
-                    enableStatistics: true
-                    host: "build-failure-analyzer-ptl.documents.azure.com"
-                    password: "${bfa-jenkins-pass}"
-                    port: 10255
-                    successfulLogging: false
-                    userName: "build-failure-analyzer-ptl"
-                    tls: true
-                maxLogSize: 0
-                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
-                nrOfScanThreads: 3
-                testResultCategories: "test-failures"
-                testResultParsingEnabled: true
           azure-vm-agent: |
             jenkins:
               clouds:
