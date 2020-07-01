@@ -6565,7 +6565,8 @@ subjects:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: null
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -6573,6 +6574,7 @@ metadata:
   name: istio-ingressgateway
   namespace: istio-system
 spec:
+  loadBalancerIP: 10.10.1.240
   ports:
     - name: status-port
       port: 15021
