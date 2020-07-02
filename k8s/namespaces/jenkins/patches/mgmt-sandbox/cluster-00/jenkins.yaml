@@ -133,20 +133,22 @@ spec:
             clouds:
               - kubernetes:
                   name: kubernetes
-                  skipTlsVerify: true
                   namespace: jenkins
                   jenkinsUrl: http://jenkins:8080
                   jenkinsTunnel: jenkins-agent:50000
+                  containerCapStr: 10
                   connectTimeout: 5
                   readTimeout: 15
                   podLabels:
                     cloud: kubernetes
                     aadpodidbinding: jenkins
+                  waitForPodSec: 300
+                  retentionTimeout: 10
                   addMasterProxyEnvVars: true
                   templates:
                     - name: "k8s-inbound-agent"
                       namespace: "jenkins"
-                      label: "kubernetes"
+                      label: "k8s-agent"
                       nodeUsageMode: EXCLUSIVE
                       containers:
                         - name: "inbound-agent"
@@ -158,13 +160,10 @@ spec:
                           resourceLimitCpu: "1000m"
                           resourceRequestMemory: "1Gi"
                           resourceLimitMemory: "2Gi"
-                      volumes:
-                        - emptyDirVolume:
-                            memory: false
-                            mountPath: "/tmp"
                       instanceCap: 10
-                      idleMinutes: "5"
-                      activeDeadlineSeconds: "120"
+                      podRetention: Never
+                      idleMinutes: 10
+                      activeDeadlineSeconds: 120
                       serviceAccount: jenkins
           azure-vm-agent: |
             jenkins:
