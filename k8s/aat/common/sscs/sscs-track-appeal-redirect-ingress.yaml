@@ -8,7 +8,7 @@ metadata:
     traefik.ingress.kubernetes.io/redirect-permanent: "true"
     traefik.ingress.kubernetes.io/redirect-regex: ^https://track-appeal.aat.platform.hmcts.net/(.*)
     traefik.ingress.kubernetes.io/redirect-replacement: https://sscs-cor.aat.platform.hmcts.net/validate-surname/:tya/trackyourappeal
-  name: sscs-track-appeal-redirect
+  name: sscs-track-appeal-redirect-ingress-ingress
   namespace: sscs
 spec:
   rules:
@@ -16,6 +16,6 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: sscs-tya-frontend-deprecated
+              serviceName: sscs-cor-frontend-nodejs
               servicePort: 80
             path: /
