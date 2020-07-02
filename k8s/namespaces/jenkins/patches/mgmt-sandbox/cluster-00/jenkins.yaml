@@ -152,7 +152,7 @@ spec:
                         - name: "inbound-agent"
                           image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4q68"
                           alwaysPullImage: true
-                          workingDir: "/opt/jenkins"
+                          workingDir: "/home/jenkins/agent"
                           ttyEnabled: true
                           resourceRequestCpu: "500m"
                           resourceLimitCpu: "1000m"
@@ -162,10 +162,10 @@ spec:
                         - emptyDirVolume:
                             memory: false
                             mountPath: "/tmp"
-                      serviceAccount: jenkins
-                      idleMinutes: "1"
+                      instanceCap: 10
+                      idleMinutes: "5"
                       activeDeadlineSeconds: "120"
-                      slaveConnectTimeout: "1000"
+                      serviceAccount: jenkins
           azure-vm-agent: |
             jenkins:
               clouds:
