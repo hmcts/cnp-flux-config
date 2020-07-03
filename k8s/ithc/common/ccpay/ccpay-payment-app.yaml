@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:ithc-*
 spec:
   releaseName: ccpay-payment-api
   rollback:
@@ -20,7 +20,8 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:prod-36771ec8
+      image: hmctspublic.azurecr.io/payment/api:ithc
+      imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true
     global:
