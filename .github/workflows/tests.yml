@@ -26,4 +26,4 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: git branch -a; echo "$GITHUB_CONTEXT"
       - name: Flux automation tests
-        run: ./tests/flux-automation.sh ${{ github.head_ref }} ${{ github.base_ref }}
+        run: ./tests/flux-automation.sh ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}

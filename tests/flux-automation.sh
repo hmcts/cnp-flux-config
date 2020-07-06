@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -x
 
-#_github_head_ref=$1
-#_github_base_ref=${2:-master}
+_github_head_sha=$1
+_github_base_sha=$2
 
 whitelist_dirs=(
     admin
@@ -11,14 +11,16 @@ whitelist_dirs=(
     knode-system
     neuvector)
 
-#[ -z "$_github_head_ref" ] && echo "Error: github commit sha missing." && exit 1
+[ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
+[ -z "$_github_base_sha" ] && echo "Error: github base sha missing." && exit 1
 
 _errors=()
 
-git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+#git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+git fetch origin master:master
 
-#for f in $(git diff --no-commit-id --name-only "refs/heads/${_github_head_ref}" "refs/heads/${_github_base_ref}")
-for f in $(git diff --no-commit-id --name-only origin/master HEAD)
+#for f in $(git diff --no-commit-id --name-only origin/master HEAD)
+for f in $(git diff-tree --no-commit-id --name-only -r $_github_head_sha master)
 do
   # run check only if on the prod or aat path
   echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/"
