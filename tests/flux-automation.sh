@@ -14,14 +14,18 @@ whitelist_dirs=(
 
 _errors=""
 
-for f in $(git diff-tree --no-commit-id --name-only -r $_github_sha)
+for f in $(git diff-tree --no-commit-id --name-only -r $_github_sha master)
 do
-  # check if whitelisted
+  # run check only if on the prod or aat path
+  echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/"
+  [ $? -eq 1 ] && continue
+  # run check only if not whitelisted
   for wd in "${whitelist_dirs[@]}"
   do 
     echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/${wd}"
     [ $? -eq 0 ] && continue 2
   done
+  
   # check if automated
   fgrep -E -q '(flux\.weave\.works|fluxcd\.io)/automated: *"true"' "$f"
   [ $? -ne 0 ] && _errors="${_errors}${f}: automated must be set to true\n"
