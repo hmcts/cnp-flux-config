@@ -22,12 +22,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-notification-service
-    version: 0.1.1
+    version: 0.1.2
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-5433f39a
+      environment:
+        PENDING_NOTIFICATIONS_SEND_DELAY_IN_MINUTE: 0
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account

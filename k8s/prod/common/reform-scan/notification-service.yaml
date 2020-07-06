@@ -20,7 +20,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-notification-service
-    version: 0.1.1
+    version: 0.1.2
   values:
     java:
       replicas: 2
@@ -29,6 +29,7 @@ spec:
       environment:
         NOTIFICATIONS_CONSUME_TASK_DELAY_IN_MS: "600000"
         PENDING_NOTIFICATIONS_TASK_DELAY_IN_MS: "1800000"
+        NOTIFICATIONS_CONSUME_TASK_ENABLED: false
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
