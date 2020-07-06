@@ -21,5 +21,9 @@ jobs:
         run: 'sudo apt-get install -y yamllint'
       - name: Lint Tests
         run: ./tests/lint-yaml.sh
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: Flux automation tests
         run: ./tests/flux-automation.sh ${{ github.event.after }}
