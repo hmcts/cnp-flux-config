@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#set -x
+set -x
 
 _github_head_sha=$1
 _github_base_sha=$2
@@ -17,7 +17,6 @@ whitelist_dirs=(
 
 _errors=()
 
-#git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 git fetch origin master:master
 
 #for f in $(git diff --no-commit-id --name-only origin/master HEAD)
