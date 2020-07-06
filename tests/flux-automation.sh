@@ -12,6 +12,13 @@ whitelist_dirs=(
     monitoring
     neuvector)
 
+exclusions=(
+  k8s/aat/cluster-00/rd/judicial-data-load.yaml
+  k8s/aat/cluster-01/rd/judicial-data-load.yaml
+  k8s/aat/common/xui/approve-org.yaml
+  k8s/aat/common/xui/webapp.yaml
+)
+
 [ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
 [ -z "$_github_base_sha" ] && echo "Error: github base sha missing." && exit 1
 
@@ -30,7 +37,9 @@ do
     echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/${wd}"
     [ $? -eq 0 ] && continue 2
   done
-  
+  # run check only if not in the exclusions list
+  [[ "${exclusions[@]}" =~ "$f" ]] && continue
+
   # check if automated
   grep -E -q '(flux\.weave\.works|fluxcd\.io)/automated: *"true"' "$f"
   [ $? -ne 0 ] && _errors+=("${f}: automated must be set to true")
