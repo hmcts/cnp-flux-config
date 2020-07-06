@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
-_github_sha=$1
+_github_head_ref=$1
+_github_base_ref={$2:-master}
 
 whitelist_dirs=(
     admin
@@ -10,11 +11,11 @@ whitelist_dirs=(
     knode-system
     neuvector)
 
-[ -z "$_github_sha" ] && echo "Error: github commit sha missing." && exit 1
+[ -z "$_github_head_ref" ] && echo "Error: github commit sha missing." && exit 1
 
 _errors=""
 
-for f in $(git diff-tree --no-commit-id --name-only -r $_github_sha master)
+for f in $(git diff-tree --no-commit-id --name-only -r "$_github_head_ref" "$_github_base_ref")
 do
   # run check only if on the prod or aat path
   echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/"
