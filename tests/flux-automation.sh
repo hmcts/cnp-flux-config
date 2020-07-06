@@ -15,7 +15,7 @@ whitelist_dirs=(
 
 _errors=()
 
-for f in $(git diff --no-commit-id --name-only "refs/heads${_github_head_ref}" "refs/heads/${_github_base_ref}")
+for f in $(git diff --no-commit-id --name-only "refs/heads/${_github_head_ref}" "refs/heads/${_github_base_ref}")
 do
   # run check only if on the prod or aat path
   echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/"
