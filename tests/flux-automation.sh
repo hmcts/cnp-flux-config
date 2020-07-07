@@ -4,6 +4,7 @@
 _github_head_sha=$1
 _github_base_sha=$2
 
+# Applications in this directories (namespaces) are NOT checked  
 whitelist_dirs=(
     admin
     kube-system
@@ -12,11 +13,18 @@ whitelist_dirs=(
     monitoring
     neuvector)
 
+# Applications that are currently excluded from this check 
 exclusions=(
+  k8s/aat/cluster-00/sscs/sscs-case-loader.yaml
   k8s/aat/cluster-00/rd/judicial-data-load.yaml
+  k8s/aat/cluster-01/sscs/sscs-case-loader.yaml
   k8s/aat/cluster-01/rd/judicial-data-load.yaml
-  k8s/aat/common/xui/approve-org.yaml
-  k8s/aat/common/xui/webapp.yaml
+  k8s/aat/common/em/em-showcase.yaml
+  k8s/aat/common/idam/idam-api.yaml
+  k8s/aat/common/idam/idam-web-admin.yaml
+  k8s/aat/common/idam/idam-web-public.yaml
+  k8s/aat/common/ethos/ecm-consumer.yaml
+  k8s/aat/common/ethos/repl-docmosis-service.yaml
 )
 
 [ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
