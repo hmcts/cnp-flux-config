@@ -47,6 +47,9 @@ do
   done
   # run check only if not in the exclusions list
   [[ "${exclusions[@]}" =~ "$f" ]] && continue
+  # run check only if HelmRelease
+  grep -E -q -i 'kind: +helmrelease' "$f"
+  [ $? -eq 1 ] && continue
 
   # check if automated
   grep -E -q '(flux\.weave\.works|fluxcd\.io)/automated: *"true"' "$f"
