@@ -21,7 +21,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 2.0.1
+    version: 2.0.4
   values:
     global:
       devMode: true
@@ -41,12 +41,13 @@ spec:
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
       postgresqlHost: "cmc-demo-postgresql"
 
-    ### CMC SERVICES ###
+    ### CMC SERVICES ####
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-208047d8
-        ingressHost: cmc-demo-claim-store-demo.service.core-compute-demo.internal
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-054164ef
+        ingressClass: traefik-private
+        ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -61,14 +62,11 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-90dd872a
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-b48d7a67
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
             secretRef: cmc-s2s-secret
-            key: key
-          LAUNCHDARKLY_SDK_KEY:
-            secretRef: launchdarkly-sdk-key
             key: key
         environment:
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"

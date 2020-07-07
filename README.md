@@ -112,6 +112,7 @@ Retrieve the existing secret:
 ```bash
 $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
+Update this /tmp/values.yaml file with the Slack WebHook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
@@ -197,6 +198,7 @@ Retrieve the existing secret:
 ```bash
 $ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
+Update this /tmp/values.yaml file with the Slack WebHook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
@@ -214,4 +216,21 @@ AZ_DEVOPS_TOKEN=$(az keyvault secret show --vault-name infra-vault-nonprod --nam
 kubectl create secret generic vsts-token --from-literal=token=$AZ_DEVOPS_TOKEN --namespace vsts --dry-run=client -o json > /tmp/values.json
 mkdir -p k8s/$ENV/common/vsts/
 kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/vsts/vsts-token.yaml
+```
+
+### External DNS (ideally we'll move this to managed identity)
+
+```bash
+ENV=demo
+VAULT=cftapps-${ENV}
+mkdir -p k8s/$ENV/common/sealed-secrets/
+CLIENT_ID=$(az keyvault secret show --vault-name ${VAULT} --name aks-sp-app-id --query value -o tsv)
+CLIENT_SECRET=$(az keyvault secret show --vault-name ${VAULT} --name aks-sp-app-password --query value -o tsv)
+
+kubectl create secret generic external-dns --from-literal AZURE_TENANT_ID=531ff96d-0ae9-462a-8d2d-bec7c0b42082 \
+  --from-literal AZURE_CLIENT_ID=${CLIENT_ID} --from-literal AZURE_CLIENT_SECRET=${CLIENT_SECRET} \
+  --dry-run=client \
+  -o json > /tmp/external-dns.json
+
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/external-dns.json > k8s/$ENV/common/sealed-secrets/external-dns.yaml
 ```

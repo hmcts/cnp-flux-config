@@ -21,8 +21,8 @@ spec:
     master:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
-      image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db4228"
+      image: "hmctspublic.azurecr.io/jenkins/jenkins"
+      imageTag: "db4sc5"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -123,9 +123,6 @@ spec:
                     - "Job/Discover:anonymous"
                     - "Job/Workspace:authenticated"
                     - "Credentials/View:authenticated"
-                    - "Build Failure Analyzer/RemoveCause:authenticated"
-                    - "Build Failure Analyzer/UpdateCauses:authenticated"
-                    - "Build Failure Analyzer/ViewCauses:authenticated"
                     - "Lockable Resources/Unlock:authenticated"
                     - "Lockable Resources/Reserve:authenticated"
                     - "SCM/Tag:authenticated"
@@ -182,10 +179,8 @@ spec:
                 allPipelines: true
           theme: |
             unclassified:
-              simple-theme-plugin:
-                elements:
-                - cssUrl:
-                    url: ""
+              themeManager:
+                theme: "darkSystem"
           build-discarders: |
             unclassified:
               buildDiscarders:
@@ -510,10 +505,20 @@ spec:
                           id: "hmcts-jenkins-rse"
                           privateKey: "${hmcts-jenkins-rse-ghapp}"
                       - gitHubApp:
+                          appID: "68302"
+                          description: "GitHub APP Key - ucmc"
+                          id: "hmcts-jenkins-ucmc"
+                          privateKey: "${hmcts-jenkins-ucmc-ghapp}"
+                      - gitHubApp:
                           appID: "62005"
                           description: "GitHub APP Key - em"
                           id: "hmcts-jenkins-em"
                           privateKey: "${hmcts-jenkins-em-ghapp}"
+                      - gitHubApp:
+                          appID: "69800"
+                          description: "GitHub APP Key - hmi"
+                          id: "hmcts-jenkins-hmi"
+                          privateKey: "${hmcts-jenkins-hmi-ghapp}"
 
           jobs: |
             jobs:
