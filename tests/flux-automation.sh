@@ -44,7 +44,7 @@ do
   grep -E -q '(flux\.weave\.works|fluxcd\.io)/automated: *"true"' "$f"
   [ $? -ne 0 ] && _errors+=("${f}: automated must be set to true")
   # check if prod tag
-  grep -E -q '(filter\.fluxcd\.io|flux\.weave\.works)/(tag\.)*(java|nodejs): glob:prod-\*' "$f"
+  grep -E -q '(filter\.fluxcd\.io|flux\.weave\.works)/(tag\.)*(java|nodejs|job|function): glob:prod-\*' "$f"
   [ $? -ne 0 ] && _errors+=("${f}: must use a prod-* tag")
 done  
 
