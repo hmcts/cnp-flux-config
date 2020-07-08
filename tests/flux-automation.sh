@@ -25,6 +25,9 @@ exclusions=(
   k8s/aat/common/idam/idam-web-public.yaml
   k8s/aat/common/ethos/ecm-consumer.yaml
   k8s/aat/common/ethos/repl-docmosis-service.yaml
+  k8s/aat/common/xui/manage-organisations.yaml
+  k8s/aat/common/xui/approve-org.yaml
+  k8s/aat/common/xui/webapp.yaml
 )
 
 [ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
@@ -55,7 +58,7 @@ do
   grep -E -q '(flux\.weave\.works|fluxcd\.io)/automated: *"true"' "$f"
   [ $? -ne 0 ] && _errors+=("${f}: automated must be set to true")
   # check if prod tag
-  grep -E -q '(filter\.fluxcd\.io|flux\.weave\.works)/(tag\.)*(java|nodejs|job|function): glob:prod-\*' "$f"
+  grep -E -q '((filter\.)*fluxcd\.io|flux\.weave\.works)/(tag\.)*(java|nodejs|job|function): glob:prod-\*' "$f"
   [ $? -ne 0 ] && _errors+=("${f}: must use a prod-* tag")
 done  
 
