@@ -43,11 +43,11 @@ spec:
       "expr": |
         flux_helm_operator_release_condition_info{condition="RolledBack"} == 1
       "labels":
-        "severity": "warning"
+        "severity": "critical"
     - "alert": "HelmReleaseError"
       "annotations":
         "message": "A Helm Release {{ $labels.release_name }} has failed to deploy"
       "expr": |
         flux_helm_operator_release_condition_info{condition="Released"} == -1
       "labels":
-        "severity": "warning"
+        "severity": "critical"
