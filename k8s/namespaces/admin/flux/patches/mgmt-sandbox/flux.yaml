@@ -10,13 +10,12 @@ spec:
       email: "hmcts-flux-mgmt-sandbox@hmcts.net"
       user: "Flux mgmt sandbox"
     affinity:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/component
-                    operator: In
-                    values:
-                    - jenkins-master
-              topologyKey: "kubernetes.io/hostname"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                  - jenkins-master
+            topologyKey: "kubernetes.io/hostname"
