@@ -232,34 +232,3 @@ spec:
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftsbox-intsvc-vnet"
                         virtualNetworkResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
-
-    persistence:
-      enabled: true
-      ## A manually managed Persistent Volume and Claim
-      ## Requires persistence.enabled: true
-      ## If defined, PVC must be created manually before volume will be bound
-      existingClaim: "jenkins"
-      ## jenkins data Persistent Volume Storage Class
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      storageClass:
-      annotations: {}
-      accessMode: "ReadWriteOnce"
-      size: "8Gi"
-      volumes:
-        - name: workspace
-          hostPath:
-            path: /mnt
-            type: DirectoryOrCreate
-        - name: logging
-          configMap:
-            name: jenkins-config-logging
-      mounts:
-        - mountPath: /var/jenkins_home/workspace
-          name: workspace
-        - mountPath: /var/jenkins_home/userconf
-          name: logging
