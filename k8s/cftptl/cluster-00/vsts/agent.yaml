@@ -18,6 +18,17 @@ spec:
       labels:
         app: vsts-aks-agent
     spec:
+      affinity:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/component
+                      operator: In
+                      values:
+                      - jenkins-master
+                topologyKey: "kubernetes.io/hostname"
       volumes:
       - name: docker-sock-volume
         hostPath:
