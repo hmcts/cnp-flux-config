@@ -15,10 +15,6 @@ whitelist_dirs=(
 
 # Applications that are currently excluded from this check 
 exclusions=(
-  k8s/aat/cluster-00/sscs/sscs-case-loader.yaml
-  k8s/aat/cluster-00/rd/judicial-data-load.yaml
-  k8s/aat/cluster-01/sscs/sscs-case-loader.yaml
-  k8s/aat/cluster-01/rd/judicial-data-load.yaml
   k8s/aat/common/em/em-showcase.yaml
   k8s/aat/common/idam/idam-api.yaml
   k8s/aat/common/idam/idam-web-admin.yaml
