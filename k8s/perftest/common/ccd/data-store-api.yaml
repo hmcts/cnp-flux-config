@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-964-*
+    flux.weave.works/tag.java: glob:pr-601-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccd-data-store-api
-    version: 1.5.7
+    version: 1.6.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-964-b0bb384e
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-15f45ecc
       environment:
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"

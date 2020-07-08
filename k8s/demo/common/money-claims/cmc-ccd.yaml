@@ -76,7 +76,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0cd9ec1a
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-47e023f5
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-da38d576
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3ec3758c
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-8be557a1
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-97778561
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
@@ -118,7 +118,7 @@ spec:
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.2
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.3
       waitHosts: "cmc-ccd-ccd-definition-store:80"
       waitHostsTimeout: 600
       environment:
