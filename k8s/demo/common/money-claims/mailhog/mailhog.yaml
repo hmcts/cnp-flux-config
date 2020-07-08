@@ -24,7 +24,7 @@ spec:
     app: mailhog
 ---
 # Source: mailhog/templates/deployment.yaml
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mailhog
@@ -35,6 +35,9 @@ metadata:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.mailhog: regexp:^v1.*
 spec:
+  selector:
+    matchLabels:
+      app: mailhog
   template:
     metadata:
       labels:
