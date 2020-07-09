@@ -42,6 +42,7 @@ spec:
         "message": "A helm release {{ $labels.release_name }} has been rolled back "
       "expr": |
         flux_helm_operator_release_condition_info{condition="RolledBack"} == 1
+      "for": "10m"
       "labels":
         "severity": "warning"
     - "alert": "HelmReleaseError"
@@ -49,5 +50,6 @@ spec:
         "message": "A Helm Release {{ $labels.release_name }} has failed to deploy"
       "expr": |
         flux_helm_operator_release_condition_info{condition="Released"} == -1
+      "for": "10m"
       "labels":
         "severity": "critical"
