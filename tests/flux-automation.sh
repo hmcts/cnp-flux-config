@@ -19,11 +19,6 @@ exclusions=(
   k8s/aat/common/idam/idam-api.yaml
   k8s/aat/common/idam/idam-web-admin.yaml
   k8s/aat/common/idam/idam-web-public.yaml
-  k8s/aat/common/ethos/ecm-consumer.yaml
-  k8s/aat/common/ethos/repl-docmosis-service.yaml
-  k8s/aat/common/xui/manage-organisations.yaml
-  k8s/aat/common/xui/approve-org.yaml
-  k8s/aat/common/xui/webapp.yaml
 )
 
 [ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
