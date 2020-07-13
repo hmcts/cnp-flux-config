@@ -6,7 +6,7 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:aat-*
+    fluxcd.io/tag.nodejs: glob:prod-*
 spec:
   releaseName: xui-webapp
   rollback:
@@ -20,11 +20,12 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:aat-b65a867a
+      image: hmctspublic.azurecr.io/xui/webapp:prod-f5786a68
       ingressHost: manage-case.aat.platform.hmcts.net
       environment:
-        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT
+        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL
         FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
+        SERVICES_MARKUP_API: http://em-npa-aat.service.core-compute-aat.internal
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

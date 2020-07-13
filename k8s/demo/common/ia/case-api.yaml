@@ -6,7 +6,7 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-463-*
+    flux.weave.works/tag.java: glob:pr-451-*
 spec:
   releaseName: ia-case-api
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-api
-    version: 0.0.11
+    version: 0.0.12
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:pr-463-fff00ba6
+      image: hmctspublic.azurecr.io/ia/case-api:pr-451-e4ff6bc4
       ingressHost: ia-case-api-demo.service.core-compute-demo.internal
       environment:
         RESTART_ME: "Update due to vault Change"

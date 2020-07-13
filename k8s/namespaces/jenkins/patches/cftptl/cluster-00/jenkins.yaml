@@ -17,10 +17,10 @@ spec:
       resources:
         requests:
           cpu: "4"
-          memory: "20Gi"
+          memory: "24Gi"
         limits:
           cpu: "6"
-          memory: "20Gi"
+          memory: "24Gi"
       JCasC:
         configScripts:
           welcome-message: |
@@ -48,9 +48,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : preview-00-aks
+                        value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: preview-00-rg
+                        value: preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -259,6 +259,56 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftptl-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
+          kubernetes-agent: |
+            jenkins:
+              clouds:
+                - kubernetes:
+                    addMasterProxyEnvVars: true
+                    containerCap: 40
+                    containerCapStr: "40"
+                    jenkinsTunnel: "jenkins-agent:50000"
+                    jenkinsUrl: "http://jenkins:8080"
+                    maxRequestsPerHost: 32
+                    maxRequestsPerHostStr: "32"
+                    name: "kubernetes"
+                    namespace: "jenkins"
+                    podLabels:
+                    - key: "aadpodidbinding"
+                      value: "jenkins"
+                    - key: "cloud"
+                      value: "kubernetes"
+                    templates:
+                    - activeDeadlineSeconds: 120
+                      activeDeadlineSecondsStr: "120"
+                      containers:
+                      - alwaysPullImage: true
+                        args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4q68"
+                        livenessProbe:
+                          failureThreshold: 0
+                          initialDelaySeconds: 0
+                          periodSeconds: 0
+                          successThreshold: 0
+                          timeoutSeconds: 0
+                        name: "inbound-agent"
+                        resourceLimitCpu: "1000m"
+                        resourceLimitMemory: "2Gi"
+                        resourceRequestCpu: "500m"
+                        resourceRequestMemory: "1Gi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      hostNetwork: false
+                      idleMinutes: 10
+                      idleMinutesStr: "10"
+                      instanceCap: 40
+                      instanceCapStr: "40"
+                      label: "k8s-agent"
+                      name: "k8s-inbound-agent"
+                      namespace: "jenkins"
+                      podRetention: "never"
+                      serviceAccount: "jenkins"
+                      yamlMergeStrategy: "override"
           azure-vm-agent: |
             jenkins:
               clouds:

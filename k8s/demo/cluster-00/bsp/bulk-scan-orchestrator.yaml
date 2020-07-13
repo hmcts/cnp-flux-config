@@ -6,7 +6,7 @@ metadata:
   namespace: bsp
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-1033-*
 spec:
   releaseName: bulk-scan-orchestrator
   rollback:
@@ -20,7 +20,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1015-a89d09d0
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1033-db720448
+      environment:
+        ROOT_LOGGING_LEVEL: DEBUG
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

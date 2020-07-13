@@ -6,21 +6,24 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-459-*
 spec:
   releaseName: div-rfe
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-rfe
-    version: 1.1.6
+    #    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    #    name: div-rfe
+    #    version: 1.1.6
+    git: https://github.com/hmcts/div-respondent-frontend
+    ref: WLA-591-Copy-amends
+    path: charts/div-rfe
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/rfe:prod-9ba1cc2e
+      image: hmctspublic.azurecr.io/div/rfe:pr-459-6471af8d
       ingressClass: traefik-no-proxy
       ingressHost: respond-divorce-aks.demo.platform.hmcts.net
       environment:

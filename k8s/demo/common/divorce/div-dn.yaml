@@ -6,21 +6,24 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-481-*
 spec:
   releaseName: div-dn
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: div-dn
-    version: 1.2.4
+    #    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    #    name: div-dn
+    #    version: 1.2.4
+    git: https://github.com/hmcts/div-decree-nisi-frontend
+    ref: WLA-591-Copy-amends
+    path: charts/div-dn
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-e763f225
+      image: hmctspublic.azurecr.io/div/dn:pr-481-40c2429d
       ingressClass: traefik-no-proxy
       ingressHost: decree-nisi-aks.demo.platform.hmcts.net
       environment:

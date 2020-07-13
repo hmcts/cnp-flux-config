@@ -142,18 +142,18 @@ This can only be retrieved from powershell or lots of clicking in the Azure Port
 The "CustomerId" is your workspace ID
 ```powershell
 Connect-AzAccount
-Select-AzSubscription  DCD-CFTAPPS-<env>
-$oms = Get-AzOperationalInsightsWorkspace
+Select-AzSubscription DCD-CNP-DEV # prod: DCD-CNP-PROD, sandbox, DCD-CFT-Sandbox
+$oms = Get-AzOperationalInsightsWorkspace -ResourceGroupName oms-automation
 $workspaceId = $oms.CustomerId.Guid
 
-$keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation-rg -Name hmcts-<env>-law
+$keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation -Name hmcts-nonprod # prod: hmcts-prod, sandbox: hmcts-sandbox
 $primaryKey = $keys.PrimarySharedKey
 
 kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run=client -o json > /tmp/fluentbit-log.json
 ```
 
 ```bash
-kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json > k8s/<env>/common/neuvector/fluentbit-log.yaml
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/fluentbit-log.json > k8s/$ENV/common/neuvector/fluentbit-log.yaml
 ```
 
 ### Traefik

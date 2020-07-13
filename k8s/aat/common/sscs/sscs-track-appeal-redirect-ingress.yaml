@@ -1,0 +1,21 @@
+# this is to apply permanent redirect on track-appeal.aat.platform.hmcts.net
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://track-appeal.aat.platform.hmcts.net/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://sscs-cor.aat.platform.hmcts.net/validate-surname/:tya/trackyourappeal
+  name: sscs-track-appeal-redirect-ingress
+  namespace: sscs
+spec:
+  rules:
+    - host: track-appeal.aat.platform.hmcts.net
+      http:
+        paths:
+          - backend:
+              serviceName: sscs-cor-frontend-nodejs
+              servicePort: 80
+            path: /

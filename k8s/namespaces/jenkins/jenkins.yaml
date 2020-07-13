@@ -22,10 +22,20 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      imageTag: "db4sc5"
+      imageTag: "db4uuy"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - jenkins
+              topologyKey: "kubernetes.io/hostname"
 
       jenkinsAdminEmail: noreply@reform.hmcts.net
 
@@ -39,10 +49,17 @@ spec:
 
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
-        -XX:MaxRAMPercentage=60.0
-        -XX:MinRAMPercentage=20.0
-        -XX:+UseParallelOldGC
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=30.0
+        -XX:+UseG1GC
+        -XX:+AlwaysPreTouch
+        -XX:+HeapDumpOnOutOfMemoryError
+        -XX:HeapDumpPath=/var/jenkins_home/logs
+        -XX:+UseStringDeduplication
+        -XX:+ParallelRefProcEnabled
+        -XX:+DisableExplicitGC
         -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
@@ -584,6 +601,20 @@ spec:
       annotations: {}
       accessMode: "ReadWriteOnce"
       size: "8Gi"
+      volumes:
+        - name: workspace
+          hostPath:
+            path: /mnt
+            type: DirectoryOrCreate
+        - name: logging
+          configMap:
+            name: jenkins-config-logging
+      mounts:
+        - mountPath: /var/jenkins_home/workspace
+          name: workspace
+        - mountPath: /var/jenkins_home/userconf
+          name: logging
+
 
     ## Install Default RBAC roles and bindings
     rbac:

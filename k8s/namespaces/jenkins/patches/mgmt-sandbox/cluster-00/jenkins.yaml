@@ -105,6 +105,60 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftsbox-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
+          kubernetes-agent: |
+            jenkins:
+              clouds:
+                - kubernetes:
+                    addMasterProxyEnvVars: true
+                    containerCap: 10
+                    containerCapStr: "10"
+                    jenkinsTunnel: "jenkins-agent:50000"
+                    jenkinsUrl: "http://jenkins:8080"
+                    maxRequestsPerHost: 32
+                    maxRequestsPerHostStr: "32"
+                    name: "kubernetes"
+                    namespace: "jenkins"
+                    podLabels:
+                    - key: "aadpodidbinding"
+                      value: "jenkins"
+                    - key: "cloud"
+                      value: "kubernetes"
+                    templates:
+                    - activeDeadlineSeconds: 120
+                      activeDeadlineSecondsStr: "120"
+                      containers:
+                      - args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4wuu"
+                        livenessProbe:
+                          failureThreshold: 0
+                          initialDelaySeconds: 0
+                          periodSeconds: 0
+                          successThreshold: 0
+                          timeoutSeconds: 0
+                        name: "inbound-agent"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "2Gi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      hostNetwork: false
+                      idleMinutes: 10
+                      idleMinutesStr: "10"
+                      instanceCap: 10
+                      instanceCapStr: "10"
+                      label: "k8s-agent"
+                      name: "k8s-inbound-agent"
+                      namespace: "jenkins"
+                      podRetention: "never"
+                      serviceAccount: "jenkins"
+                      supplementalGroups: "118"
+                      volumes:
+                      - hostPathVolume:
+                          hostPath: "/var/run/docker.sock"
+                          mountPath: "/var/run/docker.sock"
+                      yamlMergeStrategy: "override"
           azure-vm-agent: |
             jenkins:
               clouds:
@@ -182,34 +236,3 @@ spec:
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftsbox-intsvc-vnet"
                         virtualNetworkResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
-
-    persistence:
-      enabled: true
-      ## A manually managed Persistent Volume and Claim
-      ## Requires persistence.enabled: true
-      ## If defined, PVC must be created manually before volume will be bound
-      existingClaim: "jenkins"
-      ## jenkins data Persistent Volume Storage Class
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      storageClass:
-      annotations: {}
-      accessMode: "ReadWriteOnce"
-      size: "8Gi"
-      volumes:
-        - name: workspace
-          hostPath:
-            path: /mnt
-            type: DirectoryOrCreate
-        - name: logging
-          configMap:
-            name: jenkins-config-logging
-      mounts:
-        - mountPath: /var/jenkins_home/workspace
-          name: workspace
-        - mountPath: /var/jenkins_home/userconf
-          name: logging

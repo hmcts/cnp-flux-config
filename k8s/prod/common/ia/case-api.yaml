@@ -15,16 +15,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-api
-    version: 0.0.11
+    version: 0.0.12
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-b6e3d9dd
+      image: hmctspublic.azurecr.io/ia/case-api:prod-a1d3561c
       ingressHost: ia-case-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
+        IS_SAVE_AND_CONTINUE_ENABLED: "false"
         RESTART_ME: "Update due to vault Change"
       prometheus:
         enabled: true

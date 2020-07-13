@@ -15,13 +15,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-tribunals-api
-    version: 0.0.16
+    version: 0.0.18
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-79438fa3
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-647d2ba1
       environment:
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
         IDAM_URL: https://idam-api.platform.hmcts.net
@@ -30,7 +31,10 @@ spec:
         PDF_SERVICE_HEALTH_URL: https://docmosis.platform.hmcts.net/rs/status
         DOC_ASSEMBLY_URL: http://dg-docassembly-prod.service.core-compute-prod.internal
         READY_TO_LIST_OFFICES: DWP PIP (1),DWP PIP (2),DWP PIP (3),DWP PIP (4),DWP
-          PIP (5),DWP PIP (6),DWP PIP (7),DWP PIP (8),DWP PIP (9),DWP PIP (AE)
+          PIP (5),DWP PIP (6),DWP PIP (7),DWP PIP (8),DWP PIP (9),DWP PIP (AE),Balham
+          DRT,Birkenhead LM DRT,Chesterfield DRT,Coatbridge Benefit Centre,Inverness
+          DRT,Lowestoft DRT,Milton Keynes DRT,Norwich DRT,Sheffield DRT,Springburn
+          DRT,Watford DRT,Wellingborough DRT,Worthing DRT
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
