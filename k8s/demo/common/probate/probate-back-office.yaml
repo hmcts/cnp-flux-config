@@ -6,7 +6,7 @@ metadata:
   namespace: probate
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1108-*
+    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: probate-back-office
   rollback:
@@ -22,7 +22,7 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/back-office:pr-1108-5c0a75ae
       environment:
-        CCD_GATEWAY_HOST: https://gateway-ccd.demo.platform.hmcts.net
+        CCD_GATEWAY_HOST: https://xui-webapp-demo.service.core-compute-demo.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
