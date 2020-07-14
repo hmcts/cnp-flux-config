@@ -158,7 +158,44 @@ spec:
                       - hostPathVolume:
                           hostPath: "/var/run/docker.sock"
                           mountPath: "/var/run/docker.sock"
-                      yamlMergeStrategy: "override"
+                      yaml: |-
+                        metadata:
+                          labels:
+                            app.kubernetes.io/name: jenkins
+                            app.kubernetes.io/component: jenkins-agent
+                        spec:
+                          securityContext:
+                            fsGroup: 118
+                          affinity:
+                            podAntiAffinity:
+                              requiredDuringSchedulingIgnoredDuringExecution:
+                                - labelSelector:
+                                    matchExpressions:
+                                      - key: app.kubernetes.io/component
+                                        operator: In
+                                        values:
+                                          - jenkins-master
+                                  topologyKey: "kubernetes.io/hostname"
+                      yamlMergeStrategy: "merge"
+                      yamls:
+                      - |-
+                        metadata:
+                          labels:
+                            app.kubernetes.io/name: jenkins
+                            app.kubernetes.io/component: jenkins-agent
+                        spec:
+                          securityContext:
+                            fsGroup: 118
+                          affinity:
+                            podAntiAffinity:
+                              requiredDuringSchedulingIgnoredDuringExecution:
+                                - labelSelector:
+                                    matchExpressions:
+                                      - key: app.kubernetes.io/component
+                                        operator: In
+                                        values:
+                                          - jenkins-master
+                                  topologyKey: "kubernetes.io/hostname"
           azure-vm-agent: |
             jenkins:
               clouds:
