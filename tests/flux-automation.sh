@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #set -x
 
-_github_head_sha=$1
-_github_base_sha=$2
+_github_base_sha=$1
+_github_head_sha=$2
 
 # Applications in this directories (namespaces) are NOT checked  
 whitelist_dirs=(
@@ -21,14 +21,14 @@ exclusions=(
   k8s/aat/common/idam/idam-web-public.yaml
 )
 
-[ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
 [ -z "$_github_base_sha" ] && echo "Error: github base sha missing." && exit 1
+[ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
 
 _errors=()
 
 git fetch origin master:master
 
-for f in $(git diff-tree --no-commit-id --name-only -r $_github_head_sha $_github_base_sha)
+for f in $(git diff-tree --no-commit-id --name-only -r $_github_base_sha $_github_head_sha)
 do
   # run check only if on the prod or aat path
   echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/"
