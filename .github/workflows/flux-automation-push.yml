@@ -1,0 +1,14 @@
+name: Flux push automation checks
+
+# yamllint disable-line
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Flux automation tests
+        run: ./tests/flux-automation.sh ${{ github.event.before }} ${{ github.event.after }}
