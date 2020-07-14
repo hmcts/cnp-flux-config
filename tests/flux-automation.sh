@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#set -x
+set -x
 
 _github_head_sha=$1
 _github_base_sha=$2
