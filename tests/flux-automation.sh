@@ -21,8 +21,8 @@ exclusions=(
   k8s/aat/common/idam/idam-web-public.yaml
 )
 
-[ -z "$_github_head_sha" ] && echo "Github head sha missing. Not on a PR" && exit 0
-[ -z "$_github_base_sha" ] && echo "Github base sha missing. Not on a PR" && exit 0
+[ -z "$_github_head_sha" ] && echo "Error: github head sha missing." && exit 1
+[ -z "$_github_base_sha" ] && echo "Error: github base sha missing." && exit 1
 
 _errors=()
 
