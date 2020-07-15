@@ -1,0 +1,47 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-admin-web
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: ccd-admin-web
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccd-admin-web
+    version: 2.0.3
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/admin-web:prod-c3784e64
+      ingressHost: ccd-admin-web-ethosldata.platform.hmcts.net
+      environment:
+        ADMINWEB_AUTHORIZATION_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/idam/adminweb/authorization
+        ADMINWEB_CREATE_DEFINITION_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/draft
+        ADMINWEB_DEFINITIONS_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/drafts
+        ADMINWEB_DELETE_DEFINITION_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/draft
+        ADMINWEB_IMPORT_AUDITS_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/import-audits
+        ADMINWEB_IMPORT_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/import
+        ADMINWEB_JURISDICTIONS_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/data/jurisdictions
+        ADMINWEB_LOGIN_URL: https://idam-web-public-ethosldata.platform.hmcts.net/login
+        ADMINWEB_SAVE_USER_PROFILE_URL: http://ccd-user-profile-api-ldata.service.core-compute-ethosldata.internal/users/save
+        ADMINWEB_UPDATE_DEFINITION_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/draft/save
+        ADMINWEB_USER_PROFILE_URL: http://ccd-user-profile-api-ldata.service.core-compute-ethosldata.internal/users
+        ADMINWEB_USER_ROLE_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/user-role
+        ADMINWEB_WHOAMI_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/idam/profile
+        ADMIN_ALL_USER_ROLES_URL: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal/api/user-roles
+        IDAM_BASE_URL: https://idam-api-ethosldata.platform.hmcts.net
+        IDAM_OAUTH2_LOGOUT_ENDPOINT: https://idam-api-ethosldata.platform.hmcts.net/session/:token
+        IDAM_OAUTH2_TOKEN_ENDPOINT: https://idam-api-ethosldata.platform.hmcts.net/oauth2/token
+        IDAM_S2S_URL: http://rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal
+    global:
+      environment: ethosldata
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

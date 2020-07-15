@@ -15,12 +15,16 @@ spec:
   chart:
     name: pcq-backend
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 0.0.18
+    version: 0.0.21
   values:
     java:
+      memoryRequests: "1024Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/backend:prod-60061d68
+      image: hmctspublic.azurecr.io/pcq/backend:prod-9320ddba
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

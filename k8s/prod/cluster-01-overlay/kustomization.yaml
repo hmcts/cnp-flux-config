@@ -5,13 +5,18 @@ bases:
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/kube-slack
   - ../../namespaces/admin/keyvault-flexvol
+  - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/admin/traefik
+  - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
   - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/monitoring/botkube
   - ../../namespaces/knode-system
+  - ../../namespaces/admin/keda
+  - ../../namespaces/monitoring/dynatrace
 
 patchesStrategicMerge:
   # flux patches
@@ -41,3 +46,6 @@ patchesStrategicMerge:
 
   # botkube patch
   - ../../namespaces/monitoring/botkube/patches/prod/cluster-01/botkube.yaml
+
+  #Dynatrace patch
+  - ../../namespaces/monitoring/dynatrace/patches/prod/oneagent.yaml

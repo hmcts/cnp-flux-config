@@ -47,7 +47,7 @@ Install version 0.5.1 from https://github.com/bitnami-labs/sealed-secrets/releas
 kubectl create secret generic my-secret \
   --from-literal key=secret-value \
   --namespace namespace \
-  --dry-run -o json > my-secret.json
+  --dry-run=client -o json > my-secret.json
 
 kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 ```
@@ -56,7 +56,7 @@ kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 kubectl create secret generic my-secret \
   --from-file=./some-file.txt \
   --namespace namespace \
-  --dry-run -o json > my-secret.json
+  --dry-run=client -o json > my-secret.json
 
 kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 ```
@@ -97,7 +97,7 @@ You have a slack channel with name aks-monitor-<env>.
 Run (replace `<env>` with your env name ):
 ```bash
 $ ENV=<your-env>
-$ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
+$ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run=client -o json > /tmp/values.json
 $ mkdir -p k8s/$ENV/common/sealed-secrets
 $ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/fluxcloud-values.yaml
 ```
@@ -112,10 +112,11 @@ Retrieve the existing secret:
 ```bash
 $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
+Update this /tmp/values.yaml file with the Slack WebHook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
-$ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run -o json > /tmp/values.json
+$ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run=client -o json > /tmp/values.json
 $ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/kured-values.yaml
 ```
 
@@ -127,7 +128,7 @@ It requires a sealed secret that contains the azure storage account name and key
 ```bash
 $ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-<env> --name storage-account-key --query value -o tsv)
 
-$ kubectl create secret generic nv-storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps<env> --namespace neuvector --dry-run -o json > /tmp/neuvector.json
+$ kubectl create secret generic nv-storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps<env> --namespace neuvector --dry-run=client -o json > /tmp/neuvector.json
 $ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/neuvector.json > k8s/<env>/common/neuvector/nv-storage-secret.yaml
 ```
 
@@ -141,18 +142,18 @@ This can only be retrieved from powershell or lots of clicking in the Azure Port
 The "CustomerId" is your workspace ID
 ```powershell
 Connect-AzAccount
-Select-AzSubscription  DCD-CFTAPPS-<env>
-$oms = Get-AzOperationalInsightsWorkspace
+Select-AzSubscription DCD-CNP-DEV # prod: DCD-CNP-PROD, sandbox, DCD-CFT-Sandbox
+$oms = Get-AzOperationalInsightsWorkspace -ResourceGroupName oms-automation
 $workspaceId = $oms.CustomerId.Guid
 
-$keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation-rg -Name hmcts-<env>-law
+$keys = Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName oms-automation -Name hmcts-nonprod # prod: hmcts-prod, sandbox: hmcts-sandbox
 $primaryKey = $keys.PrimarySharedKey
 
-kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run -o json > /tmp/fluentbit-log.json
+kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_id=$workspaceId --from-literal azure_log_workspace_shared_key=$primaryKey --namespace neuvector --dry-run=client -o json > /tmp/fluentbit-log.json
 ```
 
 ```bash
-kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/fluentbit-log.json > k8s/<env>/common/neuvector/fluentbit-log.yaml
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/fluentbit-log.json > k8s/$ENV/common/neuvector/fluentbit-log.yaml
 ```
 
 ### Traefik
@@ -180,7 +181,7 @@ ssl:
 Create traefik-values sealed secret from the values.yaml 
 
 ```bash
-kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run -o yaml > tmp/traefiksecret.yaml
+kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run=client -o yaml > tmp/traefiksecret.yaml
 mkdir -p k8s/$ENV/common/traefik/
 kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/$ENV/common/traefik/traefik-values.yaml
 ```
@@ -197,19 +198,39 @@ Retrieve the existing secret:
 ```bash
 $ kubectl -n admin get secret kube-slack-values  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
 ```
+Update this /tmp/values.yaml file with the Slack WebHook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
-$ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run -o json > /tmp/values.json
+$ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run=client -o json > /tmp/values.json
 $ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/kube-slack-values.yaml
 ```
 
 ### Azure DevOps
 
+Only complete this step for management clusters
+
 ```bash
 ENV=mgmt-sandbox
 AZ_DEVOPS_TOKEN=$(az keyvault secret show --vault-name infra-vault-nonprod --name azure-devops-token --query value -o tsv)
-kubectl create secret generic vsts-token --from-literal=token=$AZ_DEVOPS_TOKEN --namespace vsts --dry-run -o json > /tmp/values.json
+kubectl create secret generic vsts-token --from-literal=token=$AZ_DEVOPS_TOKEN --namespace vsts --dry-run=client -o json > /tmp/values.json
 mkdir -p k8s/$ENV/common/vsts/
 kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/vsts/vsts-token.yaml
+```
+
+### External DNS (ideally we'll move this to managed identity)
+
+```bash
+ENV=demo
+VAULT=cftapps-${ENV}
+mkdir -p k8s/$ENV/common/sealed-secrets/
+CLIENT_ID=$(az keyvault secret show --vault-name ${VAULT} --name aks-sp-app-id --query value -o tsv)
+CLIENT_SECRET=$(az keyvault secret show --vault-name ${VAULT} --name aks-sp-app-password --query value -o tsv)
+
+kubectl create secret generic external-dns --from-literal AZURE_TENANT_ID=531ff96d-0ae9-462a-8d2d-bec7c0b42082 \
+  --from-literal AZURE_CLIENT_ID=${CLIENT_ID} --from-literal AZURE_CLIENT_SECRET=${CLIENT_SECRET} \
+  --dry-run=client \
+  -o json > /tmp/external-dns.json
+
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/external-dns.json > k8s/$ENV/common/sealed-secrets/external-dns.yaml
 ```

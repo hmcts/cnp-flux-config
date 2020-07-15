@@ -15,14 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-tribunals-frontend
-    version: 0.2.5
+    version: 0.2.6
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-44d28738
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-6ed5644c
       ingressHost: benefit-appeal.demo.platform.hmcts.net
+      environment:
+        FT_WELSH: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

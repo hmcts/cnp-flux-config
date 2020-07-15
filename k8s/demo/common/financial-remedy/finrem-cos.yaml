@@ -20,11 +20,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-196e5c25
+      image: hmctspublic.azurecr.io/finrem/cos:prod-5614b0b3
       environment:
-        FEATURE_APPROVED_CONSENT_ORDER_NOTIFICATION_LETTER: true
-        FEATURE_HWF_SUCCESSFUL_NOTIFICATION_LETTER: true
-        FEATURE_ASSIGNED_TO_JUDGE_NOTIFICATION_LETTER: true
+        FEATURE_PRINT_GENERAL_LETTER: true
+        FEATURE_CONSENT_ORDER_NOT_APPROVED_APPLICANT_DOCUMENT_GENERATION: true
+        FEATURE_CONTESTED_COURT_DETAILS_MIGRATION: false
+        BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
+        BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

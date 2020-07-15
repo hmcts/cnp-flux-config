@@ -8,7 +8,7 @@ spec:
   values:
     master:
       ingress:
-        hostName: build-beta.platform.hmcts.net
+        hostName: build.platform.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
@@ -16,11 +16,11 @@ spec:
           value: https://cftptl-intsvc.vault.azure.net
       resources:
         requests:
-          cpu: "2"
-          memory: "4Gi"
-        limits:
           cpu: "4"
-          memory: "7Gi"
+          memory: "24Gi"
+        limits:
+          cpu: "6"
+          memory: "24Gi"
       JCasC:
         configScripts:
           welcome-message: |
@@ -44,15 +44,15 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: aat-01-aks
+                        value: aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: aat-01-rg
+                        value: aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cnp-aks-cluster
+                        value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cnp-aks-rg
+                        value: preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
-                        value: DCD-CNP-DEV
+                        value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-STG
                       - key : AAT_AKS_KEY_VAULT
@@ -64,13 +64,13 @@ spec:
                     name: all
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|feature-toggle-api|service-auth-provider-app|spring-boot-template|cnp-rhubarb-recipes-service|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
+                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
                     name: Platform
                     recurse: true
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-*|send-letter-client|send-letter-service)\/master
+                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-.*|send-letter-client|send-letter-service)\/master
                     name: BSP
                     recurse: true
                     title: BSP
@@ -130,7 +130,7 @@ spec:
                     title: CDM Nightly Builds
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-backend|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
+                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -224,6 +224,24 @@ spec:
                     name: Evidence
                     recurse: true
                     title: Evidence Management
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*UCMC.*\/.+\/master
+                    name: UCMC
+                    recurse: true
+                    title: UCMC Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*UNSPEC.*\/.+\/master
+                    name: UNSPEC
+                    recurse: true
+                    title: UNSPEC Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*HMI.*\/.+\/master
+                    name: HMI
+                    recurse: true
+                    title: HMI
           authentication: |
             jenkins:
               securityRealm:
@@ -233,7 +251,7 @@ spec:
                   groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
                   idpMetadataConfiguration:
                     period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=f51ea833-3992-44a6-899e-16257b3e4fd1
+                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=b2391616-ba63-4676-ad17-0d8fa49c4f44
                   maximumAuthenticationLifetime: 7862400
                   usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                   usernameCaseConversion: "none"
@@ -241,33 +259,62 @@ spec:
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://build-beta.platform.hmcts.net'
+                url: 'https://build.platform.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:
                 keyVaultURL: https://cftptl-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
-          build-failure-analyzer: |
-            unclassified:
-              buildFailureAnalyzer:
-                doNotAnalyzeAbortedJob: false
-                gerritTriggerEnabled: true
-                globalEnabled: true
-                graphsEnabled: true
-                knowledgeBase:
-                  mongoDB:
-                    dbName: "build-failure-analyzer"
-                    enableStatistics: true
-                    host: "build-failure-analyzer.platform.hmcts.net"
-                    password: "${bfa-user-password}"
-                    port: 27017
-                    successfulLogging: false
-                    userName: "build-failure-analyzer"
-                maxLogSize: 0
-                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
-                nrOfScanThreads: 3
-                testResultCategories: "test-failures"
-                testResultParsingEnabled: true
+          kubernetes-agent: |
+            jenkins:
+              clouds:
+                - kubernetes:
+                    addMasterProxyEnvVars: true
+                    containerCap: 40
+                    containerCapStr: "40"
+                    jenkinsTunnel: "jenkins-agent:50000"
+                    jenkinsUrl: "http://jenkins:8080"
+                    maxRequestsPerHost: 32
+                    maxRequestsPerHostStr: "32"
+                    name: "kubernetes"
+                    namespace: "jenkins"
+                    podLabels:
+                    - key: "aadpodidbinding"
+                      value: "jenkins"
+                    - key: "cloud"
+                      value: "kubernetes"
+                    templates:
+                    - activeDeadlineSeconds: 120
+                      activeDeadlineSecondsStr: "120"
+                      containers:
+                      - alwaysPullImage: true
+                        args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4q68"
+                        livenessProbe:
+                          failureThreshold: 0
+                          initialDelaySeconds: 0
+                          periodSeconds: 0
+                          successThreshold: 0
+                          timeoutSeconds: 0
+                        name: "inbound-agent"
+                        resourceLimitCpu: "1000m"
+                        resourceLimitMemory: "2Gi"
+                        resourceRequestCpu: "500m"
+                        resourceRequestMemory: "1Gi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      hostNetwork: false
+                      idleMinutes: 10
+                      idleMinutesStr: "10"
+                      instanceCap: 40
+                      instanceCapStr: "40"
+                      label: "k8s-agent"
+                      name: "k8s-inbound-agent"
+                      namespace: "jenkins"
+                      podRetention: "never"
+                      serviceAccount: "jenkins"
+                      yamlMergeStrategy: "override"
           azure-vm-agent: |
             jenkins:
               clouds:

@@ -20,24 +20,25 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-payment-processor
-    version: 0.1.9
+    version: 0.2.0
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-5dbbbcfc
+      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-d12c36d9
       environment:
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        FORCE_RESTART: true
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
         environment:
           TEST_URL: "http://bulk-scan-payment-processor-prod.service.core-compute-prod.internal"
           SLACK_CHANNEL: "bsp-test-notices"
-          SLACK_NOTIFY_SUCCESS: true
+          SLACK_NOTIFY_SUCCESS: false
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-5dbbbcfc
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-d12c36d9
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -23,11 +23,13 @@ spec:
       url: git@github.com:hmcts/cnp-flux-config
       pollInterval: 1m
       secretName: flux-git-deploy
+      timeout: "60s"
     syncGarbageCollection:
       enabled: true
     registry:
       acr:
         enabled: true
+      includeImage: 'hmctspublic.azurecr.io/*'
     additionalArgs:
       - --connect=ws://fluxcloud
       - --manifest-generation=true

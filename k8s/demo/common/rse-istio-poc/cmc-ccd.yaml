@@ -62,7 +62,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-istio-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-1f77564f
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-c3784e64
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -77,7 +77,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-9bd905cb
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-307ddc01
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -86,7 +86,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-77f5956b
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3ec3758c
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -97,14 +97,14 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-73b64ead
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c33fa2e2
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-a7b8709b
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ee0dde47
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-92184588
+        image: hmctspublic.azurecr.io/dm/store:prod-d1500396

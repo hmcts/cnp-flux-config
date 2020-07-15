@@ -1,0 +1,45 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-management-web
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: ccd-case-management-web
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccd-case-management-web
+    version: 2.0.4
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1b97a222
+      ingressHost: www-ccd-ethosldata.platform.hmcts.net
+      environment:
+        CCD_ACTIVITY_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/activity
+        CCD_API_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/aggregated
+        CCD_DATA_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/data
+        CCD_GW_LOGOUT_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/logout
+        CCD_GW_OAUTH2_CLIENT_ID: ccd_gateway
+        CCD_GW_OAUTH2_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/oauth2
+        CCD_PAGE_SIZE: 25
+        DM_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/documents
+        DM_URL_REMOTE: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-ldata\.service\.core-compute-ethosldata\.internal(?::\d+)?)/documents
+        IDAM_LOGIN_URL: https://idam-web-public-ethosldata.platform.hmcts.net
+        PAYMENTS_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/payments
+        PAY_BULKSCAN_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/pay-bulkscan
+        POSTCODE_LOOKUP_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/addresses?postcode=$${postcode}
+        PRINT_SERVICE_URL: https://gateway-ccd-ethosldata.platform.hmcts.net/print
+        PRINT_SERVICE_URL_REMOTE: https://return-case-doc-ccd-ethosldata.platform.hmcts.net
+        SHUTTER_REDIRECT_URL: https://xui-webapp-ldata.service.core-compute-ethosldata.internal
+    global:
+      environment: ethosldata
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

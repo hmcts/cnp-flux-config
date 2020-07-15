@@ -7,8 +7,21 @@ metadata:
 spec:
   values:
     master:
+      javaOpts: >-
+        -XX:InitialRAMPercentage=30.0
+        -XX:MaxRAMPercentage=60.0
+        -XX:MinRAMPercentage=20.0
+        -XX:+UseParallelOldGC
+        -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/workspace/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
       ingress:
-        hostName: sandbox-build-beta.platform.hmcts.net
+        hostName: sandbox-build.platform.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -45,9 +58,9 @@ spec:
                       - key: GRADLE_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: SANDBOX_AKS_CLUSTER_NAME
-                        value: sbox-01-aks
+                        value: sbox-00-aks
                       - key: SANDBOX_AKS_RESOURCE_GROUP
-                        value: sbox-01-rg
+                        value: sbox-00-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-SBOX
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -78,7 +91,7 @@ spec:
                   groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
                   idpMetadataConfiguration:
                     period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=0c70bee1-6f46-40f3-8e6e-756e912f8d73
+                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/FederationMetadata/2007-06/FederationMetadata.xml?appid=001b73bc-0fae-46fa-bb7f-2296a655ba33
                   maximumAuthenticationLifetime: 7862400
                   usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                   usernameCaseConversion: "none"
@@ -86,33 +99,103 @@ spec:
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://sandbox-build-beta.platform.hmcts.net'
+                url: 'https://sandbox-build.platform.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:
                 keyVaultURL: https://cftsbox-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
-          build-failure-analyzer: |
-            unclassified:
-              buildFailureAnalyzer:
-                doNotAnalyzeAbortedJob: false
-                gerritTriggerEnabled: true
-                globalEnabled: true
-                graphsEnabled: true
-                knowledgeBase:
-                  mongoDB:
-                    dbName: "build-failure-analyzer"
-                    enableStatistics: true
-                    host: "sandbox-build-failure-analyzer.platform.hmcts.net"
-                    password: "${bfa-user-password}"
-                    port: 27017
-                    successfulLogging: false
-                    userName: "build-failure-analyzer"
-                maxLogSize: 0
-                noCausesMessage: 'No problems were identified. If you know why this problem occurred, please add a suitable Cause for it - <a href="https://tools.hmcts.net/confluence/display/CNP/Build+failure+analyzer">documentation</a>'
-                nrOfScanThreads: 3
-                testResultCategories: "test-failures"
-                testResultParsingEnabled: true
+          kubernetes-agent: |
+            jenkins:
+              clouds:
+                - kubernetes:
+                    addMasterProxyEnvVars: true
+                    containerCap: 10
+                    containerCapStr: "10"
+                    jenkinsTunnel: "jenkins-agent:50000"
+                    jenkinsUrl: "http://jenkins:8080"
+                    maxRequestsPerHost: 32
+                    maxRequestsPerHostStr: "32"
+                    name: "kubernetes"
+                    namespace: "jenkins"
+                    podLabels:
+                    - key: "aadpodidbinding"
+                      value: "jenkins"
+                    - key: "cloud"
+                      value: "kubernetes"
+                    templates:
+                    - activeDeadlineSeconds: 120
+                      activeDeadlineSecondsStr: "120"
+                      containers:
+                      - args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4wuu"
+                        livenessProbe:
+                          failureThreshold: 0
+                          initialDelaySeconds: 0
+                          periodSeconds: 0
+                          successThreshold: 0
+                          timeoutSeconds: 0
+                        name: "inbound-agent"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "2Gi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      hostNetwork: false
+                      idleMinutes: 10
+                      idleMinutesStr: "10"
+                      instanceCap: 10
+                      instanceCapStr: "10"
+                      label: "k8s-agent"
+                      name: "k8s-inbound-agent"
+                      namespace: "jenkins"
+                      podRetention: "never"
+                      serviceAccount: "jenkins"
+                      supplementalGroups: "118"
+                      volumes:
+                      - hostPathVolume:
+                          hostPath: "/var/run/docker.sock"
+                          mountPath: "/var/run/docker.sock"
+                      yaml: |-
+                        metadata:
+                          labels:
+                            app.kubernetes.io/name: jenkins
+                            app.kubernetes.io/component: jenkins-agent
+                        spec:
+                          securityContext:
+                            fsGroup: 118
+                          affinity:
+                            podAntiAffinity:
+                              requiredDuringSchedulingIgnoredDuringExecution:
+                                - labelSelector:
+                                    matchExpressions:
+                                      - key: app.kubernetes.io/component
+                                        operator: In
+                                        values:
+                                          - jenkins-master
+                                  topologyKey: "kubernetes.io/hostname"
+                      yamlMergeStrategy: "merge"
+                      yamls:
+                      - |-
+                        metadata:
+                          labels:
+                            app.kubernetes.io/name: jenkins
+                            app.kubernetes.io/component: jenkins-agent
+                        spec:
+                          securityContext:
+                            fsGroup: 118
+                          affinity:
+                            podAntiAffinity:
+                              requiredDuringSchedulingIgnoredDuringExecution:
+                                - labelSelector:
+                                    matchExpressions:
+                                      - key: app.kubernetes.io/component
+                                        operator: In
+                                        values:
+                                          - jenkins-master
+                                  topologyKey: "kubernetes.io/hostname"
           azure-vm-agent: |
             jenkins:
               clouds:

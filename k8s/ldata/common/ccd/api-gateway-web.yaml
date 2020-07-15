@@ -1,0 +1,45 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-api-gateway-web
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: ccd-api-gateway-web
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccd-api-gateway-web
+    version: 1.0.8
+  values:
+    nodejs:
+      replicas: 4
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-307ddc01
+      ingressHost: gateway-ccd-ethosldata.platform.hmcts.net
+      environment:
+        CORS_ORIGIN_WHITELIST: "*"
+        IDAM_BASE_URL: https://idam-api-ethosldata.platform.hmcts.net
+        IDAM_OAUTH2_LOGOUT_ENDPOINT: https://idam-api-ethosldata.platform.hmcts.net/session/:token
+        IDAM_OAUTH2_TOKEN_ENDPOINT: https://idam-api-ethosldata.platform.hmcts.net/oauth2/token
+        IDAM_S2S_URL: http://rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal
+        PROXY_AGGREGATED: http://ccd-data-store-api-ldata.service.core-compute-ethosldata.internal
+        PROXY_CASE_ACTIVITY: http://ccd-case-activity-api-ldata.service.core-compute-ethosldata.internal
+        PROXY_DATA: http://ccd-data-store-api-ldata.service.core-compute-ethosldata.internal
+        PROXY_DEFINITION_IMPORT: http://ccd-definition-store-api-ldata.service.core-compute-ethosldata.internal
+        PROXY_DOCUMENT_MANAGEMENT: http://dm-store-ldata.service.core-compute-ethosldata.internal
+        PROXY_MV_ANNOTATIONS_API_URL: http://em-anno-ldata.service.core-compute-ethosldata.internal
+        PROXY_PAYMENTS: http://payment-api-ldata.service.core-compute-ethosldata.internal
+        PROXY_PAY_BULKSCAN: http://ccpay-bulkscanning-api-ldata.service.core-compute-ethosldata.internal
+        PROXY_PRINT_SERVICE: http://ccd-case-print-service-ldata.service.core-compute-ethosldata.internal
+        PROXY_REFDATA: http://rd-professional-api-ldata.service.core-compute-ethosldata.internal
+        SECURE_AUTH_COOKIE_ENABLED: true
+    global:
+      environment: ethosldata
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

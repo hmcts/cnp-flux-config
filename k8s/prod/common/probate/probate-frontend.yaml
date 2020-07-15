@@ -15,16 +15,21 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-frontend
-    version: 2.0.9
+    version: 2.0.13
   values:
     nodejs:
       replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:prod-f143df81
+      image: hmctspublic.azurecr.io/probate/frontend:prod-7ff947d8
       ingressHost: www.apply-for-probate.service.gov.uk
       environment:
         IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
         IDAM_API_URL: https://idam-api.platform.hmcts.net
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

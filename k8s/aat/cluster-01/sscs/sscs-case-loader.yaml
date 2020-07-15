@@ -5,8 +5,8 @@ metadata:
   name: sscs-case-loader
   namespace: sscs
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.job: glob:staging-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.job: glob:prod-*
 spec:
   releaseName: sscs-case-loader
   rollback:
@@ -14,12 +14,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-case-loader
-    version: 0.0.6
+    version: 0.0.10
   values:
     job:
       schedule: "5/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/case-loader:staging-e61880da
+      image: hmctspublic.azurecr.io/sscs/case-loader:prod-cb31c50f
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

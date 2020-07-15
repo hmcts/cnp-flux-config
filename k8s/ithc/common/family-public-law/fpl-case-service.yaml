@@ -15,7 +15,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.11.1
+    version: 1.12.1
   values:
     java:
       replicas: 2
@@ -23,14 +23,15 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-1c9407d7
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-6c877228
       ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
-        DOCMOSIS_TORNADO_URL: https://docmosis-ithc.platform.hmcts.net
+        DUMMY: dummy
+        SCHEDULER_ENABLED: false
+        DOCMOSIS_TORNADO_URL: https://docmosis-development.platform.hmcts.net
         GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
         SPRING_SECURITY_ENABLED: true
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.ithc.platform.hmcts.net/o/jwks
-        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/hmcts
       aadIdentityName: family-public-law
     global:
       environment: ithc

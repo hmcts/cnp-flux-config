@@ -15,7 +15,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-cos
-    version: 1.3.3
+    version: 1.4.3
   values:
     java:
       replicas: 2
@@ -28,15 +28,17 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "686ed071-9c72-4dc3-9edb-191edceb6018"
-      image: hmctspublic.azurecr.io/div/cos:pr-766-2e96d5ab
+      image: hmctspublic.azurecr.io/div/cos:pr-766-952361f0
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: "true"
+        FEATURE_PAPER_UPDATE: true
+        SOLICITOR_DN_REJECT_AND_AMEND: true
         DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
-        BULKACTION_MINCASES: 5
+        BULKACTION_MINCASES: 3
         DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com

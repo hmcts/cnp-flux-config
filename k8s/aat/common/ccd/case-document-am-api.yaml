@@ -2,25 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: case-document-am-api
+  name: ccd-case-document-am-api
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: case-document-am-api
+  releaseName: ccd-case-document-am-api
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: case-document-am-api
-    version: 0.2.9
+    name: ccd-case-document-am-api
+    version: 0.3.3
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-document-am-api:prod-07c25493
+      image: hmctspublic.azurecr.io/ccd/case-document-am-api:prod-1f5043b1
+      environment:
+        IDAM_URL: https://idam-api.aat.platform.hmcts.net
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

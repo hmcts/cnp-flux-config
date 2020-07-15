@@ -20,16 +20,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-orchestrator
-    version: 0.2.11
+    version: 0.3.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-4da165c4
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-07380959
       environment:
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
         TRANSFORMATION_URL_DIVORCE: ""
-        TRANSFORMATION_URL_FINREM: ""
         DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "0 30 0/2 * * *"
         DELETE_ENVELOPES_DLQ_MESSAGES_TTL: "PT72H"
       testsConfig:
@@ -38,10 +37,10 @@ spec:
         environment:
           TEST_URL: "http://bulk-scan-orchestrator-prod.service.core-compute-prod.internal"
           SLACK_CHANNEL: "bsp-test-notices"
-          SLACK_NOTIFY_SUCCESS: true
+          SLACK_NOTIFY_SUCCESS: false
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-4da165c4
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-07380959
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

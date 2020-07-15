@@ -18,6 +18,16 @@ spec:
       labels:
         app: vsts-aks-agent
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - jenkins-master
+              topologyKey: "kubernetes.io/hostname"
       volumes:
         - name: docker-sock-volume
           hostPath:
@@ -25,7 +35,7 @@ spec:
             type: File
       containers:
         - name: vsts-aks-agent
-          image: hmctspublic.azurecr.io/hmcts/vsts-agent:db3tuu
+          image: hmctspublic.azurecr.io/hmcts/vsts-agent:db4ubu
           volumeMounts:
             - mountPath: /var/run/docker.sock
               name: docker-sock-volume

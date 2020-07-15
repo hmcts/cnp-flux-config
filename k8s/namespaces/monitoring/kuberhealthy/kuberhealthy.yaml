@@ -1,0 +1,28 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kuberhealthy
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: kuberhealthy
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://comcast.github.io/kuberhealthy/helm-repos
+    name: kuberhealthy
+    version: 2.2.0
+  values:
+    prometheus:
+      enableAlerting: true
+      enableScraping: true
+      enabled: true
+      name: prom-operator
+      release: prom-operator
+      serviceMonitor: true
+    check:
+      daemonset:
+        runInterval: 1h

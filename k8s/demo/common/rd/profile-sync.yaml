@@ -15,12 +15,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rd-profile-sync
-    version: 0.0.5
+    version: 0.0.6
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/rd/profile-sync:demo
+      environment:
+        IDAM_URL: https://idam-api.demo.platform.hmcts.net
+        TEMP_VAR: rd-profile-sync-2
+        # This is temp solution for restarting pod with adding/updating following variable. Dont change flux version.
+
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

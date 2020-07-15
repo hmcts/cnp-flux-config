@@ -5,8 +5,8 @@ metadata:
   name: sscs-tribunals-api
   namespace: sscs
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1028-*
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.nodejs: glob:pr-1142-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -15,16 +15,20 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-tribunals-api
-    version: 0.0.14
+    version: 0.0.18
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1028-f876f2c3
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1142-87f79dda
       aadIdentityName: sscs
       environment:
         READY_TO_LIST_OFFICES: DWP PIP (1),DWP PIP (2),DWP PIP (3),DWP PIP (4),DWP
-          PIP (5),DWP PIP (6),DWP PIP (7),DWP PIP (8),DWP PIP (9),DWP PIP (AE)
+          PIP (5),DWP PIP (6),DWP PIP (7),DWP PIP (8),DWP PIP (9),DWP PIP (AE),Balham
+          DRT,Birkenhead LM DRT,Chesterfield DRT,Coatbridge Benefit Centre,Inverness
+          DRT,Lowestoft DRT,Milton Keynes DRT,Norwich DRT,Sheffield DRT,Springburn
+          DRT,Watford DRT,Wellingborough DRT,Worthing DRT
+        TEST2: dummy
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

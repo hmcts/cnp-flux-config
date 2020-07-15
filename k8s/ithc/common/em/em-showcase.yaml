@@ -5,7 +5,7 @@ metadata:
   name: em-showcase
   namespace: em
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.nodejs: glob:aat-*
 spec:
   releaseName: em-showcase
@@ -15,16 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-showcase
-    version: 1.1.3
+    version: 1.1.8
   values:
     nodejs:
-      replicas: 2
-      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
+      replicas: 1
+      applicationInsightsInstrumentKey: "85dcdcdd-f333-47b1-9e2b-bd8fea0b00ce"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/showcase:aat-59ba9a28
+      image: hmctspublic.azurecr.io/em/showcase:aat-98eec57f
       ingressHost: em-showcase-ithc.service.core-compute-ithc.internal
       environment:
-        VAR_T3: trigger4
+        VAR_T3: trigger10
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

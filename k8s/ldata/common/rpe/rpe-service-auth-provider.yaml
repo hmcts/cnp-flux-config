@@ -1,0 +1,33 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rpe-service-auth-provider
+  namespace: rpe
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: rpe-service-auth-provider
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: rpe-service-auth-provider
+    version: 0.3.6
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "9e3b09db-52b8-42d3-acd5-9a4a6bf7a9a5"
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-cd811b15
+      ingressHost: rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal
+      JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0
+        -XX:+UseConcMarkSweepGC -javaagent:/opt/app/applicationinsights-agent-2.5.1.jar
+        -Dfile.encoding=UTF-8 -Djava.security.egd=file:/dev/./urandom
+    global:
+      environment: ethosldata
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      subscriptionId: "unneeded-after-chart-update"
+      enableKeyVaults: true

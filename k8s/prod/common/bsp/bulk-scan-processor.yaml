@@ -20,14 +20,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.2.26
+    version: 0.3.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-c1a44902
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-5088b5b5
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
@@ -35,11 +35,9 @@ spec:
         SMTP_HOST: smtp.office365.com
         SCAN_DELAY: "300000"
         UPLOAD_TASK_DELAY: "300000"
-        REUPLOAD_DELAY: "600000"
         STORAGE_BLOB_PUBLIC_KEY: trusted_public_key.der
         NO_NEW_ENVELOPES_TASK_ENABLED: true
         OCR_VALIDATION_URL_DIVORCE: ""
-        OCR_VALIDATION_URL_FINREM: ""
         DELETE_COMPLETE_FILES_CRON: "0 0/10 * * * *"
         STORAGE_BLOB_LEASE_TIMEOUT: 60
       testsConfig:
@@ -58,7 +56,7 @@ spec:
           TEST_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-c1a44902
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-5088b5b5
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ucmc
+  namespace: ucmc
+spec:
+  type: 0
+  ResourceID: /subscriptions/96c274ce-846d-4e48-89a7-d528432298a7/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ucmc-aat-mi
+  ClientID: 451a7547-c950-4cdd-abc0-505a147c67d0
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ucmc-binding
+  namespace: ucmc
+spec:
+  AzureIdentity: ucmc
+  Selector: ucmc
+

@@ -7,6 +7,11 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:prod-*
 spec:
   releaseName: reform-scan-notification-service
   rollback:
@@ -15,14 +20,25 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: reform-scan-notification-service
-    version: 0.0.13
+    version: 0.1.2
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-b96a2ab6
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-e69bb581
       environment:
+        NOTIFICATIONS_CONSUME_TASK_DELAY_IN_MS: "600000"
         PENDING_NOTIFICATIONS_TASK_DELAY_IN_MS: "1800000"
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        environment:
+          TEST_URL: "http://reform-scan-notification-service-prod.service.core-compute-prod.internal"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+      smoketests:
+        enabled: true
+        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:prod-e69bb581
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

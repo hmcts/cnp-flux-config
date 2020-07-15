@@ -11,9 +11,6 @@ metadata:
     filter.fluxcd.io/cmc-citizen-frontend: glob:prod-*
     repository.fluxcd.io/cmc-claim-store: cmc-claim-store.java.image
     filter.fluxcd.io/cmc-claim-store: glob:prod-*
-    repository.fluxcd.io/rpe-feature-toggle-api: rpe-feature-toggle-api.java.image
-    filter.fluxcd.io/rpe-feature-toggle-api: glob:prod-*
-
 spec:
   releaseName: cmc-demo
   timeout: 900
@@ -24,7 +21,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 2.0.0
+    version: 2.0.4
   values:
     global:
       devMode: true
@@ -42,15 +39,15 @@ spec:
       documentManagementUrl: "http://cmc-ccd-dm-store"
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
-      togglesUrl: "http://cmc-demo-rpe-feature-toggle-api"
       postgresqlHost: "cmc-demo-postgresql"
 
-    ### CMC SERVICES ###
+    ### CMC SERVICES ####
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-387db7d3
-        ingressHost: cmc-demo-claim-store-demo.service.core-compute-demo.internal
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-f4c4f082
+        ingressClass: traefik-private
+        ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
@@ -61,18 +58,18 @@ spec:
           DOC_ASSEMBLY_TEMPLATEID: CV-CMC-GOR-ENG-0004-1.docx
           DOC_ASSEMBLY_JUDGETEMPLATEID: CV-CMC-GOR-ENG-00219-1.docx
           FEATURE_TOGGLES_CTSC_ENABLED: true
+          FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
 
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-63285554
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-01579aa8
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
             secretRef: cmc-s2s-secret
             key: key
         environment:
-          FEATURE_TOGGLES_API_URL: "http://cmc-demo-rpe-feature-toggle-api"
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"
           FEATURE_INVERSION_OF_CONTROL: false
           FEATURE_MOCK_PAY: true
@@ -83,11 +80,3 @@ spec:
           url: "https://idam-web-public.demo.platform.hmcts.net"
         service:
           redirect_uri: "https://{{ .Values.global.cmcFrontendUrl }}/receiver"
-      rpe-feature-toggle-api:
-        enabled: true
-        importer:
-          apiUrl: "http://cmc-demo-rpe-feature-toggle-api/api/ff4j/store/features/"
-        java:
-          releaseNameOverride: "cmc-demo-rpe-feature-toggle-api"
-          environment:
-            FEATURES_DB_HOST: "{{ .Release.Name }}-postgresql"

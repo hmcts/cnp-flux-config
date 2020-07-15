@@ -15,16 +15,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: fpl-case-service
-    version: 1.11.1
+    version: 1.12.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-6d6c29d6
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-573ddc23
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
       environment:
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
+        TESTING_SUPPORT_ENABLED: true
       aadIdentityName: family-public-law
     global:
       environment: demo

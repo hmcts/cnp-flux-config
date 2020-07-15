@@ -16,6 +16,7 @@ k8s/prod/ @hmcts/production-apps-approvals
 k8s/common/ @hmcts/platform-engineering @hmcts/devops
 k8s/namespaces/ @hmcts/platform-engineering @hmcts/devops
 k8s/**/cluster-*-overlay/ @hmcts/platform-engineering
+k8s/prod/*/kube-system/ @hmcts/platform-engineering
 k8s/**/common/monitoring/ @hmcts/platform-engineering
 
 ### Next team
@@ -41,6 +42,8 @@ k8s/**/common/rpe/send-letter-identity.yaml @hmcts/bulk-scan
 k8s/**/common/rpe/send-letter-service.yaml @hmcts/bulk-scan
 
 k8s/**/common/admin/check-acr-sync-cronjob.yaml @hmcts/platform-engineering
+
+tests/ @hmcts/platform-engineering
 
 ### Next team
 
@@ -85,8 +88,10 @@ k8s/**/common/ia/case-documents-api.yaml @hmcts/immigration-asylum
 k8s/**/common/ia/case-notifications-api.yaml @hmcts/immigration-asylum
 k8s/**/common/ia/aip-frontend.yaml @hmcts/immigration-asylum
 k8s/aat/common/ia/home-office-integration-api.yaml @hmcts/immigration-asylum
-k8s/aat/common/ia/timed-event-service.yaml @hmcts/immigration-asylum
+k8s/aat/common/ia/home-office-mock-api.yaml @hmcts/immigration-asylum
+k8s/**/common/ia/timed-event-service.yaml @hmcts/immigration-asylum
 k8s/aat/common/ia/case-payments-api.yaml @hmcts/immigration-asylum
+k8s/demo/common/ia/case-payments-api.yaml @hmcts/immigration-asylum
 
 ## Divorce
 k8s/demo/common/divorce/*.yaml @hmcts/divorce
@@ -133,6 +138,9 @@ k8s/**/common/em/em-npa.yaml @hmcts/evidence
 k8s/**/common/em/em-stitching.yaml @hmcts/evidence
 k8s/aat/common/em/em-showcase.yaml @hmcts/evidence
 k8s/**/common/em/em-ccd-orchestrator.yaml @hmcts/evidence
+k8s/**/common/em/em-icp.yaml @hmcts/evidence
+k8s/**/cluster-*/em/em-icp.yaml @hmcts/evidence
+
 
 ## Probate
 k8s/**/common/probate/namespace.yaml @hmcts/probate
@@ -151,7 +159,8 @@ k8s/**/common/rd/professional-api.yaml @hmcts/ref-data
 k8s/**/common/rd/profile-sync.yaml @hmcts/ref-data
 k8s/**/common/rd/user-profile-api.yaml @hmcts/ref-data
 k8s/**/common/rd/judicial-api.yaml @hmcts/ref-data
-k8s/**/common/rd/judicial-data-load.yaml @hmcts/ref-data
+k8s/**/cluster-00/rd/judicial-data-load.yaml @hmcts/ref-data @hmcts/ref-data
+k8s/**/cluster-01/rd/judicial-data-load.yaml @hmcts/ref-data @hmcts/ref-data
 
 ## SSCS
 k8s/**/common/sscs/namespace.yaml @hmcts/sscs
@@ -160,12 +169,12 @@ k8s/**/common/sscs/sscs-tribunals-api.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-evidence-share.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-tya-notif.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-bulk-scan.yaml @hmcts/sscs
-k8s/**/common/sscs/sscs-cor-backend.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-ccd-callback-orchestrator.yaml @hmcts/sscs
 k8s/**/cluster-*/sscs/sscs-case-loader.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-tribunals-frontend.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-cor-frontend.yaml @hmcts/sscs
 k8s/**/common/sscs/sscs-tya-frontend.yaml @hmcts/sscs
+k8s/**/common/sscs/sscs-track-appeal-redirect-ingress.yaml @hmcts/sscs
 
 ## FPLA
 k8s/**/common/family-public-law/namespace.yaml @hmcts/fpl-admins
@@ -191,7 +200,13 @@ k8s/**/common/ccpay/ccpay-payment-app.yaml @hmcts/Fees
 k8s/**/common/ccpay/fees-register-api.yaml @hmcts/Fees
 k8s/**/common/ccpay/fees-register-frontend.yaml @hmcts/Fees
 k8s/**/common/ccpay/ccpay-bubble-frontend.yaml @hmcts/Fees
-k8s/aat/common/ccpay/ccpay-callback-function.yaml @hmcts/Fees
+k8s/**/common/ccpay/ccpay-callback-function.yaml @hmcts/Fees
+
+k8s/**/cluster-*/ccpay/bar-payment-job.yaml @hmcts/Fees
+k8s/**/cluster-*/ccpay/card-payment-job.yaml @hmcts/Fees
+k8s/**/cluster-*/ccpay/finrem-payment-job.yaml @hmcts/Fees
+k8s/**/cluster-*/ccpay/pba-payment-job.yaml @hmcts/Fees
+k8s/**/cluster-*/ccpay/status-payment-job.yaml @hmcts/Fees
 
 ## bar
 k8s/**/common/bar/bar-app.yaml @hmcts/Fees
@@ -211,6 +226,13 @@ k8s/**/common/am/namespace.yaml @hmcts/am-devs
 k8s/**/common/am/identity.yaml @hmcts/am-devs
 k8s/aat/common/am/accessmgmt-api.yaml @hmcts/am-devs
 k8s/perftest/common/am/accessmgmt-api.yaml @hmcts/am-devs
+k8s/aat/common/am/am-role-assignment-service.yaml @hmcts/am-devs
+k8s/aat/common/am/am-judicial-booking-service.yaml @hmcts/am-devs
+k8s/aat/common/am/am-org-role-mapping-service.yaml @hmcts/am-devs
+k8s/aat/cluster-**/am/role-assignment-batch.yaml @hmcts/am-devs
+k8s/aat/cluster-**/am/org-role-mapping-batch.yaml @hmcts/am-devs
+k8s/aat/cluster-**/am/judicial-booking-batch-service.yaml @hmcts/am-devs
+k8s/demo/common/am/am-role-assignment-service.yaml @hmcts/am-devs
 
 ## Ethos
 k8s/**/common/ethos/namespace.yaml @hmcts/ethos
@@ -248,13 +270,17 @@ k8s/perftest/common/xui/share-case.yaml @hmcts/xui
 ### PCQ
 k8s/**/common/pcq/namespace.yaml @hmcts/pcq-admins
 k8s/**/common/pcq/identity.yaml @hmcts/pcq-admins
-k8s/aat/common/pcq/pcq-frontend.yaml @hmcts/pcq-admins
-k8s/aat/common/pcq/pcq-backend.yaml @hmcts/pcq-admins
-k8s/demo/common/pcq/pcq-frontend.yaml @hmcts/pcq-admins
-k8s/demo/common/pcq/pcq-backend.yaml @hmcts/pcq-admins
-k8s/aat/cluster-00/pcq/pcq-consolidation-service.yaml @hmcts/pcq-admins
-k8s/aat/cluster-01/pcq/pcq-consolidation-service.yaml @hmcts/pcq-admins
+k8s/**/common/pcq/pcq-frontend.yaml @hmcts/pcq-admins
+k8s/**/common/pcq/pcq-backend.yaml @hmcts/pcq-admins
+k8s/**/cluster-*/pcq/pcq-consolidation-service.yaml @hmcts/pcq-admins
 
 ### RSE
 k8s/demo/common/rse-istio-poc/** @hmcts/rse
 k8s/aat/common/rse/check.yaml @hmcts/rse
+
+### UCMC
+k8s/**/common/ucmc/namespace.yaml @hmcts/ucmc-admins
+k8s/aat/common/ucmc/ucmc-service.yaml @hmcts/ucmc-admins
+k8s/aat/common/ucmc/identity.yaml @hmcts/ucmc-admins
+k8s/demo/common/ucmc/ucmc-service.yaml @hmcts/ucmc-admins
+k8s/demo/common/ucmc/identity.yaml @hmcts/ucmc-admins

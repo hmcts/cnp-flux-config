@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-196-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: ccd-case-activity-api
   rollback:
@@ -18,10 +18,11 @@ spec:
     version: 1.1.7
   values:
     nodejs:
-      replicas: 2
+      replicas: 4
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-activity-api:pr-196-258911fd
+      image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-477a8911
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+      test: test

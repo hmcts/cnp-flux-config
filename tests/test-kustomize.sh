@@ -11,6 +11,10 @@ kustomizepaths=(
     k8s/cftptl/cluster-00-overlay
     k8s/demo/cluster-00-overlay
     k8s/demo/cluster-01-overlay
+    k8s/ldata/cluster-00-overlay
+    k8s/ldata/cluster-01-overlay
+    k8s/preview/cluster-00-overlay
+    k8s/preview/cluster-01-overlay
     k8s/ithc/cluster-00-overlay
     k8s/ithc/cluster-01-overlay
     k8s/mgmt-sandbox/cluster-00-overlay
