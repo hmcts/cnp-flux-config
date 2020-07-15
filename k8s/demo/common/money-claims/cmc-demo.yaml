@@ -45,7 +45,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-097399b5
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-f4c4f082
         ingressClass: traefik-private
         ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
@@ -58,11 +58,12 @@ spec:
           DOC_ASSEMBLY_TEMPLATEID: CV-CMC-GOR-ENG-0004-1.docx
           DOC_ASSEMBLY_JUDGETEMPLATEID: CV-CMC-GOR-ENG-00219-1.docx
           FEATURE_TOGGLES_CTSC_ENABLED: true
+          FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
 
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-8cc83776
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-01579aa8
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:

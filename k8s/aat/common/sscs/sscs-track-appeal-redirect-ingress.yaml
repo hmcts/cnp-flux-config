@@ -6,8 +6,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/redirect-permanent: "true"
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://track-appeal.aat.platform.hmcts.net/(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://sscs-cor.aat.platform.hmcts.net/validate-surname/:tya/trackyourappeal
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://track-appeal.aat.platform.hmcts.net/evidence/(.*)|https://track-appeal.aat.platform.hmcts.net/trackyourappeal/(.*)|https://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/evidence|https://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/trackyourappeal|https://track-appeal.aat.platform.hmcts.net/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://sscs-cor.aat.platform.hmcts.net/validate-surname/:tya/trackyourappeal?tya=${1}${2}${3}${4}
   name: sscs-track-appeal-redirect-ingress
   namespace: sscs
 spec:
