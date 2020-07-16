@@ -1,0 +1,17 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: draft-store-service
+  namespace: rpe
+spec:
+  releaseName: draft-store-service
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: draft-store-service
+    version: 2.0.4
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/draft-store/service:latest
