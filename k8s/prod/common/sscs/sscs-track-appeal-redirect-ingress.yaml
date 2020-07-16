@@ -6,8 +6,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/redirect-permanent: "true"
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://www.track-benefit-appeal.service.gov.uk/(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://www.manage.appeal-benefit-decision.service.gov.uk/validate-surname/:tya/trackyourappeal
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://www.track-benefit-appeal.service.gov.uk/evidence/(.*)|https://www.track-benefit-appeal.service.gov.uk/trackyourappeal/(.*)|https://www.track-benefit-appeal.service.gov.uk/validate-surname/(.*)/evidence|https://www.track-benefit-appeal.service.gov.uk/validate-surname/(.*)/trackyourappeal|https://www.track-benefit-appeal.service.gov.uk/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://www.manage.appeal-benefit-decision.service.gov.uk/validate-surname/:tya/trackyourappeal?tya=${1}${2}${3}${4}
   name: sscs-track-appeal-redirect-ingress
   namespace: sscs
 spec:
