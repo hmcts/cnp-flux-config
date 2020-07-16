@@ -1,0 +1,17 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rpe-service-auth-provider
+  namespace: rpe
+spec:
+  releaseName: rpe-service-auth-provider
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: rpe-service-auth-provider
+    version: 0.3.6
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:latest
