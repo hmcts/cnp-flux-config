@@ -139,9 +139,23 @@ spec:
                         name: "inbound-agent"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "1000m"
-                        resourceRequestMemory: "2Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "512Mi"
                         ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      - image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4wuu"
+                        livenessProbe:
+                          failureThreshold: 0
+                          initialDelaySeconds: 0
+                          periodSeconds: 0
+                          successThreshold: 0
+                          timeoutSeconds: 0
+                        name: "jnlp"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "512Mi"
+                        ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                       hostNetwork: false
                       idleMinutes: 10
@@ -158,6 +172,9 @@ spec:
                       - hostPathVolume:
                           hostPath: "/var/run/docker.sock"
                           mountPath: "/var/run/docker.sock"
+                      - emptyDirVolume:
+                          memory: false
+                          mountPath: "/opt/jenkins"
                       yaml: |-
                         metadata:
                           labels:
