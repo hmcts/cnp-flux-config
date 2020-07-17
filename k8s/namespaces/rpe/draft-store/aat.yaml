@@ -19,9 +19,6 @@ metadata:
 spec:
   values:
     java:
-      environment:
-        IDAM_URL: http://idam-api.idam-sprod
-        S2S_URL: http://rpe-service-auth-provider-java.rpe
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -37,12 +34,12 @@ spec:
           SLACK_CHANNEL: "rpe-build-notices"
           SLACK_NOTIFY_SUCCESS: "false"
           USE_IDAM_TESTING_SUPPORT: "true"
-          S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-sandbox.service.core-compute-sandbox.internal"
-          IDAM_URL_FOR_TESTS: "https://idam-api.sandbox.platform.hmcts.net"
+          S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          IDAM_URL_FOR_TESTS: "https://idam-api.aat.platform.hmcts.net"
           S2S_NAME_FOR_TESTS: "draft_store_tests"
           IDAM_USER_EMAIL_FOR_TESTS: "reformplatformengineering+tests@gmail.com"
           IDAM_CLIENT_ID_FOR_TESTS: "cmc_citizen"
-          IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-sandbox-staging.service.core-compute-sandbox.internal/receiver"
+          IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
       smoketestscron:
         enabled: true
         image: hmctspublic.azurecr.io/draft-store/service-test:latest
