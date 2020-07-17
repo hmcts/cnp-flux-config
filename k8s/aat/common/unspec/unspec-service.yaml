@@ -2,29 +2,28 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: draft-store-service
-  namespace: rpe
+  name: unspec-service
+  namespace: unspec
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: draft-store-service
+  releaseName: unspec-service
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: draft-store-service
-    version: 2.0.4
+    name: unspec-service
+    version: 0.0.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:prod-304842c9
-      environment:
-        IDAM_URL: http://idam-api.idam-sprod
-        S2S_URL: http://rpe-service-auth-provider-java.rpe
+      image: hmctspublic.azurecr.io/unspec/service:latest
+      ingressHost: unspec-service-aat.service.core-compute-aat.internal
+      aadIdentityName: unspec
     global:
-      environment: sandbox
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

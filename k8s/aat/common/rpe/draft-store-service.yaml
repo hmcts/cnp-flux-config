@@ -22,9 +22,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: draft-store-service
-    version: 2.0.3
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/draft-store-service
   values:
     java:
       replicas: 2
@@ -32,7 +32,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:prod-304842c9
+      image: hmctspublic.azurecr.io/draft-store/service:prod-167db162
       prometheus:
         enabled: true
       testsConfig:
@@ -58,18 +58,18 @@ spec:
           IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
       smoketestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-304842c9
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
         schedule: "15 0/1 * * *"
       functionaltestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-304842c9
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
         schedule: "25 0/6 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-304842c9
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-304842c9
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

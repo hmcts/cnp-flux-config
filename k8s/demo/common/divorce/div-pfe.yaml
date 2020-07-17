@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-722-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-pfe
   rollback:
@@ -15,7 +15,7 @@ spec:
   chart:
     #    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     #    name: div-pfe
-    #    version: 1.1.10
+    #    version: 1.1.11
     git: https://github.com/hmcts/div-petitioner-frontend
     ref: WLA-591-Copy-amends
     path: charts/div-pfe
@@ -23,7 +23,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:pr-722-40967619
+      image: hmctspublic.azurecr.io/div/pfe:prod-17cdf357
       ingressClass: traefik-no-proxy
       ingressHost: petitioner-frontend-aks.demo.platform.hmcts.net
       environment:

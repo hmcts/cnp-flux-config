@@ -20,16 +20,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-144a5945
+      image: hmctspublic.azurecr.io/finrem/cos:prod-d987f693
       dnsConfig:
         singleRequestTcp: false
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        FEATURE_APPROVED_CONSENT_ORDER_NOTIFICATION_LETTER: true
-        FEATURE_HWF_SUCCESSFUL_NOTIFICATION_LETTER: true
-        FEATURE_ASSIGNED_TO_JUDGE_NOTIFICATION_LETTER: true
         FEATURE_CONSENT_ORDER_NOT_APPROVED_APPLICANT_DOCUMENT_GENERATION: true
-        FEATURE_CONTESTED_COURT_DETAILS_MIGRATION: false
+        FEATURE_CONTESTED_COURT_DETAILS_MIGRATION: true
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
         BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
     global:
