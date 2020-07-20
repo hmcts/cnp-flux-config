@@ -19,12 +19,12 @@ spec:
         receivers:
           - name: "slack_alerting"
             slack_configs:
-              - channel: prometheus-alerting
+              - channel: prometheus-alerting-prod
                 title: 'CFTPTL - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "slack_critical"
             slack_configs:
-              - channel: prometheus-critical
+              - channel: prometheus-critical-prod
                 title: 'CFTPTL - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "null"
