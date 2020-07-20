@@ -6,9 +6,6 @@ metadata:
   labels:
     k8s-app: node-local-dns
 spec:
-  updateStrategy:
-    rollingUpdate:
-      maxUnavailable: 10%
   selector:
     matchLabels:
       k8s-app: node-local-dns
@@ -16,21 +13,10 @@ spec:
     metadata:
       labels:
         k8s-app: node-local-dns
-      annotations:
-        prometheus.io/port: "9253"
-        prometheus.io/scrape: "true"
     spec:
-      priorityClassName: system-node-critical
-      serviceAccountName: node-local-dns
-      hostNetwork: true
-      dnsPolicy: Default  # Don't use cluster DNS.
       containers:
         - name: node-cache
-          image: lbitonti/k8s-dns-node-cache-amd64:1.15.13-8-ga2ba507-dirty
-          resources:
-            requests:
-              cpu: 25m
-              memory: 5Mi
+          image: hmctspublic.azurecr.io/k8s-dns/k8s-dns-node-cache-amd64:1.15.13-10-gcfc66b2
           args:
             - "-localip"
             - "169.254.20.10,10.0.0.10"
