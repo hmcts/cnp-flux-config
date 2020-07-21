@@ -2,28 +2,26 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ucmc-service
-  namespace: ucmc
+  name: am-role-assignment-service
+  namespace: am
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:perftest-*
 spec:
-  releaseName: ucmc-service
+  releaseName: am-role-assignment-service
   rollback:
     enable: true
     retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ucmc-service
-    version: 0.0.3
+    name: am-role-assignment-service
+    version: 0.0.12
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ucmc/service:prod-cd5cba38
-      ingressHost: ucmc-service-aat.service.core-compute-aat.internal
-      aadIdentityName: ucmc
+      image: hmctspublic.azurecr.io/am/role-assignment-service:perftest
     global:
-      environment: aat
+      environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
