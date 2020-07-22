@@ -6,16 +6,19 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-524-*
 spec:
   releaseName: sscs-cor-frontend
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-cor-frontend
-    version: 0.1.16
+#    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+#    name: sscs-cor-frontend
+#    version: 0.1.16
+    git: https://github.com/hmcts/sscs-cor-frontend
+    ref: WLA-454-3-Hide-Webchat
+    path: charts/sscs-cor-frontend
   values:
     nodejs:
       replicas: 2
