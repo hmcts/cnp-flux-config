@@ -1,40 +1,22 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: draft-store-service
-  namespace: rpe
   annotations:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/smokecron: java.smoketestscron.image
-    filter.fluxcd.io/smokecron: glob:prod-*
-    repository.fluxcd.io/functionalcron: java.functionaltestscron.image
-    filter.fluxcd.io/functionalcron: glob:prod-*
-    repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
-    repository.fluxcd.io/functional: java.functionaltests.image
-    filter.fluxcd.io/functional: glob:prod-*
+    repository.fluxcd.io/java.smoketestscron: java.smoketestscron.image
+    filter.fluxcd.io/java.smoketestscron: glob:prod-*
+    repository.fluxcd.io/java.functionaltestscron: java.functionaltestscron.image
+    filter.fluxcd.io/java.functionaltestscron: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+    repository.fluxcd.io/java.functionaltests: java.functionaltests.image
+    filter.fluxcd.io/java.functionaltests: glob:prod-*
 spec:
-  releaseName: draft-store-service
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/draft-store-service
   values:
     java:
-      replicas: 2
-      readinessDelay: 45
-      readinessTimeout: 5
-      readinessPeriod: 15
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:prod-167db162
-      prometheus:
-        enabled: true
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -58,19 +40,16 @@ spec:
           IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
       smoketestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
         schedule: "15 0/1 * * *"
       functionaltestscron:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
         schedule: "25 0/6 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-167db162
-    global:
-      environment: aat
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
+      image: hmctspublic.azurecr.io/draft-store/service:prod-b5a6045e
