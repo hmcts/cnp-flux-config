@@ -20,39 +20,4 @@ spec:
       environment:
         IDAM_URL: http://idam-api.idam-sprod
         S2S_URL: http://rpe-service-auth-provider-java.rpe
-      testsConfig:
-        memoryLimits: "3072Mi"
-        serviceAccountName: tests-service-account
-        keyVaults:
-          "draft-store":
-            resourceGroup: draft-store-service
-            secrets:
-              s2s-secret-for-tests: S2S_SECRET_FOR_TESTS
-              idam-password-for-tests: IDAM_PASSWORD_FOR_TESTS
-              idam-client-secret-for-tests: IDAM_CLIENT_SECRET_FOR_TESTS
-        environment:
-          TEST_URL: http://draft-store-service-java
-          SLACK_CHANNEL: "rpe-build-notices"
-          SLACK_NOTIFY_SUCCESS: "false"
-          USE_IDAM_TESTING_SUPPORT: "true"
-          S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-sandbox.service.core-compute-sandbox.internal"
-          IDAM_URL_FOR_TESTS: "https://idam-api.sandbox.platform.hmcts.net"
-          S2S_NAME_FOR_TESTS: "draft_store_tests"
-          IDAM_USER_EMAIL_FOR_TESTS: "reformplatformengineering+tests@gmail.com"
-          IDAM_CLIENT_ID_FOR_TESTS: "cmc_citizen"
-          IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-sandbox-staging.service.core-compute-sandbox.internal/receiver"
-      smoketestscron:
-        enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
-        schedule: "15 0/1 * * *"
-      functionaltestscron:
-        enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
-        schedule: "25 0/6 * * *"
-      smoketests:
-        enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
-      functionaltests:
-        enabled: true
-        image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5a6045e
       image: hmctspublic.azurecr.io/draft-store/service:prod-b5a6045e
