@@ -6,21 +6,24 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-524-*
 spec:
   releaseName: sscs-cor-frontend
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-cor-frontend
-    version: 0.1.16
+#    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+#    name: sscs-cor-frontend
+#    version: 0.1.16
+    git: https://github.com/hmcts/sscs-cor-frontend
+    ref: WLA-454-3-Hide-Webchat
+    path: charts/sscs-cor-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-364319a9
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:pr-524-85978fff
       ingressHost: sscs-cor.demo.platform.hmcts.net
       environment:
         NODE_ENV: preprod
@@ -28,6 +31,7 @@ spec:
         ADDITIONAL_EVIDENCE_FEATURE_FLAG: "true"
         EVIDENCE_UPLOAD_QUESTION_PAGE_OVERRIDE_ALLOWED: "true"
         POST_BULK_SCAN: "true"
+        FT_WELSH: "false"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

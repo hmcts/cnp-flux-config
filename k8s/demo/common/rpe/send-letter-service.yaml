@@ -15,14 +15,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: rpe-send-letter-service
-    version: 0.1.0
+    version: 0.1.1
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-bd327ccd
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-aa59fad1
       environment:
         FILE_CLEANUP_ENABLED: "true"
+        OLD_LETTER_CONTENT_CLEANUP_ENABLED: "true"
         FORCE_RESTART: true
     global:
       environment: demo
