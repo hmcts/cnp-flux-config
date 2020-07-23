@@ -31,6 +31,8 @@ git fetch origin master:master
 
 for f in $(git diff-tree --no-commit-id --name-only -r $_github_head_sha $_github_base_sha)
 do
+  # do not run if file deleted
+  [ ! -f "$f" ] && continue
   # run check only if on the prod or aat path
   echo "$f" | grep -E -q "k8s/(aat|prod)/(common|cluster-00|cluster-01)/"
   [ $? -eq 1 ] && continue
