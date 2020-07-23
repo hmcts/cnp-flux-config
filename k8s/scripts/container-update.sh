@@ -6,9 +6,6 @@ yq --version || (wget -O /usr/local/bin/yq "https://github.com/mikefarah/yq/rele
 file_name=../../namespaces/$FLUX_WL_NS/$FLUX_WL_NAME/${ENV}.yaml
 touch $file_name
 
-#Hack - overriding container appending java. for handling tests
-if echo $FLUX_CONTAINER |grep "tests" - > /dev/null; then FLUX_CONTAINER=java.$FLUX_CONTAINER; fi
-
 #set basic manifest,to handle cases where it is created new
 yq w -i $file_name 'apiVersion' helm.fluxcd.io/v1
 yq w -i $file_name kind HelmRelease
