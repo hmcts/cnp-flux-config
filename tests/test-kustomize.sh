@@ -26,6 +26,7 @@ kustomizepaths=(
     k8s/perftest/common-overlay
     k8s/prod/cluster-00-overlay
     k8s/prod/cluster-01-overlay
+    k8s/prod/common-overlay
     k8s/sandbox/cluster-00-overlay
     k8s/sandbox/cluster-01-overlay
     k8s/sandbox/common-overlay
