@@ -3,8 +3,7 @@ Flux config for AKS clusters
 
 ## Adding an app to flux
 
-All App deployments are managed through `HelmRelease` manifests. 
-See [App Deployment section](docs/app-deployment.md) for more details.
+All App deployments are managed through `HelmRelease` manifests. See [App Deployment section](docs/app-deployment.md) for more details.
 
 ## Creating Sealed Secrets
 
