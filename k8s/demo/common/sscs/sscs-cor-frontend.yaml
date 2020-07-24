@@ -6,21 +6,24 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-527-*
 spec:
   releaseName: sscs-cor-frontend
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-cor-frontend
-    version: 0.1.16
+#    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+#    name: sscs-cor-frontend
+#    version: 0.1.16
+    git: https://github.com/hmcts/sscs-cor-frontend
+    ref: WLA-454-6-I18Next
+    path: charts/sscs-cor-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-0cd66c05
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:pr-524-85978fff
       ingressHost: sscs-cor.demo.platform.hmcts.net
       environment:
         NODE_ENV: preprod
