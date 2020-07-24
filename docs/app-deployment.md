@@ -81,3 +81,8 @@ metadata:
 ....
 ....
 ```
+
+### Deploying an app to single cluster
+
+- It is recommended to add all applications to both clusters as one of the cluster can be removed from operation at any point. 
+- If you still have a use case, it has to be dealt exceptionally with help of [#rpe](https://hmcts-reform.slack.com/archives/C8SR5CAMU)
