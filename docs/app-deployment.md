@@ -11,14 +11,14 @@ All the applications owned by a team are deployed to a single namespace.
  
 ### Create a namespace manifest
 
-1. Run [add-namespace.sh](/bin/add-namespace.sh) with your namespace( usually team name) and team build notices slack channel.
+- Run [add-namespace.sh](/bin/add-namespace.sh) with your namespace( usually team name) and team build notices slack channel.
    ```bash
     ./bin/add-namespace.sh <your namespace> <team slack channel>
    ```
    
 ### Add kustomization to a environment
 
-1. Run [add-namespace-to-env.sh](/bin/add-namespace-to-env.sh) with namespace and environment.
+- Run [add-namespace-to-env.sh](/bin/add-namespace-to-env.sh) with namespace and environment.
    ```bash
     ./bin/add-namespace-to-env.sh <your namespace> <environment>
    ```
@@ -29,8 +29,8 @@ All application deployments are managed with `HelmRelease`.
 
 ### Add an application manifest
 
-1. Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
-2. Add a `HelmRelease` manifest in `/k8s/namespaces/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/k8s/namespaces/rpe/draft-store-service/draft-store-service.yaml)
+- Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
+- Add a `HelmRelease` manifest in `/k8s/namespaces/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/k8s/namespaces/rpe/draft-store-service/draft-store-service.yaml)
 
 
 ### Add application to all environments
@@ -38,15 +38,34 @@ All application deployments are managed with `HelmRelease`.
 Below adds Application to all the environments you have [added your kustomization](#Add-kustomization-to-a-environment). 
 If you want to add a new app only to a one environment, see [Add application to only one environment](#Add-application-to-only-one-environment)
 
-1. Add `- <application-name>/<application-name>.yaml`  to `bases:` list in `/k8s/namespaces/<your-namespace>/kustomization.yaml`
+- Add `- <application-name>/<application-name>.yaml`  to `bases:` list in `/k8s/namespaces/<your-namespace>/kustomization.yaml`
 
 ### Add application to only one environment
 
-1. Add `- ../../../<application-name>/<application-name>.yaml`  to `bases:` list in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
+- Add `- ../../../<application-name>/<application-name>.yaml`  to `bases:` list in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
 
 ### Override Environment specific config
 
-1. If you want to override environment specific config, you need to create patch `<env>.yaml` in `/k8s/namespaces/<your-namespace>/<application-name>/` directory by specifying only the values you want to override.
+- If you want to override environment specific config, you need to create patch `<env>.yaml` in `/k8s/namespaces/<your-namespace>/<application-name>/` directory by specifying only the values you want to override.
    [Example prod patch](/k8s/namespaces/rpe/draft-store-service/prod.yaml)
-2. Add this patch `- ../../../namespaces/<namespace>/<application-name>/prod.yaml` in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
+- Add this patch `- ../../../namespaces/<namespace>/<application-name>/prod.yaml` in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
 
+### Deploy non prod image to an environment
+
+- The default setup is configured to set all environments with image automation enabled with `prod-*` tag.
+- It is highly recommended to follow trunk based development, use prod image on all environments using feature toggling.
+- It is not allowed to break prod image automation on `aat` and `prod`.
+- If you wish to override this default behaviour in a specific environment, create a environment patch as described in previous section and set annotations as in below example: 
+```yaml
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: <application-name>
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.(java/nodejs): glob:pr-112-*
+    hmcts.github.com/prod-automated: disabled
+....
+....
+```
