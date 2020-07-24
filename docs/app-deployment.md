@@ -42,10 +42,11 @@ If you want to add a new app only to a one environment, see [Add application to 
 
 ### Add application to only one environment
 
-1. Add `- ../../../<application-name>/<application-name>.yaml`  to `bases:` list in team specific overlay in corresponding environment (`/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`).
+1. Add `- ../../../<application-name>/<application-name>.yaml`  to `bases:` list in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
 
 ### Override Environment specific config
 
 1. If you want to override environment specific config, you need to create patch `<env>.yaml` in `/k8s/namespaces/<your-namespace>/<application-name>/` directory by specifying only the values you want to override.
    [Example prod patch](/k8s/namespaces/rpe/draft-store-service/prod.yaml)
-2. Add this patch `- ../../../namespaces/<namespace>/<application-name>/prod.yaml` in team specific overlay in corresponding environment (`/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`).
+2. Add this patch `- ../../../namespaces/<namespace>/<application-name>/prod.yaml` in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
+
