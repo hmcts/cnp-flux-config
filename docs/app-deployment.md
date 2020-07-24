@@ -35,6 +35,11 @@ All application deployments are managed with `HelmRelease`.
 
 ### Add application to all environments
 
-Below adds Application to all the environments you have [added your kustomization](#Add-kustomization-to-a-environment)
+Below adds Application to all the environments you have [added your kustomization](#Add-kustomization-to-a-environment). 
+If you want to add a new app only to a one environment, see [Add application to only one environment](#Add-application-to-only-one-environment)
 
-1. Add `- <application-name>/<application-name>.yaml` 
+1. Add `- <application-name>/<application-name>.yaml`  to `bases:` list in `/k8s/namespaces/<your-namespace>/kustomization.yaml`
+
+### Add application to only one environment
+
+1. Add `- <application-name>/<application-name>.yaml`  to `bases:` list in `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`
