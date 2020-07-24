@@ -7,11 +7,23 @@ Note: Some of these scripts need you to [install yq](https://mikefarah.gitbook.i
 
 ## Namespace
 
-All the applications owned by a team are deployed to a single namespace.
+All the applications owned by a team are deployed to a single namespace ( usually team name).
+
+## Managed Identity 
+
+We use Managed Identity to access keyvaults secrets in application.
+
+- Run [base-ns-id-gen.sh](/bin/base-ns-id-gen.sh) with your namespace, Team short name, Manage Identity Name
+
+ ```bash
+    ./bin/base-ns-id-gen.sh <your namespace> <team short name> <mi name>
+    #example
+    ./bin/base-ns-id-gen.sh divorce div div
+   ```
  
 ### Create a namespace manifest
 
-- Run [add-namespace.sh](/bin/add-namespace.sh) with your namespace( usually team name) and team build notices slack channel.
+- Run [add-namespace.sh](/bin/add-namespace.sh) with your namespace and team build notices slack channel.
    ```bash
     ./bin/add-namespace.sh <your namespace> <team slack channel>
    ```
@@ -54,7 +66,7 @@ If you want to add a new app only to a one environment, see [Add application to 
 
 - The default setup is configured to set all environments with image automation enabled with `prod-*` tag.
 - It is highly recommended to follow trunk based development, use prod image on all environments using feature toggling.
-- It is not allowed to break prod image automation on `aat` and `prod`.
+- **It is not allowed to break prod image automation on `aat` and `prod`.**
 - If you wish to override this default behaviour in a specific environment, create a environment patch as described in previous section and set annotations as in below example: 
 ```yaml
 ---
