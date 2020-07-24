@@ -1,42 +1,10 @@
 # cnp-flux-config
 Flux config for AKS clusters
 
-## Folder Structure
+## Adding an app to flux
 
-
-    k8s
-    ├── common                                          # Workloads which are not Kustomized and applied across all environments.
-    │   └── ...                                         # One folder per namespace containing workloads.
-    │       └── namespace.yaml
-    ├── common-base                                     # Kustomization base for common workloads applied across all environments. Used for Admin workloads.
-    │   ├── namespace
-    │   │   └── ...                                     # One folder per namespace containing base resources.
-    │   │       ├── kustomization.yaml                  # Kustomization per name space to be able to override them individually 
-    │   │       └── ...                                 # Resources
-    │   └── kustomization.yaml                          # Kustomize file for common-base referring to nested directories
-    ├── env(sandbox)                                     
-    │   ├── cluster-xx                                  # Folder per cluster
-    │   │   ├── static                                  # Directory containing workloads which aren't overlays / Kustomized.
-    │   │   │   └── ...                                 # Folder per namespace.
-    │   │   │       └── ...
-    │   │   └── static-overlay                          # Directory containing Kustomized workloads not having image automation.
-    │   │       └── .flux.yaml                          # Flux Kustomize file.
-    │   │       └── static
-    │   │           ├── kustomization.yaml              # kustomization file referring to env base and overrides. 
-    │   │           └── ...                             # Folder per namespace containing patch workloads.
-    │   │               └── ...
-    │   │
-    │   ├── common                                      # Common workloads applied across all clusters in environment.
-    │   │   └── ...                                     # Folder per namespace containing common workloads.
-    │   │       └── ...
-    │   ├── env-base                                    # Kustomization directory overlaying common-base.                                
-    │   │   ├── ...                                     # Folder per namespace containing overriding patches / additional resources on top of basic resources.
-    │   │   │   └── ...
-    │   │   └── kustomization.yaml                      
-    │   └── pub-cert.pem                                # pem file for sealed-secrets
-    └── ...
-    
-
+All App deployments are managed through `HelmRelease` manifests. 
+See [App Deployment section](docs/app-deployment.md) for more details.
 
 ## Creating Sealed Secrets
 
