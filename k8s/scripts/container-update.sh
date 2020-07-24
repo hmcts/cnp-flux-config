@@ -2,8 +2,14 @@ set -x
 ENV="$1"
 #Install yq if not present
 yq --version || (wget -O /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/3.2.0/yq_linux_amd64" && chmod +x /usr/local/bin/yq)
+
+IMAGE_PATH=spec.values.$FLUX_CONTAINER.image
 if $(echo $FLUX_TAG | grep -q 'prod-') ; then
+  # patch main manifest for prod tags
   file_name=../../namespaces/$FLUX_WL_NS/$FLUX_WL_NAME/$FLUX_WL_NAME.yaml
+  
+  #delete image from env patch if it exists so that it doesn't override
+  [ -f ../../namespaces/$FLUX_WL_NS/$FLUX_WL_NAME/${ENV}.yaml ] && yq d -i ../../namespaces/$FLUX_WL_NS/$FLUX_WL_NAME/${ENV}.yaml $IMAGE_PATH
 else
   file_name=../../namespaces/$FLUX_WL_NS/$FLUX_WL_NAME/${ENV}.yaml
   touch $file_name
@@ -18,4 +24,4 @@ else
 fi
 
 #set image
-yq w -i $file_name spec.values.$FLUX_CONTAINER.image "$FLUX_IMG:$FLUX_TAG"
+yq w -i $file_name $IMAGE_PATH "$FLUX_IMG:$FLUX_TAG"
