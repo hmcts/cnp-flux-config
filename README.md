@@ -12,7 +12,7 @@ Flux config for AKS clusters
     │   ├── namespace                                   # One folder per namespace containing base resources.
     │       └── ... namespace.yaml                      # Namespace manifest  
     │           ├── kustomization.yaml                  # Kustomization per name space referring all manifests in this directory.
-    │           └── <application-name>                  # Folder containing manifests and patches for each application.
+    │           └── <application-name>                  # Folder per app containing manifests and patches for each application.
     │               └── <application-name>.yaml         # Helm Release for each application.
     │               └── <env>.yaml...                   # Optional patch for each environment
     │               └── ...
