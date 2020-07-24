@@ -1,7 +1,8 @@
 # Application Configuration
 
-The section covers how to configure a new application in this repository to deploy to various environments.
-We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
+The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
+
+**It is important to follow below discussed naming convention, file and folder names should match application helm release name**
 
 Note: Some of these scripts need you to [install yq](https://mikefarah.gitbook.io/yq/)
 
@@ -86,3 +87,12 @@ metadata:
 
 - It is recommended to add all applications to both clusters as one of the cluster can be removed from operation at any point. 
 - If you still have a use case, it has to be dealt exceptionally with help of [#rpe](https://hmcts-reform.slack.com/archives/C8SR5CAMU)
+
+## Additional details
+
+- Each team has a base kustomization in [namespaces directory](/k8s/namespaces)
+- Team's Base kustomization has an overlay with optional patches in [each environment](/k8s/prod/common-overlay/rpe)
+- Team's overlays are added to [environment kustomization](/k8s/prod/common-overlay/kustomization.yaml)
+- [Environment Kustomization](/k8s/prod/common-overlay/kustomization.yaml) also patches environment specific [global values](/k8s/prod/common-overlay/prod-helmrelease.yaml) and  [image automation defaults](/k8s/prod/common-overlay/automated-helmrelease.yaml).
+- Flux image automation is managed through [custom image automation script](/k8s/scripts/container-update.sh)
+- prod-* image updates are updated/committed to base manifest where as the other updates(if configured by teams) are applied to environment specific patches.
