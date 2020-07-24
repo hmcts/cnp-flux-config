@@ -67,7 +67,7 @@ If you want to add a new app only to a one environment, see [Add application to 
 - The default setup is configured to set all environments with image automation enabled with `prod-*` tag.
 - It is highly recommended to follow trunk based development, use prod image on all environments using feature toggling.
 - **It is not allowed to break prod image automation on `aat` and `prod`.**
-- If you wish to override this default behaviour in a specific environment, create a environment patch as described in previous section and set annotations as in below example: 
+- If you wish to override this default behaviour in a specific environment, create a environment patch as described in previous section and set image automation annotations as in below example: 
 ```yaml
 ---
 apiVersion: helm.fluxcd.io/v1
