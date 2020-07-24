@@ -6,10 +6,11 @@ Flux config for AKS clusters
 
     k8s
     ├── common                                          # Workloads which are not Kustomized and applied across all environments.
-    │   └── ...                                         # One folder per namespace containing workloads.
+    │   └── namespace                                   # One folder per namespace containing workloads.
+    │       └── ...
     │       
     ├── namespaces                                     
-    │   ├── namespace                                   # One folder per namespace containing base resources.
+    │   └── namespace                                   # One folder per namespace containing base resources.
     │       └── ... namespace.yaml                      # Namespace manifest  
     │           ├── kustomization.yaml                  # Kustomization per name space referring all manifests in this directory.
     │           └── <application-name>                  # Folder per app containing manifests and patches for each application.
@@ -20,9 +21,9 @@ Flux config for AKS clusters
     ├── env(sandbox)
     │   ├── cluster-xx                                  # Folder per cluster containing workloads which aren't overlays / Kustomized but speific to only a particular cluster( not recomnended)
     │   │   ├── namespaces                              # Folder per namespace
-    │   │   └── ...
+    │   │       └── ...
     │   │                                    
-    │   ├── (cluster-xx/common)-overlay                          # Folder per cluster
+    │   ├── (cluster-xx/common)-overlay                 # Kustomized common (or per cluster) folder 
     │   │   ├── .flux.yaml                              # Flux Kustomize file.
     │   │   ├── kustomization.yaml                      # Kustomization referring to below namespaced bases and common env specific overrides.
     │   │   ├── ...
@@ -30,7 +31,7 @@ Flux config for AKS clusters
     │   │       └── kustomization.yaml                  # kustomization file referring to team kustomize base and env specific patches.
     │   │
     │   ├── common                                      # Common workloads applied across all clusters in environment.
-    │   │   └── ...                                     # Folder per namespace.
+    │   │   └── namespace                               # Folder per namespace.
     │   │       └── ...
     │   └── pub-cert.pem                                # pem file for sealed-secrets
     └── ...
