@@ -44,7 +44,7 @@ All App deployments are managed through `HelmRelease` manifests. See [App Deploy
 
 Install version 0.5.1 from https://github.com/bitnami-labs/sealed-secrets/releases
 
-### From a Literal
+#### From a Literal
 ```
 kubectl create secret generic my-secret \
   --from-literal key=secret-value \
