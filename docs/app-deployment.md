@@ -8,7 +8,7 @@ Note: Some of these scripts need you to [install yq](https://mikefarah.gitbook.i
 
 ## Namespace
 
-All the applications owned by a team are deployed to a single namespace ( usually team name).
+All the applications owned by a team are deployed to a single namespace (usually team name, e.g. probate).
 
 ### Create a namespace manifest
 
