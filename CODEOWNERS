@@ -11,25 +11,26 @@ k8s/aat/ @hmcts/platform-engineering @hmcts/devops
 ## environment rules
 k8s/prod/ @hmcts/production-apps-approvals
 
-## application rules
+## Platform rules
 
 k8s/common/ @hmcts/platform-engineering @hmcts/devops
 k8s/namespaces/ @hmcts/platform-engineering @hmcts/devops
-k8s/**/cluster-*-overlay/ @hmcts/platform-engineering
+k8s/**/*-overlay/ @hmcts/platform-engineering
 k8s/prod/*/kube-system/ @hmcts/platform-engineering
 k8s/**/common/monitoring/ @hmcts/platform-engineering
+k8s/scripts/ @hmcts/platform-engineering
+tests/ @hmcts/platform-engineering
+.github/  @hmcts/platform-engineering
+docs/ @hmcts/platform-engineering
 
 ### Next team
 
 ## application rules
 
 ### RPE
-k8s/**/common/rpe/namespace.yaml @hmcts/platform-engineering
+k8s/namespaces/rpe/ @hmcts/platform-engineering
 k8s/**/common/rpe/identity.yaml @hmcts/platform-engineering
-k8s/**/common/rpe/draft-store-service.yaml @hmcts/platform-engineering
-k8s/**/common/rpe/rpe-service-auth-provider.yaml @hmcts/platform-engineering
 k8s/**/common/rpe/pdf-service.yaml @hmcts/platform-engineering
-
 k8s/**/common/**/tests-values.yaml @hmcts/platform-engineering
 
 k8s/*/*-base/kustomization.yaml @hmcts/platform-engineering
@@ -40,7 +41,6 @@ k8s/**/common/neuvector/identity.yaml @hmcts/platform-engineering
 
 k8s/**/common/admin/check-acr-sync-cronjob.yaml @hmcts/platform-engineering
 
-tests/ @hmcts/platform-engineering
 
 ### Bulk Print
 k8s/**/common/rpe/send-letter-identity.yaml @hmcts/bulk-print
@@ -287,3 +287,8 @@ k8s/aat/common/unspec/unspec-service.yaml @hmcts/unspec-admins
 k8s/aat/common/unspec/identity.yaml @hmcts/unspec-admins
 k8s/demo/common/unspec/unspec-service.yaml @hmcts/unspec-admins
 k8s/demo/common/unspec/identity.yaml @hmcts/unspec-admins
+
+
+### Kustomization control
+
+k8s/namespaces/**/kustomization.yaml @hmcts/platform-engineering
