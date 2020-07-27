@@ -30,18 +30,6 @@ do
   MODULES_DIR="${SCRIPT_DIR}/../k8s/${e}/common/${NAMESPACE}"
   [[ ! -d "$MODULES_DIR" ]] && mkdir -p "$MODULES_DIR"
 
-# -----------------------------------------------------------
-(
-cat <<EOF
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: $NAMESPACE
-
-EOF
-) > "${MODULES_DIR}/namespace.yaml"
-# -----------------------------------------------------------
-
 CLIENT_ID=$(az identity show --name ${SHORT_NAME}-${e}-mi --resource-group managed-identities-${e}-rg --subscription $(echo ${SUB_MAP[${i}]} |cut -d '=' -f 2) --query clientId)
 RESOURCE_ID=$(az identity show --name ${SHORT_NAME}-${e}-mi --resource-group managed-identities-${e}-rg --subscription $(echo ${SUB_MAP[${i}]} |cut -d '=' -f 2) --query id)
 
