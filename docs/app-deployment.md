@@ -77,7 +77,8 @@ metadata:
   name: <application-name>
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.(java/nodejs): glob:pr-112-*
+    fluxcd.io/tag.java: glob:pr-112-*
+    #fluxcd.io/tag.nodejs: glob:pr-112-*
     hmcts.github.com/prod-automated: disabled
 ....
 ....
