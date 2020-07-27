@@ -10,18 +10,6 @@ Note: Some of these scripts need you to [install yq](https://mikefarah.gitbook.i
 
 All the applications owned by a team are deployed to a single namespace ( usually team name).
 
-## Managed Identity 
-
-We use Managed Identity to access keyvaults secrets in application.
-
-- Run [base-ns-id-gen.sh](/bin/base-ns-id-gen.sh) with your namespace, Team short name, Manage Identity Name
-
- ```bash
-    ./bin/base-ns-id-gen.sh <your namespace> <team short name> <mi name>
-    #example
-    ./bin/base-ns-id-gen.sh divorce div div
-   ```
- 
 ### Create a namespace manifest
 
 - Run [add-namespace.sh](/bin/add-namespace.sh) with your namespace and team build notices slack channel.
@@ -36,6 +24,18 @@ We use Managed Identity to access keyvaults secrets in application.
     ./bin/add-namespace-to-env.sh <your namespace> <environment>
    ```
 
+## Managed Identity 
+
+We use Managed Identity to access keyvaults secrets in application.
+
+- Run [base-ns-id-gen.sh](/bin/base-ns-id-gen.sh) with your namespace, Team short name, Manage Identity Name
+
+ ```bash
+    ./bin/base-ns-id-gen.sh <your namespace> <team short name> <mi name>
+    #example
+    ./bin/base-ns-id-gen.sh divorce div div
+   ```
+ 
 ## Application
 
 All application deployments are managed with `HelmRelease`.
