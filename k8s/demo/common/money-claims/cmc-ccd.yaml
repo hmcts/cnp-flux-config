@@ -109,7 +109,7 @@ spec:
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-3dfd8753
+        image: hmctspublic.azurecr.io/dm/store:prod-f39d198f
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
@@ -120,8 +120,8 @@ spec:
 
     ccd-definition-importer:
       image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.9
-      waitHosts: "cmc-ccd-definition-store:80"
-      waitHostsTimeout: 1200
+      waitHosts: "cmc-ccd-ccd-definition-store:80"
+      waitHostsTimeout: 600
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
@@ -135,4 +135,5 @@ spec:
       - caseworker-cmc-anonymouscitizen
       - caseworker-cmc-judge
       - caseworker-cmc-legaladvisor
+      - caseworker-cmc-pcqextractor
 
