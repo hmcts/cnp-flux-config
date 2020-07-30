@@ -21,11 +21,21 @@ spec:
     master:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
-      image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db4228"
+      image: "hmctspublic.azurecr.io/jenkins/jenkins"
+      imageTag: "db533u"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - jenkins
+              topologyKey: "kubernetes.io/hostname"
 
       jenkinsAdminEmail: noreply@reform.hmcts.net
 
@@ -39,10 +49,17 @@ spec:
 
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
-        -XX:MaxRAMPercentage=60.0
-        -XX:MinRAMPercentage=20.0
-        -XX:+UseParallelOldGC
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=30.0
+        -XX:+UseG1GC
+        -XX:+AlwaysPreTouch
+        -XX:+HeapDumpOnOutOfMemoryError
+        -XX:HeapDumpPath=/var/jenkins_home/logs
+        -XX:+UseStringDeduplication
+        -XX:+ParallelRefProcEnabled
+        -XX:+DisableExplicitGC
         -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
@@ -123,9 +140,6 @@ spec:
                     - "Job/Discover:anonymous"
                     - "Job/Workspace:authenticated"
                     - "Credentials/View:authenticated"
-                    - "Build Failure Analyzer/RemoveCause:authenticated"
-                    - "Build Failure Analyzer/UpdateCauses:authenticated"
-                    - "Build Failure Analyzer/ViewCauses:authenticated"
                     - "Lockable Resources/Unlock:authenticated"
                     - "Lockable Resources/Reserve:authenticated"
                     - "SCM/Tag:authenticated"
@@ -182,10 +196,8 @@ spec:
                 allPipelines: true
           theme: |
             unclassified:
-              simple-theme-plugin:
-                elements:
-                - cssUrl:
-                    url: ""
+              themeManager:
+                theme: "darkSystem"
           build-discarders: |
             unclassified:
               buildDiscarders:
@@ -510,10 +522,20 @@ spec:
                           id: "hmcts-jenkins-rse"
                           privateKey: "${hmcts-jenkins-rse-ghapp}"
                       - gitHubApp:
+                          appID: "72816"
+                          description: "GitHub APP Key - unspec"
+                          id: "hmcts-jenkins-unspec"
+                          privateKey: "${hmcts-jenkins-unspec-ghapp}"
+                      - gitHubApp:
                           appID: "62005"
                           description: "GitHub APP Key - em"
                           id: "hmcts-jenkins-em"
                           privateKey: "${hmcts-jenkins-em-ghapp}"
+                      - gitHubApp:
+                          appID: "69800"
+                          description: "GitHub APP Key - hmi"
+                          id: "hmcts-jenkins-hmi"
+                          privateKey: "${hmcts-jenkins-hmi-ghapp}"
 
           jobs: |
             jobs:
@@ -579,6 +601,20 @@ spec:
       annotations: {}
       accessMode: "ReadWriteOnce"
       size: "8Gi"
+      volumes:
+        - name: workspace
+          hostPath:
+            path: /mnt
+            type: DirectoryOrCreate
+        - name: logging
+          configMap:
+            name: jenkins-config-logging
+      mounts:
+        - mountPath: /var/jenkins_home/workspace
+          name: workspace
+        - mountPath: /var/jenkins_home/userconf
+          name: logging
+
 
     ## Install Default RBAC roles and bindings
     rbac:

@@ -15,18 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccpay-callback-function
-    version: 0.1.0
+    version: 0.1.4
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-7542692d
+      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-c67b3c89
       environment:
-        SERVICE_CALLBACK_RETRY_QUEUE: servicecallbackretryqueue
-        SERVICE_CALLBACK_SUBSCRIPTION: defaultServiceCallbackSubscription
-        APPINSIGHTS_INSTRUMENTATIONKEY: 124e39c3-6dad-49ef-aede-d2cddac865c2
+        DELAY_MESSAGE_MINUTES: 10
       secrets:
+        APPINSIGHTS_INSTRUMENTATIONKEY:
+          secretRef: ccpay-callback-function
+          key: APPINSIGHTS_INSTRUMENTATIONKEY
         SERVICE_CALLBACK_BUS_CONNECTION:
           secretRef: ccpay-callback-function
           key: SERVICE_CALLBACK_BUS_CONNECTION
-        AzureWebJobsStorage:
-          secretRef: ccpay-callback-function
-          key: AzureWebJobsStorage

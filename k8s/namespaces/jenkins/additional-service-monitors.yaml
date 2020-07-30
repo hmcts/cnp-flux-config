@@ -1,0 +1,12 @@
+- op: add
+  path: /spec/values/prometheus/additionalServiceMonitors/-
+  value:
+    name: "jenkins-monitor"
+    selector:
+      app.kubernetes.io/name: jenkins
+    namespaceSelector:
+      matchNames:
+        - jenkins
+    endpoints:
+      - port: http
+        path: /prometheus/

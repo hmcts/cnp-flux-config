@@ -15,6 +15,19 @@ spec:
       ingress:
         hosts:
           - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net
+      config:
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting
+                title: 'CFTSBOX - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
+                title: 'CFTBOX - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"
 
     grafana:
       enabled: true
@@ -24,17 +37,17 @@ spec:
       additionalDataSources:
         - name: prometheus-00
           type: prometheus
-          url: https://prometheus-00.sandbox.platform.hmcts.net
+          url: http://prometheus-00.sandbox.platform.hmcts.net
           access: proxy
         - name: prometheus-01
           type: prometheus
-          url: https://prometheus-01.sandbox.platform.hmcts.net
+          url: http://prometheus-01.sandbox.platform.hmcts.net
           access: proxy
         - name: alertmanager-00
           type: camptocamp-prometheus-alertmanager-datasource
-          url: https://alertmanager-00.sandbox.platform.hmcts.net
+          url: http://alertmanager-00.sandbox.platform.hmcts.net
           access: proxy
         - name: alertmanager-01
           type: camptocamp-prometheus-alertmanager-datasource
-          url: https://alertmanager-01.sandbox.platform.hmcts.net
+          url: http://alertmanager-01.sandbox.platform.hmcts.net
           access: proxy

@@ -9,3 +9,13 @@ spec:
     git:
       email: "flux-cftptl@hmcts.net"
       user: "Flux CFT PTL"
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - jenkins-master
+            topologyKey: "kubernetes.io/hostname"

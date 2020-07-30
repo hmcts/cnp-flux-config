@@ -7,8 +7,11 @@ bases:
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
   - ../../namespaces/jenkins
+  - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/node-problem-detector
+  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/pact-broker
   - ../../namespaces/artifactory
@@ -17,6 +20,7 @@ patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/mgmt-sandbox/flux.yaml
   - ../../namespaces/admin/flux/patches/mgmt-sandbox/cluster-00/flux.yaml
+  - ../../namespaces/admin/flux/patches/mgmt-sandbox/flux-helm-operator.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/mgmt-sandbox/cluster-00/fluxcloud.yaml
@@ -37,6 +41,7 @@ patchesStrategicMerge:
 
   #prom-operator patch
   - ../../namespaces/monitoring/patches/mgmt-sandbox/cluster-00/prom-operator.yaml
+  - ../../namespaces/monitoring/patches/mgmt-sandbox/cluster-00/nodelocaldns-alerts-rules.yaml
 
   - ../../namespaces/admin/env-injector/patches/mgmt-sandbox/cluster-00/env-injector.yaml
 
@@ -46,3 +51,12 @@ patchesStrategicMerge:
 
   #artifactory
   - ../../namespaces/artifactory/patches/mgmt-sandbox/cluster-00/ingress.yaml
+
+patchesJson6902:
+  - target:
+      group: helm.fluxcd.io
+      version: v1
+      kind: HelmRelease
+      name: prom-operator
+      namespace: monitoring
+    path: ../../namespaces/jenkins/additional-service-monitors.yaml

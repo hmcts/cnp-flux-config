@@ -6,11 +6,15 @@ bases:
   - ../../namespaces/admin/kube-slack
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
+  - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
   - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/node-problem-detector
+  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/knode-system
+  - ../../namespaces/monitoring/dynatrace
 
 patchesStrategicMerge:
   #flux patches
@@ -37,3 +41,6 @@ patchesStrategicMerge:
   - ../../namespaces/monitoring/patches/perftest/cluster-01/prom-operator.yaml
 
   - ../../namespaces/admin/env-injector/patches/perftest/cluster-01/env-injector.yaml
+
+  #Dynatrace patch
+  - ../../namespaces/monitoring/dynatrace/patches/perftest/oneagent.yaml
