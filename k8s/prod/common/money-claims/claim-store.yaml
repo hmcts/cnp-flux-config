@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 3
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-c6e371c8
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-2c036308
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CLAIM_STORE_TEST_SUPPORT_ENABLED: false
@@ -30,6 +30,9 @@ spec:
         FRONTEND_BASE_URL: https://www.moneyclaims.service.gov.uk
         RESPOND_TO_CLAIM_URL: https://www.gov.uk/respond-money-claim
         REFORM_ENVIRONMENT: prod
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: false
+        FEATURE_TOGGLES_CTSC_ENABLED: true
+        FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

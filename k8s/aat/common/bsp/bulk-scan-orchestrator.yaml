@@ -23,12 +23,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-orchestrator
-    version: 0.3.1
+    version: 0.3.3
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-1ae6baca
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-b06d1120
       environment:
         ROOT_LOGGING_LEVEL: DEBUG
       testsConfig:
@@ -57,10 +57,10 @@ spec:
           IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-1ae6baca
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-b06d1120
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-1ae6baca
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-b06d1120
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

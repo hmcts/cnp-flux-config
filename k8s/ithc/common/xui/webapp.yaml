@@ -6,7 +6,7 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-581-c8ea0c7b
+    fluxcd.io/tag.nodejs: glob:pr-587-66ffed21
 spec:
   releaseName: xui-webapp
   rollback:
@@ -20,12 +20,14 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:pr-581-c8ea0c7b
+      image: hmctspublic.azurecr.io/xui/webapp:pr-587-66ffed21
       ingressHost: manage-case.ithc.platform.hmcts.net
       environment:
         SERVICES_IDAM_LOGIN_URL: https://idam-web-public.ithc.platform.hmcts.net
         SERVICES_IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
         SERVICES_MARKUP_API: http://em-npa-ithc.service.core-compute-ithc.internal
+        DEBUG: xuiNode:*
+        LAUNCH_DARKLY_CLIENT_ID: 1
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

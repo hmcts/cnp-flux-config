@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -13,4 +12,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:latest
+      image: hmctspublic.azurecr.io/draft-store/service:prod-e974b748
+      smoketestscron:
+        image: hmctspublic.azurecr.io/draft-store/service:prod-e974b748
+      functionaltestscron:
+        image: hmctspublic.azurecr.io/draft-store/service:prod-e974b748
+      smoketests:
+        image: hmctspublic.azurecr.io/draft-store/service:prod-e974b748
+      functionaltests:
+        image: hmctspublic.azurecr.io/draft-store/service:prod-e974b748
