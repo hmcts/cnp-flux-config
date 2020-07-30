@@ -110,7 +110,7 @@ If you want to find the effective yaml that will get applied to a environment, y
   ```
 - To generate the effective yaml generated including platform default, you can run 
 
-  `Note : This can be very big as it inlcudes all namespaces, you can temporarily remove other namespaces from bases: in k8s/<env>/common-overlay/kustomization.yaml to make it readable)`
+  `Note : This can be very big as it includes all namespaces, you can temporarily remove other namespaces from bases: in k8s/<env>/common-overlay/kustomization.yaml to make it readable)`
     ```bash
     kustomize build --load_restrictor none k8s/<env>/common-overlay
     ```
