@@ -35,7 +35,9 @@ We use Managed Identity to access keyvaults secrets in application.
     #example
     ./bin/base-ns-id-gen.sh divorce div div
    ```
- 
+- Preview applications use AAT key vaults and thus AAT managed identities, you can reuse identity created for AAT by adding it to preview kustomization.
+  Add `- ../../../namespaces/<your-namespace>/identity.yaml` to `bases:` in `k8s/preview/common-overlay/<your namespace>/kustomization.yaml`
+
 ## Application
 
 All application deployments are managed with `HelmRelease`.
