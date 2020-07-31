@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: admin
+resources: 
+  - https://raw.githubusercontent.com/hmcts/cnp-flux-config/master/k8s/namespaces/admin/flux/flux.yaml
+patchesStrategicMerge:
+  - https://raw.githubusercontent.com/hmcts/cnp-flux-config/master/k8s/namespaces/admin/flux/patches/aat/flux.yaml
+  - https://raw.githubusercontent.com/hmcts/cnp-flux-config/master/k8s/namespaces/admin/flux/patches/aat/cluster-00/flux.yaml
