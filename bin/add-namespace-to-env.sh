@@ -13,6 +13,12 @@ then
   exit 1
 fi
 
+NAMESPACE_PATH=../../../namespaces/$NAMESPACE
+if [ "${ENV}"  == "preview" ]
+then
+    NAMESPACE_PATH=../../../namespaces/$NAMESPACE/namespace.yaml
+fi
+
 SCRIPT_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 MODULES_DIR="${SCRIPT_DIR}/../k8s/${ENV}/common-overlay/${NAMESPACE}"
@@ -25,7 +31,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $NAMESPACE
 bases:
-- ../../../namespaces/$NAMESPACE
+- $NAMESPACE_PATH
 EOF
 ) > "${MODULES_DIR}/kustomization.yaml"
 # -----------------------------------------------------------
