@@ -5,7 +5,7 @@ metadata:
   name: cmc-claim-store
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-4c3f6aba
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-1852-244a16b0
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -33,6 +33,8 @@ spec:
         FEATURE_TOGGLES_CTSC_ENABLED: true
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
+        SCHEDULE_TRANSFER_CLAIMS: 15 * * * * ?
+        AUTOMATED_TRANSFER_READ_MODE: true
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
