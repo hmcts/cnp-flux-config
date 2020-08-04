@@ -57,7 +57,7 @@ If you want to add a new app only to a one environment, see [Add application to 
 
 ### Add application to only one environment
 
-- Add `- ../../../<application-name>/<application-name>.yaml`  to `bases:` list in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
+- Add `- ../../../namespaces/<your-namespace>/<application-name>/<application-name>.yaml`  to `bases:` list in team specific overlay in corresponding environment `/k8s/<env>/common-overlay/<your-namespace>/kustomization.yaml`.
 
 ### Override Environment specific config
 
