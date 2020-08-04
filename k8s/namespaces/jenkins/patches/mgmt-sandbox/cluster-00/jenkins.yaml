@@ -129,7 +129,7 @@ spec:
                       containers:
                       - args: "cat"
                         command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                        image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5bnn"
                         livenessProbe:
                           failureThreshold: 0
                           initialDelaySeconds: 0
@@ -139,11 +139,11 @@ spec:
                         name: "inbound-agent"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "512Mi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "1Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                      - image: "hmctspublic.azurecr.io/jenkins/build-agent:db5bnn"
                         livenessProbe:
                           failureThreshold: 0
                           initialDelaySeconds: 0
