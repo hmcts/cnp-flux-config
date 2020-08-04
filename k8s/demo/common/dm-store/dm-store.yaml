@@ -5,7 +5,7 @@ metadata:
   name: dm-store
   namespace: dm-store
   annotations:
-    fluxcd.io/automated: "false"
+    fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
 spec:
@@ -21,7 +21,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:pr-709-8e3353c5
+      image: hmctspublic.azurecr.io/dm/store:prod-f39d198f
       ingressHost: dm-store-demo.service.core-compute-demo.internal
       environment:
         ENABLE_TTL: "true"
