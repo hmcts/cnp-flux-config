@@ -6,8 +6,13 @@ metadata:
     k8s-app: aad-pod-id
   name: aad-pod-identity
   namespace: admin
+  annotations:
+    fluxcd.io/automated: "false"
 spec:
   releaseName: aad-pod-identity
+  rollback:
+    enable: true
+    retry: true
   chart:
     repository: https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
     name: aad-pod-identity
