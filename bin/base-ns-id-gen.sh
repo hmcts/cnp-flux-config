@@ -57,7 +57,6 @@ metadata:
 spec:
   AzureIdentity: $SHORT_NAME
   Selector: $SHORT_NAME
-  
 EOF
 ) > "${MODULES_DIR}/identity.yaml"
 # -----------------------------------------------------------
