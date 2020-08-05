@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-SUB_MAP=( "aat=DCD-CFTAPPS-STG"
-  "perftest=DCD-CFTAPPS-TEST"
+SUB_MAP=( "aat=DCD-CNP-DEV"
+  "perftest=DCD-CNP-QA"
 )
-#  "ithc=DCD-CFTAPPS-ITHC"
-#  "prod=DCD-CFTAPPS-PROD"
-#  "sbox=DCD-CFTAPPS-SBOX"
+#  "demo=DCD-CNP-DEV"
+#  "ithc=DCD-CNP-QA"
+#  "prod=DCD-CNP-Prod"
+#  "sbox=DCD-CFT-Sandbox"
 
 NAMESPACE="$1"
 SHORT_NAME="$2"
