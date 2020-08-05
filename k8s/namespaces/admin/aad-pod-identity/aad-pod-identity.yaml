@@ -1,0 +1,16 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  labels:
+    k8s-app: aad-pod-id
+  name: aad-pod-identity
+  namespace: admin
+spec:
+  releaseName: aad-pod-identity
+  chart:
+    repository: https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
+    name: aad-pod-identity
+    version: 1.6.2
+  values:
+    forceNameSpaced: true
