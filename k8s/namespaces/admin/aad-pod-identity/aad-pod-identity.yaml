@@ -8,9 +8,13 @@ metadata:
   namespace: admin
 spec:
   releaseName: aad-pod-identity
+  rollback:
+    enable: true
+    retry: true
   chart:
     repository: https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
     name: aad-pod-identity
-    version: 1.6.2
+    version: 2.0.1
   values:
     forceNameSpaced: true
+    installCRDs: true
