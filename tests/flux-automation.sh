@@ -19,6 +19,9 @@ exclusions=(
   k8s/aat/common/idam/idam-api.yaml
   k8s/aat/common/idam/idam-web-admin.yaml
   k8s/aat/common/idam/idam-web-public.yaml
+  k8s/prod/common/idam/idam-api.yaml
+  k8s/prod/common/idam/idam-web-admin.yaml
+  k8s/prod/common/idam/idam-web-public.yaml
 )
 
 [ -z "$_github_head_sha" ] && echo "Github head sha missing. Not on a PR" && exit 0
