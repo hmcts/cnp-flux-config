@@ -15,12 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-pfe
-    version: 1.1.7
+    version: 1.1.12
   values:
     nodejs:
       replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-d1060619
+      image: hmctspublic.azurecr.io/div/pfe:prod-e773e8fc
       ingressHost: www.apply-divorce.service.gov.uk
       environment:
         PUBLIC_HOSTNAME: https://www.apply-divorce.service.gov.uk
@@ -34,6 +38,7 @@ spec:
         WEBCHAT_BUTTON_NO_AGENTS: "2806315905d232e71137898.81655511"
         WEBCHAT_BUTTON_AGENTS_BUSY: "6100617245d23302e383e79.04188400"
         WEBCHAT_BUTTON_SERVICE_CLOSED: "19684351645d232edee71e86.59595908"
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

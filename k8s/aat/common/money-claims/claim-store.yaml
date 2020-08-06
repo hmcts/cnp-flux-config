@@ -15,20 +15,24 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 4.1.3
+    version: 4.1.13
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-be06a5cc
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-4c3f6aba
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: true
         MILO_CSV_SCHEDULE: "0 0 8 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
         FRONTEND_BASE_URL: https://cmc-citizen-frontend-staging.service.core-compute-aat.internal
         REFORM_ENVIRONMENT: aat
         FEATURE_AUTO_CANCEL_PAYMENTS: true
+        FEATURE_TOGGLES_CTSC_ENABLED: true
+        FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -6,11 +6,14 @@ bases:
   - ../../namespaces/admin/kube-slack
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
-  - ../../namespaces/admin/node-problem-detector
+  - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/kured
   - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
+  - ../../namespaces/admin/aad-pod-identity
   - ../../namespaces/knode-system
+  - ../../namespaces/kube-system/nodelocaldns
 
 patchesStrategicMerge:
   #flux patches
@@ -31,9 +34,6 @@ patchesStrategicMerge:
 
   #prom-operator patch
   - ../../namespaces/monitoring/patches/sandbox/cluster-01/prom-operator.yaml
+  - ../../namespaces/monitoring/patches/sandbox/cluster-01/nodelocaldns-alerts-rules.yaml
 
   - ../../namespaces/admin/env-injector/patches/sandbox/cluster-01/env-injector.yaml
-
-  #knode patches
-  - ../../namespaces/knode-system/patches/sandbox/cluster-01/configmap.yaml
-  - ../../namespaces/knode-system/patches/sandbox/cluster-01/daemonset.yaml

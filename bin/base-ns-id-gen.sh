@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-SUB_MAP=( "aat=DCD-CFTAPPS-STG"
-  "perftest=DCD-CFTAPPS-TEST"
+SUB_MAP=( "aat=DCD-CNP-DEV"
+  "perftest=DCD-CNP-QA"
 )
-#  "ithc=DCD-CFTAPPS-ITHC"
-#  "prod=DCD-CFTAPPS-PROD"
-#  "sbox=DCD-CFTAPPS-SBOX"
+#  "demo=DCD-CNP-DEV"
+#  "ithc=DCD-CNP-QA"
+#  "prod=DCD-CNP-Prod"
+#  "sbox=DCD-CFT-Sandbox"
 
 NAMESPACE="$1"
 SHORT_NAME="$2"
@@ -29,18 +30,6 @@ do
 
   MODULES_DIR="${SCRIPT_DIR}/../k8s/${e}/common/${NAMESPACE}"
   [[ ! -d "$MODULES_DIR" ]] && mkdir -p "$MODULES_DIR"
-
-# -----------------------------------------------------------
-(
-cat <<EOF
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: $NAMESPACE
-
-EOF
-) > "${MODULES_DIR}/namespace.yaml"
-# -----------------------------------------------------------
 
 CLIENT_ID=$(az identity show --name ${SHORT_NAME}-${e}-mi --resource-group managed-identities-${e}-rg --subscription $(echo ${SUB_MAP[${i}]} |cut -d '=' -f 2) --query clientId)
 RESOURCE_ID=$(az identity show --name ${SHORT_NAME}-${e}-mi --resource-group managed-identities-${e}-rg --subscription $(echo ${SUB_MAP[${i}]} |cut -d '=' -f 2) --query id)
@@ -68,7 +57,6 @@ metadata:
 spec:
   AzureIdentity: $SHORT_NAME
   Selector: $SHORT_NAME
-  
 EOF
 ) > "${MODULES_DIR}/identity.yaml"
 # -----------------------------------------------------------

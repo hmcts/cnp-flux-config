@@ -7,27 +7,6 @@ metadata:
 spec:
   values:
     prometheus:
-      additionalPodMonitors:
-        - name: "nodelocaldns"
-          selector:
-            matchLabels:
-              k8s-app: node-local-dns
-          namespaceSelector:
-            matchNames:
-              - kube-system
-          podMetricsEndpoints:
-            - port: metrics
-              path: /metrics
-        - name: "node-problem-monitor"
-          selector:
-            matchLabels:
-              app.kubernetes.io/name: node-problem-detector
-          namespaceSelector:
-            matchNames:
-              - monitoring
-          podMetricsEndpoints:
-            - port: exporter
-              path: /metrics
       ingress:
         hosts:
           - prometheus-01.sandbox.platform.hmcts.net

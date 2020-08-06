@@ -21,7 +21,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc
-    version: 2.0.1
+    version: 2.0.4
   values:
     global:
       devMode: true
@@ -41,15 +41,19 @@ spec:
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
       postgresqlHost: "cmc-demo-postgresql"
 
-    ### CMC SERVICES ###
+    ### CMC SERVICES ####
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-be06a5cc
-        ingressHost: cmc-demo-claim-store-demo.service.core-compute-demo.internal
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-4c3f6aba
+        ingressClass: traefik-private
+        ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
           IDAM_S2S_AUTH_TOTP_SECRET:
             secretRef: claim-store-s2s-secret
+            key: key
+          SEND_GRID_API_KEY_SECRET:
+            secretRef: sendgrid-api-key
             key: key
         environment:
           FRONTEND_BASE_URL: "https://{{ .Values.global.cmcFrontendUrl }}"
@@ -57,18 +61,17 @@ spec:
           DOC_ASSEMBLY_TEMPLATEID: CV-CMC-GOR-ENG-0004-1.docx
           DOC_ASSEMBLY_JUDGETEMPLATEID: CV-CMC-GOR-ENG-00219-1.docx
           FEATURE_TOGGLES_CTSC_ENABLED: true
-
+          FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
+          FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
+          STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: yogendra.upasani@hmcts.net
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-b2581f82
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-bfd04664
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
             secretRef: cmc-s2s-secret
-            key: key
-          LAUNCHDARKLY_SDK_KEY:
-            secretRef: launchdarkly-sdk-key
             key: key
         environment:
           CLAIM_STORE_URL: "{{ .Values.global.cmcBackendUrl }}"

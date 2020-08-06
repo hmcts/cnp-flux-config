@@ -187,6 +187,9 @@ data:
         in_cluster_url: http://grafana:3000
       prometheus:
         url: http://prometheus.istio-system:9090
+    istio_labels:
+      app_label_name: app.kubernetes.io/name
+      version_label_name: app.kubernetes.io/version
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -6562,7 +6565,8 @@ subjects:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: null
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -6570,6 +6574,7 @@ metadata:
   name: istio-ingressgateway
   namespace: istio-system
 spec:
+  loadBalancerIP: 10.10.1.240
   ports:
     - name: status-port
       port: 15021

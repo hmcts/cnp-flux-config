@@ -20,8 +20,12 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-297ead14
+      image: hmctspublic.azurecr.io/xui/webapp:prod-e69c0d43
       ingressHost: manage-case.perftest.platform.hmcts.net
+      environment:
+        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
+        DEBUG: xuiNode:*
+        DUMMY_VAR: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

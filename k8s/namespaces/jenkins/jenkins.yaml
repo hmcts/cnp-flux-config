@@ -21,11 +21,21 @@ spec:
     master:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
-      image: "hmctspublic.azurecr.io/jenkins"
-      imageTag: "db4228"
+      image: "hmctspublic.azurecr.io/jenkins/jenkins"
+      imageTag: "db533u"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - jenkins
+              topologyKey: "kubernetes.io/hostname"
 
       jenkinsAdminEmail: noreply@reform.hmcts.net
 
@@ -39,10 +49,17 @@ spec:
 
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
-        -XX:MaxRAMPercentage=60.0
-        -XX:MinRAMPercentage=20.0
-        -XX:+UseParallelOldGC
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=30.0
+        -XX:+UseG1GC
+        -XX:+AlwaysPreTouch
+        -XX:+HeapDumpOnOutOfMemoryError
+        -XX:HeapDumpPath=/var/jenkins_home/logs
+        -XX:+UseStringDeduplication
+        -XX:+ParallelRefProcEnabled
+        -XX:+DisableExplicitGC
         -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
@@ -123,9 +140,6 @@ spec:
                     - "Job/Discover:anonymous"
                     - "Job/Workspace:authenticated"
                     - "Credentials/View:authenticated"
-                    - "Build Failure Analyzer/RemoveCause:authenticated"
-                    - "Build Failure Analyzer/UpdateCauses:authenticated"
-                    - "Build Failure Analyzer/ViewCauses:authenticated"
                     - "Lockable Resources/Unlock:authenticated"
                     - "Lockable Resources/Reserve:authenticated"
                     - "SCM/Tag:authenticated"
@@ -182,10 +196,8 @@ spec:
                 allPipelines: true
           theme: |
             unclassified:
-              simple-theme-plugin:
-                elements:
-                - cssUrl:
-                    url: ""
+              themeManager:
+                theme: "darkSystem"
           build-discarders: |
             unclassified:
               buildDiscarders:
@@ -224,96 +236,6 @@ spec:
                           password: "${hmcts-github-apikey}"
                           scope: GLOBAL
                           username: "jenkins-reform-hmcts3"
-                      - usernamePassword:
-                          description: "GitHub - CMC"
-                          id: "jenkins-github-hmcts-api-token_cmc"
-                          password: "${hmcts-github-apikey-cmc}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-cmc"
-                      - usernamePassword:
-                          description: "GitHub - Divorce"
-                          id: "jenkins-github-hmcts-api-token_div"
-                          password: "${hmcts-github-apikey-div}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-div"
-                      - usernamePassword:
-                          description: "GitHub - Financial remedy"
-                          id: "jenkins-github-hmcts-api-token_finrem"
-                          password: "${hmcts-github-apikey-finrem}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-finrem"
-                      - usernamePassword:
-                          description: "GitHub - CCD"
-                          id: "jenkins-github-hmcts-api-token_cdm"
-                          password: "${hmcts-github-apikey-cdm}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-cdm"
-                      - usernamePassword:
-                          description: "GitHub - IAC"
-                          id: "jenkins-github-hmcts-api-token_iac"
-                          password: "${hmcts-github-apikey-iac}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-iac"
-                      - usernamePassword:
-                          description: "GitHub - Platform"
-                          id: "jenkins-github-hmcts-api-token_platform"
-                          password: "${hmcts-github-apikey-platform}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-platform"
-                      - usernamePassword:
-                          description: "GitHub - RPA"
-                          id: "jenkins-github-hmcts-api-token_rpa"
-                          password: "${hmcts-github-apikey-rpa}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-rpa"
-                      - usernamePassword:
-                          description: "GitHub - SSCS"
-                          id: "jenkins-github-hmcts-api-token_sscs"
-                          password: "${hmcts-github-apikey-sscs}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-sscs"
-                      - usernamePassword:
-                          description: "GitHub - Probate"
-                          id: "jenkins-github-hmcts-api-token_probate"
-                          password: "${hmcts-github-apikey-probate}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-probate"
-                      - usernamePassword:
-                          description: "GitHub - Fees and Pay"
-                          id: "jenkins-github-hmcts-api-token_feepay"
-                          password: "${hmcts-github-apikey-feepay}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-feepay"
-                      - usernamePassword:
-                          description: "GitHub - Scheduling and listing"
-                          id: "jenkins-github-hmcts-api-token_sl"
-                          password: "${hmcts-github-apikey-sl}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-sl"
-                      - usernamePassword:
-                          description: "GitHub - CNP"
-                          id: "jenkins-github-hmcts-api-token_cnp"
-                          password: "${hmcts-github-apikey-cnp}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-cnp"
-                      - usernamePassword:
-                          description: "GitHub - IDAM"
-                          id: "jenkins-github-hmcts-api-token_idam"
-                          password: "${hmcts-github-apikey-idam}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-idam"
-                      - usernamePassword:
-                          description: "GitHub - Civil Enforcement"
-                          id: "jenkins-github-hmcts-api-token_cet"
-                          password: "${hmcts-github-apikey-cet}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-cet"
-                      - usernamePassword:
-                          description: "GitHub - FPLA"
-                          id: "jenkins-github-hmcts-api-token_fpl"
-                          password: "${hmcts-github-apikey-fpl}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-fpl"
                       - usernamePassword:
                           description: "SSH credentials for Jenkins agents"
                           id: "vm_agent_creds"
@@ -358,42 +280,6 @@ spec:
                           scope: GLOBAL
                           subscriptionId: "${subscription-id}"
                           tenant: "${jenkins-sp-tenant-id}"
-                      - usernamePassword:
-                          description: "GitHub - Access Management"
-                          id: "jenkins-github-hmcts-api-token_am"
-                          password: "${hmcts-github-apikey-am}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-am"
-                      - usernamePassword:
-                          description: "GitHub - CTSC"
-                          id: "jenkins-github-hmcts-api-token_ctsc"
-                          password: "${hmcts-github-apikey-ctsc}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-ctsc"
-                      - usernamePassword:
-                          description: "GitHub - Ethos"
-                          id: "jenkins-github-hmcts-api-token_ethos"
-                          password: "${hmcts-github-apikey-ethos}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-ethos"
-                      - usernamePassword:
-                          description: "GitHub - Reference Data"
-                          id: "jenkins-github-hmcts-api-token_rd"
-                          password: "${hmcts-github-apikey-rd}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-rd"
-                      - usernamePassword:
-                          description: "GitHub - MI"
-                          id: "jenkins-github-hmcts-api-token_mi"
-                          password: "${hmcts-github-apikey-mi}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-mi"
-                      - usernamePassword:
-                          description: "GitHub - Bulk Scanning"
-                          id: "jenkins-github-hmcts-api-token_bsp"
-                          password: "${hmcts-github-apikey-bsp}"
-                          scope: GLOBAL
-                          username: "jenkins-reform-bulkscan"
                       - gitHubApp:
                           appID: "52866"
                           description: "GitHub APP Key - RPE"
@@ -510,11 +396,25 @@ spec:
                           id: "hmcts-jenkins-rse"
                           privateKey: "${hmcts-jenkins-rse-ghapp}"
                       - gitHubApp:
+                          appID: "72816"
+                          description: "GitHub APP Key - unspec"
+                          id: "hmcts-jenkins-unspec"
+                          privateKey: "${hmcts-jenkins-unspec-ghapp}"
+                      - gitHubApp:
                           appID: "62005"
                           description: "GitHub APP Key - em"
                           id: "hmcts-jenkins-em"
                           privateKey: "${hmcts-jenkins-em-ghapp}"
-
+                      - gitHubApp:
+                          appID: "69800"
+                          description: "GitHub APP Key - hmi"
+                          id: "hmcts-jenkins-hmi"
+                          privateKey: "${hmcts-jenkins-hmi-ghapp}"
+                      - gitHubApp:
+                          appID: "75169"
+                          description: "GitHub APP Key - wa"
+                          id: "hmcts-jenkins-wa"
+                          privateKey: "${hmcts-jenkins-wa-ghapp}"
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
@@ -579,6 +479,20 @@ spec:
       annotations: {}
       accessMode: "ReadWriteOnce"
       size: "8Gi"
+      volumes:
+        - name: workspace
+          hostPath:
+            path: /mnt
+            type: DirectoryOrCreate
+        - name: logging
+          configMap:
+            name: jenkins-config-logging
+      mounts:
+        - mountPath: /var/jenkins_home/workspace
+          name: workspace
+        - mountPath: /var/jenkins_home/userconf
+          name: logging
+
 
     ## Install Default RBAC roles and bindings
     rbac:

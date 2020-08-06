@@ -1,14 +1,19 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: traefik-forward-auth
   namespace: admin
+  labels:
+    app: oauth2-proxy
 spec:
+  selector:
+    matchLabels:
+      app: oauth2-proxy
   template:
     metadata:
       labels:
-        app: traefik-forward-auth
+        app: oauth2-proxy
     spec:
       volumes:
         - name: oauth2-certs
@@ -80,7 +85,7 @@ spec:
   loadBalancerIP: 51.11.25.221
   type: LoadBalancer
   selector:
-    app: traefik-forward-auth
+    app: oauth2-proxy
   ports:
     - protocol: TCP
       port: 80
