@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-professional-api
+spec:
+  values:
+    java:
+      environment:
+        IDAM_URL: https://idam-api.demo.platform.hmcts.net
+        CCD_URL: http://ccd-user-profile-api-demo.service.core-compute-demo.internal
+        #this is temp solution for restarting pod with adding/updating following variable. Dont change flux version.
+        DUMMY_URL: http://rpe.compute-core.preview.preview.net
