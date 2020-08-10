@@ -6,7 +6,7 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
+    fluxcd.io/tag.nodejs: glob:pr-601-ee6ee716
 spec:
   releaseName: xui-webapp
   rollback:
@@ -20,12 +20,12 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-18634c34
+      image: hmctspublic.azurecr.io/xui/webapp:pr-601-ee6ee716
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
         FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
         DEBUG: xuiNode:*
-        DUMMY_VAR: true
+        DUMMY_VAR: false
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
