@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -13,7 +12,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-074d770e
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-6a65fd3a
       ingressHost: camunda-bpm.{{ .Values.global.environment }}.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true
@@ -22,6 +21,6 @@ spec:
       keyVaults:
         camunda:
           secrets:
-            - bpm-POSTGRES-PASS
-            - openid-client-id
-            - openid-client-secret
+          - bpm-POSTGRES-PASS
+          - openid-client-id
+          - openid-client-secret
