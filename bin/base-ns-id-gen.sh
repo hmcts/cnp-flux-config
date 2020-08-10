@@ -44,8 +44,8 @@ metadata:
   namespace: $NAMESPACE
 spec:
   type: 0
-  ResourceID: $RESOURCE_ID
-  ClientID: $CLIENT_ID
+  resourceID: $RESOURCE_ID
+  clientID: $CLIENT_ID
 
 ---
 
@@ -55,8 +55,8 @@ metadata:
   name: $SHORT_NAME-binding
   namespace: $NAMESPACE
 spec:
-  AzureIdentity: $SHORT_NAME
-  Selector: $SHORT_NAME
+  azureIdentity: $SHORT_NAME
+  selector: $SHORT_NAME
 EOF
 ) > "${MODULES_DIR}/identity.yaml"
 # -----------------------------------------------------------
