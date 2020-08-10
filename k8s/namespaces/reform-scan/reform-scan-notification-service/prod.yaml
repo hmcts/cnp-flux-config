@@ -4,13 +4,11 @@ kind: HelmRelease
 metadata:
   name: reform-scan-notification-service
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
 spec:
   values:
     java:
