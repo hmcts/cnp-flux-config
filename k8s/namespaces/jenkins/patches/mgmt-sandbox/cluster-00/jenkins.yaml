@@ -129,27 +129,27 @@ spec:
                       containers:
                       - args: "cat"
                         command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5dgx"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "inbound-agent"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "512Mi"
+                        resourceRequestCpu: "500m"
+                        resourceRequestMemory: "1Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5dgx"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "jnlp"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
@@ -175,6 +175,9 @@ spec:
                       - emptyDirVolume:
                           memory: false
                           mountPath: "/opt/jenkins"
+                      - emptyDirVolume:
+                          memory: false
+                          mountPath: "/home/jenkins/.ssh"
                       yaml: |-
                         metadata:
                           labels:

@@ -1,0 +1,22 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-processor
+spec:
+  releaseName: bulk-scan-processor
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: bulk-scan-processor
+    version: 0.3.4
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      cpuRequests: "500m"
+      cpuLimits: "2500m"
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-0c484d81
+      smoketests:
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0c484d81
+      functionaltests:
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0c484d81

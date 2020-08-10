@@ -1,0 +1,12 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-processor
+spec:
+  values:
+    java:
+      environment:
+        STORAGE_BLOB_SELECTED_CONTAINER: ALL
+        #60 days in seconds
+        SAS_TOKEN_VALIDITY: "5184000"
