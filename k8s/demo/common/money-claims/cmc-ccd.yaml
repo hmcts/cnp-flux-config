@@ -76,7 +76,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-307ddc01
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-d14e9458
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-f89c7125
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-056f0b8b
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,14 +98,14 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0dd64943
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-6a61b9d6
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ee0dde47
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-7c8c1fdf
 
     dm-store:
       java:

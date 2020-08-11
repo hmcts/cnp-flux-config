@@ -1,25 +1,23 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: reform-scan-notification-service
+  name: bulk-scan-orchestrator
   annotations:
-    fluxcd.io/automated: "true"
-    repository.fluxcd.io/java: java.image
-    filter.fluxcd.io/java: glob:prod-*
     repository.fluxcd.io/java.smoketests: java.smoketests.image
     filter.fluxcd.io/java.smoketests: glob:prod-*
 spec:
   values:
     java:
       environment:
-        NOTIFICATIONS_CONSUME_TASK_DELAY_IN_MS: "600000"
-        PENDING_NOTIFICATIONS_TASK_DELAY_IN_MS: "1800000"
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        TRANSFORMATION_URL_DIVORCE: ""
+        DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "0 30 0/2 * * *"
+        DELETE_ENVELOPES_DLQ_MESSAGES_TTL: "PT72H"
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
         environment:
-          TEST_URL: http://reform-scan-notification-service-java
+          TEST_URL: "http://bulk-scan-orchestrator-java"
           SLACK_CHANNEL: "bsp-test-notices"
           SLACK_NOTIFY_SUCCESS: false
       smoketests:

@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -15,8 +14,10 @@ spec:
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-0c484d81
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-dbbc02d1
+      environment:
+        STORAGE_BLOB_SELECTED_CONTAINER: ALL
       smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0c484d81
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-dbbc02d1
       functionaltests:
         image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0c484d81
