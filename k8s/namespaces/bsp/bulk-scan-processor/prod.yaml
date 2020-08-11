@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -13,7 +12,6 @@ spec:
   values:
     java:
       environment:
-        STORAGE_BLOB_SELECTED_CONTAINER: ALL
         STORAGE_URL: https://bulkscan.platform.hmcts.net
         PROCESS_PAYMENTS_ENABLED: true
         SMTP_HOST: smtp.office365.com
@@ -39,4 +37,4 @@ spec:
           TEST_S2S_NAME: "bulk_scan_processor_tests"
           TEST_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
       smoketests:
-        enabled: false
+        enabled: true
