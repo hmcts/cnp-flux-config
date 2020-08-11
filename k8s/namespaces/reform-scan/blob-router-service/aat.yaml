@@ -3,15 +3,14 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
-  namespace: reform-scan
   annotations:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
-    repository.fluxcd.io/functional: java.functionaltests.image
-    filter.fluxcd.io/functional: glob:prod-*
+    repository.fluxcd.io/java.smoke: java.smoketests.image
+    filter.fluxcd.io/java.smoke: glob:prod-*
+    repository.fluxcd.io/java.functional: java.functionaltests.image
+    filter.fluxcd.io/java.functional: glob:prod-*
 spec:
   values:
     java:
@@ -46,9 +45,5 @@ spec:
           TEST_USE_PROXY_FOR_SOURCE_STORAGE: "true"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-aa64e6c6
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-aa64e6c6
-    global:
-      environment: aat
