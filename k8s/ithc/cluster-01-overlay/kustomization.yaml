@@ -39,3 +39,12 @@ patchesStrategicMerge:
 
   - ../../namespaces/admin/env-injector/patches/ithc/cluster-01/env-injector.yaml
   - ../../namespaces/monitoring/patches/ithc/cluster-01/prom-operator.yaml
+patches:
+  - path: ../ithc-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled

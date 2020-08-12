@@ -45,3 +45,13 @@ patchesStrategicMerge:
 
   #Dynatrace patch
   - ../../namespaces/monitoring/dynatrace/patches/perftest/oneagent.yaml
+
+patches:
+  - path: ../perftest-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled
