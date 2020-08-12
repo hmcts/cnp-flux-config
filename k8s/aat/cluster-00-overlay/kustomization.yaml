@@ -50,3 +50,12 @@ patchesStrategicMerge:
 
   #botkube patch
   - ../../namespaces/monitoring/botkube/patches/aat/cluster-00/botkube.yaml
+patches:
+  - path: ../aat-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled

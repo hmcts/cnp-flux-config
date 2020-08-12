@@ -44,3 +44,13 @@ patchesStrategicMerge:
 
   - ../../namespaces/admin/env-injector/patches/preview/cluster-01/env-injector.yaml
   - ../../namespaces/admin/external-dns/patches/preview/cluster-01/external-dns-deployment.yaml
+
+patches:
+  - path: ../preview-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled
