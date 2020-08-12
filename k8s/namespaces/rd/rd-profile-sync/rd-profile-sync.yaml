@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-profile-sync
+spec:
+  releaseName: rd-profile-sync
+  chart:
+    rgit: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rd-profile-sync
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rd/profile-sync:prod-e9cf73ce
