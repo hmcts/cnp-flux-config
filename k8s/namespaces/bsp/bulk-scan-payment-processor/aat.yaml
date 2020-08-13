@@ -25,7 +25,7 @@ spec:
               idam-users-bulkscan-username: IDAM_USERS_BULKSCAN_USERNAME
               idam-users-bulkscan-password: IDAM_USERS_BULKSCAN_PASSWORD
               idam-client-secret: IDAM_CLIENT_SECRET
-              payments-queue-send-connection-string: PAYMENTS_QUEUE_WRITE_CONNECTION_STRING
+              payments-queue-send-shared-access-key: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
         environment:
           TEST_URL: "http://bulk-scan-payment-processor-aat.service.core-compute-aat.internal"
           SLACK_CHANNEL: "bsp-test-notices"
@@ -35,6 +35,9 @@ spec:
           CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
           IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
           IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
+          PAYMENTS_QUEUE_NAME: "payments"
+          PAYMENTS_QUEUE_NAMESPACE: "bulk-scan-servicebus-aat"
+          PAYMENTS_QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
       smoketests:
         enabled: true
       functionaltests:
