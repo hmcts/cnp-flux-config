@@ -12,7 +12,7 @@ spec:
   chart:
     repository: https://hmcts.github.io/RoadieHQ-helm-charts
     name: backstage
-    version: 0.2.3
+    version: 0.2.4
   valueFileSecrets:
     - name: "backstage-values"
   values:
@@ -36,7 +36,7 @@ spec:
       replicaCount: 2
       image:
         repository: hmctspublic.azurecr.io/backstage/backend
-        tag: latest
+        tag: v2
     pg:
       # This must match the path provided to appConfig.backend.postgresPathToCa. For example, if
       # postgresPathToCa is /etc/config/my-ca.crt then pg.caVolumeMountDir must be /etc/config.
@@ -53,8 +53,10 @@ spec:
         listen: 0.0.0.0:7000
         cors:
           origin: https://backstage.sandbox.platform.hmcts.net
-        postgresUser: backstage@hmcts-backstage-sbox
-        postgresPort: 5432
-        postgresDatabase: backstage
-        postgresHost: hmcts-backstage-sbox.postgres.database.azure.com
-        postgresPathToCa: /etc/config/ca-cert.pem
+        database:
+          client: pg
+          connection:
+            user: backstage@hmcts-backstage-sbox
+            port: 5432
+            host: hmcts-backstage-sbox.postgres.database.azure.com
+            ssl: require
