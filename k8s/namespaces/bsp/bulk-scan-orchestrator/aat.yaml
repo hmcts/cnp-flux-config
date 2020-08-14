@@ -24,6 +24,10 @@ spec:
               idam-users-bulkscan-username: IDAM_USER_NAME
               idam-users-bulkscan-password: IDAM_USER_PASSWORD
               idam-client-secret: IDAM_CLIENT_SECRET
+              envelopes-queue-send-shared-access-key: ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+              envelopes-queue-listen-shared-access-key: ENVELOPES_QUEUE_READ_ACCESS_KEY
+              payments-queue-send-shared-access-key: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
+              # following can be removed once https://github.com/hmcts/bulk-scan-orchestrator/pull/1141 is deployed
               envelopes-queue-send-connection-string: ENVELOPES_QUEUE_WRITE_CONN_STRING
               envelopes-queue-listen-connection-string: ENVELOPES_QUEUE_READ_CONN_STRING
               payments-queue-send-connection-string: PAYMENTS_QUEUE_WRITE_CONN_STRING
@@ -37,6 +41,11 @@ spec:
           CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
           IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
           IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
+          QUEUE_NAMESPACE = "bulk-scan-servicebus-aat"
+          QUEUE_ENVELOPES_NAME = "envelopes"
+          QUEUE_PAYMENTS_NAME = "payments"
+          QUEUE_READ_ACCESS_KEY_NAME = 'ListenSharedAccessKey'
+          QUEUE_WRITE_ACCESS_KEY_NAME = 'SendSharedAccessKey'
       smoketests:
         enabled: true
       functionaltests:
