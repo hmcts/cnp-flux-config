@@ -1,0 +1,24 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: family-public-law
+  name: fpl-pod-exec
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: fpl-pod-exec
+  namespace: family-public-law
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cgi-developers-logs
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "bb778c38-9e7a-4d03-8dad-4fe0b207e8a3"
