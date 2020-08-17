@@ -6,7 +6,7 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:aat-*
+    flux.weave.works/tag.nodejs: glob:preview-*
 spec:
   releaseName: ia-wa-proto-frontend
   rollback:
@@ -20,10 +20,10 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/wa-proto-frontend:prod-1b1891f5
-      ingressHost: ia-wa-proto-frontend.aat.platform.hmcts.net
+      image: hmctspublic.azurecr.io/ia/wa-proto-frontend:preview
+      ingressHost: ia-wa-proto-frontend.service.core-compute-preview.internal
       environment:
     global:
-      environment: aat
+      environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
