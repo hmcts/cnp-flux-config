@@ -1,0 +1,24 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: family-public-law
+  name: fpl-pod-portforward
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/portforward"]
+  verbs: ["get", "list", "create"]
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: fpl-pod-portforward
+  namespace: family-public-law
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: fpl-pod-portforward
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "bb778c38-9e7a-4d03-8dad-4fe0b207e8a3"
