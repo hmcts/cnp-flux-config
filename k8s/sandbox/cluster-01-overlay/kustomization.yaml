@@ -11,6 +11,7 @@ bases:
   - ../../namespaces/monitoring
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
+  - ../../namespaces/admin/aad-pod-identity
   - ../../namespaces/knode-system
   - ../../namespaces/kube-system/nodelocaldns
 
@@ -36,5 +37,12 @@ patchesStrategicMerge:
   - ../../namespaces/monitoring/patches/sandbox/cluster-01/nodelocaldns-alerts-rules.yaml
 
   - ../../namespaces/admin/env-injector/patches/sandbox/cluster-01/env-injector.yaml
-
-  - ../../namespaces/kube-system/nodelocaldns/patches/use-eb-tables.yaml
+patches:
+  - path: ../sandbox-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled

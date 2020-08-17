@@ -13,17 +13,20 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-bulk-scan
-    version: 0.0.10
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-bulk-scan
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-97a80e22
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-79b8f870
       environment:
-        READY_TO_LIST_OFFICES: 1,2,3,4,5,6,7,8,9,AE
-        TEST_PROPERTY: true
+        READY_TO_LIST_OFFICES: 1,2,3,4,5,6,7,8,9,AE,Balham DRT,Birkenhead LM DRT,Chesterfield
+          DRT,Coatbridge Benefit Centre,Inverness DRT,Lowestoft DRT,Milton Keynes
+          DRT,Norwich DRT,Sheffield DRT,Springburn DRT,Watford DRT,Wellingborough
+          DRT,Worthing DRT
+        TEST_FLAG: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

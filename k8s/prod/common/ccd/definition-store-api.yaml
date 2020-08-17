@@ -15,15 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccd-definition-store-api
-    version: 1.4.0
+    version: 1.4.2
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3ec3758c
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-96d1a24f
       environment:
         IDAM_USER_URL: "https://hmcts-access.service.gov.uk"
         ELASTIC_SEARCH_FAIL_ON_IMPORT: true
+        ELASTIC_SEARCH_DYNAMIC: strict
         test: "test1"
     global:
       environment: prod

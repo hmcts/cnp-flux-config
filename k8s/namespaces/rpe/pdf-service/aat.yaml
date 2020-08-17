@@ -1,0 +1,35 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pdf-service
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/java.smoketestscron: java.smoketestscron.image
+    filter.fluxcd.io/java.smoketestscron: glob:prod-*
+    repository.fluxcd.io/java.functionaltestscron: java.functionaltestscron.image
+    filter.fluxcd.io/java.functionaltestscron: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+    repository.fluxcd.io/java.functionaltests: java.functionaltests.image
+    filter.fluxcd.io/java.functionaltests: glob:prod-*
+spec:
+  values:
+    java:
+      testsConfig:
+        memoryLimits: "3072Mi"
+        environment:
+          TEST_URL: http://pdf-service-java
+          SLACK_CHANNEL: "rpe-build-notices"
+          SLACK_NOTIFY_SUCCESS: "false"
+      smoketestscron:
+        enabled: true
+        schedule: "35 0/1 * * *"
+      functionaltestscron:
+        enabled: true
+        schedule: "45 0/6 * * *"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

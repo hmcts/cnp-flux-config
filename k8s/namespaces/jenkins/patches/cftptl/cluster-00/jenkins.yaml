@@ -70,7 +70,7 @@ spec:
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-.*|send-letter-client|send-letter-service)\/master
+                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
                     name: BSP
                     recurse: true
                     title: BSP
@@ -130,7 +130,7 @@ spec:
                     title: CDM Nightly Builds
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
+                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -236,6 +236,12 @@ spec:
                     name: HMI
                     recurse: true
                     title: HMI
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*WA.*\/.+\/master
+                    name: WA
+                    recurse: true
+                    title: WA
           authentication: |
             jenkins:
               securityRealm:
@@ -281,22 +287,83 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - alwaysPullImage: true
-                        args: "cat"
+                      - args: "cat"
                         command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db4q68"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "inbound-agent"
-                        resourceLimitCpu: "1000m"
-                        resourceLimitMemory: "2Gi"
-                        resourceRequestCpu: "500m"
-                        resourceRequestMemory: "1Gi"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "256Mi"
                         ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      - args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
+                        livenessProbe:
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
+                        name: "inbound-agent-1"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "256Mi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      - args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
+                        livenessProbe:
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
+                        name: "inbound-agent-2"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "256Mi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      - args: "cat"
+                        command: "/bin/sh -c"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
+                        livenessProbe:
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
+                        name: "inbound-agent-3"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "256Mi"
+                        ttyEnabled: true
+                        workingDir: "/home/jenkins/agent"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
+                        livenessProbe:
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
+                        name: "jnlp"
+                        resourceLimitCpu: "2000m"
+                        resourceLimitMemory: "6Gi"
+                        resourceRequestCpu: "200m"
+                        resourceRequestMemory: "256Mi"
+                        ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                       hostNetwork: false
                       idleMinutes: 10
@@ -308,7 +375,58 @@ spec:
                       namespace: "jenkins"
                       podRetention: "never"
                       serviceAccount: "jenkins"
-                      yamlMergeStrategy: "override"
+                      supplementalGroups: "118"
+                      volumes:
+                      - hostPathVolume:
+                          hostPath: "/var/run/docker.sock"
+                          mountPath: "/var/run/docker.sock"
+                      - emptyDirVolume:
+                          memory: false
+                          mountPath: "/opt/jenkins"
+                      - emptyDirVolume:
+                          memory: false
+                          mountPath: "/home/jenkins/.ssh"
+                      - hostPathVolume:
+                          hostPath: "/tmp/jenkins-agent"
+                          mountPath: "/tmp/jenkins-agent"
+                      yaml: |-
+                        metadata:
+                          labels:
+                            app.kubernetes.io/name: jenkins
+                            app.kubernetes.io/component: jenkins-agent
+                        spec:
+                          securityContext:
+                            fsGroup: 118
+                          affinity:
+                            podAntiAffinity:
+                              requiredDuringSchedulingIgnoredDuringExecution:
+                                - labelSelector:
+                                    matchExpressions:
+                                      - key: app.kubernetes.io/component
+                                        operator: In
+                                        values:
+                                          - jenkins-master
+                                  topologyKey: "kubernetes.io/hostname"
+                      yamlMergeStrategy: "merge"
+                      yamls:
+                      - |-
+                        metadata:
+                          labels:
+                            app.kubernetes.io/name: jenkins
+                            app.kubernetes.io/component: jenkins-agent
+                        spec:
+                          securityContext:
+                            fsGroup: 118
+                          affinity:
+                            podAntiAffinity:
+                              requiredDuringSchedulingIgnoredDuringExecution:
+                                - labelSelector:
+                                    matchExpressions:
+                                      - key: app.kubernetes.io/component
+                                        operator: In
+                                        values:
+                                          - jenkins-master
+                                  topologyKey: "kubernetes.io/hostname"
           azure-vm-agent: |
             jenkins:
               clouds:
@@ -333,7 +451,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.0.0"
+                          galleryImageVersion: "2.1.0"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
@@ -354,6 +472,8 @@ spec:
                           jenkinsssh soft
                           proc 32768
                           jenkinsssh hard nproc 32768
+                          jenkinsssh soft core unlimited
+                          jenkinsssh hard core unlimited
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed

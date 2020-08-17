@@ -1,0 +1,26 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pcq-loader
+  namespace: pcq
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.job: glob:prod-*
+spec:
+  releaseName: pcq-loader
+  rollback:
+    enable: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/pcq-loader
+  values:
+    job:
+      schedule: "0/15 * * * *"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/pcq/loader:prod-fc52035b
+    global:
+      environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

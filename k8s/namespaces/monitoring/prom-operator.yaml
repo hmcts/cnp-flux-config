@@ -16,7 +16,7 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
-    version: 8.3.0
+    version: 9.3.1
   valueFileSecrets:
     - name: "prometheus-values"
   values:
@@ -46,7 +46,8 @@ spec:
       additionalServiceMonitors:
         - name: "flux-monitor"
           selector:
-            app: flux
+            matchLabels:
+              app: flux
           namespaceSelector:
             matchNames:
               - admin
@@ -88,7 +89,7 @@ spec:
         global:
           resolve_timeout: "5m"
         route:
-          receiver: slack_alerting  # default receiver
+          receiver: slack_alerting # default receiver
           group_by:
             - alertname
             - cluster

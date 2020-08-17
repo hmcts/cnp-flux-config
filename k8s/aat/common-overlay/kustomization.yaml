@@ -1,13 +1,42 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-  - rpe
-
+- rpe
+- bar
+- bsp
+- adoption
+- aac
+- am
+- ccd
+- cnp
+- coh
+- ctsc
+- dg
+- divorce
+- dm-store
+- em
+- ethos
+- family-public-law
+- ia
+- idam
+- money-claims
+- pcq
+- probate
+- rd
+- reform-scan
+- rse
+- sscs
+- unspec
+- xui
+- fees-pay
+- financial-remedy
+- wa
+- camunda
 patches:
-  - path: aat-helmrelease.yaml
-    target:
-      kind: HelmRelease
-  - path: automated-helmrelease.yaml
-    target:
-      kind: HelmRelease
-      annotationSelector: hmcts.github.com/prod-automated != disabled
+- path: ../aat-helmrelease.yaml
+  target:
+    kind: HelmRelease
+- path: ../automated-helmrelease.yaml
+  target:
+    kind: HelmRelease
+    annotationSelector: hmcts.github.com/prod-automated != disabled

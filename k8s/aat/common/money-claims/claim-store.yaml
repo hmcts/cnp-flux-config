@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 4.1.9
+    version: 4.1.13
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-c6e371c8
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-78f9240b
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -32,6 +32,7 @@ spec:
         FEATURE_AUTO_CANCEL_PAYMENTS: true
         FEATURE_TOGGLES_CTSC_ENABLED: true
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

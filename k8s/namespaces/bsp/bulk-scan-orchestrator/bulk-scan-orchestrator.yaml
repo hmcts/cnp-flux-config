@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-orchestrator
+spec:
+  releaseName: bulk-scan-orchestrator
+  timeout: 600
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: bulk-scan-orchestrator
+    version: 0.3.6
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-aec3413d
+      smoketests:
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-aec3413d
+      functionaltests:
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-aec3413d

@@ -6,24 +6,21 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-527-*
+    flux.weave.works/tag.nodejs: glob:pr-539-*
 spec:
   releaseName: sscs-cor-frontend
   rollback:
     enable: true
     retry: true
   chart:
-#    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-#    name: sscs-cor-frontend
-#    version: 0.1.16
-    git: https://github.com/hmcts/sscs-cor-frontend
-    ref: WLA-454-6-I18Next
-    path: charts/sscs-cor-frontend
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-cor-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:pr-524-85978fff
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:pr-539-3be84baa
       ingressHost: sscs-cor.demo.platform.hmcts.net
       environment:
         NODE_ENV: preprod
@@ -31,7 +28,7 @@ spec:
         ADDITIONAL_EVIDENCE_FEATURE_FLAG: "true"
         EVIDENCE_UPLOAD_QUESTION_PAGE_OVERRIDE_ALLOWED: "true"
         POST_BULK_SCAN: "true"
-        FT_WELSH: "false"
+        FT_WELSH: "true"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

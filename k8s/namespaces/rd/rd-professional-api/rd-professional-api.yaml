@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-professional-api
+spec:
+  releaseName: rd-professional-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rd-professional-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rd/professional-api:prod-edb65b54

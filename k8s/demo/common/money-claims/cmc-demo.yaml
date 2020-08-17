@@ -45,7 +45,7 @@ spec:
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-c6e371c8
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-78f9240b
         ingressClass: traefik-private
         ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
@@ -62,11 +62,12 @@ spec:
           DOC_ASSEMBLY_JUDGETEMPLATEID: CV-CMC-GOR-ENG-00219-1.docx
           FEATURE_TOGGLES_CTSC_ENABLED: true
           FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
-
+          FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
+          STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: yogendra.upasani@hmcts.net
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-6721860c
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-56b1bc99
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:

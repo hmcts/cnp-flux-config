@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-64c34f4a
+      image: hmctspublic.azurecr.io/finrem/cos:prod-6bb95083
       dnsConfig:
         singleRequestTcp: false
       environment:
@@ -28,6 +28,9 @@ spec:
         FEATURE_CONSENT_ORDER_NOT_APPROVED_APPLICANT_DOCUMENT_GENERATION: true
         FEATURE_CONTESTED_COURT_DETAILS_MIGRATION: true
         FEATURE_PRINT_GENERAL_ORDER: true
+        FEATURE_AUTOMATE_SEND_ORDER: true
+        FEATURE_AUTOMATE_ASSIGN_JUDGE: true
+        CTSC_EMAIL: contactFinancialRemedy@justice.gov.uk
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
         BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
     global:

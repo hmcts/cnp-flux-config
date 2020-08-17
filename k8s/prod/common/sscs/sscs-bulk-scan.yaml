@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-bulk-scan
-    version: 0.0.10
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-bulk-scan
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-97a80e22
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-79b8f870
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks

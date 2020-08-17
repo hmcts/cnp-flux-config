@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
+  - rd
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/kube-slack
@@ -17,6 +18,7 @@ bases:
   - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
   - ../../namespaces/monitoring/dynatrace
+  - ../../namespaces/admin/aad-pod-identity
 
 patchesStrategicMerge:
   # flux patches
@@ -49,3 +51,12 @@ patchesStrategicMerge:
 
   #Dynatrace patch
   - ../../namespaces/monitoring/dynatrace/patches/prod/oneagent.yaml
+patches:
+  - path: ../prod-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled

@@ -10,7 +10,11 @@ The rules are simple:
 1. only file name entries may be added to CODEOWNERS, no directories as that bypasses the review for new applications
 1. be sensible, every change is tracked through git, don't repurpose files, create a new one for new applications
 
-To add a new app:
+Adding a new Kustomization namespace:
+
+Add `k8s/namespaces/<namespace>` to CODEOWNERS
+
+To add a new app to common (**Deprecated**):
 
 Raise a pull request adding it to `k8s/<env>/common/<product>/<component>.yaml`
 If you're adding the application to AAT or prod then then add a line referring to it in CODEOWNERS, i.e. 

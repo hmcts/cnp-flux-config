@@ -15,18 +15,19 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-citizen-frontend
-    version: 3.3.11
+    version: 3.3.12
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-6721860c
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-56b1bc99
       ingressHost: moneyclaims.aat.platform.hmcts.net
       environment:
         FEATURE_TESTING_SUPPORT: true
         FEATURE_RETURN_ERROR_TO_USER: true
         FEATURE_WEB_CHAT: true
         FEATURE_MOCK_PAY: true
+        FEATURE_AAT_TEST: false
         PCQ_URL: https://pcq.aat.platform.hmcts.net
     global:
       environment: aat

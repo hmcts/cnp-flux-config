@@ -5,7 +5,7 @@ metadata:
   name: cmc-claim-store
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-c6e371c8
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-1855-f58306c9
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -33,6 +33,8 @@ spec:
         IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
+        STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: claimtesthmcts@gmail.com
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

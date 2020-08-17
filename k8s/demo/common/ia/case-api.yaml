@@ -6,7 +6,7 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-499-*
 spec:
   releaseName: ia-case-api
   rollback:
@@ -20,11 +20,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-55d0910f
+      image: hmctspublic.azurecr.io/ia/case-api:pr-499-dcd8b8db
       ingressHost: ia-case-api-demo.service.core-compute-demo.internal
       environment:
         RESTART_ME: "Update due to vault Change"
         IA_FEEPAYMENT_ENABLED: "false"
+        EM_BUNDLER_URL: "http://em-ccdorc-demo.service.core-compute-demo.internal"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

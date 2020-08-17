@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: fpl-case-service
-    version: 1.12.1
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fpl-case-service
   values:
     java:
       replicas: 2
@@ -23,7 +23,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-9061c2aa
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-3cafb142
       ingressHost: fpl-case-service-aat.service.core-compute-aat.internal
       environment:
         MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health, info, threaddump

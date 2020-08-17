@@ -51,6 +51,9 @@ metadata:
 data:
   Corefile: |
     cluster.local:53 {
+        log . {
+          class error
+        }
         errors
         cache {
                 success 9984 30
@@ -125,7 +128,7 @@ spec:
       priorityClassName: system-node-critical
       serviceAccountName: node-local-dns
       hostNetwork: true
-      dnsPolicy: Default  # Don't use cluster DNS.
+      dnsPolicy: Default # Don't use cluster DNS.
       containers:
         - name: node-cache
           image: hmctspublic.azurecr.io/k8s-dns-node-cache-amd64:1.15.13-10-gcfc66b2
@@ -140,6 +143,7 @@ spec:
             - "/etc/Corefile"
             - "-upstreamsvc"
             - "kube-dns-upstream"
+            - "-setupebtables"
           securityContext:
             privileged: true
           ports:
