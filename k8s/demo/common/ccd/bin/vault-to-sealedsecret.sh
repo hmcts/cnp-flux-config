@@ -36,6 +36,6 @@ for i in "${secrets[@]}"; do
         --namespace $namespace \
         --dry-run -o json > $name.json
 
-    kubeseal --format=yaml --cert=$cert < $name.json > ../sealed-secrets/$name.yaml
+    kubeseal --format=yaml --cert=$cert < $name.json > ../$name.yaml
     rm -f $name.json
 done
