@@ -6,21 +6,21 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-616-616d9686
+    fluxcd.io/tag.nodejs: glob:pr-616-9fa2978f
 spec:
   releaseName: xui-webapp
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: xui-webapp
-    version: 0.2.3
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-webapp
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:pr-616-616d9686
+      image: hmctspublic.azurecr.io/xui/webapp:pr-616-9fa2978f
       ingressHost: manage-case.demo.platform.hmcts.net
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false

@@ -6,6 +6,7 @@ metadata:
   namespace: idam
   annotations:
     fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:preview-*
 spec:
   releaseName: idam-api
@@ -17,8 +18,7 @@ spec:
     version: 0.2.8
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:preview
-      imagePullPolicy: Always
+      image: hmctspublic.azurecr.io/idam/api:preview-3ee9a94b
       ingressHost: idam-api.service.core-compute-preview.internal
       replicas: 2
       environment:

@@ -20,12 +20,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-083b1ed6
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-e9a6f90d
       environment:
         JOB_SCHEDULER_DB_USERNAME: notification@sscs-tya-notif-postgres-v11-db-aat
         JOB_SCHEDULER_DB_NAME: notification
         JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v11-db-aat.postgres.database.azure.com
-        SSCS_TRACK_YOUR_APPEAL_LINK: https://track-appeal.aat.platform.hmcts.net/trackyourappeal/appeal_id
+        SSCS_TRACK_YOUR_APPEAL_LINK: https://track-appeal.nonprod.platform.hmcts.net/trackyourappeal/appeal_id
+        HOURS_START_TIME: 0
+        HOURS_END_TIME: 17
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

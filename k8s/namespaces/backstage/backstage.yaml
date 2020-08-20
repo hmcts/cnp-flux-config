@@ -12,7 +12,7 @@ spec:
   chart:
     repository: https://hmcts.github.io/RoadieHQ-helm-charts
     name: backstage
-    version: 0.2.6
+    version: 0.2.9
   valueFileSecrets:
     - name: "backstage-values"
   values:
@@ -20,7 +20,7 @@ spec:
       replicaCount: 2
       image:
         repository: hmctspublic.azurecr.io/backstage/frontend
-        tag: latest
+        tag: v7
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
@@ -36,27 +36,21 @@ spec:
       replicaCount: 2
       image:
         repository: hmctspublic.azurecr.io/backstage/backend
-        tag: v2
-    pg:
-      # This must match the path provided to appConfig.backend.postgresPathToCa. For example, if
-      # postgresPathToCa is /etc/config/my-ca.crt then pg.caVolumeMountDir must be /etc/config.
-      caVolumeMountDir: /etc/config
+        tag: v4
 
     appConfig:
       app:
-        baseUrl: https://backstage.sandbox.platform.hmcts.net
+        baseUrl: backstage.sandbox.platform.hmcts.net
         title: HMCTS Backstage
+      auth:
+        github:
+          development:
+            appOrigin: https://backstage.sandbox.platform.hmcts.net/
       backend:
         baseUrl: https://backstage-api.sandbox.platform.hmcts.net
-        lighthouseHostname: https://lighthouse.example.com
-        gitOpsHostname: https://gitops.example.com
-        listen: 0.0.0.0:7000
         cors:
           origin: https://backstage.sandbox.platform.hmcts.net
-        database:
-          client: pg
-          connection:
-            user: backstage@hmcts-backstage-sbox
-            port: 5432
-            host: hmcts-backstage-sbox.postgres.database.azure.com
-            ssl: require
+        db:
+          user: backstage@hmcts-backstage-sbox
+          port: 5432
+          host: hmcts-backstage-sbox.postgres.database.azure.com
