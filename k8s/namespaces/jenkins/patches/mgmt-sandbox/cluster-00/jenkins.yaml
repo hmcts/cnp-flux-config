@@ -129,13 +129,8 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - command:
-                        - "/tini"
-                        - "--"
-                        args:
-                        - "/bin/sh"
-                        - "-c"
-                        - "cat"
+                      - args: "/bin/sh -c cat"
+                        command: "/tini --"
                         image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
                         livenessProbe:
                           failureThreshold: 3
