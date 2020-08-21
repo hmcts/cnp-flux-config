@@ -1,0 +1,29 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-caveats-fe
+  namespace: probate
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: probate-caveats-fe
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-caveats-fe
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      environment:
+        EQUALITY_URL: https://pcq.perftest.platform.hmcts.net
+      image: hmctspublic.azurecr.io/probate/caveats-fe:latest
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
