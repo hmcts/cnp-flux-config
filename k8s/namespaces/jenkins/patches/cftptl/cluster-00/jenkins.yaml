@@ -273,58 +273,10 @@ spec:
                           successThreshold: 1
                           timeoutSeconds: 5
                         name: "inbound-agent"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
-                        ttyEnabled: true
-                        workingDir: "/home/jenkins/agent"
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
-                        livenessProbe:
-                          failureThreshold: 3
-                          initialDelaySeconds: 150
-                          periodSeconds: 15
-                          successThreshold: 1
-                          timeoutSeconds: 5
-                        name: "inbound-agent-1"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
-                        ttyEnabled: true
-                        workingDir: "/home/jenkins/agent"
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
-                        livenessProbe:
-                          failureThreshold: 3
-                          initialDelaySeconds: 150
-                          periodSeconds: 15
-                          successThreshold: 1
-                          timeoutSeconds: 5
-                        name: "inbound-agent-2"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
-                        ttyEnabled: true
-                        workingDir: "/home/jenkins/agent"
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
-                        livenessProbe:
-                          failureThreshold: 3
-                          initialDelaySeconds: 150
-                          periodSeconds: 15
-                          successThreshold: 1
-                          timeoutSeconds: 5
-                        name: "inbound-agent-3"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
+                        resourceLimitCpu: "4000m"
+                        resourceLimitMemory: "12Gi"
+                        resourceRequestCpu: "2000m"
+                        resourceRequestMemory: "2Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
                       - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
@@ -337,8 +289,8 @@ spec:
                         name: "jnlp"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "1Gi"
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                       hostNetwork: false
@@ -372,6 +324,7 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
                           affinity:
                             podAntiAffinity:
