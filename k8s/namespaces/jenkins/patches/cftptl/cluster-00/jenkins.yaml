@@ -7,6 +7,7 @@ metadata:
 spec:
   values:
     master:
+      imageTag: "db5r2t"
       ingress:
         hostName: build.platform.hmcts.net
       containerEnv:
@@ -263,8 +264,8 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - args: "/bin/sh -c cat"
-                        command: "/tini --"
+                      - args: "cat"
+                        command: "/bin/sh -c"
                         image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
                         livenessProbe:
                           failureThreshold: 3
