@@ -263,8 +263,13 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - args: "cat"
-                        command: "/bin/sh -c"
+                      - command:
+                        - "/tini"
+                        - "--"
+                        args:
+                        - "/bin/sh"
+                        - "-c"
+                        - "cat"
                         image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
                         livenessProbe:
                           failureThreshold: 3
@@ -276,7 +281,7 @@ spec:
                         resourceLimitCpu: "4000m"
                         resourceLimitMemory: "12Gi"
                         resourceRequestCpu: "2000m"
-                        resourceRequestMemory: "2Gi"
+                        resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
                       - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
