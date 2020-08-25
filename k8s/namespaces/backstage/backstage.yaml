@@ -12,15 +12,16 @@ spec:
   chart:
     repository: https://hmcts.github.io/RoadieHQ-helm-charts
     name: backstage
-    version: 0.2.9
+    version: 0.2.10
   valueFileSecrets:
     - name: "backstage-values"
   values:
     frontend:
       replicaCount: 2
+      baseUrl: https://backstage.sandbox.platform.hmcts.net
       image:
         repository: hmctspublic.azurecr.io/backstage/frontend
-        tag: v7
+        tag: v8
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
@@ -36,21 +37,11 @@ spec:
       replicaCount: 2
       image:
         repository: hmctspublic.azurecr.io/backstage/backend
-        tag: v4
-
-    appConfig:
-      app:
-        baseUrl: backstage.sandbox.platform.hmcts.net
-        title: HMCTS Backstage
-      auth:
-        github:
-          development:
-            appOrigin: https://backstage.sandbox.platform.hmcts.net/
-      backend:
-        baseUrl: https://backstage-api.sandbox.platform.hmcts.net
-        cors:
-          origin: https://backstage.sandbox.platform.hmcts.net
-        db:
-          user: backstage@hmcts-backstage-sbox
-          port: 5432
-          host: hmcts-backstage-sbox.postgres.database.azure.com
+        tag: v5
+      baseUrl: https://backstage-api.sandbox.platform.hmcts.net
+      db:
+        user: backstage@hmcts-backstage-sbox
+        host: hmcts-backstage-sbox.postgres.database.azure.com
+        ssl: require
+      cors:
+        origin: https://backstage.sandbox.platform.hmcts.net
