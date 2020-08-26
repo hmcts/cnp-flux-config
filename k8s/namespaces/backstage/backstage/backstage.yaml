@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -8,10 +7,8 @@ metadata:
     fluxcd.io/automated: "true"
     repository.fluxcd.io/frontend: frontend.image
     filter.fluxcd.io/frontend: glob:prod-*
-
     repository.fluxcd.io/backend: backend.image
     filter.fluxcd.io/backend: glob:prod-*
-
 spec:
   releaseName: backstage
   rollback:
@@ -22,26 +19,26 @@ spec:
     name: backstage
     version: 0.2.11
   valueFileSecrets:
-    - name: "backstage-values"
+  - name: "backstage-values"
   values:
     frontend:
       replicaCount: 2
       baseUrl: https://backstage.sandbox.platform.hmcts.net
-      image: hmctspublic.azurecr.io/backstage/frontend:prod-0c3e37b
+      image: hmctspublic.azurecr.io/backstage/frontend:prod-dcfb8d1
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
       enabled: true
       hosts:
-        - host: backstage.sandbox.platform.hmcts.net
-          paths:
-            - service: frontend
-        - host: backstage-api.sandbox.platform.hmcts.net
-          paths:
-            - service: backend
+      - host: backstage.sandbox.platform.hmcts.net
+        paths:
+        - service: frontend
+      - host: backstage-api.sandbox.platform.hmcts.net
+        paths:
+        - service: backend
     backend:
       replicaCount: 2
-      image: hmctspublic.azurecr.io/backstage/backend:v5
+      image: hmctspublic.azurecr.io/backstage/backend:prod-dcfb8d1
       baseUrl: https://backstage-api.sandbox.platform.hmcts.net
       db:
         user: backstage@hmcts-backstage-sbox
