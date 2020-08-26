@@ -6,21 +6,21 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1021-*
+    flux.weave.works/tag.java: glob:pr-1106-*
 spec:
   releaseName: sscs-tya-notif
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tya-notif
-    version: 0.0.17
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tya-notif
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-1021-4ea8460a
+      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-1106-03839cb6
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-demo"
         JOB_SCHEDULER_DB_NAME: "notification"

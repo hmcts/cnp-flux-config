@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-evidence-share
-    version: 0.0.19
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-evidence-share
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-b702bfeb
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-092d8d0c
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks

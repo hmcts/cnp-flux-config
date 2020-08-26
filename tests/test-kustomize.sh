@@ -11,12 +11,12 @@ kustomizepaths=(
     k8s/aat/common-overlay
     k8s/cftptl/cluster-00-overlay
     k8s/demo/cluster-00-overlay
-    k8s/demo/cluster-01-overlay
     k8s/demo/common-overlay
     k8s/ldata/cluster-00-overlay
     k8s/ldata/cluster-01-overlay
     k8s/preview/cluster-00-overlay
     k8s/preview/cluster-01-overlay
+    k8s/preview/common-overlay
     k8s/ithc/cluster-00-overlay
     k8s/ithc/cluster-01-overlay
     k8s/ithc/common-overlay
@@ -46,7 +46,7 @@ prod_whitelist_helm_release_pattern='sample\|another-sample' # Helm Release name
 for env in $(echo "aat prod"); do
   env_white_list=${env}_whitelist_helm_release_pattern
   for path in $(echo "k8s/$env/cluster-00-overlay k8s/$env/cluster-01-overlay k8s/$env/common-overlay"); do
-    ./kustomize build --load_restrictor none $path | yq r  -d'*'  -j - metadata | (grep hmcts.github.com/prod-automated || true ) | grep -v ${!env_white_list}
+    ./kustomize build --load_restrictor none $path | yq r  -d'*'  -j - metadata | (grep \"hmcts.github.com/prod-automated\":\"disabled\" || true ) | grep -v ${!env_white_list}
     if [ $? -eq 0 ]
     then
       echo "Non whitelisted HelmReleases found with hmcts.github.com/prod-automated annotation in $path" && exit 1

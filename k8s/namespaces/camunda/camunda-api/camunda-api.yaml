@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: camunda-api
+spec:
+  releaseName: camunda-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/camunda-bpm
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-f093324d
+      ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{
+        .Values.global.environment }}.internal

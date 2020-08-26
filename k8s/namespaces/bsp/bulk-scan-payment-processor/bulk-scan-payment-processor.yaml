@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-payment-processor
+spec:
+  releaseName: bulk-scan-payment-processor
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: bulk-scan-payment-processor
+    version: 0.2.3
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-a6115700
+      smoketests:
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-a6115700
+      functionaltests:
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-a6115700

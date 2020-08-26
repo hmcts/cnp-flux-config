@@ -1,6 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
+  - am
+  - rd
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/kube-slack
@@ -17,6 +19,7 @@ bases:
   - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
   - ../../namespaces/monitoring/dynatrace
+  - ../../namespaces/admin/aad-pod-identity
 
 patchesStrategicMerge:
   #flux patches
@@ -49,3 +52,15 @@ patchesStrategicMerge:
 
   #botkube patch
   - ../../namespaces/monitoring/botkube/patches/aat/cluster-00/botkube.yaml
+
+  #nodelocaldns patch
+  - ../../namespaces/kube-system/nodelocaldns/patches/aat/nodelocaldns.yaml
+patches:
+  - path: ../aat-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled

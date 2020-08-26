@@ -1,0 +1,25 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-payment-processor
+  namespace: bsp
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+spec:
+  values:
+    java:
+      environment:
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        environment:
+          TEST_URL: "http://bulk-scan-payment-processor-prod.service.core-compute-prod.internal"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+      smoketests:
+        enabled: true

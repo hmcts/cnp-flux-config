@@ -2,4 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: bsp
 bases:
-- ../../../namespaces/bsp
+  - ../../../namespaces/bsp
+patchesStrategicMerge:
+  - ../../../namespaces/bsp/bulk-scan-payment-processor/aat.yaml
+  - ../../../namespaces/bsp/bulk-scan-processor/aat.yaml
+  - ../../../namespaces/bsp/bulk-scan-orchestrator/aat.yaml

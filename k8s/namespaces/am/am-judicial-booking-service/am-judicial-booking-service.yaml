@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: am-judicial-booking-service
+spec:
+  releaseName: am-judicial-booking-service
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/am-judicial-booking-service
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-714db8ed

@@ -6,21 +6,21 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-587-66ffed21
+    fluxcd.io/tag.nodejs: glob:pr-616-d78c2c20
 spec:
   releaseName: xui-webapp
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: xui-webapp
-    version: 0.2.1
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-webapp
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:pr-587-66ffed21
+      image: hmctspublic.azurecr.io/xui/webapp:pr-616-d78c2c20
       ingressHost: manage-case.ithc.platform.hmcts.net
       environment:
         SERVICES_IDAM_LOGIN_URL: https://idam-web-public.ithc.platform.hmcts.net
@@ -28,8 +28,12 @@ spec:
         SERVICES_MARKUP_API: http://em-npa-ithc.service.core-compute-ithc.internal
         LAUNCH_DARKLY_CLIENT_ID: 1
         DEBUG: xuiNode:*,-xuiNode:auth:s2s
-        ISS_SERVICE: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/hmcts
+        SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/hmcts
         SERVICES_IDAM_OAUTH_CALLBACK_URL: /oauth2/callback
+        FEATURE_OIDC_ENABLED: true
+        STUB: false
+        SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
+        SERVICES_PRD_API: http://rd-professional-api-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

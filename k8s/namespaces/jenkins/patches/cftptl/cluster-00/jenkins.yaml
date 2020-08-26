@@ -48,9 +48,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : preview-00-aks
+                        value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: preview-00-rg
+                        value: preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -70,34 +70,10 @@ spec:
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-.*|send-letter-client|send-letter-service)\/master
+                      ^HMCTS_.*BSP.*\/(blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
                     name: BSP
                     recurse: true
                     title: BSP
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(prd-.*)\/(master|demo)
-                    name: PRD
-                    recurse: true
-                    title: PRD
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(prd-.*)\/(.*PR-.*)
-                    name: PRD-PR
-                    recurse: true
-                    title: PRD-PR
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(rpa-.*)\/(master|demo)
-                    name: RPA
-                    recurse: true
-                    title: RPA
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(rpa-.*)\/(.*PR-.*)
-                    name: RPA-PR
-                    recurse: true
-                    title: RPA-PR
                 - buildMonitor:
                     includeRegex: >-
                       .+\/(rpx-.*)\/(master|demo)
@@ -130,7 +106,7 @@ spec:
                     title: CDM Nightly Builds
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-frontend|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests)\/master
+                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -160,7 +136,7 @@ spec:
                     title: Divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      .+\/(am-.*)\/(master|demo)
+                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-judicial-booking-batch-service|am-judicial-booking-service|am-org-role-mapping-batch-service|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service)\/(master|demo)
                     name: AM
                     recurse: true
                     title: AM
@@ -190,7 +166,7 @@ spec:
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RD.*\/.+\/master
+                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-caseworker-ref-api|rd-location-ref-data-load|rd-caseworker-ref-data-load)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -220,7 +196,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM|DG).*\/(document-management-store-app)\/master
+                      ^HMCTS_.*(EM|DG|DM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -236,6 +212,18 @@ spec:
                     name: HMI
                     recurse: true
                     title: HMI
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*WA.*\/.+\/master
+                    name: WA
+                    recurse: true
+                    title: WA
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*IDAM.*\/(idam-api|idam-web-public|idam-web-admin|idam-performance-tests)\/master
+                    name: IDAM
+                    recurse: true
+                    title: IDAM Dashboard
           authentication: |
             jenkins:
               securityRealm:
@@ -283,32 +271,32 @@ spec:
                       containers:
                       - args: "cat"
                         command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "inbound-agent"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "512Mi"
+                        resourceLimitCpu: "4000m"
+                        resourceLimitMemory: "12Gi"
+                        resourceRequestCpu: "2000m"
+                        resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "jnlp"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "512Mi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "1Gi"
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                       hostNetwork: false
@@ -329,6 +317,12 @@ spec:
                       - emptyDirVolume:
                           memory: false
                           mountPath: "/opt/jenkins"
+                      - emptyDirVolume:
+                          memory: false
+                          mountPath: "/home/jenkins/.ssh"
+                      - hostPathVolume:
+                          hostPath: "/tmp/jenkins-agent"
+                          mountPath: "/tmp/jenkins-agent"
                       yaml: |-
                         metadata:
                           labels:
@@ -336,6 +330,7 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
                           affinity:
                             podAntiAffinity:
@@ -356,6 +351,7 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
                           affinity:
                             podAntiAffinity:
@@ -412,6 +408,8 @@ spec:
                           jenkinsssh soft
                           proc 32768
                           jenkinsssh hard nproc 32768
+                          jenkinsssh soft core unlimited
+                          jenkinsssh hard core unlimited
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed

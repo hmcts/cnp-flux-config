@@ -1,0 +1,31 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam-sprod
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:preview-*
+spec:
+  releaseName: idam-web-public
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: idam-web-public
+    version: 0.2.5
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-public:preview-63d3038f
+      imagePullPolicy: Always
+      ingressHost: idam-web-public-sprod.sandbox.platform.hmcts.net
+      aadIdentityName: idam-sprod
+      replicas: 3
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api-sprod.sandbox.platform.hmcts.net
+    global:
+      environment: sprod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

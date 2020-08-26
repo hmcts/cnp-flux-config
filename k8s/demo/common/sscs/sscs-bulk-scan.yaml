@@ -6,21 +6,21 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-603-*
 spec:
   releaseName: sscs-bulk-scan
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-bulk-scan
-    version: 0.0.10
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-bulk-scan
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-6d1add73
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:pr-603-fe4cb500
       environment:
         DUMMY_PROPERTY: true
         READY_TO_LIST_OFFICES: 1,2,3,4,5,6,7,8,9,AE,Balham DRT,Birkenhead LM DRT,Chesterfield

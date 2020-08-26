@@ -1,0 +1,34 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: reform-scan-notification-service
+  annotations:
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+    repository.fluxcd.io/java.functionaltests: java.functionaltests.image
+    filter.fluxcd.io/java.functionaltests: glob:prod-*
+spec:
+  values:
+    java:
+      environment:
+        PENDING_NOTIFICATIONS_SEND_DELAY_IN_MINUTE: 0
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          reform-scan:
+            resourceGroup: reform-scan
+            secrets:
+              notifications-queue-listen-connection-string: NOTIFICATION_QUEUE_CONN_STRING_READ
+              notifications-queue-send-connection-string: NOTIFICATION_QUEUE_CONN_STRING_WRITE
+              test-s2s-secret: TEST_S2S_SECRET
+        environment:
+          TEST_URL: http://reform-scan-notification-service-java
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          TEST_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

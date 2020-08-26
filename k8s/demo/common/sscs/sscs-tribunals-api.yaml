@@ -6,21 +6,21 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1140-*
+    flux.weave.works/tag.java: glob:pr-1239-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tribunals-api
-    version: 0.0.21
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tribunals-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1140-6c75a929
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1239-498a9352
       aadIdentityName: sscs
       environment:
         READY_TO_LIST_OFFICES: DWP PIP (1),DWP PIP (2),DWP PIP (3),DWP PIP (4),DWP
@@ -28,7 +28,8 @@ spec:
           DRT,Birkenhead LM DRT,Chesterfield DRT,Coatbridge Benefit Centre,Inverness
           DRT,Lowestoft DRT,Milton Keynes DRT,Norwich DRT,Sheffield DRT,Springburn
           DRT,Watford DRT,Wellingborough DRT,Worthing DRT
-        TEST2: dummy
+        BUNDLE_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
+        TEST_REMOVE_ME: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

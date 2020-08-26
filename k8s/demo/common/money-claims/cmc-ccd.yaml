@@ -70,13 +70,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1b97a222
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-76acb4a1
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-307ddc01
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5a11e345
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-f89c7125
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-96d1a24f
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,14 +98,14 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-494c1247
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-13ae4290
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ee0dde47
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-f30b5741
 
     dm-store:
       java:
@@ -119,7 +119,7 @@ spec:
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.9
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.10
       waitHosts: "cmc-ccd-ccd-definition-store:80"
       waitHostsTimeout: 600
       environment:

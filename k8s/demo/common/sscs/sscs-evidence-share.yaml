@@ -6,23 +6,27 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-583-*
 spec:
   releaseName: sscs-evidence-share
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-evidence-share
-    version: 0.0.19
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-evidence-share
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-b702bfeb
+      image: hmctspublic.azurecr.io/sscs/evidence-share:pr-583-61d75a11
       environment:
         BULK_SCAN_MIGRATED: true
+        ROBOTICS_EMAIL_TO: gokul.sridharan@HMCTS.NET
+        WLU_EMAIL_FROM: Phani.Perla@HMCTS.NET
+        WLU_EMAIL_TO: Phani.Perla@HMCTS.NET
+        DUMMY: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

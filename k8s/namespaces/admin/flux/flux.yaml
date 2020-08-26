@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://charts.fluxcd.io
     name: flux
-    version: 1.4.0
+    version: 1.4.1
   values:
     git:
       url: git@github.com:hmcts/cnp-flux-config
@@ -26,8 +26,8 @@ spec:
     registry:
       acr:
         enabled: true
-        secretName: 'acr-credentials'
-      includeImage: 'hmctspublic.azurecr.io/*'
+        secretName: "acr-credentials"
+      includeImage: "hmcts*.azurecr.io/*"
     additionalArgs:
       - --connect=ws://fluxcloud
       - --manifest-generation=true
@@ -39,6 +39,7 @@ spec:
         cpu: 500m
         memory: 1Gi
     memcached:
+      tag: 1.6.6
       resources:
         limits:
           cpu: 500m

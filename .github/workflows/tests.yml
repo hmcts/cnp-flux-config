@@ -13,13 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Install pre-reqs
+        run: |
+          sudo apt-get install -y yamllint
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
       - name: Tests
         run: ./tests/run.sh
       - name: Kustomize Tests
         run: ./tests/test-kustomize.sh
-      - name: Install pre-reqs
-        run: 'sudo apt-get install -y yamllint'
       - name: Lint Tests
         run: ./tests/lint-yaml.sh
       - name: Flux automation tests
         run: ./tests/flux-automation.sh ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+      - name: Helm Release naming convention tests
+        run: ./tests/helm-release-naming.sh

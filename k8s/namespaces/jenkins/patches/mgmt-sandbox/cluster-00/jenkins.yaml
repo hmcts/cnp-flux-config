@@ -17,6 +17,8 @@ spec:
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true
+        -Dkubernetes.websocket.ping.interval=60000
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
@@ -127,34 +129,34 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                      - args: "/bin/sh -c cat"
+                        command: "/tini --"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "inbound-agent"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "512Mi"
+                        resourceLimitCpu: "3000m"
+                        resourceLimitMemory: "8Gi"
+                        resourceRequestCpu: "1500m"
+                        resourceRequestMemory: "3Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/inbound-agent:db58dx"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
                         livenessProbe:
-                          failureThreshold: 0
-                          initialDelaySeconds: 0
-                          periodSeconds: 0
-                          successThreshold: 0
-                          timeoutSeconds: 0
+                          failureThreshold: 3
+                          initialDelaySeconds: 150
+                          periodSeconds: 15
+                          successThreshold: 1
+                          timeoutSeconds: 5
                         name: "jnlp"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "512Mi"
+                        resourceRequestCpu: "500m"
+                        resourceRequestMemory: "1Gi"
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                       hostNetwork: false
@@ -175,6 +177,12 @@ spec:
                       - emptyDirVolume:
                           memory: false
                           mountPath: "/opt/jenkins"
+                      - emptyDirVolume:
+                          memory: false
+                          mountPath: "/home/jenkins/.ssh"
+                      - hostPathVolume:
+                          hostPath: "/tmp/jenkins-agent"
+                          mountPath: "/tmp/jenkins-agent"
                       yaml: |-
                         metadata:
                           labels:
@@ -182,6 +190,7 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
                           affinity:
                             podAntiAffinity:
@@ -202,6 +211,7 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
                           affinity:
                             podAntiAffinity:

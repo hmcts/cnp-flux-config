@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-SUB_MAP=( "aat=DCD-CFTAPPS-STG"
-  "perftest=DCD-CFTAPPS-TEST"
+SUB_MAP=( "aat=DCD-CNP-DEV"
+  "perftest=DCD-CNP-QA"
 )
-#  "ithc=DCD-CFTAPPS-ITHC"
-#  "prod=DCD-CFTAPPS-PROD"
-#  "sbox=DCD-CFTAPPS-SBOX"
+#  "demo=DCD-CNP-DEV"
+#  "ithc=DCD-CNP-QA"
+#  "prod=DCD-CNP-Prod"
+#  "sbox=DCD-CFT-Sandbox"
 
 NAMESPACE="$1"
 SHORT_NAME="$2"
@@ -43,8 +44,8 @@ metadata:
   namespace: $NAMESPACE
 spec:
   type: 0
-  ResourceID: $RESOURCE_ID
-  ClientID: $CLIENT_ID
+  resourceID: $RESOURCE_ID
+  clientID: $CLIENT_ID
 
 ---
 
@@ -54,9 +55,8 @@ metadata:
   name: $SHORT_NAME-binding
   namespace: $NAMESPACE
 spec:
-  AzureIdentity: $SHORT_NAME
-  Selector: $SHORT_NAME
-  
+  azureIdentity: $SHORT_NAME
+  selector: $SHORT_NAME
 EOF
 ) > "${MODULES_DIR}/identity.yaml"
 # -----------------------------------------------------------
