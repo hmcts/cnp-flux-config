@@ -4,6 +4,15 @@ kind: HelmRelease
 metadata:
   name: backstage
   namespace: backstage
+  annotations:
+    repository.fluxcd.io/frontend: frontend.image.repository
+    tag.fluxcd.io/frontend: frontend.image.tag
+    filter.fluxcd.io/frontend: glob:pr-4-*
+
+    repository.fluxcd.io/backend: backend.image.repository
+    tag.fluxcd.io/backend: backend.image.tag
+    filter.fluxcd.io/backend: glob:pr-4-*
+
 spec:
   releaseName: backstage
   rollback:
