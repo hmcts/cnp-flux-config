@@ -5,13 +5,11 @@ metadata:
   name: backstage
   namespace: backstage
   annotations:
-    repository.fluxcd.io/frontend: frontend.image.repository
-    tag.fluxcd.io/frontend: frontend.image.tag
-    filter.fluxcd.io/frontend: glob:pr-4-*
+    repository.fluxcd.io/frontend: frontend.image
+    filter.fluxcd.io/frontend: glob:prod-*
 
-    repository.fluxcd.io/backend: backend.image.repository
-    tag.fluxcd.io/backend: backend.image.tag
-    filter.fluxcd.io/backend: glob:pr-4-*
+    repository.fluxcd.io/backend: backend.image
+    filter.fluxcd.io/backend: glob:prod-*
 
 spec:
   releaseName: backstage
@@ -21,16 +19,14 @@ spec:
   chart:
     repository: https://hmcts.github.io/RoadieHQ-helm-charts
     name: backstage
-    version: 0.2.10
+    version: 0.2.11
   valueFileSecrets:
     - name: "backstage-values"
   values:
     frontend:
       replicaCount: 2
       baseUrl: https://backstage.sandbox.platform.hmcts.net
-      image:
-        repository: hmctspublic.azurecr.io/backstage/frontend
-        tag: prod-0c3e37b
+      image: hmctspublic.azurecr.io/backstage/frontend:prod-0c3e37b
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
@@ -44,9 +40,7 @@ spec:
             - service: backend
     backend:
       replicaCount: 2
-      image:
-        repository: hmctspublic.azurecr.io/backstage/backend
-        tag: v5
+      image: hmctspublic.azurecr.io/backstage/backend:v5
       baseUrl: https://backstage-api.sandbox.platform.hmcts.net
       db:
         user: backstage@hmcts-backstage-sbox
