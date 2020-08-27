@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpine
+  namespace: rpe
+  labels:
+    app: alpine
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: alpine
+      namespace: rpe
+      labels:
+        app: alpine
+        aadpodidbinding: "rpe"
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-kvname
+  selector:
+    matchLabels:
+      app: alpine
