@@ -21,6 +21,14 @@ spec:
       replicas: 3
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/cmc/claim-store:prod-34d8012e
+      memoryRequests: '1024Mi'
+      memoryLimits: '3072Mi'
+      readinessDelay: 60
+      readinessTimeout: 5
+      readinessPeriod: 15
+      livenessDelay: 60
+      livenessTimeout: 5
+      livenessPeriod: 15
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CLAIM_STORE_TEST_SUPPORT_ENABLED: false
