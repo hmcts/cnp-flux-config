@@ -7,7 +7,7 @@ metadata:
   namespace: aac
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-86-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: manage-case-assignment
   rollback:
@@ -21,12 +21,8 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-86-d67f51e0
-      environment:
-        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
-        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
-        IDAM_OIDC_URL: https://idam-web-public.ithc.platform.hmcts.net
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-dc892e19
     global:
-      environment: ithc
+      environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
