@@ -17,12 +17,12 @@ spec:
   chart:
     repository: https://hmcts.github.io/RoadieHQ-helm-charts
     name: backstage
-    version: 0.2.12
+    version: 0.2.13
   valueFileSecrets:
   - name: "backstage-values"
   values:
     frontend:
-      replicaCount: 1
+      replicaCount: 2
       baseUrl: https://backstage.sandbox.platform.hmcts.net
       image: hmctspublic.azurecr.io/backstage/frontend:prod-d1d8c90511345
     ingress:
@@ -37,7 +37,7 @@ spec:
         paths:
         - service: backend
     backend:
-      replicaCount: 1
+      replicaCount: 2
       image: hmctspublic.azurecr.io/backstage/backend:prod-d1d8c9051135
       baseUrl: https://backstage-api.sandbox.platform.hmcts.net
       db:
