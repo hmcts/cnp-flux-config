@@ -1,0 +1,17 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: reform-scan-blob-router
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:pr-629-*
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:pr-629-90390962
+      environment:
+        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
+        CRIME_ENABLED: "true"
+        TASK_SCAN_DELAY: 300000
