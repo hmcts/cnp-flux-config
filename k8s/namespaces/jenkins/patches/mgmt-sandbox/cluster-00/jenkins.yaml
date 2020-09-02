@@ -192,6 +192,20 @@ spec:
                           securityContext:
                             runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -213,6 +227,20 @@ spec:
                           securityContext:
                             runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
