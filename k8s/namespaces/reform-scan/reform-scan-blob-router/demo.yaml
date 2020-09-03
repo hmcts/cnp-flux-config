@@ -1,17 +1,17 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
   annotations:
-    fluxcd.io/automated: "true"
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-629-*
     fluxcd.io/tag.java: glob:pr-629-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
-        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: "true"
+        STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         TASK_SCAN_DELAY: 300000
-        DUMMY_VAR_DEMO: "delete_me"
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:pr-629-90390962
