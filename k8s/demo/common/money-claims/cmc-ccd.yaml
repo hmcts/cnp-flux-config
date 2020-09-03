@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-5b8fb6f6
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-6f756534
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -70,7 +70,7 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-76acb4a1
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-70c0a677
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-96d1a24f
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-33f7dd95
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,18 +98,18 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-13ae4290
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-6b6105f8
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-f30b5741
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-38e58a4c
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-f39d198f
+        image: hmctspublic.azurecr.io/dm/store:prod-29a03e03
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
