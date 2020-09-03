@@ -3,15 +3,14 @@ kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:pr-629-*
-    fluxcd.io/automated: "false"
+    fluxcd.io/automated: "true"
     fluxcd.io/tag.java: glob:pr-629-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:pr-629-b6931224
       environment:
         CRIME_ENABLED: "true"
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
