@@ -130,7 +130,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db611k"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db61kt"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -140,11 +140,11 @@ spec:
                         name: "inbound-agent"
                         resourceLimitCpu: "3000m"
                         resourceLimitMemory: "8Gi"
-                        resourceRequestCpu: "1500m"
-                        resourceRequestMemory: "3Gi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "2Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db611k"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -193,7 +193,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db611k
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt
                             command:
                               - /bin/sh
                               - -c
@@ -228,7 +228,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db611k
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt
                             command:
                               - /bin/sh
                               - -c
