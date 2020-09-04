@@ -1,0 +1,23 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fact-frontend
+spec:
+  releaseName: fact-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fact-frontend
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fact/frontend:prod-88f6d04d
+      smoketestscron:
+        image: hmctspublic.azurecr.io/fact/frontend-test:prod-88f6d04d
+      functionaltestscron:
+        image: hmctspublic.azurecr.io/fact/frontend-test:prod-88f6d04d
+      smoketests:
+        image: hmctspublic.azurecr.io/fact/frontend-test:prod-88f6d04d
+      functionaltests:
+        image: hmctspublic.azurecr.io/fact/frontend-test:prod-88f6d04d
