@@ -1,0 +1,45 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-processor
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+    repository.fluxcd.io/java.functionaltests: java.functionaltests.image
+    filter.fluxcd.io/java.functionaltests: glob:prod-*
+spec:
+  values:
+    java:
+      environment:
+        DUMMY_VAR_RESTART_PODS: "true"
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            resourceGroup: bulk-scan
+            secrets:
+              storage-account-primary-key: TEST_STORAGE_ACCOUNT_KEY
+              storage-account-name: TEST_STORAGE_ACCOUNT_NAME
+              processed-envelopes-queue-send-connection-string: PROCESSED_ENVELOPES_QUEUE_WRITE_CONN_STRING
+              test-s2s-secret: TEST_S2S_SECRET
+        environment:
+          TEST_URL: "http://bulk-scan-processor-aat.service.core-compute-aat.internal"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          TEST_S2S_NAME: "bulk_scan_processor_tests"
+          TEST_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          TEST_SCAN_DELAY: "4000"
+          TEST_STORAGE_CONTAINER_NAME: "bulkscan"
+          TEST_STORAGE_ACCOUNT_URL: "https://bulkscan.aat.platform.hmcts.net"
+          PROXYOUT_ENABLED: true
+          RUN_END_TO_END_TESTS: true
+          STORAGE_BLOB_SELECTED_CONTAINER: ALL
+          FLUX_FUNC_TEST: "true"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-frontend
-    version: 2.0.13
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-frontend
   values:
     nodejs:
       replicas: 2
@@ -24,7 +24,7 @@ spec:
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:prod-76d151d1
+      image: hmctspublic.azurecr.io/probate/frontend:prod-ee22bf75
       ingressHost: www.apply-for-probate.service.gov.uk
       environment:
         IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login

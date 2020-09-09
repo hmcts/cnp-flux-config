@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: pcq-frontend
-    version: 1.2.3
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/pcq-frontend
   values:
     nodejs:
       memoryRequests: "1024Mi"
@@ -24,7 +24,7 @@ spec:
       cpuLimits: "1500m"
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/frontend:prod-2e21a7c6
+      image: hmctspublic.azurecr.io/pcq/frontend:prod-496d484b
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

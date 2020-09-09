@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-definition-store-api
-    version: 1.4.0
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-definition-store-api
   values:
     java:
-      replicas: 4
+      replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3ec3758c
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-33f7dd95
       environment:
         IDAM_USER_URL: "https://hmcts-access.service.gov.uk"
         ELASTIC_SEARCH_FAIL_ON_IMPORT: true

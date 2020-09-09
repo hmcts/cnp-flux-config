@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: fpl-case-service
-    version: 1.12.1
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fpl-case-service
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-5cbdca9d
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-8a6a9fe4
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
       environment:
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net

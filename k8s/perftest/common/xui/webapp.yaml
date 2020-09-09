@@ -6,25 +6,26 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
+    fluxcd.io/tag.nodejs: glob:pr-601-2490cf00
 spec:
   releaseName: xui-webapp
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: xui-webapp
-    version: 0.2.1
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-webapp
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-f5786a68
+      image: hmctspublic.azurecr.io/xui/webapp:pr-601-2490cf00
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
         FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
         DEBUG: xuiNode:*
+        SERVICES_IDAM_OAUTH_CALLBACK_URL: /oauth2/callback
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

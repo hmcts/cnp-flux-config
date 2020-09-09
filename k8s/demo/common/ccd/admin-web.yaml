@@ -6,22 +6,24 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:demo
+    flux.weave.works/tag.nodejs: glob:pr-327-*
 spec:
   releaseName: ccd-admin-web
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-admin-web
-    version: 2.0.5
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-admin-web
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/admin-web:demo
+      image: hmctspublic.azurecr.io/ccd/admin-web:pr-327-b7e0bfa5
       ingressClass: traefik-no-proxy
+      environment:
+        ADMINWEB_ELASTIC_INDEX_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal/elastic-support/index
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

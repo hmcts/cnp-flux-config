@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: manage-case-assignment
+spec:
+  releaseName: manage-case-assignment
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/aac-manage-case-assignment
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-dc892e19

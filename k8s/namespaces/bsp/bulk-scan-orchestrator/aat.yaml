@@ -1,0 +1,51 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-orchestrator
+  annotations:
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+    repository.fluxcd.io/java.functionaltests: java.functionaltests.image
+    filter.fluxcd.io/java.functionaltests: glob:prod-*
+spec:
+  values:
+    java:
+      environment:
+        ROOT_LOGGING_LEVEL: DEBUG
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            resourceGroup: bulk-scan
+            secrets:
+              s2s-secret-bulk-scan-orchestrator: S2S_SECRET
+              idam-users-bulkscan-username: IDAM_USER_NAME
+              idam-users-bulkscan-password: IDAM_USER_PASSWORD
+              idam-client-secret: IDAM_CLIENT_SECRET
+              envelopes-queue-send-shared-access-key: ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+              envelopes-queue-listen-shared-access-key: ENVELOPES_QUEUE_READ_ACCESS_KEY
+              payments-queue-send-shared-access-key: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
+              # following can be removed once https://github.com/hmcts/bulk-scan-orchestrator/pull/1141 is deployed
+              envelopes-queue-send-connection-string: ENVELOPES_QUEUE_WRITE_CONN_STRING
+              envelopes-queue-listen-connection-string: ENVELOPES_QUEUE_READ_CONN_STRING
+              payments-queue-send-connection-string: PAYMENTS_QUEUE_WRITE_CONN_STRING
+        environment:
+          TEST_URL: "http://bulk-scan-orchestrator-java"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          S2S_NAME: "bulk_scan_orchestrator"
+          S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          DOCUMENT_MANAGEMENT_URL: "http://dm-store-aat.service.core-compute-aat.internal"
+          CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+          IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
+          IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
+          QUEUE_NAMESPACE: "bulk-scan-servicebus-aat"
+          QUEUE_ENVELOPES_NAME: "envelopes"
+          QUEUE_PAYMENTS_NAME: "payments"
+          QUEUE_READ_ACCESS_KEY_NAME: "ListenSharedAccessKey"
+          QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

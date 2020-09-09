@@ -6,23 +6,24 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-673-*
+    flux.weave.works/tag.java: glob:pr-702-*
 spec:
   releaseName: ccd-definition-store-api
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccd-definition-store-api
-    version: 1.4.0
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-definition-store-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-673-10f77667
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-702-536cb6ef
       environment:
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
+        DUMMY_VAR: delete_me
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

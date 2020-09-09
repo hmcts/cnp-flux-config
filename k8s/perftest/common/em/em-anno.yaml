@@ -15,14 +15,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-anno
-    version: 0.1.18
+    version: 0.1.19
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/anno:prod-2d57620f
+      image: hmctspublic.azurecr.io/em/anno:prod-1de96a08
       ingressHost: em-anno-perftest.service.core-compute-perftest.internal
       environment:
+        ENABLE_METADATA_ENDPOINT: true
         VAR_TA: trigger1
     global:
       environment: perftest

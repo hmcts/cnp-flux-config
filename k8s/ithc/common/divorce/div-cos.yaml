@@ -15,31 +15,34 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-cos
-    version: 1.3.3
+    version: 1.4.3
   values:
     java:
       replicas: 2
-      memoryRequests: "512Mi"
-      cpuRequests: "250m"
-      memoryLimits: "2048Mi"
-      cpuLimits: "1500m"
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "a4744b45-c8de-4b9d-aaad-f99dc84bec93"
-      image: hmctspublic.azurecr.io/div/cos:prod-a25c3b5d
+      image: hmctspublic.azurecr.io/div/cos:prod-e5e88d60
       environment:
         IDAM_API_URL: "https://idam-api.ithc.platform.hmcts.net"
         FEATURE_DN_REFUSAL: "true"
         FEATURE_PAPER_UPDATE: true
+        SOLICITOR_DN_REJECT_AND_AMEND: true
+        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
-        BULKACTION_MINCASES: 5
+        BULKACTION_MINCASES: 3
         DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
+        SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
       aadIdentityName: divorce
       prometheus:
         enabled: true

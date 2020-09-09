@@ -1,0 +1,44 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-payment-processor
+  namespace: bsp
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+    repository.fluxcd.io/java.smoketests: java.smoketests.image
+    filter.fluxcd.io/java.smoketests: glob:prod-*
+    repository.fluxcd.io/java.functionaltests: java.functionaltests.image
+    filter.fluxcd.io/java.functionaltests: glob:prod-*
+spec:
+  values:
+    java:
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            resourceGroup: bulk-scan
+            secrets:
+              s2s-secret-payment-processor: S2S_SECRET
+              idam-users-bulkscan-username: IDAM_USERS_BULKSCAN_USERNAME
+              idam-users-bulkscan-password: IDAM_USERS_BULKSCAN_PASSWORD
+              idam-client-secret: IDAM_CLIENT_SECRET
+              payments-queue-send-shared-access-key: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
+        environment:
+          TEST_URL: "http://bulk-scan-payment-processor-aat.service.core-compute-aat.internal"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          S2S_NAME: "bulk_scan_payment_processor"
+          S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+          IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
+          IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
+          PAYMENTS_QUEUE_NAME: "payments"
+          PAYMENTS_QUEUE_NAMESPACE: "bulk-scan-servicebus-aat"
+          PAYMENTS_QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

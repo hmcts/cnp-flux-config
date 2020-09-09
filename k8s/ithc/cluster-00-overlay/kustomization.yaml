@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
+  - rd
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/kube-slack
@@ -14,6 +15,8 @@ bases:
   - ../../namespaces/neuvector
   - ../../namespaces/admin/env-injector
   - ../../namespaces/knode-system
+  - ../../namespaces/admin/aad-pod-identity
+  - ../../namespaces/admin/csi-secret-store-provider
 
 patchesStrategicMerge:
   #flux patches
@@ -38,4 +41,12 @@ patchesStrategicMerge:
 
   - ../../namespaces/admin/env-injector/patches/ithc/cluster-00/env-injector.yaml
   - ../../namespaces/monitoring/patches/ithc/cluster-00/prom-operator.yaml
-  - ../../namespaces/kube-system/nodelocaldns/patches/use-eb-tables.yaml
+patches:
+  - path: ../ithc-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/global-defaults == enabled
+  - path: ../automated-helmrelease.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: hmcts.github.com/prod-automated == enabled

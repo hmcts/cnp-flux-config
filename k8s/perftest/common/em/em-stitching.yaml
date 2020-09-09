@@ -15,17 +15,18 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-stitching
-    version: 0.1.20
+    version: 0.1.21
   values:
     java:
       replicas: 2
       memoryLimits: "4096Mi"
       cpuLimits: "2000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/stitching:prod-1482f05b
+      image: hmctspublic.azurecr.io/em/stitching:prod-e3dcaf22
       ingressHost: em-stitching-perftest.service.core-compute-perftest.internal
       environment:
         DOCMOSIS_ENDPOINT: https://docmosis-testing.platform.hmcts.net/rs/convert
+        DOCMOSIS_RENDER_ENDPOINT: https://docmosis-testing.platform.hmcts.net/rs/render
         TASK_ENV: documentTaskLock-perftest
         VAR_TA: trigger3
     global:
