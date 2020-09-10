@@ -13,16 +13,16 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-frontend
-    version: 2.0.13
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
       environment:
         EQUALITY_URL: https://pcq.aat.platform.hmcts.net
-      image: hmctspublic.azurecr.io/probate/frontend:prod-5267f3e3
+      image: hmctspublic.azurecr.io/probate/frontend:prod-ff0729d8
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

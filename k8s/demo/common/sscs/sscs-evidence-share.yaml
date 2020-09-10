@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-583-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-evidence-share
   rollback:
@@ -20,9 +20,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:pr-583-3499a2b8
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-e339b3cc
       environment:
         ROBOTICS_EMAIL_TO: gokul.sridharan@HMCTS.NET
+        WLU_EMAIL_FROM: Phani.Perla@HMCTS.NET
         WLU_EMAIL_TO: Phani.Perla@HMCTS.NET
         UC_ENABLED: true
     global:

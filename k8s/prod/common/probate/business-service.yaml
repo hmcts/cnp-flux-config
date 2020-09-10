@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-business-service
-    version: 0.1.1
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-business-service
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-1f675b2b
+      image: hmctspublic.azurecr.io/probate/business-service:prod-e4291ba9
       environment:
         SERVICES_NOTIFY_INVITEDATA_INVITELINK: https://www.apply-for-probate.service.gov.uk/executors/invitation/
     global:

@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: xui-mo-webapp
-    version: 1.0.2
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-mo-webapp
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-c99dda72
+      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-8fe81a53
       ingressHost: manage-org.ithc.platform.hmcts.net
       environment:
         IDAM_WEB_SERVICE: https://idam-web-public.ithc.platform.hmcts.net

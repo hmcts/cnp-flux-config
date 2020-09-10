@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    name: pcq-backend
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 0.0.21
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/pcq-backend
   values:
     java:
       memoryRequests: "1024Mi"
@@ -24,7 +24,7 @@ spec:
       cpuLimits: "1500m"
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/backend:prod-51ded33c
+      image: hmctspublic.azurecr.io/pcq/backend:prod-09545afc
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

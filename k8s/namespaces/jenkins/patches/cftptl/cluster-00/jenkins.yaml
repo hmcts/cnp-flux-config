@@ -48,9 +48,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : preview-00-aks
+                        value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: preview-00-rg
+                        value: preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -74,30 +74,6 @@ spec:
                     name: BSP
                     recurse: true
                     title: BSP
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(prd-.*)\/(master|demo)
-                    name: PRD
-                    recurse: true
-                    title: PRD
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(prd-.*)\/(.*PR-.*)
-                    name: PRD-PR
-                    recurse: true
-                    title: PRD-PR
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(rpa-.*)\/(master|demo)
-                    name: RPA
-                    recurse: true
-                    title: RPA
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(rpa-.*)\/(.*PR-.*)
-                    name: RPA-PR
-                    recurse: true
-                    title: RPA-PR
                 - buildMonitor:
                     includeRegex: >-
                       .+\/(rpx-.*)\/(master|demo)
@@ -160,7 +136,7 @@ spec:
                     title: Divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      .+\/(am-.*)\/(master|demo)
+                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-judicial-booking-batch-service|am-judicial-booking-service|am-org-role-mapping-batch-service|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service)\/(master|demo)
                     name: AM
                     recurse: true
                     title: AM
@@ -184,13 +160,13 @@ spec:
                     title: ETHOS
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(CMC).*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure)\/master
+                      ^HMCTS_.*(CMC).*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test)\/master
                     name: CMC
                     recurse: true
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-caseworker-ref-api|rd-fee-pay-ref-data-load|rd-caseworker-ref-data-load)\/master
+                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -200,6 +176,12 @@ spec:
                     name: ADOPTION
                     recurse: true
                     title: Adoption Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*FPL.*\/(fpl-ccd-configuration)\/(master|demo|ithc|perftest)
+                    name: FPLA
+                    recurse: true
+                    title: FPLA
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*(MI).*\/(mi-integration-service|mi-staging-service|mi-presentation-service|mi-housekeeping-service|mi-shared-infrastructure)\/master
@@ -220,7 +202,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM|DG).*\/(document-management-store-app)\/master
+                      ^HMCTS_.*(EM|DG|DM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -242,6 +224,12 @@ spec:
                     name: WA
                     recurse: true
                     title: WA
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*IDAM.*\/(idam-api|idam-web-public|idam-web-admin|idam-performance-tests)\/master
+                    name: IDAM
+                    recurse: true
+                    title: IDAM Dashboard
           authentication: |
             jenkins:
               securityRealm:
@@ -287,9 +275,9 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
+                      - args: "/bin/sh -c cat"
+                        command: "/tini --"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db61kt"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -297,61 +285,13 @@ spec:
                           successThreshold: 1
                           timeoutSeconds: 5
                         name: "inbound-agent"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
+                        resourceLimitCpu: "4000m"
+                        resourceLimitMemory: "12Gi"
+                        resourceRequestCpu: "2000m"
+                        resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
-                        livenessProbe:
-                          failureThreshold: 3
-                          initialDelaySeconds: 150
-                          periodSeconds: 15
-                          successThreshold: 1
-                          timeoutSeconds: 5
-                        name: "inbound-agent-1"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
-                        ttyEnabled: true
-                        workingDir: "/home/jenkins/agent"
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
-                        livenessProbe:
-                          failureThreshold: 3
-                          initialDelaySeconds: 150
-                          periodSeconds: 15
-                          successThreshold: 1
-                          timeoutSeconds: 5
-                        name: "inbound-agent-2"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
-                        ttyEnabled: true
-                        workingDir: "/home/jenkins/agent"
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
-                        livenessProbe:
-                          failureThreshold: 3
-                          initialDelaySeconds: 150
-                          periodSeconds: 15
-                          successThreshold: 1
-                          timeoutSeconds: 5
-                        name: "inbound-agent-3"
-                        resourceLimitCpu: "2000m"
-                        resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
-                        ttyEnabled: true
-                        workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -361,8 +301,8 @@ spec:
                         name: "jnlp"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
-                        resourceRequestCpu: "200m"
-                        resourceRequestMemory: "256Mi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "1Gi"
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                       hostNetwork: false
@@ -396,7 +336,22 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -416,7 +371,22 @@ spec:
                             app.kubernetes.io/component: jenkins-agent
                         spec:
                           securityContext:
+                            runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:

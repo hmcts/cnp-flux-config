@@ -7,17 +7,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-processor
-    version: 0.3.4
+    version: 0.3.6
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-a5910502
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-eeccec6f
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
       smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-a5910502
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-eeccec6f
       functionaltests:
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-a5910502
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-eeccec6f

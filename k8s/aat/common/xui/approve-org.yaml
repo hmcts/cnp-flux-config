@@ -13,21 +13,20 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: xui-ao-webapp
-    version: 0.2.2
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-ao-webapp
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/ao-webapp:prod-5f1012f1
+      image: hmctspublic.azurecr.io/xui/ao-webapp:prod-4a317028
       ingressHost: administer-orgs.aat.platform.hmcts.net
       environment:
         FEATURE_OIDC_ENABLED: true
         USER_TIMEOUT_IN_SECONDS: 1800
-        DEBUG: xuiNode:*
-        ISS_SERVICE: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/hmcts
-        DUMMY_VAR: true
+        DEBUG: xuiNode:*,-xuiNode:auth:s2s
+        ISS_SERVICE: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         SERVICES_IDAM_OAUTH_CALLBACK_URL: /oauth2/callback
     global:
       environment: aat

@@ -11,7 +11,6 @@ kustomizepaths=(
     k8s/aat/common-overlay
     k8s/cftptl/cluster-00-overlay
     k8s/demo/cluster-00-overlay
-    k8s/demo/cluster-01-overlay
     k8s/demo/common-overlay
     k8s/ldata/cluster-00-overlay
     k8s/ldata/cluster-01-overlay

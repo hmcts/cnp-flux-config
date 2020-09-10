@@ -5,7 +5,7 @@ metadata:
   name: idam-web-public
   namespace: idam
   annotations:
-    fluxcd.io/automated: "false"
+    fluxcd.io/automated: "true"
     filter.fluxcd.io/java: glob:prod-*
 spec:
   releaseName: idam-web-public
@@ -15,15 +15,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-web-public
-    version: 0.2.3
+    version: 0.2.4
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-53bc0cc7
+      image: hmctspublic.azurecr.io/idam/web-public:prod-8fa63cf1
       ingressHost: hmcts-access.service.gov.uk
       aadIdentityName: idam
       useInterpodAntiAffinity: true
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.platform.hmcts.net
+        FEDERATED_SSO: false
+        GA_TRACKING_ID: "UA-122164129-4"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

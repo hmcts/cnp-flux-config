@@ -15,15 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-web-public
-    version: 0.2.4
+    version: 0.2.5
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:aat-e24130ad
+      image: hmctspublic.azurecr.io/idam/web-public:aat-bb2e70e2
       ingressHost: idam-web-public.aat.platform.hmcts.net
       replicas: 2
       aadIdentityName: idam
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.aat.platform.hmcts.net
+        FEDERATED_SSO: false
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

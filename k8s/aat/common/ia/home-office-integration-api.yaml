@@ -16,13 +16,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-home-office-integration-api
-    version: 0.0.6
+    version: 0.0.12
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-b93b1300
+      image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-eaf829f6
       ingressHost: ia-home-office-integration-api-aat.service.core-compute-aat.internal
+      environment:
+        HOME_OFFICE_ENDPOINT: "https://cts-challenge.prp1.np.immigration-api.homeoffice.gov.uk"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -22,7 +22,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-master"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      imageTag: "db5k0k"
+      imageTag: "db611m"
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -63,6 +63,7 @@ spec:
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dkubernetes.websocket.ping.interval=60000
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
@@ -80,6 +81,8 @@ spec:
       healthProbesReadinessTimeout: 60
       healthProbeReadinessPeriodSeconds: 10
       healthProbeLivenessFailureThreshold: 12
+      healthProbeReadinessInitialDelay: 180
+      healthProbeLivenessInitialDelay: 180
       slaveListenerPort: 50000
       slaveHostPort:
       disabledAgentProtocols:
@@ -415,6 +418,11 @@ spec:
                           description: "GitHub APP Key - wa"
                           id: "hmcts-jenkins-wa"
                           privateKey: "${hmcts-jenkins-wa-ghapp}"
+                      - gitHubApp:
+                          appID: "79716"
+                          description: "GitHub APP Key - fact"
+                          id: "hmcts-jenkins-fact"
+                          privateKey: "${hmcts-jenkins-fact-ghapp}"
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy

@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-location-ref-data-load
+  annotations:
+    hmcts.github.com/global-defaults: enabled
+    hmcts.github.com/prod-automated: enabled
+spec:
+  releaseName: rd-location-ref-data-load
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rd-location-ref-data-load
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rd/location-ref-data-load:prod-f782ec72

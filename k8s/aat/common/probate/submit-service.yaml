@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-submit-service
-    version: 0.2.6
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-submit-service
   values:
     java:
       replicas: 2
@@ -27,7 +27,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-e720701c
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-ce7958ff
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

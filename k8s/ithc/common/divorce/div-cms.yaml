@@ -1,0 +1,41 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-cms
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: div-cms
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: div-cms
+    version: 1.2.1
+  values:
+    java:
+      replicas: 2
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      applicationInsightsInstrumentKey: "a4744b45-c8de-4b9d-aaad-f99dc84bec93"
+      image: hmctspublic.azurecr.io/div/cms:prod-f0ce1f32
+      environment:
+        IDAM_API_BASEURL: "https://idam-api.ithc.platform.hmcts.net"
+      aadIdentityName: divorce
+      prometheus:
+        enabled: true
+    global:
+      environment: ithc
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
