@@ -24,7 +24,7 @@ spec:
             secrets:
               storage-account-primary-key: TEST_STORAGE_ACCOUNT_KEY
               storage-account-name: TEST_STORAGE_ACCOUNT_NAME
-              processed-envelopes-queue-send-connection-string: PROCESSED_ENVELOPES_QUEUE_WRITE_CONN_STRING
+              processed-envelopes-queue-send-shared-access-key: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
               test-s2s-secret: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://bulk-scan-processor-aat.service.core-compute-aat.internal"
@@ -39,6 +39,9 @@ spec:
           RUN_END_TO_END_TESTS: true
           STORAGE_BLOB_SELECTED_CONTAINER: ALL
           FLUX_FUNC_TEST: "true"
+          PROCESSED_ENVELOPES_QUEUE_NAME: "processed-envelopes"
+          PROCESSED_ENVELOPES_QUEUE_NAMESPACE: "bulk-scan-servicebus-aat"
+          PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
       smoketests:
         enabled: true
       functionaltests:
