@@ -15,7 +15,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: div-cos
-    version: 1.4.3
+    version: 1.4.6
   values:
     java:
       replicas: 2
@@ -43,6 +43,8 @@ spec:
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
+        #Temporary change to make sure job runs in AAT
+        SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_CRON: "0 30 10 ? * * *"
       aadIdentityName: divorce
       prometheus:
         enabled: true
