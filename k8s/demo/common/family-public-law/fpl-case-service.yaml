@@ -5,7 +5,7 @@ metadata:
   name: fpl-case-service
   namespace: family-public-law
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: fpl-case-service
@@ -20,12 +20,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-7770f0ac
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-1656
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
       environment:
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
         TESTING_SUPPORT_ENABLED: true
+        UPCOMING_HEARINGS_CRON: 0 0/15 * ? * MON-FRI *
       aadIdentityName: family-public-law
     global:
       environment: demo

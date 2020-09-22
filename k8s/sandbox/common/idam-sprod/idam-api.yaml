@@ -6,7 +6,7 @@ metadata:
   namespace: idam-sprod
   annotations:
     flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:preview-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-api
   rollback:
@@ -15,10 +15,10 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.2.8
+    version: 0.2.7
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:perftest
+      image: hmctspublic.azurecr.io/idam/api:prod-db9ab965
       imagePullPolicy: Always
       ingressHost: idam-api-sprod.sandbox.platform.hmcts.net
       replicas: 3
