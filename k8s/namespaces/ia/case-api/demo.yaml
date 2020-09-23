@@ -6,29 +6,5 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:wa-proto-demo-*
+    flux.weave.works/tag.java: glob:pr-577-*
     hmcts.github.com/prod-automated: disabled
-spec:
-  releaseName: ia-case-api
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-case-api
-    version: 0.0.14
-  values:
-    java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-dd6b7d59
-      ingressHost: ia-case-api-demo.service.core-compute-demo.internal
-      environment:
-        RESTART_ME: "Update due to vault change"
-        IA_FEEPAYMENT_ENABLED: "false"
-        EM_BUNDLER_URL: "http://em-ccdorc-demo.service.core-compute-demo.internal"
-        IS_SAVE_AND_CONTINUE_ENABLED: "false"
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
