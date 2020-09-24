@@ -20,13 +20,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-f4c885d1
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-5a56d065
       ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
         RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
         TESTING_SUPPORT_ENABLED: true
+        UPCOMING_HEARINGS_CRON: 0 0/15 * ? * MON-FRI *
       aadIdentityName: family-public-law
     global:
       environment: ithc
