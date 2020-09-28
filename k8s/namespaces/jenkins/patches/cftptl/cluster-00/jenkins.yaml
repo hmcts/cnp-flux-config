@@ -88,22 +88,10 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      HMCTS_CDM.+\/master
-                    name: CDM
+                      ^HMCTS_.*CDM.*\/.+\/master
+                    name: CCD
                     recurse: true
-                    title: CDM master Builds
-                - buildMonitor:
-                    includeRegex: >-
-                      HMCTS_CDM.+\/demo
-                    name: CDM demo
-                    recurse: true
-                    title: CDM demo Builds
-                - buildMonitor:
-                    includeRegex: >-
-                      HMCTS_Nightly_CDM.+\/master
-                    name: CDM Nightly
-                    recurse: true
-                    title: CDM Nightly Builds
+                    title: CCD Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator)\/master
@@ -202,7 +190,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM|DG|DM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app)\/master
+                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -277,7 +265,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db61kt"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db6hu6"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -291,7 +279,7 @@ spec:
                         resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -340,7 +328,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
                             command:
                               - /bin/sh
                               - -c
@@ -375,7 +363,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db61kt
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
                             command:
                               - /bin/sh
                               - -c
