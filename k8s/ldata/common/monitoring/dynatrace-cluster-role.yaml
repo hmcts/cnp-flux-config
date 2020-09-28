@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynatrace-monitoring
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dynatrace-monitoring-cluster
+rules:
+  - apiGroups:
+      - ""
+      - batch
+      - apps
+    resources:
+      - nodes
+      - pods
+      - namespaces
+      - deployments
+      - replicasets
+      - deploymentconfigs
+      - replicationcontrollers
+      - jobs
+      - cronjobs
+      - statefulsets
+      - daemonsets
+      - events
+    verbs:
+      - list
+      - watch
+      - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dynatrace-monitoring-cluster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: dynatrace-monitoring-cluster
+subjects:
+  - kind: ServiceAccount
+    name: dynatrace-monitoring
+    namespace: monitoring

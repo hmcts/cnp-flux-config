@@ -8,15 +8,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: bulk-scan-orchestrator
-    version: 0.3.7
+    version: 0.3.8
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-ccb9463f
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-fcd90c15
       environment:
-        TMP_DUMMY_VAR: "yes"
+        DUMMY_VAR_MAIN: "delete_me"
       smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-ccb9463f
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-fcd90c15
       functionaltests:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-ccb9463f
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-fcd90c15
