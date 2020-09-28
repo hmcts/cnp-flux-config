@@ -5,7 +5,7 @@ metadata:
   name: cmc-ccd
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
@@ -102,6 +102,7 @@ spec:
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
+          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
 
     ccd-user-profile-api:
       java:
@@ -115,11 +116,14 @@ spec:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
       - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
+      - steve.liddiard@justice.gov.uk|CMC|MoneyClaimCase|open
+      - sunil.kumar@hmcts.net|CMC|MoneyClaimCase|open
       - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
       - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
+      - yogendra.upasani@hmcts.net|CMC|MoneyClaimCase|open
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.12
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.11
       waitHosts: "cmc-ccd-ccd-definition-store:80"
       waitHostsTimeout: 600
       environment:
@@ -136,4 +140,4 @@ spec:
       - caseworker-cmc-judge
       - caseworker-cmc-legaladvisor
       - caseworker-cmc-pcqextractor
-
+      - payments
