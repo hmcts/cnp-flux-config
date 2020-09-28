@@ -1,17 +1,9 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-terms-and-conditions
-  namespace: xui
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
 spec:
   releaseName: xui-terms-and-conditions
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -21,8 +13,4 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/xui/terms-and-conditions:prod-cb860787
-      ingressHost: xui-terms-and-conditions-perftest.service.core-compute-perftest.internal
-    global:
-      environment: perftest
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+
