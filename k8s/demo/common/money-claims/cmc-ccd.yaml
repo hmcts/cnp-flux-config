@@ -5,7 +5,7 @@ metadata:
   name: cmc-ccd
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
@@ -123,9 +123,9 @@ spec:
       - yogendra.upasani@hmcts.net|CMC|MoneyClaimCase|open
 
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.11
-      waitHosts: "cmc-ccd-ccd-definition-store:80"
-      waitHostsTimeout: 600
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.6.12.2
+      #waitHosts: "cmc-ccd-ccd-definition-store:80"
+      #waitHostsTimeout: 600
       environment:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
