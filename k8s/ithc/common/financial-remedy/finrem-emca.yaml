@@ -1,0 +1,27 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-emca
+  namespace: financial-remedy
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+spec:
+  releaseName: finrem-emca
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: finrem-emca
+    version: 0.0.3
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/emca:prod-2a3be36e
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

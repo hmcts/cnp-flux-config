@@ -1,0 +1,27 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-ps
+  namespace: financial-remedy
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+spec:
+  releaseName: finrem-ps
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: finrem-ps
+    version: 0.0.6
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/ps:prod-f1d015ac
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
