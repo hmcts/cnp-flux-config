@@ -1,0 +1,19 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ccd
+  namespace: family-public-law
+spec:
+  type: 0
+  resourceID: "/subscriptions/96c274ce-846d-4e48-89a7-d528432298a7/resourcegroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ccd-aat-mi"
+  clientID: "dbdcc00c-cc33-42de-8478-6bea54921347"
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ccd-binding
+  namespace: family-public-law
+spec:
+  azureIdentity: ccd
+  selector: ccd
