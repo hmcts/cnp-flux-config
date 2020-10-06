@@ -6,17 +6,17 @@ spec:
   releaseName: bulk-scan-orchestrator
   timeout: 600
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: bulk-scan-orchestrator
-    version: 0.3.8
+    git: git@github.com:hmcts/hmcts-charts
+    path: stable/bulk-scan-orchestrator
+    ref: master
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-12a7b819
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-7d02c295
       environment:
         DUMMY_VAR_MAIN: "delete_me"
       smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-12a7b819
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-7d02c295
       functionaltests:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-12a7b819
+        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-7d02c295

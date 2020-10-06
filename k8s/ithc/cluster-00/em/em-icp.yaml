@@ -5,7 +5,7 @@ metadata:
   name: em-icp
   namespace: em
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: em-icp
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: em-icp
-    version: 0.1.9
+    version: 0.1.10
   values:
     nodejs:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/icp:pr-27-638bed2f
+      image: hmctspublic.azurecr.io/em/icp:prod-27b10787
       ingressHost: em-icp-ithc.service.core-compute-ithc.internal
       environment:
         VAR_T3: trigger5

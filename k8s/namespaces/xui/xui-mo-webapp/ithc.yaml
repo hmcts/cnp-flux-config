@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-mo-webapp
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.nodejs: glob:pr-578-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    nodejs:
+      ingressHost: manage-org.ithc.platform.hmcts.net
+      environment:
+        IDAM_WEB_SERVICE: https://idam-web-public.ithc.platform.hmcts.net
+        IDAM_API_SERVICE: https://idam-api.ithc.platform.hmcts.net
+        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
+        LAUNCH_DARKLY_CLIENT_ID: 123456789
+        DEBUG: xuiNode:*,-xuiNode:auth:s2s
+        SERVICES_MCA_PROXY_API: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
+      image: hmctspublic.azurecr.io/xui/mo-webapp:pr-578-8510e6cc

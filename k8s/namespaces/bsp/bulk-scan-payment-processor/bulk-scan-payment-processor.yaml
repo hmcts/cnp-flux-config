@@ -5,15 +5,15 @@ metadata:
 spec:
   releaseName: bulk-scan-payment-processor
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: bulk-scan-payment-processor
-    version: 0.2.3
+    git: git@github.com:hmcts/hmcts-charts
+    path: stable/bulk-scan-payment-processor
+    ref: master
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-f721c60d
+      image: hmctspublic.azurecr.io/bulk-scan/payment-processor:prod-c6c9b2b3
       smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-f721c60d
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-c6c9b2b3
       functionaltests:
-        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-f721c60d
+        image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-c6c9b2b3

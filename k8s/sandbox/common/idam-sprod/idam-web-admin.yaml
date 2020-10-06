@@ -6,7 +6,7 @@ metadata:
   namespace: idam-sprod
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:aat-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-web-admin
   rollback:
@@ -18,11 +18,10 @@ spec:
     version: 0.2.4
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-admin:aat-d52787ad
+      image: hmctspublic.azurecr.io/idam/web-admin:prod-b6408ff7
       imagePullPolicy: Always
       ingressHost: idam-web-admin-sprod.sandbox.platform.hmcts.net
       aadIdentityName: idam-sprod
-      replicas: 1
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api-sprod.sandbox.platform.hmcts.net
         STRATEGIC_PUBLIC_URL: https://idam-web-public-sprod.sandbox.platform.hmcts.net

@@ -9,18 +9,18 @@ spec:
   releaseName: reform-scan-blob-router
   timeout: 600
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: reform-scan-blob-router
-    version: 0.2.4
+    git: git@github.com:hmcts/hmcts-charts
+    path: stable/reform-scan-blob-router
+    ref: master
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-41a5812f
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-7bec3229
       smoketests:
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-41a5812f
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7bec3229
       functionaltests:
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-41a5812f
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7bec3229
       environment:
         STORAGE_BLOB_PROCESSING_DELAY_IN_MINUTES: 0
         CRIME_ENABLED: true

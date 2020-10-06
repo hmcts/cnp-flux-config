@@ -5,7 +5,7 @@ metadata:
   name: em-showcase
   namespace: em
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.nodejs: glob:aat-*
 spec:
   releaseName: em-showcase
@@ -18,13 +18,13 @@ spec:
     version: 1.1.12
   values:
     nodejs:
-      replicas: 2
+      replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/showcase:pr-62-1203cf94
+      image: hmctspublic.azurecr.io/em/showcase:aat-655f995a
       ingressHost: em-showcase-ithc.service.core-compute-ithc.internal
       environment:
-        VAR_T3: trigger6
+        VAR_T3: trigger7
     global:
-      environment: aat
+      environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

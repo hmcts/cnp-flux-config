@@ -5,19 +5,19 @@ metadata:
 spec:
   releaseName: bulk-scan-processor
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: bulk-scan-processor
-    version: 0.3.6
+    git: git@github.com:hmcts/hmcts-charts
+    path: stable/bulk-scan-processor
+    ref: master
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       cpuRequests: "500m"
       cpuLimits: "2500m"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-1209ccf1
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-dd4d0761
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
       smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-1209ccf1
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-dd4d0761
       functionaltests:
-        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-1209ccf1
+        image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-dd4d0761

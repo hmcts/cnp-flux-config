@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-mo-webapp
+spec:
+  values:
+    nodejs:
+      ingressHost: manage-org.platform.hmcts.net
+      environment:
+        IDAM_API_SERVICE: https://idam-api.platform.hmcts.net
+        IDAM_WEB_SERVICE: https://hmcts-access.service.gov.uk
+        MANAGE_CASE_LINK: https://manage-case.platform.hmcts.net/cases
+        MANAGE_ORG_LINK: https://manage-org.platform.hmcts.net
+        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
+        FEATURE_OIDC_ENABLED: true
