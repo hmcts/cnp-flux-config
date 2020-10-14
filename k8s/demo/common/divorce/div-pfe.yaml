@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-757-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-pfe
   rollback:
@@ -20,12 +20,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:pr-757-273337d1
+      image: hmctspublic.azurecr.io/div/pfe:prod-f84ae26c
       ingressClass: traefik-no-proxy
       ingressHost: petitioner-frontend-aks.demo.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://petitioner-frontend-aks.demo.platform.hmcts.net
         DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.demo.platform.hmcts.net
+        EQUALITY_URL: https://pcq.demo.platform.hmcts.net
     global:
       environment: demo
       subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"
