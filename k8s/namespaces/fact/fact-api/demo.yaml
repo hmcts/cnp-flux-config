@@ -3,25 +3,7 @@ kind: HelmRelease
 metadata:
   name: fact-api
 spec:
-  releaseName: fact-api
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/fact-api
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fact/api:prod-b64603eb
-      keyVaults:
-        fact:
-          resourceGroup: fact
-          secrets:
-          - AppInsightsInstrumentationKey
-          - api-POSTGRES-DATABASE
-          - api-POSTGRES-HOST
-          - api-POSTGRES-PASS
-          - api-POSTGRES-PORT
-          - api-POSTGRES-USER
       environment:
         VAR_TA: trigger1
