@@ -1,0 +1,31 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ctsc-work-allocation
+  namespace: ctsc
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.java: glob:pr-*
+spec:
+  releaseName: ctsc-work-allocation
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ctsc-work-allocation
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ctsc/work-allocation:pr-284-6b19a044
+      environment:
+        TEST_ENDPOINTS_ENABLED: true
+        SMTP_ENABLED: true
+        CCD_DRY_RUN: false
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
