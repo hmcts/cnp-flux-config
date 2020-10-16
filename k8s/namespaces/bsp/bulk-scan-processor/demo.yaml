@@ -2,9 +2,32 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-1571-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-1571-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
         #60 days in seconds
         SAS_TOKEN_VALIDITY: "5184000"
+      keyVaults:
+        "bulk-scan":
+        "bulk-scan-v2":
+          secrets:
+            - processor-POSTGRES-PASS
+            - s2s-secret
+            - flyway-password
+            - envelopes-queue-send-shared-access-key
+            - notifications-queue-send-shared-access-key
+            - processed-envelopes-queue-listen-shared-access-key
+            - storage-account-name
+            - storage-account-primary-key
+            - app-insights-instrumentation-key
+            - reports-email-username
+            - reports-email-password
+            - reports-recipients
+      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-1571-211ca287
