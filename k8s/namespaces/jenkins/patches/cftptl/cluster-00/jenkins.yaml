@@ -124,16 +124,10 @@ spec:
                     title: Divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-judicial-booking-batch-service|am-judicial-booking-service|am-org-role-mapping-batch-service|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service)\/(master|demo)
+                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests)\/master
                     name: AM
                     recurse: true
                     title: AM
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(am-.*)\/(.*PR-.*)
-                    name: AM-PR
-                    recurse: true
-                    title: AM-PR
                 - buildMonitor:
                     includeRegex: >-
                       HMCTS_.*CTSC\/.+\/master
@@ -435,6 +429,7 @@ spec:
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
                         installDocker: false
                         installGit: false
                         installMaven: false
