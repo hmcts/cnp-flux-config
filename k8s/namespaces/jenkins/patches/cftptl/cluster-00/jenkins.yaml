@@ -414,7 +414,8 @@ spec:
                           mkdir -pv /opt/jenkins
                           mount /dev/sdb1 /opt/jenkins
                           chown -R jenkinsssh:jenkinsssh /opt/jenkins
-                          mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                          set -e
+                          cp /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
                           chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
                           chmod 0600 /home/jenkinsssh/.ssh/id_rsa
                           mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
@@ -429,6 +430,7 @@ spec:
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
                         installDocker: false
                         installGit: false
                         installMaven: false

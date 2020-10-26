@@ -146,7 +146,7 @@ Create traefik-values sealed secret from the values.yaml
 ```bash
 kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run=client -o yaml > tmp/traefiksecret.yaml
 mkdir -p k8s/$ENV/common/traefik/
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/$ENV/common/traefik/traefik-values.yaml
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/$ENV/common/sealed-secrets/traefik-values.yaml
 ```
 
 ### Kube-Slack
