@@ -12,6 +12,8 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-9f90d70c
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-20c67729
       ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{
         .Values.global.environment }}.internal
+      environment:
+        CAMUNDA_API_AUTH_ENABLED: false
