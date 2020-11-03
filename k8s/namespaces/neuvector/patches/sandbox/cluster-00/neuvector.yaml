@@ -1,0 +1,43 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  values:
+    neuvector:
+      controller:
+        azureFileShare:
+          secretName: nv-storage-secret
+          shareName: neuvector-data-00
+        ingress:
+          enabled: true
+          host: neuvector00.service.core-compute-sbox.internal
+          path: "/api"
+          annotations:
+            kubernetes.io/ingress.class: traefik-neuvector-api
+            ingress.kubernetes.io/rewrite-target: /
+            ingress.kubernetes.io/protocol: https
+        configmap:
+          data:
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_in_json: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Syslog_In_Json: false
+              Cluster_Name: sbox00
+      manager:
+        ingress:
+          host: neuvector00.service.core-compute-sbox.internal
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik-neuvector-api

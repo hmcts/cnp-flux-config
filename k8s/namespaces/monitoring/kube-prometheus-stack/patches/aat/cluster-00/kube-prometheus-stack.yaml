@@ -1,0 +1,30 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  values:
+    prometheus:
+      ingress:
+        hosts:
+          - prometheus-00.aat.platform.hmcts.net
+
+    alertmanager:
+      ingress:
+        hosts:
+          - alertmanager-00.aat.platform.hmcts.net
+      config:
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting
+                title: 'AAT-00 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
+                title: 'AAT-00 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"

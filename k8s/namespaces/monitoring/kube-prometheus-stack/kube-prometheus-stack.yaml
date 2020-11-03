@@ -1,0 +1,182 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/ignore: "false"
+spec:
+  releaseName: kube-prometheus-stack
+  forceUpgrade: true
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://prometheus-community.github.io/helm-charts
+    name: kube-prometheus-stack
+    version: 11.0.0
+  valueFileSecrets:
+    - name: "prometheus-values"
+  values:
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: false
+        etcd: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubePrometheusNodeAlerting: true
+        kubePrometheusNodeRecording: true
+        kubernetesAbsent: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: true
+        network: true
+        node: true
+        prometheus: true
+        prometheusOperator: true
+        time: true
+
+    prometheus:
+      additionalServiceMonitors:
+        - name: "flux-monitor"
+          selector:
+            matchLabels:
+              app: flux
+          namespaceSelector:
+            matchNames:
+              - admin
+          endpoints:
+            - targetPort: 3030
+          path: /metrics
+      additionalPodMonitors:
+        - name: "nodelocaldns"
+          selector:
+            matchLabels:
+              k8s-app: node-local-dns
+          namespaceSelector:
+            matchNames:
+              - kube-system
+          podMetricsEndpoints:
+            - port: metrics
+              path: /metrics
+        - name: "node-problem-monitor"
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: node-problem-detector
+          namespaceSelector:
+            matchNames:
+              - monitoring
+          podMetricsEndpoints:
+            - port: exporter
+              path: /metrics
+      ingress:
+        enabled: true
+
+    kubelet:
+      serviceMonitor:
+        https: false
+
+    alertmanager:
+      ingress:
+        enabled: true
+      config:
+        global:
+          resolve_timeout: "5m"
+        route:
+          receiver: slack_alerting # default receiver
+          group_by:
+            - alertname
+            - cluster
+            - service
+          group_wait: "30s"
+          group_interval: "5m"
+          repeat_interval: "2h"
+          routes:
+            - match_re:
+                alertname: KubeletDown|KubeControllerManagerDown|KubeSchedulerDown
+              receiver: "null"
+            - match:
+                severity: critical
+              receiver: slack_critical
+        # Mute any warning-level notifications if the same alert is already critical.
+        inhibit_rules:
+          - source_match:
+              severity: "critical"
+            target_match:
+              severity: "warning"
+            equal: ["alertname", "cluster", "service"]
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"
+
+    grafana:
+      enabled: false
+      plugins:
+        - grafana-kubernetes-app
+        - camptocamp-prometheus-alertmanager-datasource
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: "default"
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          kubernetes-pod-monitoring:
+            gnetId: 9144
+            revision: 2
+            datasource: Prometheus
+          Kubernetes-Deployment-Statefulset-Daemonset-metrics:
+            gnetId: 8588
+            revision: 1
+            datasource: Prometheus
+          Cluster-Monitoring-for-Kubernetes:
+            gnetId: 10000
+            revision: 1
+            datasource: Prometheus
+          Cluster-cost:
+            gnetId: 8670
+            revision: 5
+            datasource: Prometheus
+          Cluster-Dashboard:
+            gnetId: 11358
+            revision: 1
+          Jenkins:
+            gnetId: 9964
+            revision: 1
+            datasource: Prometheus
+          NodeLocalDNS:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/nodelocaldns.json
+          CoreDNS-Cluster:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/coredns_cluster.json
+          FluxPerf:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/flux-performance.json
+          AppHealth:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/app_health.json
+          Kuberhealthy:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/kuberhealthy.json
+          AdminApps:
+            url: https://raw.githubusercontent.com/hmcts/prometheus-monitoring/master/grafana/dashboards/admin_health.json
