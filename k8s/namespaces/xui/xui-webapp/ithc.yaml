@@ -1,26 +1,14 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-webapp
-  namespace: xui
   annotations:
     fluxcd.io/automated: "true"
     fluxcd.io/tag.nodejs: glob:pr-654-*
+    hmcts.github.com/prod-automated: disabled
 spec:
-  releaseName: xui-webapp
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/xui-webapp
   values:
     nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:pr-654-7bf4f759
       ingressHost: manage-case.ithc.platform.hmcts.net
       environment:
         SERVICES_IDAM_LOGIN_URL: https://idam-web-public.ithc.platform.hmcts.net
@@ -35,8 +23,4 @@ spec:
         SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
         SERVICES_PRD_API: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         SERVICES_ICP_API: http://em-icp-ithc.service.core-compute-ithc.internal
-        DUMMY_VAR: false
-    global:
-      environment: ithc
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+      image: hmctspublic.azurecr.io/xui/webapp:pr-654-7bf4f759
