@@ -1,0 +1,34 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  values:
+    prometheus:
+      ingress:
+        annotations:
+          kubernetes.io/ingress.class: traefik-private
+        hosts:
+          - prometheus-00.demo.platform.hmcts.net
+
+    alertmanager:
+      ingress:
+        annotations:
+          kubernetes.io/ingress.class: traefik-private
+        hosts:
+          - alertmanager-00.demo.platform.hmcts.net
+      config:
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting
+                title: 'Demo-00 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical
+                title: 'Demo-00 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"

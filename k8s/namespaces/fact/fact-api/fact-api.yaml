@@ -12,7 +12,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fact/api:prod-27db4ae0
+      image: hmctspublic.azurecr.io/fact/api:prod-c343c42d
+      environment:
+        VAR_TA: trigger5
       keyVaults:
         fact:
           resourceGroup: fact
@@ -23,3 +25,4 @@ spec:
           - api-POSTGRES-PASS
           - api-POSTGRES-PORT
           - api-POSTGRES-USER
+          - mapit-key
