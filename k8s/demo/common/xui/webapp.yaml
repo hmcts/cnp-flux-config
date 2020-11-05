@@ -6,7 +6,7 @@ metadata:
   namespace: xui
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
+    fluxcd.io/tag.nodejs: glob:pr-680-*
 spec:
   releaseName: xui-webapp
   rollback:
@@ -20,14 +20,14 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-7de43d2e
+      image: hmctspublic.azurecr.io/xui/webapp:pr-680-1ad46918
       ingressHost: manage-case.demo.platform.hmcts.net
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL
         FEATURE_OIDC_ENABLED: true
-        SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
+        SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
         DEBUG: xuiNode:*
         SERVICES_IDAM_OAUTH_CALLBACK_URL: oauth2/callback
         STUB: false
