@@ -5,5 +5,9 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-6490066c
       environment:
-        DUMMY_VAR: "delete_me"
+        FILE_CLEANUP_ENABLED: "true"
+        OLD_LETTER_CONTENT_CLEANUP_ENABLED: "true"
