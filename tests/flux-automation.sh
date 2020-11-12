@@ -19,6 +19,7 @@ exclusions=(
   k8s/aat/common/idam/idam-api.yaml
   k8s/aat/common/idam/idam-web-admin.yaml
   k8s/aat/common/idam/idam-web-public.yaml
+  k8s/aat/cluster-01/traefik/traefik-neuvector-api.yaml
   k8s/prod/common/idam/idam-api.yaml
   k8s/prod/common/idam/idam-web-admin.yaml
   k8s/prod/common/idam/idam-web-public.yaml
