@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-354-*
 spec:
   releaseName: ccd-api-gateway-web
   rollback:
@@ -18,11 +18,12 @@ spec:
     path: stable/ccd-api-gateway-web
   values:
     nodejs:
-      replicas: 4
+      replicas: 8
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5a11e345
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-354-448d740c
       environment:
         CORS_ORIGIN_WHITELIST: "*"
+        UV_THREADPOOL_SIZE: 128
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

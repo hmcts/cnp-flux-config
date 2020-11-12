@@ -6,11 +6,11 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-799-*
 spec:
   releaseName: ccd-definition-store-api
   rollback:
-    enable: true
+    enable: false
     retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
@@ -20,9 +20,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-33f7dd95
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-799-1e582e4e
       environment:
         ELASTIC_SEARCH_FAIL_ON_IMPORT: false
+        DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fact-admin
+spec:
+  releaseName: fact-admin
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fact-admin
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fact/admin:prod-86d98a52
+      environment:
+        VAR_TA: trigger7
+      keyVaults:
+        fact:
+          resourceGroup: fact
+          secrets:
+          - AppInsightsInstrumentationKey
+          - redis-access-key
+          - oauth-client-secret

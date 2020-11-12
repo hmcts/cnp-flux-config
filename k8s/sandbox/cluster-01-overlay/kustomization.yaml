@@ -8,12 +8,13 @@ bases:
   - ../../namespaces/admin/traefik
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/kured
-  - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
-  - ../../namespaces/admin/aad-pod-identity
+  - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/knode-system
   - ../../namespaces/kube-system/nodelocaldns
+  - ../../namespaces/admin/csi-secret-store-provider
 
 patchesStrategicMerge:
   #flux patches
@@ -33,10 +34,11 @@ patchesStrategicMerge:
   - ../../namespaces/kured/patches/sandbox/cluster-01/kured.yaml
 
   #prom-operator patch
-  - ../../namespaces/monitoring/patches/sandbox/cluster-01/prom-operator.yaml
-  - ../../namespaces/monitoring/patches/sandbox/cluster-01/nodelocaldns-alerts-rules.yaml
+  - ../../namespaces/monitoring/kube-prometheus-stack/patches/sandbox/cluster-01/kube-prometheus-stack.yaml
+  - ../../namespaces/monitoring/kube-prometheus-stack/patches/sandbox/cluster-01/nodelocaldns-alerts-rules.yaml
 
   - ../../namespaces/admin/env-injector/patches/sandbox/cluster-01/env-injector.yaml
+
 patches:
   - path: ../sandbox-helmrelease.yaml
     target:

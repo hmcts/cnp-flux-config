@@ -12,14 +12,14 @@ spec:
   rollback:
     enable: true
   chart:
-    name: pcq-consolidation-service
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 0.0.17
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/pcq-consolidation-service
   values:
     job:
       schedule: "0 18 2-30/2 * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-e79dc86b
+      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-61d6599e
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
     global:

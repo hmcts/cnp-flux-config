@@ -1,0 +1,30 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: em-icp
+  namespace: em
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: em-icp
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: em-icp
+    version: 0.1.10
+  values:
+    nodejs:
+      replicas: 1
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/icp:prod-e9c6d189
+      ingressHost: em-icp-demo.service.core-compute-demo.internal
+      environment:
+        VAR_T3: trigger4
+    global:
+      environment: demo
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

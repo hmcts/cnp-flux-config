@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-callback-function
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.function: glob:pr-26-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-26-e1ff7ac8
+      aadIdentityName: ccpay
+      environment:
+        S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        MICROSERVICE_PAYMENT_APP: "payment_app"
+      keyVaults:
+        "ccpay":
+          secrets:
+          - payment-s2s-secret

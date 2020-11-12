@@ -6,7 +6,7 @@ metadata:
   namespace: ethos
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-911-*
 spec:
   releaseName: repl-docmosis-service
   forceUpgrade: true
@@ -16,12 +16,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ethos-repl-docmosis-backend
-    version: 0.2.1
+    version: 0.2.4
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-5aa8870e
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:pr-911-f7a0cbf2
       ingressHost: ethos-repl-docmosis-backend-ldata.service.core-compute-ethosldata.internal
       environment:
         CCD_DATA_STORE_API_URL: http://ccd-data-store-api-java.ccd.svc.cluster.local

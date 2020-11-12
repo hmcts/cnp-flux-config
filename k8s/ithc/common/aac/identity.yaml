@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: aac
+  namespace: aac
+spec:
+  type: 0
+  resourceID: "/subscriptions/62864d44-5da9-4ae9-89e7-0cf33942fa09/resourcegroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aac-ithc-mi"
+  clientID: "e4f1e678-ee5a-4d87-8a6d-d00c8ff4ea14"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: aac-binding
+  namespace: aac
+spec:
+  azureIdentity: aac
+  selector: aac

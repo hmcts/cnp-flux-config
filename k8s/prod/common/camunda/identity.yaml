@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: camunda
+  namespace: camunda
+spec:
+  type: 0
+  resourceID: "/subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourceGroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/camunda-prod-mi"
+  clientID: "91891d7b-22b8-49a0-ab51-574d4095fd17"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: camunda-binding
+  namespace: camunda
+spec:
+  azureIdentity: camunda
+  selector: camunda

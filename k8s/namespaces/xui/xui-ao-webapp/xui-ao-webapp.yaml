@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-ao-webapp
+spec:
+  releaseName: xui-ao-webapp
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-ao-webapp
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/xui/ao-webapp:prod-f5529402

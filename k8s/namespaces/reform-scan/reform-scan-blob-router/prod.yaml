@@ -16,11 +16,13 @@ spec:
         REJECT_DUPLICATES_CRON: "0 0 6 * * *"
         TASK_SCAN_DELAY: 300000
         STORAGE_URL: https://reformscan.platform.hmcts.net
-        STORAGE_BULKSCAN_URL: https://bulkscan.platform.hmcts.net
+        STORAGE_BULKSCAN_URL: https://bulkscanprod.blob.core.windows.net
         STORAGE_BLOB_PUBLIC_KEY: "trusted_public_key.der"
         CRIME_DESTINATION_CONTAINER: bs-prd-scan-received
         SEND_DAILY_REPORT_ENABLED: true
         SMTP_HOST: smtp.office365.com
+        PROXY_ENABLED: "false"
+        PCQ_ENABLED: "true"
       testsConfig:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
@@ -40,6 +42,7 @@ spec:
               test-subscription-key: TEST_SUBSCRIPTION_KEY
               storage-account-secondary-key: TEST_STORAGE_ACCOUNT_KEY
               storage-account-name: TEST_STORAGE_ACCOUNT_NAME
+              reconciliation-api-key: TEST_RECONCILIATION_API_KEY
         environment:
           TEST_URL: "http://reform-scan-blob-router-prod.service.core-compute-prod.internal"
           SLACK_CHANNEL: "bsp-test-notices"

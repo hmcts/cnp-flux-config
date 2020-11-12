@@ -18,14 +18,15 @@ spec:
     path: stable/ccd-api-gateway-web
   values:
     nodejs:
-      replicas: 4
+      replicas: 8
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5a11e345
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-be19da52
       ingressHost: gateway.ccd.platform.hmcts.net
       environment:
         IDAM_BASE_URL: "https://idam-api.platform.hmcts.net"
         IDAM_OAUTH2_LOGOUT_ENDPOINT: https://idam-api.platform.hmcts.net/session/:token
         IDAM_OAUTH2_TOKEN_ENDPOINT: https://idam-api.platform.hmcts.net/oauth2/token
+        DUMMY_VAR_TO_REDEPLOY: 1
 
         CORS_ORIGIN_WHITELIST: "https://www.ccd.platform.hmcts.net,https://ccd.platform.hmcts.net"
     global:

@@ -12,14 +12,14 @@ spec:
   rollback:
     enable: true
   chart:
-    name: pcq-consolidation-service
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 0.0.18
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/pcq-consolidation-service
   values:
     job:
       schedule: "0/45 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-e79dc86b
+      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-61d6599e
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

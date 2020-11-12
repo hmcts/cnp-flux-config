@@ -20,10 +20,12 @@ spec:
           reform-scan:
             resourceGroup: reform-scan
             secrets:
-              notifications-queue-listen-connection-string: NOTIFICATION_QUEUE_CONN_STRING_READ
-              notifications-queue-send-connection-string: NOTIFICATION_QUEUE_CONN_STRING_WRITE
+              notification-queue-send-shared-access-key: NOTIFICATION_QUEUE_ACCESS_KEY_WRITE
               test-s2s-secret: TEST_S2S_SECRET
         environment:
+          NOTIFICATION_QUEUE_ACCESS_KEY_NAME_WRITE: "SendSharedAccessKey"
+          NOTIFICATION_QUEUE_NAME: "notifications"
+          NOTIFICATION_QUEUE_NAMESPACE: "reform-scan-servicebus-aat"
           TEST_URL: http://reform-scan-notification-service-java
           SLACK_CHANNEL: "bsp-test-notices"
           SLACK_NOTIFY_SUCCESS: false

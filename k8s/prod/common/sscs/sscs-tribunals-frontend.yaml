@@ -20,8 +20,9 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-ee3bfa68
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-4f8d36a5
       ingressHost: www.appeal-benefit-decision.service.gov.uk
+      livenessPath: /health/readiness
       environment:
         CONTACT_US_WEB_FORM_ENABLED: false
         SERVICES_WEBCHAT_UUID: "script_1519925245d3ec86ead6a15.79946496"
@@ -31,7 +32,8 @@ spec:
         SERVICES_BTN_SERVICE_CLOSED: "/aG1jdHN4MTAx/button_19684351645d232edee71e86.59595908/img/logo"
         SERVICES_IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
         SERVICES_IDAM_API_URL: https://idam-api.platform.hmcts.net
-        FT_WELSH: "false"
+        FT_WELSH: "true"
+        DUMMY_PROPERTY: "true"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

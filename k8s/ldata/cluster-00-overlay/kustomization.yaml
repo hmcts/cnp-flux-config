@@ -9,12 +9,14 @@ bases:
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
-  - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/admin/env-injector
   - ../../namespaces/monitoring/botkube
   - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
-  - ../../namespaces/admin/aad-pod-identity
+  - ../../namespaces/admin/aad-pod-id
+  - ../../namespaces/admin/csi-secret-store-provider
+  - ../../namespaces/monitoring/dynatrace
 
 patchesStrategicMerge:
   # flux patches
@@ -36,3 +38,6 @@ patchesStrategicMerge:
   # neuvector patch
   - ../../namespaces/neuvector/patches/ldata/neuvector.yaml
   - ../../namespaces/neuvector/patches/ldata/cluster-00/neuvector.yaml
+
+  # Dynatrace patch
+  - ../../namespaces/monitoring/dynatrace/patches/ldata/oneagent.yaml

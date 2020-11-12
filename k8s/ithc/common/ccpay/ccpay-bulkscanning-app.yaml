@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:ithc-*
 spec:
   releaseName: ccpay-bulkscanning-api
   rollback:
@@ -15,12 +15,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccpay-bulkscanning-api
-    version: 1.0.0
+    version: 1.0.5
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-a169f42a
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:ithc
+      imagePullPolicy: Always
+      environment:
+        DUMMY_RESTART_VAR: false
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

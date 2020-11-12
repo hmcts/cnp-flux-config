@@ -88,22 +88,10 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      HMCTS_CDM.+\/master
-                    name: CDM
+                      ^HMCTS_.*CDM.*\/.+\/master
+                    name: CCD
                     recurse: true
-                    title: CDM master Builds
-                - buildMonitor:
-                    includeRegex: >-
-                      HMCTS_CDM.+\/demo
-                    name: CDM demo
-                    recurse: true
-                    title: CDM demo Builds
-                - buildMonitor:
-                    includeRegex: >-
-                      HMCTS_Nightly_CDM.+\/master
-                    name: CDM Nightly
-                    recurse: true
-                    title: CDM Nightly Builds
+                    title: CCD Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator)\/master
@@ -130,22 +118,16 @@ spec:
                     title: INTESTACY Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      HMCTS_DIV/(?!div-ansible|div-case-progression-service|div-feature-toggle-client|div-frontend-boilerplate).+\/master
+                      ^HMCTS_.*DIV.*\/(?!div-ansible|div-case-progression-service|div-feature-toggle-client|div-frontend-boilerplate).+\/master
                     name: DIV
                     recurse: true
                     title: Divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-judicial-booking-batch-service|am-judicial-booking-service|am-org-role-mapping-batch-service|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service)\/(master|demo)
+                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests)\/master
                     name: AM
                     recurse: true
                     title: AM
-                - buildMonitor:
-                    includeRegex: >-
-                      .+\/(am-.*)\/(.*PR-.*)
-                    name: AM-PR
-                    recurse: true
-                    title: AM-PR
                 - buildMonitor:
                     includeRegex: >-
                       HMCTS_.*CTSC\/.+\/master
@@ -160,13 +142,13 @@ spec:
                     title: ETHOS
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(CMC).*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure)\/master
+                      ^HMCTS_.*(CMC).*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test)\/master
                     name: CMC
                     recurse: true
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-caseworker-ref-api|rd-location-ref-data-load|rd-caseworker-ref-data-load)\/master
+                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -176,6 +158,12 @@ spec:
                     name: ADOPTION
                     recurse: true
                     title: Adoption Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*FPL.*\/(fpl-ccd-configuration)\/(master|demo|ithc|perftest)
+                    name: FPLA
+                    recurse: true
+                    title: FPLA
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*(MI).*\/(mi-integration-service|mi-staging-service|mi-presentation-service|mi-housekeeping-service|mi-shared-infrastructure)\/master
@@ -196,7 +184,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM|DG|DM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app)\/master
+                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -269,9 +257,9 @@ spec:
                     - activeDeadlineSeconds: 120
                       activeDeadlineSecondsStr: "120"
                       containers:
-                      - args: "cat"
-                        command: "/bin/sh -c"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
+                      - args: "/bin/sh -c cat"
+                        command: "/tini --"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db6hu6"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -285,7 +273,7 @@ spec:
                         resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -332,6 +320,20 @@ spec:
                           securityContext:
                             runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -353,6 +355,20 @@ spec:
                           securityContext:
                             runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -387,7 +403,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.1.0"
+                          galleryImageVersion: "2.2.2"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
@@ -398,7 +414,8 @@ spec:
                           mkdir -pv /opt/jenkins
                           mount /dev/sdb1 /opt/jenkins
                           chown -R jenkinsssh:jenkinsssh /opt/jenkins
-                          mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                          set -e
+                          cp /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
                           chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
                           chmod 0600 /home/jenkinsssh/.ssh/id_rsa
                           mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
@@ -413,10 +430,11 @@ spec:
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
                         installDocker: false
                         installGit: false
                         installMaven: false
-                        javaPath: /usr/share/jdk-11.0.2/bin/java
+                        javaPath: /usr/lib/jvm/java-11-openjdk/bin/java
                         jvmOptions: "-Xms4G -Xmx6G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\

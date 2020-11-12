@@ -1,0 +1,30 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-timed-event-service
+  namespace: ia
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+spec:
+  releaseName: ia-timed-event-service
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ia-timed-event-service
+    version: 0.0.14
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/timed-event-service:prod-b1cb8c31
+      environment:
+        RESTART_ME: "Update due to vault change"
+    global:
+      environment: demo
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

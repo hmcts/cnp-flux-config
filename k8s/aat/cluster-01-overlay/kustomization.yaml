@@ -13,18 +13,20 @@ bases:
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
-  - ../../namespaces/monitoring
+  - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/admin/env-injector
   - ../../namespaces/monitoring/botkube
   - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
   - ../../namespaces/monitoring/dynatrace
-  - ../../namespaces/admin/aad-pod-identity
+  - ../../namespaces/admin/aad-pod-id
+  - ../../namespaces/admin/csi-secret-store-provider
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/aat/flux.yaml
   - ../../namespaces/admin/flux/patches/aat/cluster-01/flux.yaml
+  - ../../namespaces/admin/flux/helm-operator-test.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/aat/cluster-01/fluxcloud.yaml
@@ -43,7 +45,7 @@ patchesStrategicMerge:
   - ../../namespaces/neuvector/patches/aat/cluster-01/neuvector.yaml
 
   #prom-operator patch
-  - ../../namespaces/monitoring/patches/aat/cluster-01/prom-operator.yaml
+  - ../../namespaces/monitoring/kube-prometheus-stack/patches/aat/cluster-01/kube-prometheus-stack.yaml
 
   - ../../namespaces/admin/env-injector/patches/aat/cluster-01/env-injector.yaml
 

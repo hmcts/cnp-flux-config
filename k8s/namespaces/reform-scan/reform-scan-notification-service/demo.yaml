@@ -1,10 +1,32 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-notification-service
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-275-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-275-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
         PENDING_NOTIFICATIONS_SEND_DELAY_IN_MINUTE: 0
+        QUEUE_NAMESPACE: reform-scan-servicebus-v2-demo
+      keyVaults:
+        "reform-scan-v2":
+          secrets:
+          - error-notifications-password
+          - error-notifications-url
+          - error-notifications-username
+          - notification-service-POSTGRES-PASS
+          - notification-service-POSTGRES-USER
+          - notification-service-POSTGRES-DATABASE
+          - notification-service-POSTGRES-HOST
+          - notification-service-POSTGRES-PORT
+          - notification-queue-listen-shared-access-key
+        "reform-scan":
+          secrets:
+          - dummy
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:pr-275-4f399cfa

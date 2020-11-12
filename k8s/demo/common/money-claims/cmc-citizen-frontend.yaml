@@ -5,7 +5,7 @@ metadata:
   name: cmc-citizen-frontend
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: cmc-citizen-frontend
@@ -20,12 +20,11 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-56b1bc99
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-2605-c554a6ea
       ingressHost: moneyclaims.demo.platform.hmcts.net
       environment:
         FEATURE_TESTING_SUPPORT: true
         FEATURE_RETURN_ERROR_TO_USER: true
-        FEATURE_WEB_CHAT: true
         PCQ_URL: https://pcq.demo.platform.hmcts.net
     global:
       environment: demo

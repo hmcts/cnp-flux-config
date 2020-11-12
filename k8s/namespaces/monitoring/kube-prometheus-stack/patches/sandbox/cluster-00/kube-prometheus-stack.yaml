@@ -1,0 +1,16 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  values:
+    prometheus:
+      ingress:
+        hosts:
+          - prometheus-00.sandbox.platform.hmcts.net
+    alertmanager:
+      ingress:
+        hosts:
+          - alertmanager-00.sandbox.platform.hmcts.net

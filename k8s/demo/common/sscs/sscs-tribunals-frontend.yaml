@@ -13,18 +13,20 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: sscs-tribunals-frontend
-    version: 0.2.8
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tribunals-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-9808ea73
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-4f8d36a5
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
         FT_WELSH: "true"
+        DUMMY_PROPERTY: "false"
+        FT_ANTENNA_WEBCHAT: "true"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

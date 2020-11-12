@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: fact
+  namespace: fact
+spec:
+  type: 0
+  resourceID: "/subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/fact-perftest-mi"
+  clientID: "5237d5f6-b271-47af-b59f-2564efaafb03"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: fact-binding
+  namespace: fact
+spec:
+  azureIdentity: fact
+  selector: fact

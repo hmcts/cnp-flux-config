@@ -15,15 +15,16 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-documents-api
-    version: 0.0.14
+    version: 0.0.16
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-157d55b6
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-e9c30c91
       ingressHost: ia-case-documents-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
+        OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
         DOCMOSIS_ENDPOINT: https://docmosis.platform.hmcts.net
         RESTART_ME: "Update due to vault change"
       prometheus:

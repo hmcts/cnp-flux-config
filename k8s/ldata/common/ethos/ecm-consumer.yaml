@@ -1,0 +1,36 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ecm-consumer
+  namespace: ethos
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: ecm-consumer
+  forceUpgrade: true
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ethos-ecm-consumer
+    version: 0.1.7
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ethos/ecm-consumer:prod-ede042c4
+      environment:
+        ECM_CONSUMER_URL: "http://ecm-consumer-ldata.service.core-compute-ethosldata.internal"
+        IDAM_API_URL: "https://idam-api-ethosldata.platform.hmcts.net"
+        IDAM_API_JWK_URL: "https://idam-api-ethosldata.platform.hmcts.net/jwks"
+        IDAM_API_OIDC_URL: "https://idam-api-ethosldata.platform.hmcts.net/o/token"
+        IDAM_CLIENT_REDIRECT_URL: "https://ecm-consumer-ldata.service.core-compute-ethosldata.internal/oauth2redirect"
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal"
+        CCD_DATA_STORE_API_URL: "http://ccd-data-store-api-ldata.service.core-compute-ethosldata.internal"
+    global:
+      environment: ethosldata
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

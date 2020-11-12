@@ -17,8 +17,7 @@ spec:
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true
         -Djenkins.model.Jenkins.logStartupPerformance=true
-        -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true
-        -Dkubernetes.websocket.ping.interval=60000
+        -Dkubernetes.websocket.ping.interval=30000
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
@@ -131,7 +130,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db5h1m"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db6hu6"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -141,11 +140,11 @@ spec:
                         name: "inbound-agent"
                         resourceLimitCpu: "3000m"
                         resourceLimitMemory: "8Gi"
-                        resourceRequestCpu: "1500m"
-                        resourceRequestMemory: "3Gi"
+                        resourceRequestCpu: "1000m"
+                        resourceRequestMemory: "2Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db5h1m"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -192,6 +191,20 @@ spec:
                           securityContext:
                             runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -213,6 +226,20 @@ spec:
                           securityContext:
                             runAsUser: 1000
                             fsGroup: 118
+                          initContainers:
+                          - name: init-agent
+                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            command:
+                              - /bin/sh
+                              - -c
+                              - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-3
+                            securityContext:
+                              runAsUser: 0
+                              runAsGroup: 0
+                              privileged: true
                           affinity:
                             podAntiAffinity:
                               requiredDuringSchedulingIgnoredDuringExecution:
@@ -247,7 +274,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.1.0"
+                          galleryImageVersion: "2.2.2"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
@@ -258,6 +285,7 @@ spec:
                           mkdir -pv /opt/jenkins
                           mount /dev/sdb1 /opt/jenkins
                           chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                          set -e
                           mv /tmp/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
                           chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
                           chmod 0600 /home/jenkinsssh/.ssh/id_rsa
@@ -271,10 +299,11 @@ spec:
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
                         installDocker: false
                         installGit: false
                         installMaven: false
-                        javaPath: /usr/share/jdk-11.0.2/bin/java
+                        javaPath: /usr/lib/jvm/java-11-openjdk/bin/java
                         jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\

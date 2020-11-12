@@ -1,0 +1,39 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-payment-processor
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-318-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-318-*
+    hmcts.github.com/prod-automated: disabled*
+spec:
+  values:
+    java:
+      environment:
+        PAYMENTS_QUEUE_NAMESPACE: bulk-scan-servicebus-v2-demo
+      keyVaults:
+        "bulk-scan-v2":
+          secrets:
+          - site-id-probate
+          - site-id-divorce
+          - site-id-finrem
+          - site-id-bulkscan
+          - s2s-secret-payment-processor
+          - app-insights-instrumentation-key
+          - idam-client-secret
+          - payments-queue-listen-shared-access-key
+          - idam-users-bulkscan-username
+          - idam-users-bulkscan-password
+          - idam-users-cmc-username
+          - idam-users-cmc-password
+          - idam-users-div-username
+          - idam-users-div-password
+          - idam-users-finrem-username
+          - idam-users-finrem-password
+          - idam-users-probate-username
+          - idam-users-probate-password
+        "bulk-scan":
+          secrets:
+          - dummy

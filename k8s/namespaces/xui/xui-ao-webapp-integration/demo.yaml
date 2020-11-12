@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-ao-webapp-integration
+spec:
+  values:
+    nodejs:
+      ingressHost: administer-orgs-int.demo.platform.hmcts.net
+      environment:
+        FEATURE_OIDC_ENABLED: true
+        USER_TIMEOUT_IN_SECONDS: 1800
+        DEBUG: xuiNode:*,-xuiNode:auth:s2s
+        ISS_SERVICE: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        FEATURE_SECURE_COOKIE_ENABLED: false
