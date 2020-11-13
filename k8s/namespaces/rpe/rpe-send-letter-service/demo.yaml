@@ -2,19 +2,3 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rpe-send-letter-service
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:prod-*
-    fluxcd.io/automated: "false"
-    fluxcd.io/tag.java: glob:prod-*
-    hmcts.github.com/prod-automated: disabled
-spec:
-  values:
-    java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-6490066c
-      environment:
-        FILE_CLEANUP_ENABLED: "true"
-        OLD_LETTER_CONTENT_CLEANUP_ENABLED: "true"
-
