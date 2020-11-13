@@ -31,7 +31,7 @@ spec:
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       aadIdentityName: cnp
       environment:
-        POSTGRES_SSL_MODE: require
+        POSTGRES_SSL_MODE: none
       keyVaults:
         "plumsi":
           resourceGroup: plum-shared-infrastructure
@@ -40,6 +40,7 @@ spec:
           - recipe-backend-POSTGRES-HOST
           - recipe-backend-POSTGRES-USER
           - recipe-backend-POSTGRES-PASS
+          - fail-secret
       testsConfig:
         environment:
           TEST_URL: http://plum-recipe-backend-java
