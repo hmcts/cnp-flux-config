@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fpl-case-service
+  annotations:
+    fluxcd.io/automated: "false"
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-5a4b25f5
+      ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
+      environment:
+        GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
+        TESTING_SUPPORT_ENABLED: true
