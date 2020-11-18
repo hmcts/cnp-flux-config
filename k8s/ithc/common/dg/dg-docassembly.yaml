@@ -15,17 +15,15 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dg-docassembly
-    version: 1.0.7
+    version: 1.1.0
   values:
     java:
       replicas: 2
-      #      applicationInsightsInstrumentKey: "7db6f85f-50a8-47f7-a8d5-d901065c4e3c"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/dg/docassembly:prod-e4fb72b7
       environment:
         ENABLE_FORM_DEFINITION_ENDPOINT: "false"
         ENABLE_TEMPLATE_RENDITION_ENDPOINT: "true"
-      ingressHost: dg-docassembly-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
