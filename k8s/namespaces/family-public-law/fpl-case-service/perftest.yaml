@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fpl-case-service
+  annotations:
+    fluxcd.io/automated: "false"
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-6d8cbc30
+      ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
+      environment:
+        SCHEDULER_ENABLED: false
+        DOCMOSIS_TORNADO_URL: https://docmosis-testing.platform.hmcts.net
+        GATEWAY_URL: https://gateway-ccd.perftest.platform.hmcts.net
+        SPRING_SECURITY_ENABLED: true
+        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.perftest.platform.hmcts.net/o/jwks

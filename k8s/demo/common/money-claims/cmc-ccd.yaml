@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-38bbd12b
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-faa344a0
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -70,13 +70,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-cb8469d2
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-3976f989
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-be19da52
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-06d62756
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-2d9dab9e
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-b0a50e7c
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-2860b9c1
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c7fc34ae
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
@@ -106,11 +106,11 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-650aec75
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-8eb0e6eb
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-e9c16b9e
+        image: hmctspublic.azurecr.io/dm/store:prod-ba0e8336
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
@@ -124,7 +124,7 @@ spec:
 
     #cmc ccd definition importer redeployiing the ccd components
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.8.5
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.8.6
       waitHosts: "cmc-ccd-ccd-definition-store:80"
       waitHostsTimeout: 600
       environment:
