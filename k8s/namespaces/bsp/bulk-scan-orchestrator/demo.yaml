@@ -2,16 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-orchestrator
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1255-*
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1255-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
+        ROOT_LOGGING_LEVEL: DEBUG
         TRANSFORMATION_URL_PROBATE: "http://probate-back-office-demo.service.core-compute-demo.internal/transform-scanned-data"
         TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
         AUTO_CASE_CREATION_ENABLED_SSCS: "true"
@@ -21,30 +16,3 @@ spec:
         AUTO_CASE_UPDATE_ENABLED_PROBATE: "false"
         CASE_DEFINITION_HAS_ENVELOPE_IDS_PROBATE: "false"
         CAN_SEARCH_CASES_BY_ENVELOPE_ID_PROBATE: "false"
-        QUEUE_NAMESPACE: "bulk-scan-servicebus-v2-demo"
-      keyVaults:
-        "bulk-scan-v2":
-          secrets:
-          - idam-client-secret
-          - s2s-secret-bulk-scan-orchestrator
-          - idam-users-bulkscan-username
-          - idam-users-bulkscan-password
-          - idam-users-cmc-username
-          - idam-users-cmc-password
-          - idam-users-div-username
-          - idam-users-div-password
-          - idam-users-probate-username
-          - idam-users-probate-password
-          - idam-users-publiclaw-username
-          - idam-users-publiclaw-password
-          - idam-users-sscs-username
-          - idam-users-sscs-password
-          - envelopes-queue-listen-shared-access-key
-          - processed-envelopes-queue-send-shared-access-key
-          - payments-queue-send-shared-access-key
-          - envelopes-queue-max-delivery-count
-          - app-insights-instrumentation-key
-        "bulk-scan":
-          secrets:
-          - dummy
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1255-4ee4cc85
