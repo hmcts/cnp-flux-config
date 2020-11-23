@@ -1,15 +1,15 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ia-case-payments-api
+  name: wa-case-event-handler
 spec:
-  releaseName: ia-case-payments-api
+  releaseName: wa-case-event-handler
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/ia-case-payments-api
+    path: stable/wa-case-event-handler
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-payments-api:prod-c3836656
+      image: hmctspublic.azurecr.io/wa/case-event-handler:lastest
