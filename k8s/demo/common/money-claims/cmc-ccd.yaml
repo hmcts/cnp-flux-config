@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-28eecae6
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-b0a50e7c
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-81b3e620
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-806ddadd
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
@@ -110,7 +110,7 @@ spec:
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-a2e548f2
+        image: hmctspublic.azurecr.io/dm/store:prod-e26da06d
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
@@ -124,7 +124,7 @@ spec:
 
     #cmc ccd definition importer redeployiing the ccd components
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.8.6
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.8.7
       waitHosts: "cmc-ccd-ccd-definition-store:80"
       waitHostsTimeout: 600
       environment:

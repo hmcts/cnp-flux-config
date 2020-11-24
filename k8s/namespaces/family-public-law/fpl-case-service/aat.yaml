@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fpl-case-service
+spec:
+  values:
+    java:
+      ingressHost: fpl-case-service-aat.service.core-compute-aat.internal
+      environment:
+        MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health, info, threaddump
+        GATEWAY_URL: https://gateway-ccd.aat.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.aat.platform.hmcts.net
+        SPRING_SECURITY_ENABLED: false
+        TESTING_SUPPORT_ENABLED: true

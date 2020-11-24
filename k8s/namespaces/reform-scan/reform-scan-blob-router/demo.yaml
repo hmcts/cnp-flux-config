@@ -2,12 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-749-*
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-749-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -24,28 +18,4 @@ spec:
         SEND_RECONCILIATION_REPORT_MAIL_ENABLED: "false"
         SMTP_HOST: smtp.office365.com
         STORAGE_URL: https://v2-reformscan.demo.platform.hmcts.net
-        STORAGE_BULKSCAN_URL: https://v2-bulkscan.demo.platform.hmcts.net
-        NOTIFICATIONS_QUEUE_NAMESPACE: reform-scan-servicebus-v2-demo
-      keyVaults:
-        "reform-scan-v2":
-          secrets:
-          - app-insights-instrumentation-key
-          - storage-account-name
-          - storage-account-primary-key
-          - storage-account-secondary-key
-          - crime-storage-connection-string
-          - reports-email-username
-          - reports-email-password
-          - reports-recipients
-          - blob-router-POSTGRES-PASS
-          - blob-router-POSTGRES-USER
-          - blob-router-POSTGRES-DATABASE
-          - blob-router-POSTGRES-HOST
-          - blob-router-POSTGRES-PORT
-          - notification-queue-send-shared-access-key
-          - reconciliation-api-key
-          - s2s-secret-blob-router
-        "reform-scan":
-          secrets:
-          - dummy
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:pr-749-5af9c15d
+        STORAGE_BULKSCAN_URL: https://bulkscandemo.blob.core.windows.net
