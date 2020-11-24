@@ -39,6 +39,15 @@ spec:
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
     keycloak:
       enabled: true
+      extraEnv: |
+        - name: KEYCLOAK_USER_FILE
+          value: /mnt/secrets/idam-keycloak/keycloak-admin-username
+        - name: KEYCLOAK_PASSWORD_FILE
+          value: /mnt/secrets/idam-keycloak/keycloak-admin-password
+        - name: DB_VENDOR
+          value: h2
+        - PROXY_ADDRESS_FORWARDING
+          value: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
