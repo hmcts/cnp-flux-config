@@ -1,0 +1,19 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: fact
+  namespace: fact
+spec:
+  type: 0
+  resourceID: /subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourceGroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/fact-prod-mi
+  clientID: c1c5a799-1740-4a3f-bd95-e43b84ad03f5
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: fact-binding
+  namespace: fact
+spec:
+  azureIdentity: fact
+  selector: fact
