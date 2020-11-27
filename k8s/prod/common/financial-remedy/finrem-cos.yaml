@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: finrem-cos
-    version: 0.0.8
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-cos
   values:
     java:
       replicas: 2
@@ -30,7 +30,7 @@ spec:
         FEATURE_CONTESTED_PRINT_GENERAL_ORDER: false
         FEATURE_CONSENT_ORDER_NOT_APPROVED_APPLICANT_DOCUMENT_GENERATION: true
         FEATURE_PRINT_GENERAL_ORDER: true
-        FEATURE_SHARE_A_CASE: false
+        FEATURE_SHARE_A_CASE: true
         CTSC_EMAIL: contactFinancialRemedy@justice.gov.uk
         ASSIGNED_TO_JUDGE_DEFAULT_EMAIL: newApplication@justice.gov.uk
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
