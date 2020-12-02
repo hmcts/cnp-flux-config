@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helm-operator
+spec:
+  containers:
+    args:
+    - --enabled-helm-versions=v3
+    - --helm-repository-import=v3:/root/.helm/repository/repositories.yaml
+    - --kubeconfig=/root/.kube/config
+    - --log-format=fmt
+    - --git-timeout=1m
+    - --git-poll-interval=1m
+    - --charts-sync-interval=3m
+    - --status-update-interval=30s
+    - --update-chart-deps=true
+    - --log-release-diffs=false
+    - --workers=3
+    - --tiller-namespace=kube-system
+  resources:
+    limits:
+      cpu: "1"
+      memory: 3Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  volumeMounts:
