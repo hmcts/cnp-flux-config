@@ -1,0 +1,25 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  values:
+    frontend:
+      baseUrl: https://backstage.platform.hmcts.net
+    ingress:
+      hosts:
+        - host: backstage.platform.hmcts.net
+          paths:
+            - service: frontend
+        - host: backstage-api.platform.hmcts.net
+          paths:
+            - service: backend
+    backend:
+      baseUrl: https://backstage-api.platform.hmcts.net
+      db:
+        user: backstage@hmcts-backstage-ptl
+        host: hmcts-backstage-ptl.postgres.database.azure.com
+        ssl: require
+      cors:
+        origin: https://backstage.platform.hmcts.net

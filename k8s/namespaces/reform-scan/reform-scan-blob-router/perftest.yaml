@@ -2,9 +2,16 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-813-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-813-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      memoryLimits: "2048Mi"
       environment:
         # settings should be as prod-like as possible
         STORAGE_BULKSCAN_URL: https://bulkscanperftest.blob.core.windows.net
@@ -12,3 +19,4 @@ spec:
         REJECT_DUPLICATES_CRON: "0 0 6 * * *"
         TASK_SCAN_DELAY: 300000
         PROXY_ENABLED: "false"
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:pr-813-85c73f41

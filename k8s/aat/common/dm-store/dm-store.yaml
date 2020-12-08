@@ -16,12 +16,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.1.4
+    version: 2.1.5
   values:
     java:
-      replicas: 2
+      replicas: 4
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-2c67083a
+      image: hmctspublic.azurecr.io/dm/store:prod-73848820
       ingressHost: dm-store-aat.service.core-compute-aat.internal
       environment:
         ENABLE_TTL: "true"

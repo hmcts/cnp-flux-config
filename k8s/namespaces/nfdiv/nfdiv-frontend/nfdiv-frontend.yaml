@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-frontend
+spec:
+  releaseName: nfdiv-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/nfdiv-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/nfdiv/frontend:prod-13ff8a34
+      environment:
+        VAR_TA: trigger1
+      keyVaults:
+        nfdiv:
+          resourceGroup: nfdiv
+          secrets:
+          - oauth-client-secret
+          - AppInsightsInstrumentationKey
+          - redis-access-key
