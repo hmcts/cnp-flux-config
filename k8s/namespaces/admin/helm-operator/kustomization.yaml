@@ -4,7 +4,13 @@ resources:
   - https://raw.githubusercontent.com/fluxcd/helm-operator/1.2.0/deploy/crds.yaml
   - https://raw.githubusercontent.com/fluxcd/helm-operator/1.2.0/deploy/deployment.yaml
   - https://raw.githubusercontent.com/fluxcd/helm-operator/1.2.0/deploy/rbac.yaml
+configurations:
+- helm-operator-variables.yaml
 vars:
-- name: NAMESPACE
-  objref: { kind: Deployment, name: helm-operator, apiVersion: 'apps/v1' }
-  fieldref: { fieldpath: metadata.namespace }
+- name: MY_NAMESPACE
+  objref:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: helm-operator
+  fieldref:
+    fieldpath: metadata.namespace
