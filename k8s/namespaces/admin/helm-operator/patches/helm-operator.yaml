@@ -46,9 +46,6 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        # - mountPath: /root/.kube
-        #   name: config
-        #   readOnly: true
         - mountPath: /etc/fluxd/ssh
           name: git-key
           readOnly: true
@@ -66,10 +63,6 @@ spec:
       serviceAccount: helm-operator
       terminationGracePeriodSeconds: 30
       volumes:
-      # - configMap:
-      #     defaultMode: 384
-      #     name: flux-helm-operator-kube-config
-      #   name: config
       - name: git-key
         secret:
           defaultMode: 256
