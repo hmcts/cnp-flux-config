@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1203-*
+    flux.weave.works/tag.java: glob:pr-1244-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -18,11 +18,11 @@ spec:
     path: stable/ccd-data-store-api
   values:
     java:
-      replicas: 4
+      replicas: 6
       memoryLimits: "3072Mi"
       cpuLimits: "2000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1203-cc4858fe
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1244-90aeec5c
       environment:
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
@@ -30,7 +30,7 @@ spec:
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120  #remove when version 1.3.1 of the chart is available.
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
         DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,unspec_service,am_role_assignment_service
-        CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service
+        CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service,iac
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

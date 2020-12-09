@@ -17,32 +17,17 @@ spec:
   chart:
     repository: https://hmcts.github.io/RoadieHQ-helm-charts
     name: backstage
-    version: 0.2.14
+    version: 0.2.15
   valueFileSecrets:
   - name: "backstage-values"
   values:
     frontend:
       replicaCount: 2
-      baseUrl: https://backstage.sandbox.platform.hmcts.net
-      image: hmctspublic.azurecr.io/backstage/frontend:prod-d804308
+      image: hmctspublic.azurecr.io/backstage/frontend:prod-b4f71cd
     ingress:
       annotations:
         kubernetes.io/ingress.class: traefik
       enabled: true
-      hosts:
-      - host: backstage.sandbox.platform.hmcts.net
-        paths:
-        - service: frontend
-      - host: backstage-api.sandbox.platform.hmcts.net
-        paths:
-        - service: backend
     backend:
       replicaCount: 1 # scaffolder doesn't handle multiple instances atm: https://discord.com/channels/687207715902193673/687207715902193679/753621815133208637
-      image: hmctspublic.azurecr.io/backstage/backend:prod-d804308
-      baseUrl: https://backstage-api.sandbox.platform.hmcts.net
-      db:
-        user: backstage@hmcts-backstage-sbox
-        host: hmcts-backstage-sbox.postgres.database.azure.com
-        ssl: require
-      cors:
-        origin: https://backstage.sandbox.platform.hmcts.net
+      image: hmctspublic.azurecr.io/backstage/backend:prod-b4f71cd

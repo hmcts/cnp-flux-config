@@ -4,16 +4,16 @@ metadata:
   name: bulk-scan-orchestrator
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1282-*
+    flux.weave.works/tag.java: glob:pr-1292-*
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1282-*
+    fluxcd.io/tag.java: glob:pr-1292-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
         ROOT_LOGGING_LEVEL: DEBUG
-        TRANSFORMATION_URL_PROBATE: "http://probate-back-office-demo.service.core-compute-demo.internal/transform-scanned-data"
+        TRANSFORMATION_URL_PROBATE: "http://probate-back-office-demo.service.core-compute-demo.internal/transform-exception-record"
         TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
         AUTO_CASE_CREATION_ENABLED_SSCS: "true"
         CASE_DEFINITION_HAS_ENVELOPE_IDS_SSCS: "true"
@@ -22,4 +22,4 @@ spec:
         AUTO_CASE_UPDATE_ENABLED_PROBATE: "false"
         CASE_DEFINITION_HAS_ENVELOPE_IDS_PROBATE: "false"
         CAN_SEARCH_CASES_BY_ENVELOPE_ID_PROBATE: "false"
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1282-90e6f2ed
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1292-1af307d7

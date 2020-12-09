@@ -106,7 +106,7 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Probate.*\/(probate-frontend|probate-persistence-service|probate-business-service|probate-submit-service|probate-back-office)\/(master|demo|cnp)
+                      ^HMCTS_.*Probate.*\/(probate-frontend|probate-caveats-frontend|probate-persistence-service|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/(master|demo|cnp)
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -212,6 +212,12 @@ spec:
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*NFDIV.*\/(nfdiv-frontend|nfdiv-shared-infrastructure)\/master
+                    name: NFDIV
+                    recurse: true
+                    title: No Fault Divorce Dashboard
           authentication: |
             jenkins:
               securityRealm:
@@ -259,7 +265,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db6hu6"
+                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db8a7c"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -273,7 +279,7 @@ spec:
                         resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6"
+                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db8a7c"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -403,7 +409,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.2.2"
+                          galleryImageVersion: "2.2.3"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"

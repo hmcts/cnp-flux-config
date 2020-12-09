@@ -13,19 +13,19 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: finrem-cos
-    version: 0.0.8
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-cos
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-70ce9b6d
+      image: hmctspublic.azurecr.io/finrem/cos:prod-21d6fd48
       environment:
+        FEATURE_RESPONDENT_JOURNEY: true
         FEATURE_CONTESTED_PRINT_DRAFT_ORDER_NOT_APPROVED: true
         FEATURE_CONTESTED_PRINT_GENERAL_ORDER: true
-        FEATURE_CONSENT_ORDER_NOT_APPROVED_APPLICANT_DOCUMENT_GENERATION: true
-        FEATURE_PRINT_GENERAL_ORDER: true
+        FEATURE_SHARE_A_CASE: true
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
         BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
     global:

@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1565-*
+    flux.weave.works/tag.java: glob:pr-1642-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1565-18613d4c
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1642-c494c3d6
       aadIdentityName: sscs
       environment:
         READY_TO_LIST_OFFICES: DWP PIP (1),DWP PIP (2),DWP PIP (3),DWP PIP (4),DWP
@@ -32,6 +32,7 @@ spec:
         UC_ENABLED: true
         REINSTATEMENT_REQUESTS_FEATURE_FLAG: true
         URGENT_HEARING_ENABLED: true
+        DUMMY_PROPERTY: "false"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

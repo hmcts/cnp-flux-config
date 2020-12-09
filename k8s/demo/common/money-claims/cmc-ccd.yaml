@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-faa344a0
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-b55491f8
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -70,13 +70,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-3976f989
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-e86cf0cc
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-06d62756
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-b0a50e7c
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-5cddca10
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-50681302
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-13d2df2f
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
@@ -106,11 +106,11 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-8eb0e6eb
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-0d4fe2ce
 
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-2c67083a
+        image: hmctspublic.azurecr.io/dm/store:prod-52e94473
 
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14

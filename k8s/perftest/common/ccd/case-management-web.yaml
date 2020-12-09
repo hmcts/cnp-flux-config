@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-992-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: ccd-case-management-web
   rollback:
@@ -18,9 +18,9 @@ spec:
     path: stable/ccd-case-management-web
   values:
     nodejs:
-      replicas: 8
+      replicas: 16
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-management-web:pr-992-eacc75eb
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-e86cf0cc
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

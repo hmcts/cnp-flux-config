@@ -20,22 +20,21 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-70ce9b6d
+      image: hmctspublic.azurecr.io/finrem/cos:prod-21d6fd48
       dnsConfig:
         singleRequestTcp: false
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        FEATURE_RESPONDENT_SOLICITOR_EMAIL_NOTIFICATION: false
-        FEATURE_CONTESTED_PRINT_DRAFT_ORDER_NOT_APPROVED: false
-        FEATURE_CONTESTED_PRINT_GENERAL_ORDER: false
-        FEATURE_CONSENT_ORDER_NOT_APPROVED_APPLICANT_DOCUMENT_GENERATION: true
-        FEATURE_PRINT_GENERAL_ORDER: true
-        FEATURE_SHARE_A_CASE: false
         CTSC_EMAIL: contactFinancialRemedy@justice.gov.uk
         ASSIGNED_TO_JUDGE_DEFAULT_EMAIL: newApplication@justice.gov.uk
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
         BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
+        FEATURE_RESPONDENT_JOURNEY: false
+        FEATURE_CONTESTED_PRINT_DRAFT_ORDER_NOT_APPROVED: false
+        FEATURE_CONTESTED_PRINT_GENERAL_ORDER: false
+        FEATURE_SHARE_A_CASE: false
         FEATURE_SEND_TO_FRC: true
+        FEATURE_OFFLINE_NOTIFICATIONS: false
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
