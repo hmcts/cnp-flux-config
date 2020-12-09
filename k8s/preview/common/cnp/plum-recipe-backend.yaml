@@ -1,0 +1,32 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: plum-recipe-backend
+  namespace: cnp
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
+spec:
+  releaseName: plum-recipe-backend
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/plum-recipe-backend
+  values:
+    java:
+      postgresql:
+        enabled: true
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-f9234e58
+      ingressHost: plum-recipe-backend.service.core-compute-preview.internal
+      aadIdentityName: cnp
+      environment:
+        POSTGRES_HOST: "{{ .Release.Name }}-postgresql"
+        POSTGRES_SSL_MODE: disable
+        POSTGRES_DATABASE: "{{ .Values.postgresql.postgresqlDatabase}}"
+        POSTGRES_USER: "{{ .Values.postgresql.postgresqlUsername}}"
+        POSTGRES_PASSWORD: "{{ .Values.postgresql.postgresqlPassword}}"

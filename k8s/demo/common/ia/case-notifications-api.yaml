@@ -6,7 +6,7 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-397-*
 spec:
   releaseName: ia-case-notifications-api
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ia-case-notifications-api
-    version: 0.0.20
+    version: 0.0.23
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-cca078cc
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:pr-397-ad87feff
       ingressHost: ia-case-notifications-api-demo.service.core-compute-demo.internal
       environment:
         RESTART_ME: "Update due to vault Change"
