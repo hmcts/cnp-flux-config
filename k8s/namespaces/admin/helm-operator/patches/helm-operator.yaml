@@ -21,6 +21,21 @@ spec:
         - --tiller-namespace=kube-system
         - --allow-namespace=$(NAMESPACE)
         name: helm-operator
+        ports:
+        - containerPort: 3030
+          protocol: TCP
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
         resources:
           limits:
             cpu: "1"
@@ -28,3 +43,40 @@ spec:
           requests:
             cpu: 500m
             memory: 1Gi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        # - mountPath: /root/.kube
+        #   name: config
+        #   readOnly: true
+        - mountPath: /etc/fluxd/ssh
+          name: git-key
+          readOnly: true
+        - mountPath: /root/.helm/repository/repositories.yaml
+          name: repositories-yaml
+          readOnly: true
+          subPath: repositories.yaml
+        - mountPath: /root/.cache/helm/repository
+          name: repositories-cache
+          subPath: v3
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: helm-operator
+      terminationGracePeriodSeconds: 30
+      volumes:
+      # - configMap:
+      #     defaultMode: 384
+      #     name: flux-helm-operator-kube-config
+      #   name: config
+      - name: git-key
+        secret:
+          defaultMode: 256
+          secretName: flux-git-deploy
+      - name: repositories-yaml
+        secret:
+          defaultMode: 420
+          secretName: flux-helm-repositories
+      - emptyDir: {}
+        name: repositories-cache
