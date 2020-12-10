@@ -3,19 +3,3 @@ kind: Kustomization
 namespace: fees-pay
 bases:
 - ../../../namespaces/admin/helm-operator
-# vars:
-# - name: NAMESPACE
-#   objref:
-#     apiVersion: apps/v1
-#     kind: Deployment
-#     name: helm-operator
-#   fieldref:
-#     fieldpath: metadata.namespace
-patches:
-- path: ../../../namespaces/admin/helm-operator/patches/helm-operator.yaml
-  target:
-    group: apps
-    version: v1
-    kind: Deployment
-    name: helm-operator
-    namespace: fees-pay
