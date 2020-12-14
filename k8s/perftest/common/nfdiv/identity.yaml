@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: nfdiv
+  namespace: nfdiv
+spec:
+  type: 0
+  resourceID: "/subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/nfdiv-perftest-mi"
+  clientID: "fac5a0db-0b49-4ffc-95c2-438e139e0203"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: nfdiv-binding
+  namespace: nfdiv
+spec:
+  azureIdentity: nfdiv
+  selector: nfdiv
