@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: message-publisher
+spec:
+  releaseName: message-publisher
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-message-publisher
+  values:
+    java:
+      replicas: 1 # Must always be 1
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/message-publisher:prod-updateme
