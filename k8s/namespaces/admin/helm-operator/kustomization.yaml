@@ -2,14 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - https://raw.githubusercontent.com/fluxcd/helm-operator/1.2.0/deploy/deployment.yaml
-vars:
-- name: flux_ns
-  objref:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: helm-operator
-  fieldref:
-    fieldpath: metadata.namespace
 patches:
 - path: ../../../namespaces/admin/helm-operator/patches/helm-operator.yaml
   target:

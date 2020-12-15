@@ -3,3 +3,10 @@ kind: Kustomization
 namespace: camunda
 bases:
 - ../../../namespaces/admin/helm-operator
+patches:
+- path: ../../../namespaces/admin/helm-operator/patches/sandbox/camunda.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
