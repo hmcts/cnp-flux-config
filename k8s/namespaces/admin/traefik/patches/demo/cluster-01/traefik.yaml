@@ -5,14 +5,17 @@ metadata:
   namespace: admin
 spec:
   values:
-    loadBalancerIP: 51.145.32.153
+    loadBalancerIP: 10.51.31.250
+    kubernetes:
+      ingressEndpoint:
+        ip: 20.68.184.102
+        useDefaultPublishedService: false
+    forwardedHeaders:
+      enabled: true
+      trustedIPs:
+        - 0.0.0.0
     dashboard:
       domain: traefik01.demo.platform.hmcts.net
-    startupArguments:
-      - "--logLevel=INFO"
-      - "--ping"
-      - "--ping.entrypoint=http"
-      - "--entrypoints='Name:https Auth.Forward.Address:http://traefik-forward-auth:80 Auth.Forward.AuthResponseHeaders:X-Forwarded-User'"
     service:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
