@@ -45,6 +45,15 @@ spec:
             host: idam-keycloak-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
             paths:
               - /
+      extraEnv: |
+        - name: KEYCLOAK_USER_FILE
+          value: /mnt/secrets/idam-keycloak/keycloak-admin-username
+        - name: KEYCLOAK_PASSWORD_FILE
+          value: /mnt/secrets/idam-keycloak/keycloak-admin-password
+        - name: DB_VENDOR
+          value: h2
+        - name: PROXY_ADDRESS_FORWARDING
+          value: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
