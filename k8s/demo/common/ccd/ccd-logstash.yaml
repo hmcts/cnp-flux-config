@@ -1,0 +1,90 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-logstash
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+spec:
+  releaseName: ccd-logstash
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:elastic/helm-charts
+    ref: master
+    path: tree/master/logstash
+  values:
+    image: "hmctspublic.azurecr.io/imported/logstash"
+    imageTag: "6.8.13"
+    imagePullPolicy: "IfNotPresent"
+    logstashConfig:
+      logstash.yml: |
+        xpack.monitoring:
+          enabled: true
+        xpack.monitoring.elasticsearch:
+          url: ["http://ccd-data-0.service.core-compute-demo.internal:9200","http://ccd-data-1.service.core-compute-demo.internal:9200","http://ccd-data-2.service.core-compute-demo.internal:9200"]
+    logstashPipeline:
+      logstash.conf: |
+        input {
+          jdbc {
+            jdbc_connection_string => "${DB_URL}"
+            jdbc_user => "${DB_USER}"
+            jdbc_password => "${DB_PWD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/postgresql-42.2.2.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_default_timezone => "UTC"
+            use_column_value => false
+
+            parameters => {
+                        "divorcej" => "DIVORCE"
+                        "cmcj" => "CMC"
+                        "probatej" => "PROBATE"
+                        "ethosj" => "EMPLOYMENT"
+                        "sscsj" => "SSCS"
+                      }
+
+        statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction != :divorcej AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+
+        clean_run => false
+        last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run_ccd"
+      
+        schedule => "* * * * * *"
+        }
+          }
+
+        filter{
+          json{
+            source => "json_data"
+            target => "data"
+            remove_field => ["json_data"]
+          }
+          json{
+            source => "json_data_classification"
+            target => "data_classification"
+            remove_field => ["json_data_classification"]
+          }
+          json{
+              source => "json_supplementary_data"
+              target => "supplementary_data"
+              remove_field => ["json_supplementary_data"]
+            }
+          mutate {
+              add_field => { "index_id" => "%{case_type_id}_cases" }
+            }
+          mutate {
+            lowercase => [ "index_id" ]
+          }
+        }
+        output {
+            elasticsearch {
+                hosts => ["${ES_DATA_NODES_URL}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{id}"
+                timeout => 60
+            }
+        }
