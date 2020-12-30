@@ -19,19 +19,22 @@ spec:
     image: "hmctspublic.azurecr.io/imported/logstash"
     imageTag: "6.8.13"
     imagePullPolicy: "IfNotPresent"
+    envFrom:
+      - secretRef:
+        name: logstash-secret
     logstashConfig:
       logstash.yml: |
         xpack.monitoring:
           enabled: true
         xpack.monitoring.elasticsearch:
-          url: ["http://ccd-data-0.service.core-compute-demo.internal:9200","http://ccd-data-1.service.core-compute-demo.internal:9200","http://ccd-data-2.service.core-compute-demo.internal:9200"]
+          url: [${ES_HOSTS}]
     logstashPipeline:
       logstash.conf: |
         input {
           jdbc {
-            jdbc_connection_string => "${DB_URL}"
-            jdbc_user => "${DB_USER}"
-            jdbc_password => "${DB_PWD}"
+            jdbc_connection_string => "${DATA_STORE_HOST}"
+            jdbc_user => "${DATA_STORE_USER}"
+            jdbc_password => "${DATA_STORE_USER_PASS}"
             jdbc_validate_connection => true
             jdbc_driver_library => "/usr/share/logstash/postgresql-42.2.2.jar"
             jdbc_driver_class => "org.postgresql.Driver"
@@ -75,7 +78,7 @@ spec:
         }
         output {
             elasticsearch {
-                hosts => ["${ES_DATA_NODES_URL}"]
+                hosts => [${ES_HOSTS}]
                 sniffing => false
                 index => "%{[index_id]}"
                 document_type => "_doc"
