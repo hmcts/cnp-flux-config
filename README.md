@@ -63,6 +63,7 @@ kubectl create secret generic my-secret \
 kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 
+
 ## Bootstrapping sealed secrets for a new cluster
 
 See [new cluster creation](docs/new-cluster.md) steps.
