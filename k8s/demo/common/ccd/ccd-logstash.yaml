@@ -19,6 +19,14 @@ spec:
     image: "hmctspublic.azurecr.io/imported/logstash"
     imageTag: "6.8.13"
     imagePullPolicy: "IfNotPresent"
+    logstashJavaOpts: "-Xmx8g -Xms16g"
+    resources:
+      requests:
+        cpu: "4000m"
+        memory: "8Gi"
+      limits:
+        cpu: "8000m"
+        memory: "16Gi"
     envFrom:
       - secretRef:
           name: logstash-secret
