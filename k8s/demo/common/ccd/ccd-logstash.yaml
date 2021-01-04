@@ -37,14 +37,14 @@ spec:
         xpack.monitoring:
           enabled: true
         xpack.monitoring.elasticsearch:
-          url: ["${ES_HOSTS}"]
+          hosts: ["${ES_HOSTS}"]
     logstashPipeline:
       logstash.conf: |
         input {
           jdbc {
             jdbc_connection_string => "${DATA_STORE_HOST}"
             jdbc_user => "${DATA_STORE_USER}"
-            jdbc_password => "${DATA_STORE_USER_PASS}"
+            jdbc_password => "${DATA_STORE_PASS}"
             jdbc_validate_connection => true
             jdbc_driver_library => "/usr/share/logstash/postgresql-42.2.2.jar"
             jdbc_driver_class => "org.postgresql.Driver"
