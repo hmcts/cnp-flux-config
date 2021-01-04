@@ -20,13 +20,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-61a0fd53
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-396d9e70
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       cpuRequests: "500m"
       cpuLimits: "3000m"
       environment:
         ELASTIC_SEARCH_FAIL_ON_IMPORT: true
+        DEFINITION_STORE_DB_MAX_POOL_SIZE: 25
         DUMMY_RESTART_VAR: 0
     global:
       environment: aat

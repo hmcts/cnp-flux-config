@@ -2,7 +2,7 @@
 set -x
 
 curl -s "https://raw.githubusercontent.com/\
-kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 3.7.0
 
 
 kustomizepaths=(
@@ -11,6 +11,7 @@ kustomizepaths=(
     k8s/aat/common-overlay
     k8s/cftptl/cluster-00-overlay
     k8s/demo/cluster-00-overlay
+    k8s/demo/cluster-01-overlay
     k8s/demo/common-overlay
     k8s/ldata/cluster-00-overlay
     k8s/ldata/cluster-01-overlay
