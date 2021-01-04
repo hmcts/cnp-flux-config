@@ -6,7 +6,7 @@ To enable teams to be self service they are allowed to merge changes related to 
 The rules are simple:
 1. only AAT and prod are protected
 1. Prod requires a review from the [@hmcts/production-apps-approvals](https://github.com/orgs/hmcts/teams/production-apps-approvals/members) team
-1. AAT requires a review from [@hmcts/platform-engineering](https://github.com/orgs/hmcts/teams/platform-engineering/members) or [@hmcts/devops](https://github.com/orgs/hmcts/teams/devops/members)
+1. AAT requires a review from [@hmcts/platform-operations](https://github.com/orgs/hmcts/teams/platform-operations/members)
 1. only file name entries may be added to CODEOWNERS, no directories as that bypasses the review for new applications
 1. be sensible, every change is tracked through git, don't repurpose files, create a new one for new applications
 
