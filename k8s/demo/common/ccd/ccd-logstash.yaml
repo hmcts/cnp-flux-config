@@ -36,8 +36,8 @@ spec:
         http.host: 0.0.0.0
         xpack.monitoring:
           enabled: true
-        #xpack.monitoring.elasticsearch:
-         # url: [${ES_HOSTS}]
+        xpack.monitoring.elasticsearch:
+          url: ["${ES_HOSTS}"]
     logstashPipeline:
       logstash.conf: |
         input {
@@ -88,7 +88,7 @@ spec:
         }
         output {
             elasticsearch {
-                hosts => [${ES_HOSTS}]
+                hosts => ["${ES_HOSTS}"]
                 sniffing => false
                 index => "%{[index_id]}"
                 document_type => "_doc"
