@@ -11,6 +11,7 @@ spec:
     java:
       image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-180-e7c269d8
       environment:
-        DUMMY_RESTART_VAR: true
-    nodejs:
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-184-2daeecca
+        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration
+        MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
+        CCD_DEFINITION_STORE_API_BASE_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal
+        MCA_DEF_STORE_PROXY_URLS_ALLOWED_LIST: /api/display/challenge-questions.*
