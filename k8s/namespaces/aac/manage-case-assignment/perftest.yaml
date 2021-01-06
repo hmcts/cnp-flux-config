@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: manage-case-assignment
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-180-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-180-e7c269d8
+      environment:
+        DUMMY_RESTART_VAR: true
+    nodejs:
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-184-2daeecca
