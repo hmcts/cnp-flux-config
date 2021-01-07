@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-  - ../../namespaces/admin/helm-operator/helm-operator-clusterrole-binding.yaml
   - admin
   - camunda
   - ccpay
@@ -20,37 +19,3 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/prod-automated != disabled
-patchesJson6902:
-  - target:
-      group: rbac.authorization.k8s.io
-      version: v1beta1
-      kind: ClusterRoleBinding
-      name: helm-operator-clb
-    patch: |-
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : camunda}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : fees-pay}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : cnp}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : idam}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : idam-sprod}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : kured}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : monitoring}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : neuvector}
-      - op: add
-        path: "/subjects/-"
-        value: {"kind" : ServiceAccount, "name" : helm-operator, "namespace" : rpe}
