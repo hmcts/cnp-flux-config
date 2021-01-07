@@ -19,11 +19,15 @@ metadata:
     filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
     repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
     filter.fluxcd.io/ccd-data-store-api: glob:prod-*
+    repository.fluxcd.io/ccd-case-activity-api: ccd-case-activity-api.nodejs.image
+    filter.fluxcd.io/ccd-case-activity-api: glob:prod-*
+    repository.fluxcd.io/ccd-case-print-service: ccd-case-print-service.nodejs.image
+    filter.fluxcd.io/ccd-case-print-service: glob:prod-*
 
 spec:
   releaseName: ccd-integration
   timeout: 900
-  forceUpgrade: true
+  #forceUpgrade: true
   rollback:
     enable: false
     force: true
@@ -91,6 +95,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-fd7f8cc2
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -100,6 +105,10 @@ spec:
         keyVaults:
       redis:
         enabled: true
+    
+    ccd-case-print-service:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-f4490267
 
     ccd-definition-store-api:
       java:
@@ -121,6 +130,7 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-97a0d43c
+        
     ccd-user-profile-importer:
       users:
       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
