@@ -45,7 +45,7 @@ spec:
       apiGatewayWeb:
         enabled: true
       emAnnotation:
-        enabled: false
+        enabled: true
       draftStore:
         enabled: false
       dmStore:
@@ -53,7 +53,7 @@ spec:
       activityApi:
         enabled: true
       blobstorage:
-        enabled: false
+        enabled: true
       printService:
         enabled: true
 
@@ -130,6 +130,8 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-97a0d43c
+        waitHosts: "{{ .Release.Name }}-postgresql-0:5432"
+        waitHostsTimeout: 600
 
     ccd-user-profile-importer:
       users:
