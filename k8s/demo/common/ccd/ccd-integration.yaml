@@ -47,9 +47,9 @@ spec:
       emAnnotation:
         enabled: true
       draftStore:
-        enabled: false
+        enabled: true
       dmStore:
-        enabled: false
+        enabled: true
       activityApi:
         enabled: true
       blobstorage:
@@ -130,12 +130,10 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-97a0d43c
-        waitHosts: "{{ .Release.Name }}-postgresql-0:5432"
-        waitHostsTimeout: 600
 
-    ccd-user-profile-importer:
-      users:
-      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+#     ccd-user-profile-importer:
+#       users:
+#       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
 
 #     ccd-definition-importer:
 #       waitHosts: "{{ .Release.Name }}-ccd-definition-store:80"
