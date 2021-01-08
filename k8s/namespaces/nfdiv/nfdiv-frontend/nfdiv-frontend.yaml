@@ -12,11 +12,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/frontend:prod-*
+      image: hmctspublic.azurecr.io/nfdiv/frontend:prod-22efa0aa
       environment:
-        VAR_TA: trigger1
+        VAR_TA: trigger5
       keyVaults:
-        fact:
+        nfdiv:
           resourceGroup: nfdiv
           secrets:
+          - idam-secret
           - AppInsightsInstrumentationKey
+          - redis-access-key

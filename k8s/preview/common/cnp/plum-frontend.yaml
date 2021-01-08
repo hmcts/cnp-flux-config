@@ -1,0 +1,21 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: plum-frontend
+  namespace: cnp
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: plum-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/plum-frontend
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/plum/frontend:prod-41c16310
+      ingressHost: plum-frontend.service.core-compute-preview.internal
+      environment:
+        RECIPE_BACKEND_URL: http://plum-recipe-backend-java

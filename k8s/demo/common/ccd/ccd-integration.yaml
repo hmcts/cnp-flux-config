@@ -2,7 +2,7 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-full
+  name: ccd-integration
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
@@ -19,21 +19,25 @@ metadata:
     filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
     repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
     filter.fluxcd.io/ccd-data-store-api: glob:prod-*
+    repository.fluxcd.io/ccd-case-activity-api: ccd-case-activity-api.nodejs.image
+    filter.fluxcd.io/ccd-case-activity-api: glob:prod-*
+    repository.fluxcd.io/ccd-case-print-service: ccd-case-print-service.nodejs.image
+    filter.fluxcd.io/ccd-case-print-service: glob:prod-*
 
 spec:
-  releaseName: ccd-full
+  releaseName: ccd-integration
   timeout: 900
-  forceUpgrade: true
+  #forceUpgrade: true
   rollback:
-    enable: true
+    enable: false
     force: true
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.2.4
+    version: 4.3.5
   values:
     tags:
-      idam-pr: true
+      idam-pr: false
 
     ccd:
       managementWeb:
@@ -61,11 +65,11 @@ spec:
       ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
       environment: demo
-      dummy: true
+      enableKeyVaults: false
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-b55491f8
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-358bf5d6
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -74,23 +78,24 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-2e8ce841
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-e86cf0cc
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-15a1de01
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
-          PROXY_CASE_ACTIVITY: http://ccd-full-ccd-case-activity-api
+          PROXY_CASE_ACTIVITY: "http://{{ .Release.Name }}-ccd-case-activity-api"
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
 
     ccd-case-activity-api:
       nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-fd7f8cc2
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -101,9 +106,13 @@ spec:
       redis:
         enabled: true
 
+    ccd-case-print-service:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-f4490267
+
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-60722fca
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-e75ff137
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -114,21 +123,22 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-6d1a74c9
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-126dd47b
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-0182708c
-    ccd-user-profile-importer:
-      users:
-      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-97a0d43c
 
-    ccd-definition-importer:
-      waitHosts: "ccd-full-ccd-definition-store:80"
-      waitHostsTimeout: 600
-      definitions:
-      - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
-      userRoles:
-      - caseworker-autotest1
+#     ccd-user-profile-importer:
+#       users:
+#       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+
+#     ccd-definition-importer:
+#       waitHosts: "{{ .Release.Name }}-ccd-definition-store:80"
+#       waitHostsTimeout: 600
+#       definitions:
+#       - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+#       userRoles:
+#       - caseworker-autotest1

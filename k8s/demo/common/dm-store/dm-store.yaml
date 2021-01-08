@@ -6,7 +6,6 @@ metadata:
   namespace: dm-store
   annotations:
     fluxcd.io/automated: "false"
-    repository.fluxcd.io/java: java.image
     filter.fluxcd.io/java: glob:prod-*
 spec:
   releaseName: dm-store
@@ -16,17 +15,21 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: dm-store
-    version: 2.1.4
+    version: 2.1.5
   values:
     java:
       replicas: 4
       memoryLimits: "4096Mi"
       cpuLimits: "2000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:pr-801-c12d68e5
+      image: hmctspublic.azurecr.io/dm/store:pr-570-43bec5b1
       ingressHost: dm-store-demo.service.core-compute-demo.internal
       environment:
         ENABLE_TTL: "true"
+        LOG_OUTPUT: single
+        ROOT_LOGGING_LEVEL: INFO
+        LOG_LEVEL_SPRING_WEB: INFO
+        LOG_LEVEL_DM: INFO
         VAR_TA: trigger5
       testsConfig:
         memoryLimits: "3072Mi"

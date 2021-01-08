@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-mo-webapp
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-578-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
@@ -18,4 +14,3 @@ spec:
         DEBUG: xuiNode:*,-xuiNode:auth:s2s
         SERVICES_MCA_PROXY_API: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
         CASE_TYPES: FinancialRemedyConsentedRespondent
-      image: hmctspublic.azurecr.io/xui/mo-webapp:pr-578-80b4440c
