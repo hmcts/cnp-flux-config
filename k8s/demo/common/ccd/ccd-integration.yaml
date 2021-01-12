@@ -128,6 +128,9 @@ spec:
         image: hmctspublic.azurecr.io/ccd/data-store-api:prod-180ceb1b
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
+          ELASTIC_SEARCH_ENABLED: true
+          ELASTIC_SEARCH_HOSTS: "{{ .Release.Name }}-es-master:9200"
+          ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://{{ .Release.Name }}-es-master:9200"
 
     ccd-user-profile-api:
       java:
