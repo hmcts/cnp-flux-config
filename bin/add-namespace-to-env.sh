@@ -35,4 +35,4 @@ bases:
 EOF
 ) > "${MODULES_DIR}/kustomization.yaml"
 # -----------------------------------------------------------
-yq w -i ${MODULES_DIR}/../kustomization.yaml "bases[+]" $NAMESPACE
+NAMESPACE=$NAMESPACE yq eval '.bases += env(NAMESPACE)' -i ${MODULES_DIR}/../kustomization.yaml
