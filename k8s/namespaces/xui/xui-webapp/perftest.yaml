@@ -2,6 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-webapp
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.nodejs: glob:pr-769-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
@@ -24,3 +28,4 @@ spec:
         FEATURE_OIDC_ENABLED: false
         FEATURE_SECURE_COOKIE_ENABLED: false
         STUB: false
+      image: hmctspublic.azurecr.io/xui/webapp:pr-769-9c0e126c

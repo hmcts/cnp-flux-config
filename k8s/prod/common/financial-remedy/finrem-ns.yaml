@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: finrem-ns
-    version: 0.0.6
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-ns
   values:
     java:
       replicas: 2
@@ -28,7 +28,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "eb08d1ca-cf60-4744-854d-b0e6a94b99e2"
-      image: hmctspublic.azurecr.io/finrem/ns:prod-25d560f0
+      image: hmctspublic.azurecr.io/finrem/ns:prod-3f3dd558
       environment:
         SWAGGER_ENABLED: false
     global:
