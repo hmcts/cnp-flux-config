@@ -34,7 +34,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 4.3.5
+    version: 5.0-alpha
   values:
     tags:
       idam-pr: false
@@ -55,6 +55,8 @@ spec:
       blobstorage:
         enabled: true
       printService:
+        enabled: true
+      elastic:
         enabled: true
 
     global:
@@ -112,7 +114,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-e75ff137
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-42e4acfe
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -123,13 +125,27 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-126dd47b
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-180ceb1b
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
+          ELASTIC_SEARCH_ENABLED: true
+          ELASTIC_SEARCH_HOSTS: "{{ .Release.Name }}-es-master:9200"
+          ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://{{ .Release.Name }}-es-master:9200"
 
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-97a0d43c
+
+    elasticsearch:
+      persistence:
+        enabled: true
+      ingress:
+        hosts:
+          - es-ccd-integration.demo.platform.hmcts.net
+
+    logstash:
+      persistence:
+        enabled: true
 
 #     ccd-user-profile-importer:
 #       users:
