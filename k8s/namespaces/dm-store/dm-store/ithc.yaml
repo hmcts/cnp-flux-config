@@ -1,0 +1,24 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dm-store
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/smoke: java.smoketests.image
+    filter.fluxcd.io/smoke: glob:prod-*
+spec:
+  values:
+    java:
+      replicas: 4
+      environment:
+        ENABLE_TTL: false
+      testsConfig:
+        memoryLimits: "3072Mi"
+        environment:
+          TEST_URL: http://dm-store-java
+          SLACK_CHANNEL: "em-dev-chat"
+          SLACK_NOTIFY_SUCCESS: "true"
+      smoketests:
+        enabled: false
+        image: hmctspublic.azurecr.io/dm/store-test:prod-0c81510a

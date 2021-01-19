@@ -3,32 +3,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-  namespace: dm-store
-  annotations:
-    fluxcd.io/automated: "true"
-    repository.fluxcd.io/java: java.image
-    filter.fluxcd.io/java: glob:prod-*
 spec:
-  releaseName: dm-store
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: dm-store
-    version: 2.1.6
   values:
     java:
-      replicas: 6
-      memoryLimits: "4096Mi"
-      cpuLimits: "2000m"
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-0c81510a
       environment:
         ENABLE_TTL: "false"
         ENABLE_TESTING: "false"
         S2S_NAMES_WHITELIST: divorce,ccd,em_api,em_gw,ccd_gw,ccd_data,sscs,sscs_bulkscan,divorce_document_upload,divorce_frontend,divorce_document_generator,probate_backend,jui_webapp,pui_webapp,cmc_claim_store,bulk_scan_processor,em_npa_app,bulk_scan_orchestrator,fpl_case_service,finrem_document_generator,iac,em_stitching_api,dg_docassembly_api,ethos_repl_service,employment_tribunals,xui_webapp,ccd_case_document_am_api,unspec_service
-        VAR_TA: trigger3
       testsConfig:
         environment:
           TEST_URL: http://dm-store-java
@@ -36,7 +17,3 @@ spec:
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
         enabled: false
-    global:
-      environment: prod
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
