@@ -1,0 +1,25 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dm-store
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-570-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      replicas: 4
+      environment:
+        ENABLE_TTL: "true"
+        LOG_OUTPUT: single
+        ROOT_LOGGING_LEVEL: INFO
+        LOG_LEVEL_SPRING_WEB: INFO
+        LOG_LEVEL_DM: INFO
+      testsConfig:
+        memoryLimits: "3072Mi"
+        environment:
+          TEST_URL: http://dm-store-java
+          SLACK_CHANNEL: "em-dev-chat"
+          SLACK_NOTIFY_SUCCESS: "true"
