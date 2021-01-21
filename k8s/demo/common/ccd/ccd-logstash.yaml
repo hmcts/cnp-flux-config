@@ -18,15 +18,15 @@ spec:
     version: 6.8.13
   initContainers:
   - name: download-postgres-jdbc
-    image: busybox
+    image: hmctspublic.azurecr.io/imported/busybox
     command:
-      - wget
-      - "-O"
-      - "/lib/postgresql.jar"
-      - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+    - wget
+    - "-O"
+    - "/lib/postgresql.jar"
+    - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
     volumeMounts:
-      - name: logstash-lib
-        mountPath: "/lib"
+    - name: logstash-lib
+      mountPath: "/lib"
   volumes:
   - name: logstash-lib
     emptyDir: {}
@@ -44,7 +44,7 @@ spec:
         memory: "8Gi"
     envFrom:
       - secretRef:
-          name: logstash-secret
+        name: logstash-secret
     extraVolumeMounts: |
       - name: logstash-lib
         mountPath: /usr/share/logstash/lib
