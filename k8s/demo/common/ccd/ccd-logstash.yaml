@@ -16,6 +16,20 @@ spec:
     repository: https://helm.elastic.co
     name: logstash
     version: 6.8.13
+  initContainers:
+  - name: download-postgres-jdbc
+    image: hmctspublic.azurecr.io/imported/busybox
+    command:
+    - wget
+    - "-O"
+    - "/lib/postgresql.jar"
+    - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+    volumeMounts:
+    - name: logstash-lib
+      mountPath: "/lib"
+  volumes:
+  - name: logstash-lib
+    emptyDir: {}
   values:
     image: "hmctspublic.azurecr.io/imported/logstash"
     imageTag: "6.8.13"
@@ -29,15 +43,16 @@ spec:
         cpu: "4000m"
         memory: "8Gi"
     envFrom:
-      - secretRef:
-          name: logstash-secret
+    - secretRef:
+      name: logstash-secret
+    extraVolumeMounts: |
+      - name: logstash-lib
+        mountPath: /usr/share/logstash/lib
     logstashConfig:
       logstash.yml: |
         http.host: 0.0.0.0
-        xpack.monitoring:
-          enabled: true
-        xpack.monitoring.elasticsearch:
-          hosts: ["${ES_HOSTS}"]
+        xpack.monitoring.enabled: false
+        # xpack.monitoring.elasticsearch.url: ["${ES_HOSTS}"]
     logstashPipeline:
       logstash.conf: |
         input {
@@ -46,7 +61,7 @@ spec:
             jdbc_user => "${DATA_STORE_USER}"
             jdbc_password => "${DATA_STORE_PASS}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/postgresql-42.2.2.jar"
+            jdbc_driver_library => "/usr/share/logstash/lib/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_default_timezone => "UTC"
             use_column_value => false
