@@ -16,6 +16,20 @@ spec:
     repository: https://helm.elastic.co
     name: logstash
     version: 6.8.13
+  initContainers:
+    - name: install
+      image: busybox
+      command:
+        - wget
+        - "-O"
+        - "/lib/postgresql.jar"
+        - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+      volumeMounts:
+        - name: logstash-lib
+          mountPath: "/lib
+  volumes:
+    - name: logstash-lib
+      emptyDir: {}
   values:
     image: "hmctspublic.azurecr.io/imported/logstash"
     imageTag: "6.8.13"
@@ -31,10 +45,6 @@ spec:
     envFrom:
       - secretRef:
           name: logstash-secret
-    extraVolumes: |
-      - name: logstash-lib
-        configMap:
-          name: logstash-lib
     extraVolumeMounts: |
       - name: logstash-lib
         mountPath: /usr/share/logstash/lib
@@ -51,7 +61,7 @@ spec:
             jdbc_user => "${DATA_STORE_USER}"
             jdbc_password => "${DATA_STORE_PASS}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/lib/postgresql-42.2.2.jar"
+            jdbc_driver_library => "/usr/share/logstash/lib/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_default_timezone => "UTC"
             use_column_value => false
