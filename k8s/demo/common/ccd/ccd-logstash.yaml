@@ -16,17 +16,6 @@ spec:
     repository: https://helm.elastic.co
     name: logstash
     version: 6.8.13
-  initContainers:
-  - name: download-postgres-jdbc
-    image: hmctspublic.azurecr.io/imported/busybox
-    command:
-    - wget
-    - "-O"
-    - "/lib/postgresql.jar"
-    - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
-    volumeMounts:
-    - name: logstash-lib
-      mountPath: /lib
   values:
     image: "hmctspublic.azurecr.io/imported/logstash"
     imageTag: "6.8.13"
@@ -42,6 +31,17 @@ spec:
     envFrom:
     - secretRef:
         name: logstash-secret
+    extraInitContainers: |
+      - name: download-postgres-jdbc
+        image: hmctspublic.azurecr.io/imported/busybox
+        command:
+        - wget
+        - "-O"
+        - "/lib/postgresql.jar"
+        - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+        volumeMounts:
+        - name: logstash-lib
+          mountPath: /lib
     extraVolumes: |
       - name: logstash-lib
         emptyDir: {}
