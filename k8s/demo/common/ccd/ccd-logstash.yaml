@@ -33,12 +33,13 @@ spec:
         name: logstash-secret
     extraInitContainers: |
       - name: download-postgres-jdbc
-        image: hmctspublic.azurecr.io/imported/busybox
+        image: hmctspublic.azurecr.io/curl:7.70.0
         command:
-        - wget
-        - "-O"
-        - "/lib/postgresql.jar"
+        - curl
+        - -L
         - https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+        - -o
+        - /lib/postgresql.jar
         volumeMounts:
         - name: logstash-lib
           mountPath: /lib
