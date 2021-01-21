@@ -6,8 +6,6 @@ metadata:
   namespace: neuvector
 spec:
   values:
-    containerd:
-      enabled: true
     rules:
       network:  # IDs must match array index + 1
         - create: '{"insert":{"after":0,"rules":[{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false,"learned": false}]}}'
@@ -28,7 +26,9 @@ spec:
           update: '{"config":{"id":8,"comment":"","from":"AllPods","to":"Idam","ports":"tcp/443","action":"allow","applications":["SSL"],"disable":true}}'
     config:
       sleep: 30
-    neuvector:
+    neuvector: 
+      containerd: 
+        enabled: true
       controller:
         azureFileShare:
           secretName: nv-storage-secret
