@@ -15,10 +15,9 @@ bases:
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/neuvector
   - ../../namespaces/admin/env-injector
-  - ../../namespaces/knode-system
   - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider
+  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
 
 patchesStrategicMerge:
@@ -44,6 +43,9 @@ patchesStrategicMerge:
 
   - ../../namespaces/admin/env-injector/patches/ithc/cluster-00/env-injector.yaml
   - ../../namespaces/monitoring/kube-prometheus-stack/patches/ithc/cluster-00/kube-prometheus-stack.yaml
+
+  #nodelocaldns patch
+  - ../../namespaces/kube-system/nodelocaldns/nodelocaldns-patch.yaml
 patches:
   - path: ../ithc-helmrelease.yaml
     target:
