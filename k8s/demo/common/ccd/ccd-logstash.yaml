@@ -52,7 +52,7 @@ spec:
         dead_letter_queue.enable: true
       pipelines.yml: |
         - pipeline.id: main
-          path.config: "/usr/share/logstash/pipeline/logstash.conf"
+          path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
           pipeline.workers: 4
           pipeline.batch.size: 500
           queue.type: persisted
@@ -61,7 +61,7 @@ spec:
           pipeline.workers: 1
           dead_letter_queue.enable: false
     logstashPipeline:
-      logstash.conf: |
+      01_input.conf: |
         input {
           jdbc {
             jdbc_connection_string => "${DATA_STORE_URL}"
@@ -83,6 +83,7 @@ spec:
             schedule => "* * * * * *"
           }
         }
+      02_filter.conf: |
         filter{
           json{
             source => "json_data"
@@ -106,6 +107,7 @@ spec:
             lowercase => [ "index_id" ]
           }
         }
+      03_output.conf: |
         output {
             elasticsearch {
                 hosts => ["${ES_HOSTS}"]
