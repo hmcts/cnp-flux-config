@@ -47,7 +47,7 @@ spec:
       logstash.yml: |
         http.host: 0.0.0.0
         xpack.monitoring.enabled: true
-        xpack.monitoring.elasticsearch.url: ["${ES_HOSTS}"]
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
         queue.type: persisted
         dead_letter_queue.enable: true
       pipelines.yml: |
@@ -119,7 +119,7 @@ spec:
       dead_letter_indexing_pipeline.conf: |
         input {
           dead_letter_queue {
-            path => "/var/lib/logstash/dead_letter_queue"
+            path => "${LOGSTASH_HOME}/data/dead_letter_queue"
             commit_offsets => true
             pipeline_id => "main"
           }
