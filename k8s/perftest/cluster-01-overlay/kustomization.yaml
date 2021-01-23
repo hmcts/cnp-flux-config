@@ -14,7 +14,6 @@ bases:
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
-  - ../../namespaces/knode-system
   - ../../namespaces/monitoring/dynatrace
   - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/kube-system/aad-pod-id
@@ -48,6 +47,9 @@ patchesStrategicMerge:
 
   #Dynatrace patch
   - ../../namespaces/monitoring/dynatrace/patches/perftest/oneagent.yaml
+
+  #nodelocaldns patch
+  - ../../namespaces/kube-system/nodelocaldns/nodelocaldns-patch.yaml
 
 patches:
   - path: ../perftest-helmrelease.yaml
