@@ -2,9 +2,14 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-490-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: em-ccdorc-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/em/ccdorc:pr-490-6e7ccd17
       environment:
         CALLBACK_DOMAIN: em-ccdorc-demo.service.core-compute-demo.internal
