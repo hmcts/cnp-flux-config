@@ -13,11 +13,10 @@ bases:
   - ../../namespaces/osba
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/admin/env-injector
-  - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
   - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider
+  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
 
 patchesStrategicMerge:
@@ -44,6 +43,8 @@ patchesStrategicMerge:
   - ../../namespaces/admin/env-injector/patches/preview/cluster-01/env-injector.yaml
   - ../../namespaces/admin/external-dns/patches/preview/cluster-01/external-dns-deployment.yaml
 
+  #nodelocaldns patch
+  - ../../namespaces/kube-system/nodelocaldns/nodelocaldns-patch.yaml
 patches:
   - path: ../preview-helmrelease.yaml
     target:
