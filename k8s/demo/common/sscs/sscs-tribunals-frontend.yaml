@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-1071-*
 spec:
   releaseName: sscs-tribunals-frontend
   rollback:
@@ -21,12 +21,12 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-eb9af040
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1071-583e9561
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
         FT_WELSH: "true"
         DUMMY_PROPERTY: "false"
-        FT_ANTENNA_WEBCHAT: "true"
+        FT_ANTENNA_WEBCHAT: "false"
         FT_ALLOW_UC_HEARING_OPTIONS: "true"
     global:
       environment: demo
