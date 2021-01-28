@@ -61,7 +61,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-358bf5d6
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-89dff8c1
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -70,13 +70,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-b512f905
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-92046411
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0b316d4c
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -85,7 +85,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-23a584eb
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-6c3d1e3c
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -98,7 +98,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c05e6016
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-b700e6cb
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
@@ -124,7 +124,7 @@ spec:
 
     #cmc ccd definition importer redeployiing the ccd components
     ccd-definition-importer:
-      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.9.1
+      image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.9.3
       waitHosts: "cmc-ccd-ccd-definition-store:80"
       waitHostsTimeout: 600
       environment:

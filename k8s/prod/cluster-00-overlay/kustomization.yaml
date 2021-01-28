@@ -16,12 +16,11 @@ bases:
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/monitoring/botkube
-  - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
   - ../../namespaces/monitoring/dynatrace
   - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider
+  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
 
 patchesStrategicMerge:
@@ -55,6 +54,9 @@ patchesStrategicMerge:
 
   #Dynatrace patch
   - ../../namespaces/monitoring/dynatrace/patches/prod/oneagent.yaml
+
+  #nodelocaldns patch
+  - ../../namespaces/kube-system/nodelocaldns/nodelocaldns-patch.yaml
 patches:
   - path: ../prod-helmrelease.yaml
     target:
