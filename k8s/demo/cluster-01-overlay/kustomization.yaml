@@ -16,11 +16,10 @@ bases:
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/osba
   - ../../namespaces/admin/env-injector
-  - ../../namespaces/knode-system
   - ../../namespaces/admin/keda
   - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider
+  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
   - ../../namespaces/admin/traefik-auth
   - ../../namespaces/admin/traefik-no-proxy
@@ -55,6 +54,9 @@ patchesStrategicMerge:
   - ../../namespaces/monitoring/kube-prometheus-stack/patches/demo/cluster-01/kube-prometheus-stack.yaml
   - ../../namespaces/admin/external-dns/patches/demo/cluster-01/external-dns-deployment.yaml
   - ../../namespaces/admin/external-dns-public/patches/demo-01.yaml
+
+  #nodelocaldns patch
+  - ../../namespaces/kube-system/nodelocaldns/nodelocaldns-patch.yaml
 patches:
   - path: ../demo-helmrelease.yaml
     target:
