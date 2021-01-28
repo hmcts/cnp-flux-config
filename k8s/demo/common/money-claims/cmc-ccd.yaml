@@ -5,7 +5,7 @@ metadata:
   name: cmc-ccd
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
@@ -94,7 +94,7 @@ spec:
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
-          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
+          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
 
     ccd-data-store-api:
       java:
@@ -102,7 +102,7 @@ spec:
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
-          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
+          OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
 
     ccd-user-profile-api:
       java:
