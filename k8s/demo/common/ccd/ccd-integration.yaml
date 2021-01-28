@@ -34,7 +34,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 5.3-alpha
+    version: 5.4-alpha
   values:
     tags:
       idam-pr: false
@@ -71,7 +71,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-358bf5d6
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-89dff8c1
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
@@ -80,13 +80,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-e86cf0cc
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-92046411
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0b316d4c
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -110,11 +110,13 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-f4490267
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-a25cd68a
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-23a584eb
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-6c3d1e3c
+        autoscaling:
+          enabled: false
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -125,7 +127,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c05e6016
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-b700e6cb
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
