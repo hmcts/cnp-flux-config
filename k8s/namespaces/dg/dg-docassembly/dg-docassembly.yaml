@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dg-docassembly
+spec:
+  releaseName: dg-docassembly
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/dg-docassembly
+  values:
+    java:
+      useInterpodAntiAffinity: true
+      replicas: 2
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-f4751578
