@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: media-viewer
+spec:
+  releaseName: media-viewer
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/media-viewer
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/showcase:aat-740c3b0f
+      ingressHost: em-showcase-aat.service.core-compute-aat.internal
+      environment:
+        VAR_T3: trigger6
