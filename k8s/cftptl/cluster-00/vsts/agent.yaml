@@ -28,17 +28,9 @@ spec:
                 values:
                 - jenkins-master
             topologyKey: "kubernetes.io/hostname"
-      volumes:
-      - name: docker-sock-volume
-        hostPath:
-          path: /var/run/docker.sock
-          type: File
       containers:
       - name: vsts-aks-agent
         image: hmctspublic.azurecr.io/hmcts/vsts-agent:db9h0g
-        volumeMounts:
-        - mountPath: /var/run/docker.sock
-          name: docker-sock-volume
         env:
         - name: AZP_URL
           value: https://dev.azure.com/hmcts
