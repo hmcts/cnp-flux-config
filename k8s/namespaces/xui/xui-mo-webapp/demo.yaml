@@ -2,6 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-mo-webapp
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.nodejs: glob:pr-608-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
@@ -10,3 +14,4 @@ spec:
         DEBUG: xuiNode:*,-xuiNode:auth:s2s
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MCA_PROXY_API: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/xui/mo-webapp:pr-608-a2acafc2
