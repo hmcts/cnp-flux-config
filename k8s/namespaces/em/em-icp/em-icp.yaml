@@ -2,8 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-icp
-  fluxcd.io/automated: "true"
-  fluxcd.io/tag.nodejs: glob:demo-*
+  fluxcd.io/automated: "false"
+  fluxcd.io/tag.nodejs: glob:prod-*
   hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: em-icp
@@ -15,6 +15,6 @@ spec:
     nodejs:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/icp:demo
+      image: hmctspublic.azurecr.io/em/icp:prod-2d9c8538
       environment:
         VAR_T3: trigger5
