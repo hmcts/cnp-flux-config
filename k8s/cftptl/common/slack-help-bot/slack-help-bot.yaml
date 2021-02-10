@@ -1,0 +1,40 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: slack-help-bot
+  namespace: admin
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.nodejs: glob:*
+spec:
+  releaseName: slack-help-bot
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: nodejs
+    version: 2.3.4
+  values:
+    replicas: 2
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-c08b463
+    environment:
+      SLACK_REPORT_CHANNEL: slack-bot-test
+      SLACK_REPORT_CHANNEL_ID: C01LQE3E69W
+      JIRA_START_TRANSITION_ID: 21
+      JIRA_DONE_TRANSITION_ID: 41
+      JIRA_PROJECT: SBOX
+      JIRA_ISSUE_TYPE_ID: 10900
+    aadIdentityName: slack-help-bot
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+        - slack-bot-token
+        - slack-app-token
+        - jira-username
+        - jira-password
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
