@@ -2,6 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-icp
+  fluxcd.io/automated: "true"
+  fluxcd.io/tag.nodejs: glob:demo-*
+  hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: em-icp
   chart:
@@ -12,6 +15,6 @@ spec:
     nodejs:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/icp:latest
+      image: hmctspublic.azurecr.io/em/icp:demo
       environment:
         VAR_T3: trigger5
