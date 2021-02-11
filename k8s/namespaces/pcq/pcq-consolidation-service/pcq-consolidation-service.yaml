@@ -1,12 +1,10 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: pcq-consolidation-service
-  namespace: pcq
   annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.job: glob:prod-*
+    hmcts.github.com/global-defaults: enabled
+    hmcts.github.com/prod-automated: enabled
 spec:
   releaseName: pcq-consolidation-service
   rollback:
@@ -17,10 +15,5 @@ spec:
     path: stable/pcq-consolidation-service
   values:
     job:
-      schedule: "0/15 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-3b86d8ad
-    global:
-      environment: aat
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+      image: hmctspublic.azurecr.io/pcq/consolidation-service:prod-60bdc842
