@@ -1,0 +1,19 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: xui
+  namespace: sscs
+spec:
+  type: 0
+  resourceID: "/subscriptions/96c274ce-846d-4e48-89a7-d528432298a7/resourcegroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/xui-aat-mi"
+  clientID: "1a8fb8b2-aed8-4463-b0a9-e9dab6899f68"
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: xui-binding
+  namespace: sscs
+spec:
+  azureIdentity: xui
+  selector: xui
