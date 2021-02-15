@@ -17,7 +17,7 @@ spec:
     version: 6.8.13
   values:
     image: "hmctspublic.azurecr.io/imported/logstash"
-    imageTag: "6.8.13"
+    imageTag: "7.10.1"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
@@ -130,9 +130,9 @@ spec:
           }
 
           # prune every field off the event except for the one we've just created. Note that this does not prune event metadata.
-          #prune {
-          #  whitelist_names => [ "^failed_case$" ]
-          #}
+          prune {
+            whitelist_names => [ "^failed_case$" ]
+          }
 
           ruby {
             code => "event.set('timestamp', event.get('[@metadata][dead_letter_queue][entry_time]'))"
