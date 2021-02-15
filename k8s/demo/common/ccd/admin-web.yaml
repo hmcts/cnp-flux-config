@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-354-*
 spec:
   releaseName: ccd-admin-web
   rollback:
@@ -20,7 +20,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/admin-web:prod-5cbd17bf
+      image: hmctspublic.azurecr.io/ccd/admin-web:pr-354-a4c2a908
       ingressClass: traefik-no-proxy
       environment:
         ADMINWEB_ELASTIC_INDEX_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal/elastic-support/index
