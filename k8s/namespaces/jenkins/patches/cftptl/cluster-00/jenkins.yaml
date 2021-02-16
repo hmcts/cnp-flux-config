@@ -44,9 +44,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: aat-00-aks
+                        value: aat-01-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: aat-00-rg
+                        value: aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -106,7 +106,7 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      HMCTS_.*Fee.*\/(bar-api|bar-web|bar-shared-infrastructure|bar-web-performance-tests|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-paybubble-performance-tests|ccpay-bubble)\/master
+                      HMCTS_.*Fee.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|paybubble-performance-tests|ccpay-bubble)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
@@ -128,6 +128,12 @@ spec:
                     name: DIV
                     recurse: true
                     title: Divorce Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*NFDIV.*\/(nfdiv-.*)\/master
+                    name: NFDIV
+                    recurse: true
+                    title: No fault divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests)\/master
@@ -190,7 +196,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|dg-docassembly-api|document-management-store-app|em-hrs-api)\/master
+                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -218,12 +224,6 @@ spec:
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
-                - buildMonitor:
-                    includeRegex: >-
-                      ^HMCTS_.*NFDIV.*\/(nfdiv-frontend|nfdiv-shared-infrastructure)\/master
-                    name: NFDIV
-                    recurse: true
-                    title: No Fault Divorce Dashboard
           authentication: |
             jenkins:
               securityRealm:

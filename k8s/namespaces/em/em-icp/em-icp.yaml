@@ -2,9 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-icp
-  fluxcd.io/automated: "false"
-  fluxcd.io/tag.nodejs: glob:prod-*
-  hmcts.github.com/prod-automated: disabled
+  annotations:
+    hmcts.github.com/global-defaults: enabled
+    hmcts.github.com/prod-automated: enabled
 spec:
   releaseName: em-icp
   chart:
@@ -15,6 +15,7 @@ spec:
     nodejs:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/icp:prod-2d9c8538
+      image: hmctspublic.azurecr.io/em/icp:prod-7b8e955d
       environment:
-        VAR_T3: trigger5
+        SLACK_CHANNEL: "em-dev-chat"
+        SLACK_NOTIFY_SUCCESS: "true"
