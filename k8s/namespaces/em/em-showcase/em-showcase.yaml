@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: em-showcase
+  fluxcd.io/automated: "false"
+  fluxcd.io/tag.nodejs: glob:aat-*
+  #hmcts.github.com/prod-automated: disabled
+spec:
+  releaseName: em-showcase
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/em-showcase
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/showcase:prod-2dc18d76
+      ingressHost: em-showcase-{{ .Values.global.environment }}.service.core-compute-{{
+        .Values.global.environment }}.internal
+      environment:
+        VAR_T3: trigger6
