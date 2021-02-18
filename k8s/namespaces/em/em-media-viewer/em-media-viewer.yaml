@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: em-media-viewer
+spec:
+  releaseName: em-media-viewer
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/em-media-viewer
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/em/em-media-viewer:latest
+      environment:
+        VAR_T3: trigger6

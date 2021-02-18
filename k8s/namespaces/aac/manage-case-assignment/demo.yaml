@@ -4,12 +4,12 @@ metadata:
   name: manage-case-assignment
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-180-*
+    fluxcd.io/tag.java: glob:pr-231-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-180-097bad1e
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-231-8c701b5b
       keyVaults:
         aac:
           secrets:
@@ -22,7 +22,7 @@ spec:
           - idam-noc-approver-password
           - notify-mca-api-key-secret
       environment:
-        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend
+        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,ccd_data
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
         CCD_DEFINITION_STORE_API_BASE_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal
         MCA_DEF_STORE_PROXY_URLS_ALLOWED_LIST: /api/display/challenge-questions.*
