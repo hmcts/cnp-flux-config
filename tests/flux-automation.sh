@@ -7,6 +7,7 @@ _github_base_sha=$2
 # Applications in this directories (namespaces) are NOT checked
 whitelist_dirs=(
     admin
+    docmosis
     kube-system
     kube-public
     knode-system
