@@ -43,7 +43,7 @@ for path in "${kustomizepaths[@]}"; do
 done
 
 aat_whitelist_helm_release_pattern='sample\|another-sample\|docmosis' # Helm Release names seperated by `\|`
-prod_whitelist_helm_release_pattern='sample\|another-sample' # Helm Release names seperated by `\|`
+prod_whitelist_helm_release_pattern='sample\|docmosis' # Helm Release names seperated by `\|`
 
 for env in $(echo "aat prod"); do
   env_white_list=${env}_whitelist_helm_release_pattern
