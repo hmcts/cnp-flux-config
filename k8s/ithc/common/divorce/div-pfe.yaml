@@ -2,30 +2,34 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: div-da
+  name: div-pfe
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.nodejs: glob:prod-*
 spec:
-  releaseName: div-da
+  releaseName: div-pfe
   rollback:
     enable: true
     retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/div-da
+    path: stable/div-pfe
   values:
     nodejs:
       replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/da:prod-6629325f
-      ingressHost: decree-absolute-aks.ithc.platform.hmcts.net
+      image: hmctspublic.azurecr.io/div/pfe:prod-d5e35484
+      ingressHost: petitioner-frontend-aks.ithc.platform.hmcts.net
       environment:
-        PUBLIC_HOSTNAME: https://decree-absolute-aks.ithc.platform.hmcts.net
-        PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.ithc.platform.hmcts.net
+        PUBLIC_HOSTNAME: https://petitioner-frontend-aks.ithc.platform.hmcts.net
         DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.ithc.platform.hmcts.net
+        EQUALITY_URL: https://pcq.ithc.platform.hmcts.net
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
