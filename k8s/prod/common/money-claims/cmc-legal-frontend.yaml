@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc-legal-frontend
-    version: 1.2.0
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/cmc-legal-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-7f402e9d
+      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-402b9921
       ingressHost: www.moneyclaim-legal.platform.hmcts.net
       environment:
         GA_TRACKING_ID: UA-97111056-4

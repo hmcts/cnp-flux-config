@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: payment-api
-    version: 2.0.37
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/payment-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:prod-4e5dfdfc
+      image: hmctspublic.azurecr.io/payment/api:prod-7a6269b5
       environment:
         DUMMY_RESTART_VAR: true
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
