@@ -2,38 +2,38 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: div-cms
+  name: div-hm
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
-  releaseName: div-cms
+  releaseName: div-hm
   rollback:
     enable: true
     retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/div-cms
+    path: stable/div-hm
   values:
-    java:
+    nodejs:
       replicas: 2
-      memoryRequests: "768Mi"
-      cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
-      cpuLimits: "2500m"
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cms:prod-b235bdce
+      image: hmctspublic.azurecr.io/div/hm:prod-47d7368e
       environment:
-        IDAM_API_BASEURL: "https://idam-api.perftest.platform.hmcts.net"
+        DEPLOYMENT_ENV: "perftest"
       aadIdentityName: divorce
       prometheus:
         enabled: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+      enableKeyVaults: false
