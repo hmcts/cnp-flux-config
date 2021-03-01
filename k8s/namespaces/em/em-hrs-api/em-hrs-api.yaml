@@ -1,15 +1,15 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: em-hrs
+  name: em-hrs-api
 spec:
-  releaseName: em-hrs
+  releaseName: em-hrs-api
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/em-hrs
+    path: stable/em-hrs-api
   values:
     java:
       useInterpodAntiAffinity: true
       replicas: 2
-      image: hmctspublic.azurecr.io/em/hrs:prod-f5989b1e
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-e340487f
