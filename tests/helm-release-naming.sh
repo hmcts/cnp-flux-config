@@ -10,9 +10,7 @@ for file in $(grep -lr "kind: HelmRelease" k8s/namespaces  --exclude-dir={admin,
   BASE_MANIFEST="$FILE_DIRECTORY$HELM_RELEASE_NAME.yaml"
   SPEC_RELEASE_NAME=$(yq r $BASE_MANIFEST spec.releaseName)
   
-  if  "$HELM_RELEASE_NAME" =~ "ccd-logstash"; then
-   continue
-  fi
+  [[ "$HELM_RELEASE_NAME" =~ "ccd-logstash" ]] && continue
 
   # Make sure spec release name is matching helm release name
   [ "$HELM_RELEASE_NAME" == "$SPEC_RELEASE_NAME" ] || (echo "spec.releaseName not matching HelmRelease name for $HELM_RELEASE_NAME" && exit 1 ) 
