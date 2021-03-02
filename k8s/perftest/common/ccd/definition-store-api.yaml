@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-931-*
+    flux.weave.works/tag.java: glob:pr-955-*
 spec:
   releaseName: ccd-definition-store-api
   rollback:
@@ -24,11 +24,13 @@ spec:
         minReplicas: 2
         maxReplicas: 3
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-931-6a31fb0c
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-955-b0548709
       environment:
         ELASTIC_SEARCH_FAIL_ON_IMPORT: false
         DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"
         DEFINITION_STORE_DB_MAX_POOL_SIZE: 32
+        DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-perftest.postgres.database.azure.com
+        DEFINITION_STORE_DB_USERNAME: ccd@ccd-definition-store-api-postgres-db-v11-perftest
         DUMMY_VAR: false
     global:
       environment: perftest
