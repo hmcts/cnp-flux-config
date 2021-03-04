@@ -5,6 +5,10 @@ metadata:
   name: jenkins
   namespace: jenkins
 spec:
+  chart:
+    repository: https://charts.jenkins.io
+    name: jenkins
+    version: 3.2.0
   values:
     master:
       javaOpts: >-
@@ -28,6 +32,13 @@ spec:
           value: "sandbox"
         - name: AZURE_KEYVAULT_URL
           value: https://cftsbox-intsvc.vault.azure.net
+      sidecars:
+        configAutoReload:
+          enabled: true
+          image: kiwigrid/k8s-sidecar:0.1.275
+          env:
+            - name: REQ_TIMEOUT
+              value: "60"
       JCasC:
         configScripts:
           welcome-message: |
