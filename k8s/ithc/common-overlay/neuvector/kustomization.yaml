@@ -1,8 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: dg
+namespace: neuvector
 bases:
-- ../../../namespaces/dg
 - ../../../namespaces/all-namespaces/helm-operator
 - ../../../namespaces/all-namespaces/helm-operator/sealed-secrets/ithc
 patchesJson6902:
@@ -11,8 +10,8 @@ patchesJson6902:
     version: v1
     kind: Deployment
     name: helm-operator
-    namespace: dg
+    namespace: neuvector
   patch: |-
     - op: add
       path: "/spec/template/spec/containers/0/args/-"
-      value: --allow-namespace=dg
+      value: --allow-namespace=neuvector

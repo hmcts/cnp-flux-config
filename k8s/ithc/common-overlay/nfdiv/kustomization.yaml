@@ -3,3 +3,16 @@ kind: Kustomization
 namespace: nfdiv
 bases:
 - ../../../namespaces/nfdiv
+- ../../../namespaces/all-namespaces/helm-operator
+- ../../../namespaces/all-namespaces/helm-operator/sealed-secrets/ithc
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
+    namespace: nfdiv
+  patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/args/-"
+      value: --allow-namespace=nfdiv

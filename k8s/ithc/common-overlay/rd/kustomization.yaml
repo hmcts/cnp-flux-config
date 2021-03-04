@@ -6,7 +6,20 @@ bases:
 - ../../../namespaces/rd/rd-judicial-api/rd-judicial-api.yaml
 - ../../../namespaces/rd/rd-location-ref-api/rd-location-ref-api.yaml
 - ../../../namespaces/rd/rd-caseworker-ref-api/rd-caseworker-ref-api.yaml
+- ../../../namespaces/all-namespaces/helm-operator
+- ../../../namespaces/all-namespaces/helm-operator/sealed-secrets/ithc
 patchesStrategicMerge:
 - ../../../namespaces/rd/rd-professional-api/ithc.yaml
 - ../../../namespaces/rd/rd-location-ref-api/ithc.yaml
 - ../../../namespaces/rd/rd-caseworker-ref-api/ithc.yaml
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
+    namespace: rd
+  patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/args/-"
+      value: --allow-namespace=rd

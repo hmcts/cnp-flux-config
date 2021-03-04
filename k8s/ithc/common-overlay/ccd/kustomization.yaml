@@ -4,5 +4,18 @@ namespace: ccd
 bases:
 - ../../../namespaces/ccd
 - ../../../namespaces/ccd/logstash
+- ../../../namespaces/all-namespaces/helm-operator
+- ../../../namespaces/all-namespaces/helm-operator/sealed-secrets/ithc
 patchesStrategicMerge:
 - ../../../namespaces/ccd/ccd-logstash-indexer/ithc.yaml
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
+    namespace: ccd
+  patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/args/-"
+      value: --allow-namespace=ccd

@@ -3,5 +3,18 @@ kind: Kustomization
 namespace: family-public-law
 bases:
 - ../../../namespaces/family-public-law
+- ../../../namespaces/all-namespaces/helm-operator
+- ../../../namespaces/all-namespaces/helm-operator/sealed-secrets/ithc
 patchesStrategicMerge:
 - ../../../namespaces/family-public-law/fpl-case-service/ithc.yaml
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
+    namespace: family-public-law
+  patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/args/-"
+      value: --allow-namespace=family-public-law

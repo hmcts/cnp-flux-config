@@ -3,5 +3,18 @@ kind: Kustomization
 namespace: unspec
 bases:
 - ../../../namespaces/unspec
+- ../../../namespaces/all-namespaces/helm-operator
+- ../../../namespaces/all-namespaces/helm-operator/sealed-secrets/ithc
 patchesStrategicMerge:
 - ../../../namespaces/unspec/unspec-service/ithc.yaml
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: helm-operator
+    namespace: unspec
+  patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/args/-"
+      value: --allow-namespace=unspec
