@@ -34,7 +34,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 5.4-alpha
+    version: 5.0.0
   values:
     tags:
       idam-pr: false
@@ -71,16 +71,18 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-5cbd17bf
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-cb2e88a5
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-integration-ccd-definition-store/health # odd hack to get improt working?!?
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-426e620c
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-f206cda4
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
@@ -114,7 +116,7 @@ spec:
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-14004cd0
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-2e6a5f23
         autoscaling:
           enabled: false
         secrets:
@@ -127,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e49e0c1d
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-5b8e4330
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -136,7 +138,7 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-65373629
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-70a35589
 
     elasticsearch:
       persistence:
