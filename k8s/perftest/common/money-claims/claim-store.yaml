@@ -5,7 +5,7 @@ metadata:
   name: cmc-claim-store
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "true"
+    flux.weave.works/automated: "false"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
@@ -24,14 +24,24 @@ spec:
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
-        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: false
+        FEATURE_TOGGLES_REMINDER_EMAILS: true
         MILO_CSV_SCHEDULE: "0 0 8 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
-        FRONTEND_BASE_URL: https://cmc-citizen-frontend-staging.service.core-compute-aat.internal
-        REFORM_ENVIRONMENT: aat
+        SCHEDULE_STATE_TRANSITION_WAITING_TRANSFER: ""
+        REFORM_ENVIRONMENT: perftest
         FEATURE_AUTO_CANCEL_PAYMENTS: true
         FEATURE_TOGGLES_CTSC_ENABLED: true
+        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net
+        OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/realms/root/realms/hmcts
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
+        STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: civilmoneyclaimsdemo@gmail.com
+        RPA_NOTIFICATIONS_LEGALSEALEDCLAIMRECIPIENT: civilmoneyclaimsdemo@gmail.com
+        SCHEDULE_ISSUE_CREATED_CLAIMS: 0 30 15 * * ?
+        STAFF_NOTIFICATIONS_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
+        RPA_NOTIFICATIONS_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
+        MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

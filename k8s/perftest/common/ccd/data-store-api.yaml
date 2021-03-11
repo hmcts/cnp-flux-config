@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1350-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -24,14 +24,14 @@ spec:
       memoryLimits: "8192Mi"
       cpuLimits: "6000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1350-5cf88503
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-39b83e0c
       environment:
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
         CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-perftest\.service\.core-compute-perftest\.internal(?::\d+)?)
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120  #remove when version 1.3.1 of the chart is available.
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
-        DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,unspec_service,am_role_assignment_service,nfdiv_cms,nfdiv_cos,divorce_frontend
+        DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,unspec_service,am_role_assignment_service,nfdiv_cms,nfdiv_cos,divorce_frontend,wa_task_configuration_api
         CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service,iac,finrem_case_orchestration,unspec_service,divorce_frontend,nfdiv_cos
         DUMMY_VAR: false
     global:
