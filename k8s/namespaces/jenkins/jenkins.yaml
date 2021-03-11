@@ -431,7 +431,7 @@ spec:
                           privateKey: "${hmcts-jenkins-nfdiv-ghapp}"
           jobs: |
             jobs:
-              - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
+              - url: https://raw.githubusercont ent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
 
       sidecars:
         configAutoReload:
@@ -472,7 +472,414 @@ spec:
         labels: {}
         annotations:
           kubernetes.io/ingress.class: traefik
+    controller:
+      # Used for label app.kubernetes.io/component
+      componentName: "jenkins-controller"
+      image: "hmctspublic.azurecr.io/jenkins/jenkins"
+      tag: "dbau43"
+      imagePullPolicy: "IfNotPresent"
+      podLabels:
+        aadpodidbinding: jenkins
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - jenkins
+              topologyKey: "kubernetes.io/hostname"
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "512Mi"
+        limits:
+          cpu: "2000m"
+          memory: "4096Mi"
+      javaOpts: >-
+        -XX:InitialRAMPercentage=30.0
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=30.0
+        -XX:+UseG1GC
+        -XX:+AlwaysPreTouch
+        -XX:+HeapDumpOnOutOfMemoryError
+        -XX:HeapDumpPath=/var/jenkins_home/logs
+        -XX:+UseStringDeduplication
+        -XX:+ParallelRefProcEnabled
+        -XX:+DisableExplicitGC
+        -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true
+        -Dkubernetes.websocket.ping.interval=60000
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
+        -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
 
+      installPlugins:
+      # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
+      # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
+      # Keys are only used to give the section a meaningful name.  The only restriction is they may only contain RFC 1123 \ DNS label
+      # characters: lowercase letters, numbers, and hyphens.  The keys become the name of a configuration yaml file on the master in
+      # /var/jenkins_home/casc_configs (by default) and will be processed by the Configuration as Code Plugin.  The lines after each |
+      # become the content of the configuration yaml file.  The first line after this is a JCasC root element, eg jenkins, credentials,
+      # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.
+      JCasC:
+        defaultConfig: false
+        configScripts:
+          misc-jenkins-settings: |
+            jenkins:
+              crumbIssuer:
+                standard:
+                  excludeClientIPFromCrumb: false
+              markupFormatter:
+                rawHtml:
+                  disableSyntaxHighlighting: false
+              disabledAdministrativeMonitors:
+                - "jenkins.security.QueueItemAuthenticatorMonitor"
+                - "jenkins.security.s2m.MasterKillSwitchWarning"
+              numExecutors: 0
+          default-view: |
+            jenkins:
+              primaryView:
+                all:
+                  name: all
+          auth: |
+            jenkins:
+              authorizationStrategy:
+                globalMatrix:
+                  permissions:
+                    - "Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
+                    - "Overall/Administer:3830f73c-22c0-436c-893d-e1869d2bc551" # platform engineering in RPE899 tenant
+                    - "Overall/SystemRead:authenticated"
+                    - "Overall/Read:authenticated"
+                    - "View/Read:authenticated"
+                    - "Run/Replay:authenticated"
+                    - "Run/Update:authenticated"
+                    - "Job/Configure:authenticated"
+                    - "Job/Cancel:authenticated"
+                    - "Job/Read:authenticated"
+                    - "Job/Build:authenticated"
+                    - "Job/Move:authenticated"
+                    - "Job/Discover:authenticated"
+                    - "Job/Discover:anonymous"
+                    - "Job/Workspace:authenticated"
+                    - "Credentials/View:authenticated"
+                    - "Lockable Resources/Unlock:authenticated"
+                    - "Lockable Resources/Reserve:authenticated"
+                    - "SCM/Tag:authenticated"
+          global-library: |
+            unclassified:
+              globalLibraries:
+                libraries:
+                  - name: 'Infrastructure'
+                    includeInChangesets: false
+                    defaultVersion: master
+                    retriever:
+                      modernSCM:
+                        scm:
+                          github:
+                            credentialsId: hmcts-jenkins-cnp
+                            repoOwner: hmcts
+                            repository: cnp-jenkins-library
+                  - name: 'Pipeline'
+                    includeInChangesets: false
+                    defaultVersion: master
+                    retriever:
+                      modernSCM:
+                        scm:
+                          github:
+                            credentialsId: hmcts-jenkins-cnp
+                            repoOwner: hmcts
+                            repository: cnp-jenkins-library
+          health: |
+            unclassified:
+              defaultFolderConfiguration:
+                healthMetrics:
+                - "primaryBranchHealthMetric"
+          slack: |
+            unclassified:
+              slackNotifier:
+                teamDomain: hmcts-reform
+                tokenCredentialId: slack-token
+                botUser: true
+          pipeline-config: |
+            unclassified:
+              globalDefaultFlowDurabilityLevel:
+                durabilityHint: PERFORMANCE_OPTIMIZED
+          sonar: |
+            unclassified:
+              sonarGlobalConfiguration:
+                installations:
+                  - additionalAnalysisProperties: sonar.organization=hmcts
+                    name: SonarQube
+                    credentialsId: 'sonarcloud-api-token'
+                    serverUrl: 'https://sonarcloud.io'
+          timestamper: |
+            unclassified:
+              timestamperConfig:
+                allPipelines: true
+          theme: |
+            unclassified:
+              themeManager:
+                theme: "darkSystem"
+          build-discarders: |
+            unclassified:
+              buildDiscarders:
+                configuredBuildDiscarders:
+                - "jobBuildDiscarder"
+                - simpleBuildDiscarder:
+                    discarder:
+                      logRotator:
+                        artifactDaysToKeepStr: "14"
+                        artifactNumToKeepStr: "20"
+                        daysToKeepStr: "14"
+                        numToKeepStr: "20"
+          credentials: |
+            credentials:
+              system:
+                domainCredentials:
+                  - credentials:
+                      - string:
+                          scope: GLOBAL
+                          id: sonarcloud-api-token
+                          secret: '${sonarcloud-api-token}'
+                          description: SonarCloud API token
+                      - string:
+                          scope: GLOBAL
+                          id: "fortify-on-demand"
+                          secret: "${fortify-on-demand}"
+                          description: "Fortify - token"
+                      - string:
+                          scope: GLOBAL
+                          id: slack-token
+                          secret: '${slack-token}'
+                          description: Slack token
+                      - usernamePassword:
+                          description: "GitHub - Service account"
+                          id: "jenkins-github-hmcts-api-token"
+                          password: "${hmcts-github-apikey}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-hmcts3"
+                      - usernamePassword:
+                          description: "SSH credentials for Jenkins agents"
+                          id: "vm_agent_creds"
+                          password: "${mgmt-bastion-creds-password}"
+                          scope: GLOBAL
+                          username: "jenkinsssh"
+                      - string:
+                          description: "Read/Write Key To Publish CosmosDB Metrics"
+                          id: "COSMOSDB_TOKEN_KEY"
+                          scope: GLOBAL
+                          secret: "${pipelinemetrics-cosmosdb-key}"
+                      - usernamePassword:
+                          description: "Username and password for the OWASP vulnerability database"
+                          id: "owasp-db-login"
+                          password: "${OWASPDb-Password}"
+                          scope: GLOBAL
+                          username: "owasp_administrator"
+                      - usernamePassword:
+                          description: "Storage account name and access key for storing build reports"
+                          id: "buildlog-storage-account"
+                          password: "${jenkins-build-logs-key}"
+                          scope: GLOBAL
+                          username: "mgmtbuildlogstoresandbox"
+                      - sauce:
+                          apiKey: "${sauce-access-key}"
+                          description: "Sauce Labs Reform Key"
+                          id: "reform_tunnel"
+                          scope: GLOBAL
+                          username: "reform"
+                          restEndpoint: "https://eu-central-1.saucelabs.com/"
+                      - azureImds:
+                          azureEnvName: "Azure"
+                          description: "Jenkins Azure identity"
+                          id: "jenkins-managed-identity"
+                          scope: GLOBAL
+                      - azure:
+                          azureEnvironmentName: "Azure"
+                          clientId: "${sp-app-id}"
+                          clientSecret: "${sp-app-password}"
+                          description: "Jenkins Service Principal"
+                          id: "jenkinsServicePrincipal"
+                          scope: GLOBAL
+                          subscriptionId: "${subscription-id}"
+                          tenant: "${jenkins-sp-tenant-id}"
+                      - gitHubApp:
+                          appID: "52866"
+                          description: "GitHub APP Key - RPE"
+                          id: "hmcts-jenkins-rpe"
+                          privateKey: "${hmcts-jenkins-rpe-ghapp}"
+                      - gitHubApp:
+                          appID: "52960"
+                          description: "GitHub APP Key - CNP"
+                          id: "hmcts-jenkins-cnp"
+                          privateKey: "${hmcts-jenkins-cnp-ghapp}"
+                      - gitHubApp:
+                          appID: "54542"
+                          description: "GitHub APP Key - pcq"
+                          id: "hmcts-jenkins-pcq"
+                          privateKey: "${hmcts-jenkins-pcq-ghapp}"
+                      - gitHubApp:
+                          appID: "54385"
+                          description: "GitHub APP Key - xui"
+                          id: "hmcts-jenkins-xui"
+                          privateKey: "${hmcts-jenkins-xui-ghapp}"
+                      - gitHubApp:
+                          appID: "54687"
+                          description: "GitHub APP Key - adoption"
+                          id: "hmcts-jenkins-adoption"
+                          privateKey: "${hmcts-jenkins-adoption-ghapp}"
+                      - gitHubApp:
+                          appID: "58060"
+                          description: "GitHub APP Key - am"
+                          id: "hmcts-jenkins-am"
+                          privateKey: "${hmcts-jenkins-am-ghapp}"
+                      - gitHubApp:
+                          appID: "58046"
+                          description: "GitHub APP Key - bsp"
+                          id: "hmcts-jenkins-bsp"
+                          privateKey: "${hmcts-jenkins-bsp-ghapp}"
+                      - gitHubApp:
+                          appID: "58044"
+                          description: "GitHub APP Key - cdm"
+                          id: "hmcts-jenkins-cdm"
+                          privateKey: "${hmcts-jenkins-cdm-ghapp}"
+                      - gitHubApp:
+                          appID: "58041"
+                          description: "GitHub APP Key - cmc"
+                          id: "hmcts-jenkins-cmc"
+                          privateKey: "${hmcts-jenkins-cmc-ghapp}"
+                      - gitHubApp:
+                          appID: "58067"
+                          description: "GitHub APP Key - ctsc"
+                          id: "hmcts-jenkins-ctsc"
+                          privateKey: "${hmcts-jenkins-ctsc-ghapp}"
+                      - gitHubApp:
+                          appID: "58042"
+                          description: "GitHub APP Key - div"
+                          id: "hmcts-jenkins-div"
+                          privateKey: "${hmcts-jenkins-div-ghapp}"
+                      - gitHubApp:
+                          appID: "58064"
+                          description: "GitHub APP Key - ethos"
+                          id: "hmcts-jenkins-ethos"
+                          privateKey: "${hmcts-jenkins-ethos-ghapp}"
+                      - gitHubApp:
+                          appID: "58052"
+                          description: "GitHub APP Key - feepay"
+                          id: "hmcts-jenkins-feepay"
+                          privateKey: "${hmcts-jenkins-feepay-ghapp}"
+                      - gitHubApp:
+                          appID: "58043"
+                          description: "GitHub APP Key - finrem"
+                          id: "hmcts-jenkins-finrem"
+                          privateKey: "${hmcts-jenkins-finrem-ghapp}"
+                      - gitHubApp:
+                          appID: "58059"
+                          description: "GitHub APP Key - fpl"
+                          id: "hmcts-jenkins-fpl"
+                          privateKey: "${hmcts-jenkins-fpl-ghapp}"
+                      - gitHubApp:
+                          appID: "58045"
+                          description: "GitHub APP Key - iac"
+                          id: "hmcts-jenkins-iac"
+                          privateKey: "${hmcts-jenkins-iac-ghapp}"
+                      - gitHubApp:
+                          appID: "58058"
+                          description: "GitHub APP Key - idam"
+                          id: "hmcts-jenkins-idam"
+                          privateKey: "${hmcts-jenkins-idam-ghapp}"
+                      - gitHubApp:
+                          appID: "58069"
+                          description: "GitHub APP Key - mi"
+                          id: "hmcts-jenkins-mi"
+                          privateKey: "${hmcts-jenkins-mi-ghapp}"
+                      - gitHubApp:
+                          appID: "58050"
+                          description: "GitHub APP Key - probate"
+                          id: "hmcts-jenkins-probate"
+                          privateKey: "${hmcts-jenkins-probate-ghapp}"
+                      - gitHubApp:
+                          appID: "58068"
+                          description: "GitHub APP Key - rd"
+                          id: "hmcts-jenkins-rd"
+                          privateKey: "${hmcts-jenkins-rd-ghapp}"
+                      - gitHubApp:
+                          appID: "58048"
+                          description: "GitHub APP Key - rpa"
+                          id: "hmcts-jenkins-rpa"
+                          privateKey: "${hmcts-jenkins-rpa-ghapp}"
+                      - gitHubApp:
+                          appID: "58049"
+                          description: "GitHub APP Key - sscs"
+                          id: "hmcts-jenkins-sscs"
+                          privateKey: "${hmcts-jenkins-sscs-ghapp}"
+                      - gitHubApp:
+                          appID: "60878"
+                          description: "GitHub APP Key - rse"
+                          id: "hmcts-jenkins-rse"
+                          privateKey: "${hmcts-jenkins-rse-ghapp}"
+                      - gitHubApp:
+                          appID: "72816"
+                          description: "GitHub APP Key - unspec"
+                          id: "hmcts-jenkins-unspec"
+                          privateKey: "${hmcts-jenkins-unspec-ghapp}"
+                      - gitHubApp:
+                          appID: "62005"
+                          description: "GitHub APP Key - em"
+                          id: "hmcts-jenkins-em"
+                          privateKey: "${hmcts-jenkins-em-ghapp}"
+                      - gitHubApp:
+                          appID: "69800"
+                          description: "GitHub APP Key - hmi"
+                          id: "hmcts-jenkins-hmi"
+                          privateKey: "${hmcts-jenkins-hmi-ghapp}"
+                      - gitHubApp:
+                          appID: "75169"
+                          description: "GitHub APP Key - wa"
+                          id: "hmcts-jenkins-wa"
+                          privateKey: "${hmcts-jenkins-wa-ghapp}"
+                      - gitHubApp:
+                          appID: "79716"
+                          description: "GitHub APP Key - fact"
+                          id: "hmcts-jenkins-fact"
+                          privateKey: "${hmcts-jenkins-fact-ghapp}"
+                      - gitHubApp:
+                          appID: "90741"
+                          description: "GitHub APP Key - nfdiv"
+                          id: "hmcts-jenkins-nfdiv"
+                          privateKey: "${hmcts-jenkins-nfdiv-ghapp}"
+          jobs: |
+            jobs:
+              - url: https://raw.githubusercont ent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
+
+      sidecars:
+        configAutoReload:
+          # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
+          # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
+          # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
+          # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          env:
+            - name: REQ_TIMEOUT
+              value: "60"
+      ingress:
+        enabled: true
+        # For Kubernetes v1.14+, use 'networking.k8s.io/v1beta1'
+        apiVersion: "networking.k8s.io/v1beta1"
+        labels: {}
+        annotations:
+          kubernetes.io/ingress.class: traefik
     agent:
       enabled: false
 
