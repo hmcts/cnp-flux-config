@@ -5,6 +5,10 @@ metadata:
   name: neuvector
   namespace: neuvector
 spec:
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: neuvector-azure-keyvault
+    version: 1.2.2
   values:
     rules:
       network:  # IDs must match array index + 1
@@ -27,6 +31,7 @@ spec:
     config:
       sleep: 30
     neuvector:
+      tag: 4.2.0
       controller:
         azureFileShare:
           secretName: nv-storage-secret
