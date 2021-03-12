@@ -877,6 +877,14 @@ spec:
         labels: {}
         annotations:
           kubernetes.io/ingress.class: traefik
+      customInitContainers: 
+      - name: mount-permissions
+        image: "busybox"
+        imagePullPolicy: Always
+        command: [ "sh", "-c", "chown -R 1000:1000 /mnt/" ]
+        volumeMounts: 
+        - name: workspace-mnt
+          mountPath: /mnt/
     agent:
       enabled: false
 
