@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1779-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -14,4 +10,3 @@ spec:
         SAS_TOKEN_VALIDITY: "5184000"
         STORAGE_URL: https://bulkscandemo.blob.core.windows.net
         DELETE_REJECTED_FILES_TTL: PT1H
-      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-1779-75853008
