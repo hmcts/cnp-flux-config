@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-case-payments-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-129-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      ingressHost: ia-case-payments-api-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/ia/case-payments-api:pr-129-92e635c2
+      environment:
+        IDAM_URL: "https://idam-api.demo.platform.hmcts.net"
+        S2S_URL: "http://rpe-service-auth-provider-demo.service.core-compute-demo.internal"
+        FEES_REGISTER_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
+        PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
+
