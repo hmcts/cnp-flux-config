@@ -20,15 +20,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-c8b0e4b8
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-de511b6f
       ingressHost: ia-case-documents-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
         DOCMOSIS_ENDPOINT: https://docmosis.platform.hmcts.net
         RESTART_ME: "Update due to vault change"
-      prometheus:
-        enabled: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
