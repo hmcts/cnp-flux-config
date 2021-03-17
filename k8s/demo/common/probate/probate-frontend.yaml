@@ -6,7 +6,7 @@ metadata:
   namespace: probate
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-1387-*
 spec:
   releaseName: probate-frontend
   rollback:
@@ -15,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-frontend
-    version: 2.0.11
+    version: 2.3.6
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:prod-39649360
+      image: hmctspublic.azurecr.io/probate/frontend:latest
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
