@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SUB_MAP=( "aat=DCD-CNP-DEV"
-  "demo=DCD-CNP-DEV"
+  "perftest=DCD-CNP-QA"
 )
 #  "demo=DCD-CNP-DEV"
 #  "ithc=DCD-CNP-QA"
