@@ -2,6 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-media-viewer
+  fluxcd.io/automated: "true"
+  fluxcd.io/tag.nodejs: glob:aat-*
 spec:
   releaseName: em-media-viewer
   chart:
@@ -10,8 +12,8 @@ spec:
     path: stable/em-media-viewer
   values:
     nodejs:
-      replicas: 2
+      replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/em-media-viewer:latest
+      image: hmctspublic.azurecr.io/em/em-media-viewer:aat-74989987
       environment:
         VAR_T3: trigger6
