@@ -5,10 +5,6 @@ metadata:
   name: neuvector
   namespace: neuvector
 spec:
-  chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: neuvector-azure-keyvault
-    version: 1.2.2
   values:
     rules:
       network:  # IDs must match array index + 1
@@ -30,7 +26,6 @@ spec:
           update: '{"config":{"id":8,"comment":"","from":"AllPods","to":"Idam","ports":"tcp/443","action":"allow","applications":["SSL"],"disable":true}}'
     redeploy: true
     neuvector:
-      tag: 4.2.0
       controller:
         azureFileShare:
           secretName: nv-storage-secret
