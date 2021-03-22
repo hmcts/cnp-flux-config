@@ -2,28 +2,27 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: probate-back-office
-  namespace: probate
+  name: ia-home-office-mock-api
+  namespace: ia
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
+    repository.fluxcd.io/java: java.image
+    filter.fluxcd.io/java: glob:prod-*
 spec:
-  releaseName: probate-back-office
+  releaseName: ia-home-office-mock-api
   rollback:
     enable: true
     retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/probate-back-office
+    path: stable/ia-home-office-mock-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: "hmctspublic.azurecr.io/probate/back-office:prod-15e11d84"
-      environment:
-        CCD_GATEWAY_HOST: https://gateway-ccd.aat.platform.hmcts.net
+      image: hmctspublic.azurecr.io/ia/home-office-mock-api:prod-b04eab77
     global:
-      environment: aat
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
