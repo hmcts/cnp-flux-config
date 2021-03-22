@@ -3,12 +3,15 @@ kind: HelmRelease
 metadata:
   name: xui-webapp-integration
   annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-950-*
+    fluxcd.io/automated: "false"
+    fluxcd.io/tag.nodejs: glob:pr-769-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
+      replicas: 20
+      memoryLimits: "1Gi"
+      cpuLimits: "2000m"
       ingressHost: manage-case-int.demo.platform.hmcts.net
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false
@@ -23,4 +26,5 @@ spec:
         SERVICES_ICP_API: http://em-icp-demo.service.core-compute-demo.internal
         DEBUG: xuiNode:*,-xuiNode:auth:s2s
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/xui/webapp:pr-950-3be8f905
+        UV_THREADPOOL_SIZE: 96
+      image: hmctspublic.azurecr.io/xui/webapp:pr-769-b1b82b9b
