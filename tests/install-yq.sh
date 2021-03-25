@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 VERSION=v4.6.1
