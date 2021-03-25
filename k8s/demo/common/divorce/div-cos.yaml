@@ -49,6 +49,28 @@ spec:
         #AOS Overdue job parameters
         SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true
         SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_CRON: "0 0/10 * ? * * *"   #Runs every 10 minutes (if enabled)
+        SPRING_MAIL_HOST: smtp.sendgrid.net
+        SPRING_MAIL_PORT: 587
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: smtp.sendgrid.net
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+        SPRING_MAIL_USERNAME: apikey
+      keyVaults:
+        "div":
+          resourceGroup: div
+          secrets:
+            - ccd-submission-s2s-auth-secret
+            - div-doc-s2s-auth-secret
+            - idam-secret
+            - frontend-secret
+            - idam-citizen-username
+            - idam-citizen-password
+            - idam-caseworker-username
+            - idam-caseworker-password
+            - uk-gov-notify-api-key
+            - cos-postgresql-password
+            - AppInsightsInstrumentationKey
+            - spring-mail-password
       aadIdentityName: divorce
       prometheus:
         enabled: true
