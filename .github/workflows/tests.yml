@@ -15,10 +15,10 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install pre-reqs
         run: |
-          sudo apt-get install -y yamllint
-          sudo add-apt-repository ppa:rmescandon/yq
           sudo apt update
-          sudo apt install yq -y
+          sudo apt-get install -y yamllint
+          sudo apt install snapd
+          sudo snap install yq
       - name: Tests
         run: ./tests/run.sh
       - name: Kustomize Tests
