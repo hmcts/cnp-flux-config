@@ -18,7 +18,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: check-acr-sync
-              image: hmctspublic.azurecr.io/check-acr-sync:dbafmh
+              image: hmctspublic.azurecr.io/check-acr-sync:dbbbhf
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
@@ -43,3 +43,6 @@ spec:
                   value: "3000"
                 - name: ACR_SYNC_DEBUG
                   value: "true"
+              envFrom:
+                - secretRef:
+                    name: acr-sync
