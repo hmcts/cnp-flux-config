@@ -8,17 +8,17 @@ metadata:
 spec:
   schedule: "*/15 * * * *"
   concurrencyPolicy: "Forbid"
-  failedJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 3
   startingDeadlineSeconds: 300
   jobTemplate:
     spec:
-      backoffLimit: 2
+      backoffLimit: 3
       template:
         spec:
           restartPolicy: Never
           containers:
             - name: check-acr-sync
-              image: hmctspublic.azurecr.io/check-acr-sync:dbafmh
+              image: hmctspublic.azurecr.io/check-acr-sync:dbbbhf
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
@@ -33,11 +33,12 @@ spec:
                     secretKeyRef:
                       name: monitoring-values
                       key: slack-webhook
-                - name: SLACK_CHANNEL
-                  value: aks-monitor-prod
-                - name: AKS_CLUSTER
-                  value: prod
                 - name: SLACK_ICON
                   value: flux
                 - name: ACR_MAX_RESULTS
                   value: "3000"
+                - name: ACR_SYNC_DEBUG
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: acr-sync
