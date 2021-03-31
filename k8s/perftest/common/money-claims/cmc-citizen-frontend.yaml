@@ -1,0 +1,34 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: cmc-citizen-frontend
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: cmc-citizen-frontend
+    version: 3.3.7
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-6d09a108
+      ingressHost: moneyclaims.perftest.platform.hmcts.net
+      environment:
+        FEATURE_TESTING_SUPPORT: true
+        FEATURE_RETURN_ERROR_TO_USER: true
+        PCQ_URL: https://pcq.perftest.platform.hmcts.net
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

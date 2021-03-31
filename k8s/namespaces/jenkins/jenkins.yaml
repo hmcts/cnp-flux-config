@@ -17,13 +17,15 @@ spec:
   chart:
     repository: https://charts.jenkins.io
     name: jenkins
-    version: 1.16.1
+    version: 3.2.1
   values:
-    master:
+    controller:
       # Used for label app.kubernetes.io/component
-      componentName: "jenkins-master"
+      componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      imageTag: "dba9x7"
+      tag: "dbau43"
+      podSecurityContextOverride:
+        runAsUser: 0
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
@@ -37,9 +39,6 @@ spec:
                     values:
                       - jenkins
               topologyKey: "kubernetes.io/hostname"
-
-      jenkinsAdminEmail: noreply@reform.hmcts.net
-
       resources:
         requests:
           cpu: "50m"
@@ -47,7 +46,6 @@ spec:
         limits:
           cpu: "2000m"
           memory: "4096Mi"
-
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=65.0
@@ -70,32 +68,7 @@ spec:
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
 
-      usePodSecurityContext: true
-      # can't figure out why this no longer works, it works locally, possibly helm version bug?
-      #runAsUser: 1000
-      #fsGroup: 1000
-      servicePort: 8080
-      targetPort: 8080
-      serviceType: ClusterIP
-
-      healthProbes: true
-      healthProbesLivenessTimeout: 90
-      healthProbesReadinessTimeout: 60
-      healthProbeReadinessPeriodSeconds: 10
-      healthProbeLivenessFailureThreshold: 12
-      healthProbeReadinessInitialDelay: 180
-      healthProbeLivenessInitialDelay: 180
-      slaveListenerPort: 50000
-      slaveHostPort:
-      disabledAgentProtocols:
-        - JNLP-connect
-        - JNLP2-connect
-      cli: false
-
-      slaveListenerServiceType: "ClusterIP"
-
       installPlugins:
-
       # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
       # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
       # Keys are only used to give the section a meaningful name.  The only restriction is they may only contain RFC 1123 \ DNS label
@@ -104,7 +77,7 @@ spec:
       # become the content of the configuration yaml file.  The first line after this is a JCasC root element, eg jenkins, credentials,
       # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.
       JCasC:
-        enabled: true
+        defaultConfig: false
         configScripts:
           misc-jenkins-settings: |
             jenkins:
@@ -129,7 +102,6 @@ spec:
                 globalMatrix:
                   permissions:
                     - "Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
-                    - "Overall/Administer:3830f73c-22c0-436c-893d-e1869d2bc551" # platform engineering in RPE899 tenant
                     - "Overall/SystemRead:authenticated"
                     - "Overall/Read:authenticated"
                     - "View/Read:authenticated"
@@ -435,13 +407,11 @@ spec:
 
       sidecars:
         configAutoReload:
+          image: kiwigrid/k8s-sidecar:0.1.275
           # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
           # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
           # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
           # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
-          enabled: true
-          image: kiwigrid/k8s-sidecar:0.1.132
-          imagePullPolicy: IfNotPresent
           resources:
             limits:
               cpu: 100m
@@ -452,27 +422,15 @@ spec:
           env:
             - name: REQ_TIMEOUT
               value: "60"
-          # SSH port value can be set to any unused TCP port.  The default, 1044, is a non-standard SSH port that has been chosen at random.
-          # Is only used to reload jcasc config from the sidecar container running in the Jenkins master pod.
-          # This TCP port will not be open in the pod (unless you specifically configure this), so Jenkins will not be
-          # accessible via SSH from outside of the pod.  Note if you use non-root pod privileges (runAsUser & fsGroup),
-          # this must be > 1024:
-          sshTcpPort: 1044
-          # folder in the pod that should hold the collected dashboards:
-          folder: "/var/jenkins_home/casc_configs"
-          # If specified, the sidecar will search for JCasC config-maps inside this namespace.
-          # Otherwise the namespace in which the sidecar is running will be used.
-          # It's also possible to specify ALL to search in all namespaces:
-          # searchNamespace:
-
+            - name: METHOD
+              value: "SLEEP"
+            - name: SLEEP_TIME
+              value: "300"
       ingress:
         enabled: true
-        # For Kubernetes v1.14+, use 'networking.k8s.io/v1beta1'
-        apiVersion: "networking.k8s.io/v1beta1"
         labels: {}
         annotations:
           kubernetes.io/ingress.class: traefik
-
     agent:
       enabled: false
 
@@ -511,5 +469,3 @@ spec:
     ## Install Default RBAC roles and bindings
     rbac:
       create: true
-
-    checkDeprecation: true
