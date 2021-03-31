@@ -6,21 +6,21 @@ metadata:
   namespace: probate
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
+    fluxcd.io/tag.java: glob:pr-1431-*
 spec:
   releaseName: probate-back-office
   rollback:
     enable: true
     retry: true
   chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/probate-back-office
+    name: probate-back-office
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    version: 1.0.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-15e11d84
+      image: hmctspublic.azurecr.io/probate/back-office:pr-1431-8ce9f600
       environment:
         CCD_GATEWAY_HOST: https://gateway-ccd.perftest.platform.hmcts.net
     global:

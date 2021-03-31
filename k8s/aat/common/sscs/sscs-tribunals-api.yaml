@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-5c9ef3ba
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-cc312d9e
       aadIdentityName: sscs
       environment:
         CREATE_CCD_ENDPOINT: true
@@ -28,6 +28,8 @@ spec:
         PDF_SERVICE_CONVERT_URL: https://docmosis.aat.platform.hmcts.net/rs/convert
         PDF_SERVICE_HEALTH_URL: https://docmosis.aat.platform.hmcts.net/rs/status
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.aat.platform.hmcts.net/rs/render
+        MAX_FILE_SIZE: 500MB
+        MAX_REQUEST_SIZE: 500MB
         MULTI_BUNDLE_FEATURE: false
     global:
       environment: aat

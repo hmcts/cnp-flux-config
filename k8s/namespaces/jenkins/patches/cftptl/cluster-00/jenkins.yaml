@@ -88,10 +88,10 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*CDM.*\/.+\/master
-                    name: CCD
+                      ^HMCTS_.*CDM.*\/(?!.*ccd-admin-web-api).+\/master
+                    name: CDM
                     recurse: true
-                    title: CCD Builds Dashboard
+                    title: CDM Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator)\/master
@@ -196,7 +196,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-showcase|document-management-store-app)\/master
+                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-media-viewer|em-showcase|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -399,7 +399,7 @@ spec:
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 40
+                    maxVirtualMachinesLimit: 60
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
