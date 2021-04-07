@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: dg
 bases:
 - ../../../namespaces/dg
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: dg
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "86a17b6c-bc2b-4cbb-bd94-862cbf7af3aa"
