@@ -149,6 +149,23 @@ mkdir -p k8s/$ENV/common/traefik/
 kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/$ENV/common/sealed-secrets/traefik-values.yaml
 ```
 
+In demo, traefik-forward-auth is using the following sealed secret:
+
+[oauth2-cert-key.yaml](../k8s/demo/common/sealed-secrets/oauth2-cert-key.yaml)
+
+ this can be generated starting from the .crt and .key files obtained after running openssl on the .pfx file:
+
+```bash
+openssl pkcs12 -in ${SECRET_NAME}.pfx -nokeys -nodes -passin pass:"" > demo-platform-hmcts-crt.pem
+openssl pkcs12 -in ${SECRET_NAME}.pfx -nocerts -nodes -passin pass:"" > demo-platform-hmcts-key.pem
+
+kubectl create secret generic oauth2-cert-key --from-file demo-platform-hmcts-crt.pem --from-file demo-platform-hmcts-key.pem --namespace admin --dry-run -o json > oauth2-cert-key.json
+
+kubeseal --format=yaml --cert=k8s/demo/pub-cert.pem < oauth2-cert-key.json > k8s/demo/common/sealed-secrets/oauth2-cert-key.yaml
+
+rm oauth2-cert-key.json
+```
+
 ### Kube-Slack
 To add Kube-Slack for Slack monitoring on AKS cluster, change the SLACK_CHANNEL in HelmRelease to env specific slack channel.
 

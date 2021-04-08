@@ -44,9 +44,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: aat-00-aks
+                        value: aat-01-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: aat-00-rg
+                        value: aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -88,10 +88,10 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*CDM.*\/.+\/master
-                    name: CCD
+                      ^HMCTS_.*CDM.*\/(?!.*ccd-admin-web-api).+\/master
+                    name: CDM
                     recurse: true
-                    title: CCD Builds Dashboard
+                    title: CDM Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator)\/master
@@ -196,7 +196,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-showcase|document-management-store-app)\/master
+                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-media-viewer|em-showcase|document-management-store-app)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -229,11 +229,12 @@ spec:
               securityRealm:
                 saml:
                   binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                  displayNameAttributeName: "http://schemas.microsoft.com/identity/claims/displayname"
+                  emailAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
                   groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
                   idpMetadataConfiguration:
                     period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=b2391616-ba63-4676-ad17-0d8fa49c4f44
+                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=f51ea833-3992-44a6-899e-16257b3e4fd1
                   maximumAuthenticationLifetime: 7862400
                   usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                   usernameCaseConversion: "none"
@@ -395,11 +396,11 @@ spec:
             jenkins:
               clouds:
                 - azureVM:
-                    azureCredentialsId: "jenkinsServicePrincipal"
+                    azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 40
+                    maxVirtualMachinesLimit: 60
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -410,7 +411,7 @@ spec:
                         doNotUseMachineIfInitFails: true
                         enableMSI: false
                         enableUAMI: true
-                        ephemeralOSDisk: true
+                        ephemeralOSDisk: false
                         executeInitScriptAsRoot: true
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
@@ -454,6 +455,7 @@ spec:
                         location: "UK South"
                         noOfParallelJobs: 1
                         osDiskSize: 0
+                        osDiskStorageAccountType: "StandardSSD_LRS"
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:

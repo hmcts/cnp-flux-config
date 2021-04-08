@@ -255,7 +255,7 @@ spec:
             jenkins:
               clouds:
                 - azureVM:
-                    azureCredentialsId: "jenkinsServicePrincipal"
+                    azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
@@ -270,7 +270,7 @@ spec:
                         doNotUseMachineIfInitFails: true
                         enableMSI: false
                         enableUAMI: true
-                        ephemeralOSDisk: true
+                        ephemeralOSDisk: false
                         executeInitScriptAsRoot: true
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
@@ -312,6 +312,7 @@ spec:
                         location: "UK South"
                         noOfParallelJobs: 1
                         osDiskSize: 0
+                        osDiskStorageAccountType: "StandardSSD_LRS"
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:
