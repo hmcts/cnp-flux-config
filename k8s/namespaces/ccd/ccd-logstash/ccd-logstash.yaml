@@ -29,9 +29,6 @@ spec:
     envFrom:
     - secretRef:
         name: logstash-secret
-    extraEnvs:
-    - name: DUMMY_VAR
-        value: true
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctspublic.azurecr.io/curl:7.70.0
@@ -97,7 +94,7 @@ spec:
             target => "data_classification"
             remove_field => ["json_data_classification"]
           }
-          json{
+          json {
               source => "json_supplementary_data"
               target => "supplementary_data"
               remove_field => ["json_supplementary_data"]
