@@ -2,8 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: wa-case-event-handler
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-108-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/wa/case-event-handler:pr-108-887a35fd
       environment:
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
