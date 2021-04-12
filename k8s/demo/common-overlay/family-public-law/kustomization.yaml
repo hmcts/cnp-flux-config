@@ -3,5 +3,20 @@ kind: Kustomization
 namespace: family-public-law
 bases:
 - ../../../namespaces/family-public-law
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/family-public-law/fpl-case-service/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: family-public-law
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "24bf2d89-09a4-450f-8c3f-52eeda3fcaea"
