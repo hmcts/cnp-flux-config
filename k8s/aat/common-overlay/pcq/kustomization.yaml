@@ -3,5 +3,20 @@ kind: Kustomization
 namespace: pcq
 bases:
 - ../../../namespaces/pcq
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/pcq/pcq-backend/aat.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: pcq
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "731343b8-be79-4a97-b14e-60be786ad393"
