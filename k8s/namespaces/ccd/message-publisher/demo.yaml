@@ -10,7 +10,13 @@ spec:
   releaseName: message-publisher
   values:
     java:
-      replicas: 1 # Must always be 1
+      replicas: 1  # Must always be 1
+      keyVaults:
+        ccd:
+          secrets:
+            - data-store-api-POSTGRES-PASS-V11
+            - ccd-servicebus-connection-string
+            - AppInsightsInstrumentationKey
       useInterpodAntiAffinity: true
       environment:
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-demo.postgres.database.azure.com
