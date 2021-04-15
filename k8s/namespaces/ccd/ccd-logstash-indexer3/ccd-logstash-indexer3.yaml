@@ -7,6 +7,23 @@ spec:
   releaseName: ccd-logstash-indexer3
   values:
     replicas: 0  # Override value in env patches when required
+    logstashConfig:
+      logstash.yml: |
+        http.host: 0.0.0.0
+        xpack.monitoring.enabled: true
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        queue.type: persisted
+        dead_letter_queue.enable: true
+      pipelines.yml: |
+        - pipeline.id: main
+          path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
+          pipeline.workers: 8
+          pipeline.batch.size: 200
+          queue.type: persisted
+        - pipeline.id: index-dead-letter-to-es
+          path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
+          pipeline.workers: 1
+          dead_letter_queue.enable: false
     logstashPipeline:
       01_input.conf: |
         input {
