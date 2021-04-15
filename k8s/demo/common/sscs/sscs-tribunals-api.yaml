@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1877
+    flux.weave.works/tag.java: glob:pr-1915-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1877
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-1915-160deaf6
       aadIdentityName: sscs
       environment:
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -28,7 +28,9 @@ spec:
         PDF_SERVICE_CONVERT_URL: https://docmosis.demo.platform.hmcts.net/rs/convert
         PDF_SERVICE_HEALTH_URL: https://docmosis.demo.platform.hmcts.net/rs/status
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net/rs/render
-        MULTI_BUNDLE_FEATURE: false
+        MAX_FILE_SIZE: 500MB
+        MAX_REQUEST_SIZE: 500MB
+        MULTI_BUNDLE_FEATURE: true
         DUMMY: true
     global:
       environment: demo

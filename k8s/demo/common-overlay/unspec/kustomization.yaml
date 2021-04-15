@@ -3,5 +3,20 @@ kind: Kustomization
 namespace: unspec
 bases:
 - ../../../namespaces/unspec
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
-- ../../../namespaces/unspec/unspec-service/demo.yaml
+- ../../../namespaces/unspec/civil-damages-service/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: unspec
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "40c33f5a-24d0-4b22-a923-df8a80a59cd9"
