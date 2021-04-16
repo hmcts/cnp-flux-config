@@ -10,6 +10,7 @@ bases:
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/admin/traefik
+  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
@@ -68,3 +69,7 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/prod-automated == enabled
+  - path: ../../namespaces/all-namespaces/reader-clusterrole/prod.yaml
+    target:
+      kind: ClusterRoleBinding
+      labelSelector: role-type=developer

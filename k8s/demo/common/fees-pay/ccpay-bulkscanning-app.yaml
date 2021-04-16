@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:demo-*
+    flux.weave.works/tag.java: pr-289-*
 spec:
   releaseName: ccpay-bulkscanning-api
   rollback:
@@ -20,10 +20,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:demo
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:pr-289-d55a0c24
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
+        IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
