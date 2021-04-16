@@ -7,6 +7,7 @@ bases:
   - ../../namespaces/admin/kube-slack
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
+  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
@@ -43,3 +44,9 @@ patchesStrategicMerge:
 
   # Dynatrace patch
   - ../../namespaces/monitoring/dynatrace/patches/ldata/oneagent.yaml
+
+patches:
+  - target:
+      kind: ClusterRoleBinding
+      labelSelector: role-type=developer
+    path: ../../namespaces/all-namespaces/reader-clusterrole/ldata.yaml

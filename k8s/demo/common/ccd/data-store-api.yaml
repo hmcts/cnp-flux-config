@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1260-*
+    flux.weave.works/tag.java: glob:pr-1443-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -19,8 +19,20 @@ spec:
   values:
     java:
       replicas: 2
+      keyVaults:
+        ccd:
+          secrets:
+            - data-store-api-POSTGRES-USER-V11
+            - data-store-api-POSTGRES-PASS-V11
+            - data-store-api-draftStoreEncryptionSecret
+            - data-store-api-draft-key
+            - ccd-data-s2s-secret
+            - ccd-ELASTIC-SEARCH-URL
+            - ccd-ELASTIC-SEARCH-DATA-NODES-URL
+            - ccd-ELASTIC-SEARCH-PASSWORD
+            - AppInsightsInstrumentationKey
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1260-e845f23c
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1443-744e5d18
       environment:
         DEFINITION_CACHE_LATEST_VERSION_TTL_SEC: 30
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
@@ -31,6 +43,8 @@ spec:
         DATA_STORE_DB_OPTIONS: ?stringtype=unspecified&gssEncMode=disable
         DATA_STORE_DEFAULT_LOG_LEVEL: DEBUG
         SERVER_MAX_HTTP_HEADER_SIZE: 100KB
+        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-demo.postgres.database.azure.com
+        DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-v11-demo
         DATA_STORE_CROSS_JURISDICTIONAL_ROLES: caseworker-caa,caseworker-approver
         DUMMY_RESTART_VAR: false
     global:
