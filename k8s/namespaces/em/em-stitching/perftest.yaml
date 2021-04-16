@@ -6,7 +6,11 @@ metadata:
 #    fluxcd.io/automated: "true"
 #    fluxcd.io/tag.java: glob:pr-551-*
 #    hmcts.github.com/prod-automated: disabled
-#spec:
-#  values:
-#    java:
+spec:
+  values:
+    java:
+      memoryLimits: "6144Mi"
+      cpuLimits: "3000m"
 #      image: hmctspublic.azurecr.io/em/stitching:pr-551-482c6023
+      environment:
+        CALLBACK_MAX_ATTEMPTS: 1

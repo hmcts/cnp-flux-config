@@ -10,6 +10,7 @@ bases:
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/admin/traefik
+  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
@@ -17,6 +18,7 @@ bases:
   - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/monitoring/botkube
+  - ../../namespaces/monitoring/acr-sync/check-acr-sync.yaml
   - ../../namespaces/admin/keda
   - ../../namespaces/monitoring/dynatrace
   - ../../namespaces/admin/aad-pod-id
@@ -56,6 +58,8 @@ patchesStrategicMerge:
   #Dynatrace patch
   - ../../namespaces/monitoring/dynatrace/patches/prod/oneagent.yaml
 
+  - ../../namespaces/monitoring/acr-sync/prod.yaml
+
 patches:
   - path: ../prod-helmrelease.yaml
     target:
@@ -65,3 +69,7 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/prod-automated == enabled
+  - path: ../../namespaces/all-namespaces/reader-clusterrole/prod.yaml
+    target:
+      kind: ClusterRoleBinding
+      labelSelector: role-type=developer
