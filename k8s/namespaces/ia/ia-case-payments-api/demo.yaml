@@ -4,13 +4,12 @@ metadata:
   name: ia-case-payments-api
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-129-*
+    fluxcd.io/tag.java: glob:prod-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: ia-case-payments-api-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/ia/case-payments-api:pr-129-cd9d73ae
       environment:
         IDAM_URL: "https://idam-web-public.demo.platform.hmcts.net"
         S2S_URL: "http://rpe-service-auth-provider-demo.service.core-compute-demo.internal"

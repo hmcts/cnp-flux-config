@@ -23,7 +23,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: "dbau43"
+      tag: "dbbuqp"
       podSecurityContextOverride:
         runAsUser: 0
       imagePullPolicy: "IfNotPresent"
@@ -96,6 +96,10 @@ spec:
               primaryView:
                 all:
                   name: all
+          rate-limiting: |
+            unclassified:
+              gitHubConfiguration:
+                apiRateLimitChecker: ThrottleOnOver
           auth: |
             jenkins:
               authorizationStrategy:
@@ -244,6 +248,7 @@ spec:
                           restEndpoint: "https://eu-central-1.saucelabs.com/"
                       - azureImds:
                           azureEnvName: "Azure"
+                          subscriptionId: "${subscription-id}"
                           description: "Jenkins Azure identity"
                           id: "jenkins-managed-identity"
                           scope: GLOBAL
