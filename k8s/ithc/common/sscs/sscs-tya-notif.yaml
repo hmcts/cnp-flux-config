@@ -1,0 +1,34 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tya-notif
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: sscs-tya-notif
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tya-notif
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-58a33f02
+      environment:
+        JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-ithc"
+        JOB_SCHEDULER_DB_NAME: "notification"
+        JOB_SCHEDULER_DB_HOST: "sscs-tya-notif-postgres-v11-db-ithc.postgres.database.azure.com"
+        COVID_19_NOTIFICATION_FEATURE: false
+        PDF_SERVICE_HEALTH_URL: https://docmosis.ithc.platform.hmcts.net/rs/status
+        PDF_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

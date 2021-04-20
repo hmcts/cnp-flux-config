@@ -1,0 +1,33 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-evidence-share
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: sscs-evidence-share
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-evidence-share
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-08bb4e89
+      environment:
+        ROBOTICS_EMAIL_TO: gokul.sridharan@HMCTS.NET
+        WLU_EMAIL_FROM: noreply@mail-sscs-nonprod.platform.hmcts.net
+        WLU_EMAIL_TO: sscs-tests@HMCTS.NET
+        PDF_SERVICE_HEALTH_URL: https://docmosis.ithc.platform.hmcts.net/rs/status
+        PDF_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
