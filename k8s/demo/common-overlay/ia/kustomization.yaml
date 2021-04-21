@@ -3,5 +3,20 @@ kind: Kustomization
 namespace: ia
 bases:
 - ../../../namespaces/ia
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/ia/ia-case-payments-api/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: ia
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "b16db4e7-5cd6-409a-9f10-632089d91ff5"
