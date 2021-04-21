@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rpe-send-letter-service-container-new
+  annotations:
+  fluxcd.io/automated: "true"
+  fluxcd.io/tag.java: glob:pr-3-*
+  hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    function:
+      trigger:
+        type: azure-blob
+        blob:
+          blobContainerName: "new"
+          accountName: "rpesendletterdemo"
