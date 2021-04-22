@@ -20,8 +20,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-a275c29f
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-77b2d294
       environment:
+        IDAM_S2S_AUTH: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        IDAM_API_JWK_URL: https://idam-api.aat.platform.hmcts.net/jwks
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

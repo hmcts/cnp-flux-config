@@ -3,12 +3,26 @@ kind: Kustomization
 namespace: rd
 bases:
 - ../../../namespaces/rd
-- ../../../namespaces/rd/rd-caseworker-ref-api/rd-caseworker-ref-api.yaml
 - ../../../namespaces/rd/rd-judicial-api/rd-judicial-api.yaml
 - ../../../namespaces/rd/rd-location-ref-api/rd-location-ref-api.yaml
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/rd/rd-professional-api/demo.yaml
 - ../../../namespaces/rd/rd-user-profile-api/demo.yaml
 - ../../../namespaces/rd/rd-profile-sync/demo.yaml
 - ../../../namespaces/rd/rd-caseworker-ref-api/demo.yaml
 - ../../../namespaces/rd/rd-location-ref-api/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: rd
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "35327411-b189-467e-a8db-9fb833745484"

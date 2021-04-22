@@ -2,8 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-hrs-api
-  fluxcd.io/automated: "true"
-  fluxcd.io/tag.java: glob:aat-*
 spec:
   releaseName: em-hrs-api
   chart:
@@ -14,4 +12,7 @@ spec:
     java:
       useInterpodAntiAffinity: true
       replicas: 2
-      image: hmctspublic.azurecr.io/em/hrs-api:prod-7e811a3e
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-87e328f0
+      environment:

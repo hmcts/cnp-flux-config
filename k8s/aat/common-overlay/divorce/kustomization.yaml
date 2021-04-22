@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: divorce
 bases:
 - ../../../namespaces/divorce
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: divorce
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "f2ef9d16-488a-4b84-b433-3eb4225923cb"

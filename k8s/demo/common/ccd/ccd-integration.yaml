@@ -75,14 +75,14 @@ spec:
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
-          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-integration-ccd-definition-store/health # odd hack to get improt working?!?
+          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-integration-ccd-definition-store/health  # odd hack to get import working?!?
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-24404afe
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-cdf7e765
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
@@ -112,11 +112,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-4f33b672
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-2c1096a4
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-e24b8a75
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-0ded8bc2
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ccb23960
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-fa12c1f4
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -138,7 +138,7 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-da85637e
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-660c648e
 
     elasticsearch:
       persistence:
