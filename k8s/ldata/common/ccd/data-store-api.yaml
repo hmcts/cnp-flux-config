@@ -20,12 +20,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-fa12c1f4
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e49e0c1d
       ingressHost: ccd-data-store-api-ldata.service.core-compute-ethosldata.internal
       environment:
         IDAM_USER_URL: https://idam-web-public-ethosldata.platform.hmcts.net
         CCD_DEFAULTPRINTURL: "https://return-case-doc-ccd-ethosldata.platform.hmcts.net/jurisdictions/:jid/case-types/:ctid/cases/:cid"
-        CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-ldata\.service\.core-compute-ethosldata\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-ldata\.service\.core-compute-ethosldata\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]))
+        CCD_DM_DOMAIN: ^https?://(?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-ldata\.service\.core-compute-ethosldata\.internal(?::\d+)?)
         CCD_DRAFT_STORE_URL: http://draft-store-service-ldata.service.core-compute-ethosldata.internal
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-ethosldata.postgres.database.azure.com
         DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-ethosldata
