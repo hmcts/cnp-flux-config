@@ -1,15 +1,15 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: unspec-service
+  name: ia-case-access-api
 spec:
-  releaseName: unspec-service
+  releaseName: ia-case-access-api
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/unspec-service
+    path: stable/ia-case-access-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/unspec/service:prod-a30cdb4e
+      image: hmctspublic.azurecr.io/ia/case-access-api:prod-6b81841b

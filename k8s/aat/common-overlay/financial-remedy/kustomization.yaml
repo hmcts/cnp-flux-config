@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: financial-remedy
 bases:
 - ../../../namespaces/financial-remedy
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: financial-remedy
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "645b757f-5015-4fc1-93f9-0522b623c0fa"

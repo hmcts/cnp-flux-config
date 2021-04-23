@@ -12,7 +12,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-955d4dca
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-5af382be
       ingressHost: camunda-bpm.{{ .Values.global.environment }}.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true
@@ -21,7 +21,13 @@ spec:
       keyVaults:
         camunda:
           secrets:
-          - bpm-POSTGRES-PASS
-          - openid-client-id
-          - openid-client-secret
-          - camunda-admin-password
+          - name: bpm-POSTGRES-PASS
+            alias: spring.datasource.password
+          - name: camunda-admin-password
+            alias: CAMUNDA_ADMIN_PASSWORD
+          - name: openid-client-id
+            alias: CLIENT_ID
+          - name: openid-client-secret
+            alias: CLIENT_SECRET
+          - name: AppInsightsInstrumentationKey
+            alias: azure.application-insights.instrumentation-key
