@@ -2,25 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: message-publisher
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-74-*
-    hmcts.github.com/prod-automated: disabled
 spec:
-  releaseName: message-publisher
   values:
     java:
-      replicas: 1  # Must always be 1
-      keyVaults:
-        ccd:
-          secrets:
-            - data-store-api-POSTGRES-USER-V11
-            - data-store-api-POSTGRES-PASS-V11
-            - ccd-servicebus-connection-string
-            - AppInsightsInstrumentationKey
-      useInterpodAntiAffinity: true
       environment:
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-demo.postgres.database.azure.com
         DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-v11-demo
-        DUMMY_VAR: 2
-      image: hmctspublic.azurecr.io/ccd/message-publisher:pr-74-6c7596f5
