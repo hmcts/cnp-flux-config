@@ -2,6 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-webapp
+  annotations:
+    fluxcd.io/automated: "false"
+    fluxcd.io/tag.nodejs: glob:pr-977-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
@@ -26,3 +30,4 @@ spec:
         STUB: false
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal
         UV_THREADPOOL_SIZE: 96
+      image: hmctspublic.azurecr.io/xui/webapp:pr-977-502604e6
