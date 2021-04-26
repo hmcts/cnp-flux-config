@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: adoption
 bases:
 - ../../../namespaces/adoption
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: adoption
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "78fd709b-45c7-42f1-8411-130434575920"

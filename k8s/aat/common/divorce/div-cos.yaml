@@ -27,51 +27,26 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cos:prod-2064951b
+      image: hmctspublic.azurecr.io/div/cos:prod-067f53d8
       environment:
         IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
-        FEATURE_DN_REFUSAL: "true"
+        FEATURE_DN_REFUSAL: true
         FEATURE_PAPER_UPDATE: true
         SOLICITOR_DN_REJECT_AND_AMEND: true
         PAY_BY_ACCOUNT: true
-        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
-        FEATURE_RESP_SOLICITOR_DETAILS: "true"
-        FEATURE_SHARE_A_CASE: "true"
-        FEATURE_REPRESENTED_RESPONDENT_JOURNEY: "true"
+        FEATURE_RESP_SOLICITOR_DETAILS: true
+        FEATURE_SHARE_A_CASE: true
+        FEATURE_REPRESENTED_RESPONDENT_JOURNEY: true
+        FEATURE_OBJECT_TO_COSTS: true
+        FEATURE_BAILIFF_JOURNEY: true
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
         BULKACTION_MINCASES: 5
-        DATAEXTRACTION_EMAILFROM: noreply@mail-divorce-nonprod.platform.hmcts.net
         DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
         SCHEDULER_ENABLED: true
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
         SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true
-        SPRING_MAIL_HOST: smtp.sendgrid.net
-        SPRING_MAIL_PORT: 587
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: smtp.sendgrid.net
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
-        SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
-        SPRING_MAIL_USERNAME: apikey
-      keyVaults:
-        "div":
-          resourceGroup: div
-          secrets:
-          - ccd-submission-s2s-auth-secret
-          - div-doc-s2s-auth-secret
-          - idam-secret
-          - frontend-secret
-          - idam-citizen-username
-          - idam-citizen-password
-          - idam-caseworker-username
-          - idam-caseworker-password
-          - uk-gov-notify-api-key
-          - cos-postgresql-password
-          - AppInsightsInstrumentationKey
-          - spring-mail-password
-      aadIdentityName: divorce
-      prometheus:
-        enabled: true
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

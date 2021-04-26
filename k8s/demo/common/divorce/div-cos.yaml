@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1320-*
+    flux.weave.works/tag.java: glob:pr-1268-*
 spec:
   releaseName: div-cos
   rollback:
@@ -27,17 +27,19 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cos:pr-1320-ef62dadf
+      image: hmctspublic.azurecr.io/div/cos:pr-1268-e5ae5867
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
-        FEATURE_DN_REFUSAL: "true"
+        FEATURE_DN_REFUSAL: true
         FEATURE_PAPER_UPDATE: true
         SOLICITOR_DN_REJECT_AND_AMEND: true
         PAY_BY_ACCOUNT: true
+        FEATURE_RESP_SOLICITOR_DETAILS: true
+        FEATURE_SHARE_A_CASE: true
+        FEATURE_REPRESENTED_RESPONDENT_JOURNEY: true
+        FEATURE_OBJECT_TO_COSTS: true
+        FEATURE_BAILIFF_JOURNEY: true
         DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
-        FEATURE_RESP_SOLICITOR_DETAILS: "true"
-        FEATURE_SHARE_A_CASE: "false"
-        FEATURE_REPRESENTED_RESPONDENT_JOURNEY: "true"
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
         BULKACTION_MINCASES: 3

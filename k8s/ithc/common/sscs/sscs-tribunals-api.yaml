@@ -1,0 +1,38 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-api
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: sscs-tribunals-api
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tribunals-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-1808bd02
+      aadIdentityName: sscs
+      environment:
+        UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
+        BUNDLE_URL: http://em-ccdorc-ithc.service.core-compute-ithc.internal
+        PDF_SERVICE_CONVERT_URL: https://docmosis.ithc.platform.hmcts.net/rs/convert
+        PDF_SERVICE_HEALTH_URL: https://docmosis.ithc.platform.hmcts.net/rs/status
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
+        MAX_FILE_SIZE: 500MB
+        MAX_REQUEST_SIZE: 500MB
+        MULTI_BUNDLE_FEATURE: true
+        DUMMY: false
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
