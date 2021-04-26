@@ -1,0 +1,34 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-frontend
+  namespace: sscs
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: sscs-tribunals-frontend
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tribunals-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-4efc99c9
+      ingressHost: benefit-appeal.ithc.platform.hmcts.net
+      environment:
+        FT_WELSH: "true"
+        DUMMY_PROPERTY: "false"
+        FT_ANTENNA_WEBCHAT: "true"
+        FT_ALLOW_UC_HEARING_OPTIONS: "true"
+        MEDIA_FILES_ALLOWED_ENABLED: "true"
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
