@@ -2,3 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rpe-send-letter-service-container-new
+spec:
+  values:
+    function:
+      trigger:
+        type: azure-blob
+        blob:
+          blobContainerName: "new"
+          accountName: "rpesendletterdemo"
