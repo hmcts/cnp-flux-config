@@ -28,6 +28,11 @@ spec:
               envelopes-queue-send-connection-string: ENVELOPES_QUEUE_WRITE_CONN_STRING
               envelopes-queue-listen-connection-string: ENVELOPES_QUEUE_READ_CONN_STRING
               payments-queue-send-connection-string: PAYMENTS_QUEUE_WRITE_CONN_STRING
+              orchestrator-POSTGRES-PASS: DB_PASSWORD
+              orchestrator-POSTGRES-USER: DB_USER
+              orchestrator-POSTGRES-HOST: DB_HOST
+              orchestrator-POSTGRES-PORT: DB_PORT
+              orchestrator-POSTGRES-DATABASE: DB_NAME
         environment:
           TEST_URL: "http://bulk-scan-orchestrator-java"
           SLACK_CHANNEL: "bsp-test-notices"
@@ -43,9 +48,8 @@ spec:
           QUEUE_PAYMENTS_NAME: "payments"
           QUEUE_READ_ACCESS_KEY_NAME: "ListenSharedAccessKey"
           QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
-          SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.testcontainers.jdbc.ContainerDatabaseDriver
-          SPRING_DATASOURCE_URL: jdbc:tc:postgresql:11.0://localhost/bs_orchestrator
           FLYWAY_SKIP_MIGRATIONS: true
+          DB_CONN_OPTIONS: ?sslmode=require
       smoketests:
         enabled: true
       functionaltests:
