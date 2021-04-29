@@ -2,6 +2,21 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: fees-pay
 bases:
-  - ../../../namespaces/fees-pay
+- ../../../namespaces/fees-pay
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
-  - ../../../namespaces/fees-pay/ccpay-callback-function/demo.yaml
+- ../../../namespaces/fees-pay/ccpay-callback-function/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: fees-pay
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "8215e978-44be-4b26-948f-dbcb6536c3ff"

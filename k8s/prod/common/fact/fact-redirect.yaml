@@ -1,0 +1,22 @@
+# this is to apply permanent redirect on courttribunalfinder.service.gov.uk
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://courttribunalfinder.service.gov.uk/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://www.find-court-tribunal.service.gov.uk/$1
+    traefik.ingress.kubernetes.io/preserve-host: "true"
+  name: fact-redirect-ingress
+  namespace: fact
+spec:
+  rules:
+    - host: courttribunalfinder.service.gov.uk
+      http:
+        paths:
+          - backend:
+              serviceName: fact-frontend-nodejs
+              servicePort: 80
+            path: /
