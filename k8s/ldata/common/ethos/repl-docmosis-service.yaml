@@ -21,7 +21,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-cc41e24f
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-a993f245
       ingressHost: ethos-repl-docmosis-backend-ldata.service.core-compute-ethosldata.internal
       environment:
         CCD_DATA_STORE_API_URL: http://ccd-data-store-api-java.ccd.svc.cluster.local
@@ -31,6 +31,7 @@ spec:
         IDAM_API_URL: https://idam-api-ethosldata.platform.hmcts.net
         REPL_DOCMOSIS_BACKEND_URL: http://ethos-repl-docmosis-service-ldata.service.core-compute-ethosldata.internal
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-ldata.service.core-compute-ethosldata.internal
+        DUMMY_VAR_TO_RESTART: 1
     global:
       environment: ethosldata
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
