@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-case-notificationss-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      ingressHost: ia-case-notifications-api-perftest.service.core-compute-perftest.internal
+      environment:
+        IA_EXUI_FRONTEND_URL: https://manage-case.platform.hmcts.net/
+        IA_AIP_FRONTEND_URL: https://immigration-appeal.platform.hmcts.net/
+        IA_IDAM_REDIRECT_URI: "https://ia-case-api-aat.service.core-compute-aat.internal/oauth2/callback"
+        DM_URL: "http://dm-store-aat.service.core-compute-aat.internal"
+        CCD_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+        IDAM_URL: "https://idam-api.aat.platform.hmcts.net"
+        OPEN_ID_IDAM_URL: "https://idam-web-public.aat.platform.hmcts.net"
+        S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+        IA_HOME_OFFICE_GOV_NOTIFY_ENABLED: "true"

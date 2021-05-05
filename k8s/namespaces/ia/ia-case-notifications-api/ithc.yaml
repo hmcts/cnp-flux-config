@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-case-notificationss-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      ingressHost: ia-case-notifications-api-ithc.service.core-compute-ithc.internal
+      environment:
+        IDAM_URL: "https://idam-api.ithc.platform.hmcts.net"
+        OPEN_ID_IDAM_URL: "https://idam-web-public.ithc.platform.hmcts.net"
+
