@@ -2,9 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-npa
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-447-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
         TEST_VAR: value1
-        # Need to override DB details while upgrading Postgres from v9 to v11
+      image: hmctspublic.azurecr.io/em/npa:pr-447-f36763d6
