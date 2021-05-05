@@ -1,15 +1,12 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: rd-judicial-data-load
+  name: dg-docassembly
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:pr-183-*
+    fluxcd.io/tag.java: glob:pr-331-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
-    job:
-      schedule: "0/10 * * * *"
-      environment:
-        DELETE_ORG: true
+    java:
+      image: hmctspublic.azurecr.io/dg/docassembly:pr-331-8d11a2b1
