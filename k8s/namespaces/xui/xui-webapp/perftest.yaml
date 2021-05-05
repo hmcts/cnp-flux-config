@@ -4,13 +4,13 @@ metadata:
   name: xui-webapp
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-981-*
+    fluxcd.io/tag.nodejs: glob:pr-977-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
-      replicas: 20
-      memoryLimits: "1Gi"
+      replicas: 30
+      memoryLimits: "8Gi"
       cpuLimits: "2000m"
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
@@ -30,5 +30,5 @@ spec:
         STUB: false
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal
         UV_THREADPOOL_SIZE: 96
-        DUMMY_VAR: true
-      image: hmctspublic.azurecr.io/xui/webapp:pr-981-1068ea96
+        HEALTH_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal/health
+      image: hmctspublic.azurecr.io/xui/webapp:pr-977-68b862f2

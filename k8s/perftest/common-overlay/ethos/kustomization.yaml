@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: ethos
 bases:
 - ../../../namespaces/ethos
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: ethos
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "414c132d-5160-42b3-bbff-43a2e1daafcf"
