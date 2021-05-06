@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-case-documents-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      ingressHost: ia-case-documents-api-ithc.service.core-compute-ithc.internal
+      environment:
+        EM_BUNDLER_URL: "http://em-ccdorc-ithc.service.core-compute-ithc.internal"
