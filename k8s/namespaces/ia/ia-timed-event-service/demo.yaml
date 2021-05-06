@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-timed-event-service
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:prod-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      environment:
+        IDAM_URL: "https://idam-web-public.demo.platform.hmcts.net"
