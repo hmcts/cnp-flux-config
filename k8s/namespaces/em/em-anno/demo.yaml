@@ -1,23 +1,23 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: em-npa
+  name: em-anno
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-447-*
+    fluxcd.io/tag.java: glob:pr-455-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       keyVaults:
-        em-npa:
+        em-anno:
           secrets:
+            - name: microservicekey-em-annotation-app
+              alias: S2S_KEY
             - name: AppInsightsInstrumentationKey
               alias: APPINSIGHTS_INSTRUMENTATIONKEY
-            - name: microservicekey-em-npa-app
-              alias: S2S_KEY
-            - name: npa-POSTGRES-PASS
+            - name: anno-POSTGRES-PASS
               alias: SPRING_DATASOURCE_PASSWORD
       environment:
         TEST_VAR: value1
-      image: hmctspublic.azurecr.io/em/npa:pr-447-623bcf94
+      image: hmctspublic.azurecr.io/em/anno:pr-455-fed35ceb
