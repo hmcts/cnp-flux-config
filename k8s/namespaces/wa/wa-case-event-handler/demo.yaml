@@ -4,10 +4,13 @@ metadata:
   name: wa-case-event-handler
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
+    fluxcd.io/tag.java: glob:demo-*
 spec:
   values:
     java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/wa/case-event-handler:latest
       environment:
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
         RESTART_ME: ""
