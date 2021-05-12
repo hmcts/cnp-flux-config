@@ -1,0 +1,34 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-dn
+  namespace: divorce
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: div-dn
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/div-dn
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/dn:prod-339b15de
+      ingressHost: decree-nisi-aks.perftest.platform.hmcts.net
+      environment:
+        PUBLIC_HOSTNAME: https://decree-nisi-aks.perftest.platform.hmcts.net  # looks unused
+        BASE_URL: https://decree-nisi-aks.perftest.platform.hmcts.net
+        RESPONDENT_FRONTEND_URL: https://respond-divorce-aks.perftest.platform.hmcts.net
+        PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.perftest.platform.hmcts.net
+        DECREE_ABSOLUTE_FRONTEND_URL: https://decree-absolute-aks.perftest.platform.hmcts.net
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

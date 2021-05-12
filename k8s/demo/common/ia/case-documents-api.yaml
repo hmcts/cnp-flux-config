@@ -13,17 +13,17 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-case-documents-api
-    version: 0.0.17
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ia-case-documents-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-849fb82b
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-8cf0c19d
       ingressHost: ia-case-documents-api-demo.service.core-compute-demo.internal
       environment:
-        DOCMOSIS_ENDPOINT: https://docmosis-development.platform.hmcts.net
+        DOCMOSIS_ENDPOINT: https://docmosis.demo.platform.hmcts.net
         EM_BUNDLER_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
         RESTART_ME: "3"
     global:

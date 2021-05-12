@@ -4,6 +4,21 @@ namespace: ia
 bases:
 - ../../../namespaces/ia
 - ../../../namespaces/ia/ia-task-configuration/ia-task-configuration.yaml
-
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+- ../../../namespaces/ia/ia-case-access-api/ia-case-access-api.yaml
 patchesStrategicMerge:
 - ../../../namespaces/ia/ia-home-office-integration-api/aat.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: ia
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "b16db4e7-5cd6-409a-9f10-632089d91ff5"

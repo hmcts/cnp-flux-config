@@ -2,8 +2,23 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: bsp
 bases:
-  - ../../../namespaces/bsp
+- ../../../namespaces/bsp
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
-  - ../../../namespaces/bsp/bulk-scan-processor/demo.yaml
-  - ../../../namespaces/bsp/bulk-scan-orchestrator/demo.yaml
-  - ../../../namespaces/bsp/bulk-scan-payment-processor/demo.yaml
+- ../../../namespaces/bsp/bulk-scan-processor/demo.yaml
+- ../../../namespaces/bsp/bulk-scan-orchestrator/demo.yaml
+- ../../../namespaces/bsp/bulk-scan-payment-processor/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: bsp
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "d0a6004d-8985-4f40-87bc-4bed938bf395"

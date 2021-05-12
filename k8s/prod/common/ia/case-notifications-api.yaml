@@ -13,21 +13,19 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-case-notifications-api
-    version: 0.0.24
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ia-case-notifications-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-0a506cc1
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-e7ba42f0
       ingressHost: ia-case-notifications-api-prod.service.core-compute-prod.internal
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
         RESTART_ME: "Update due to vault Change"
-      prometheus:
-        enabled: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

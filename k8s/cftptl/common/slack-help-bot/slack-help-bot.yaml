@@ -6,7 +6,7 @@ metadata:
   namespace: slack-help-bot
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:prod-*
+    filter.fluxcd.io/chart-image: glob:prod-*
 spec:
   releaseName: slack-help-bot
   rollback:
@@ -17,8 +17,8 @@ spec:
     name: nodejs
     version: 2.3.4
   values:
-    replicas: 2
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:pr-16-a1c2432
+    replicas: 1
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-7732c2d
     environment:
       SLACK_REPORT_CHANNEL: platops-help
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
@@ -26,6 +26,7 @@ spec:
       JIRA_DONE_TRANSITION_ID: 201
       JIRA_PROJECT: DTSPO
       JIRA_ISSUE_TYPE_ID: 17100
+      JIRA_ISSUE_TYPE_NAME: "BAU Task"
     aadIdentityName: slack-help-bot
     keyVaults:
       cftptl-intsvc:

@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ia-aip-frontend
-    version: 0.0.10
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ia-aip-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-62db774b
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-b44a35b3
       ingressHost: immigration-appeal.aat.platform.hmcts.net
       environment:
         IDAM_WEB_URL: "https://idam-web-public.aat.platform.hmcts.net"

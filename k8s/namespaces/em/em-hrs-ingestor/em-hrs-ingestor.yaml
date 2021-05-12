@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: em-hrs-ingestor
+spec:
+  releaseName: em-hrs-ingestor
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/em-hrs-ingestor
+  values:
+    java:
+      useInterpodAntiAffinity: true
+      replicas: 2
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
+      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-4affea7a

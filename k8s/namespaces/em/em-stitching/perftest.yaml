@@ -2,9 +2,15 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-stitching
+#  annotations:
+#    fluxcd.io/automated: "true"
+#    fluxcd.io/tag.java: glob:pr-551-*
+#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      memoryLimits: "6144Mi"
+      cpuLimits: "3000m"
+      #      image: hmctspublic.azurecr.io/em/stitching:pr-551-482c6023
       environment:
-        DOCMOSIS_ENDPOINT: https://docmosis-testing.platform.hmcts.net/rs/convert
-        DOCMOSIS_RENDER_ENDPOINT: https://docmosis-testing.platform.hmcts.net/rs/render
+        CALLBACK_MAX_ATTEMPTS: 1

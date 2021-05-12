@@ -13,14 +13,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc-citizen-frontend
-    version: 3.3.14
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/cmc-citizen-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-2835-bdb4396f
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-3065-8660767a
       ingressHost: moneyclaims.demo.platform.hmcts.net
       environment:
         FEATURE_TESTING_SUPPORT: true

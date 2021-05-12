@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: docmosis
+  annotations:
+    filter.fluxcd.io/chart-image: glob:demo-*
+spec:
+  values:
+    ingressClass: traefik-private
+    ingressHost: docmosis.demo.platform.hmcts.net
+    image: hmctsprivate.azurecr.io/docmosis:demo-141140

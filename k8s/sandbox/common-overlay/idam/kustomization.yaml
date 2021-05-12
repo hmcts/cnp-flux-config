@@ -4,6 +4,7 @@ namespace: idam
 bases:
 - ../../../namespaces/admin/helm-operator
 - ../../../namespaces/admin/helm-operator/sealed-secrets/sandbox
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesJson6902:
 - target:
     group: apps
@@ -15,3 +16,16 @@ patchesJson6902:
     - op: add
       path: "/spec/template/spec/containers/0/args/-"
       value: --allow-namespace=idam
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: idam
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "fb6d2b15-482b-489e-8b1a-1172afcd432f"

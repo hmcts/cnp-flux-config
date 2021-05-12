@@ -7,6 +7,7 @@ bases:
   - ../../namespaces/admin/kube-slack
   - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
+  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/jenkins
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
@@ -70,3 +71,9 @@ patchesJson6902:
       name: kube-prometheus-stack
       namespace: monitoring
     path: ../../namespaces/jenkins/additional-service-monitors.yaml
+
+patches:
+  - target:
+      kind: ClusterRoleBinding
+      labelSelector: role-type=developer
+    path: ../../namespaces/all-namespaces/reader-clusterrole/mgmt-sandbox.yaml
