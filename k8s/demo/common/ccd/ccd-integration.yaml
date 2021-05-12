@@ -88,7 +88,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e414c0ec
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-64e73f3d
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -99,7 +99,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-09fb7e7b
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-94377766
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -112,11 +112,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-dbcf4a95
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-21fe91e1
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-cc43d0fa
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-c829e02e
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ef9fd93a
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-cf16079a
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
