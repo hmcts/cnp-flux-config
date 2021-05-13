@@ -3,9 +3,7 @@ kind: Kustomization
 namespace: am
 bases:
 - ../../../namespaces/am
-- ../../../namespaces/am/am-org-role-mapping-service/am-org-role-mapping-service.yaml
-- ../../../namespaces/am/am-role-assignment-service/am-role-assignment-service.yaml
-- ../../../namespaces/all-namespaces/nonptl-role.yaml
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/am/am-org-role-mapping-service/ithc.yaml
 - ../../../namespaces/am/am-role-assignment-service/ithc.yaml
@@ -14,7 +12,7 @@ patchesJson6902:
     group: rbac.authorization.k8s.io
     version: v1
     kind: RoleBinding
-    name: nonptl-team-permissions
+    name: nonprod-team-permissions
     namespace: am
   patch: |-
     - op: add

@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: ctsc
 bases:
 - ../../../namespaces/ctsc
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: ctsc
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "075cc55b-c1d0-4fb9-a658-e5e0de0e13b1"
