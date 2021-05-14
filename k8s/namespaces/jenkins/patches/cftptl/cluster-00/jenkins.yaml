@@ -48,9 +48,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : preview-01-aks
+                        value : preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: preview-01-rg
+                        value: preview-00-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -68,6 +68,12 @@ spec:
                     name: Platform
                     recurse: true
                     title: Platform
+                - buildMonitor:
+                    includeRegex: >-
+                      .*_Nightly_.*\/(.*fpl-ccd-configuration-.*|.*ia-ccd-e2e-tests-.*)\/master
+                    name: ExUI-PR-POC
+                    recurse: true
+                    title: Service-ExUI PR Tests Dashboard POC
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*BSP.*\/(send-letter-.*|blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
@@ -212,6 +218,12 @@ spec:
                     name: UNSPEC
                     recurse: true
                     title: UNSPEC Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*Civil.*\/.+\/master
+                    name: Civil
+                    recurse: true
+                    title: Civil Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*HMI.*\/.+\/master

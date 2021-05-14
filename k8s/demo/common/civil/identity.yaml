@@ -1,0 +1,19 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: civil
+  namespace: civil
+spec:
+  type: 0
+  resourceID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/civil-demo-mi
+  clientID: 8fb0be85-085e-4207-b48c-b1dca4796508
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: civil-binding
+  namespace: civil
+spec:
+  azureIdentity: civil
+  selector: civil

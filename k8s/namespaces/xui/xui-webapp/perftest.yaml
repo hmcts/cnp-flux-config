@@ -4,14 +4,16 @@ metadata:
   name: xui-webapp
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-981-*
+    fluxcd.io/tag.nodejs: glob:pr-977-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
       replicas: 20
-      memoryLimits: "1Gi"
+      memoryLimits: "6Gi"
+      memoryRequests: "3Gi"
       cpuLimits: "2000m"
+      cpuRequests: "1000m"
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL
@@ -30,4 +32,5 @@ spec:
         STUB: false
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal
         UV_THREADPOOL_SIZE: 96
-      image: hmctspublic.azurecr.io/xui/webapp:pr-981-c8cb83ca
+        HEALTH_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal/health
+      image: hmctspublic.azurecr.io/xui/webapp:pr-977-1e8872c1
