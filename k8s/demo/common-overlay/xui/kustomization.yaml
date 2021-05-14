@@ -7,6 +7,7 @@ bases:
 - ../../../namespaces/xui/xui-ao-webapp-integration/xui-ao-webapp-integration.yaml
 - ../../../namespaces/xui/xui-mo-webapp-integration/xui-mo-webapp-integration.yaml
 - ../../../namespaces/xui/xui-terms-and-conditions-integration/xui-terms-and-conditions-integration.yaml
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/xui/xui-terms-and-conditions/demo.yaml
 - ../../../namespaces/xui/xui-ao-webapp/demo.yaml
@@ -16,3 +17,17 @@ patchesStrategicMerge:
 - ../../../namespaces/xui/xui-ao-webapp-integration/demo.yaml
 - ../../../namespaces/xui/xui-mo-webapp-integration/demo.yaml
 - ../../../namespaces/xui/xui-terms-and-conditions-integration/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: xui
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "7a7c6518-2381-408b-940c-7b9bd0256d9a"
