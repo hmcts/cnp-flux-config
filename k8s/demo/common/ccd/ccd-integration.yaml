@@ -71,7 +71,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-46753042
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-57fb85eb
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -88,7 +88,7 @@ spec:
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e414c0ec
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-64e73f3d
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -99,7 +99,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-c56ede8d
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-94377766
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -112,11 +112,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-a18184c2
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-21fe91e1
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-249f0995
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-c829e02e
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-eaebe720
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ed48eb4c
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -138,7 +138,7 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-1fcd4d95
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-c11442ce
 
     elasticsearch:
       persistence:

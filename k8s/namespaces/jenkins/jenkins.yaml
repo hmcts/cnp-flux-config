@@ -68,7 +68,7 @@ spec:
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
 
-      installPlugins:
+      installPlugins: false
       # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
       # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
       # Keys are only used to give the section a meaningful name.  The only restriction is they may only contain RFC 1123 \ DNS label
@@ -406,6 +406,11 @@ spec:
                           description: "GitHub APP Key - nfdiv"
                           id: "hmcts-jenkins-nfdiv"
                           privateKey: "${hmcts-jenkins-nfdiv-ghapp}"
+                      - gitHubApp:
+                          appID: "113725"
+                          description: "GitHub APP Key - civil"
+                          id: "hmcts-jenkins-civil"
+                          privateKey: "${hmcts-jenkins-civil-ghapp}"
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
