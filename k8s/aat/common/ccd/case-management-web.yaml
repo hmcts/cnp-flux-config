@@ -20,7 +20,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-c0533e36
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1a8a9743
       environment:
         CCD_ACTIVITY_URL: https://gateway-ccd.aat.platform.hmcts.net/activity
         PAYMENTS_URL: https://gateway-ccd.aat.platform.hmcts.net/payments
@@ -31,9 +31,10 @@ spec:
         CCD_GW_OAUTH2_URL: https://gateway-ccd.aat.platform.hmcts.net/oauth2
         DM_URL: https://gateway-ccd.aat.platform.hmcts.net/documents
         ANNOTATION_API_URL: https://gateway-ccd.aat.platform.hmcts.net/em-anno
+        DM_URL_REMOTE: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-aat\.service\.core-compute-aat\.internal(?::\\d+)?)\/documents)|(em-hrs-api-aat\.service\.core-compute-aat\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]))
         POSTCODE_LOOKUP_URL: https://gateway-ccd.aat.platform.hmcts.net/addresses?postcode=${postcode}
         PRINT_SERVICE_URL: https://gateway-ccd.aat.platform.hmcts.net/print
-        DUMMY_ENV_VAR_TO_RESTART: 1
+        DUMMY_ENV_VAR_TO_RESTART: true
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

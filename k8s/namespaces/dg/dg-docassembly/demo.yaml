@@ -2,11 +2,25 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dg-docassembly
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-352-*
-#    hmcts.github.com/prod-automated: disabled
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-352-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-#      image: hmctspublic.azurecr.io/dg/docassembly:pr-352-81c4e916
+      keyVaults:
+        dg-docassembly:
+          resourceGroup: dg-docassembly
+          secrets:
+          - name: microservicekey-dg-docassembly-api
+            alias: S2S_KEY
+          - name: AppInsightsInstrumentationKey
+            alias: APPINSIGHTS_INSTRUMENTATIONKEY
+          - name: docmosis-templates-auth
+            alias: DOCMOSIS_TEMPLATES_ENDPOINT_AUTH
+          - name: docmosis-access-key
+            alias: DOCMOSIS_ACCESS_KEY
+      image: hmctspublic.azurecr.io/dg/docassembly:pr-352-aac43a6c
+      environment:
+        TEST_VAR: value1

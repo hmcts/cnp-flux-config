@@ -2,14 +2,24 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-546-*
-#    hmcts.github.com/prod-automated: disabled
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-595-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      keyVaults:
+        em-ccdorc:
+          resourceGroup: em-ccdorc
+          secrets:
+          - name: AppInsightsInstrumentationKey
+            alias: APPINSIGHTS_INSTRUMENTATIONKEY
+          - name: microservicekey-em-ccd-orchestrator
+            alias: S2S_KEY
+          - name: notification-api-key
+            alias: NOTIFICATION_API_KEY
       ingressHost: em-ccdorc-demo.service.core-compute-demo.internal
-      #      image: hmctspublic.azurecr.io/em/ccdorc:pr-546-e8ae3070
+      image: hmctspublic.azurecr.io/em/ccdorc:pr-595-2520c442
       environment:
         CALLBACK_DOMAIN: em-ccdorc-demo.service.core-compute-demo.internal
