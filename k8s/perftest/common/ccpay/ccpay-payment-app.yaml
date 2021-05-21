@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: pr-904-*
 spec:
   releaseName: ccpay-payment-api
   rollback:
@@ -20,10 +20,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:prod-587c6f24
+      image: hmctspublic.azurecr.io/payment/api:pr-904
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
+        DUMMY_RESTART_VAR: true
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment
           }}
