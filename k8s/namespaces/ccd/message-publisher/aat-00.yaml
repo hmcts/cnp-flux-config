@@ -3,15 +3,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: message-publisher
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
-    hmcts.github.com/prod-automated: disabled
 spec:
-  releaseName: message-publisher
   values:
     java:
       environment:
         CCD_CASE_EVENTS_ENABLED: true
-        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-aat.postgres.database.azure.com
-        DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-v11-demo
