@@ -6,7 +6,7 @@ metadata:
   namespace: probate
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1481-*
+    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: probate-back-office
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:pr-1481-cefc70c3
+      image: hmctspublic.azurecr.io/probate/back-office:latest
       environment:
         CCD_GATEWAY_HOST: https://gateway-ccd.ithc.platform.hmcts.net
     global:
