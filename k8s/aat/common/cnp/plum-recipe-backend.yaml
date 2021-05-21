@@ -27,7 +27,7 @@ spec:
     path: stable/plum-recipe-backend
   values:
     java:
-      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-11b8ccad
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-f8d99447
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       testsConfig:
         environment:
@@ -35,19 +35,19 @@ spec:
           SLACK_CHANNEL: "platops-build-notices"
           SLACK_NOTIFY_SUCCESS: "false"
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-11b8ccad
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-f8d99447
         enabled: true
         schedule: "10 0/1 * * *"
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-11b8ccad
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-f8d99447
         enabled: true
         schedule: "20 0/3 * * *"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-11b8ccad
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-f8d99447
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-11b8ccad
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-f8d99447
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: am-role-assignment-refresh-batch
+  annotations:
+    hmcts.github.com/global-defaults: enabled
+    hmcts.github.com/prod-automated: enabled
+spec:
+  releaseName: am-role-assignment-refresh-batch
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/am-role-assignment-refresh-batch
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/am/role-assignment-refresh-batch:prod-64a7f48f

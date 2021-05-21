@@ -71,7 +71,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-46753042
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-57fb85eb
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -82,13 +82,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-c0533e36
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-1a8a9743
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e414c0ec
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-64e73f3d
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -99,7 +99,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-09fb7e7b
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-94377766
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -112,11 +112,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-dbcf4a95
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-21fe91e1
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-c829e02e
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-cf6a1a9f
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-493c67c2
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-665dc8a9
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true

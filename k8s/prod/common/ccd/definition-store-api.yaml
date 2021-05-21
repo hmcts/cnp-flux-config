@@ -22,26 +22,26 @@ spec:
       keyVaults:
         ccd:
           secrets:
-            - definition-store-api-POSTGRES-USER-V11
-            - definition-store-api-POSTGRES-PASS-V11
-            - ccd-definition-s2s-secret
-            - ccd-ELASTIC-SEARCH-URL
-            - ccd-ELASTIC-SEARCH-PASSWORD
-            - storage-account-primary-connection-string
-            - AppInsightsInstrumentationKey
+          - definition-store-api-POSTGRES-USER-V11
+          - definition-store-api-POSTGRES-PASS-V11
+          - ccd-definition-s2s-secret
+          - ccd-ELASTIC-SEARCH-URL
+          - ccd-ELASTIC-SEARCH-PASSWORD
+          - storage-account-primary-connection-string
+          - AppInsightsInstrumentationKey
       autoscaling:
         enabled: false
         minReplicas: 2
         maxReplicas: 3
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-c829e02e
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-cf6a1a9f
       environment:
         IDAM_USER_URL: "https://hmcts-access.service.gov.uk"
         ELASTIC_SEARCH_FAIL_ON_IMPORT: true
         DEFINITION_STORE_DB_MAX_POOL_SIZE: 32
         DEFINITION_STORE_DB_NAME: ccd_definition_store
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-prod.postgres.database.azure.com
-        DUMMY_RESTART_VAR: 2
+        DUMMY_RESTART_VAR: 1
         test: "test1"
     global:
       environment: prod
