@@ -1,15 +1,15 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: wa-proto-frontend
+  name: wa-task-monitor
 spec:
-  releaseName: wa-proto-frontend
+  releaseName: wa-task-monitor
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/wa-proto-frontend
+    path: stable/wa-task-monitor
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/proto-frontend:prod-bd77f220
+      image: hmctspublic.azurecr.io/wa/task-monitor:prod-acd7c4ad
