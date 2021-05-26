@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
+    flux.weave.works/tag.nodejs: glob:pr-1146-*
 spec:
   releaseName: sscs-tribunals-frontend
   rollback:
@@ -21,7 +21,7 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-6db4c31b
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1146-44b846a4
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
         FT_WELSH: "true"
@@ -31,6 +31,8 @@ spec:
         MEDIA_FILES_ALLOWED_ENABLED: "true"
         MULTIPLE_DRAFTS_ENABLED: "true"
         TEST_PROPERTY: "true"
+        PCQ_URL: https://pcq.demo.platform.hmcts.net
+        PCQ_ENABLED: "true"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

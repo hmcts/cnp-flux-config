@@ -1,15 +1,15 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: wa-standalone-task-bpmn
+  name: wa-task-monitor
 spec:
-  releaseName: wa-standalone-task-bpmn
+  releaseName: wa-task-monitor
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/wa-standalone-task-bpmn
+    path: stable/wa-task-monitor
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/standalone-task-bpmn:prod-0410f1a9
+      image: hmctspublic.azurecr.io/wa/task-monitor:prod-9ad4d7a8

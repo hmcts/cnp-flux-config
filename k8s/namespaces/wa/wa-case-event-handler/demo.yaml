@@ -2,16 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: wa-case-event-handler
-  namespace: wa
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
 spec:
-  releaseName: wa-case-event-handler
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
       environment:
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
-        RESTART_ME: ""

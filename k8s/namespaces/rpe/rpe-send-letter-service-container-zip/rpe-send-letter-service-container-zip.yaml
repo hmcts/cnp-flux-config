@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rpe-send-letter-service-container-zip
+spec:
+  releaseName: rpe-send-letter-service-container-zip
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rpe-send-letter-service-container-zip
+  values:
+    function:
+      image: hmctspublic.azurecr.io/rpe/send-letter-service-container-zip:prod-58c1161b
