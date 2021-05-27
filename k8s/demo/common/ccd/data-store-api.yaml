@@ -5,8 +5,8 @@ metadata:
   name: ccd-data-store-api
   namespace: ccd
   annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:prod-b4c6e929
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -19,8 +19,20 @@ spec:
   values:
     java:
       replicas: 2
+      keyVaults:
+        ccd:
+          secrets:
+            - data-store-api-POSTGRES-USER-V11
+            - data-store-api-POSTGRES-PASS-V11
+            - data-store-api-draftStoreEncryptionSecret
+            - data-store-api-draft-key
+            - ccd-data-s2s-secret
+            - ccd-ELASTIC-SEARCH-URL
+            - ccd-ELASTIC-SEARCH-DATA-NODES-URL
+            - ccd-ELASTIC-SEARCH-PASSWORD
+            - AppInsightsInstrumentationKey
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-b4c6e929
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-f05cb607
       environment:
         DEFINITION_CACHE_LATEST_VERSION_TTL_SEC: 30
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
