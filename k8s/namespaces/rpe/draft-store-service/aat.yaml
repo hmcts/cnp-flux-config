@@ -21,12 +21,13 @@ spec:
         memoryLimits: "3072Mi"
         serviceAccountName: tests-service-account
         keyVaults:
-          "draft-store":
-            resourceGroup: draft-store-service
+          draft-store:
+            excludeEnvironmentSuffix: true
             secrets:
-              s2s-secret-for-tests: S2S_SECRET_FOR_TESTS
-              idam-password-for-tests: IDAM_PASSWORD_FOR_TESTS
-              idam-client-secret-for-tests: IDAM_CLIENT_SECRET_FOR_TESTS
+              - name: s2s-secret-for-tests
+                alias: S2S_SECRET_FOR_TESTS
+              - name: idam-password-for-tests
+              - name: idam-client-secret-for-tests
         environment:
           TEST_URL: http://draft-store-service-java
           SLACK_CHANNEL: "platops-build-notices"
