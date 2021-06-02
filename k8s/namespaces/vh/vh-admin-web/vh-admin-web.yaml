@@ -1,0 +1,23 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: vh-admin-web
+spec:
+  releaseName: vh-admin-web
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/vh-admin-web
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: sdshmctspublic.azurecr.io/vh/admin-web:latest
+      smoketestscron:
+        image: sdshmctspublic.azurecr.io/vh/admin-web:latest
+      functionaltestscron:
+        image: sdshmctspublic.azurecr.io/vh/admin-web:latest
+      smoketests:
+        image: sdshmctspublic.azurecr.io/vh/admin-web:latest
+      functionaltests:
+        image: sdshmctspublic.azurecr.io/vh/admin-web:latest
