@@ -2,14 +2,24 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-801-*
-#    hmcts.github.com/prod-automated: disabled
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-977-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       replicas: 4
+      keyVaults:
+        dm:
+          resourceGroup: dm-shared
+          secrets:
+            - name: RpaAppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: dm-store-storage-account-primary-connection-string
+              alias: azure.storage.connection-string
+            - name: store-POSTGRES-PASS
+              alias: spring.datasource.password
       environment:
         ENABLE_TTL: "false"
         LOG_OUTPUT: single
@@ -23,4 +33,4 @@ spec:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
-#      image: hmctspublic.azurecr.io/dm/store:pr-801-01e68598
+      image: hmctspublic.azurecr.io/dm/store:pr-977-7a63285d
