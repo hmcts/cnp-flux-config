@@ -2,16 +2,22 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: fpl-case-service
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-2666-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-2666-807c6b32
       environment:
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
         TESTING_SUPPORT_ENABLED: true
+        C2_WITH_NOTICE: GAOnNotice
+        ESO_EXTENSION: EduSupervisionChange
+        WARRANT_TO_ASSIST_PERSON_KEYWORD: WarrantEPO
+        CHILD_ASSESSMENT_KEYWORD: ChildAssess
+        CONTACT_WITH_CHILD_IN_CARE_KEYWORD: ContactChild
+        CHANGE_SURNAME_KEYWORD: CareChildChange
+        SPECIAL_GUARDIANSHIP_KEYWORD: SpecialGuardian
+        APPOINTMENT_OF_GUARDIAN_KEYWORD: Guardians
+        PARENTAL_RESPONSIBILITY_FATHER_KEYWORD: ParentalResponsibChg
+        PARENTAL_RESPONSIBILITY_FEMALE_KEYWORD: ParentalResponsibility
+        DECLARATION_OF_PARENTAGE: Private
