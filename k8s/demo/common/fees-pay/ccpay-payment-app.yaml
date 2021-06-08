@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: pr-896-*
+    flux.weave.works/tag.java: pr-904-*
 spec:
   releaseName: ccpay-payment-api
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-896-fcba0cf4
+      image: hmctspublic.azurecr.io/payment/api:pr-904-fb8f6e51
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
@@ -32,6 +32,8 @@ spec:
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         GOV_PAY_OPERATIONAL_SERVICES: "ccd_gw,api_gw,xui_webapp"
         PBA_CONFIG1_SERVICE_NAMES: dummy
+        IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment
+          }}.service.core-compute-{{ .Values.global.environment }}.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
