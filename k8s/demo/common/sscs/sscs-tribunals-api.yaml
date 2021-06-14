@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-2057-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2057-f354e938
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-0b71205b
       aadIdentityName: sscs
       environment:
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -31,7 +31,7 @@ spec:
         MAX_FILE_SIZE: 500MB
         MAX_REQUEST_SIZE: 500MB
         MULTI_BUNDLE_FEATURE: true
-        DUMMY: false
+        DUMMY: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

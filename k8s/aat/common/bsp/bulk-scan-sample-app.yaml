@@ -27,7 +27,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-04bbba78
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-6dd4e18b
       testsConfig:
         serviceAccountName: tests-service-account
         keyVaults:
@@ -42,12 +42,13 @@ spec:
           TEST_S2S_NAME: "bulk_scan_sample_app_tests"
           TEST_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
           TEST_SCAN_DELAY: "4000"
+          DUMMY_VAR: "delete_me"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-04bbba78
+        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-6dd4e18b
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-04bbba78
+        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-6dd4e18b
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
