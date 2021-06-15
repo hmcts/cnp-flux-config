@@ -5,7 +5,7 @@ ENV="$2"
 AAD_TEAM_GROUP_NAME="$3"
 
 function usage() {
-  echo "usage: ./add-namespace-to-env.sh <namespace> <env> <aad_team_group_name>"
+  echo 'usage: ./add-namespace-to-env.sh <namespace> <env> <"aad_team_group_name">'
 }
 
 if [ -z "${NAMESPACE}" ] || [ -z "${ENV}" ]
