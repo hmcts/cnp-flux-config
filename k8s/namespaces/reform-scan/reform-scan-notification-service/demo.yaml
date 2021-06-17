@@ -2,9 +2,15 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-notification-service
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-529-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      replicas: 6
       environment:
         PENDING_NOTIFICATIONS_SEND_DELAY_IN_MINUTE: 0
-        DUMMY_VAR: "delete_me"
+        NOTIFICATIONS_CONSUME_TASK_DELAY_IN_MS: 600000
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:pr-529-edf60d6-20210617085732

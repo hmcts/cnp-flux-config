@@ -19,9 +19,9 @@ All the applications owned by a team are deployed to a single namespace (usually
    
 ### Add kustomization to a environment
 
-- Run [add-namespace-to-env.sh](/bin/add-namespace-to-env.sh) with namespace and environment.
+- Run [add-namespace-to-env.sh](/bin/add-namespace-to-env.sh) with namespace, environment and Azure AD team group name (note:- add double quotes for aad_team_group_name).
    ```bash
-    ./bin/add-namespace-to-env.sh <your namespace> <environment>
+    ./bin/add-namespace-to-env.sh <your namespace> <environment> <"aad_team_group_name">
    ```
 
 ## Managed Identity 
