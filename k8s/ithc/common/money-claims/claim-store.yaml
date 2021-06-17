@@ -5,7 +5,7 @@ metadata:
   name: cmc-claim-store
   namespace: money-claims
   annotations:
-    flux.weave.works/automated: "false"
+    flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2208-bae349ab
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-48a7996b
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true

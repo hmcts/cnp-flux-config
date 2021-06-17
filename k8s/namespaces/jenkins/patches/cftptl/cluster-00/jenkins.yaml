@@ -100,7 +100,7 @@ spec:
                     title: CDM Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*CDM.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-api-gateway.*PR-353|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-335|.*cpo-case-payment-orders-api.*PR-54|.*ccd-admin-web.*PR-325|.*ccd-api-gateway.*PR-353|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-case-management-web.*PR-1043)
+                      ^HMCTS_.*CDM.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-399|.*cpo-case-payment-orders-api.*PR-54|.*ccd-api-gateway.*PR-353|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-case-management-web.*PR-1043)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
@@ -236,6 +236,12 @@ spec:
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_Nightly.*.*\/(.*performance.*|.*Performance.*)\/master
+                    name: Performance
+                    recurse: true
+                    title: Performance Dashboard
           authentication: |
             jenkins:
               securityRealm:
@@ -428,7 +434,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.2.4"
+                          galleryImageVersion: "2.2.9"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"

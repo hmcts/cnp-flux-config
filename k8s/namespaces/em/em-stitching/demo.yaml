@@ -2,8 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-stitching
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-656-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/em/stitching:pr-656-0d73a18-20210617093400
       environment:
         TEST_VAR: value1
