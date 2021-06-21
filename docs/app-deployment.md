@@ -112,7 +112,7 @@ If you want to find the effective yaml that will get applied to a environment, y
   kustomize build --load_restrictor none k8s/<env>/common-overlay/<your-namespace>
   
   #version 4.x
-    kustomize build --load-restrictor LoadRestrictionsNone k8s/<env>/common-overlay/<your-namespace>
+  kustomize build --load-restrictor LoadRestrictionsNone k8s/<env>/common-overlay/<your-namespace>
   ```
 - To generate the effective yaml generated including platform default, you can run 
 
