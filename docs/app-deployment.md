@@ -1,3 +1,4 @@
+
 # Application Configuration
 
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
@@ -19,9 +20,9 @@ All the applications owned by a team are deployed to a single namespace (usually
    
 ### Add kustomization to a environment
 
-- Run [add-namespace-to-env.sh](/bin/add-namespace-to-env.sh) with namespace and environment.
+- Run [add-namespace-to-env.sh](/bin/add-namespace-to-env.sh) with namespace, environment and Azure AD team group name (note:- add double quotes for aad_team_group_name).
    ```bash
-    ./bin/add-namespace-to-env.sh <your namespace> <environment>
+    ./bin/add-namespace-to-env.sh <your namespace> <environment> <"aad_team_group_name">
    ```
 
 ## Managed Identity 
@@ -109,10 +110,17 @@ If you want to find the effective yaml that will get applied to a environment, y
   `Note : This won't include platform defaults)`
   ```bash
   kustomize build --load_restrictor none k8s/<env>/common-overlay/<your-namespace>
+  
+  #version 4.x
+  kustomize build --load-restrictor LoadRestrictionsNone k8s/<env>/common-overlay/<your-namespace>
   ```
 - To generate the effective yaml generated including platform default, you can run 
 
   `Note : This can be very big as it includes all namespaces, you can temporarily remove other namespaces from bases: in k8s/<env>/common-overlay/kustomization.yaml to make it readable)`
     ```bash
     kustomize build --load_restrictor none k8s/<env>/common-overlay
+
+    #version 4.x
+    kustomize build --load-restrictor LoadRestrictionsNone k8s/<env>/common-overlay
+
     ```
