@@ -6,7 +6,7 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-903-*
 spec:
   releaseName: ia-case-api
   rollback:
@@ -20,10 +20,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-2f698c78
+      image: hmctspublic.azurecr.io/ia/case-api:pr-903-c1e5d81-20210621145940
       ingressHost: ia-case-api-perftest.service.core-compute-perftest.internal
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        IA_FEEPAYMENT_ENABLED: "true"
+        IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
+        IS_SAVE_AND_CONTINUE_ENABLED: "false"
+        IA_TIMED_EVENT_SERVICE_ENABLED: "true"
         CCD_URL: "http://ccd-data-store-api-perftest.service.core-compute-perftest.internal"
     global:
       environment: perftest
