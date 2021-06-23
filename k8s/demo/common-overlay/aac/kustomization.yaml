@@ -3,5 +3,20 @@ kind: Kustomization
 namespace: aac
 bases:
 - ../../../namespaces/aac
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/aac/manage-case-assignment/demo.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: aac
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "1250b19a-8c14-4760-9538-95b313e700db"

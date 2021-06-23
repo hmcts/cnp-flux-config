@@ -3,9 +3,23 @@ kind: Kustomization
 namespace: xui
 bases:
 - ../../../namespaces/xui
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/xui/xui-terms-and-conditions/aat.yaml
 - ../../../namespaces/xui/xui-ao-webapp/aat.yaml
 - ../../../namespaces/xui/xui-mo-webapp/aat.yaml
 - ../../../namespaces/xui/xui-webapp/aat.yaml
-
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: xui
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "7a7c6518-2381-408b-940c-7b9bd0256d9a"

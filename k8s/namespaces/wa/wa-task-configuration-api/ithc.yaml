@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-task-configuration-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-165-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/wa/wa-task-configuration-api:prod-dd83ccd5

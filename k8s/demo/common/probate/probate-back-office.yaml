@@ -6,7 +6,7 @@ metadata:
   namespace: probate
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1255-*
+    fluxcd.io/tag.java: glob:pr-1413-*
 spec:
   releaseName: probate-back-office
   rollback:
@@ -15,14 +15,15 @@ spec:
   chart:
     name: probate-back-office
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 1.0.6
+    version: 1.0.7
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:pr-1255-fa95e830
+      image: hmctspublic.azurecr.io/probate/back-office:pr-1413-1f5e16f-20210623104853
       environment:
         CCD_GATEWAY_HOST: https://gateway-ccd.demo.platform.hmcts.net
+        VAR1_DUMMY: DUMMY
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

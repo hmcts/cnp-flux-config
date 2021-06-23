@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-workflow-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-196-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/wa/wa-workflow-api:prod-47d9ee49
+

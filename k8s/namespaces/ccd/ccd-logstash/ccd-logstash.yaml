@@ -61,7 +61,7 @@ spec:
           dead_letter_queue.enable: false
     logstashPipeline:
       01_input.conf: |
-        input {
+        input  {
           jdbc {
             jdbc_connection_string => "${DATA_STORE_URL}"
             jdbc_user => "${DATA_STORE_USER}"
@@ -94,7 +94,7 @@ spec:
             target => "data_classification"
             remove_field => ["json_data_classification"]
           }
-          json{
+          json {
               source => "json_supplementary_data"
               target => "supplementary_data"
               remove_field => ["json_supplementary_data"]
