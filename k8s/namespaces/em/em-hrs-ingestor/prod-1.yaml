@@ -1,0 +1,10 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: em-hrs-ingestor
+spec:
+  values:
+    job:
+      schedule: "30 0-5,21-23 * * *"
+      # Run every hour at 30 mins past, during the evening 9pm through 6am

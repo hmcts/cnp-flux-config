@@ -4,21 +4,11 @@ metadata:
   name: em-stitching
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-626-*
+    fluxcd.io/tag.java: glob:pr-656-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      keyVaults:
-        em-stitching:
-          resourceGroup: em-stitching
-          secrets:
-          - name: AppInsightsInstrumentationKey
-            alias: APPINSIGHTS_INSTRUMENTATIONKEY
-          - name: docmosis-access-key
-            alias: DOCMOSIS_ACCESS_KEY
-          - name: microservicekey-em-stitching-api
-            alias: S2S_KEY
-          - name: stitching-POSTGRES-PASS
-            alias: SPRING_DATASOURCE_PASSWORD
-      image: hmctspublic.azurecr.io/em/stitching:pr-626-1b6adf17
+      image: hmctspublic.azurecr.io/em/stitching:pr-656-8737705-20210621064101
+      environment:
+        TEST_VAR: value1
