@@ -12,4 +12,19 @@ for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
     yq eval 'del(.spec.valueFileSecrets)' -i $file
   fi
   yq eval 'del(.spec.rollback)' -i $file
+  yq eval 'del(.metadata.annotations)' -i $file
+  if $(yq e '.spec | has("chart")' $file) ; then
+    
+    if $(yq e '.spec.chart | has("repository")' $file) ; then
+    CHART_REPO=$(yq eval '.spec.chart.repository' $file)
+    CHART_NAME=$(yq eval '.spec.chart.name' $file)
+    CHART_VERSION=$(yq eval '.spec.chart.version' $file)
+    
+    yq eval 'del(.spec.chart)' -i $file
+    CHART_NAME=$CHART_NAME CHART_VERSION=$CHART_VERSION yq e '.spec.chart.spec.chart = env(CHART_NAME)|.spec.chart.spec.version = env(CHART_VERSION) ' -i $file
+      if [[ $CHART_REPO == *"hmctspublic"* ]]; then
+       yq e '.spec.chart.spec.sourceRef.kind = "HelmRepository"|.spec.chart.spec.sourceRef.name = "hmctspublic"| .spec.chart.spec.sourceRef.namespace = "flux-system"' -i $file
+      fi
+    fi
+  fi
 done
