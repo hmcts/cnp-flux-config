@@ -11,7 +11,9 @@ spec:
     name: flux-config
     namespace: flux-system
   validation: none
-  path: ./apps/admin/${ENVIRONMENT}/${CLUSTER}
+  path: ./apps/admin/${ENVIRONMENT}/base/
+  patchesStrategicMerge:
+    - ./apps/admin/traefik/${ENVIRONMENT}/${CLUSTER}.yaml
   postBuild:
     substitute:
       NAMESPACE: "admin"
