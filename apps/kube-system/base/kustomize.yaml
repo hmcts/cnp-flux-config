@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: admin
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-config
+    namespace: flux-system
+  validation: nonde
+  path: ./apps/kube-system/base
