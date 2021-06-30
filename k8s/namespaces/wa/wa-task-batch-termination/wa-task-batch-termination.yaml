@@ -1,9 +1,9 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: wa-task-batch-service
+  name: wa-task-batch-termination
 spec:
-  releaseName: wa-task-batch-service
+  releaseName: wa-task-batch-termination
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -11,4 +11,6 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/task-batch-service:prod-9cac1af-20210625110131
+      image: hmctspublic.azurecr.io/wa/task-batch-service:latest
+      environment:
+        JOB_NAME: TERMINATION
