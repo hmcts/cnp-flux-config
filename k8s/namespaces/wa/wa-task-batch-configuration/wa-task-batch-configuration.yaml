@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-configuration
+spec:
+  releaseName: wa-task-batch-configuration
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/wa-task-batch-service
+  values:
+    java:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/wa/task-batch-service:latest
+      environment:
+        JOB_NAME: CONFIGURATION
