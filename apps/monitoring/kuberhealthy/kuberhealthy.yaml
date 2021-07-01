@@ -1,20 +1,10 @@
----
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: kuberhealthy
   namespace: monitoring
-  annotations:
-    flux.weave.works/automated: "false"
 spec:
   releaseName: kuberhealthy
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    repository: https://comcast.github.io/kuberhealthy/helm-repos
-    name: kuberhealthy
-    version: 2.2.0
   values:
     prometheus:
       enableAlerting: true
@@ -26,3 +16,7 @@ spec:
     check:
       daemonset:
         runInterval: 1h
+  chart:
+    spec:
+      chart: kuberhealthy
+      version: 2.2.0
