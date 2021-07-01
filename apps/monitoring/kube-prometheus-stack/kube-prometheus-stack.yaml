@@ -3,9 +3,10 @@ kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
   namespace: monitoring
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   releaseName: kube-prometheus-stack
-  forceUpgrade: true
   values:
     defaultRules:
       create: true
