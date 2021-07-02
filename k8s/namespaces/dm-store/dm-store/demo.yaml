@@ -4,23 +4,15 @@ metadata:
   name: dm-store
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1018-*
+    fluxcd.io/tag.java: glob:pr-1033-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       replicas: 4
-      keyVaults:
-        dm:
-          resourceGroup: dm-shared
-          secrets:
-          - name: RpaAppInsightsInstrumentationKey
-            alias: azure.application-insights.instrumentation-key
-          - name: dm-store-storage-account-primary-connection-string
-            alias: azure.storage.connection-string
-          - name: store-POSTGRES-PASS
-            alias: spring.datasource.password
       environment:
+        ENABLE_METADATA_MIGRATION: 'true'
+        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "3600000"
         ENABLE_TTL: "false"
         LOG_OUTPUT: single
         ROOT_LOGGING_LEVEL: INFO
@@ -33,4 +25,4 @@ spec:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
-      image: hmctspublic.azurecr.io/dm/store:pr-1018-b7ed240-20210630105427
+      image: hmctspublic.azurecr.io/dm/store:pr-1033-d6f93dc-20210701192546
