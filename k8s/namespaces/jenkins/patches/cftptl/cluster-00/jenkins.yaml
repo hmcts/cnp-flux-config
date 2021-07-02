@@ -70,10 +70,16 @@ spec:
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      .*_Nightly_.*\/(.*fpl-ccd-configuration-.*|.*ia-ccd-e2e-tests-.*)\/master
-                    name: ExUI-PR-POC
+                      ^HMCTS_Nightly.*.*\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/master
+                    name: CC-SRT-FULL
                     recurse: true
-                    title: Service-ExUI PR Tests Dashboard POC
+                    title: Common Components - Service Regression Full Nightly Pipeline
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_Nightly.*.*\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/QA-588
+                    name: CC-SRT
+                    recurse: true
+                    title: Common Components - Service Regression Functional Only
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*BSP.*\/(send-letter-.*|blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
