@@ -2,22 +2,22 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1033-*
-    hmcts.github.com/prod-automated: disabled
+#  annotations:
+#    fluxcd.io/automated: "true"
+#    fluxcd.io/tag.java: glob:pr-1033-*
+#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       replicas: 4
       environment:
         ENABLE_METADATA_MIGRATION: 'true'
-        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "3600000"
+        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "600000"
         ENABLE_TTL: "false"
         LOG_OUTPUT: single
-        ROOT_LOGGING_LEVEL: INFO
-        LOG_LEVEL_SPRING_WEB: INFO
-        LOG_LEVEL_DM: INFO
+        ROOT_LOGGING_LEVEL: DEBUG
+        LOG_LEVEL_SPRING_WEB: DEBUG
+        LOG_LEVEL_DM: DEBUG
         FLAG: "refresh"
       testsConfig:
         memoryLimits: "3072Mi"
@@ -25,4 +25,4 @@ spec:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
-      image: hmctspublic.azurecr.io/dm/store:pr-1033-d6f93dc-20210701192546
+#      image: hmctspublic.azurecr.io/dm/store:pr-1033-d6f93dc-20210701192546
