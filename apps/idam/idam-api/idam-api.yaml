@@ -1,15 +1,10 @@
----
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
 spec:
   releaseName: idam-api
-  chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: idam-api
-    version: 0.3.8
   values:
     java:
       image: hmctspublic.azurecr.io/idam/api:prod-492cb68-20210621165229
@@ -39,3 +34,11 @@ spec:
         STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 02c54cd8-9625-43e5-af11-8774c4209a01
+  chart:
+    spec:
+      chart: idam-api
+      version: 0.3.8
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
