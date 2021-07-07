@@ -1,0 +1,20 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam
+spec:
+  releaseName: idam-web-public
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: idam-web-public
+    version: 0.2.10
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-public:prod-e80dd5e-20210701123856
+      ingressHost: hmcts-access.service.gov.uk
+      aadIdentityName: idam
+      useInterpodAntiAffinity: true
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.platform.hmcts.net
