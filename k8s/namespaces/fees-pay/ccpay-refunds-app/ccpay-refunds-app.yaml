@@ -6,9 +6,11 @@ metadata:
 spec:
   releaseName: ccpay-refunds-api
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: ccpay-refunds-api
-    version: 0.1.4
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-refunds-api
   values:
-    function:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-2be4e35-20210707170031
