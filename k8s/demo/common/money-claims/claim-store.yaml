@@ -15,12 +15,17 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 4.1.29
+    version: 4.1.27
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/cmc/claim-store:pr-2447-9953cdb-20210707183818
+      keyVaults:
+       cmc:
+        resourceGroup: cmc
+        secrets:
+          - cmc-db-password-v11
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -44,6 +49,8 @@ spec:
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: Win10UAT_006@test.justice.gov.uk
         MANAGEMENT_HEALTH_MAIL_ENABLED: false
         REFRESH_PODS: true
+        CMC_DB_USERNAME: cmc@cmc-db-v11-demo
+        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
