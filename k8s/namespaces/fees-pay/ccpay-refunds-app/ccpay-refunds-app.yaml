@@ -1,0 +1,14 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-refunds-api
+spec:
+  releaseName: ccpay-refunds-api
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccpay-refunds-api
+    version: 0.1.4
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-2be4e35-20210707170031
