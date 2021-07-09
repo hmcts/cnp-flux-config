@@ -1,0 +1,104 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: artifactory-oss
+  namespace: artifactory
+spec:
+  serviceName: "artifactory"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: artifactory-oss
+  template:
+    metadata:
+      labels:
+        app: artifactory-oss
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - artifactory-oss
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - jenkins-master
+              topologyKey: "kubernetes.io/hostname"
+      initContainers:
+        - name: artifactory-init
+          image: hmctspublic.azurecr.io/artifactory-init:0.1.0
+          command:
+            [
+              "sh",
+              "-c",
+              "mkdir -p /var/opt/jfrog/artifactory/etc; cp artifactory.config.xml /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml; chown -R 1030:1030 /var/opt/jfrog/artifactory; chmod -R 0700 /var/opt/jfrog/artifactory;",
+            ]
+          volumeMounts:
+            - mountPath: "/var/opt/jfrog/artifactory"
+              name: artifactory-data
+      containers:
+        - image: docker.bintray.io/jfrog/artifactory-oss:6.23.13
+          name: artifactory-oss
+          env:
+            - name: EXTRA_JAVA_OPTIONS
+              value: "-Xms2g -Xmx8g"
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "1000m"
+            limits:
+              memory: "8192Mi"
+              cpu: "3000m"
+          ports:
+            - containerPort: 8081
+              name: http
+          readinessProbe:
+            httpGet:
+              port: 8081
+              path: /
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
+            timeoutSeconds: 1
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: "/var/opt/jfrog/artifactory"
+              name: artifactory-data
+  volumeClaimTemplates:
+    - metadata:
+        name: artifactory-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "managed-premium"
+        resources:
+          requests:
+            storage: 1000Gi
+---
+#
+# Service
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: artifactory-oss
+  namespace: artifactory
+  annotations:
+    traefik.ingress.kubernetes.io/affinity: "true"
+  labels:
+    app: artifactory-oss
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8081
+  clusterIP: None
+  selector:
+    app: artifactory-oss
