@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-config-logging
+  namespace: jenkins
+data:
+  logging.properties: |
+    .level=INFO
+    handlers=java.util.logging.ConsoleHandler
+
+    java.util.logging.ConsoleHandler.level=INFO
+    java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+
+    winstone.level=INFO
+    org.apache.sshd.level=WARNING
+    hudson.model.WorkspaceCleanupThread.level=ALL
+    hudson.model.AsyncPeriodicWork.level=ALL
+    hudson.model.PeriodicWork.level=ALL
+
