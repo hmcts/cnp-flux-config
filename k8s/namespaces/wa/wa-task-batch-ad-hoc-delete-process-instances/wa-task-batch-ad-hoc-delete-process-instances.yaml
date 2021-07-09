@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-ad-hoc-delete-process-instances
+spec:
+  releaseName: wa-task-batch-ad-hoc-delete-process-instances
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/wa-task-batch-service
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/wa/task-batch-service:prod-2ba7463-20210702093219
+      environment:
+        JOB_NAME: AD_HOC_DELETE_PROCESS_INSTANCES
+    global:
+      jobKind: Job
+
