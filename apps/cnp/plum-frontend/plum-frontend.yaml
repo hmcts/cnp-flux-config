@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plum-frontend
+spec:
+  releaseName: plum-frontend
+  chart:
+    spec:
+      chart: ./stable/plum-frontend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/plum/frontend:prod-d6ab8a9-20210616131508
+      environment:
+        RECIPE_BACKEND_URL: http://plum-recipe-backend-java
