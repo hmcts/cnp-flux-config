@@ -2,10 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
-  annotations:
-    fluxcd.io/automated: "false"
-    fluxcd.io/tag.java: glob:prod-25e64c8f
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
-    job: {}
+    job:
+      #ingestion job disabled as per request from perf team
+      #schedule of "0 0 31 2 *" is a mechanism to not run the job at all (31st feb is a nonfiring date)
+      #k8s version 1.21 supports disabling a job via spec
+      #see https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/
+      schedule: "0 0 31 2 *"
