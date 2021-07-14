@@ -20,12 +20,14 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/da:prod-9710b30e
+      image: hmctspublic.azurecr.io/div/da:prod-9447eb3-20210702185517
       ingressHost: decree-absolute-aks.aat.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://decree-absolute-aks.aat.platform.hmcts.net
         PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.aat.platform.hmcts.net
         DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.aat.platform.hmcts.net
+        FEATURE_ANTENNA_WEBCHAT: "true"
+        FEATURE_WEBCHAT: "false"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

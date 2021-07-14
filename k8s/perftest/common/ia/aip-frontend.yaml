@@ -20,9 +20,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-a848fb7e
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-e86c3c3-20210714125548
       ingressHost: immigration-appeal.perftest.platform.hmcts.net
       environment:
+        IDAM_WEB_URL: "https://idam-web-public.perftest.platform.hmcts.net"
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+        TIMELINE_ENABLED: true
+        ASK_FOR_MORE_TIME_ENABLED: true
         RESTART_ME: "Update due to vault change"
     global:
       environment: perftest

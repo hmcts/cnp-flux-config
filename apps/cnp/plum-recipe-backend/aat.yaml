@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plum-recipe-backend
+spec:
+  releaseName: plum-recipe-backend
+  values:
+    java:
+      ingressHost: plum-recipe-backend.service.core-compute-aat.internal
+      testsConfig:
+        environment:
+          TEST_URL: http://plum-recipe-backend-java
+          SLACK_CHANNEL: "platops-build-notices"
+          SLACK_NOTIFY_SUCCESS: "false"
+      smoketestscron:
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-06be9032
+        enabled: true
+        schedule: "10 0/1 * * *"
+      functionaltestscron:
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-06be9032
+        enabled: true
+        schedule: "20 0/3 * * *"
+      smoketests:
+        enabled: true
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-06be9032
+      functionaltests:
+        enabled: true
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-06be9032

@@ -6,7 +6,7 @@ metadata:
   namespace: ia
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-903-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ia-case-api
   rollback:
@@ -20,11 +20,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:pr-903-0a8518b-20210624110139
+      image: hmctspublic.azurecr.io/ia/case-api:prod-0ac03d4-20210714101758
       ingressHost: ia-case-api-perftest.service.core-compute-perftest.internal
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
-        IA_FEEPAYMENT_ENABLED: "true"
+        IA_FEEPAYMENT_ENABLED: "false"
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
         IS_SAVE_AND_CONTINUE_ENABLED: "false"
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"

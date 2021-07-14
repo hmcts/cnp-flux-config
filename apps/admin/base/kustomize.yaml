@@ -10,7 +10,7 @@ spec:
     kind: GitRepository
     name: flux-config
     namespace: flux-system
-  validation: client
+  validation: none
   path: ./apps/admin/${ENVIRONMENT}/${CLUSTER}
   postBuild:
     substitute:
@@ -18,4 +18,6 @@ spec:
       TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"
       ENV_INJECTOR: "disabled"
       ENVIRONMENT: "${ENVIRONMENT}"
-      CLUSTER: "${CLUSTER}"
+      CLUSTER: "\"${CLUSTER}\""
+      CLUSTER_PATH: "${ENVIRONMENT}/${CLUSTER}"
+      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"

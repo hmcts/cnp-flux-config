@@ -4,7 +4,6 @@ metadata:
   name: kube-slack
   namespace: admin
 spec:
-  interval: 5m
   chart:
     spec:
       chart: ./stable/kube-slack
@@ -28,4 +27,4 @@ spec:
     envVars:
       NOT_READY_MIN_TIME: "180000"  # in ms
       SLACK_CHANNEL: "${TEAM_NOTIFICATION_CHANNEL}"
-      SLACK_USERNAME: ${CLUSTER}-{CLUSTER}-aks
+      SLACK_USERNAME: "${CLUSTER_FULL_NAME}-aks"
