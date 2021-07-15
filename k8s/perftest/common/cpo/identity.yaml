@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: cpo
+  namespace: cpo
+spec:
+  type: 0
+  resourceID: "/subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cpo-perftest-mi"
+  clientID: "7bfcb905-4473-4c8e-9104-fb88947e2a40"
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: cpo-binding
+  namespace: cpo
+spec:
+  azureIdentity: cpo
+  selector: cpo

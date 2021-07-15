@@ -5,15 +5,14 @@ bases:
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
   - ../../namespaces/admin/kube-slack
-  - ../../namespaces/admin/keyvault-flexvol
   - ../../namespaces/admin/traefik
+  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/jenkins
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/monitoring/jenkins-alerts
   - ../../namespaces/monitoring/node-problem-detector
-  - ../../namespaces/monitoring/kuberhealthy
   - ../../namespaces/admin/env-injector
   - ../../namespaces/pact-broker
   - ../../namespaces/artifactory
@@ -67,3 +66,9 @@ patchesJson6902:
       name: kube-prometheus-stack
       namespace: monitoring
     path: ../../namespaces/jenkins/additional-service-monitors.yaml
+
+patches:
+  - target:
+      kind: ClusterRoleBinding
+      labelSelector: role-type=developer
+    path: ../../namespaces/all-namespaces/reader-clusterrole/cftptl.yaml

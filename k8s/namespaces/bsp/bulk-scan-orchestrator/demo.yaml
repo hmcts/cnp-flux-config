@@ -2,12 +2,20 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-orchestrator
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-1474-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       environment:
-        ROOT_LOGGING_LEVEL: DEBUG
+        REFORM_LOG_LEVEL: DEBUG
         TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
         AUTO_CASE_CREATION_ENABLED_SSCS: "true"
         CASE_DEFINITION_HAS_ENVELOPE_IDS_SSCS: "true"
         CAN_SEARCH_CASES_BY_ENVELOPE_ID_SSCS: "true"
+        DELETE_ENVELOPES_DLQ_MESSAGES_ENABLED: "true"
+        DELETE_ENVELOPES_DLQ_MESSAGES_TTL: "60s"
+        DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "* */2 * * * *"
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1474-089d3af-20210714141601

@@ -1,0 +1,24 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: civil
+  name: civil-pod-portforward
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/portforward"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: civil-pod-portforward
+  namespace: civil
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: civil-pod-portforward
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "ca5067a5-f554-4f6a-9eda-e93a1190d7ec"

@@ -2,13 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: fpl-case-service
-  annotations:
-    fluxcd.io/automated: "false"
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-45bb02a9
       ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
       environment:
         SCHEDULER_ENABLED: false

@@ -20,10 +20,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-b17c2d10
+      image: hmctspublic.azurecr.io/ia/case-api:prod-0ac03d4-20210714101758
       ingressHost: ia-case-api-perftest.service.core-compute-perftest.internal
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        IA_FEEPAYMENT_ENABLED: "false"
+        IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
+        IS_SAVE_AND_CONTINUE_ENABLED: "false"
+        IA_TIMED_EVENT_SERVICE_ENABLED: "true"
         CCD_URL: "http://ccd-data-store-api-perftest.service.core-compute-perftest.internal"
     global:
       environment: perftest

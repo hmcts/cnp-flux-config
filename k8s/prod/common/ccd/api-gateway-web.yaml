@@ -22,15 +22,14 @@ spec:
       autoscaling:
         enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0b316d4c
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-cd1762f-20210621150634
       ingressHost: gateway.ccd.platform.hmcts.net
       environment:
         IDAM_BASE_URL: "https://idam-api.platform.hmcts.net"
         IDAM_OAUTH2_LOGOUT_ENDPOINT: https://idam-api.platform.hmcts.net/session/:token
         IDAM_OAUTH2_TOKEN_ENDPOINT: https://idam-api.platform.hmcts.net/oauth2/token
-        DUMMY_VAR_TO_REDEPLOY: 2
-
-        CORS_ORIGIN_WHITELIST: "https://www.ccd.platform.hmcts.net,https://ccd.platform.hmcts.net"
+        DUMMY_VAR_TO_REDEPLOY: 1
+        CORS_ORIGIN_WHITELIST: "https://www.ccd.platform.hmcts.net,https://ccd.platform.hmcts.net,https://manage-case.platform.hmcts.net"
         TIMING-ALLOW-ORIGIN: "https://www.ccd.platform.hmcts.net"
     global:
       environment: prod

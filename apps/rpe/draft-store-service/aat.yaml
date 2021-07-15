@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: draft-store-service
+spec:
+  values:
+    java:
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          draft-store:
+            excludeEnvironmentSuffix: false
+            secrets:
+              - name: s2s-secret-for-tests
+              - name: idam-password-for-tests
+              - name: idam-client-secret-for-tests
+        environment:
+          TEST_URL: http://draft-store-service-java
+          SLACK_CHANNEL: "platops-build-notices"
+          SLACK_NOTIFY_SUCCESS: "false"
+          USE_IDAM_TESTING_SUPPORT: "true"
+          S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          IDAM_URL_FOR_TESTS: "https://idam-api.aat.platform.hmcts.net"
+          S2S_NAME_FOR_TESTS: "draft_store_tests"
+          IDAM_USER_EMAIL_FOR_TESTS: "reformplatformengineering+tests@gmail.com"
+          IDAM_CLIENT_ID_FOR_TESTS: "cmc_citizen"
+          IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
+      smoketestscron:
+        enabled: true
+        schedule: "15 0/1 * * *"
+      functionaltestscron:
+        enabled: true
+        schedule: "25 0/6 * * *"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

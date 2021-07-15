@@ -2,6 +2,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: developer-read
+  labels:
+    role-type: developer
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -14,7 +16,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: developer-view-custom-resources
+  name: developer-read-custom-resources
 rules:
 - apiGroups: ['keda.k8s.io']
   resources: ['scaledobjects']
@@ -32,11 +34,13 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: developer-view-custom-resources
+  name: developer-read-custom-resources
+  labels:
+    role-type: developer
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: developer-view-custom-resources
+  name: developer-read-custom-resources
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group

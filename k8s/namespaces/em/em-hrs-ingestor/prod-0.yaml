@@ -1,0 +1,12 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: em-hrs-ingestor
+spec:
+  values:
+    job:
+      schedule: "00 * * * *"
+      #temp schedule to prove connectivity, on the hour
+      #schedule: "00 0-6,20-23 * * *"
+      # Run every hour, during the evening 9pm through 6am
