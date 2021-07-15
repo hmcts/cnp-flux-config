@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-case-api
+spec:
+  releaseName: nfdiv-case-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/nfdiv-case-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-5e455ca-20210715134618
+      environment:
+        AWAITING_CONDITIONAL_ORDER_SCHEDULED_CRON: 0 0/10 * * * ?
+        CASE_HOLDING_WEEKS: 0
