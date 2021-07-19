@@ -20,7 +20,33 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2208-e925f2f-20210716164744
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2459-25aa59c-20210719100911
+      keyVaults:
+        cmc:
+          resourceGroup: cmc
+          secrets:
+            - AppInsightsInstrumentationKey
+            - cmc-db-password-v11
+            - citizen-oauth-client-secret
+            - claim-store-s2s-secret
+            - anonymous-caseworker-username
+            - anonymous-caseworker-password
+            - system-update-username
+            - system-update-password
+            - notify-api-key
+            - milo-recipient
+            - staff-email
+            - live-support-email
+            - rpa-email-sealed-claim
+            - rpa-email-breathing-space
+            - rpa-email-legal-sealed-claim
+            - rpa-email-more-time-requested
+            - rpa-email-response
+            - rpa-email-ccj
+            - rpa-email-paid-in-full
+            - launchDarkly-sdk-key
+            - sendgrid-api-key
+            - staff-email-legal-rep
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
