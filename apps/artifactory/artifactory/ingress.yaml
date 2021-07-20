@@ -1,0 +1,20 @@
+---
+#
+# Ingress
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: artifactory-oss
+  namespace: artifactory
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: artifactory.platform.hmcts.net
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: artifactory-oss
+              servicePort: 80
