@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 for file in $(grep -lr "kind: HelmRelease" k8s/namespaces  --exclude-dir={admin,monitoring,neuvector,pact-broker,osba,jenkins,kured}); do
   
   NAMESPACE="$( echo $file | cut -d'/' -f3)"
-  FILE_NAMESPACE=$(yq eval '{.metadata.name:.[.name]}' k8s/namespaces/$NAMESPACE/namespace.yaml | cut -f1 -d":")
-  HELM_RELEASE_NAME=$(yq eval '{.metadata.name:.[.name]}' $file | cut -f1 -d":")
+  FILE_NAMESPACE=$(yq eval .metadata.name k8s/namespaces/$NAMESPACE/namespace.yaml)
+  HELM_RELEASE_NAME=$(yq eval .metadata.name $file)
   FILE_DIRECTORY="k8s/namespaces/$NAMESPACE/$HELM_RELEASE_NAME/"
   BASE_MANIFEST="$FILE_DIRECTORY$HELM_RELEASE_NAME.yaml"
-  SPEC_RELEASE_NAME=$(yq eval '{.spec.releaseName:.[.releaseName]}' $BASE_MANIFEST | cut -f1 -d":")
+  SPEC_RELEASE_NAME=$(yq eval .spec.releaseName $BASE_MANIFEST)
   
   [[ "$HELM_RELEASE_NAME" =~ "ccd-logstash" ]] && continue
 
