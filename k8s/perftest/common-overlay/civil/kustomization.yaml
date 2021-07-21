@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: civil
+bases:
+- ../../../namespaces/civil
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesStrategicMerge:
+- ../../../namespaces/civil/civil-service/perftest.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: civil
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "ca5067a5-f554-4f6a-9eda-e93a1190d7ec"

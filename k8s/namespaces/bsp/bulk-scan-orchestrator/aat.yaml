@@ -15,24 +15,38 @@ spec:
         serviceAccountName: tests-service-account
         keyVaults:
           bulk-scan:
-            resourceGroup: bulk-scan
             secrets:
-              s2s-secret-bulk-scan-orchestrator: S2S_SECRET
-              idam-users-bulkscan-username: IDAM_USER_NAME
-              idam-users-bulkscan-password: IDAM_USER_PASSWORD
-              idam-client-secret: IDAM_CLIENT_SECRET
-              envelopes-queue-send-shared-access-key: ENVELOPES_QUEUE_WRITE_ACCESS_KEY
-              envelopes-queue-listen-shared-access-key: ENVELOPES_QUEUE_READ_ACCESS_KEY
-              payments-queue-send-shared-access-key: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
+            - name: s2s-secret-bulk-scan-orchestrator
+              alias: S2S_SECRET
+            - name: idam-users-bulkscan-username
+              alias: IDAM_USER_NAME
+            - name: idam-users-bulkscan-password
+              alias: IDAM_USER_PASSWORD
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: envelopes-queue-send-shared-access-key
+              alias: ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+            - name: envelopes-queue-listen-shared-access-key
+              alias: ENVELOPES_QUEUE_READ_ACCESS_KEY
+            - name: payments-queue-send-shared-access-key
+              alias: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
               # following can be removed once https://github.com/hmcts/bulk-scan-orchestrator/pull/1141 is deployed
-              envelopes-queue-send-connection-string: ENVELOPES_QUEUE_WRITE_CONN_STRING
-              envelopes-queue-listen-connection-string: ENVELOPES_QUEUE_READ_CONN_STRING
-              payments-queue-send-connection-string: PAYMENTS_QUEUE_WRITE_CONN_STRING
-              orchestrator-POSTGRES-PASS: DB_PASSWORD
-              orchestrator-POSTGRES-USER: DB_USER
-              orchestrator-POSTGRES-HOST: DB_HOST
-              orchestrator-POSTGRES-PORT: DB_PORT
-              orchestrator-POSTGRES-DATABASE: DB_NAME
+            - name: envelopes-queue-send-connection-string
+              alias: ENVELOPES_QUEUE_WRITE_CONN_STRING
+            - name: envelopes-queue-listen-connection-string
+              alias: ENVELOPES_QUEUE_READ_CONN_STRING
+            - name: payments-queue-send-connection-string
+              alias: PAYMENTS_QUEUE_WRITE_CONN_STRING
+            - name: orchestrator-POSTGRES-PASS
+              alias: DB_PASSWORD
+            - name: orchestrator-POSTGRES-USER
+              alias: DB_USER
+            - name: orchestrator-POSTGRES-HOST
+              alias: DB_HOST
+            - name: orchestrator-POSTGRES-PORT
+              alias: DB_PORT
+            - name: orchestrator-POSTGRES-DATABASE
+              alias: DB_NAME
         environment:
           TEST_URL: "http://bulk-scan-orchestrator-java"
           SLACK_CHANNEL: "bsp-test-notices"

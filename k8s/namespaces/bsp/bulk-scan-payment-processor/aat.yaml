@@ -23,11 +23,16 @@ spec:
           bulk-scan:
             resourceGroup: bulk-scan
             secrets:
-              s2s-secret-payment-processor: S2S_SECRET
-              idam-users-bulkscan-username: IDAM_USERS_BULKSCAN_USERNAME
-              idam-users-bulkscan-password: IDAM_USERS_BULKSCAN_PASSWORD
-              idam-client-secret: IDAM_CLIENT_SECRET
-              payments-queue-send-shared-access-key: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
+            - name: s2s-secret-payment-processor
+              alias: S2S_SECRET
+            - name: idam-users-bulkscan-username
+              alias: IDAM_USERS_BULKSCAN_USERNAME
+            - name: idam-users-bulkscan-password
+              alias: IDAM_USERS_BULKSCAN_PASSWORD
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: payments-queue-send-shared-access-key
+              alias: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
         environment:
           TEST_URL: "http://bulk-scan-payment-processor-aat.service.core-compute-aat.internal"
           SLACK_CHANNEL: "bsp-test-notices"

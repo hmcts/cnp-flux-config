@@ -3,13 +3,7 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rd-judicial-data-load
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:pr-183-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     job:
-      schedule: "0/10 * * * *"
-      environment:
-        DELETE_ORG: true
+      schedule: "0 15 * * *"

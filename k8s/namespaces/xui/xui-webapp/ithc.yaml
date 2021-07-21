@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-webapp
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:pr-925-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
@@ -24,4 +20,3 @@ spec:
         SERVICES_PRD_API: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         SERVICES_ICP_API: http://em-icp-ithc.service.core-compute-ithc.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL
-      image: hmctspublic.azurecr.io/xui/webapp:pr-925-cd5188d2

@@ -70,10 +70,16 @@ spec:
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      .*_Nightly_.*\/(.*fpl-ccd-configuration-.*|.*ia-ccd-e2e-tests-.*)\/master
-                    name: ExUI-PR-POC
+                      ^HMCTS_Nightly.*.*\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/master
+                    name: CC-SRT-FULL
                     recurse: true
-                    title: Service-ExUI PR Tests Dashboard POC
+                    title: Common Components - Service Regression Full Nightly Pipeline
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_Nightly.*.*\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/QA-588
+                    name: CC-SRT
+                    recurse: true
+                    title: Common Components - Service Regression Functional Only
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*BSP.*\/(send-letter-.*|blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
@@ -100,7 +106,7 @@ spec:
                     title: CDM Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*CDM.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-api-gateway.*PR-353|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-335|.*cpo-case-payment-orders-api.*PR-54|.*ccd-admin-web.*PR-325|.*ccd-api-gateway.*PR-353|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-case-management-web.*PR-1043)
+                      ^HMCTS_.*CDM.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-399|.*cpo-case-payment-orders-api.*PR-54|.*ccd-api-gateway.*PR-353|.*ccd-case-activity-api.*PR-256|.*ccd-case-print-service.*PR-260|.*ccd-case-management-web.*PR-1043)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
@@ -124,7 +130,7 @@ spec:
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Probate.*\/(probate-frontend|probate-caveats-frontend|probate-persistence-service|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/(master|demo|cnp)
+                      ^HMCTS_.*Probate.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -208,16 +214,10 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-media-viewer|em-showcase|document-management-store-app)\/master
+                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-media-viewer|em-showcase|document-management-store-app|dg-docassembly-api|em-hrs-api|em-hrs-ingestor)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
-                - buildMonitor:
-                    includeRegex: >-
-                      ^HMCTS_.*UNSPEC.*\/.+\/master
-                    name: UNSPEC
-                    recurse: true
-                    title: UNSPEC Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_.*Civil.*\/.+\/master
@@ -242,6 +242,18 @@ spec:
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_Nightly.*.*\/(.*performance.*|.*Performance.*)\/master
+                    name: Performance
+                    recurse: true
+                    title: Performance Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*FPRL.*\/(fprl-cos-api|fprl-ccd-definitions)\/master
+                    name: FPRL
+                    recurse: true
+                    title: Family Private Law
           authentication: |
             jenkins:
               securityRealm:
@@ -434,7 +446,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.2.4"
+                          galleryImageVersion: "2.2.9"
                           galleryName: "cnpimagegallery"
                           galleryResourceGroup: "cnp-image-gallery-rg"
                           gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
@@ -472,7 +484,7 @@ spec:
                       \ -XX:G1SummarizeRSetStatsPeriod=1"
                         location: "UK South"
                         noOfParallelJobs: 1
-                        osDiskSize: 0
+                        osDiskSize: 60
                         osDiskStorageAccountType: "StandardSSD_LRS"
                         osType: "Linux"
                         preInstallSsh: true

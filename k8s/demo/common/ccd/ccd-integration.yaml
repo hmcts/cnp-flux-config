@@ -71,7 +71,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-46753042
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-c12457a-20210714122055
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -82,13 +82,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-c0533e36
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-7616d82-20210720124403
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e414c0ec
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-c38a097-20210720162909
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -99,7 +99,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-09fb7e7b
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-bf64bc1-20210720161401
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -112,11 +112,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-dbcf4a95
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-09929c4-20210720161301
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-cc43d0fa
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-1ff0015-20210720161059
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ef9fd93a
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-a476922-20210720180912
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -138,7 +138,7 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-c11442ce
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-99b7ce6-20210716172456
 
     elasticsearch:
       persistence:
