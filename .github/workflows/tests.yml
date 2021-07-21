@@ -17,9 +17,8 @@ jobs:
         run: |
           sudo apt update
           sudo apt-get install -y yamllint
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt install yq -y
+      - name: Install yq
+        run: ./tests/install-yq.sh
       - name: Tests
         run: ./tests/run.sh
       - name: Kustomize Tests
