@@ -11,3 +11,12 @@ commonAnnotations:
 
 patchesStrategicMerge:
   - config-patches.yaml
+patches:
+  - path: hmctspublic-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry != hmctsprivate
+  - path: prod-image-policy.yaml
+    target:
+      kind: ImagePolicy
+      annotationSelector: hmcts.github.com/prod-automated != disabled
