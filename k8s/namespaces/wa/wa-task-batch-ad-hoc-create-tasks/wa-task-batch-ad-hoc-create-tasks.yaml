@@ -1,9 +1,11 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: wa-task-batch-termination
+  name: wa-task-batch-ad-hoc-create-tasks
+  fluxcd.io/automated: "true"
+  fluxcd.io/tag.job: glob:prod-*
 spec:
-  releaseName: wa-task-batch-termination
+  releaseName: wa-task-batch-ad-hoc-create-tasks
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -12,5 +14,3 @@ spec:
     job:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/wa/task-batch-service:prod-fa0a2b2-20210722095926
-      environment:
-        JOB_NAME: TERMINATION
