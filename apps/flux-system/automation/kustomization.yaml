@@ -2,15 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-  - https://github.com/fluxcd/flux2/manifests/integrations/registry-credentials-sync/azure?ref=main
+  - registry-credential-sync/hmctspublic/kustomize.yaml
+  - registry-credential-sync/hmctsprivate/kustomize.yaml
   - ../../backstage/automation
   - ../../cnp/automation
   - ../../slack-help-bot/automation
-commonAnnotations:
-  kustomize.toolkit.fluxcd.io/substitute: disabled
-
-patchesStrategicMerge:
-  - config-patches.yaml
 patches:
   - path: hmctspublic-image-repo.yaml
     target:
