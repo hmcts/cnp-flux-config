@@ -71,7 +71,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-c12457a-20210714122055
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-d53bbf2-20210722141816
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -82,13 +82,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-79a93de-20210715143324
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-7616d82-20210720124403
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-e3cf0f1-20210715143127
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-c38a097-20210720162909
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -99,7 +99,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-602cd68-20210705174435
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-7705f58-20210722160941
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -112,11 +112,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-4c1b03e-20210706152248
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-09929c4-20210720161301
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-de050ce-20210717120418
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7d98723-20210722141131
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +129,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-cffa537-20210719200200
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-b99ebee-20210722165345
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
