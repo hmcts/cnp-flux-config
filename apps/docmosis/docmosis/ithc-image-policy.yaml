@@ -1,0 +1,13 @@
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImagePolicy
+metadata:
+  name: ithc-docmosis
+spec:
+  filterTags:
+    pattern: '^ithc-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: ''
+  policy:
+    alphabetical:
+      order: asc
+  imageRepositoryRef:
+    name: docmosis
