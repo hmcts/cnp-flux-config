@@ -62,6 +62,8 @@ apiVersion: image.toolkit.fluxcd.io/v1alpha2
 kind: ImagePolicy
 metadata:
   name: ${TAG_PATTERN}-${HELM_RELEASE_NAME}
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
     pattern: '^${TAG_PATTERN}-[a-f0-9]+-(?P<ts>[0-9]+)'
