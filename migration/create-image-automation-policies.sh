@@ -34,13 +34,6 @@ for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   HELM_RELEASE_NAME=$(yq eval .metadata.name $file)
   FILE_DIRECTORY=$(dirname $file)
   
-  if [[ $FULL_IMAGE == hmctspublic* ]] ;
-  then
-    REPOSITORY_CREDS="hmctspublic-creds"
-  elif [[ $FULL_IMAGE == hmctsprivate* ]] ;
-  then
-    REPOSITORY_CREDS="hmctsprivate-creds"
-  fi
   IMAGE_REPO=$(echo ${FULL_IMAGE} |cut -d ':' -f 1)
   IMAGE_TAG=$(echo ${FULL_IMAGE} |cut -d ':' -f 2)
   
@@ -93,6 +86,11 @@ spec:
   image: $IMAGE_REPO
 EOF
 ) > "${FILE_DIRECTORY}/image-repo.yaml"
+  
+if [[ $FULL_IMAGE == hmctsprivate* ]] ;
+  then
+   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
+fi
 
 IMAGE_PATCH="$FULL_IMAGE #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
 
