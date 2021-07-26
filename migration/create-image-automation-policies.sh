@@ -96,6 +96,7 @@ EOF
 
 IMAGE_PATCH="$FULL_IMAGE #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
 
-#sed -i 's/$FULL_IMAGE/$IMAGE_PATCH/g' $file
+sed -i "s|$FULL_IMAGE|$IMAGE_PATCH|g" $file
+
 #IMAGE_COMMENT=$IMAGE_COMMENT IMAGE_PATH=$IMAGE_PATH yq eval 'env(IMAGE_PATH) lineComment="env(IMAGE_COMMENT)"' -i $file
 done
