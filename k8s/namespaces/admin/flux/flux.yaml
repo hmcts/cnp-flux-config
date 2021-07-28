@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://charts.fluxcd.io
     name: flux
-    version: 1.9.0
+    version: 1.10.0
   values:
     git:
       url: git@github.com:hmcts/cnp-flux-config
@@ -28,6 +28,8 @@ spec:
         enabled: true
         secretName: "acr-credentials"
       includeImage: "hmcts*.azurecr.io/*"
+    sync:
+      timeout: 3m
     additionalArgs:
       - --connect=ws://fluxcloud
       - --manifest-generation=true

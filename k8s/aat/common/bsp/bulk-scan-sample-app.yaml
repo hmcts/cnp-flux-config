@@ -27,14 +27,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-07d2f5d-20210629091508
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-dd27a4d-20210719105517
       testsConfig:
         serviceAccountName: tests-service-account
         keyVaults:
           bulk-scan:
-            resourceGroup: bulk-scan
             secrets:
-              sample-app-s2s-secret: TEST_S2S_SECRET
+            - name: sample-app-s2s-secret
+              alias: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://bulk-scan-sample-app-aat.service.core-compute-aat.internal"
           SLACK_CHANNEL: "bsp-test-notices"
@@ -42,13 +42,12 @@ spec:
           TEST_S2S_NAME: "bulk_scan_sample_app_tests"
           TEST_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
           TEST_SCAN_DELAY: "4000"
-          DUMMY_VAR: "delete_me"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-07d2f5d-20210629091508
+        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-dd27a4d-20210719105517
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-07d2f5d-20210629091508
+        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-dd27a4d-20210719105517
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

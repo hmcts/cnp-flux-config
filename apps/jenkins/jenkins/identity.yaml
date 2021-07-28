@@ -1,0 +1,17 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  type: 0
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: jenkins-binding
+  namespace: jenkins
+spec:
+  azureIdentity: jenkins
+  selector: jenkins

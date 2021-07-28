@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  values:
+    prometheus:
+      additionalServiceMonitors:
+        - name: "jenkins-monitor"
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: jenkins
+          namespaceSelector:
+            matchNames:
+              - jenkins
+          endpoints:
+            - port: http
+              path: /prometheus/

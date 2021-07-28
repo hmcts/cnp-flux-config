@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-document-am-api
+spec:
+  values:
+    java:
+      environment:
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
+        # enable as part of CHG5005127 (28th July 2021)
+        CASE_DOCUMENT_AM_API_ENABLED: false
+        RESTART: 0

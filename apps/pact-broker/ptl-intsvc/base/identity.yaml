@@ -1,0 +1,20 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: pact-broker
+  namespace: pact-broker
+spec:
+  resourceID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pact-broker-cftptl-intsvc-mi
+  clientID: 5eee22ba-c979-4523-aeb9-27f68c856923
+  type: 0
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: pact-broker
+  namespace: pact-broker
+spec:
+  azureIdentity: pact-broker
+  selector: pact-broker
+

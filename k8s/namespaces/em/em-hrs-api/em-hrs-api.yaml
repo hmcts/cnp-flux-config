@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-hrs-api
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-315
-    hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: em-hrs-api
   chart:
@@ -20,6 +16,6 @@ spec:
       memoryLimits: "4096Mi"
       cpuRequests: "1000m"
       cpuLimits: "2000m"
-      image: hmctspublic.azurecr.io/em/hrs-api:pr-315
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-2a28349-20210721164238
       environment:
-        TEST: "REFRESHJun14"
+        TEST: "REFRESHJul14"

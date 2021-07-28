@@ -4,21 +4,17 @@ metadata:
   name: dm-store
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1040-*
+    fluxcd.io/tag.java: glob:pr-1058-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      replicas: 1
-      memoryRequests: "2048Mi"
-      cpuRequests: "1000m"
+      #      replicas: 1
+      #      memoryRequests: "2048Mi"
+      #      cpuRequests: "1000m"
       environment:
-        ENABLE_METADATA_MIGRATION: 'true'
-        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "900000"
+        #        ENABLE_METADATA_MIGRATION: 'true'
+        #        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "900000"
         ENABLE_TTL: false
-        LOG_OUTPUT: single
-        ROOT_LOGGING_LEVEL: DEBUG
-        LOG_LEVEL_SPRING_WEB: DEBUG
-        LOG_LEVEL_DM: DEBUG
-        MAX_NON_MEDIA_FILE_SIZE: 1024
-      image: hmctspublic.azurecr.io/dm/store:pr-1040-6e7dc3b-20210709110000
+        REFRESH_FLAG: VAR1
+      image: hmctspublic.azurecr.io/dm/store:pr-1058-909395a-20210722114118
