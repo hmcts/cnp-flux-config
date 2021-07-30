@@ -18,7 +18,7 @@ spec:
     path: stable/ccd-definition-store-api
   values:
     java:
-      replicas: 2
+      replicas: 4
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-143c75a-20210728104758
       memoryRequests: "1024Mi"
@@ -32,7 +32,7 @@ spec:
         DEFINITION_STORE_DB_NAME: ccd_definition_store
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-aat.postgres.database.azure.com
         DUMMY_RESTART_VAR: 2
-        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
+        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 40
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
