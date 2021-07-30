@@ -2,13 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-webapp
-  annotations:
-    fluxcd.io/automated: "false"
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/xui/webapp:pr-1117-6580194-20210729194824
       ingressHost: manage-case.aat.platform.hmcts.net
       environment:
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL,CMC,HRS,PRIVATELAW
