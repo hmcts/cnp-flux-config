@@ -21,6 +21,31 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1558-6395ce1-20210730101117
+      keyVaults:
+        ccd:
+          secrets:
+            - name: data-store-api-POSTGRES-USER
+              alias: DATA_STORE_DB_USERNAME
+            - name: data-store-api-POSTGRES-PASS
+              alias: DATA_STORE_DB_PASSWORD
+            - name: data-store-api-draft-key
+              alias: CCD_DRAFT_ENCRYPTION_KEY
+            - name: ccd-data-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: ccd-ELASTIC-SEARCH-URL
+              alias: ELASTIC_SEARCH_HOSTS
+            - name: ccd-ELASTIC-SEARCH-DATA-NODES-URL
+              alias: ELASTIC_SEARCH_DATA_NODES_HOSTS
+            - name: ccd-ELASTIC-SEARCH-PASSWORD
+              alias: ELASTIC_SEARCH_PASSWORD
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: idam-data-store-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: idam-data-store-system-user-username
+              alias: IDAM_DATA_STORE_SYSTEM_USER_USERNAME
+            - name: idam-data-store-system-user-password
+              alias: IDAM_DATA_STORE_SYSTEM_USER_PASSWORD
       environment:
         DEFINITION_CACHE_LATEST_VERSION_TTL_SEC: 30
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
