@@ -20,7 +20,7 @@ cat <<EOF
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../apps/flux-system/sbox/base
+- ../../../apps/flux-system/$ENVIRONMENT/base
 - ../../../apps/admin/base/kustomize.yaml
 - ../../../apps/kube-system/base/kustomize.yaml
 - ../../../apps/kured/base/kustomize.yaml
