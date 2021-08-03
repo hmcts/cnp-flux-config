@@ -54,8 +54,8 @@ spec:
   imageRepositoryRef:
     name: $HELM_RELEASE_NAME
 EOF
-) > "${FILE_DIRECTORY}/image-policy.yaml" > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-policy.yaml"
-    
+) > "${FILE_DIRECTORY}/image-policy.yaml"
+cp ${FILE_DIRECTORY}/image-policy.yaml ${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-policy.yaml
   else
     
     TAG_PATTERN=${IMAGE_TAG%-*}
@@ -78,8 +78,8 @@ spec:
   imageRepositoryRef:
     name: $HELM_RELEASE_NAME
 EOF
-) > "${FILE_DIRECTORY}/${TAG_PATTERN}-image-policy.yaml" > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${TAG_PATTERN}-image-policy.yaml"
-  
+) > "${FILE_DIRECTORY}/${TAG_PATTERN}-image-policy.yaml"
+cp ${FILE_DIRECTORY}/${TAG_PATTERN}-image-policy.yaml ${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${TAG_PATTERN}-image-policy.yaml
   fi
   
 (
@@ -91,8 +91,8 @@ metadata:
 spec:
   image: $IMAGE_REPO
 EOF
-) > "${FILE_DIRECTORY}/image-repo.yaml" > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml"
-  
+) > "${FILE_DIRECTORY}/image-repo.yaml"
+cp ${FILE_DIRECTORY}/image-repo.yaml ${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml
 if [[ $FULL_IMAGE == hmctsprivate* ]] ;
   then
    yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
