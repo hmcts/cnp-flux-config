@@ -3,6 +3,9 @@ set -ex
 
 ENVIRONMENT=$1
 
+#Logging to cft sbox to pull secrets
+az aks get-credentials --resource-group cft-sbox-00-rg --name cft-sbox-00-aks --subscription b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb --overwrite-existing -a && kubectl config use-context cft-sbox-00-aks-admin
+
 # ----------------------- Cluster files ----------
 
 CLUSTER_DIRECTORY=clusters/$ENVIRONMENT
@@ -109,8 +112,6 @@ spec:
 EOF
 ) > "$FLUX_SYSTEM_DIRECTORY/01/kustomize.yaml"
 
-
-kubectx cft-sbox-00-aks-admin
 
 kubectl get secrets -n flux-system git-credentials -o yaml > /tmp/git-credentials.yaml
 kubeseal --format=yaml --cert=$CLUSTER_DIRECTORY/pub-cert.pem <  /tmp/git-credentials.yaml >  $FLUX_SYSTEM_DIRECTORY/base/git-credentials.yaml
