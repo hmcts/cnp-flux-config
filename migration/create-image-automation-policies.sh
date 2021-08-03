@@ -2,6 +2,9 @@
 set -ex
 FILE_DIRECTORY=$1
 NAMESPACE=$2
+APPS_DIRECTORY=$3
+
+
 
 for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
@@ -36,7 +39,8 @@ for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
   IMAGE_REPO=$(echo ${FULL_IMAGE} |cut -d ':' -f 1)
   IMAGE_TAG=$(echo ${FULL_IMAGE} |cut -d ':' -f 2)
-  
+  mkdir -p ${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}
+
   if [[ $IMAGE_TAG == prod-* ]] ;
   then
     TAG_POLICY_NAME=${HELM_RELEASE_NAME}
@@ -50,7 +54,7 @@ spec:
   imageRepositoryRef:
     name: $HELM_RELEASE_NAME
 EOF
-) > "${FILE_DIRECTORY}/image-policy.yaml"
+) > "${FILE_DIRECTORY}/image-policy.yaml" > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-policy.yaml"
     
   else
     
@@ -74,7 +78,7 @@ spec:
   imageRepositoryRef:
     name: $HELM_RELEASE_NAME
 EOF
-) > "${FILE_DIRECTORY}/${TAG_PATTERN}-image-policy.yaml"
+) > "${FILE_DIRECTORY}/${TAG_PATTERN}-image-policy.yaml" > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${TAG_PATTERN}-image-policy.yaml"
   
   fi
   
@@ -87,7 +91,7 @@ metadata:
 spec:
   image: $IMAGE_REPO
 EOF
-) > "${FILE_DIRECTORY}/image-repo.yaml"
+) > "${FILE_DIRECTORY}/image-repo.yaml" > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml"
   
 if [[ $FULL_IMAGE == hmctsprivate* ]] ;
   then
