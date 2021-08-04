@@ -34,16 +34,35 @@ for path in "${kustomizepaths[@]}"; do
     fi
 done
 
-aat_whitelist_helm_release_pattern='sample\|another-sample\|docmosis\|ccd-logstash-*' # Helm Release names seperated by `\|`
-prod_whitelist_helm_release_pattern='sample\|docmosis' # Helm Release names seperated by `\|`
+aat_whitelist_helm_release_pattern="ccd-logstash-* docmosis"
+prod_whitelist_helm_release_pattern="docmosis"
 
 for env in $(echo "aat prod"); do
-  env_white_list=${env}_whitelist_helm_release_pattern
-  for path in $(echo "k8s/$env/cluster-00-overlay k8s/$env/cluster-01-overlay k8s/$env/common-overlay"); do
-    ./kustomize build --load_restrictor none $path | yq e 'del(.metadata)' -j - | (grep \"hmcts.github.com/prod-automated\":\"disabled\" || true ) | grep -v ${!env_white_list}
-    if [ $? -eq 0 ]
-    then
-      echo "Non whitelisted HelmReleases found with hmcts.github.com/prod-automated annotation in $path" && exit 1
-    fi
+env_white_list=${env}_whitelist_helm_release_pattern
+
+  for helm_release in $(echo ${!env_white_list}); do
+
+    for path in $(echo "k8s/$env/cluster-00-overlay k8s/$env/cluster-01-overlay k8s/$env/common-overlay"); do
+  
+      kustomize_check=$(./kustomize build --load_restrictor none $path | \
+      helm_release_name="${helm_release}" yq eval 'select(.metadata and .kind == "HelmRelease" and .metadata.name == env(helm_release_name) )' -)
+
+      [[ $kustomize_check == "" ]] && true || false
+
+      if [ $? -eq 1 ]
+        then
+          
+        echo $kustomize_check | grep 'hmcts.github.com/prod-automated: disabled'
+
+        if [ $? -eq 1 ]
+        then
+          echo "Non whitelisted HelmReleases found with hmcts.github.com/prod-automated annotation in $path" && exit 1
+        fi
+
+      fi
+
+      done
+
   done
+  
 done
