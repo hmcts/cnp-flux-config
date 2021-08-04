@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-profile-sync-integration
+spec:
+  values:
+    java:
+      ingressHost: rd-profile-sync-int-demo.service.core-compute-demo.internal
+      environment:
+        USER_PROFILE_URL: http://rd-user-profile-api-int-demo.service.core-compute-demo.internal
+        DELETE_ORG: false

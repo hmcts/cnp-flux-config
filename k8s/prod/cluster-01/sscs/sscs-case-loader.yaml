@@ -19,7 +19,7 @@ spec:
     job:
       schedule: "0 2 31 2 *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/case-loader:prod-c6ae5cf-20210721145936
+      image: hmctspublic.azurecr.io/sscs/case-loader:prod-ede95fe-20210803113037
       startingDeadlineSeconds: 1800
       concurrencyPolicy: Forbid
       memoryRequests: "768Mi"
@@ -33,6 +33,8 @@ spec:
         IGNORE_HEARING_POSTPONED_BEFORE_DATE: 2021-03-01
         IDAM_LOG_DETAIL: FULL
         APACHE_LOG_LEVEL: DEBUG
+        PROCESS_MINOR_EVENTS: false
+        USE_EXISTING_DATE: false
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
