@@ -5,42 +5,26 @@ bases:
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
   - ../../namespaces/admin/external-dns
-  - ../../namespaces/admin/kube-slack
-  - ../../namespaces/admin/traefik
   - ../../namespaces/all-namespaces/edit-clusterrole.yaml
-  - ../../namespaces/kube-system/nodelocaldns
-  - ../../namespaces/kured
   - ../../namespaces/osba
-  - ../../namespaces/monitoring/node-problem-detector
-  - ../../namespaces/admin/env-injector
   - ../../namespaces/admin/keda
-  - ../../namespaces/admin/aad-pod-id
-  - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
+  - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
+  - ../../namespaces/admin/flux-helm-operator/rbac/preview-role-binding.yaml
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/preview/flux.yaml
   - ../../namespaces/admin/flux/patches/preview/cluster-01/flux.yaml
 
+  - ../../namespaces/admin/flux-helm-operator/patches/disable-rbac.yaml
+
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/preview/cluster-01/fluxcloud.yaml
-
-  #kube-slack patch
-  - ../../namespaces/admin/kube-slack/patches/preview/cluster-01/kube-slack.yaml
-
-  #traefik patch
-  - ../../namespaces/admin/traefik/patches/preview/cluster-01/traefik.yaml
-
-  #kured patch
-  - ../../namespaces/kured/patches/preview/cluster-01/kured.yaml
 
   #osba patch
   - ../../namespaces/osba/patches/preview/osba.yaml
 
-  #prom-operator patch
-  - ../../namespaces/admin/env-injector/patches/preview/cluster-01/env-injector.yaml
   - ../../namespaces/admin/external-dns/patches/preview/cluster-01/external-dns-deployment.yaml
 
 patches:
