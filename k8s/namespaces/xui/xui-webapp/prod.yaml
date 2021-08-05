@@ -2,9 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: xui-webapp
+  annotations:
+    fluxcd.io/automated: "false"
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
+      image: hmctspublic.azurecr.io/xui/webapp:pr-1117-0770733-20210803145545
       replicas: 20
       memoryLimits: "2048Mi"
       cpuLimits: "2000m"
