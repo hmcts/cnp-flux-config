@@ -3,16 +3,16 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    name: helm-operator
-  name: helm-operator
+    name: flux-helm-operator
+  name: flux-helm-operator
   namespace: admin
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   labels:
-    name: helm-operator
-  name: helm-operator
+    name: flux-helm-operator
+  name: flux-helm-operator
 rules:
   - apiGroups: ['*']
     resources: ['*']
@@ -24,7 +24,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: helm-operator-ro
+  name: flux-helm-operator-ro
 rules:
   - apiGroups: ['*']
     resources: ['*']
@@ -38,12 +38,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: helm-operator
+  name: flux-helm-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: helm-operator-ro
+  name: flux-helm-operator-ro
 subjects:
   - kind: ServiceAccount
-    name: helm-operator
+    name: flux-helm-operator
     namespace: admin
