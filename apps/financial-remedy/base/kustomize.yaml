@@ -1,0 +1,20 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: financial-remedy
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-config
+    namespace: flux-system
+  validation: none
+  path: ./apps/financial-remedy/
+  postBuild:
+    substitute:
+      NAMESPACE: "financial-remedy"
+      TEAM_NOTIFICATION_CHANNEL: "finrem-dev"
+      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
+      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"
