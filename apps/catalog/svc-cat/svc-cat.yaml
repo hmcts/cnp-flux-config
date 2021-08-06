@@ -1,0 +1,33 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: svc-cat
+  namespace: catalog
+spec:
+  releaseName: svc-cat
+  values:
+    apiserver:
+      resources:
+        limits:
+          memory: 1000Mi
+      storage:
+        etcd:
+          useEmbedded: false
+          servers: http://etcd.etcd:2379
+      healthcheck:
+        enabled: true
+    controllerManager:
+      healthcheck:
+        enabled: false
+      resources:
+        limits:
+          memory: 300Mi
+  chart:
+    spec:
+      chart: catalog-v0.2
+      version: 0.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
