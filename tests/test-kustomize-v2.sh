@@ -37,36 +37,3 @@ kustomizepaths=()
         done
 
 done
-
-aat_whitelist_helm_release_pattern="aat-docmosis"
-# prod_whitelist_helm_release_pattern="docmosis"
-
-for env in $(echo "aat prod"); do
-env_white_list=${env}_whitelist_helm_release_pattern
-
-  for helm_release in $(echo ${!env_white_list}); do
-
-    for path in $(echo "clusters/ptl-intsvc/base"); do
-  
-      kustomize_check=$(./kustomize build --load_restrictor none $path | \
-      helm_release_name="${helm_release}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(helm_release_name) )' -)
-
-      [[ $kustomize_check == "" ]] && true || false
-
-      if [ $? -eq 1 ]
-        then
-          
-        echo $kustomize_check | grep 'hmcts.github.com/prod-automated: disabled'
-
-        if [ $? -eq 1 ]
-        then
-          echo "Non whitelisted HelmReleases found with hmcts.github.com/prod-automated annotation in ImagePolicy: $helm_release" && exit 1
-        fi
-
-      fi
-
-      done
-
-  done
-  
-done
