@@ -52,7 +52,7 @@ spec:
     name: flux-config
     namespace: flux-system
   validation: none
-  path: ./apps/$namespace/${ENVIRONMENT}
+  path: ./apps/$namespace/\${ENVIRONMENT}
   postBuild:
     substitute:
       NAMESPACE: "$namespace"
