@@ -1,0 +1,20 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: divorce
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-config
+    namespace: flux-system
+  validation: none
+  path: ./apps/divorce/
+  postBuild:
+    substitute:
+      NAMESPACE: "divorce"
+      TEAM_NOTIFICATION_CHANNEL: "div-dev"
+      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
+      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"
