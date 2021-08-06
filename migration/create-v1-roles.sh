@@ -10,15 +10,15 @@ cat <<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: helm-operator
+  name: flux-helm-operator
   namespace: $namespace
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: helm-operator
+  name: flux-helm-operator
 subjects:
-  - name: helm-operator
-    namespace: flux
+  - name: flux-helm-operator
+    namespace: admin
     kind: ServiceAccount
 
 ---
