@@ -102,7 +102,7 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
-  path: ./$CLUSTER_DIRECTORY/00
+  path: ./$CLUSTER_DIRECTORY/01
   postBuild:
     substitute:
       ENVIRONMENT: "$ENVIRONMENT"
