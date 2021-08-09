@@ -36,7 +36,7 @@ done
 
 # Keep --- in below, only required once
 aat_whitelist_helm_release_pattern='ccd-logstash-*|---|docmosis'
-prod_whitelist_helm_release_pattern="exampleapp|---|docmosis"
+prod_whitelist_helm_release_pattern="ccd-logstash-*|---|docmosis"
 
 for env in $(echo "aat prod"); do
 env_white_list=${env}_whitelist_helm_release_pattern
