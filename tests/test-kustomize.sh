@@ -34,35 +34,30 @@ for path in "${kustomizepaths[@]}"; do
     fi
 done
 
-aat_whitelist_helm_release_pattern="ccd-logstash-* docmosis"
-prod_whitelist_helm_release_pattern="docmosis"
+# Keep --- in below, only required once
+aat_whitelist_helm_release_pattern='ccd-logstash-*|---|docmosis'
+prod_whitelist_helm_release_pattern="ccd-logstash-*|---|docmosis"
 
 for env in $(echo "aat prod"); do
 env_white_list=${env}_whitelist_helm_release_pattern
 
-  for helm_release in $(echo ${!env_white_list}); do
-
     for path in $(echo "k8s/$env/cluster-00-overlay k8s/$env/cluster-01-overlay k8s/$env/common-overlay"); do
-  
-      kustomize_check=$(./kustomize build --load_restrictor none $path | \
-      helm_release_name="${helm_release}" yq eval 'select(.metadata and .kind == "HelmRelease" and .metadata.name == env(helm_release_name) )' -)
 
-      [[ $kustomize_check == "" ]] && true || false
+    KUSTOMIZE_OUTPUT=$(./kustomize build --load_restrictor none $path | \
+    yq eval 'select(.kind == "HelmRelease" and .metadata.annotations."hmcts.github.com/prod-automated" == "disabled")' - | yq eval '.metadata.name' - )
+    HELMRELEASE_CHECK=$(echo "$KUSTOMIZE_OUTPUT" | grep -Ev "${!env_white_list}")
 
-      if [ $? -eq 1 ]
-        then
-          
-        echo $kustomize_check | grep 'hmcts.github.com/prod-automated: disabled'
+    if [ "$HELMRELEASE_CHECK" == null ] || [ "$HELMRELEASE_CHECK" == "" ]
+    then 
+        false
+    fi
 
-        if [ $? -eq 1 ]
-        then
-          echo "Non whitelisted HelmReleases found with hmcts.github.com/prod-automated annotation in $path" && exit 1
-        fi
 
-      fi
+    if [ $? -eq 0 ]
+    then
+      echo "Non whitelisted HelmReleases found with hmcts.github.com/prod-automated annotation in $path" && exit 1
+    fi
 
-      done
+    done
 
-  done
-  
 done
