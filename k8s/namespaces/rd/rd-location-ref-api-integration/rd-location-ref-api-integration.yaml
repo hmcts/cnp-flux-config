@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-location-ref-api-integration
+spec:
+  releaseName: rd-location-ref-api-integration
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rd-location-ref-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rd/location-ref-api:prod-5047957-20210805103330
