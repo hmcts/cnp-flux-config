@@ -1,0 +1,22 @@
+
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-test-stubs-service
+  namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+spec:
+  releaseName: ccd-test-stubs-service
+  rollback:
+    enable: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-test-stubs-service
+  values:
+    java:
+      replicas: 1
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/test-stubs-service:prod-fcc5d03-20210726124745
