@@ -28,7 +28,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
         fi
 
         IFS=$'\n'
-        IMAGE_POLICIES+=($(grep -o "flux-system:.*" $FILE | cut -d ':' -f2 | sed 's/...$// '))
+        IMAGE_POLICIES+=($(grep -o "flux-system:.*" $FILE | cut -d ':' -f2 | sed 's/..$//'))
 
     done
 
@@ -41,9 +41,12 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
         IMAGE_AUTOMATION_CHECK=$(./kustomize build --load_restrictor none $path | \
         IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' - | yq eval '.spec.filterTags.pattern == "^prod-[a-f0-9]+-(?P<ts>[0-9]+)"' -)
 
-            if [ $IMAGE_AUTOMATION_CHECK == false ]
+            if [ "$IMAGE_AUTOMATION_CHECK" == "" ]
             then
-            echo "Non whitelisted pattern found in ImagePolicy: $IMAGE_POLICY it should be ^prod-[a-f0-9]+-(?P<ts>[0-9]+)" && exit 1
+                echo "No ImagePolicy for $IMAGE_POLICY in clusters/ptl-intsvc/base"
+            elif [ $IMAGE_AUTOMATION_CHECK == false ]
+            then
+                echo "Non whitelisted pattern found in ImagePolicy: $IMAGE_POLICY it should be ^prod-[a-f0-9]+-(?P<ts>[0-9]+)" && exit 1
             fi
 
         done
