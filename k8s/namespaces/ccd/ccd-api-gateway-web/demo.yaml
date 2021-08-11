@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-api-gateway-web
+spec:
+  releaseName: ccd-api-gateway-web
+  values:
+    nodejs:
+      ingressClass: traefik-no-proxy
+      environment:
+        CORS_ORIGIN_WHITELIST: "*"
+        TIMING-ALLOW-ORIGIN: "https://www-ccd.demo.platform.hmcts.net"
+        DUMMY_VAR_TO_REDEPLOY: 1
