@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-activity-api
+spec:
+  releaseName: ccd-case-activity-api
+  values:
+    nodejs:
+      replicas: 16
+      autoscaling:
+        enabled: false
+      environment:
+        CORS_ORIGIN_WHITELIST: "https://www.ccd.platform.hmcts.net,https://ccd.platform.hmcts.net"
+        IDAM_BASE_URL: https://idam-api.platform.hmcts.net
+        DUMMY_VAR_TO_REDEPLOY: 1
