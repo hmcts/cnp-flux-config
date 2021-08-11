@@ -38,17 +38,29 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 
         for path in $(echo "clusters/ptl-intsvc/base"); do
 
-        IMAGE_AUTOMATION_CHECK=$(./kustomize build --load_restrictor none $path | \
-        IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' - | yq eval '.spec.filterTags.pattern == "^prod-[a-f0-9]+-(?P<ts>[0-9]+)"' -)
+        IMAGE_AUTOMATION=$(./kustomize build --load_restrictor none $path | \
+        IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' -)
 
-            if [ "$IMAGE_AUTOMATION_CHECK" == "" ]
+            if [ "$IMAGE_AUTOMATION" == "" ]
             then
                 echo "No ImagePolicy for $IMAGE_POLICY in clusters/ptl-intsvc/base"
-            elif [ $IMAGE_AUTOMATION_CHECK == false ]
+                IMAGE_AUTOMATION=false
+            else
+                IMAGE_AUTOMATION=true
+            fi
+            
+            if [ "$IMAGE_AUTOMATION" == true ]
+            then
+            IMAGE_AUTOMATION_CHECK=$(./kustomize build --load_restrictor none $path | \
+            IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' - | yq eval '.spec.filterTags.pattern == "^prod-[a-f0-9]+-(?P<ts>[0-9]+)"' -)
+
+            if [ $IMAGE_AUTOMATION_CHECK == false ]
             then
                 echo "Non whitelisted pattern found in ImagePolicy: $IMAGE_POLICY it should be ^prod-[a-f0-9]+-(?P<ts>[0-9]+)" && exit 1
             fi
-
+        
+            fi
+        
         done
 
     done
