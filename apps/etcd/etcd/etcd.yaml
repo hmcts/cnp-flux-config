@@ -6,11 +6,7 @@ metadata:
 spec:
   releaseName: etcd
   values:
-    image:
-      repository: "k8s.gcr.io/etcd-amd64"
-      tag: "3.3.10" # "v3.3.8-0-gke.1"
-    pullPolicy: "IfNotPresent"
-    replicas: 3
+    replicaCount: 3
     resources:
       requests:
         cpu: 100m
@@ -18,14 +14,14 @@ spec:
       limits:
         cpu: 1000m
         memory: 2500Mi
-    persistentVolume:
+    persistence:
       enabled: true
-      storage: "2Gi"
+      size: "2Gi"
   chart:
     spec:
-      chart: ./incubator/etcd
+      chart: etcd
+      version: 6.3.3
       sourceRef:
-        kind: GitRepository
-        name: hmcts-stable
-        namespace: flux-system
-      interval: 5m
+        kind: HelmRepository
+        name: etcd
+        namespace: etcd
