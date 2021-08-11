@@ -1,0 +1,42 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: sample-kustomize
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-config
+    namespace: flux-system
+  validation: none
+  patches:
+    - patch: |-
+        apiVersion: helm.toolkit.fluxcd.io/v2beta1
+        kind: HelmRelease
+        metadata:
+          name: test-helmrelease
+        spec:
+          interval: 5m
+          install:
+            remediation:
+              retries: 3
+          upgrade:
+            remediation:
+              retries: 3
+              remediateLastFailure: true
+          values:
+            global:
+              environment: ${KEYVAULT_ENVIRONMENT:-prod}
+              tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+              enableKeyVaults: true
+      target:
+        kind: HelmRelease
+  postBuild:
+    substitute:
+      ENVIRONMENT: "${ENVIRONMENT}"
+      CLUSTER: "\"${CLUSTER}\""
+      CLUSTER_PATH: "${ENVIRONMENT}/${CLUSTER}"
+      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
+      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"
