@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: lau-case-frontend
+spec:
+  releaseName: lau-case-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/lau-case-frontend
+  values:
+    nodejs:
+      memoryRequests: "1024Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/lau/case-frontend:latest
