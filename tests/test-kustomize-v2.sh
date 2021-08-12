@@ -24,6 +24,8 @@ kustomizepaths=()
         elif [[ $FOLDER_SEARCH =~ "base" ]]
         then
             kustomizepaths+=("$FOLDER_FIND/base")
+        else 
+            echo "No folder found that matches base, 00, 01" && exit 1
         fi
 
     done
