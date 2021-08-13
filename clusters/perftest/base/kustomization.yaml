@@ -6,3 +6,8 @@ resources:
 - ../../../apps/kube-system/base/kustomize.yaml
 - ../../../apps/kured/base/kustomize.yaml
 - ../../../apps/monitoring/base/kustomize.yaml
+patches:
+  - path: ../../../apps/base/kustomize.yaml
+    target:
+      kind: Kustomization
+      annotationSelector: hmcts.github.com/kustomize-defaults != disabled
