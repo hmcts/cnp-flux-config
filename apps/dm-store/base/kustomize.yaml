@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: dm-store
+  namespace: flux-system
+spec:
+  path: ./apps/dm-store/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "dm-store"
+      TEAM_NOTIFICATION_CHANNEL: "em-dev-chat"
