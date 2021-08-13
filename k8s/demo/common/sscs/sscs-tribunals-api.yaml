@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-2237-*
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2237-8995f39-20210803111628
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-683a646-20210810115849   #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
       aadIdentityName: sscs
       environment:
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
