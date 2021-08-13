@@ -37,7 +37,7 @@ fi
     # If sealed-secret file is not there, then copy to apps/<namespace>/<environment>/sealed-secrets/
     if [ ! -f "apps/$NAMESPACE/$ENV/sealed-secrets/$file" ]
     then
-        cp $file apps/$NAMESPACE/$ENV/sealed-secrets/
+        mv $file apps/$NAMESPACE/$ENV/sealed-secrets/
     fi
 
     # Create kustomization file apps/<namespace>/<environment>/sealed-secrets/kustomization.yaml
