@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-public:preview-ac79e31-20210805005251
+      ingressHost: idam-web-public.service.core-compute-preview.internal
+      replicas: 2
+      environment:
+        GA_TRACKING_ID: "UA-122164129-3"
+        STRATEGIC_SERVICE_URL: http://idam-api
+        STEP_UP_AUTHENTICATION: true
+    global:
+      environment: preview
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
