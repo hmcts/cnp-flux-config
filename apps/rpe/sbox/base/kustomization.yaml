@@ -4,11 +4,8 @@ resources:
   - ../../../base  #not default namespace base
   - ../../draft-store-service/draft-store-service.yaml
   - ../../rpe-service-auth-provider/rpe-service-auth-provider.yaml
-  - identity.yaml
+  - ../../identity/identity.yaml
 namespace: rpe
 patchesStrategicMerge:
   - ../../draft-store-service/sbox.yaml
-patches:  #Adding patch here as we don't use namespace base in here
-  - path: ../../../base/helmrelease-default.yaml
-    target:
-      kind: HelmRelease
+  - ../../identity/sbox.yaml
