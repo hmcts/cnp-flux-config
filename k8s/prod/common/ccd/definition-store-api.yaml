@@ -18,21 +18,21 @@ spec:
     path: stable/ccd-definition-store-api
   values:
     java:
-      replicas: 2
+      replicas: 4
       autoscaling:
         enabled: false
         minReplicas: 2
         maxReplicas: 3
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-4d117a0-20210625103644
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-cd4c4e5-20210816091253
       environment:
         IDAM_USER_URL: "https://hmcts-access.service.gov.uk"
         ELASTIC_SEARCH_FAIL_ON_IMPORT: true
-        DEFINITION_STORE_DB_MAX_POOL_SIZE: 32
+        DEFINITION_STORE_DB_MAX_POOL_SIZE: 25
         DEFINITION_STORE_DB_NAME: ccd_definition_store
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-prod.postgres.database.azure.com
-        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
-        DUMMY_RESTART_VAR: 1
+        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 60
+        DUMMY_RESTART_VAR: 2
         test: "test1"
     global:
       environment: prod

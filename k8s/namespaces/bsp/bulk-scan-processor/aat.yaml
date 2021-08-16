@@ -18,12 +18,15 @@ spec:
         serviceAccountName: tests-service-account
         keyVaults:
           bulk-scan:
-            resourceGroup: bulk-scan
             secrets:
-              storage-account-primary-key: TEST_STORAGE_ACCOUNT_KEY
-              storage-account-name: TEST_STORAGE_ACCOUNT_NAME
-              processed-envelopes-queue-send-shared-access-key: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
-              test-s2s-secret: TEST_S2S_SECRET
+            - name: storage-account-primary-key
+              alias: TEST_STORAGE_ACCOUNT_KEY
+            - name: storage-account-name
+              alias: TEST_STORAGE_ACCOUNT_NAME
+            - name: processed-envelopes-queue-send-shared-access-key
+              alias: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+            - name: test-s2s-secret
+              alias: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://bulk-scan-processor-java"
           SLACK_CHANNEL: "bsp-test-notices"
@@ -39,6 +42,7 @@ spec:
           PROCESSED_ENVELOPES_QUEUE_NAME: "processed-envelopes"
           PROCESSED_ENVELOPES_QUEUE_NAMESPACE: "bulk-scan-servicebus-aat"
           PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
+          DUMMY_VAR: "delete_me"
       smoketests:
         enabled: true
       functionaltests:

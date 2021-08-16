@@ -13,12 +13,12 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: payment-jobs
-    version: 0.0.6
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/payment-jobs
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:prod-eac66225"
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-0a0ded6-20210716134918"   #{"$imagepolicy": "flux-system:bar-csv-report"}
       schedule: "30 2 * * *"
       environment:
         REPORT_NAME: bar-csv-report

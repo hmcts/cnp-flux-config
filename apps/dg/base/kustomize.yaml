@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: dg
+  namespace: flux-system
+spec:
+  path: ./apps/dg/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "dg"
+      TEAM_NOTIFICATION_CHANNEL: "dts-builds"

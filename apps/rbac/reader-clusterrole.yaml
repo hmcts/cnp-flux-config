@@ -1,0 +1,47 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: developer-read
+  labels:
+    role-type: developer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: 'b2a1773c-a5ae-48b5-b5fa-95b0e05eee05'  # DTS CFT Developers
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: developer-read-custom-resources
+rules:
+- apiGroups: ['keda.k8s.io']
+  resources: ['scaledobjects']
+  verbs: ['list', 'get']
+- apiGroups: ['servicecatalog.k8s.io']
+  resources: ['servicebindings', 'serviceinstances', 'serviceinstances/status']
+  verbs: ['list', 'get']
+- apiGroups: ['secrets-store.csi.x-k8s.io']
+  resources: ['secretproviderclasses']
+  verbs: ['list', 'get']
+- apiGroups: ['helm.fluxcd.io']
+  resources: ['helmreleases']
+  verbs: ['list', 'get']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: developer-read-custom-resources
+  labels:
+    role-type: developer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: developer-read-custom-resources
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: 'b2a1773c-a5ae-48b5-b5fa-95b0e05eee05'  # DTS CFT Developers

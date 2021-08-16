@@ -1,0 +1,11 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Provider
+metadata:
+  name: slack
+  namespace: ${NAMESPACE}
+spec:
+  type: slack
+  channel: ${TEAM_NOTIFICATION_CHANNEL}
+  username: ${CLUSTER_FULL_NAME}-aks
+  secretRef:
+    name: slack-url

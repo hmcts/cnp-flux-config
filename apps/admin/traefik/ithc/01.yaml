@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  values:
+    loadBalancerIP: 10.10.39.250
+    dashboard:
+      domain: traefik01.service.core-compute-ithc.internal
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-ithc-rg
+  valuesFrom:
+    - kind: Secret
+      name: traefik-values

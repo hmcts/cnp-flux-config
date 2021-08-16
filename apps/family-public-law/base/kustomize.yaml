@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: family-public-law
+  namespace: flux-system
+spec:
+  path: ./apps/family-public-law/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "family-public-law"
+      TEAM_NOTIFICATION_CHANNEL: "fpla-tech"

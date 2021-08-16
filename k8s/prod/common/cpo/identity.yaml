@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: cpo
+  namespace: cpo
+spec:
+  type: 0
+  resourceID: "/subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourcegroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/cpo-prod-mi"
+  clientID: "9c7e26fc-24d7-4e88-87a5-00a77dc63015"
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: cpo-binding
+  namespace: cpo
+spec:
+  azureIdentity: cpo
+  selector: cpo

@@ -1,0 +1,27 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nonprod-team-permissions
+rules:
+- apiGroups: ['']
+  resources: ['pods']
+  verbs: ['delete']
+- apiGroups: ['']
+  resources: ['secrets']
+  verbs: ['list']
+- apiGroups: ['helm.fluxcd.io']
+  resources: ['helmreleases']
+  verbs: ['delete']
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nonprod-team-permissions
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nonprod-team-permissions
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "${TEAM_AAD_GROUP_ID}"

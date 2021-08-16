@@ -1,0 +1,107 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: node-problem-detector
+  namespace: monitoring
+spec:
+  releaseName: node-problem-detector
+  values:
+    image:
+      repository: hmctspublic.azurecr.io/k8s/node-problem-detector
+      tag: v0.8.2-db4cph
+    extraVolumes:
+      - name: custom-plugins
+        configMap:
+          name: node-problem-detector-custom-config
+          defaultMode: 0555
+    extraVolumeMounts:
+      - name: custom-plugins
+        mountPath: /custom-plugins
+        readOnly: true
+    settings:
+      custom_plugin_monitors:
+        - /custom-config/local-dns-resolver-config.json
+      custom_monitor_definitions:
+        local-dns-resolver-config.json: |
+          {
+              "plugin": "custom",
+              "pluginConfig": {
+                  "invoke_interval": "30s",
+                  "timeout": "34s",
+                  "max_output_length": 80,
+                  "concurrency": 1
+              },
+              "source": "local-dns-resolver-custom-plugin-monitor",
+              "conditions": [
+                  {
+                      "type": "NodeLocalDnsResolutionFailure",
+                      "reason": "NodeLocalDnsResolutionSucceeding",
+                      "message": "node-local-dns resolution succeeding"
+                  }
+              ],
+              "rules": [
+                  {
+                      "type": "permanent",
+                      "condition": "NodeLocalDnsResolutionFailure",
+                      "reason": "NodeLocalDnsResolutionFailing",
+                      "path": "/custom-plugins/local_dns_resolver.sh",
+                      "args": [
+                          "10.0.0.10",
+                          "hmcts-access.service.gov.uk"
+                      ]
+                  }
+              ]
+          }
+        local_dns_resolver.sh: |
+          #!/bin/sh
+          set -x
+
+          OK=0
+          NONOK=1
+          UNKNOWN=2
+
+          readonly local_dns_resolver_ip="$1"
+          readonly dns_address_to_lookup="$2"
+
+          # CHAOS class request for a TXT record "id.server." (typically used for
+          # identification of DNS software). We send a single attempt only, without
+          # retries and with 33s timeout - CoreDNS forward plugin internally defaults to
+          # 30s dial time and 2s read timeout - this way we ensure to leave enough time
+          # for CoreDNS forward plugin to respond with _something_.
+          dig_cmd_out="$(dig -t A @"${local_dns_resolver_ip}" +tries=1 +retry=0 +time=33 +norecurse +noqr ${dns_address_to_lookup}. 2>&1)"
+          dig_cmd_return_code="$?"
+          dig_cmd_response_status="$(echo "${dig_cmd_out}" | grep HEADER | sed -e 's/^.* status: \(\w\w*\).*$/\1/')"
+
+          case "${dig_cmd_return_code}" in
+          0)
+              # Reply from the server received
+              case "${dig_cmd_response_status}" in
+                  NOERROR|NXDOMAIN|SERVFAIL)
+                      echo "Acceptable response status value received: ${dig_cmd_response_status}"
+                      exit "${OK}"
+                      ;;
+                  *)
+                      echo "Unexpected response status value received: ${dig_cmd_response_status}"
+                      exit "${NONOK}"
+                      ;;
+              esac
+              ;;
+
+          9)
+              echo "No reply received"
+              exit "${NONOK}"
+              ;;
+
+          *)
+              echo "Unexpected return code of dig: ${dig_cmd_return_code}"
+              exit "${UNKNOWN}"
+              ;;
+          esac
+  chart:
+    spec:
+      chart: node-problem-detector
+      version: 1.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: deliveryhero
+        namespace: monitoring

@@ -20,10 +20,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-4fddf2ce
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-ce62060-20210810153445   #{"$imagepolicy": "flux-system:ia-case-documents-api"}
       ingressHost: ia-case-documents-api-aat.service.core-compute-aat.internal
       environment:
         RESTART_ME: "Update due to vault Change"
+        IA_AIP_FRONTEND_URL: "https://www.appeal-immigration-asylum-decision.service.gov.uk/"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

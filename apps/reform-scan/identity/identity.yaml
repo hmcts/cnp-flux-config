@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: reform-scan
+  namespace: reform-scan
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: reform-scan-binding
+  namespace: reform-scan
+spec:
+  azureIdentity: reform-scan
+  selector: reform-scan
