@@ -4,17 +4,8 @@ metadata:
   name: dg
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/dg/${ENVIRONMENT}
+  path: ./apps/dg/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "dg"
       TEAM_NOTIFICATION_CHANNEL: "dts-builds"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

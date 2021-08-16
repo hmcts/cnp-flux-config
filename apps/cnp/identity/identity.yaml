@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: cnp
+  namespace: cnp
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: cnp-binding
+  namespace: cnp
+spec:
+  azureIdentity: cnp
+  selector: cnp

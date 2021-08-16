@@ -4,17 +4,8 @@ metadata:
   name: ethos
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/ethos/${ENVIRONMENT}
+  path: ./apps/ethos/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "ethos"
       TEAM_NOTIFICATION_CHANNEL: "ethos-repl-service"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

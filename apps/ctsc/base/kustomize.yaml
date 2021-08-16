@@ -4,17 +4,8 @@ metadata:
   name: ctsc
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/ctsc/${ENVIRONMENT}
+  path: ./apps/ctsc/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "ctsc"
       TEAM_NOTIFICATION_CHANNEL: "ctsc-master-builds"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

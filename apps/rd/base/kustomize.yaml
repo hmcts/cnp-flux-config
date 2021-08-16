@@ -4,17 +4,8 @@ metadata:
   name: rd
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/rd/${ENVIRONMENT}
+  path: ./apps/rd/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "rd"
       TEAM_NOTIFICATION_CHANNEL: "rd-master-builds"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

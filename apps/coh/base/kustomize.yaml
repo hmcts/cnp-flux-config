@@ -4,17 +4,8 @@ metadata:
   name: coh
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/coh/${ENVIRONMENT}
+  path: ./apps/coh/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "coh"
       TEAM_NOTIFICATION_CHANNEL: "coh-pipeline"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

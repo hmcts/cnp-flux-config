@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: bsp
+  namespace: bsp
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: bsp-binding
+  namespace: bsp
+spec:
+  azureIdentity: bsp
+  selector: bsp
