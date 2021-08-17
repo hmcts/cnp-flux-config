@@ -4,16 +4,17 @@ metadata:
   name: ccpay-callback-function
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.function: glob:pr-28-*
+    fluxcd.io/tag.function: glob:pr-34-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-28-0e5761eb   #{"$imagepolicy": "flux-system:pr-28-ccpay-callback-function"}
+      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-34-93e5bd4-20210816130437
       aadIdentityName: ccpay
       environment:
         S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         MICROSERVICE_PAYMENT_APP: "payment_app"
+        DUMMY_RESTART_VAR: true
       keyVaults:
         "ccpay":
           secrets:
