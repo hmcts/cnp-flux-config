@@ -15,12 +15,38 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: cmc-claim-store
-    version: 4.1.16
+    version: 4.1.28
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-f20af2a8
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2447-0cd2595-20210816174744
+      keyVaults:
+        cmc:
+          resourceGroup: cmc
+          secrets:
+            - AppInsightsInstrumentationKey
+            - cmc-db-password-v11
+            - citizen-oauth-client-secret
+            - claim-store-s2s-secret
+            - anonymous-caseworker-username
+            - anonymous-caseworker-password
+            - system-update-username
+            - system-update-password
+            - notify-api-key
+            - milo-recipient
+            - staff-email
+            - live-support-email
+            - rpa-email-sealed-claim
+            - rpa-email-breathing-space
+            - rpa-email-legal-sealed-claim
+            - rpa-email-more-time-requested
+            - rpa-email-response
+            - rpa-email-ccj
+            - rpa-email-paid-in-full
+            - launchDarkly-sdk-key
+            - sendgrid-api-key
+            - staff-email-legal-rep
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -45,6 +71,8 @@ spec:
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         TEMP_VARIABLE_TO_RESTART: true
         MANAGEMENT_HEALTH_MAIL_ENABLED: false
+        CMC_DB_USERNAME: cmc@cmc-db-v11-perf
+        CMC_DB_HOST: cmc-db-v11-perf.postgres.database.azure.com
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
