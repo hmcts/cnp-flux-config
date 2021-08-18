@@ -6,7 +6,7 @@ metadata:
   namespace: ccd
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-1600-*
 spec:
   releaseName: ccd-data-store-api
   rollback:
@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-fd7e507-20210817182329
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1600-83aabfb-20210816181047
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-demo\.service\.core-compute-demo\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-demo\.service\.core-compute-demo\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]))
