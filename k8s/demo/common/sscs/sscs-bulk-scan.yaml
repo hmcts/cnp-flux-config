@@ -5,7 +5,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1025-*
+    flux.weave.works/tag.java: pr-1025-*
 spec:
   releaseName: sscs-bulk-scan
   rollback:
@@ -19,11 +19,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-933e82a-20210817074639 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-0f7665e-20210816154944 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
       environment:
         DO_NOT_REMOVE_PROPERTY: true
         UC_OFFICE_FEATURE: true
-        DUMMY: true
+        DUMMY: false
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
