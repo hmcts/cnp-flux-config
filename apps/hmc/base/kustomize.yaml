@@ -4,17 +4,8 @@ metadata:
   name: hmc
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/hmc/${ENVIRONMENT}
+  path: ./apps/hmc/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "hmc"
       TEAM_NOTIFICATION_CHANNEL: "ccd-master-builds"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

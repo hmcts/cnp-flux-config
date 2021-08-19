@@ -11,3 +11,10 @@ resources:
 - ../../../apps/backstage/base/kustomize.yaml
 - ../../../apps/pact-broker/base/kustomize.yaml
 - ../../../apps/jenkins/base/kustomize.yaml
+
+
+patches:
+- path: ../../../apps/base/kustomize.yaml
+  target:
+    kind: Kustomization
+    annotationSelector: hmcts.github.com/kustomize-defaults != disabled

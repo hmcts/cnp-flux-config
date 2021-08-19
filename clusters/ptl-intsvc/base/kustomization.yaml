@@ -13,3 +13,9 @@ resources:
 - ../../../apps/jenkins/base/kustomize.yaml
 - ../../../apps/slack-help-bot/base/kustomize.yaml
 - ../../../apps/response/base/kustomize.yaml
+
+patches:
+- path: ../../../apps/base/kustomize.yaml
+  target:
+    kind: Kustomization
+    annotationSelector: hmcts.github.com/kustomize-defaults != disabled

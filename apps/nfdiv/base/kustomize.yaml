@@ -4,17 +4,8 @@ metadata:
   name: nfdiv
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/nfdiv/${ENVIRONMENT}
+  path: ./apps/nfdiv/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "nfdiv"
       TEAM_NOTIFICATION_CHANNEL: "nfdiv-builds"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

@@ -4,17 +4,8 @@ metadata:
   name: reform-scan
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/reform-scan/${ENVIRONMENT}
+  path: ./apps/reform-scan/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "reform-scan"
       TEAM_NOTIFICATION_CHANNEL: "bsp-build-notices"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

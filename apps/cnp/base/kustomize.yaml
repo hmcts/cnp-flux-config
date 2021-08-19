@@ -4,17 +4,8 @@ metadata:
   name: cnp
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/cnp/${ENVIRONMENT}
+  path: ./apps/cnp/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "cnp"
       TEAM_NOTIFICATION_CHANNEL: "platops-build-notices"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

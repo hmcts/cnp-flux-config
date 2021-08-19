@@ -4,17 +4,8 @@ metadata:
   name: bar
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/bar/${ENVIRONMENT}
+  path: ./apps/bar/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "bar"
       TEAM_NOTIFICATION_CHANNEL: "bar-tech"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

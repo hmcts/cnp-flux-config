@@ -4,17 +4,8 @@ metadata:
   name: xui
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/xui/${ENVIRONMENT}
+  path: ./apps/xui/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "xui"
       TEAM_NOTIFICATION_CHANNEL: "xui-pipeline"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

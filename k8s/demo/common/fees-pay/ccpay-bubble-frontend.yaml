@@ -6,7 +6,7 @@ metadata:
   namespace: fees-pay
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: pr-500-*
+    flux.weave.works/tag.nodejs: pr-518-*
 spec:
   releaseName: ccpay-bubble-frontend
   rollback:
@@ -20,11 +20,12 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:pr-500-8aeb82e-20210722121516
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:pr-518-4251697-20210818220510
       imagePullPolicy: Always
       environment:
         PCIPAL_ANTENNA_URL: https://paybubble.demo.platform.hmcts.net/ccd-search
         DUMMY_RESTART_VAR: false
+        CCPAY_REFUNDS_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

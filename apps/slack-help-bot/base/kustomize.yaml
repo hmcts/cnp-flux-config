@@ -4,16 +4,8 @@ metadata:
   name: slack-help-bot
   namespace: flux-system
 spec:
-  interval: 5m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
   path: ./apps/slack-help-bot/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "slack-help-bot"
       TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
