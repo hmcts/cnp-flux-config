@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-939a188-20210809081408   #{"$imagepolicy": "flux-system:sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-4c80552-20210819083148 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-ithc"
         JOB_SCHEDULER_DB_NAME: "notification"
@@ -28,7 +28,10 @@ spec:
         COVID_19_NOTIFICATION_FEATURE: false
         PDF_SERVICE_HEALTH_URL: https://docmosis.ithc.platform.hmcts.net/rs/status
         PDF_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
-        DUMMY: true
+        SECURE_DOC_STORE_FEATURE: true
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
+        HOURS_START_TIME: 6
+        HOURS_END_TIME: 23
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

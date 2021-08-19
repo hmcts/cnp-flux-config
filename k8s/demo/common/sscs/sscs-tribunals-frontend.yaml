@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -6,7 +5,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-1216-*
+    flux.weave.works/tag.nodejs: glob:pr-1229-*
 spec:
   releaseName: sscs-tribunals-frontend
   rollback:
@@ -21,7 +20,7 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1216-f2cef9c-20210803144106
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1229-3771f2e-20210818135448
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
         FT_WELSH: "true"
@@ -34,6 +33,7 @@ spec:
         PCQ_URL: https://pcq.demo.platform.hmcts.net
         PCQ_ENABLED: "true"
         ALLOW_COOKIE_BANNER_ENABLED: "true"
+        ALLOW_JSA_ENABLED: "true"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
