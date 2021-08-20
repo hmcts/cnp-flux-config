@@ -39,6 +39,7 @@ for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
   IMAGE_REPO=$(echo ${FULL_IMAGE} |cut -d ':' -f 1)
   IMAGE_TAG=$(echo ${FULL_IMAGE} |cut -d ':' -f 2 | cut -d '-' -f1,2)
+  ENV_NAME=$(echo ${file} | sed 's|.*/||'  | cut -d '.' -f1)
  
   mkdir -p ${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}
 
@@ -58,13 +59,13 @@ EOF
 ) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-policy.yaml"
  
   else
-    TAG_POLICY_NAME=${IMAGE_TAG}-${HELM_RELEASE_NAME}
+    TAG_POLICY_NAME=${ENV_NAME}-${HELM_RELEASE_NAME}
 (   
 cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
 kind: ImagePolicy
 metadata:
-  name: ${IMAGE_TAG}-${HELM_RELEASE_NAME}
+  name: ${ENV_NAME}-${HELM_RELEASE_NAME}
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
@@ -77,7 +78,7 @@ spec:
   imageRepositoryRef:
     name: $HELM_RELEASE_NAME
 EOF
-) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${IMAGE_TAG}-image-policy.yaml"
+) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${ENV_NAME}-image-policy.yaml"
   fi
   
 (
