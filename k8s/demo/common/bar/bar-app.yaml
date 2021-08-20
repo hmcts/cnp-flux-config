@@ -6,7 +6,7 @@ metadata:
   namespace: bar
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:demo-*
+    flux.weave.works/tag.java: pr-501-*
 spec:
   releaseName: bar-api
   rollback:
@@ -19,10 +19,10 @@ spec:
   values:
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/bar/api:demo
+      image: hmctspublic.azurecr.io/bar/api:pr-501
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         POSTGRES_HOST: bar-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_USERNAME: bar@bar-postgres-db-v11-{{ .Values.global.environment }}
     global:
