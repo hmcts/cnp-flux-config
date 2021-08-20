@@ -12,6 +12,12 @@ EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/perftest.yaml
   apps/docmosis/docmosis/sbox.yaml
   apps/flux-system/base/image-automation-components.yaml
+  apps/idam/idam-api/preview.yaml
+  apps/idam/idam-api/sbox.yaml
+  apps/idam/idam-web-admin/preview.yaml
+  apps/idam/idam-web-admin/sbox.yaml
+  apps/idam/idam-web-public/preview.yaml
+  apps/idam/idam-web-public/sbox.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
