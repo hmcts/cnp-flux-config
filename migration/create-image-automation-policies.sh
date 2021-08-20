@@ -96,7 +96,7 @@ if [[ $FULL_IMAGE == hmctsprivate* ]] ;
    yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
 fi
 
-IMAGE_PATCH="$FULL_IMAGE   #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
+IMAGE_PATCH="$FULL_IMAGE #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
 
 sed -i '' "s|$FULL_IMAGE|$IMAGE_PATCH|g" $file
 
