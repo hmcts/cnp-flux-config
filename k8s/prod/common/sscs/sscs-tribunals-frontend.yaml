@@ -1,3 +1,4 @@
+---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -14,12 +15,12 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-tribunals-frontend
-    version: 0.2.21
+    version: 0.2.22
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-e587fa5-20210816210134 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-f049aa9-20210819092452 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
       ingressHost: www.appeal-benefit-decision.service.gov.uk
       livenessPath: /health/readiness
       environment:

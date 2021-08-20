@@ -21,7 +21,7 @@ cat <<EOF
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base # This is apps/base instead of apps/$namespace/base as preview doesn't install everything
+  - ../../../base    # This is apps/base instead of apps/$namespace/base as preview doesn't install everything
 namespace: $namespace
 EOF
 ) > "apps/$namespace/preview/base/kustomization.yaml"
