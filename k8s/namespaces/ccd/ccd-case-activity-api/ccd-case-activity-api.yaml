@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-activity-api
+spec:
+  releaseName: ccd-case-activity-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-case-activity-api
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-222303c-20210806201742  #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
