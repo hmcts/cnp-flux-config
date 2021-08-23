@@ -11,3 +11,9 @@ resources:
 - ../../../apps/docmosis/base/kustomize.yaml
 - ../../../apps/idam/base/kustomize.yaml
 - ../../../apps/idam-sprod/base/kustomize.yaml
+
+patches:
+- path: ../../../apps/base/kustomize.yaml
+  target:
+    kind: Kustomization
+    annotationSelector: hmcts.github.com/kustomize-defaults != disabled

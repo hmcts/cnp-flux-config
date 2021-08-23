@@ -4,17 +4,8 @@ metadata:
   name: fact
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/fact/${ENVIRONMENT}
+  path: ./apps/fact/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "fact"
       TEAM_NOTIFICATION_CHANNEL: "fact-builds"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

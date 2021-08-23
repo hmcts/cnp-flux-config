@@ -4,17 +4,8 @@ metadata:
   name: idam
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/idam/${ENVIRONMENT}
+  path: ./apps/idam/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "idam"
       TEAM_NOTIFICATION_CHANNEL: "idam_tech"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

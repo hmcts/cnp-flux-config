@@ -4,17 +4,8 @@ metadata:
   name: money-claims
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/money-claims/${ENVIRONMENT}
+  path: ./apps/money-claims/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "money-claims"
       TEAM_NOTIFICATION_CHANNEL: "cmc-tech-notification"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

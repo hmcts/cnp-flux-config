@@ -4,17 +4,8 @@ metadata:
   name: probate
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
-  path: ./apps/probate/${ENVIRONMENT}
+  path: ./apps/probate/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "probate"
       TEAM_NOTIFICATION_CHANNEL: "probate-jenkins"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

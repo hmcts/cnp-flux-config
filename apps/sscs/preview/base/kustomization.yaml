@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base   # This is apps/base instead of apps/sscs/base as preview doesn't install everything
+  - ../../identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
+  - ../../../rpe/identity/identity.yaml
+  - ../../../ccd/identity/identity.yaml
+namespace: sscs
+patchesStrategicMerge:
+  - ../../identity/aat.yaml
+  - ../../../xui/identity/aat.yaml
+  - ../../../rpe/identity/aat.yaml
+  - ../../../ccd/identity/aat.yaml

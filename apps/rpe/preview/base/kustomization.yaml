@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base   # This is apps/base instead of apps/rpe/base as preview doesn't install everything
+  - ../../identity/identity.yaml
+  - ../../identity/send-letter-identity.yaml
+namespace: rpe
+patchesStrategicMerge:
+  - ../../identity/aat.yaml
+  - ../../identity/send-letter-identity-aat.yaml

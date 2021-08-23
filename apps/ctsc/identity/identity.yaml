@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ctsc
+  namespace: ctsc
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ctsc-binding
+  namespace: ctsc
+spec:
+  azureIdentity: ctsc
+  selector: ctsc

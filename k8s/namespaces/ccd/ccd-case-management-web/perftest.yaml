@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-management-web
+spec:
+  releaseName: ccd-case-management-web
+  values:
+    nodejs:
+      replicas: 24
+      autoscaling:
+        enabled: false
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "1000m"
+      cpuLimits: "2000m"
+      environment:
+        UV_THREADPOOL_SIZE: 64
+        DUMMY_VAR: true

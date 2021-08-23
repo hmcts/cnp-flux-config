@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-management-web
+spec:
+  releaseName: ccd-case-management-web
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-case-management-web
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-eeab7cc-20210812115809  #{"$imagepolicy": "flux-system:ccd-case-management-web"}

@@ -4,16 +4,8 @@ metadata:
   name: response
   namespace: flux-system
 spec:
-  interval: 5m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
   path: ./apps/response/${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "response"
       TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"
-      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"

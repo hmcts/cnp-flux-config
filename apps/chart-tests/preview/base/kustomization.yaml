@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base   # This is apps/base instead of apps/chart-tests/base as preview doesn't install everything
+  - ../sealed-secrets
+  - ../../../bsp/identity/identity.yaml
+  - ../../../money-claims/identity/identity.yaml
+  - ../../../ccd/identity/identity.yaml
+namespace: chart-tests
+patchesStrategicMerge:
+  - ../../../bsp/identity/aat.yaml
+  - ../../../money-claims/identity/aat.yaml
+  - ../../../ccd/identity/aat.yaml

@@ -30,10 +30,6 @@ kind: Kustomization
 resources:
   - ../../base
 namespace: $namespace
-patches:
-  - path: ../../base/helmrelease-default.yaml
-    target:
-      kind: HelmRelease
 EOF
 ) > "apps/$namespace/base/kustomization.yaml"
 
@@ -45,20 +41,11 @@ metadata:
   name: $namespace
   namespace: flux-system
 spec:
-  interval: 1m0s
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-config
-    namespace: flux-system
-  validation: none
   path: ./apps/$namespace/\${ENVIRONMENT}
   postBuild:
     substitute:
       NAMESPACE: "$namespace"
       TEAM_NOTIFICATION_CHANNEL: "${SLACK_CHANNEL}"
-      CLUSTER_FULL_NAME: "\${ENVIRONMENT}-\${CLUSTER}"
-      KEYVAULT_ENVIRONMENT: "\${KEYVAULT_ENVIRONMENT}"
 EOF
 ) > "apps/$namespace/base/kustomize.yaml"
 
