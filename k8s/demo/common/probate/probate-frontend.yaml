@@ -6,21 +6,21 @@ metadata:
   namespace: probate
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-1440-*
+    flux.weave.works/tag.nodejs: glob:pr-1451-*
 spec:
   releaseName: probate-frontend
   rollback:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-frontend
-    version: 2.3.7
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:pr-1440-7d137dc-20210722125847
+      image: hmctspublic.azurecr.io/probate/frontend:pr-1451-30f1968-20210817131230
       environment:
         VAR_TA: trigger2
     global:

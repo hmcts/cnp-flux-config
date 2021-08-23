@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-admin-web
+spec:
+  releaseName: ccd-admin-web
+  values:
+    nodejs:
+      ingressClass: traefik-no-proxy
+      environment:
+        ADMINWEB_ELASTIC_CASE_TYPES_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal/elastic-support/case-types
