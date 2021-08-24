@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -ex
+# Example of Script ./migration/create-image-automation-policies.sh k8s/namespaces/bsp bsp
 FILE_DIRECTORY=$1
 NAMESPACE=$2
 APPS_DIRECTORY=apps
 
-
+if [ -z "$NAMESPACE" ]; then
+  echo "Error: Missing NAMESPACE, example of script: ./migration/create-image-automation-policies.sh k8s/namespaces/bsp bsp"
+  exit 1
+fi
 
 for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
