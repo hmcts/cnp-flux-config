@@ -153,7 +153,7 @@ metadata:
   name: ${HELM_RELEASE_NAME}-${TAG_POLICY}
 spec:
   imageRepositoryRef:
-    name: ${HELM_RELEASE_NAME}
+    name: ${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
 EOF
 ) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${TAG_POLICY_NAME}-image-policy.yaml"
  
