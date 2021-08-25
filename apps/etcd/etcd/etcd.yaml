@@ -5,15 +5,10 @@ metadata:
   namespace: etcd
 spec:
   releaseName: etcd
-  timeout: 1800
-  chart:
-    git: https://github.com/hmcts/charts
-    ref: master
-    path: incubator/etcd
   values:
     image:
       repository: "k8s.gcr.io/etcd-amd64"
-      tag: "3.3.10"  # "v3.3.8-0-gke.1"
+      tag: "3.3.10" # "v3.3.8-0-gke.1"
     pullPolicy: "IfNotPresent"
     replicas: 3
     resources:
@@ -26,3 +21,12 @@ spec:
     persistentVolume:
       enabled: true
       storage: "2Gi"
+  chart:
+    spec:
+      chart: ./incubator/etcd
+      version: 6.3.3
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-stable
+        namespace: flux-system
+      interval: 5m
