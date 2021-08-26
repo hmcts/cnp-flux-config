@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-SystemRemindApplicant2Task
+spec:
+  releaseName: nfdiv-cron-SystemRemindApplicant2Task
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/nfdiv-cron
+  values:
+    job:
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-00fe383-20210826060439
+      args:
+        - run
+        - SystemRemindApplicant2Task
+      schedule: "0 0/10 * * *"

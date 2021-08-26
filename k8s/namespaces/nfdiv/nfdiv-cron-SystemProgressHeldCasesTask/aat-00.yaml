@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-SystemProgressHeldCasesTask
+spec:
+  values:
+    job:
+      args:
+        - run
+        - SystemProgressHeldCasesTask
+      schedule: "0 0/10 * * *"
+    global:
+      jobKind: CronJob
