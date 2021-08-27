@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-SystemRemindApplicant2Task
+spec:
+  values:
+    job:
+      args:
+        - run
+        - SystemRemindApplicant2Task
+      schedule: "0 0/10 * * *"
+    global:
+      jobKind: CronJob
