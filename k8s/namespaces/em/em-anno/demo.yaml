@@ -2,8 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-anno
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-559-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/em/anno:pr-559-af66afe-20210825123406   #{"$imagepolicy": "flux-system:pr-559-em-anno"}
       environment:
         TEST_VAR: value1
