@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-system-progress-cases-to-aos-overdue-task
+spec:
+  values:
+    job:
+      args:
+        - run
+        - SystemProgressCasesToAosOverdueTask
+      schedule: 0/10 * * * *
+    global:
+      jobKind: CronJob
