@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-management-web
+spec:
+  releaseName: ccd-case-management-web
+  values:
+    nodejs:
+      aadIdentityName: ccd
+      ingressClass: traefik-no-proxy
+      environment:
+        DUMMY_RESTART_VAR: 1
+      keyVaults:
+        ccd:
+          secrets:
+          - AppInsightsInstrumentationKey

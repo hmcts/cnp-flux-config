@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -ex
+# Example of Script ./migration/create-image-automation-policies.sh k8s/namespaces/bsp bsp
 FILE_DIRECTORY=$1
 NAMESPACE=$2
 APPS_DIRECTORY=apps
 
-
+if [ -z "$NAMESPACE" ]; then
+  echo "Error: Missing NAMESPACE, example of script: ./migration/create-image-automation-policies.sh k8s/namespaces/bsp bsp"
+  exit 1
+fi
 
 for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
@@ -149,7 +153,7 @@ metadata:
   name: ${HELM_RELEASE_NAME}-${TAG_POLICY}
 spec:
   imageRepositoryRef:
-    name: ${HELM_RELEASE_NAME}
+    name: ${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
 EOF
 ) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${TAG_POLICY_NAME}-image-policy.yaml"
  
@@ -181,7 +185,7 @@ cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
 kind: ImageRepository
 metadata:
-  name: ${HELM_RELEASE_NAME}
+  name: ${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
 spec:
   image: $IMAGE_REPO
 EOF
