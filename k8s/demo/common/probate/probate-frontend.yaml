@@ -6,7 +6,7 @@ metadata:
   namespace: probate
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-1458-*
+    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: probate-frontend
   rollback:
@@ -20,7 +20,9 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:pr-1458-70d6c6a-20210902100229
+      ingressClass: traefik-no-proxy
+      ingressHost: probate.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/probate/frontend:latest
       environment:
         VAR_TA: trigger2
     global:
