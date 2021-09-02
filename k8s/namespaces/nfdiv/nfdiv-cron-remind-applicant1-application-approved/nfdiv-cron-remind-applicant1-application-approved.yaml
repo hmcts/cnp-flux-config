@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-remind-applicant1-application-approved
+spec:
+  releaseName: nfdiv-cron-remind-applicant1-application-approved
+  chart:
+    git: git@github.com:hmcts/nfdiv-cron
+    ref: 0.0.7
+    path: nfdiv-cron
+  values:
+    job:
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-216ba8b-20210902141003  #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      args:
+        - run
+        - SystemRemindApplicant1ApplicationApprovedTask
+      schedule: 0/10 * * * *

@@ -1,9 +1,9 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-system-progress-cases-to-aos-overdue-task
+  name: nfdiv-cron-alert-application-not-reviewed
 spec:
-  releaseName: nfdiv-cron-system-progress-cases-to-aos-overdue-task
+  releaseName: nfdiv-cron-alert-application-not-reviewed
   chart:
     git: git@github.com:hmcts/nfdiv-cron
     ref: 0.0.7
@@ -13,5 +13,5 @@ spec:
       image: hmctspublic.azurecr.io/nfdiv/case-api:prod-216ba8b-20210902141003 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       args:
         - run
-        - SystemProgressCasesToAosOverdueTask
+        - SystemAlertApplicationNotReviewedTask
       schedule: 0/10 * * * *
