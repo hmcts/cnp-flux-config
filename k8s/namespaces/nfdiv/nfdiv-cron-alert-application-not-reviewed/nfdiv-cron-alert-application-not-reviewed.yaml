@@ -1,16 +1,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-system-alert-application-not-reviewed-task
+  name: nfdiv-cron-alert-application-not-reviewed
 spec:
-  releaseName: nfdiv-cron-system-alert-application-not-reviewed-task
+  releaseName: nfdiv-cron-alert-application-not-reviewed
   chart:
     git: git@github.com:hmcts/nfdiv-cron
     ref: 0.0.7
     path: nfdiv-cron
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-9e60ba5-20210902101708 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-a7f2db2-20210903113943 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       args:
         - run
         - SystemAlertApplicationNotReviewedTask
