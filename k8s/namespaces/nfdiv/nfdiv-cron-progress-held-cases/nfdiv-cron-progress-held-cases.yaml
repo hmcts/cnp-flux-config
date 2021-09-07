@@ -6,24 +6,11 @@ spec:
   releaseName: nfdiv-cron-progress-held-cases
   chart:
     git: git@github.com:hmcts/nfdiv-cron
-    ref: 0.0.7
+    ref: 0.0.8
     path: nfdiv-cron
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-3f19f09-20210903164834 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-3ae3bbd-20210907121010 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       environment:
-        NOTIFY_TEMPLATE_SIGN_IN_DIVORCE_URL: https://nfdiv-apply-for-divorce.aat.platform.hmcts.net/
-        NOTIFY_TEMPLATE_SIGN_IN_DISSOLUTION_URL: https://nfdiv-end-civil-partnership.aat.platform.hmcts.net/
-        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DIVORCE_URL: https://nfdiv-apply-for-divorce.aat.platform.hmcts.net/applicant2
-        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DISSOLUTION_URL: https://nfdiv-end-civil-partnership.aat.platform.hmcts.net/applicant2
-        S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-        FEE_API_URL: http://fees-register-api-aat.service.core-compute-aat.internal
-        IDAM_API_REDIRECT_URL: https://div-pfe-aat.service.core-compute-aat.internal/authenticated
-        IDAM_API_BASEURL: "https://idam-api.aat.platform.hmcts.net"
-        CASE_DATA_STORE_BASEURL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
-        DOC_ASSEMBLY_URL: http://dg-docassembly-aat.service.core-compute-aat.internal
-        DOCUMENT_MANAGEMENT_URL: http://dm-store-aat.service.core-compute-aat.internal
-        PRD_API_BASEURL: "http://rd-professional-api-aat.service.core-compute-aat.internal"
-        SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-aat.service.core-compute-aat.internal"
         TASK_NAME: SystemProgressHeldCasesTask
       schedule: 0/10 * * * *
