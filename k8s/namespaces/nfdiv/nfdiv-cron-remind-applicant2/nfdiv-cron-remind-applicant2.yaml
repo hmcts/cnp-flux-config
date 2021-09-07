@@ -11,6 +11,25 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/nfdiv/case-api:prod-3ae3bbd-20210907121010 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      keyVaults:
+        nfdiv:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: APP_INSIGHTS_KEY
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: s2s-case-api-secret
+              alias: S2S_SECRET
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-systemupdate-username
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-systemupdate-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
       environment:
         TASK_NAME: SystemRemindApplicant2Task
       schedule: 0/10 * * * *
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
