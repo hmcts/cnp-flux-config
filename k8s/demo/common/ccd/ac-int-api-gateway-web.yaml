@@ -21,11 +21,13 @@ spec:
       replicas: 1
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-8d5155f-20210826003548
-      ingressHost: "ac-int-gateway-ccd.demo.platform.hmcts.net"
+      ingressHost: ac-int-gateway-ccd.demo.platform.hmcts.net
       ingressClass: traefik-no-proxy
       environment:
         CORS_ORIGIN_WHITELIST: "*"
-        TIMING-ALLOW-ORIGIN: "https://www-ccd.demo.platform.hmcts.net"
+        TIMING-ALLOW-ORIGIN: "https://ccd-ac-int.demo.platform.hmcts.net"
+        PROXY_AGGREGATED: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
+        PROXY_DATA: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
         DUMMY_VAR_TO_REDEPLOY: 1
     global:
       environment: demo
