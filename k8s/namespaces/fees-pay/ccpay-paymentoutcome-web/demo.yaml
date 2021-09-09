@@ -4,11 +4,14 @@ metadata:
   name: ccpay-paymentoutcome-web
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-3-*
+    fluxcd.io/tag.nodejs: glob:pr-3-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
-    java:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:pr-3
+      imagePullPolicy: Always
       environment:
         DUMMY_VARIABLE: false
