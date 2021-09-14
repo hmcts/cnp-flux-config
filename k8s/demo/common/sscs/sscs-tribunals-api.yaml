@@ -6,7 +6,7 @@ metadata:
   namespace: sscs
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-2316-*
+    flux.weave.works/tag.java: glob:pr-2326-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,9 +20,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2316-42335c1-20210911163626
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2326-17be848-20210914132733
       aadIdentityName: sscs
       environment:
+        CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
         BUNDLE_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
         PDF_SERVICE_CONVERT_URL: https://docmosis.demo.platform.hmcts.net/rs/convert
