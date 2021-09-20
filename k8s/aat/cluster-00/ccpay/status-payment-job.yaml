@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: status-update
   namespace: fees-pay
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:prod-*
 spec:
   releaseName: status-update
   rollback:
@@ -18,7 +15,7 @@ spec:
     version: 0.0.6
   values:
     job:
-      image: hmctspublic.azurecr.io/payment/jobs:prod-0a0ded6-20210716134918   #{"$imagepolicy": "flux-system:status-update"}"
+      image: hmctspublic.azurecr.io/payment/jobs:prod-0a0ded6-20210716134918   #{"$imagepolicy": "flux-system:status-update"}
       schedule: "*/30 * * * *"
       environment:
         REPORT_NAME: status-update

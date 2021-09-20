@@ -18,6 +18,8 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-admin/sbox.yaml
   apps/idam/idam-web-public/preview.yaml
   apps/idam/idam-web-public/sbox.yaml
+  *demo.yaml
+  k8s/demo/*
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
