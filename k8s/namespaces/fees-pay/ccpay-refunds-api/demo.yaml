@@ -4,12 +4,13 @@ metadata:
   name: ccpay-refunds-api
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-34-*
+    fluxcd.io/tag.java: glob:pr-55-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-34-a78fc91-20210901101654
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-55-4162810-20210920111526
       environment:
         S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,ccd_gw
-        DUMMY_VARIABLE: false
+        PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
+        DUMMY_VARIABLE: true
