@@ -20,7 +20,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-972-6e60402-20210917165718
+      image: hmctspublic.azurecr.io/payment/api:pr-972-67a1d1e-20210920173234
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
@@ -35,8 +35,8 @@ spec:
           }}.service.core-compute-{{ .Values.global.environment }}.internal
         CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment
           }}.service.core-compute-{{ .Values.global.environment }}.internal
-        REFUND_API_URL: http://ccpay-refunds-api-{{ .Values.global.environment
-          }}.service.core-compute-{{ .Values.global.environment }}.internal
+        REFUND_API_URL: http://ccpay-refunds-api-{{ .Values.global.environment }}.service.core-compute-{{
+          .Values.global.environment }}.internal
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
