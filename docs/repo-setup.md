@@ -19,7 +19,7 @@ Below section covers how the repo is set up to handle multiple environments and 
 - [namespace base kustomization](../apps/rpe/base/kustomization.yaml) - A base kustomization including manifests that are common across all environments except special cases like preview.
 - [namespace env overlay]((../apps/rpe/aat/base/kustomization.yaml)) - Overlay of a namespace base kustomization with env specific patches related to that namespace.
 - [default namespace base](../apps/base/kustomization.yaml) - default manifests needed for all namespaces but templated which are set in [namespace Flux kustomization](../apps/rpe/base/kustomize.yaml)
-- [namespace automation kustomization](../apps/rpe/automation) - includes all automation CRDs for a namespacer
+- [namespace automation kustomization](../apps/rpe/automation) - includes all automation CRDs for a namespace
 
 ### How flux understands the config
 
