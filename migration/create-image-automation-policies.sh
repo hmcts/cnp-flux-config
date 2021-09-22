@@ -75,7 +75,7 @@ metadata:
 spec:
   filterTags:
     pattern: '^${IMAGE_TAG}-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
+    extract: '\$ts'
   policy:
     alphabetical:
       order: asc
@@ -170,7 +170,7 @@ metadata:
 spec:
   filterTags:
     pattern: '^${IMAGE_TAG}-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
+    extract: '\$ts'
   policy:
     alphabetical:
       order: asc
