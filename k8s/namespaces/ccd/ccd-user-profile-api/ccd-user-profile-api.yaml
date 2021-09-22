@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-user-profile-api
+spec:
+  releaseName: ccd-user-profile-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-user-profile-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-50f9d72-20210826004308   #{"$imagepolicy": "flux-system:ccd-user-profile-api"}

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ecm-consumer
   namespace: ethos
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ecm-consumer
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/ecm-consumer:prod-b62d494-20210810161157   #{"$imagepolicy": "flux-system:ecm-consumer"}
+      image: hmctspublic.azurecr.io/ethos/ecm-consumer:prod-51b67b1-20210920144747 #{"$imagepolicy": "flux-system:ecm-consumer"}
     global:
       environment: aat
       subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"

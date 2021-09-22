@@ -2,9 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: reform-scan-blob-router
   timeout: 600
@@ -17,8 +14,8 @@ spec:
       replicas: 2
       memoryLimits: "4096Mi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-aa4e553-20210820101918
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-f36c02c-20210921073205
       smoketests:
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-aa4e553-20210820101918
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-f36c02c-20210921073205
       functionaltests:
-        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-aa4e553-20210820101918
+        image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-7c68eae-20210902082155 #{"$imagepolicy": "flux-system:blob-router-test"}
