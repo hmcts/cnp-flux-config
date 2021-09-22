@@ -63,13 +63,13 @@ EOF
 ) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-policy.yaml"
  
   else
-    TAG_POLICY_NAME=${ENV_NAME}-${HELM_RELEASE_NAME}
+    TAG_POLICY_NAME=${IMAGE_TAG}-${HELM_RELEASE_NAME}
 (   
 cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
 kind: ImagePolicy
 metadata:
-  name: ${ENV_NAME}-${HELM_RELEASE_NAME}
+  name: ${IMAGE_TAG}-${HELM_RELEASE_NAME}
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
@@ -82,7 +82,7 @@ spec:
   imageRepositoryRef:
     name: $HELM_RELEASE_NAME
 EOF
-) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${ENV_NAME}-image-policy.yaml"
+) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${IMAGE_TAG}-image-policy.yaml"
   fi
   
 (
@@ -164,7 +164,7 @@ cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
 kind: ImagePolicy
 metadata:
-  name: ${ENV_NAME}-${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
+  name: ${IMAGE_TAG}-${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
@@ -177,7 +177,7 @@ spec:
   imageRepositoryRef:
     name: ${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
 EOF
-) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${ENV_NAME}-${TAG_POLICY_NAME}-image-policy.yaml"
+) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${IMAGE_TAG}-image-policy.yaml"
   fi
   
 (
