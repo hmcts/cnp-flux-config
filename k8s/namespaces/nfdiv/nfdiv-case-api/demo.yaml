@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: nfdiv-case-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-658-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      environment:
-        CASE_HOLDING_WEEKS: 20
+      image: hmctspublic.azurecr.io/nfdiv/case-api:pr-658-897e029-20210921050904
