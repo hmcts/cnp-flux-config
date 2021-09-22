@@ -4,12 +4,15 @@ metadata:
   name: ccpay-refunds-api
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.function: glob:pr-34-*
+    fluxcd.io/tag.java: glob:pr-55-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-34-63d3906-20210825115847
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-55-fd3cb87-20210922170511
       environment:
         S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,ccd_gw
-        DUMMY_VARIABLE: false
+        PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
+        LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
+        REFUND_STATUS_UPDATE_PATH: "/refunds-api/refunds"
+        DUMMY_VARIABLE: true

@@ -75,7 +75,7 @@ metadata:
 spec:
   filterTags:
     pattern: '^${IMAGE_TAG}-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
+    extract: '\$ts'
   policy:
     alphabetical:
       order: asc
@@ -153,7 +153,7 @@ metadata:
   name: ${HELM_RELEASE_NAME}-${TAG_POLICY}
 spec:
   imageRepositoryRef:
-    name: ${HELM_RELEASE_NAME}
+    name: ${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
 EOF
 ) > "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/${TAG_POLICY_NAME}-image-policy.yaml"
  
@@ -170,7 +170,7 @@ metadata:
 spec:
   filterTags:
     pattern: '^${IMAGE_TAG}-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
+    extract: '\$ts'
   policy:
     alphabetical:
       order: asc
@@ -185,7 +185,7 @@ cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
 kind: ImageRepository
 metadata:
-  name: ${HELM_RELEASE_NAME}
+  name: ${HELM_RELEASE_NAME}-${TAG_POLICY_NAME}
 spec:
   image: $IMAGE_REPO
 EOF

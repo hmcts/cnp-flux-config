@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: finrem-dgcs
   namespace: financial-remedy
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: finrem-dgcs
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/dgcs:prod-beec351-20210707075336   #{"$imagepolicy": "flux-system:finrem-dgcs"}
+      image: hmctspublic.azurecr.io/finrem/dgcs:prod-996b110-20210921173117 #{"$imagepolicy": "flux-system:finrem-dgcs"}
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
