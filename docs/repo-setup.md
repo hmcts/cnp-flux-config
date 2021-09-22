@@ -21,6 +21,61 @@ Below section covers how the repo is set up to handle multiple environments and 
 - [default namespace base](../apps/base/kustomization.yaml) - default manifests needed for all namespaces but templated which are set in [namespace Flux kustomization](../apps/rpe/base/kustomize.yaml)
 - [namespace automation kustomization](../apps/rpe/automation) - includes all automation CRDs for a namespace
 
+### Folder Structure
+
+
+    ├── apps                                        # apps directory containing all namespaces and manifests
+    │   │
+    │   └──<base>
+    │   │  └── kustomization.yaml                   # Default namespace base  kustomization that all teams extend
+    │   │  └── kustomize.yaml                       # defaults applied to all base team kustomizations
+    │   │  └── alert/provider.yaml                  # Default manifests for all namespaces to enable notifications
+    │   │  └── ...
+    │   │
+    │   ├── <namespace>                             # One folder per namespace containing workloads.
+    │   │   ├── automation
+    │   │   │   └── kustomization.yaml              # Namespace specific automation kustomization referring to all image repos/policies.
+    │   │   │
+    │   │   ├── base
+    │   │   │   └── kustomization.yaml              # namespace base kustomization that is applied to all clusters (except preview).
+    │   │   │   └── kustomize.yaml                  # namespace flux kustomization containing the path flux should look at.
+    │   │   │
+    │   │   ├── <env>        
+    │   │   │   └── base                          
+    │   │   │       └── kustomization.yaml          # namespace env overlay containing patches for a specific environment.
+    │   │   │       └── sealed-secrets              # Optional sealed secrets manifests.
+    │   │   │   └── 00/01
+    │   │   │       └── kustomization.yaml          # Optional cluster overlay containing patches for a specific environment.
+    │   │   │
+    │   │   ├── identity
+    │   │   │   └── identity.yaml                   # Base identity file.
+    │   │   │   └── <env>.yaml                      # Env specific patch for identity.
+    │   │   │
+    │   │   └── <application-name>                  # Folder per app containing manifests and patches for each application.
+    │   │       └── <application-name>.yaml         # Helm Release for each application.
+    │   │       └── <env>.yaml                      # Optional patch for each environment
+    │   │       └── image-repo.yaml                 # ImageRepository CRD used for image automation 
+    │   │       └── image-policy.yaml               # ImagePolicy CRD used for image automation
+    │   │       └── <env>-image-policy.yaml         # Optional ImagePolicy for non-ptl environments.
+    │   │
+    │   └──<namespace2>
+    │      └── ...
+    │
+    │
+    └── clusters
+        │
+        ├── <environment>
+        │   ├── 00/01
+        │   │   └── kustomization.yaml                # Cluster Overlay with patches on env base.  
+        │   │      
+        │   ├── base
+        │   │   └── kustomization.yaml                # Env Base which includes Flux Kustomizations for all namespaces in that cluster.
+        │   │
+        │   └── pub-cert.pem                          # pem file for sealed-secrets
+        │     
+        └──<environment2>
+           └── ...
+
 ### How flux understands the config
 
 - Flux installation from Cluster creation pipeline applies
