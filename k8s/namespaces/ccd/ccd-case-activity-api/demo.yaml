@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-activity-api
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.nodejs: glob:pr-289-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  releaseName: ccd-case-activity-api
+  values:
+    nodejs:
+      replicas: 4
+      image: hmctspublic.azurecr.io/ccd/case-activity-api:pr-289-8653065-20210921125530
