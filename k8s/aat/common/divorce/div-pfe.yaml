@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-pfe
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-pfe
   rollback:
@@ -24,7 +20,7 @@ spec:
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-15bf484-20210810101906   #{"$imagepolicy": "flux-system:div-pfe"}
+      image: hmctspublic.azurecr.io/div/pfe:prod-c3ebf28-20210921171512 #{"$imagepolicy": "flux-system:div-pfe"}
       ingressHost: petitioner-frontend-aks.aat.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://petitioner-frontend-aks.aat.platform.hmcts.net
@@ -34,7 +30,7 @@ spec:
         FEATURE_ANTENNA_WEBCHAT: "true"
         FEATURE_WEBCHAT: "false"
         ANTENNA_WEBCHAT_SERVICE: Testing
-        ANTENNA_WEBCHAT_URL: webchat.training.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

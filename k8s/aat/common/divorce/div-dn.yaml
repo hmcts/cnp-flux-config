@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-dn
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-dn
   rollback:
@@ -20,10 +16,10 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-47c7ebf-20210810124214   #{"$imagepolicy": "flux-system:div-dn"}
+      image: hmctspublic.azurecr.io/div/dn:prod-c4c57c2-20210921090051 #{"$imagepolicy": "flux-system:div-dn"}
       ingressHost: decree-nisi-aks.aat.platform.hmcts.net
       environment:
-        PUBLIC_HOSTNAME: https://decree-nisi-aks.aat.platform.hmcts.net  # looks unused
+        PUBLIC_HOSTNAME: https://decree-nisi-aks.aat.platform.hmcts.net # looks unused
         BASE_URL: https://decree-nisi-aks.aat.platform.hmcts.net
         RESPONDENT_FRONTEND_URL: https://respond-divorce-aks.aat.platform.hmcts.net
         PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.aat.platform.hmcts.net
@@ -31,7 +27,7 @@ spec:
         FEATURE_ANTENNA_WEBCHAT: "true"
         FEATURE_WEBCHAT: "false"
         ANTENNA_WEBCHAT_SERVICE: Testing
-        ANTENNA_WEBCHAT_URL: webchat.training.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
