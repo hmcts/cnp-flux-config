@@ -2,6 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-case-api
+    annotations:
+      hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -10,3 +12,4 @@ spec:
         IS_SAVE_AND_CONTINUE_ENABLED: "false"
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
         IA_FEEPAYMENT_ENABLED: "true"
+image: hmctspublic.azurecr.io/ia/case-api:pr-974-3e7c01e-20210923160716   #{"$imagepolicy": "flux-system:pr-974-ia-case-api"}
