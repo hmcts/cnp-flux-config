@@ -7,7 +7,7 @@ The section covers how to configure a new application in this repository to depl
 
 **It is important to follow below discussed naming convention, file and folder names should match application helm release name**
 
-Note: Some of these scripts need you to [install yq](https://mikefarah.gitbook.io/yq/)
+Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scripts
 
 ## Namespace
 
