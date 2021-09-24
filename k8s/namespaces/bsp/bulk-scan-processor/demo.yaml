@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-2080-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -13,4 +9,3 @@ spec:
         #60 days in seconds
         SAS_TOKEN_VALIDITY: "5184000"
         DELETE_REJECTED_FILES_TTL: PT1H
-      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-2080-27e5eeb-20210923095342   #{"$imagepolicy": "flux-system:demo-bulk-scan-processor"}
