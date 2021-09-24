@@ -3,12 +3,10 @@ kind: HelmRelease
 metadata:
   name: em-hrs-api
   annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-375-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/hrs-api:pr-375-c3de88e-20210923112239
+      image: hmctspublic.azurecr.io/em/hrs-api:pr-375-c3de88e-20210923112239   #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
       environment:
         DUMMY: demoenv
