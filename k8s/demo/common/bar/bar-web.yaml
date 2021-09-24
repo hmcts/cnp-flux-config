@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: bar-web
   namespace: bar
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.nodejs: glob:demo-*
 spec:
   releaseName: bar-web
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bar/web:demo
+      image: hmctspublic.azurecr.io/bar/web:demo   #{"$imagepolicy": "flux-system:demo-bar-web"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true

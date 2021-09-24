@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-paymentoutcome-web
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.nodejs: glob:pr-4-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:pr-4-3634d40-20210916170517
+      imagePullPolicy: Always
+      environment:
+        DUMMY_VARIABLE: false
