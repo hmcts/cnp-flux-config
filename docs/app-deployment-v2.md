@@ -1,7 +1,7 @@
 
 # Application Configuration
 
->Note: Depending on the [Migration Status](/README.md#Migration status) and the environment you are adding config, you should also do [v1 setup](app-deployment.md)
+>Note: Depending on the [Migration Status](/README.md#Migration-status) and the environment you are adding config, you should also do [v1 setup](app-deployment.md)
 
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
 
@@ -143,7 +143,7 @@ spec:
 ### Deploying an app to single cluster
 
 - It is recommended to add all applications to both clusters as one of the cluster can be removed from operation at any point. 
-- If you still have a use case, it has to be dealt exceptionally with help of [#rpe](https://hmcts-reform.slack.com/archives/C8SR5CAMU)
+- If you still have a use case, it has to be dealt exceptionally with help of [platops](https://hmcts-reform.slack.com/archives/C8SR5CAMU)
 
 ## Testing in Local
 
