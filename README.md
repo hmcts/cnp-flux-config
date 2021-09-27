@@ -20,10 +20,23 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 | Mgmt (cftptl) | Flux V2  | Migrated
 | Mgmt sbox | Flux V2  | Migrated
 
+### Image Automation Migration status
+Flux V2 image automation runs exclusively from the management clusters for all environments and migration of image automation for a specific environment to Flux V2 is independent of Flux V2 migration.
+
+
+| Environment  | Image automation managed by |
+| ------------- | ------------- |
+| Prod | Flux V1  |
+| AAT |  Flux V2  |
+| ITHC | Flux V1  |
+| Perftest | Flux V1 |
+| Demo | Flux V1  |
+
+
 ## Adding an app to flux
 
 All App deployments are managed through `HelmRelease` manifests. 
-Depending on the [Migration Status](#Migration-status) and the environment you are adding your config to , refer [v2 setup](docs/app-deployment-v2.md) or/and [v1 setup](docs/app-deployment.md).
+Depending on the [Migration Status](#Migration-status), [Image Automation Migration Status](#Image-Automation-Migration-Status) and the environment you are adding your config to , refer [v2 setup](docs/app-deployment-v2.md) or/and [v1 setup](docs/app-deployment.md).
 
 ## Creating Sealed Secrets
 
