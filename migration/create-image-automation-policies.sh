@@ -104,7 +104,7 @@ EOF
 
 if [[ $FULL_IMAGE == hmctsprivate* ]] ;
   then
-   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
+   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml"
 fi
 
 IMAGE_PATCH="$FULL_IMAGE   #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
@@ -206,7 +206,7 @@ EOF
 
 if [[ $FULL_IMAGE == hmctsprivate* ]] ;
   then
-   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
+   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml"
 fi
 
 IMAGE_PATCH="$FULL_IMAGE   #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
