@@ -4,25 +4,6 @@ kind: HelmRelease
 metadata:
   name: ccd-integration
   namespace: ccd
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: "glob:prod-*"
-    repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
-    filter.fluxcd.io/ccd-admin-web: glob:prod-*
-    repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
-    filter.fluxcd.io/ccd-case-management-web: glob:prod-*
-    repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
-    filter.fluxcd.io/ccd-api-gateway-web: glob:prod-*
-    repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
-    filter.fluxcd.io/ccd-definition-store-api: glob:prod-*
-    repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
-    filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
-    repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
-    filter.fluxcd.io/ccd-data-store-api: glob:prod-*
-    repository.fluxcd.io/ccd-case-activity-api: ccd-case-activity-api.nodejs.image
-    filter.fluxcd.io/ccd-case-activity-api: glob:prod-*
-    repository.fluxcd.io/ccd-case-print-service: ccd-case-print-service.nodejs.image
-    filter.fluxcd.io/ccd-case-print-service: glob:prod-*
 
 spec:
   releaseName: ccd-integration
@@ -71,7 +52,7 @@ spec:
 
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-aaf79b9-20210923201108
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-aaf79b9-20210923201108   #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -82,13 +63,13 @@ spec:
 
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649   #{"$imagepolicy": "flux-system:ccd-case-management-web"}
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-bf63b2b-20210927183711
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-bf63b2b-20210927183711    #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -99,7 +80,7 @@ spec:
 
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-7cfeef4-20210824182940
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-7cfeef4-20210824182940   #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -112,11 +93,11 @@ spec:
 
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-93f06e0-20210923201130
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-93f06e0-20210923201130   #{"$imagepolicy": "flux-system:ccd-case-print-service"}
 
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e2dbbf-20210927104107
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e2dbbf-20210927104107    #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -129,7 +110,7 @@ spec:
 
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c8fba87-20210927110956
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c8fba87-20210927110956    #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -138,7 +119,7 @@ spec:
 
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-50f9d72-20210826004308
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-649d172-20210928112630    #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
 
     elasticsearch:
       persistence:
