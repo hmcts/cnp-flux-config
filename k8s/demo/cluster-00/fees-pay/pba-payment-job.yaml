@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: pba-csv-report
   namespace: fees-pay
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:pr-17-*
 spec:
   releaseName: pba-csv-report
   rollback:
@@ -18,7 +15,7 @@ spec:
     version: 0.0.6
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:pr-17"
+      image: hmctspublic.azurecr.io/payment/jobs:pr-17   #{"$imagepolicy": "flux-system:demo-pba-csv-report"}
       schedule: "0 0/5 0 ? * * *"
       environment:
         REPORT_NAME: pba-csv-report
