@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-frontend
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: probate-frontend
   rollback:
@@ -22,7 +19,7 @@ spec:
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
       ingressHost: probate.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/probate/frontend:prod-aa56f8b-20210922173422
+      image: hmctspublic.azurecr.io/probate/frontend:prod-aa56f8b-20210922173422   #{"$imagepolicy": "flux-system:probate-frontend"}
       environment:
         VAR_TA: trigger4
     global:

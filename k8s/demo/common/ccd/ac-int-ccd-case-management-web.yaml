@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: ccd-ac-int-case-management-web
   namespace: ccd
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: ccd-ac-int-case-management-web
   rollback:
@@ -21,7 +18,7 @@ spec:
       aadIdentityName: ccd
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649
+      image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649   #{"$imagepolicy": "flux-system:ccd-ac-int-case-management-web"}
       ingressClass: traefik-no-proxy
       ingressHost: ccd-ac-int.demo.platform.hmcts.net
       environment:
