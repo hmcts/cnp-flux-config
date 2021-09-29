@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -33,12 +32,11 @@ spec:
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
       postgresqlHost: "cmc-demo-postgresql"
-
     ### CMC SERVICES ####
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-d7f43dc-20210928173045    #{"$imagepolicy": "flux-system:cmc-claim-store"}
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-d7f43dc-20210928173045 #{"$imagepolicy": "flux-system:cmc-claim-store"}
         ingressClass: traefik-private
         ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
@@ -65,7 +63,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-d2a2366-20210927091943    #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-361610b-20210929112448 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:
