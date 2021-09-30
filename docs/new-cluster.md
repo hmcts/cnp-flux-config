@@ -15,60 +15,32 @@ $ kubectl logs -n admin deployment/sealed-secrets
 
 Grab the public cert from the startup logs and place it in:
 ```
-k8s/<env-name>/pub-cert.pem
+clusters/<env-name>/pub-cert.pem
 ```
 ### Flux 
 
-ACR credentials for Flux, run below script with ENV ( folder name in flux config) and VAULT_NAME ( name of key vault created during bootstrap)
+Git access for Flux is managed through a couple of deploy keys added to repo.
 
-```bash
-#!/usr/bin/env bash
-ENV=$1
-VAULT_NAME=$2
-aks_client_id=$(az keyvault secret show --vault-name $VAULT_NAME --name aks-sp-app-id --query value -o tsv )
-aks_client_secret=$(az keyvault secret show --vault-name $VAULT_NAME --name aks-sp-app-password --query value -o tsv )
+1. `flux-write` with write access to repo , used only by cftptl to commit image automation.
+2. `flux-read` with read-only access to repo, unsed by all other environments.
 
-# -----------------------------------------------------------
-(
-cat <<EOF
-{
-  "cloud": "AzurePublicCloud",
-  "aadClientId": "$aks_client_id",
-  "aadClientSecret": "$aks_client_secret"
-}
-EOF
-) > "/tmp/azure-values.json"
-# -----------------------------------------------------------
-
-kubectl create secret generic acr-credentials --from-file=azure.json=/tmp/azure-values.json --namespace admin --dry-run=client -o json > /tmp/azure.json
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/azure.json > k8s/$ENV/common/sealed-secrets/acr-credentials.yaml
-
+Log into existing environment (sandbox) as an admin:
 ```
-### Flux cloud
-
-Log into sandbox as an admin:
+$ az aks get-credentials --resource-group cft-sbox-00-rg --name cft-sbox-00-aks --subscription b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb --overwrite-existing -a && kubectl config use-context cft-sbox-00-aks-admin
 ```
-$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX
+and run
 ```
-
-Retrieve the existing secret :
-```bash
-$ kubectl get secret fluxcloud-values -n admin  -o jsonpath="{['data']['values\.yaml']}" | base64 -D > /tmp/values.yaml
-```
-You have a slack channel with name aks-monitor-<env>.
-
-Run (replace `<env>` with your env name ):
-```bash
-$ ENV=<your-env>
-$ kubectl create secret generic fluxcloud-values --from-file=/tmp/values.yaml --namespace admin --dry-run=client -o json > /tmp/values.json
-$ mkdir -p k8s/$ENV/common/sealed-secrets
-$ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/fluxcloud-values.yaml
+ENV=<test>
+kubectl get secrets -n flux-system git-credentials -o yaml > /tmp/git-credentials.yaml
+mkdir -p apps/flux-system/$ENV
+mkdir -p apps/flux-system/$ENV/base
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem <  /tmp/git-credentials.yaml >  apps/flux-system/$ENV/base/git-credentials.yaml
 ```
 
 ### Kured values
 Log into sandbox as an admin:
 ```
-$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
+$ az aks get-credentials --resource-group cft-sbox-00-rg --name cft-sbox-00-aks --subscription b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb --overwrite-existing -a && kubectl config use-context cft-sbox-00-aks-admin
 ```
 
 Retrieve the existing secret:
@@ -77,10 +49,12 @@ $ kubectl -n kured get secret kured-values  -o jsonpath="{['data']['values\.yaml
 ```
 Update this /tmp/values.yaml file with the Slack WebHook for your environment
 
-Run (replace `<env>` with your env name ):
 ```bash
+ENV=<test>
 $ kubectl create secret generic kured-values --from-file=/tmp/values.yaml --namespace kured --dry-run=client -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/kured-values.yaml
+mkdir -p apps/kured/$ENV
+mkdir -p apps/kured/$ENV/base
+$ kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/values.json > apps/kured/$ENV/base/kured-values.yaml
 ```
 
 ### Neuvector
@@ -89,10 +63,11 @@ We install Neuvector on prod like or path-to-live environments
 It requires a sealed secret that contains the azure storage account name and key
 
 ```bash
-$ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-<env> --name storage-account-key --query value -o tsv)
+ENV=<test>
+$ STORAGE_ACCOUNT_KEY=$(az keyvault secret show --vault-name cftapps-$ENV --name storage-account-key --query value -o tsv)
 
-$ kubectl create secret generic nv-storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps<env> --namespace neuvector --dry-run=client -o json > /tmp/neuvector.json
-$ kubeseal --format=yaml --cert=k8s/<env>/pub-cert.pem < /tmp/neuvector.json > k8s/<env>/common/neuvector/nv-storage-secret.yaml
+$ kubectl create secret generic nv-storage-secret --from-literal azurestorageaccountkey=${STORAGE_ACCOUNT_KEY} --from-literal azurestorageaccountname=cftapps$ENV --namespace neuvector --dry-run=client -o json > /tmp/neuvector.json
+$ kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/neuvector.json > apps/neuvector/$ENV/base/nv-storage-secret.yaml
 ```
 
 #### Neuvector logging to Log Analytics
@@ -104,6 +79,7 @@ It requires a sealed secret that contains the workspace id and key in it
 This can only be retrieved from powershell or lots of clicking in the Azure Portal
 The "CustomerId" is your workspace ID
 ```powershell
+ENV=<test>
 Connect-AzAccount
 Select-AzSubscription DCD-CNP-DEV # prod: DCD-CNP-PROD, sandbox, DCD-CFT-Sandbox
 $oms = Get-AzOperationalInsightsWorkspace -ResourceGroupName oms-automation
@@ -116,7 +92,7 @@ kubectl create secret generic fluentbit-log --from-literal azure_log_workspace_i
 ```
 
 ```bash
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/fluentbit-log.json > k8s/$ENV/common/neuvector/fluentbit-log.yaml
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/fluentbit-log.json > apps/neuvector/$ENV/base/fluentbit-log.yaml
 ```
 
 ### Traefik
@@ -144,9 +120,11 @@ ssl:
 Create traefik-values sealed secret from the values.yaml 
 
 ```bash
+ENV=<test>
 kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run=client -o yaml > tmp/traefiksecret.yaml
-mkdir -p k8s/$ENV/common/traefik/
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem <  tmp/traefiksecret.yaml >  k8s/$ENV/common/sealed-secrets/traefik-values.yaml
+mkdir -p apps/admin/traefik/$ENV
+mkdir -p apps/admin/traefik/$ENV/base
+kubeseal --format=yaml --cert=apps/<env>/pub-cert.pem <  tmp/traefiksecret.yaml >  apps/admin/traefik/$ENV/base/traefik-values.yaml
 ```
 
 In demo, traefik-forward-auth is using the following sealed secret:
@@ -161,7 +139,7 @@ openssl pkcs12 -in ${SECRET_NAME}.pfx -nocerts -nodes -passin pass:"" > demo-pla
 
 kubectl create secret generic oauth2-cert-key --from-file demo-platform-hmcts-crt.pem --from-file demo-platform-hmcts-key.pem --namespace admin --dry-run -o json > oauth2-cert-key.json
 
-kubeseal --format=yaml --cert=k8s/demo/pub-cert.pem < oauth2-cert-key.json > k8s/demo/common/sealed-secrets/oauth2-cert-key.yaml
+kubeseal --format=yaml --cert=env/$ENV/pub-cert.pem < oauth2-cert-key.json > apps/admin/$ENV/base/oauth2-cert-key.yaml
 
 rm oauth2-cert-key.json
 ```
@@ -171,7 +149,7 @@ To add Kube-Slack for Slack monitoring on AKS cluster, change the SLACK_CHANNEL 
 
 Log into sandbox as an admin:
 ```
-$ az aks get-credentials --name sbox-00-aks -g sbox-00-rg --subscription DCD-CFTAPPS-SBOX --overwrite-existing
+$ az aks get-credentials --resource-group cft-sbox-00-rg --name cft-sbox-00-aks --subscription b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb --overwrite-existing -a && kubectl config use-context cft-sbox-00-aks-admin
 ```
 
 Retrieve the existing secret:
@@ -182,8 +160,9 @@ Update this /tmp/values.yaml file with the Slack WebHook for your environment
 
 Run (replace `<env>` with your env name ):
 ```bash
+ENV=<test>
 $ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run=client -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/sealed-secrets/kube-slack-values.yaml
+$ kubeseal --format=yaml --cert=apps/$ENV/pub-cert.pem < /tmp/values.json > apps/admin/$ENV/base/kube-slack-values.yaml
 ```
 
 ### Azure DevOps
@@ -195,7 +174,7 @@ ENV=mgmt-sandbox
 AZ_DEVOPS_TOKEN=$(az keyvault secret show --vault-name infra-vault-nonprod --name azure-devops-token --query value -o tsv)
 kubectl create secret generic vsts-token --from-literal=token=$AZ_DEVOPS_TOKEN --namespace vsts --dry-run=client -o json > /tmp/values.json
 mkdir -p k8s/$ENV/common/vsts/
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > k8s/$ENV/common/vsts/vsts-token.yaml
+kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > apps/vsts/$ENV/base/vsts-token.yaml
 ```
 
 ### External DNS (ideally we'll move this to managed identity)
@@ -212,5 +191,5 @@ kubectl create secret generic external-dns --from-literal AZURE_TENANT_ID=531ff9
   --dry-run=client \
   -o json > /tmp/external-dns.json
 
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/external-dns.json > k8s/$ENV/common/sealed-secrets/external-dns.yaml
+kubeseal --format=yaml --cert=apps/$ENV/pub-cert.pem < /tmp/external-dns.json > apps/$ENV/base/external-dns.yaml
 ```

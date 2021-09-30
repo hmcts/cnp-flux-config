@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: pba-finrem-weekly-csv-report
   namespace: fees-pay
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:prod-*
 spec:
   releaseName: pba-finrem-weekly-csv-report
   rollback:
@@ -18,7 +14,7 @@ spec:
     version: 0.0.6
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:prod-eac66225"
+      image: hmctspublic.azurecr.io/payment/jobs:prod-0a0ded6-20210716134918 #{"$imagepolicy": "flux-system:pba-finrem-weekly-csv-report"}
       schedule: "30 2 * * 4"
       environment:
         REPORT_NAME: pba-finrem-weekly-csv-report

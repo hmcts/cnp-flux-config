@@ -2,14 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccpay-callback-function
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.function: glob:pr-35-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-35-f7d3c8f-20210824125807
+      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-35-f7d3c8f-20210824125807   #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
       aadIdentityName: ccpay
       environment:
         S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
