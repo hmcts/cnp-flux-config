@@ -10,7 +10,7 @@ AKS_NAME=$4
 # Ensure you are logged into the correct cluster before running.
 az aks get-credentials --resource-group $AKS_RG --name $AKS_NAME --subscription $SUBSCRIPTION_ID --overwrite-existing -a
 
-for namespace in $(kubectl get ns -A -o jsonpath={.items[*].metadata.name} | xargs -n1 | grep -Ev "monitoring|default|kube-*|catalog|admin|etcd|flux-system|kured" | sort -u | xargs); do
+for namespace in $(kubectl get ns -A -o jsonpath={.items[*].metadata.name} | xargs -n1 | grep -Ev "monitoring|default|kube-*|catalog|admin|etcd|flux-system|kured|adoption" | sort -u | xargs); do
   
 if [[ $namespace == "kube-"* ]] || [[ $namespace == "default" ]]; 
 then
