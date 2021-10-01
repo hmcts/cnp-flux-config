@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: bar-api
   namespace: bar
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: bar-api
   rollback:
@@ -19,7 +16,7 @@ spec:
   values:
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/bar/api:prod-eb1fc53-20210921155000
+      image: hmctspublic.azurecr.io/bar/api:prod-eb1fc53-20210921155000   #{"$imagepolicy": "flux-system:bar-api"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false

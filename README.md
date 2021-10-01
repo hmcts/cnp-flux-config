@@ -28,8 +28,8 @@ Flux V2 image automation runs exclusively from the management clusters for all e
 | ------------- | ------------- |
 | Prod | Flux V1  |
 | AAT |  Flux V2 |
-| ITHC | Flux V1  |
-| Perftest | Flux V1  |
+| ITHC | Flux V2  |
+| Perftest | Flux V2  |
 | Preview | Flux V2  |
 | Sandbox | Flux V2  |
 | Mgmt (cftptl) | Flux V2  |
