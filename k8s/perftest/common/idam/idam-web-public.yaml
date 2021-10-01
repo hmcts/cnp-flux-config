@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: idam-web-public
   namespace: idam
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-web-public
   rollback:
@@ -18,7 +15,7 @@ spec:
     version: 0.2.11
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-50fe145-20210819144219
+      image: hmctspublic.azurecr.io/idam/web-public:prod-50fe145-20210819144219   #{"$imagepolicy": "flux-system:idam-web-public"}
       imagePullPolicy: Always
       ingressHost: idam-web-public.perftest.platform.hmcts.net
       aadIdentityName: idam
