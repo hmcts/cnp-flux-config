@@ -23,11 +23,14 @@ bases:
   - ../../namespaces/admin/keda
   - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
+  - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
+  - ../../namespaces/admin/flux-helm-operator/rbac/ithc-role-binding.yaml
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/ithc/flux.yaml
   - ../../namespaces/admin/flux/patches/ithc/cluster-01/flux.yaml
+  - ../../namespaces/admin/flux-helm-operator/patches/disable-rbac.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/ithc/cluster-01/fluxcloud.yaml
