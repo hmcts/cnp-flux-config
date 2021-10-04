@@ -25,6 +25,7 @@ EXCLUSIONS_LIST=(
   apps/*/*/test-image-policy.yaml
   apps/*/*/ithc-image-policy.yaml
   apps/*/*/sandbox-image-policy.yaml
+  apps/em/em-showcase/perftest-image-policy.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
