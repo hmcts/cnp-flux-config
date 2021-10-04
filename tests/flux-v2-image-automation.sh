@@ -20,12 +20,11 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-public/sbox.yaml
   *demo.yaml
   k8s/demo/*
-  apps/*/*/demo-image-policy.yaml
-  apps/*/*/perftest-image-policy.yaml
-  apps/*/*/test-image-policy.yaml
-  apps/*/*/ithc-image-policy.yaml
-  apps/*/*/sandbox-image-policy.yaml
-  apps/em/em-showcase/perftest-image-policy.yaml
+  *demo-image-policy.yaml
+  *perftest-image-policy.yaml
+  *test-image-policy.yaml
+  *ithc-image-policy.yaml
+  *sandbox-image-policy.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
