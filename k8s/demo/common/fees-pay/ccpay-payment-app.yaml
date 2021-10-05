@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -17,22 +16,19 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-1008-3757260-20210930162108   #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:pr-972-2af9df0-20211004115950 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
-        POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment
-          }}
+        POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
         TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         GOV_PAY_OPERATIONAL_SERVICES: "ccd_gw,api_gw,xui_webapp"
         PBA_CONFIG1_SERVICE_NAMES: dummy
-        IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment
-          }}.service.core-compute-{{ .Values.global.environment }}.internal
-        CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment
-          }}.service.core-compute-{{ .Values.global.environment }}.internal
+        IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         REFUND_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
         AUTH_REF_DATA_BASEURL: http://rd-professional-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     global:
