@@ -5,7 +5,17 @@ metadata:
 spec:
   values:
     java:
-      replicas: 0
+      keyVaults:
+        em-npa:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: microservicekey-em-npa-app
+              alias: S2S_KEY
+            - name: npa-POSTGRES-PASS-V11
+              alias: SPRING_DATASOURCE_PASSWORD
       environment:
         IDAM_API_BASE_URI: "https://idam-api.platform.hmcts.net"
         OPEN_ID_API_BASE_URI: "https://hmcts-access.service.gov.uk/o"
+        SPRING_DATASOURCE_USERNAME: npa@em-npa-postgres-db-v11-prod
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-npa-postgres-db-v11-prod.postgres.database.azure.com:5432/npa?sslmode=require
