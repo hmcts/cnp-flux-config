@@ -1,9 +1,14 @@
-set -e
+#!/usr/bin/env bash
+set -ex
 
-ENV="aat"
+ENV=$1
+NAMESPACE=$2
+
+# Example of script ./migration/identity-migration.sh perftest camunda
+
 git clean -f apps/
 git checkout apps/
-for file in $(grep -lr "kind: AzureIdentity" k8s/$ENV); do
+for file in $(grep -lr "kind: AzureIdentity" k8s/$ENV/common/$NAMESPACE); do
   
    if [ $(echo $file | cut -d'/' -f5) != "identity.yaml" ]
     then
