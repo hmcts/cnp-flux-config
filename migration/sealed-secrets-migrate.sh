@@ -1,8 +1,11 @@
-ENV="preview"
+#!/usr/bin/env bash
+set -ex
 
-for file in $(grep -lr "kind: SealedSecret" k8s/$ENV  | grep -Ev "sealed-secrets"); do
+# Example of script ./migration/sealed-secrets-migrate.sh perftest camunda
+ENV=$1
+NAMESPACE=$2
 
-    NAMESPACE=($(yq e '(.metadata.namespace)' $file))
+for file in $(grep -lr "kind: SealedSecret" k8s/$ENV/common/$NAMESPACE  | grep -Ev "sealed-secrets"); do
 
     # Creates directory apps/<namespace>/<environment>
     if [ ! -d "apps/$NAMESPACE/$ENV" ]
