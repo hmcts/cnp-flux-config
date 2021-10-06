@@ -4,6 +4,9 @@ kind: HelmRelease
 metadata:
   name: ccpay-bubble-frontend
   namespace: fees-pay
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: pr-540-*
 spec:
   releaseName: ccpay-bubble-frontend
   rollback:
@@ -21,7 +24,7 @@ spec:
       imagePullPolicy: Always
       environment:
         PCIPAL_ANTENNA_URL: https://paybubble.perftest.platform.hmcts.net/ccd-search
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         CCPAY_REFUNDS_API_URL: http://ccpay-refunds-api-perftest.service.core-compute-perftest.internal
     global:
       environment: perftest
