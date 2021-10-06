@@ -6,8 +6,6 @@ NAMESPACE=$2
 
 # Example of script ./migration/identity-migration.sh perftest camunda
 
-git clean -f apps/
-git checkout apps/
 for file in $(grep -lr "kind: AzureIdentity" k8s/$ENV/common/$NAMESPACE); do
   
    if [ $(echo $file | cut -d'/' -f5) != "identity.yaml" ]
@@ -15,7 +13,6 @@ for file in $(grep -lr "kind: AzureIdentity" k8s/$ENV/common/$NAMESPACE); do
       echo "ignoring $file,please handle it seperately"
        continue
     fi
-    
   
     NAMESPACE=($(yq e '(.metadata.namespace)' $file))
 
