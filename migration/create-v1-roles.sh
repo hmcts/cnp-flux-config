@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 set -ex
 
-# Example of script ./migration/create-v1-roles.sh perftest camunda
 ENVIRONMENT=$1
-NAMESPACE=$2
 
+for namespace in $(kubectl get hr -A -o jsonpath={.items[*].metadata.namespace} | xargs -n1 | sort -u | xargs); do
 (
 cat <<EOF
 
@@ -12,7 +11,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: flux-helm-operator
-  namespace: $NAMESPACE
+  namespace: $namespace
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -25,3 +24,4 @@ subjects:
 ---
 EOF
 ) >> "k8s/namespaces/admin/flux-helm-operator/rbac/$ENVIRONMENT-role-binding.yaml"
+done
