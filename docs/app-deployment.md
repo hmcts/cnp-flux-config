@@ -70,7 +70,7 @@ If you want to add a new app only to a one environment, see [Add application to 
 
 ### Deploy non prod image to an environment
 
-- Refer to steps detailed [here.](/docs/app-deployment-v2.md#deploy-non-prod-image-to-an-environment)
+- Image automation responsibility has been moved to flux v2. Please refer to steps detailed [here.](/docs/app-deployment-v2.md#deploy-non-prod-image-to-an-environment)
 
 
 ### Deploying an app to single cluster
