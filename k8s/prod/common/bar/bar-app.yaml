@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: bar-api
   namespace: bar
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: bar-api
   chart:
@@ -19,7 +16,7 @@ spec:
       retry: true
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/bar/api:prod-4c5bc3c-20211005143017
+      image: hmctspublic.azurecr.io/bar/api:prod-4c5bc3c-20211005143017   #{"$imagepolicy": "flux-system:bar-api"}
       environment:
         IDAM_CLIENT_BASE_URL: https://idam-api.platform.hmcts.net
         DUMMY_RESTART_VAR: true

@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-orchestrator-service
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: probate-orchestrator-service
   rollback:
@@ -29,7 +26,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: "hmctspublic.azurecr.io/probate/orchestrator-service:prod-8984ac3-20210922150525"
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-8984ac3-20210922150525   #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
       ingressHost: probate-orchestrator-service-prod.service.core-compute-prod.internal
       environment:
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
