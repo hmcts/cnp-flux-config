@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: sscs-tribunals-frontend
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: sscs-tribunals-frontend
   rollback:
@@ -19,7 +16,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-019a564-20210928153538 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-019a564-20210928153538   #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
       ingressHost: www.appeal-benefit-decision.service.gov.uk
       livenessPath: /health/readiness
       environment:

@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: ccpay-bulkscanning-api
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccpay-bulkscanning-api
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-1a0bd02-20210921150532
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-1a0bd02-20210921150532   #{"$imagepolicy": "flux-system:ccpay-bulkscanning-api"}
       environment:
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
         IDAM_API_URL: https://idam-api.platform.hmcts.net

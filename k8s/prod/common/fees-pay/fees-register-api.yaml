@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: fees-register-api
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: fees-register-api
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/api:prod-91aec6b-20211005144448
+      image: hmctspublic.azurecr.io/fees-register/api:prod-91aec6b-20211005144448   #{"$imagepolicy": "flux-system:fees-register-api"}
       environment:
         IDAM_CLIENT_BASE_URL: https://idam-api.platform.hmcts.net
     global:

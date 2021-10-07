@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-rfe
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-rfe
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/rfe:prod-93cf166-20210923100156
+      image: hmctspublic.azurecr.io/div/rfe:prod-93cf166-20210923100156   #{"$imagepolicy": "flux-system:div-rfe"}
       ingressHost: www.respond-divorce.service.gov.uk
       environment:
         GOOGLE_ANALYTICS_ID: "UA-93824767-5"
