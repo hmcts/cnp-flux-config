@@ -17,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-1002-b40ce81-20210930154805
+      image: hmctspublic.azurecr.io/payment/api:pr-1002-ece9b42-20211006100706
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true
@@ -26,7 +26,7 @@ spec:
           }}
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-{{ .Values.global.environment
           }}.service.core-compute-{{ .Values.global.environment }}.internal
-        TRUSTED_S2S_SERVICE_NAMES: "cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,probate_backend,nfdiv_case_api,civil_service"
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,probate_backend,nfdiv_case_api,civil_service"
         PBA_CONFIG1_SERVICE_NAMES: dummy
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment
           }}.service.core-compute-{{ .Values.global.environment }}.internal

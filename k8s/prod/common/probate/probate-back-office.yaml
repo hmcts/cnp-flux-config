@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-back-office
   namespace: probate
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: probate-back-office
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: "hmctspublic.azurecr.io/probate/back-office:prod-c9abd85-20211004155054"
+      image: hmctspublic.azurecr.io/probate/back-office:prod-2e930d1-20211006135527   #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
         IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net

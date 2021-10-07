@@ -1,11 +1,9 @@
+---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-cor-frontend
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: sscs-cor-frontend
   rollback:
@@ -19,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-4006a1b-20211005144659 #{"$imagepolicy": "flux-system:sscs-cor-frontend"}
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-3b3ddb0-20211006165418   #{"$imagepolicy": "flux-system:sscs-cor-frontend"}
       ingressHost: www.manage.appeal-benefit-decision.service.gov.uk
       environment:
         IDAM_URL: "https://hmcts-access.service.gov.uk"

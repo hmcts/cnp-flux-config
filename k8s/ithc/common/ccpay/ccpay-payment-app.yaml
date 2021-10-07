@@ -17,10 +17,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-1002-b40ce81-20210930154805
+      image: hmctspublic.azurecr.io/payment/api:pr-1002-ece9b42-20211006100706
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment
           }}.service.core-compute-{{ .Values.global.environment }}.internal
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
@@ -28,7 +28,7 @@ spec:
           }}.service.core-compute-{{ .Values.global.environment }}.internal
         POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment
           }}
-        TRUSTED_S2S_SERVICE_NAMES: "cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,civil_service,probate_backend,nfdiv_case_api"
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,civil_service,probate_backend,nfdiv_case_api"
         PBA_CONFIG1_SERVICE_NAMES: dummy
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment
           }}.service.core-compute-{{ .Values.global.environment }}.internal

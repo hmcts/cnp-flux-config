@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: repl-docmosis-service
   namespace: ethos
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: repl-docmosis-service
   rollback:
@@ -24,7 +21,7 @@ spec:
       memoryLimits: "4096Mi"
       cpuLimits: "3000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-a29cfbc-20211005114459
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-a29cfbc-20211005114459   #{"$imagepolicy": "flux-system:repl-docmosis-service"}
       environment:
         TORNADO_URL: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_URL: https://idam-api.platform.hmcts.net

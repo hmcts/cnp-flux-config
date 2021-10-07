@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: finrem-cos
   namespace: financial-remedy
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: finrem-cos
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-111a331-20210923093809
+      image: hmctspublic.azurecr.io/finrem/cos:prod-111a331-20210923093809   #{"$imagepolicy": "flux-system:finrem-cos"}
       dnsConfig:
         singleRequestTcp: false
       environment:

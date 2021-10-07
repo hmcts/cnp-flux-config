@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: sscs-bulk-scan
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-bulk-scan
   rollback:
@@ -19,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-5ae8dab-20211005131551 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-9b2da38-20211006100825   #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
