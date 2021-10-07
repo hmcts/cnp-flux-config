@@ -5,6 +5,16 @@ metadata:
 spec:
   values:
     java:
-      replicas: 0
+      keyVaults:
+        em-anno:
+          secrets:
+            - name: microservicekey-em-annotation-app
+              alias: S2S_KEY
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: anno-POSTGRES-PASS-V11
+              alias: SPRING_DATASOURCE_PASSWORD
       environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-anno-postgres-db-v11-aat.postgres.database.azure.com:5432/annotation?sslmode=require
+        SPRING_DATASOURCE_USERNAME: annotation@em-anno-postgres-db-v11-aat
         TEST_VAR: value1
