@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  values:
+    neuvector:
+      controller:
+        azureFileShare:
+          secretName: nv-storage-secret
+          shareName: neuvector-data-00
+        ingress:
+          host: neuvector00-api.service.core-compute-perftest.internal
+        configmap:
+          data:
+            samlinitcfg.yaml: |
+              SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
+              Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              X509_Cert: |
+                -----BEGIN CERTIFICATE-----
+                MIIC8DCCAdigAwIBAgIQep4fr6RXL6RDGr5qNE6SWTANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
+                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0xOTA4MDEwOTM0
+                MDVaFw0yMjA4MDEwOTM0MDVaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
+                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxtugdDjKLQ0b
+                cgtnpPVd4O5o2NJCYWtXJqxrMTwrv/Igx9PobwjpQfx1bHW0fNxmMWEC7RyEiSM/87IenW+ZYf/5
+                XuOaNsC2hQmDoi2R9596bxxDeW+yfbCV33GjGHdV9Vhn18TyMjwI5RObxtoo8oKFBTR1FIVwE532
+                CVZG1wkrijXeg4bHjcTJcF56NJUzOqlXCDPQ2ib+vY2fRj3y/Psz4cKk13MDi4+/EquPF6Q2BhWi
+                1GUL6JWyJ1jbas7306ioYpPQAiwjnzmTIu9btXWxIKiugvBps9C/JBwaywKvOQ3GblOrJP9Eizn7
+                b6DQa58Wkt6Yga6HHDJ0OWkrgwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBBv+ia5KXSp84vImCW
+                +XLVxYYbrIrbI6b+kYKmDcPgMl12YBIZjMxxRRCebMnbTaUMbVjvvU+LjeAZbRYYe3TyMFLI+Qs9
+                rqc8mqUd4Klf/sV0adjvmetlNxTNkQKk/Uoh8FX3jLBlBmsbtbYIN2mQSgJJTTqV6Xp6+If0LMpA
+                tfifJsu1lBH+93dQuWtWPhMnwftkpN2l2GtXpqRYu1t4JiwToMDk+aSzwfAGNxaWEHbiS+cIjP1B
+                jzkoepk27qss++VUyxc6MwSpGRSthj09c1sZEJsjRpU9TY6AU+fNlhWX00ZIbj7nVP1Fg0lYWzxZ
+                AAlK2mzES+0sP7kZ19Qi
+                -----END CERTIFICATE-----
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_in_json: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Cluster_Name: perftest00
+      manager:
+        ingress:
+          host: neuvector00.service.core-compute-perftest.internal

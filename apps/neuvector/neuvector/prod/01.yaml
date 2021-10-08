@@ -1,0 +1,76 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  values:
+    rules:
+      network: # IDs must match array index + 1
+        - create: '{"insert":{"after":0,"rules":[{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false}}'
+        - create: '{"insert":{"after":1,"rules":[{"id":2,"comment":"","from":"AllPods","to":"ApplicationInsights","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":2,"comment":"","from":"AllPods","to":"ApplicationInsights","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
+        - create: '{"insert":{"after":2,"rules":[{"id":3,"comment":"","from":"AllPods","to":"GovUkNotify","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":3,"comment":"","from":"AllPods","to":"GovUkNotify","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
+        - create: '{"insert":{"after":3,"rules":[{"id":4,"comment":"","from":"AllPods","to":"GovUkPay","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":4,"comment":"","from":"AllPods","to":"GovUkPay","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
+        - create: '{"insert":{"after":4,"rules":[{"id":5,"comment":"","from":"AllPods","to":"GovUkBankHolidays","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":5,"comment":"","from":"AllPods","to":"GovUkBankHolidays","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
+        - create: '{"insert":{"after":5,"rules":[{"id":6,"comment":"","from":"AllPods","to":"ServiceBus","ports":"tcp/5671","action":"allow","applications":["SSL"],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":6,"comment":"","from":"AllPods","to":"ServiceBus","ports":"tcp/5671","action":"allow","applications":["SSL"],"disable":false}}'
+        - create: '{"insert":{"after":6,"rules":[{"id":7,"comment":"","from":"AllPods","to":"Mta","ports":"tcp/25","action":"allow","applications":[],"disable":false,"learned": false}]}}'
+          update: '{"config":{"id":7,"comment":"","from":"AllPods","to":"Mta","ports":"tcp/25","action":"allow","applications":[],"disable":false}}'
+        - create: '{"insert":{"after":7,"rules":[{"id":8,"comment":"","from":"AllPods","to":"Idam","ports":"tcp/443","action":"allow","applications":["SSL"],"disable":true,"learned": false}]}}'
+          update: '{"config":{"id":8,"comment":"","from":"AllPods","to":"Idam","ports":"tcp/443","action":"allow","applications":["SSL"],"disable":true}}'
+    neuvector:
+      controller:
+        azureFileShare:
+          secretName: nv-storage-secret
+          shareName: neuvector-data-01
+        ingress:
+          host: neuvector01-api.service.core-compute-prod.internal
+        configmap:
+          data:
+            samlinitcfg.yaml: |
+              SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
+              Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              X509_Cert: |
+                -----BEGIN CERTIFICATE-----
+                MIIC8DCCAdigAwIBAgIQElj4o/2aPoZL0yZRJ0C11zANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
+                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0xOTA4MTIxMzE3
+                MzdaFw0yMjA4MTIxMzE3MzdaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
+                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq4QkPZq/6kLn
+                aecvd8c8b4S4g1qfn+bYvddX2nUNkZw2SdQRqjR/UoR0gJmdyETe9GOTsFeRpvg+SNqjvmwG8ltq
+                fM8RfzlWvUUDFqU4o4Dq37Heev0bODUeZSe7VPeR3YRFe4vfDr5F+0TSFSLSB4GZDLaQJnSusgt3
+                kBmxrV3n3SZ9SsEL+6YdrKaqyULwsfvuJztpDB4ewPRiym5X25ayaXWYpv8zEGOs5BdSmKC735v/
+                lGDaCjXjcMf//MrIhMExXsK5PCaKVCuwQXrENi3wgcDOyP3eSh8O4gkFwQnPlPdCGtIpQ5vQiYc9
+                lsJxWXN4CqW2fv9BtwCcWWtRCwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBasjRULiNZ0mfJQ7ST
+                aZxQ2TLmoM+IlgMdJTquclRkbxs68vv6y8q725645jFw6PRTmJUth5L+4H5H6nNw7ZlB+kgnK69Q
+                8lNxpnYhc9m5dHeWsmsse/KBK3wS8WY1QJiVctWVZaIN2jp+gtDSYadHAzDOYF0SBtacFdhedXPB
+                UYK8ErWoOJ2WQlFCZxDPiafpfSpOr3FQL/IdaWnw7lNcdrcDg5tVpLRR61EFC5vHzlOaz6ujsgql
+                VgC0s1kW8Y278i8kinrpoCfB+LDiTeuvJe7oD2aAYL2hiw6HuZc5Vr6u3iMqJCPySgKv+snZzx+6
+                N2neYblL3dtAgT+zUBNA
+                -----END CERTIFICATE-----
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_in_json: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Cluster_Name: prod01
+      manager:
+        ingress:
+          host: neuvector01.service.core-compute-prod.internal

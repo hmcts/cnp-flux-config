@@ -1,0 +1,21 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  values:
+    neuvector:
+      cve:
+        scanner:
+          image:
+            repository: neuvector/scanner
+          replicas: 2
+    keyvault:
+      name: cftapps-ithc
+      resourcegroup: core-infra-ithc-rg
+      subscriptionid: 62864d44-5da9-4ae9-89e7-0cf33942fa09
+      tenantid: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
+      aadpodidbinding: neuvector
+      licensesecretname: neuvector-license-dev
