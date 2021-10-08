@@ -13,29 +13,14 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 | ------------- | ------------- | ------------- |
 | Prod | Flux V1  | Not Migrated
 | AAT |  Flux V1  | Not Migrated
-| ITHC | Flux V1  | Not Migrated
-| Perftest | Flux V1 & V2  | Migration in progress
+| ITHC | Flux V1 & V2 | Migration in progress
+| Perftest | Flux V1 & V2 | Migration in progress
 | Preview | Flux V2  | Migrated
 | Sandbox | Flux V2  | Migrated
 | Mgmt (cftptl) | Flux V2  | Migrated
 | Mgmt sbox | Flux V2  | Migrated
 
-### Image Automation Migration status
-Flux V2 image automation runs exclusively from the management clusters for all environments and migration of image automation for a specific environment to Flux V2 is independent of Flux V2 migration.
-
-
-| Environment  | Image automation managed by |
-| ------------- | ------------- |
-| Prod | Flux V2  |
-| AAT |  Flux V2 |
-| Demo | Flux V2  |
-| ITHC | Flux V2  |
-| Perftest | Flux V2  |
-| Preview | Flux V2  |
-| Sandbox | Flux V2  |
-| Mgmt (cftptl) | Flux V2  |
-| Mgmt sbox | Flux V2  |
-
+**Note**: Image automation responsibility for all environments has been moved to Flux v2
 
 ## Adding an app to flux
 
