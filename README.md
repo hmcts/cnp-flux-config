@@ -13,8 +13,8 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 | ------------- | ------------- | ------------- |
 | Prod | Flux V1  | Not Migrated
 | AAT |  Flux V1  | Not Migrated
-| ITHC | Flux V1  | Not Migrated
-| Perftest | Flux V1 & V2  | Migration in progress
+| ITHC | Flux V1 & V2 | Migration in progress
+| Perftest | Flux V1 & V2 | Migration in progress
 | Preview | Flux V2  | Migrated
 | Sandbox | Flux V2  | Migrated
 | Mgmt (cftptl) | Flux V2  | Migrated
