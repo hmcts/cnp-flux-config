@@ -16,11 +16,11 @@ kustomizepaths=()
 
         if [[ $FOLDER_SEARCH =~ "00" && $FOLDER_SEARCH =~ "01" ]]
         then
-            kustomizepaths+=("$FOLDER_FIND/00/base")
-            kustomizepaths+=("$FOLDER_FIND/01/base")
+            kustomizepaths+=("$FOLDER_FIND/00")
+            kustomizepaths+=("$FOLDER_FIND/01")
         elif [[ $FOLDER_SEARCH =~ "00" || $FOLDER_SEARCH =~ "01" ]]
         then
-            [[ $FOLDER_SEARCH =~ "00" ]] && kustomizepaths+=("$FOLDER_FIND/00/base") || kustomizepaths+=("$FOLDER_FIND/01/base") 
+            [[ $FOLDER_SEARCH =~ "00" ]] && kustomizepaths+=("$FOLDER_FIND/00") || kustomizepaths+=("$FOLDER_FIND/01") 
         elif [[ $FOLDER_SEARCH =~ "base" ]]
         then
             kustomizepaths+=("$FOLDER_FIND/base")
