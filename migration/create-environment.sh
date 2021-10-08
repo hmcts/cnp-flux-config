@@ -24,10 +24,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../../apps/flux-system/$ENVIRONMENT/base
-- ../../../apps/admin/base/kustomize.yaml
-- ../../../apps/kube-system/base/kustomize.yaml
-- ../../../apps/kured/base/kustomize.yaml
-- ../../../apps/monitoring/base/kustomize.yaml
+#- ../../../apps/admin/base/kustomize.yaml
+#- ../../../apps/kube-system/base/kustomize.yaml
+#- ../../../apps/kured/base/kustomize.yaml
+#- ../../../apps/monitoring/base/kustomize.yaml
+
+patches:
+  - path: ../../../apps/base/kustomize.yaml
+    target:
+      kind: Kustomization
+      annotationSelector: hmcts.github.com/kustomize-defaults != disabled
 EOF
 ) > "$CLUSTER_DIRECTORY/base/kustomization.yaml"
   
