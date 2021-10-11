@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-business-service
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: probate-business-service
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-03493d0-20210823124345
+      image: hmctspublic.azurecr.io/probate/business-service:prod-03493d0-20210823124345   #{"$imagepolicy": "flux-system:probate-business-service"}
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

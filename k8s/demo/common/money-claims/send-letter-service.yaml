@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rpe-send-letter-service
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: rpe-send-letter-service
   rollback:
@@ -21,7 +17,7 @@ spec:
       devMode: true
     java:
       ingressHost: ""
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-042095f-20210920095436
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-d75823a-20211011095201 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}
       environment:
         SCHEDULING_ENABLED: false
         FLYWAY_NOOP_STRATEGY: "false"

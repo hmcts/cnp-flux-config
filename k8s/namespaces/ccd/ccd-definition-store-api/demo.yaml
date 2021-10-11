@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-definition-store-api
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-1055-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  releaseName: ccd-definition-store-api
+  values:
+    java:
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-1055-421f490-20211006160637   #{"$imagepolicy": "flux-system:demo-ccd-definition-store-api"}
+      environment:
+        IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
+        DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"
+        DEFINITION_STORE_DB_MAX_POOL_SIZE: 32
+        DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-demo.postgres.database.azure.com
+        DEFINITION_STORE_DB_USERNAME: ccd@ccd-definition-store-api-postgres-db-v11-demo
+        DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api
+        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
+        DUMMY_RESTART_VAR: 1

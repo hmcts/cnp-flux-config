@@ -2,15 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dg-docassembly
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-432-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/dg/docassembly:pr-432-c97272f-20210908185851
+      image: hmctspublic.azurecr.io/dg/docassembly:pr-438-9090d81-20210928103434   #{"$imagepolicy": "flux-system:demo-dg-docassembly"}
       environment:
-        CDAM_URL: http://ccd-case-document-am-api-{{ .Values.global.environment }}.service.core-compute-{{
-          .Values.global.environment }}.internal
         TEST_VAR: value1

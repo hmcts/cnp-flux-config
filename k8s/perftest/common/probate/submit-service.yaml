@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-submit-service
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: probate-submit-service
   rollback:
@@ -27,7 +24,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-f1892cc-20210823124233
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-2617c83-20210922150926   #{"$imagepolicy": "flux-system:probate-submit-service"}
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

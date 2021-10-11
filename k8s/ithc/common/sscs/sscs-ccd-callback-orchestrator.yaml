@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-ccd-callback-orchestrator
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-ccd-callback-orchestrator
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-de2b9f6-20210831093216 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-05c5a35-20211011140655 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
       environment:
         DUMMY_PROPERTY: "true"
         TEST_PROPERTY: "true"

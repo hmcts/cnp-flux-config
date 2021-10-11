@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-ac-int-data-store-api
   namespace: ccd
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1645-*
 spec:
   releaseName: ccd-ac-int-data-store-api
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1645-1f48af3-20210908111152
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1485-94aee8e-20211011105547 #{"$imagepolicy": "flux-system:demo-ccd-ac-int-data-store-api"}
       ingressHost: ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
@@ -41,6 +37,7 @@ spec:
         ENABLE_PSEUDO_ROLE_ASSIGNMENTS_GENERATION: true
         ENABLE_PSEUDO_ACCESS_PROFILES_GENERATION: true
         SPRING_FLYWAY_ENABLED: false
+        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,27 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: cmc-ccd
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: "glob:prod-*"
-    repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
-    filter.fluxcd.io/ccd-admin-web: glob:prod-*
-    repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
-    filter.fluxcd.io/ccd-case-management-web: glob:prod-*
-    repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
-    filter.fluxcd.io/ccd-api-gateway-web: glob:prod-*
-    repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
-    filter.fluxcd.io/ccd-definition-store-api: glob:prod-*
-    repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
-    filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
-    repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
-    filter.fluxcd.io/ccd-data-store-api: glob:prod-*
-    repository.fluxcd.io/dm-store: dm-store.java.image
-    filter.fluxcd.io/dm-store: glob:prod-*
-
 spec:
   releaseName: cmc-ccd
   timeout: 900
@@ -36,7 +17,6 @@ spec:
   values:
     tags:
       idam-pr: true
-
     ccd:
       s2s:
         enabled: false
@@ -48,7 +28,6 @@ spec:
         enabled: true
       blobstorage:
         enabled: true
-
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -61,31 +40,28 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-89dff8c1
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-aaf79b9-20210923201108 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
-
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-92046411
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649 #{"$imagepolicy": "flux-system:ccd-case-management-web"}
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
-
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0b316d4c
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-4236ef2-20211005204350 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
-
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-6c3d1e3c
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e2dbbf-20210927104107 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -95,33 +71,28 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
-
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-b700e6cb
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-5439eea-20211006072742 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
-
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-65373629
-
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-6ebb6e4-20211006072813 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-f856012b
-
+        image: hmctspublic.azurecr.io/dm/store:prod-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
-      - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
-      - steve.liddiard@justice.gov.uk|CMC|MoneyClaimCase|open
-      - sunil.kumar@hmcts.net|CMC|MoneyClaimCase|open
-      - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
-      - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
-      - yogendra.upasani@hmcts.net|CMC|MoneyClaimCase|open
-
+        - civilmoneyclaims+ccd@gmail.com|CMC|MoneyClaimCase|open
+        - steve.liddiard@justice.gov.uk|CMC|MoneyClaimCase|open
+        - sunil.kumar@hmcts.net|CMC|MoneyClaimCase|open
+        - civilmoneyclaims+judge@gmail.com|CMC|MoneyClaimCase|orderForJudgeReview
+        - civilmoneyclaims+la@gmail.com|CMC|MoneyClaimCase|readyForDirections
+        - yogendra.upasani@hmcts.net|CMC|MoneyClaimCase|open
     #cmc ccd definition importer redeployiing the ccd components
     ccd-definition-importer:
       image: hmctspublic.azurecr.io/cmc/ccd-definition-importer:1.9.3
@@ -131,14 +102,14 @@ spec:
         CCD_DEF_CLAIM_STORE_BASE_URL: "{{ .Values.global.cmcBackendUrl }}"
       definitionFilename: cmc-ccd.xlsx
       userRoles:
-      - citizen
-      - caseworker-cmc
-      - caseworker-cmc-solicitor
-      - caseworker-cmc-systemupdate
-      - letter-holder
-      - caseworker-autotest1
-      - caseworker-cmc-anonymouscitizen
-      - caseworker-cmc-judge
-      - caseworker-cmc-legaladvisor
-      - caseworker-cmc-pcqextractor
-      - payments
+        - citizen
+        - caseworker-cmc
+        - caseworker-cmc-solicitor
+        - caseworker-cmc-systemupdate
+        - letter-holder
+        - caseworker-autotest1
+        - caseworker-cmc-anonymouscitizen
+        - caseworker-cmc-judge
+        - caseworker-cmc-legaladvisor
+        - caseworker-cmc-pcqextractor
+        - payments

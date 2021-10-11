@@ -2,22 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-npa
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-447-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      keyVaults:
-        em-npa:
-          secrets:
-          - name: AppInsightsInstrumentationKey
-            alias: APPINSIGHTS_INSTRUMENTATIONKEY
-          - name: microservicekey-em-npa-app
-            alias: S2S_KEY
-          - name: npa-POSTGRES-PASS
-            alias: SPRING_DATASOURCE_PASSWORD
       environment:
         TEST_VAR: value1
-      image: hmctspublic.azurecr.io/em/npa:pr-447-623bcf94   #{"$imagepolicy": "flux-system:pr-447-em-npa"}

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccpay-payment-app
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: pr-972-*
 spec:
   releaseName: ccpay-payment-api
   rollback:
@@ -20,23 +16,21 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-972-6e60402-20210917165718
+      image: hmctspublic.azurecr.io/payment/api:pr-972-aa2cb8a-20211006103014 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
-        POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment
-          }}
-        TRUSTED_S2S_SERVICE_NAMES: "cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service"
+        POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         GOV_PAY_OPERATIONAL_SERVICES: "ccd_gw,api_gw,xui_webapp"
         PBA_CONFIG1_SERVICE_NAMES: dummy
-        IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment
-          }}.service.core-compute-{{ .Values.global.environment }}.internal
-        CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment
-          }}.service.core-compute-{{ .Values.global.environment }}.internal
+        IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         REFUND_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
+        AUTH_REF_DATA_BASEURL: http://rd-professional-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

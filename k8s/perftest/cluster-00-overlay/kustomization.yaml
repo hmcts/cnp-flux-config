@@ -5,6 +5,7 @@ bases:
   - am
   - rd
   - em
+  - nfdiv
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
@@ -14,6 +15,7 @@ bases:
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
+  - ../../namespaces/neuvector/namespace.yaml
   - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/admin/env-injector
@@ -23,11 +25,15 @@ bases:
   - ../../namespaces/admin/keda
   - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
+  - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
+  - ../../namespaces/admin/flux-helm-operator/rbac/perftest-role-binding.yaml
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/perftest/flux.yaml
   - ../../namespaces/admin/flux/patches/perftest/cluster-00/flux.yaml
+
+  - ../../namespaces/admin/flux-helm-operator/patches/disable-rbac.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/perftest/cluster-00/fluxcloud.yaml

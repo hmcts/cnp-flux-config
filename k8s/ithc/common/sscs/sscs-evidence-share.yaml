@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: sscs-evidence-share
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-evidence-share
   rollback:
@@ -19,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-2017f49-20210904095915 #{"$imagepolicy": "flux-system:sscs-evidence-share"}
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-227d089-20211007091732 #{"$imagepolicy": "flux-system:sscs-evidence-share"}
       environment:
         ROBOTICS_EMAIL_TO: gokul.sridharan@HMCTS.NET
         WLU_EMAIL_FROM: noreply@mail-sscs-nonprod.platform.hmcts.net
@@ -27,6 +24,7 @@ spec:
         PDF_SERVICE_HEALTH_URL: https://docmosis.ithc.platform.hmcts.net/rs/status
         PDF_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
         SECURE_DOC_STORE_FEATURE: true
+        ENHANCED_CONFIDENTIALITY_FEATURE: true
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

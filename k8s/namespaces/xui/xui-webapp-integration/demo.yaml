@@ -3,8 +3,6 @@ kind: HelmRelease
 metadata:
   name: xui-webapp-integration
   annotations:
-    fluxcd.io/automated: "false"
-    fluxcd.io/tag.nodejs: glob:pr-1168-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
@@ -17,7 +15,7 @@ spec:
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
-        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,AUTOTEST1,TEST
+        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,AUTOTEST1,TEST,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3
         FEATURE_OIDC_ENABLED: true
         SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
         SERVICES_IDAM_OAUTH_CALLBACK_URL: oauth2/callback
@@ -28,4 +26,4 @@ spec:
         DEBUG: xuiNode:*,-xuiNode:auth:s2s
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-demo.service.core-compute-demo.internal
         UV_THREADPOOL_SIZE: 96
-      image: hmctspublic.azurecr.io/xui/webapp:pr-1168-3488508-20210906094034   #{"$imagepolicy": "flux-system:pr-1208-xui-webapp-integration"}
+      image: hmctspublic.azurecr.io/xui/webapp:pr-1168-d75b80b-20211008142316 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration"}

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-rfe
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-550-*
 spec:
   releaseName: div-rfe
   rollback:
@@ -20,7 +16,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/rfe:pr-550-0341472-20210716125431
+      image: hmctspublic.azurecr.io/div/rfe:pr-550-41455e4-20211008092724 #{"$imagepolicy": "flux-system:demo-div-rfe"}
       ingressClass: traefik-no-proxy
       ingressHost: respond-divorce-aks.demo.platform.hmcts.net
       environment:
@@ -33,8 +29,9 @@ spec:
         FEATURE_CORESP_EQUALITY: "true"
         FEATURE_ANTENNA_WEBCHAT: "true"
         FEATURE_WEBCHAT: "false"
-        ANTENNA_WEBCHAT_SERVICE: Testing
-        ANTENNA_WEBCHAT_URL: webchat.training.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
     global:
       environment: demo
       subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"

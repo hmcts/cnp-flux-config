@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: cmc-legal-frontend
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: cmc-legal-frontend
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-ff1d25d-20210816143411
+      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-cb2d7b7-20210930155704   #{"$imagepolicy": "flux-system:cmc-legal-frontend"}
       ingressHost: www.moneyclaim-legal.platform.hmcts.net
       environment:
         GA_TRACKING_ID: UA-97111056-4

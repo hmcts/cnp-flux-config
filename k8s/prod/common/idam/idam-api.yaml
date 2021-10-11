@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
-  annotations:
-    fluxcd.io/automated: "false"
-    filter.fluxcd.io/java: glob:prod-*
 spec:
   releaseName: idam-api
   rollback:
@@ -18,12 +15,13 @@ spec:
     version: 0.3.9
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-97407f6-20210803165122
+      image: hmctspublic.azurecr.io/idam/api:prod-3805b26-20210818190558   #{"$imagepolicy": "flux-system:idam-api"}
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
       useInterpodAntiAffinity: true
       environment:
+        idam.scheduled.batch-processing.enabled: false
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3
         CACHING_USERS_MAXHTTPCALLS: 1

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: cmc-citizen-frontend
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: cmc-citizen-frontend
   rollback:
@@ -22,19 +18,16 @@ spec:
       useInterpodAntiAffinity: true
       readinessDelay: 45
       livenessDelay: 45
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-58f134d-20210920105404
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-37b4963-20211011115313 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
       ingressHost: www.moneyclaims.service.gov.uk
       environment:
         GA_TRACKING_ID: UA-97111056-2
-
         SERVICE_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCMVPT1/
         FEEDBACK_SURVEY_URL: https://www.smartsurvey.co.uk/s/CMC_Feedback/
         REPORT_PROBLEM_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCMVPPB/
-
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_AUTHENTICATION_WEB_URL: https://hmcts-access.service.gov.uk
         PAY_RETURN_URL: https://www.moneyclaims.service.gov.uk
-
         FEATURE_WEB_CHAT: false
         PCQ_URL: https://equality-and-diversity.platform.hmcts.net
         FEATURE_PLACE_HOLDER: false

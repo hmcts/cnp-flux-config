@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-dn
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-dn
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-47c7ebf-20210810124214
+      image: hmctspublic.azurecr.io/div/dn:prod-c976024-20210923100150   #{"$imagepolicy": "flux-system:div-dn"}
       ingressClass: traefik-no-proxy
       ingressHost: decree-nisi-aks.demo.platform.hmcts.net
       environment:
@@ -31,8 +28,9 @@ spec:
         DECREE_ABSOLUTE_FRONTEND_URL: https://decree-absolute-aks.demo.platform.hmcts.net
         FEATURE_ANTENNA_WEBCHAT: "true"
         FEATURE_WEBCHAT: "false"
-        ANTENNA_WEBCHAT_SERVICE: Testing
-        ANTENNA_WEBCHAT_URL: webchat.training.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
     global:
       environment: demo
       subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"

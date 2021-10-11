@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-api-gateway-web
+spec:
+  releaseName: ccd-api-gateway-web
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-api-gateway-web
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-4236ef2-20211005204350 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}

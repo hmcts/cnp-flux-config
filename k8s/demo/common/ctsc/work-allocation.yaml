@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: ctsc-work-allocation
   namespace: ctsc
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:pr-427-*
 spec:
   releaseName: ctsc-work-allocation
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 0
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ctsc/work-allocation:pr-427-b8691861
+      image: hmctspublic.azurecr.io/ctsc/work-allocation:pr-427-b8691861   #{"$imagepolicy": "flux-system:demo-ctsc-work-allocation"}
       environment:
         IDAM_API_BASE_URI: https://idam-api.demo.platform.hmcts.net
         TEST_ENDPOINTS_ENABLED: true

@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: idam-web-admin
   namespace: idam
-  annotations:
-    fluxcd.io/automated: "false"
-    filter.fluxcd.io/java: glob:prod-*
 spec:
   releaseName: idam-web-admin
   rollback:
@@ -18,7 +15,7 @@ spec:
     version: 0.2.8
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-admin:prod-f5125c3-20210805095438
+      image: hmctspublic.azurecr.io/idam/web-admin:prod-9678ea6-20210816173842   #{"$imagepolicy": "flux-system:idam-web-admin"}
       ingressHost: idam-web-admin.platform.hmcts.net
       aadIdentityName: idam
       useInterpodAntiAffinity: true

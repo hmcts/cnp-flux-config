@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: sscs-evidence-share
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-evidence-share
   rollback:
@@ -19,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-2017f49-20210904095915 #{"$imagepolicy": "flux-system:sscs-evidence-share"}
+      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-227d089-20211007091732 #{"$imagepolicy": "flux-system:sscs-evidence-share"}
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
@@ -33,6 +30,7 @@ spec:
         SCOTTISH_PO_BOX_ENABLED: true
         SECURE_DOC_STORE_FEATURE: false
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal/
+        ENHANCED_CONFIDENTIALITY_FEATURE: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

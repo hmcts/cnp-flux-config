@@ -3,6 +3,7 @@ kind: Kustomization
 bases:
   - ccd
   - rd
+  - pcq
   - em
   - ../../namespaces/admin/external-dns
   - ../../namespaces/admin/external-dns-public
@@ -17,6 +18,7 @@ bases:
   - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/osba
+  - ../../namespaces/osba/namespace.yaml
   - ../../namespaces/admin/env-injector
   - ../../namespaces/admin/keda
   - ../../namespaces/admin/aad-pod-id
@@ -62,7 +64,3 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/global-defaults == enabled
-  - path: ../automated-helmrelease.yaml
-    target:
-      kind: HelmRelease
-      annotationSelector: hmcts.github.com/prod-automated == enabled

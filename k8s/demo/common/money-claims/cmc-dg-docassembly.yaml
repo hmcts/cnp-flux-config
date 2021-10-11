@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dg-docassembly
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-dg-docassembly
   rollback:
@@ -17,7 +13,7 @@ spec:
     version: 1.0.7
   values:
     java:
-      image: hmctspublic.azurecr.io/dg/docassembly:prod-f94af44-20210915130424
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-d6e621f-20211011094124 #{"$imagepolicy": "flux-system:dg-docassembly"}
       secrets:
         DOCMOSIS_ACCESS_KEY:
           secretRef: docmosis-secret
@@ -30,7 +26,6 @@ spec:
         IDAM_WEBSHOW_WHITELIST: https://em-show-demo.service.core-compute-demo.internal/oauth2/callback
         DM_STORE_APP_URL: "http://cmc-ccd-dm-store"
         S2S_KEY: AAAAAAAAAAAAAAAA
-
     global:
       devMode: true
       environment: demo

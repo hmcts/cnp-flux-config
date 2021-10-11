@@ -6,7 +6,7 @@ metadata:
   namespace: divorce
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
+    flux.weave.works/tag.java: glob:pr-250-*
 spec:
   releaseName: div-fps
   rollback:
@@ -28,12 +28,13 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "686ed071-9c72-4dc3-9edb-191edceb6018"
-      image: hmctspublic.azurecr.io/div/fps:prod-36fac15-20210917091247
+      image: hmctspublic.azurecr.io/div/fps:pr-250-22f69f0-20211002102547 #{"$imagepolicy": "flux-system:demo-div-fps"}
       aadIdentityName: divorce
       prometheus:
         enabled: true
       environment:
         GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD: "GeneralAppWithoutNotice"
+        FEATURE_FEE_PAY_KEYWORDS: "true"
     global:
       environment: demo
       subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"

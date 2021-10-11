@@ -2,15 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: civil-service
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-225-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-225-4e64905-20210917103002 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
-        CMC_DB_USERNAME: 'cmc@cmc-db-v11-demo'
-        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com

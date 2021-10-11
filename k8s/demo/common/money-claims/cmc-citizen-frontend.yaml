@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: cmc-citizen-frontend
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: cmc-citizen-frontend
   rollback:
@@ -20,7 +17,8 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-3244-d4cf0ba-20210820092732
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-3244-d4cf0ba-20210820092732   #{"$imagepolicy": "flux-system:demo-cmc-citizen-frontend"}
+      ingressClass: traefik-no-proxy
       ingressHost: moneyclaims.demo.platform.hmcts.net
       environment:
         GA_TRACKING_ID: UA-97111056-1

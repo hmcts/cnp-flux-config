@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-data-store-api
+spec:
+  releaseName: ccd-data-store-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-data-store-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-5439eea-20211006072742 #{"$imagepolicy": "flux-system:ccd-data-store-api"}

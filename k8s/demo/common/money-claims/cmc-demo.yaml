@@ -1,16 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: cmc-demo
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: "glob:prod-*"
-    repository.fluxcd.io/cmc-citizen-frontend: cmc-citizen-frontend.nodejs.image
-    filter.fluxcd.io/cmc-citizen-frontend: glob:prod-*
-    repository.fluxcd.io/cmc-claim-store: cmc-claim-store.java.image
-    filter.fluxcd.io/cmc-claim-store: glob:prod-*
 spec:
   releaseName: cmc-demo
   timeout: 900
@@ -40,12 +32,11 @@ spec:
       dgAssemblyUrl: "http://cmc-dg-docassembly-java"
       ccdCaseDataApiUrl: "http://cmc-ccd-ccd-data-store-api"
       postgresqlHost: "cmc-demo-postgresql"
-
     ### CMC SERVICES ####
     cmc-claim-store:
       java:
         releaseNameOverride: "cmc-demo-claim-store"
-        image: hmctspublic.azurecr.io/cmc/claim-store:prod-ecd9381-20210825102150
+        image: hmctspublic.azurecr.io/cmc/claim-store:prod-34c332d-20210929114223 #{"$imagepolicy": "flux-system:cmc-claim-store"}
         ingressClass: traefik-private
         ingressHost: cmc-demo-claim-store.demo.platform.hmcts.net
         secrets:
@@ -72,7 +63,7 @@ spec:
     cmc-citizen-frontend:
       nodejs:
         releaseNameOverride: "cmc-demo-cmc-citizen-frontend"
-        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-58f134d-20210920105404
+        image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-37b4963-20211011115313 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
         ingressHost: "{{ .Values.global.cmcFrontendUrl }}"
         secrets:
           IDAM_S2S_TOTP_SECRET:

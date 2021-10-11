@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-da
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-da
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/da:prod-96b270a-20210920091730
+      image: hmctspublic.azurecr.io/div/da:prod-b3e3f69-20210922103059   #{"$imagepolicy": "flux-system:div-da"}
       ingressHost: decree-absolute-aks.ithc.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://decree-absolute-aks.ithc.platform.hmcts.net
