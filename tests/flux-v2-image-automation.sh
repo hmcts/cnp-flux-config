@@ -24,7 +24,6 @@ EXCLUSIONS_LIST=(
   *perftest.yaml
   k8s/perftest/*
   k8s/ithc/*
-  *ithc.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
