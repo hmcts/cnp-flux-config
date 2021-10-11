@@ -47,15 +47,17 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : preview-00-aks
+                        value : preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: preview-00-rg
+                        value: preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-STG
                       - key : AAT_AKS_KEY_VAULT
                         value: dcdcftappsstgkv
+                      - key: BUSINESS_AREA_TAG
+                        value: CFT
           views: |
             jenkins:
               views:
@@ -129,7 +131,7 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      HMCTS_.*Fee.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|paybubble-performance-tests|ccpay-bubble)\/master
+                      ^HMCTS_.*Fee.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|paybubble-performance-tests|ccpay-bubble|ccpay-paymentoutcome-web)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
@@ -276,7 +278,7 @@ spec:
                   idpMetadataConfiguration:
                     period: 15
                     url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=f51ea833-3992-44a6-899e-16257b3e4fd1
-                  maximumAuthenticationLifetime: 7862400
+                  maximumAuthenticationLifetime: 15724800
                   usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
                   usernameCaseConversion: "none"
           location: |
@@ -452,7 +454,7 @@ spec:
                         doNotUseMachineIfInitFails: true
                         enableMSI: false
                         enableUAMI: true
-                        ephemeralOSDisk: false
+                        ephemeralOSDisk: true
                         executeInitScriptAsRoot: true
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
@@ -496,7 +498,7 @@ spec:
                         location: "UK South"
                         noOfParallelJobs: 1
                         osDiskSize: 60
-                        osDiskStorageAccountType: "StandardSSD_LRS"
+                        osDiskStorageAccountType: "Standard_LRS"
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:

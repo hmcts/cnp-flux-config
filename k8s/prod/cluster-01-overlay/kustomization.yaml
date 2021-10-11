@@ -16,6 +16,7 @@ bases:
   - ../../namespaces/kube-system/nodelocaldns
   - ../../namespaces/kured
   - ../../namespaces/neuvector
+  - ../../namespaces/neuvector/namespace.yaml
   - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/admin/env-injector
   - ../../namespaces/monitoring/botkube
@@ -66,10 +67,6 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/global-defaults == enabled
-  - path: ../automated-helmrelease.yaml
-    target:
-      kind: HelmRelease
-      annotationSelector: hmcts.github.com/prod-automated == enabled
   - path: ../../namespaces/all-namespaces/reader-clusterrole/prod.yaml
     target:
       kind: ClusterRoleBinding

@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: sscs-case-loader
   namespace: sscs
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:prod-*
 spec:
   releaseName: sscs-case-loader
   rollback:
@@ -18,7 +15,7 @@ spec:
     job:
       schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/case-loader:prod-545323b-20210826152807 #{"$imagepolicy": "flux-system:sscs-case-loader"}
+      image: hmctspublic.azurecr.io/sscs/case-loader:prod-98fd758-20211005103919 #{"$imagepolicy": "flux-system:sscs-case-loader"}
       environment:
         TEST_PROPERTY: true
     global:

@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-webapp-ac-integration
+spec:
+  releaseName: xui-webapp-ac-integration
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-webapp
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/xui/webapp:prod-57d3999-20211007135936 #{"$imagepolicy": "flux-system:xui-webapp-ac-integration"}

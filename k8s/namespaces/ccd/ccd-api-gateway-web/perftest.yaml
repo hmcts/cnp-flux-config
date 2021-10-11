@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-api-gateway-web
+spec:
+  releaseName: ccd-api-gateway-web
+  values:
+    nodejs:
+      replicas: 20
+      autoscaling:
+        enabled: false
+      environment:
+        CORS_ORIGIN_WHITELIST: "*"
+        TIMING-ALLOW-ORIGIN: "https://www-ccd.perftest.platform.hmcts.net"
+        UV_THREADPOOL_SIZE: 128
+        DUMMY_VAR: true

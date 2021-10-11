@@ -1,0 +1,31 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-progress-held-cases
+spec:
+  releaseName: nfdiv-cron-progress-held-cases
+  chart:
+    git: git@github.com:hmcts/nfdiv-cron
+    ref: 0.0.8
+    path: nfdiv-cron
+  values:
+    job:
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-c1dede1-20211011132820 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      keyVaults:
+        nfdiv:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: APP_INSIGHTS_KEY
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: s2s-case-api-secret
+              alias: S2S_SECRET
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-systemupdate-username
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-systemupdate-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
+      environment:
+        TASK_NAME: SystemProgressHeldCasesTask
+      schedule: 0/10 * * * *

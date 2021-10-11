@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -17,14 +16,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-539fc02-20210826075220   #{"$imagepolicy": "flux-system:bulk-scan-sample-app"}
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-a33389b-20211011142304 #{"$imagepolicy": "flux-system:bulk-scan-sample-app"}
       testsConfig:
         serviceAccountName: tests-service-account
         keyVaults:
           bulk-scan:
             secrets:
-            - name: sample-app-s2s-secret
-              alias: TEST_S2S_SECRET
+              - name: sample-app-s2s-secret
+                alias: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://bulk-scan-sample-app-aat.service.core-compute-aat.internal"
           SLACK_CHANNEL: "bsp-test-notices"
@@ -34,10 +33,10 @@ spec:
           TEST_SCAN_DELAY: "4000"
       smoketests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-539fc02-20210826075220   #{"$imagepolicy": "flux-system:sample-app-test"}
+        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-a33389b-20211011142304 #{"$imagepolicy": "flux-system:bulk-scan-sample-app-sample-app-test"}
       functionaltests:
         enabled: true
-        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-539fc02-20210826075220   #{"$imagepolicy": "flux-system:sample-app-test"}
+        image: hmctspublic.azurecr.io/bulk-scan/sample-app-test:prod-a33389b-20211011142304 #{"$imagepolicy": "flux-system:bulk-scan-sample-app-sample-app-test"}
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

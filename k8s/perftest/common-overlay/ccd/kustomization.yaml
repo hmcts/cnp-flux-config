@@ -3,14 +3,18 @@ kind: Kustomization
 namespace: ccd
 bases:
 - ../../../namespaces/ccd
+- ../../../namespaces/ccd/namespace.yaml
 - ../../../namespaces/all-namespaces/nonprod-role.yaml
 patchesStrategicMerge:
 - ../../../namespaces/ccd/ccd-logstash-indexer/perftest.yaml
 - ../../../namespaces/ccd/ccd-logstash-ethos/perftest.yaml
+- ../../../namespaces/ccd/ccd-api-gateway-web/perftest.yaml
 - ../../../namespaces/ccd/ccd-case-activity-api/perftest.yaml
 - ../../../namespaces/ccd/ccd-admin-web/perftest.yaml
 - ../../../namespaces/ccd/ccd-case-management-web/perftest.yaml
 - ../../../namespaces/ccd/ccd-user-profile-api/perftest.yaml
+- ../../../namespaces/ccd/ccd-data-store-api/perftest.yaml
+- ../../../namespaces/ccd/ccd-definition-store-api/perftest.yaml
 patchesJson6902:
 - target:
     group: rbac.authorization.k8s.io

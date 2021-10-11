@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-cms
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-cms
   rollback:
@@ -27,7 +24,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cms:prod-4eb7bc3-20210825103052
+      image: hmctspublic.azurecr.io/div/cms:prod-74964d4-20210917112305   #{"$imagepolicy": "flux-system:div-cms"}
       environment:
         IDAM_API_BASEURL: "https://idam-api.perftest.platform.hmcts.net"
       aadIdentityName: divorce

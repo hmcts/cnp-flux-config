@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: fees-register-frontend
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:perftest-*
 spec:
   releaseName: fees-register-frontend
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/frontend:perftest
+      image: hmctspublic.azurecr.io/fees-register/frontend:perftest #{"$imagepolicy": "flux-system:perftest-fees-register-frontend"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true

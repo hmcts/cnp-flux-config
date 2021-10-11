@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-api
   rollback:
@@ -24,6 +21,7 @@ spec:
       ingressHost: idam-api.perftest.platform.hmcts.net
       aadIdentityName: idam
       environment:
+        idam.scheduled.batch-processing.enabled: false
         TESTING_SUPPORT_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3

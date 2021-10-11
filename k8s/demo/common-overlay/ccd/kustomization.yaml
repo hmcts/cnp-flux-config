@@ -3,13 +3,21 @@ kind: Kustomization
 namespace: ccd
 bases:
 - ../../../namespaces/ccd
+- ../../../namespaces/ccd/namespace.yaml
 - ../../../namespaces/all-namespaces/nonprod-role.yaml
+- ../../../namespaces/ccd/ccd-case-disposer/ccd-case-disposer.yaml
+- ../../../namespaces/ccd/ccd-test-stubs-service/ccd-test-stubs-service.yaml
 patchesStrategicMerge:
 - ../../../namespaces/ccd/ccd-logstash-indexer/demo.yaml
 - ../../../namespaces/ccd/ccd-case-document-am-api/demo.yaml
+- ../../../namespaces/ccd/ccd-api-gateway-web/demo.yaml
 - ../../../namespaces/ccd/ccd-admin-web/demo.yaml
 - ../../../namespaces/ccd/ccd-case-management-web/demo.yaml
 - ../../../namespaces/ccd/ccd-user-profile-api/demo.yaml
+- ../../../namespaces/ccd/ccd-data-store-api/demo.yaml
+- ../../../namespaces/ccd/ccd-definition-store-api/demo.yaml
+- ../../../namespaces/ccd/ccd-case-activity-api/demo.yaml
+- ../../../namespaces/ccd/ccd-case-disposer/demo.yaml
 patchesJson6902:
 - target:
     group: rbac.authorization.k8s.io

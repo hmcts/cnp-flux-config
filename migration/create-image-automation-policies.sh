@@ -43,8 +43,14 @@ for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
   IMAGE_REPO=$(echo ${FULL_IMAGE} |cut -d ':' -f 1)
   IMAGE_TAG=$(echo ${FULL_IMAGE} |cut -d ':' -f 2 | cut -d '-' -f1,2)
-  ENV_NAME=$(echo ${file} | sed 's|.*/||'  | cut -d '.' -f1)
- 
+
+  if [[ ${file} == k8s/namespaces* ]] ;
+  then
+    ENV_NAME=$(echo ${file} | sed 's|.*/||'  | cut -d '.' -f1)
+  else
+    ENV_NAME=$(echo ${file} | cut -d '/' -f2)
+  fi
+
   mkdir -p ${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}
 
   if [[ $IMAGE_TAG == prod-* ]] ;
@@ -75,7 +81,7 @@ metadata:
 spec:
   filterTags:
     pattern: '^${IMAGE_TAG}-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
+    extract: '\$ts'
   policy:
     alphabetical:
       order: asc
@@ -98,7 +104,7 @@ EOF
 
 if [[ $FULL_IMAGE == hmctsprivate* ]] ;
   then
-   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
+   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml"
 fi
 
 IMAGE_PATCH="$FULL_IMAGE   #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"
@@ -139,7 +145,14 @@ sed -i '' "s|$FULL_IMAGE|$IMAGE_PATCH|g" $file
   
   IMAGE_REPO=$(echo ${FULL_IMAGE} |cut -d ':' -f 1)
   IMAGE_TAG=$(echo ${FULL_IMAGE} |cut -d ':' -f 2 | cut -d '-' -f1,2)
-  ENV_NAME=$(echo ${file} | sed 's|.*/||'  | cut -d '.' -f1)
+
+  if [[ ${file} == k8s/namespaces* ]] ;
+  then
+    ENV_NAME=$(echo ${file} | sed 's|.*/||'  | cut -d '.' -f1)
+  else
+    ENV_NAME=$(echo ${file} | cut -d '/' -f2)
+  fi
+
   TAG_POLICY=$(yq eval $IMAGE_PATH_ADDITIONAL $file | sed 's|.*/||'  | cut -d ':' -f1)
 
     if [[ $IMAGE_TAG == prod-* ]] ;
@@ -170,7 +183,7 @@ metadata:
 spec:
   filterTags:
     pattern: '^${IMAGE_TAG}-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
+    extract: '\$ts'
   policy:
     alphabetical:
       order: asc
@@ -193,7 +206,7 @@ EOF
 
 if [[ $FULL_IMAGE == hmctsprivate* ]] ;
   then
-   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${FILE_DIRECTORY}/image-repo.yaml"
+   yq e '.metadata.annotations."hmcts.github.com/image-registry" = "hmctsprivate"' -i "${APPS_DIRECTORY}/${NAMESPACE}/${HELM_RELEASE_NAME}/image-repo.yaml"
 fi
 
 IMAGE_PATCH="$FULL_IMAGE   #\{\"\$imagepolicy\"\: \"flux-system\:$TAG_POLICY_NAME\"\}"

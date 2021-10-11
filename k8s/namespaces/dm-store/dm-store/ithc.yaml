@@ -12,8 +12,6 @@ spec:
       replicas: 4
       environment:
         ENABLE_TTL: false
-        ENABLE_METADATA_MIGRATION: 'true'
-        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "600000"
       testsConfig:
         memoryLimits: "3072Mi"
         environment:
@@ -22,4 +20,5 @@ spec:
           SLACK_NOTIFY_SUCCESS: "true"
       smoketests:
         enabled: false
-        image: hmctspublic.azurecr.io/dm/store-test:prod-0c81510a
+        image: hmctspublic.azurecr.io/dm/store-test:prod-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:dm-store-store-test"}
+      image: hmctspublic.azurecr.io/dm/store:aat-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:ithc-dm-store"}

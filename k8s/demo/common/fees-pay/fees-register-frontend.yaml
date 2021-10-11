@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: fees-register-frontend
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: pr-397-*
 spec:
   releaseName: fees-register-frontend
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/frontend:pr-397-809129b-20210827145001
+      image: hmctspublic.azurecr.io/fees-register/frontend:pr-398-f511350-20210930164741   #{"$imagepolicy": "flux-system:demo-fees-register-frontend"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true

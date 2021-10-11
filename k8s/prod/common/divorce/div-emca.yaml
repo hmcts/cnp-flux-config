@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-emca
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-emca
   rollback:
@@ -28,7 +25,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/emca:prod-c51c7cd-20210824104347
+      image: hmctspublic.azurecr.io/div/emca:prod-6755ea9-20210920172440   #{"$imagepolicy": "flux-system:div-emca"}
       environment:
         IDAM_API_HEALTH_URI: https://idam-api.platform.hmcts.net/health
         IDAM_API_URL: https://idam-api.platform.hmcts.net

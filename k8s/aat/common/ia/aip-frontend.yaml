@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-aip-frontend
   namespace: ia
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: ia-aip-frontend
   rollback:
@@ -20,7 +16,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-2726f8c-20210826143503   #{"$imagepolicy": "flux-system:ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-ac52206-20211008143848 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
       ingressHost: immigration-appeal.aat.platform.hmcts.net
       environment:
         IDAM_WEB_URL: "https://idam-web-public.aat.platform.hmcts.net"

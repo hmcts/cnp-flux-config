@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-dgs
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-447-*
 spec:
   releaseName: div-dgs
   rollback:
@@ -28,7 +24,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "686ed071-9c72-4dc3-9edb-191edceb6018"
-      image: hmctspublic.azurecr.io/div/dgs:pr-447-5198ad8-20210707111042
+      image: hmctspublic.azurecr.io/div/dgs:pr-447-dd8e0a4-20210920154136 #{"$imagepolicy": "flux-system:demo-div-dgs"}
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"

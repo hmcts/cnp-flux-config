@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-paymentoutcome-web
+spec:
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:pr-4-3634d40-20210916170517   #{"$imagepolicy": "flux-system:demo-ccpay-paymentoutcome-web"}
+      imagePullPolicy: Always
+      environment:
+        DUMMY_VARIABLE: false

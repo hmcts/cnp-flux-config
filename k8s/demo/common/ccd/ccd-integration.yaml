@@ -1,29 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-integration
   namespace: ccd
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: "glob:prod-*"
-    repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
-    filter.fluxcd.io/ccd-admin-web: glob:prod-*
-    repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
-    filter.fluxcd.io/ccd-case-management-web: glob:prod-*
-    repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
-    filter.fluxcd.io/ccd-api-gateway-web: glob:prod-*
-    repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
-    filter.fluxcd.io/ccd-definition-store-api: glob:prod-*
-    repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
-    filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
-    repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
-    filter.fluxcd.io/ccd-data-store-api: glob:prod-*
-    repository.fluxcd.io/ccd-case-activity-api: ccd-case-activity-api.nodejs.image
-    filter.fluxcd.io/ccd-case-activity-api: glob:prod-*
-    repository.fluxcd.io/ccd-case-print-service: ccd-case-print-service.nodejs.image
-    filter.fluxcd.io/ccd-case-print-service: glob:prod-*
-
 spec:
   releaseName: ccd-integration
   timeout: 900
@@ -38,7 +17,6 @@ spec:
   values:
     tags:
       idam-pr: false
-
     ccd:
       managementWeb:
         enabled: true
@@ -58,7 +36,6 @@ spec:
         enabled: true
       elastic:
         enabled: true
-
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -68,27 +45,24 @@ spec:
       devMode: true
       environment: demo
       enableKeyVaults: false
-
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-481b0fb-20210824182952
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-aaf79b9-20210923201108 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
-          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-integration-ccd-definition-store/health  # odd hack to get import working?!?
+          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-integration-ccd-definition-store/health # odd hack to get import working?!?
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
-
     ccd-case-management-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649
+        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-6a47809-20210826004649 #{"$imagepolicy": "flux-system:ccd-case-management-web"}
         ingressClass: traefik-no-proxy
         ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
-
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-8d5155f-20210826003548
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-13040e6-20211011143331 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -96,10 +70,9 @@ spec:
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
-
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-7cfeef4-20210824182940
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-e30210d-20211005190225 #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -109,14 +82,12 @@ spec:
         keyVaults:
       redis:
         enabled: true
-
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-8b7acc3-20210824183040
-
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-93f06e0-20210923201130 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-60664d5-20210826004809
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e2dbbf-20210927104107 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -126,39 +97,33 @@ spec:
             disabled: false
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
-
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-7088707-20210826005552
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-5439eea-20211006072742 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
           ELASTIC_SEARCH_HOSTS: "{{ .Release.Name }}-es-master:9200"
           ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://{{ .Release.Name }}-es-master:9200"
-
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-50f9d72-20210826004308
-
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-6ebb6e4-20211006072813 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     elasticsearch:
       persistence:
         enabled: true
       ingress:
         hosts:
-        - es-ccd-integration.demo.platform.hmcts.net
-
+          - es-ccd-integration.demo.platform.hmcts.net
     logstash:
       persistence:
         enabled: true
-
-#     ccd-user-profile-importer:
-#       users:
-#       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
-
+        #     ccd-user-profile-importer:
+        #       users:
+        #       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
     ccd-definition-importer:
       waitHosts: "ccd-integration-ccd-definition-store:80"
       waitHostsTimeout: 600
       definitions:
-      - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
       userRoles:
-      - caseworker-autotest1
+        - caseworker-autotest1

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-tribunals-api
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-2262-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,9 +16,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2262-be1aec8-20210831142806
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2361-12138e7-20211011145434 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
       aadIdentityName: sscs
       environment:
+        CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
         BUNDLE_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
         PDF_SERVICE_CONVERT_URL: https://docmosis.demo.platform.hmcts.net/rs/convert
@@ -33,6 +30,9 @@ spec:
         ENHANCED_CONFIDENTIALITY_FEATURE: true
         HEARING_RECORDING_FEATURE: true
         SECURE_DOC_STORE_FEATURE: true
+        POSTPONEMENTS_FEATURE: true
+        DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net
+        TEST_PROPERTY: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

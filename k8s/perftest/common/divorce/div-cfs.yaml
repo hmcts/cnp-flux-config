@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-cfs
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-cfs
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cfs:prod-917abd0-20210823103347
+      image: hmctspublic.azurecr.io/div/cfs:prod-fbc9d2f-20210917114108   #{"$imagepolicy": "flux-system:div-cfs"}
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

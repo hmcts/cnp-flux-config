@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-pfe
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: div-pfe
   rollback:
@@ -24,7 +21,7 @@ spec:
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-15bf484-20210810101906
+      image: hmctspublic.azurecr.io/div/pfe:prod-4d4aba0-20211001092902   #{"$imagepolicy": "flux-system:div-pfe"}
       ingressHost: petitioner-frontend-aks.perftest.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://petitioner-frontend-aks.perftest.platform.hmcts.net

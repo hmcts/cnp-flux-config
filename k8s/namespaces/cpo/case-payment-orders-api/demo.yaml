@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: case-payment-orders-api
+spec:
+  values:
+    java:
+      environment:
+        CPO_S2S_AUTHORISED_SERVICES: xui_webapp,payment_app,fprl-cos-api,ccpay_cpo_function_node
+        S2S_AUTHORIZATIONS_CCPAY_ID: ccpay_cpo_function_node
+        S2S_AUTHORIZATIONS_CCPAY_PERMISSION: C

@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-cms
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-cms
   timeout: 600
@@ -29,7 +26,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/cms:prod-4eb7bc3-20210825103052
+      image: hmctspublic.azurecr.io/div/cms:prod-74964d4-20210917112305   #{"$imagepolicy": "flux-system:div-cms"}
       environment:
         IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"

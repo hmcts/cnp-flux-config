@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: cmc-claim-store
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-claim-store
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2459-dd7fbf7-20210722095059
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2459-dd7fbf7-20210722095059   #{"$imagepolicy": "flux-system:ithc-cmc-claim-store"}
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true

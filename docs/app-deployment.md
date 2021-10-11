@@ -1,6 +1,8 @@
 
 # Application Configuration
 
+>Note: Depending on the [Migration Status](/README.md#Migration status) and the environment you are adding config, you should also do [v2 setup](app-deployment-v2.md)
+
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
 
 **It is important to follow below discussed naming convention, file and folder names should match application helm release name**
@@ -68,24 +70,8 @@ If you want to add a new app only to a one environment, see [Add application to 
 
 ### Deploy non prod image to an environment
 
-- The default setup is configured to set all environments with image automation enabled with `prod-*` tag.
-- It is highly recommended to follow trunk based development, use prod image on all environments using feature toggling.
-- **It is not allowed to break prod image automation on `aat` and `prod`.**
-- If you wish to override this default behaviour in a specific environment, create a environment patch as described in previous section and set image automation annotations as in below example: 
-```yaml
----
-apiVersion: helm.fluxcd.io/v1
-kind: HelmRelease
-metadata:
-  name: <application-name>
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-112-*
-    #fluxcd.io/tag.nodejs: glob:pr-112-*
-    hmcts.github.com/prod-automated: disabled
-....
-....
-```
+- Image automation responsibility has been moved to flux v2. Please refer to [Flux v2 steps](/docs/app-deployment-v2.md#deploy-non-prod-image-to-an-environment).
+
 
 ### Deploying an app to single cluster
 

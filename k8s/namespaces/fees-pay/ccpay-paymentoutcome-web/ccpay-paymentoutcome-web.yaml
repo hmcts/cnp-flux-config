@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-paymentoutcome-web
+spec:
+  releaseName: ccpay-paymentoutcome-web
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-paymentoutcome-web
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:prod-81df4c0-20210915164559 #{"$imagepolicy": "flux-system:ccpay-paymentoutcome-web"}

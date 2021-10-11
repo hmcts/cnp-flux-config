@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-cos
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1490-*
 spec:
   releaseName: div-cos
   rollback:
@@ -27,7 +23,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cos:pr-1490-7dfcaff-20210823160548
+      image: hmctspublic.azurecr.io/div/cos:pr-1490-b3db672-20211002133948 #{"$imagepolicy": "flux-system:demo-div-cos"}
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: true
@@ -53,7 +49,7 @@ spec:
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
         #AOS Overdue job parameters
         SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true
-        SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_CRON: "0 0/10 * ? * * *"   #Runs every 10 minutes (if enabled)
+        SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_CRON: "0 0/10 * ? * * *" #Runs every 10 minutes (if enabled)
       aadIdentityName: divorce
       prometheus:
         enabled: true

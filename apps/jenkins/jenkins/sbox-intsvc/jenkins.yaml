@@ -60,6 +60,8 @@ spec:
                         value: DCD-CFTAPPS-SBOX
                       - key: PROD_AKS_KEY_VAULT
                         value: dcdcftappssboxkv
+                      - key: BUSINESS_AREA_TAG
+                        value: CFT
           views: |
             jenkins:
               views:
@@ -257,15 +259,15 @@ spec:
                         doNotUseMachineIfInitFails: true
                         enableMSI: false
                         enableUAMI: true
-                        ephemeralOSDisk: false
+                        ephemeralOSDisk: true
                         executeInitScriptAsRoot: true
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.2.9"
-                          galleryName: "cnpimagegallery"
-                          galleryResourceGroup: "cnp-image-gallery-rg"
-                          gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
+                          galleryImageVersion: "1.0.3"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                         imageTopLevelType: "advanced"
                         initScript: |
                           usermod -a -G docker jenkinsssh
@@ -299,7 +301,7 @@ spec:
                         location: "UK South"
                         noOfParallelJobs: 1
                         osDiskSize: 60
-                        osDiskStorageAccountType: "StandardSSD_LRS"
+                        osDiskStorageAccountType: "Standard_LRS"
                         osType: "Linux"
                         preInstallSsh: true
                         retentionStrategy:
@@ -316,5 +318,5 @@ spec:
                         usageMode: "Use this node as much as possible"
                         usePrivateIP: true
                         virtualMachineSize: "Standard_D4s_v3"
-                        virtualNetworkName: "core-cftsbox-intsvc-vnet"
-                        virtualNetworkResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
+                        virtualNetworkName: "cft-ptlsbox-vnet"
+                        virtualNetworkResourceGroupName: "cft-ptlsbox-network-rg"

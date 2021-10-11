@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-caveats-fe
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: probate-caveats-fe
   rollback:
@@ -20,8 +16,9 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-a004361-20210817170727
+      image: hmctspublic.azurecr.io/probate/caveats-fe:pr-422-7be5bf8-20211011141747 #{"$imagepolicy": "flux-system:demo-probate-caveats-fe"}
       environment:
+        VAR_TA: trigger3
         EQUALITY_URL: https://pcq.demo.platform.hmcts.net
     global:
       environment: demo

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: cmc-s2s
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: cmc-s2s
   rollback:
@@ -19,7 +15,7 @@ spec:
   values:
     java:
       ingressHost: ""
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-281efde-20210831092822
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-e8055cc-20211008140703 #{"$imagepolicy": "flux-system:cmc-s2s"}
       secrets:
         MICROSERVICEKEYS_CMC:
           secretRef: cmc-s2s-secret

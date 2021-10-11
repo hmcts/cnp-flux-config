@@ -1,15 +1,9 @@
----
 # this chart for Exela to get SAS token, always keep it running in demo standalone
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: standalone-processor
   namespace: bsp
-  annotations:
-    flux.weave.works/ignore: "true"
-    flux.weave.works/automated: "true"
-    repository.fluxcd.io/bulk-scan-processor: bulk-scan-processor.java.image
-    filter.fluxcd.io/bulk-scan-processor: glob:prod-*
 spec:
   releaseName: standalone-processor
   timeout: 900
@@ -24,7 +18,7 @@ spec:
   values:
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-e4ee7ccb
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-adcda9a-20211011122118 #{"$imagepolicy": "flux-system:bulk-scan-processor"}
         ingressClass: traefik-private
         ingressHost: bsp-standalone-processor.demo.platform.hmcts.net
         releaseNameOverride: "{{ .Release.Name }}-bsp"

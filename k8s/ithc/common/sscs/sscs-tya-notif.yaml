@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: sscs-tya-notif
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-tya-notif
   rollback:
@@ -19,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-0afbfcb-20210826115247 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-966febc-20211007103950 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-ithc"
         JOB_SCHEDULER_DB_NAME: "notification"
@@ -30,6 +27,7 @@ spec:
         SECURE_DOC_STORE_FEATURE: true
         HOURS_START_TIME: 6
         HOURS_END_TIME: 23
+        DUMMY: true
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

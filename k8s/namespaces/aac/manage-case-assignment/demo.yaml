@@ -2,27 +2,23 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: manage-case-assignment
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-320-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       keyVaults:
         aac:
           secrets:
-          - AppInsightsInstrumentationKey
-          - aac-manage-case-s2s-secret
-          - idam-mca-client-secret
-          - idam-mca-system-user-username
-          - idam-mca-system-user-password
-          - idam-noc-approver-username
-          - idam-noc-approver-password
-          - notify-mca-api-key-secret
+            - AppInsightsInstrumentationKey
+            - aac-manage-case-s2s-secret
+            - idam-mca-client-secret
+            - idam-mca-system-user-username
+            - idam-mca-system-user-password
+            - idam-noc-approver-username
+            - idam-noc-approver-password
+            - notify-mca-api-key-secret
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,fprl-cos-api,nfdiv_case_api
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
         CCD_DEFINITION_STORE_API_BASE_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal
         MCA_DEF_STORE_PROXY_URLS_ALLOWED_LIST: /api/display/challenge-questions.*
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-320-4457182-20210829055436
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-332-77e149f-20211004175434 #{"$imagepolicy": "flux-system:demo-manage-case-assignment"}

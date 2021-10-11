@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-orchestrator-service
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: probate-orchestrator-service
   rollback:
@@ -22,7 +19,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-2ef9856-20210823132211
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-8984ac3-20210922150525   #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
       ingressHost: probate-orchestrator-service-demo.service.core-compute-demo.internal
     global:
       environment: demo

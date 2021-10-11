@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: repl-docmosis-service
   namespace: ethos
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: repl-docmosis-service
   forceUpgrade: true
@@ -21,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-ff35746-20210824135128
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-0422807-20211008133811 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

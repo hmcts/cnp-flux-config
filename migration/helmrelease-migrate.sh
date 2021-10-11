@@ -2,6 +2,8 @@
 set -ex
 FILE_DIRECTORY=$1
 
+# Example of script ./migration/helmrelease-migrate.sh k8s/namespaces/camunda
+
 for file in $(grep -lr "kind: HelmRelease" $FILE_DIRECTORY); do
   
   yq e '.apiVersion = "helm.toolkit.fluxcd.io/v2beta1"' -i $file

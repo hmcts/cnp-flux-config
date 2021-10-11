@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-definition-store-api
+spec:
+  releaseName: ccd-definition-store-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-definition-store-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e2dbbf-20210927104107   #{"$imagepolicy": "flux-system:ccd-definition-store-api"}

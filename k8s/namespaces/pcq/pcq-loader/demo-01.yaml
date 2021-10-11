@@ -1,0 +1,10 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pcq-loader
+spec:
+  values:
+    job:
+      schedule: "0/45 * * * *"
+      environment:
+        PCQ_BACKEND_URL: http://pcq-backend-demo.service.core-compute-demo.internal

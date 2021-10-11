@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-definition-store-api
+spec:
+  releaseName: ccd-definition-store-api
+  values:
+    java:
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "500m"
+      cpuLimits: "3000m"
+      environment:
+        ELASTIC_SEARCH_FAIL_ON_IMPORT: true
+        DEFINITION_STORE_DB_MAX_POOL_SIZE: 25
+        DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api
+        DEFINITION_STORE_DB_NAME: ccd_definition_store
+        DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-aat.postgres.database.azure.com
+        DUMMY_RESTART_VAR: 2
+        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 60

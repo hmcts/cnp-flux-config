@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccpay-bulkscanning-api
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: ccpay-bulkscanning-api
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-a0f9230-20210819121205   #{"$imagepolicy": "flux-system:ccpay-bulkscanning-api"}
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-9e4ebe5-20211011132000 #{"$imagepolicy": "flux-system:ccpay-bulkscanning-api"}
       environment:
         DUMMY_RESTART_VAR: true
     global:

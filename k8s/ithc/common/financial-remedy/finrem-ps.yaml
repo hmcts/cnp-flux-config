@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: finrem-ps
   namespace: financial-remedy
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:prod-*
 spec:
   releaseName: finrem-ps
   rollback:
@@ -20,7 +17,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/ps:prod-64d54dc-20210826121202
+      image: hmctspublic.azurecr.io/finrem/ps:prod-cdc1cba-20210921091347   #{"$imagepolicy": "flux-system:finrem-ps"}
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

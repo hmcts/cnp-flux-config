@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: probate-frontend
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: probate-frontend
   rollback:
@@ -24,7 +21,7 @@ spec:
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:prod-ee4f04a-20210817172450
+      image: hmctspublic.azurecr.io/probate/frontend:prod-c1d666f-20211004175543   #{"$imagepolicy": "flux-system:probate-frontend"}
       ingressHost: www.apply-for-probate.service.gov.uk
       environment:
         IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login

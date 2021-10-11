@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-cos
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-cos
   rollback:
@@ -27,7 +24,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cos:prod-51ec088-20210825134051
+      image: hmctspublic.azurecr.io/div/cos:prod-16b4966-20211001163556   #{"$imagepolicy": "flux-system:div-cos"}
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"

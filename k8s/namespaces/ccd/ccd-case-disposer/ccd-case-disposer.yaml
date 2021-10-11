@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-disposer
+spec:
+  releaseName: ccd-case-disposer
+  rollback:
+    enable: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-case-disposer
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/case-disposer:prod-2a26bb4-20210920150723 #{"$imagepolicy": "flux-system:ccd-case-disposer"}
