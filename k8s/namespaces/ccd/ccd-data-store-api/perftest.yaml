@@ -7,6 +7,7 @@ spec:
   values:
     java:
       replicas: 9
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1485-94aee8e-20211011105547   #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
       autoscaling:
         enabled: false
       memoryLimits: "4096Mi"
@@ -24,3 +25,8 @@ spec:
         DUMMY_VAR_TO_RESTART: 1
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
+        SERVER_MAX_HTTP_HEADER_SIZE: 100KB
+        ENABLE_ATTRIBUTE_BASED_ACCESS_CONTROL: true
+        ENABLE_PSEUDO_ROLE_ASSIGNMENTS_GENERATION: true
+        ENABLE_PSEUDO_ACCESS_PROFILES_GENERATION: true
+        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-perftest.service.core-compute-perftest.internal
