@@ -20,6 +20,7 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-public/sbox.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
+  k8s/demo/*
   *perftest.yaml
   k8s/perftest/*
   k8s/ithc/*
@@ -52,8 +53,10 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 
         for path in $(echo "clusters/ptl-intsvc/base"); do
 
-        cat imagepolicies_list.yaml | \
+        IMAGE_AUTOMATION=$(cat imagepolicies_list.yaml) | \
         IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' -
+
+
 
             if [ "$IMAGE_AUTOMATION" == "" ]
             then
