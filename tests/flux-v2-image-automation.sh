@@ -2,7 +2,7 @@
 set -ex -o pipefail
 
 curl -s "https://raw.githubusercontent.com/\
-kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 3.7.0
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && rm -rf kustomize && ./install_kustomize.sh 3.7.0
 
 EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/docmosis.yaml
