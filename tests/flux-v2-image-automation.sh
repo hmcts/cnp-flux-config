@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+set -x -o pipefail
 
 curl -s "https://raw.githubusercontent.com/\
 kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 3.7.0
@@ -46,6 +46,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     done
 
     ./kustomize build --load_restrictor none "clusters/ptl-intsvc/base" | yq eval 'select(.metadata and .kind == "ImagePolicy")' -  > imagepolicies_list.yaml
+    [ $? -eq 0 ] || exit 1
 
     for IMAGE_POLICY in "${IMAGE_POLICIES[@]}"; do
 
