@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-pfe
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:pr-916-*
 spec:
   releaseName: div-pfe
   rollback:
@@ -20,7 +17,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:pr-916-585a2e7-20211013081500
+      image: hmctspublic.azurecr.io/div/pfe:pr-916-585a2e7-20211013081500 #{"$imagepolicy": "flux-system:demo-div-pfe"}
       ingressClass: traefik-no-proxy
       ingressHost: petitioner-frontend-aks.demo.platform.hmcts.net
       environment:
