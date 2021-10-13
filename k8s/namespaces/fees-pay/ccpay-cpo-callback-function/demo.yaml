@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-cpo-callback-function
+spec:
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/cpo-callback-function:pr-35-f7d3c8f-20210824125807   #{"$imagepolicy": "flux-system:demo-ccpay-cpo-callback-function"}
+      aadIdentityName: ccpay
+      environment:
+        S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        MICROSERVICE_PAYMENT_APP: "ccpay_cpo_function_node"
+        DUMMY_RESTART_VAR: false
+      keyVaults:
+        "ccpay":
+          secrets:
+          - ccpay-cpo-s2s-secret
+          - ccpay-cpo-user-id
+          - ccpay-cpo-user-password
+          - ccpay-cpo-client-id 
+          - ccpay-cpo-client-secret
+          - cpo-topic-primary-send-listen-shared-access-key 
