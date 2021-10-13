@@ -30,10 +30,10 @@ resources:
 #- ../../../apps/monitoring/base/kustomize.yaml
 
 patches:
-  - path: ../../../apps/base/kustomize.yaml
-    target:
-      kind: Kustomization
-      annotationSelector: hmcts.github.com/kustomize-defaults != disabled
+- path: ../../../apps/base/kustomize.yaml
+  target:
+    kind: Kustomization
+    annotationSelector: hmcts.github.com/kustomize-defaults != disabled
 EOF
 ) > "$CLUSTER_DIRECTORY/base/kustomization.yaml"
   
