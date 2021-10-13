@@ -234,7 +234,7 @@ patchesStrategicMerge:
 EOF
 ) > "$MONITORING_DIRECTORY/01/kustomization.yaml"
   
-  
+cp k8s/$ENVIRONMENT/common/monitoring/prometheus-values.yaml  $MONITORING_DIRECTORY/base/prometheus-values.yaml  
 cp k8s/$ENVIRONMENT/common/monitoring/monitoring-values.yaml  $MONITORING_DIRECTORY/base/monitoring-values.yaml
 
 echo "Please ensure below steps manually:
