@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-payment-status-callback-function
+spec:
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/payment-status-callback-function:pr-35-f7d3c8f-20210824125807   #{"$imagepolicy": "flux-system:demo-ccpay-payment-status-callback-function"}
+      aadIdentityName: ccpay
+      environment:
+        S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        MICROSERVICE_PAYMENT_APP: "payment_app"
+        DUMMY_RESTART_VAR: false
+      keyVaults:
+        "ccpay":
+          secrets:
+          - payment-s2s-secret

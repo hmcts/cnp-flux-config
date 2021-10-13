@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-payment-status-callback-function
+spec:
+  releaseName: ccpay-payment-status-callback-function
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccpay-payment-status-callback-function
+    version: 0.1.4
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/payment-status-callback-function:prod-c67b3c89   #{"$imagepolicy": "flux-system:ccpay-payment-status-callback-function"}
+      environment:
+        DELAY_MESSAGE_MINUTES: 30
+      secrets:
+        APPINSIGHTS_INSTRUMENTATIONKEY:
+          secretRef: ccpay-payment-status-callback-function
+          key: APPINSIGHTS_INSTRUMENTATIONKEY
+        SERVICE_CALLBACK_BUS_CONNECTION:
+          secretRef: ccpay-payment-status-callback-function
+          key: SERVICE_CALLBACK_BUS_CONNECTION
