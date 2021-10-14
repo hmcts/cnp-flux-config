@@ -140,7 +140,7 @@ spec:
 ```
 - Add `- ../<component-name>/<env>-image-policy.yaml` to `resources` in automation kustomization `apps/<your-namespace>/automation/kustomization.yaml`
 
-### Removing a non prod image deployment from an environment
+### Remove a non prod image deployment from an environment
 
 - If an [environment using a non prod image](#Deploy non prod image to an environment) requires changing to use the prod image, update the HelmRelease patch to change the image policy marker to the default as in the example below
 ```yaml
