@@ -138,7 +138,6 @@ kind: Kustomization
 resources:
   - ../../base
   - kube-slack-values.yaml
-  - traefik-values.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/base/kustomization.yaml"
   
@@ -149,9 +148,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-
-patchesStrategicMerge:
-  - ../../traefik/$ENVIRONMENT/00.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/00/kustomization.yaml"
 
@@ -161,14 +157,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-
-patchesStrategicMerge:
-  - ../../traefik/$ENVIRONMENT/01.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/01/kustomization.yaml"
   
 cp k8s/$ENVIRONMENT/common/sealed-secrets/kube-slack-values.yaml  $ADMIN_DIRECTORY/base/kube-slack-values.yaml
-cp k8s/$ENVIRONMENT/common/sealed-secrets/traefik-values.yaml $ADMIN_DIRECTORY/base/traefik-values.yaml
 
 
 # ----------------------- Kured files ----------
