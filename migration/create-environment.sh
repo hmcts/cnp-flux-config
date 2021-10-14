@@ -148,6 +148,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+
+patchesStrategicMerge:
+  - ../../traefik/$ENVIRONMENT/00.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/00/kustomization.yaml"
 
@@ -157,6 +160,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+
+patchesStrategicMerge:
+  - ../../traefik/$ENVIRONMENT/01.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/01/kustomization.yaml"
   
