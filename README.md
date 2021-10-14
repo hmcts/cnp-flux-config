@@ -13,6 +13,7 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 | ------------- | ------------- | ------------- |
 | Prod | Flux V1  | Not Migrated
 | AAT |  Flux V1  | Not Migrated
+| Demo|  Flux V1 & V2  | Migration in progress
 | ITHC | Flux V1 & V2 | Migration in progress
 | Perftest | Flux V1 & V2 | Migration in progress
 | Preview | Flux V2  | Migrated
@@ -25,7 +26,7 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 ## Adding an app to flux
 
 All App deployments are managed through `HelmRelease` manifests. 
-Depending on the [Migration Status](#Migration-status), [Image Automation Migration Status](#Image-Automation-Migration-Status) and the environment you are adding your config to , refer [v2 setup](docs/app-deployment-v2.md) or/and [v1 setup](docs/app-deployment.md).
+Depending on the [Migration Status](#Migration-status) and the environment you are adding your config to, refer to [v2 setup](docs/app-deployment-v2.md) or/and [v1 setup](docs/app-deployment.md).
 
 ## Creating Sealed Secrets
 
