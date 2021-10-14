@@ -142,7 +142,7 @@ spec:
 
 ### Remove a non prod image deployment from an environment
 
-- If an [environment using a non prod image](#Deploy non prod image to an environment) requires changing to use the prod image, update the HelmRelease patch to change the image policy marker to the default as in the example below
+- If an [environment using a non prod image](#Deploy-non-prod-image-to-an-environment) requires changing to use the prod image, update the HelmRelease patch to change the image policy marker to the default as in the example below
 ```yaml
 #From:
 image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
