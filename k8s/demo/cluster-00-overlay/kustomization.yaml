@@ -30,12 +30,15 @@ bases:
   - ../../namespaces/admin/traefik-auth
   - ../../namespaces/admin/traefik-no-proxy
   - ../../namespaces/admin/traefik-private
+  - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
+  - ../../namespaces/admin/flux-helm-operator/rbac/demo-role-binding.yaml
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/demo/flux.yaml
   - ../../namespaces/admin/flux/patches/demo/cluster-00/flux.yaml
   - ../../namespaces/admin/flux-helm-operator/patches/demo/flux-helm-operator.yaml
+  - ../../namespaces/admin/flux-helm-operator/patches/disable-rbac.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/demo/cluster-00/fluxcloud.yaml
