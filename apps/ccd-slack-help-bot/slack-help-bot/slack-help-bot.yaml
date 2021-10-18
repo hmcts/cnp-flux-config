@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-slack-help-bot
+  namespace: ccd-slack-help-bot
+spec:
+  releaseName: ccd-slack-help-bot
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/ccd/slack-help-bot:prod-a92fb46-1 # {"$imagepolicy": "flux-system:ccd-slack-help-bot"}
+    environment:
+      CCD_SLACK_REPORT_CHANNEL: ccd-support
+      CCD_SLACK_REPORT_CHANNEL_ID: CG1QC1L66
+      CCD_JIRA_PROJECT: CCD
+      CCD_JIRA_ISSUE_TYPE_ID: 17602
+      CCD_JIRA_ISSUE_TYPE_NAME: "Support Request"
+      CFTS_SLACK_REPORT_CHANNEL: cft-support
+      CFTS_SLACK_REPORT_CHANNEL_ID: C020EH6BYSX
+      CFTS_JIRA_PROJECT: CFTS
+      CFTS_JIRA_ISSUE_TYPE_ID: 17602
+      CFTS_JIRA_ISSUE_TYPE_NAME: "Support Request"
+    aadIdentityName: ccd-slack-help-bot
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - name: ccd-slack-bot-token
+            alias: SLACK_BOT_TOKEN
+          - name: ccd-slack-app-token
+            alias: SLACK_APP_TOKEN
+          - name: jira-username
+            alias: JIRA_USERNAME
+          - name: jira-api-token
+            alias: JIRA_API_TOKEN
+  chart:
+    spec:
+      chart: nodejs
+      version: 2.3.4
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
