@@ -4005,7 +4005,9 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/fluxcd/source-controller:v0.16.0
+        # TODO https://github.com/fluxcd/source-controller/pull/452
+        # see https://github.com/fluxcd/source-controller/issues/439#issuecomment-943580625
+        image: docker.io/hiddeco/source-controller:libgit2-free-a62cfe8@sha256:15fb2ba83f1db177977329059b9187cbf4e50b15e9788573c
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
