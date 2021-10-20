@@ -27,11 +27,14 @@ bases:
   - ../../namespaces/kube-system/aad-pod-id
   - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
+  - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
+  - ../../namespaces/admin/flux-helm-operator/rbac/demo-role-binding.yaml
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/aat/flux.yaml
   - ../../namespaces/admin/flux/patches/aat/cluster-01/flux.yaml
+  - ../../namespaces/admin/flux-helm-operator/patches/disable-rbac.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/aat/cluster-01/fluxcloud.yaml
