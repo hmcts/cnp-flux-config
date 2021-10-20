@@ -15,7 +15,7 @@ spec:
     version: 0.3.9
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-3805b26-20210818190558   #{"$imagepolicy": "flux-system:idam-api"}
+      image: hmctspublic.azurecr.io/idam/preview-aa81b3c-20211018175130
       imagePullPolicy: Always
       replicas: 2
       ingressClass: traefik-private
@@ -36,6 +36,7 @@ spec:
         IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-demo.internal:9292
         IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-demo.internal:9292
         SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-demo.internal,emailAddress=devops@amido.com
+        SSL_TRUST_DNS_1: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-demo.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-demo.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-demo.internal
         STRATEGIC_SSO_PROVIDERS_0_providerName: azure
