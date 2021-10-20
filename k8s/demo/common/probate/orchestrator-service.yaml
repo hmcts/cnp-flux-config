@@ -11,7 +11,7 @@ spec:
   chart:
     name: probate-orchestrator-service
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    version: 1.0.0
+    version: 1.0.11
   values:
     tags:
       idam-pr: false
@@ -20,6 +20,8 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-d2f42f4-20211018141827 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
       ingressHost: probate-orchestrator-service-demo.service.core-compute-demo.internal
+      environment:
+        VAR_TA: trigger2
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
