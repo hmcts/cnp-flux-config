@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-cpo-callback-function
+spec:
+  releaseName: ccpay-cpo-callback-function
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-cpo-callback-function
+  values:
+    function:
+      image: hmctspublic.azurecr.io/ccpay/cpo-callback-function:prod-8f02b57-20211016123030 #{"$imagepolicy": "flux-system:ccpay-cpo-callback-function"}
+      environment:
+        DELAY_MESSAGE_MINUTES: 30
+      secrets:
+        APPINSIGHTS_INSTRUMENTATIONKEY:
+          secretRef: ccpay-cpo-callback-function
+          key: APPINSIGHTS_INSTRUMENTATIONKEY
+        SERVICE_CALLBACK_BUS_CONNECTION:
+          secretRef: ccpay-cpo-callback-function
+          key: SERVICE_CALLBACK_BUS_CONNECTION

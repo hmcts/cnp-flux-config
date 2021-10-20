@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -17,11 +16,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/ps:prod-cdc1cba-20210921091347   #{"$imagepolicy": "flux-system:finrem-ps"}
+      image: hmctspublic.azurecr.io/finrem/ps:prod-d5e28d1-20211019084403 #{"$imagepolicy": "flux-system:finrem-ps"}
       dnsConfig:
         singleRequestTcp: false
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
+        FEATURE_FEE_PAY_KEYWORDS: "true"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

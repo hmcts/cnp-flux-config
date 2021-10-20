@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -25,10 +24,11 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/fps:prod-36fac15-20210917091247   #{"$imagepolicy": "flux-system:div-fps"}
+      image: hmctspublic.azurecr.io/div/fps:prod-552eb26-20211019090848 #{"$imagepolicy": "flux-system:div-fps"}
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: 5000
         GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD: "GeneralAppWithoutNotice"
+        FEATURE_FEE_PAY_KEYWORDS: "true"
       aadIdentityName: divorce
       prometheus:
         enabled: true
