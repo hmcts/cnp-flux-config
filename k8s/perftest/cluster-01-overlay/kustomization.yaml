@@ -5,25 +5,10 @@ bases:
   - am
   - rd
   - em
+  - nfdiv
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
-  - ../../namespaces/admin/kube-slack
-  - ../../namespaces/admin/traefik
-  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
-  - ../../namespaces/kube-system/nodelocaldns
-  - ../../namespaces/kured
-  - ../../namespaces/neuvector
-  - ../../namespaces/neuvector/namespace.yaml
-  - ../../namespaces/monitoring/kube-prometheus-stack
-  - ../../namespaces/monitoring/node-problem-detector
-  - ../../namespaces/admin/env-injector
-  - ../../namespaces/monitoring/dynatrace
-  - ../../namespaces/admin/aad-pod-id
-  - ../../namespaces/admin/keda
-  - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
-  - ../../namespaces/kube-system/container-azm-ms-agentconfig
   - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
   - ../../namespaces/admin/flux-helm-operator/rbac/perftest-role-binding.yaml
 
@@ -37,34 +22,8 @@ patchesStrategicMerge:
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/perftest/cluster-01/fluxcloud.yaml
 
-  #kube-slack patch
-  - ../../namespaces/admin/kube-slack/patches/perftest/cluster-01/kube-slack.yaml
-
-  #traefik patch
-  - ../../namespaces/admin/traefik/patches/perftest/cluster-01/traefik.yaml
-
-  #kured patch
-  - ../../namespaces/kured/patches/perftest/cluster-01/kured.yaml
-
-  #neuvector patch
-  - ../../namespaces/neuvector/patches/perftest/neuvector.yaml
-  - ../../namespaces/neuvector/patches/perftest/cluster-01/neuvector.yaml
-
-  #prom-operator patch
-  - ../../namespaces/monitoring/kube-prometheus-stack/patches/perftest/cluster-01/kube-prometheus-stack.yaml
-
-  - ../../namespaces/admin/env-injector/patches/perftest/cluster-01/env-injector.yaml
-
-  #Dynatrace patch
-  - ../../namespaces/monitoring/dynatrace/patches/perftest/oneagent.yaml
-
-
 patches:
   - path: ../perftest-helmrelease.yaml
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/global-defaults == enabled
-  - path: ../automated-helmrelease.yaml
-    target:
-      kind: HelmRelease
-      annotationSelector: hmcts.github.com/prod-automated == enabled
