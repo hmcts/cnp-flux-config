@@ -4,6 +4,9 @@ kind: HelmRelease
 metadata:
   name: idam-web-admin
   namespace: idam
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-web-admin
   rollback:
@@ -15,7 +18,7 @@ spec:
     version: 0.2.8
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-admin:prod-9678ea6-20210816173842   #{"$imagepolicy": "flux-system:idam-web-admin"}
+      image: hmctspublic.azurecr.io/idam/web-admin:prod-9678ea6-20210816173842
       ingressHost: idam-web-admin.aat.platform.hmcts.net
       aadIdentityName: idam
       environment:

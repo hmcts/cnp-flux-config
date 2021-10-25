@@ -4,6 +4,9 @@ kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-api
   rollback:
@@ -15,7 +18,7 @@ spec:
     version: 0.3.9
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-3805b26-20210818190558   #{"$imagepolicy": "flux-system:idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:prod-3805b26-20210818190558
       replicas: 4
       ingressHost: idam-api.aat.platform.hmcts.net
       aadIdentityName: idam
