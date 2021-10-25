@@ -1,0 +1,69 @@
+# required for apps that can't handle oauth-proxy
+# i.e. ccd-api-gateway
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: traefik-no-proxy
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: traefik-no-proxy
+  chart:
+    git: https://github.com/hmcts/charts
+    ref: master
+    path: stable/traefik
+  valueFileSecrets:
+    - name: "traefik-values"
+  values:
+    imageTag: 1.7.26
+    loadBalancerIP: 51.11.5.163
+    kubernetes:
+      ingressClass: traefik-no-proxy
+      ingressEndpoint:
+        useDefaultPublishedService: true
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+    dashboard:
+      enabled: true
+      domain: traefik00-no-proxy.demo.platform.hmcts.net
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 1000m
+        memory: 300Mi
+    rbac:
+      enabled: true
+    ssl:
+      enabled: true
+      tlsMinVersion: VersionTLS12
+      cipherSuites:
+        [
+          "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+          "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+        ]
+      enforced: true
+      permanentRedirect: true
+    startupArguments:
+      - "--ping"
+      - "--ping.entrypoint=http"
+    autoscaling:
+      minReplicas: 2
+      maxReplicas: 4
+    podDisruptionBudget:
+      maxUnavailable: 50%
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                    - traefik-no-proxy
+            topologyKey: "kubernetes.io/hostname"
