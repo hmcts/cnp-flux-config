@@ -11,12 +11,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-business-service
-    version: 0.1.1
+    version: 0.1.5
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/business-service:prod-f7d9207-20211022142526 #{"$imagepolicy": "flux-system:probate-business-service"}
+      environment:
+        VAR_TA: trigger2
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
