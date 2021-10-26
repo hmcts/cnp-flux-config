@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-submit-service
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: probate-submit-service
   rollback:
@@ -27,7 +23,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-2617c83-20210922150926
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-865b600-20211022144150 #{"$imagepolicy": "flux-system:probate-submit-service"}
       environment:
         LOG_LEVEL: INFO
         AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.platform.hmcts.net"

@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: sscs-tribunals-api
   namespace: sscs
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: sscs-tribunals-api
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-d03682e-20211006104204 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-6550428-20211026091405 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
       environment:
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -31,11 +27,13 @@ spec:
         PDF_SERVICE_HEALTH_URL: https://docmosis.platform.hmcts.net/rs/status
         DOC_ASSEMBLY_URL: http://dg-docassembly-prod.service.core-compute-prod.internal
         DM_GATEWAY_URL: https://gateway.ccd.platform.hmcts.net
-        UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: false
+        UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
         MAX_FILE_SIZE: 500MB
         MAX_REQUEST_SIZE: 500MB
         ENHANCED_CONFIDENTIALITY_FEATURE: true
         HEARING_RECORDING_FEATURE: false
+        SECURE_DOC_STORE_FEATURE: false
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal/
         POSTPONEMENTS_FEATURE: false
     global:
       environment: prod

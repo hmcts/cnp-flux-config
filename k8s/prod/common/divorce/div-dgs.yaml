@@ -4,9 +4,6 @@ kind: HelmRelease
 metadata:
   name: div-dgs
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-dgs
   timeout: 600
@@ -29,7 +26,7 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/dgs:prod-b0eb7ec-20210707110555
+      image: hmctspublic.azurecr.io/div/dgs:prod-b0eb7ec-20210707110555   #{"$imagepolicy": "flux-system:div-dgs"}
       environment:
         DOCMOSIS_SERVICE_BASE_URL: "https://docmosis.platform.hmcts.net"
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "5000"

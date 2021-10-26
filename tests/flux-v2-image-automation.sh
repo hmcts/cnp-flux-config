@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-set -x
+set -ex -o pipefail
 
 curl -s "https://raw.githubusercontent.com/\
-kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 3.7.0
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && rm -rf kustomize && ./install_kustomize.sh 3.7.0
 
 EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/docmosis.yaml
@@ -18,6 +18,7 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-admin/sbox.yaml
   apps/idam/idam-web-public/preview.yaml
   apps/idam/idam-web-public/sbox.yaml
+  k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   k8s/demo/*
   *perftest.yaml
@@ -44,14 +45,19 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 
     done
 
+    ./kustomize build --load_restrictor none "clusters/ptl-intsvc/base" | yq eval 'select(.metadata and .kind == "ImagePolicy")' -  > imagepolicies_list.yaml
+    [ $? -eq 0 ] || (echo "Kustomize build has failed" && exit 1)
+
     for IMAGE_POLICY in "${IMAGE_POLICIES[@]}"; do
 
         echo "Checking image policy: $IMAGE_POLICY"
 
         for path in $(echo "clusters/ptl-intsvc/base"); do
 
-        IMAGE_AUTOMATION=$(./kustomize build --load_restrictor none $path | \
+        IMAGE_AUTOMATION=$(cat imagepolicies_list.yaml | \
         IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' -)
+
+
 
             if [ "$IMAGE_AUTOMATION" == "" ]
             then
@@ -63,7 +69,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
             
             if [ "$IMAGE_AUTOMATION" == true ]
             then
-            IMAGE_AUTOMATION_CHECK=$(./kustomize build --load_restrictor none $path | \
+            IMAGE_AUTOMATION_CHECK=$(cat imagepolicies_list.yaml  | \
             IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' - | yq eval '.spec.filterTags.pattern == "^prod-[a-f0-9]+-(?P<ts>[0-9]+)"' -)
 
             if [ $IMAGE_AUTOMATION_CHECK == false ]

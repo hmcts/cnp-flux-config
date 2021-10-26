@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -12,12 +11,14 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: probate-submit-service
-    version: 0.2.6
+    version: 0.2.14
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-2617c83-20210922150926   #{"$imagepolicy": "flux-system:probate-submit-service"}
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-865b600-20211022144150 #{"$imagepolicy": "flux-system:probate-submit-service"}
+      environment:
+        VAR_TA: trigger1
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

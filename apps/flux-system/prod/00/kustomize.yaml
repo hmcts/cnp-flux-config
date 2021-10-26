@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  path: ./clusters/prod/00
+  postBuild:
+    substitute:
+      ENVIRONMENT: "prod"
+      CLUSTER: "00"
+      ENV_MONITOR_CHANNEL: "aks-monitor-prod"
+      KEYVAULT_ENVIRONMENT: "prod"

@@ -15,7 +15,7 @@ spec:
     version: 0.3.9
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-3805b26-20210818190558
+      image: hmctspublic.azurecr.io/idam/api:preview-aa81b3c-20211018175130
       imagePullPolicy: Always
       replicas: 4
       ingressHost: idam-api.perftest.platform.hmcts.net
@@ -26,6 +26,7 @@ spec:
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3
         CACHING_USERS_MAXHTTPCALLS: 1
+        SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-perftest.internal,emailAddress=devops@hmcts.net
         STRATEGIC_ADMIN_URL: https://idam-web-admin.perftest.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.perftest.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.perftest.platform.hmcts.net
@@ -35,6 +36,12 @@ spec:
         STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
+        STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
+        STRATEGIC_SSO_PROVIDERS_1_providerName: moj
+        STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
+        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        trigger_deploy: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

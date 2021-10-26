@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-cpo-callback-function
+spec:
+  values:
+    function:
+      aadIdentityName: ccpay
+      environment:
+        S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        SERVICE_CALLBACK_BUS_CONNECTION: Endpoint=sb://ccpay-servicebus-aat.servicebus.windows.net/;SharedAccessKeyName=test_cpo_policy;SharedAccessKey=mg5GmpS8cJotpVFFVexdDVb+CRBP/qIM1zCmOs4rs14=;EntityPath=test-cpo
+        MICROSERVICE_PAYMENT_APP: "ccpay_cpo_function_node"
+        DUMMY_RESTART_VAR: false
+      keyVaults:
+        "ccpay":
+          secrets:
+            - ccpay-cpo-s2s-secret
+            - ccpay-cpo-user-id
+            - ccpay-cpo-user-password
+            - ccpay-cpo-client-id
+            - ccpay-cpo-client-secret
+            - cpo-topic-primary-send-listen-shared-access-key
