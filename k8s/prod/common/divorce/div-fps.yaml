@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-fps
   namespace: divorce
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: div-fps
   rollback:
@@ -28,10 +24,11 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
-      image: hmctspublic.azurecr.io/div/fps:prod-36fac15-20210917091247
+      image: hmctspublic.azurecr.io/div/fps:prod-ff4645b-20211025183258 #{"$imagepolicy": "flux-system:div-fps"}
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: 5000
         GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD: "GeneralAppWithoutNotice"
+        FEATURE_FEE_PAY_KEYWORDS: "true"
       aadIdentityName: divorce
       prometheus:
         enabled: true

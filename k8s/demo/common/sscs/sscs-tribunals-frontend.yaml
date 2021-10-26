@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -18,12 +17,11 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-019a564-20210928153538   #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1195-b5d5082-20211025115858 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-frontend"}
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
         FT_WELSH: "true"
-        DUMMY_PROPERTY: "false"
-        FT_ANTENNA_WEBCHAT: "true"
+        CONTACT_US_WEBCHAT_ENABLED: "true"
         FT_ALLOW_UC_HEARING_OPTIONS: "true"
         MEDIA_FILES_ALLOWED_ENABLED: "true"
         MULTIPLE_DRAFTS_ENABLED: "true"
@@ -31,7 +29,9 @@ spec:
         PCQ_ENABLED: "true"
         ALLOW_COOKIE_BANNER_ENABLED: "true"
         ALLOW_JSA_ENABLED: "true"
-        TEST_PROPERTY: true
+        WEBCHAT_URL: "webchat.pp.ctsc.hmcts.net"
+        WEBCHAT_CLIENT_URL: "webchat-client.pp.ctsc.hmcts.net"
+        TEST_PROPERTY: "true"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

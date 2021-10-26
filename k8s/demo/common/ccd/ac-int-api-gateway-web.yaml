@@ -16,7 +16,7 @@ spec:
     nodejs:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-4236ef2-20211005204350 #{"$imagepolicy": "flux-system:ccd-ac-int-api-gateway-web"}
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-8463956-20211023140055 #{"$imagepolicy": "flux-system:ccd-ac-int-api-gateway-web"}
       ingressHost: ac-int-gateway-ccd.demo.platform.hmcts.net
       ingressClass: traefik-no-proxy
       environment:
@@ -24,6 +24,7 @@ spec:
         TIMING-ALLOW-ORIGIN: "https://ccd-ac-int.demo.platform.hmcts.net"
         PROXY_AGGREGATED: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
         PROXY_DATA: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
+        PROXY_DEFINITION_IMPORT: http://ccd-ac-int-definition-store-api-demo.service.core-compute-demo.internal
         DUMMY_VAR_TO_REDEPLOY: 1
     global:
       environment: demo

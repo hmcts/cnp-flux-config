@@ -24,10 +24,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../../apps/flux-system/$ENVIRONMENT/base
-- ../../../apps/admin/base/kustomize.yaml
-- ../../../apps/kube-system/base/kustomize.yaml
-- ../../../apps/kured/base/kustomize.yaml
-- ../../../apps/monitoring/base/kustomize.yaml
+#- ../../../apps/admin/base/kustomize.yaml
+#- ../../../apps/kube-system/base/kustomize.yaml
+#- ../../../apps/kured/base/kustomize.yaml
+#- ../../../apps/monitoring/base/kustomize.yaml
+
+patches:
+- path: ../../../apps/base/kustomize.yaml
+  target:
+    kind: Kustomization
+    annotationSelector: hmcts.github.com/kustomize-defaults != disabled
 EOF
 ) > "$CLUSTER_DIRECTORY/base/kustomization.yaml"
   
@@ -132,7 +138,6 @@ kind: Kustomization
 resources:
   - ../../base
   - kube-slack-values.yaml
-  - traefik-values.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/base/kustomization.yaml"
   
@@ -162,7 +167,6 @@ EOF
 ) > "$ADMIN_DIRECTORY/01/kustomization.yaml"
   
 cp k8s/$ENVIRONMENT/common/sealed-secrets/kube-slack-values.yaml  $ADMIN_DIRECTORY/base/kube-slack-values.yaml
-cp k8s/$ENVIRONMENT/common/sealed-secrets/traefik-values.yaml $ADMIN_DIRECTORY/base/traefik-values.yaml
 
 
 # ----------------------- Kured files ----------
@@ -228,7 +232,7 @@ patchesStrategicMerge:
 EOF
 ) > "$MONITORING_DIRECTORY/01/kustomization.yaml"
   
-  
+cp k8s/$ENVIRONMENT/common/monitoring/prometheus-values.yaml  $MONITORING_DIRECTORY/base/prometheus-values.yaml  
 cp k8s/$ENVIRONMENT/common/monitoring/monitoring-values.yaml  $MONITORING_DIRECTORY/base/monitoring-values.yaml
 
 echo "Please ensure below steps manually:

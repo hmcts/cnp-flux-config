@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-business-service
   namespace: probate
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: probate-business-service
   rollback:
@@ -20,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-03493d0-20210823124345
+      image: hmctspublic.azurecr.io/probate/business-service:prod-f7d9207-20211022142526 #{"$imagepolicy": "flux-system:probate-business-service"}
       environment:
         SERVICES_NOTIFY_INVITEDATA_INVITELINK: https://www.apply-for-probate.service.gov.uk/executors/invitation/
     global:

@@ -28,7 +28,7 @@ data:
           exclude_namespaces = ["kube-system", "aac", "admin", "flux-system", "adoption", "am", "bar", "bsp", "camunda", "cnp", "coh", "ctsc", "dg", "divorce", "dm-store", "em", "ethos", "fact", "family-public-law", "fees-pay", "financial-remedy", "ia", "idam", "money-claims", "monitoring", "neuvector", "pcq", "probate", "rd", "reform-scan", "rpe", "rse", "sealed-secrets", "sscs", "civil", "wa", "xui"]
        [log_collection_settings.env_var]
           # In the absense of this configmap, default value for enabled is true
-          enabled = true
+          enabled = false
   prometheus-data-collection-settings: |-
     # Custom Prometheus metrics data collection settings
     [prometheus_data_collection_settings.cluster]
@@ -50,7 +50,7 @@ data:
         #     set this to `https` & most likely set the tls config.
         # - prometheus.io/path: If the metrics path is not /metrics, define it with this annotation.
         # - prometheus.io/port: If port is not 9102 use this annotation
-        monitor_kubernetes_pods = true
+        monitor_kubernetes_pods = false
 
     [prometheus_data_collection_settings.node]
         # Node level scrape endpoint(s). These metrics will be scraped from agent's DaemonSet running in every node in the cluster
@@ -60,7 +60,9 @@ data:
         # An array of urls to scrape metrics from. $NODE_IP (all upper case) will substitute of running Node's IP address
         urls = ["http://$NODE_IP:9103/metrics"]
         #fieldpass = ["metric_to_pass1", "metric_to_pass12"]
+
         #fielddrop = ["metric_to_drop"]
+
 metadata:
   name: container-azm-ms-agentconfig
   namespace: kube-system

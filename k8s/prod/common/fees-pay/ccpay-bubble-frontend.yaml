@@ -1,12 +1,8 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccpay-bubble-frontend
   namespace: fees-pay
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: ccpay-bubble-frontend
   rollback:
@@ -20,7 +16,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-cc569b4-20210812131809
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-8487b99-20211019134644 #{"$imagepolicy": "flux-system:ccpay-bubble-frontend"}
       ingressHost: paybubble.platform.hmcts.net
       environment:
         PCIPAL_ANTENNA_URL: https://paybubble.platform.hmcts.net/ccd-search

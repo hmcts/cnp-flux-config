@@ -2,19 +2,15 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-npa
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-585-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      keyVaults:
-        em-npa:
-          secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: APPINSIGHTS_INSTRUMENTATIONKEY
-            - name: microservicekey-em-npa-app
-              alias: S2S_KEY
-            - name: npa-POSTGRES-PASS-V11
-              alias: SPRING_DATASOURCE_PASSWORD
+      image: hmctspublic.azurecr.io/em/npa:pr-585-5055d44-20211018141139
       environment:
-        SPRING_DATASOURCE_USERNAME: npa@em-npa-postgres-db-v11-demo
-        SPRING_DATASOURCE_URL: jdbc:postgresql://em-npa-postgres-db-v11-demo.postgres.database.azure.com:5432/npa?sslmode=require
         TEST_VAR: value1
+        CDAM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        ENABLE_CDAM: false

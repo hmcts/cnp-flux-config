@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: botkube
+  namespace: monitoring
+spec:
+  url: ssh://git@github.com:infracloudio/botkube
+  ref:
+    branch: develop
+  include:
+    - repository:
+        name: botkube
+      fromPath: helm/botkube
+  interval: 10m

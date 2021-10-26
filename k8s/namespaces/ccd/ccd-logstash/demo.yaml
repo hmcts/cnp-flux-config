@@ -1,0 +1,176 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-logstash
+  namespace: ccd
+spec:
+  releaseName: ccd-logstash
+  values:
+    replicas: 1
+    logstashPipeline:
+      01_input.conf: |
+        input  {
+          jdbc {
+            jdbc_connection_string => "${DATA_STORE_URL}"
+            jdbc_user => "${DATA_STORE_USER}"
+            jdbc_password => "${DATA_STORE_PASS}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_default_timezone => "UTC"
+            parameters => {
+                        "divorcej" => "DIVORCE"
+                        "cmcj" => "CMC"
+                        "probatej" => "PROBATE"
+                        "ethosj" => "EMPLOYMENT"
+                        "sscsj" => "SSCS"
+                      }
+            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction != :divorcej AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            clean_run => false
+            schedule => "* * * * * *"
+          }
+        }
+      02_filter.conf: |
+        filter{
+          json{
+            source => "json_data"
+            target => "data"
+            remove_field => ["json_data"]
+          }
+          json{
+            source => "json_data_classification"
+            target => "data_classification"
+            remove_field => ["json_data_classification"]
+          }
+          json {
+              source => "json_supplementary_data"
+              target => "supplementary_data"
+              remove_field => ["json_supplementary_data"]
+            }
+         if [data][SearchCriteria] {
+                 clone {
+                     clones => ["SearchCriteria"]
+                 }
+           }
+
+             if [type] == "SearchCriteria" {
+                 if [data][SearchCriteria] {
+                     mutate {
+                        rename => {"[data][SearchCriteria]" => "[data_new][SearchCriteria]" }
+                     }
+                 }
+
+                 if [data][caseManagementLocation] {
+                     mutate {
+                        rename => {"[data][caseManagementLocation]" => "[data_new][caseManagementLocation]" }
+                     }
+                 }
+                 if [data][caseNameHmctsInternal] {
+                     mutate {
+                        rename => {"[data][caseNameHmctsInternal]" => "[data_new][caseNameHmctsInternal]" }
+                     }
+                 }
+                 if [data][caseManagementCategory] {
+                     mutate {
+                        rename => {"[data][caseManagementCategory]" => "[data_new][caseManagementCategory]" }
+                     }
+                 }
+                 if [supplementary_data][HMCTSServiceId] {
+                     mutate {
+                        rename => {"[supplementary_data][HMCTSServiceId]" => "[supplementary_data_new][HMCTSServiceId]" }
+                     }
+                 }
+                 if [data_classification][SearchCriteria] {
+                     mutate {
+                        rename => {"[data_classification][SearchCriteria]" => "[data_classification_new][SearchCriteria]" }
+                     }
+                 }
+                 if [data_classification][caseManagementLocation] {
+                    mutate {
+                       rename => {"[data_classification][caseManagementLocation]" => "[data_classification_new][caseManagementLocation]" }
+                    }
+                 }
+                 if [data_classification][caseNameHmctsInternal] {
+                     mutate {
+                        rename => {"[data_classification][caseNameHmctsInternal]" => "[data_classification_new][caseNameHmctsInternal]" }
+                     }
+                 }
+
+                 if [data_classification][caseManagementCategory] {
+                     mutate {
+                        rename => {"[data_classification][caseManagementCategory]" => "[data_classification_new][caseManagementCategory]" }
+                     }
+                 }
+                 mutate { remove_field =>[ "data" ,"supplementary_data", "data_classification", "last_state_modified_date", "type" ] }
+
+                 mutate {
+                         rename => { "[data_new]" => "data" }
+                         rename => { "[supplementary_data_new]"  => "supplementary_data" }
+                         rename => { "[data_classification_new]"  => "data_classification" }
+                 }
+
+                 mutate {
+                    add_field => { "index_id" => "global_search" }
+                 }
+                 mutate {
+                    lowercase => [ "index_id" ]
+                 }
+             } else {
+                 mutate {
+                     add_field => { "index_id" => "%{case_type_id}_cases" }
+               	}
+         	    mutate {
+         		    lowercase => [ "index_id" ]
+         	    }
+             }
+        }
+      03_output.conf: |
+        output {
+            elasticsearch {
+                hosts => ["${ES_HOSTS}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{id}"
+                timeout => 60
+            }
+        }
+      dead_letter_indexing_pipeline.conf: |
+        input {
+          dead_letter_queue {
+            path => "${LOGSTASH_HOME}/data/dead_letter_queue"
+            commit_offsets => true
+            pipeline_id => "main"
+          }
+        }
+
+        filter {
+          # capture the entire event, and write it to a new field; we'll call that field `failed_case`
+          ruby {
+            code => "event.set('failed_case', event.to_json())"
+          }
+
+          # prune every field off the event except for the one we've just created. Note that this does not prune event metadata.
+          prune {
+            whitelist_names => [ "^failed_case$" ]
+          }
+
+          ruby {
+            code => "event.set('timestamp', event.get('[@metadata][dead_letter_queue][entry_time]'))"
+          }
+
+          # pull useful information out of the event metadata provided by the dead letter queue, and add it to the new event.
+          mutate {
+            add_field => {
+              "reason" => "%{[@metadata][dead_letter_queue][reason]}"
+            }
+          }
+        }
+
+        output {
+          elasticsearch {
+            hosts => ["${ES_HOSTS}"]
+            sniffing => false
+            index => ".logstash_dead_letter"
+          }
+        }

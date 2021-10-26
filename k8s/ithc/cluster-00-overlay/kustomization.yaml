@@ -9,21 +9,6 @@ bases:
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
-  - ../../namespaces/admin/kube-slack
-  - ../../namespaces/admin/traefik
-  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
-  - ../../namespaces/kube-system/nodelocaldns
-  - ../../namespaces/kured
-  - ../../namespaces/monitoring/kube-prometheus-stack
-  - ../../namespaces/monitoring/node-problem-detector
-  - ../../namespaces/neuvector
-  - ../../namespaces/neuvector/namespace.yaml
-  - ../../namespaces/admin/env-injector
-  - ../../namespaces/admin/aad-pod-id
-  - ../../namespaces/admin/keda
-  - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
-  - ../../namespaces/kube-system/container-azm-ms-agentconfig
   - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
   - ../../namespaces/admin/flux-helm-operator/rbac/ithc-role-binding.yaml
 
@@ -36,28 +21,9 @@ patchesStrategicMerge:
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/ithc/cluster-00/fluxcloud.yaml
 
-  #kube-slack patch
-  - ../../namespaces/admin/kube-slack/patches/ithc/cluster-00/kube-slack.yaml
-
-  #traefik patches
-  - ../../namespaces/admin/traefik/patches/ithc/cluster-00/traefik.yaml
-
-  #kured patch
-  - ../../namespaces/kured/patches/ithc/cluster-00/kured.yaml
-
-  #neuvector patch
-  - ../../namespaces/neuvector/patches/ithc/neuvector.yaml
-  - ../../namespaces/neuvector/patches/ithc/cluster-00/neuvector.yaml
-
-  - ../../namespaces/admin/env-injector/patches/ithc/cluster-00/env-injector.yaml
-  - ../../namespaces/monitoring/kube-prometheus-stack/patches/ithc/cluster-00/kube-prometheus-stack.yaml
 
 patches:
   - path: ../ithc-helmrelease.yaml
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/global-defaults == enabled
-  - path: ../automated-helmrelease.yaml
-    target:
-      kind: HelmRelease
-      annotationSelector: hmcts.github.com/prod-automated == enabled
