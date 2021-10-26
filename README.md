@@ -25,8 +25,8 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 ## Adding an app to flux
 
-All App deployments are managed through `HelmRelease` manifests. 
-Depending on the [Migration Status](#Migration-status) and the environment you are adding your config to, refer to [v2 setup](docs/app-deployment-v2.md) or/and [v1 setup](docs/app-deployment.md).
+All App deployments are managed through `HelmRelease` manifests.  See [App Deployment section](docs/app-deployment.md) for more details.    
+
 
 ## Creating Sealed Secrets
 
