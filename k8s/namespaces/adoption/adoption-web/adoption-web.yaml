@@ -13,9 +13,9 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: adoption-web
-    version: 0.1.1
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/adoption-web
   values:
     nodejs:
       replicas: 2
@@ -23,8 +23,5 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: 4553bfbf-2d36-4331-adf1-97d645a83189
       image: hmctspublic.azurecr.io/adoption/web:prod-2261a1bf #{"$imagepolicy": "flux-system:adoption-web"}
       ingressHost: adoption-web.aat.platform.hmcts.net
-      environment:
-        NODE_ENV: production
