@@ -24,7 +24,12 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       applicationInsightsInstrumentKey: 4553bfbf-2d36-4331-adf1-97d645a83189
-      image: hmctspublic.azurecr.io/adoption/web:prod-2261a1bf
+      image: hmctspublic.azurecr.io/adoption/web:prod-2261a1bf #{"$imagepolicy": "flux-system:adoption-web"}
       ingressHost: adoption-web.aat.platform.hmcts.net
       environment:
         NODE_ENV: production
+    global:
+      environment: aat
+      subscriptionId: "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
