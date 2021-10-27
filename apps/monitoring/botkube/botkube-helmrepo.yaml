@@ -4,13 +4,14 @@ metadata:
   name: botkube
   namespace: monitoring
 spec:
-  url: ssh://git@github.com:infracloudio/botkube
+  url: ssh://git@github.com/infracloudio/botkube
   secretRef:
     name: git-credentials
   ref:
     branch: develop
-  include:
-    - repository:
-        name: botkube
-      fromPath: helm/botkube
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm/botkube
   interval: 10m
