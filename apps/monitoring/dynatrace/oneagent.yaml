@@ -14,8 +14,9 @@ spec:
         name: dynatrace-oneagent-operator
         kind: HelmRepository
         namespace: monitoring
-  valueFileSecrets:
-    - name: "oneagent-values"
+  valuesFrom:
+    - kind: Secret
+      name: oneagent-values
   values:
     platform: "kubernetes"
     oneagent:
