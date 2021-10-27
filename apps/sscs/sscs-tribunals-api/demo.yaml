@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-api
+  namespace: sscs
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2392-81410a3-20211025102323 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
+      environment:
+        VAR_TO_RESTART_THE_APP: 42
