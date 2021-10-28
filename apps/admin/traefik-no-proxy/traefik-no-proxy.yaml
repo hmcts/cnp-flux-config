@@ -5,16 +5,20 @@ kind: HelmRelease
 metadata:
   name: traefik-no-proxy
   namespace: admin
-  annotations:
-    flux.weave.works/automated: "false"
 spec:
   releaseName: traefik-no-proxy
+  interval: 5m
   chart:
-    git: https://github.com/hmcts/charts
-    ref: master
-    path: stable/traefik
-  valueFileSecrets:
-    - name: "traefik-values"
+    spec:
+      chart: ./stable/traefik
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-stable
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: traefik-values
   values:
     imageTag: 1.7.26
     loadBalancerIP: 51.11.5.163
