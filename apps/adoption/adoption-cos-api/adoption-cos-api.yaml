@@ -1,16 +1,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: adoption-web
+  name: adoption-cos-api
 spec:
-  releaseName: adoption-web
+  releaseName: adoption-cos-api
   interval: 1m
   values:
-    nodejs:
-      image: hmctspublic.azurecr.io/adoption/web:prod-ba20782-20210910150940 #{"$imagepolicy": "flux-system:adoption-web"}
+    java:
+      image: hmctspublic.azurecr.io/adoption/cos-api:prod-15ec0f6-20211028094004 #{"$imagepolicy": "flux-system:adoption-cos-api"}
   chart:
     spec:
-      chart: ./stable/adoption-web
+      chart: ./stable/adoption-cos-api
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
