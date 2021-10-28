@@ -6,13 +6,14 @@ metadata:
   namespace: monitoring
 spec:
   releaseName: botkube
+  interval: 5m
   chart:
     spec:
-      chart: botkube
+      chart: helm/botkube
       sourceRef:
         name: botkube
         kind: GitRepository
-        namespace: botkube
+        namespace: monitoring
   valuesFrom:
     - kind: Secret
       name: "botkube-values"
