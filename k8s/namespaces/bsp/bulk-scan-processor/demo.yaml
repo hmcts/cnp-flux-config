@@ -1,14 +1,11 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-2120-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/bsp/bulk-scan-processor:pr-2120-6dfc61f-20211028123722 #{"$imagepolicy": "flux-system:demo-bulk-scan-processor"}
       environment:
         #60 days in seconds
         SAS_TOKEN_VALIDITY: "5184000"
