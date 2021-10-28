@@ -16,11 +16,11 @@ spec:
       memoryLimits: '4096Mi'
       cpuLimits: '2000m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-ddbfe53-20211028092825 #{"$imagepolicy": "flux-system:dm-store-cdam"}
+      image: hmctspublic.azurecr.io/dm/store:prod-1b38b5d-20211028184444 #{"$imagepolicy": "flux-system:dm-store-cdam"}
       ingressHost: dm-store-cdam-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         ENABLE_TTL: false
         HIKARI_MAX_POOL_SIZE: 2
         ENABLE_METADATA_MIGRATION: 'true'
-#        ENABLE_OVERRIDE_METADATA: 'true'
+        #        ENABLE_OVERRIDE_METADATA: 'true'
         DOCUMENT_METADATA_UPDATE_MILLISECONDS: '900000'
