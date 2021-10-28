@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-service-request-cpo-update-service
+spec:
+  releaseName: ccpay-service-request-cpo-update-service
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-service-request-cpo-update-service
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/service-request-cpo-update-service:prod-863c1d7-20211028091306 #{"$imagepolicy": "flux-system:ccpay-refunds-api"}
