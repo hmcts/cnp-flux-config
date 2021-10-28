@@ -17,6 +17,19 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/bulk-scan:pr-1060-f9ad5ce-20211028111017 #{"$imagepolicy": "flux-system:demo-sscs-bulk-scan"}
+      keyVaults:
+        sscs-bulk-scan:
+          secrets:
+            - name: sscs-s2s-secret
+              alias: S2S_SECRET
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: idam-sscs-oauth2-client-secret
+              alias: IDAM_OAUTH2_CLIENT_SECRET
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
       environment:
         DO_NOT_REMOVE_PROPERTY: true
         UC_OFFICE_FEATURE: true
