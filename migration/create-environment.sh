@@ -30,10 +30,10 @@ resources:
 #- ../../../apps/monitoring/base/kustomize.yaml
 
 patches:
-  - path: ../../../apps/base/kustomize.yaml
-    target:
-      kind: Kustomization
-      annotationSelector: hmcts.github.com/kustomize-defaults != disabled
+- path: ../../../apps/base/kustomize.yaml
+  target:
+    kind: Kustomization
+    annotationSelector: hmcts.github.com/kustomize-defaults != disabled
 EOF
 ) > "$CLUSTER_DIRECTORY/base/kustomization.yaml"
   
@@ -138,7 +138,6 @@ kind: Kustomization
 resources:
   - ../../base
   - kube-slack-values.yaml
-  - traefik-values.yaml
 EOF
 ) > "$ADMIN_DIRECTORY/base/kustomization.yaml"
   
@@ -168,7 +167,6 @@ EOF
 ) > "$ADMIN_DIRECTORY/01/kustomization.yaml"
   
 cp k8s/$ENVIRONMENT/common/sealed-secrets/kube-slack-values.yaml  $ADMIN_DIRECTORY/base/kube-slack-values.yaml
-cp k8s/$ENVIRONMENT/common/sealed-secrets/traefik-values.yaml $ADMIN_DIRECTORY/base/traefik-values.yaml
 
 
 # ----------------------- Kured files ----------

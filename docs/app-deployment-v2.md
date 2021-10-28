@@ -1,7 +1,7 @@
 
 # Application Configuration
 
->Note: Depending on the [Migration Status](/README.md#Migration-status) and the environment you are adding config, you should also do [v1 setup](app-deployment.md)
+>Note: Only use for Flux v2 applications
 
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
 
@@ -119,7 +119,7 @@ spec:
       #image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
 ```
 
-- Create a image policy like below with your pr number (pr-332 taken as example) along side your HelmRelease file.
+- Create an image policy like below (or update an existing environment image policy) with your pr number (pr-332 taken as example) along side your HelmRelease file.
 
 ```yaml
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
@@ -139,6 +139,20 @@ spec:
     name: <component-name>
 ```
 - Add `- ../<component-name>/<env>-image-policy.yaml` to `resources` in automation kustomization `apps/<your-namespace>/automation/kustomization.yaml`
+
+### Remove a non prod image deployment from an environment
+
+- If an [environment using a non prod image](#Deploy-non-prod-image-to-an-environment) requires changing to use the prod image, update the HelmRelease patch to change the image policy marker to the default as in the example below
+```yaml
+#From:
+image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
+
+#To:
+image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:draft-store-service"}
+```
+- Alternatively, delete the HelmRelease patch if it does not contain any required patches and  
+  - Delete the existing environment image policy file `<component-name>/<env>-image-policy.yaml` 
+  - Delete the entry `- ../<component-name>/<env>-image-policy.yaml` from `resources` in automation kustomization `apps/<your-namespace>/automation/kustomization.yaml`
 
 ### Deploying an app to single cluster
 

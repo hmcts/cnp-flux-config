@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -17,14 +16,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-cb2d7b7-20210930155704   #{"$imagepolicy": "flux-system:cmc-legal-frontend"}
+      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-6795ed0-20211025065342 #{"$imagepolicy": "flux-system:cmc-legal-frontend"}
       ingressHost: www.moneyclaim-legal.platform.hmcts.net
       environment:
         GA_TRACKING_ID: UA-97111056-4
         SERVICE_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCEST2/
         FEEDBACK_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCFBT2/
         REPORT_PROBLEM_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCPPT2/
-
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_AUTHENTICATION_WEB_URL: https://hmcts-access.service.gov.uk
     global:

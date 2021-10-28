@@ -1,8 +1,6 @@
 
 # Application Configuration
 
->Note: Depending on the [Migration Status](/README.md#Migration status) and the environment you are adding config, you should also do [v2 setup](app-deployment-v2.md)
-
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
 
 **It is important to follow below discussed naming convention, file and folder names should match application helm release name**

@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: fprl
+  namespace: family-private-law
+spec:
+  type: 0
+  resourceID: "/subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourcegroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/fprl-perftest-mi"
+  clientID: "ae36d5d7-5f91-4838-b856-93af2b78ea7e"
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: fprl-binding
+  namespace: family-private-law
+spec:
+  azureIdentity: fprl
+  selector: fprl
