@@ -6,9 +6,10 @@ metadata:
   namespace: monitoring
 spec:
   releaseName: botkube
+  interval: 5m
   chart:
     spec:
-      chart: botkube
+      chart: helm/botkube
       sourceRef:
         name: botkube
         kind: GitRepository
@@ -22,8 +23,7 @@ spec:
       pullPolicy: Always
     config:
       settings:
-        clustername: cft-${ENVIRONMENT}-${CLUSTER}-aks
-
+        clustername: cft-${CLUSTER_FULL_NAME}-aks
         allowkubectl: true
         kubectl:
           commands:
@@ -120,7 +120,7 @@ spec:
       slack:
         enabled: true
         notiftype: short
-        channel: "${ENV_MONITOR_CHANNEL}"
+        channel: "${TEAM_NOTIFICATION_CHANNEL}"
     rbac:
       rules:
         - apiGroups: ["*"]

@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -17,11 +16,11 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:pr-558-8a9057e-20211013104112 #{"$imagepolicy": "flux-system:demo-div-dn"}
+      image: hmctspublic.azurecr.io/div/dn:prod-055d239-20211018132837 #{"$imagepolicy": "flux-system:demo-div-dn"}
       ingressClass: traefik-no-proxy
       ingressHost: decree-nisi-aks.demo.platform.hmcts.net
       environment:
-        PUBLIC_HOSTNAME: https://decree-nisi-aks.demo.platform.hmcts.net  #looks unused
+        PUBLIC_HOSTNAME: https://decree-nisi-aks.demo.platform.hmcts.net #looks unused
         BASE_URL: https://decree-nisi-aks.demo.platform.hmcts.net
         RESPONDENT_FRONTEND_URL: https://respond-divorce-aks.demo.platform.hmcts.net
         PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.demo.platform.hmcts.net

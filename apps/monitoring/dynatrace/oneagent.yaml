@@ -6,16 +6,18 @@ metadata:
   namespace: monitoring
 spec:
   releaseName: oneagent-operator
+  interval: 5m
   chart:
     spec:
       chart: dynatrace-oneagent-operator
-      version: 0.10.0
+      version: 0.10.2
       sourceRef:
         name: dynatrace-oneagent-operator
         kind: HelmRepository
         namespace: monitoring
-  valueFileSecrets:
-    - name: "oneagent-values"
+  valuesFrom:
+    - kind: Secret
+      name: oneagent-values
   values:
     platform: "kubernetes"
     oneagent:
