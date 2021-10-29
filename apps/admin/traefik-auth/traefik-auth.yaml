@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik-forward-auth
+  namespace: admin
+  labels:
+    app: oauth2-proxy
+spec:
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      volumes:
+        - name: oauth2-certs
+          secret:
+            secretName: oauth2-cert-key
+      containers:
+        - name: traefik-forward-auth
+          image: quay.io/pusher/oauth2_proxy:v3.2.0-amd64
+          ports:
+            - name: http
+              containerPort: 4180
+              protocol: TCP
+            - name: https
+              containerPort: 4443
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 10m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: "/var/oauth2"
+              name: "oauth2-certs"
+              readOnly: true
+          env:
+            - name: OAUTH2_PROXY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-client-secret
+                  key: oauth2-proxy-client-id
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-client-secret
+                  key: oauth2-proxy-client-secret
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-client-secret
+                  key: oauth2-proxy-cookie-secret
+          args:
+            - "--provider=azure"
+            - "--email-domain=*"
+            - "--http-address=:4180"
+            - "--https-address=:4443"
+            - "--azure-tenant=21ae17a1-694c-4005-8e0f-6a0e51c35a5f"
+            - "--skip-provider-button"
+            - "--cookie-secure=true"
+            - "--cookie-httponly=false"
+            - "--pass-host-header=true"
+            - "--request-logging"
+            - "--upstream=http://traefik:80/"
+            - "--tls-cert=/var/oauth2/demo-platform-hmcts-crt.pem"
+            - "--tls-key=/var/oauth2/demo-platform-hmcts-key.pem"
+            - "--proxy-prefix=/oauth-proxy"
+            - "--pass-basic-auth=false"
+            - "--pass-user-headers=false"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-forward-auth
+  namespace: admin
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+spec:
+  loadBalancerIP: 51.11.25.221
+  type: LoadBalancer
+  selector:
+    app: oauth2-proxy
+  ports:
+    - protocol: TCP
+      port: 80
+      name: http
+      targetPort: 4180
+    - protocol: TCP
+      port: 443
+      name: https
+      targetPort: 4443
