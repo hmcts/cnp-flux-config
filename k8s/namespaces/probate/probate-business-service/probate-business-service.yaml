@@ -2,24 +2,14 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-business-service
-  namespace: probate
 spec:
   releaseName: probate-business-service
-  rollback:
-    enable: true
-    retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: probate-business-service
-    version: 0.1.5
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-business-service
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/business-service:prod-405a071-20211027142441 #{"$imagepolicy": "flux-system:probate-business-service"}
-      environment:
-        VAR_TA: trigger2
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true

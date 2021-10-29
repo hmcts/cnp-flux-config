@@ -2,12 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: finrem-emca
-  namespace: financial-remedy
 spec:
   releaseName: finrem-emca
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -17,7 +13,5 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/finrem/emca:prod-c0af298-20211025155851 #{"$imagepolicy": "flux-system:finrem-emca"}
-    global:
-      environment: perftest
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+      environment:
+        VAR_TA: trigger1
