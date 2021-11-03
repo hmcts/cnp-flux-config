@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-cos
+spec:
+  releaseName: finrem-cos
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-cos
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/cos:prod-623189c-20211103114349 #{"$imagepolicy": "flux-system:finrem-cos"}
+      environment:
+        VAR_TA: trigger1
