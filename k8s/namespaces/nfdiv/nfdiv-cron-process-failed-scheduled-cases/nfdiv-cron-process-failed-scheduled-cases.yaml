@@ -1,9 +1,9 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-bulk-list-create
+  name: nfdiv-cron-process-failed-scheduled-cases
 spec:
-  releaseName: nfdiv-cron-bulk-list-create
+  releaseName: nfdiv-cron-process-failed-scheduled-cases
   chart:
     git: git@github.com:hmcts/nfdiv-cron
     ref: 0.0.8
@@ -27,5 +27,5 @@ spec:
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
       environment:
-        TASK_NAME: SystemCreateBulkCaseListTask
+        TASK_NAME: SystemProcessFailedScheduledCasesTask
       schedule: 0/10 * * * *
