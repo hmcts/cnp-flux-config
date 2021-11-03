@@ -29,7 +29,7 @@ kustomizepaths=()
     done
 
         for path in "${kustomizepaths[@]}"; do
-        ./kustomize build --load_restrictor none $path >/dev/null
+        ./kustomize build --load-restrictor LoadRestrictionsNone $path >/dev/null
         if [ $? -eq 1 ]
         then
         echo "Kustomize failing for env $path" && exit 1
