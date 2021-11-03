@@ -1,15 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  name: kube-prometheus-rules
-  namespace: monitoring
-spec:
-  dependsOn:
-    - name: kube-prometheus-stack
 resources:
   - ../../base
   - ../../kube-prometheus-stack/jenkins-alerts-rules.yaml
   - prometheus-values.yaml
-patchesStrategicMerge:
   - ../../kube-prometheus-stack/empty-nodelocaldns-alert-rules.yaml
+patchesStrategicMerge:
   - ../../kube-prometheus-stack/jenkins-service-monitors.yaml
