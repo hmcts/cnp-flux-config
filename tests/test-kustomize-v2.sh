@@ -2,7 +2,7 @@
 set -x
 
 curl -s "https://raw.githubusercontent.com/\
-kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 3.7.0
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 4.4.0
 
 ENVIRONMENTS="sbox sbox-intsvc preview ptl-intsvc ithc perftest demo"
 EXCLUDE_APPS='example-exclude|flux-system'
