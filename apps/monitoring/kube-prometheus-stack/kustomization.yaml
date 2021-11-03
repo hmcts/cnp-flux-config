@@ -1,7 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+metadata:
+  name: kube-prometheus-stack
 resources:
   - kube-prometheus-stack.yaml
+  - prometheus-helmrepo.yaml
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: kube-prometheus-rules
+spec:
+  dependsOn:
+    - name: kube-prometheus-stack
+resources:
   - nodelocaldns-alerts-rules.yaml
   - flux-alerts-rules.yaml
-  - prometheus-helmrepo.yaml
