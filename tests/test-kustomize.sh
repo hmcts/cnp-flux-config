@@ -24,7 +24,7 @@ kustomizepaths=(
 )
 
 for path in "${kustomizepaths[@]}"; do
-    ./kustomize build --load_restrictor none $path >/dev/null
+    ./kustomize build --load-restrictor LoadRestrictionsNone $path >/dev/null
     if [ $? -eq 1 ]
     then
      echo "Kustomize failing for env $path" && exit 1
@@ -40,7 +40,7 @@ env_white_list=${env}_whitelist_helm_release_pattern
 
     for path in $(echo "k8s/$env/cluster-00-overlay k8s/$env/cluster-01-overlay k8s/$env/common-overlay"); do
 
-    KUSTOMIZE_OUTPUT=$(./kustomize build --load_restrictor none $path | \
+    KUSTOMIZE_OUTPUT=$(./kustomize build --load-restrictor LoadRestrictionsNone $path | \
     yq eval 'select(.kind == "HelmRelease" and .metadata.annotations."hmcts.github.com/prod-automated" == "disabled")' - | yq eval '.metadata.name' - )
     HELMRELEASE_CHECK=$(echo "$KUSTOMIZE_OUTPUT" | grep -Ev "${!env_white_list}")
 
