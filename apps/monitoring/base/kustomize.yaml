@@ -5,6 +5,10 @@ metadata:
   namespace: flux-system
 spec:
   path: ./apps/monitoring/${ENVIRONMENT}/${CLUSTER}
+  sourceRef:
+    kind: GitRepository
+    name: kube-prometheus-stack-crd
+    namespace: monitoring
   postBuild:
     substitute:
       NAMESPACE: "monitoring"
