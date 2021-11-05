@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: da
+  namespace: flux-system
+spec:
+  path: ./apps/da/${ENVIRONMENT}
+  postBuild:
+    substitute:
+      NAMESPACE: "da"
+      TEAM_NOTIFICATION_CHANNEL: "da-tech-notifications"
