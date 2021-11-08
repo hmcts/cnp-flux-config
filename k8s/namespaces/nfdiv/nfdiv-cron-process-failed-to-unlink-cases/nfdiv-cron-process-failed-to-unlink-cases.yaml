@@ -1,9 +1,9 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-remind-applicant2
+  name: nfdiv-cron-process-failed-to-unlink-cases
 spec:
-  releaseName: nfdiv-cron-remind-applicant2
+  releaseName: nfdiv-cron-process-failed-to-unlink-cases
   chart:
     git: git@github.com:hmcts/nfdiv-cron
     ref: 0.0.8
@@ -27,5 +27,5 @@ spec:
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
       environment:
-        TASK_NAME: SystemRemindApplicant2Task
+        TASK_NAME: SystemProcessFailedScheduledCasesTask
       schedule: 0/10 * * * *
