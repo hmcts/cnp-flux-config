@@ -4,24 +4,21 @@ metadata:
   name: traefik
   namespace: admin
 patch: 
-  affinity: 
-    nodeAffinity: 
-      preferredDuringSchedulingIgnoredDuringExecution: 
-        - 
-          preference: 
-            matchExpressions: 
-              - 
-                key: kubernetes.azure.com/mode
-                operator: In
-                values: 
-                  - system
-          weight: 1
-  tolerations: 
-    - 
-      effect: NoSchedule
-      key: CriticalAddonsOnly
+  tolerations:
+    - key: CriticalAddonsOnly
       operator: Equal
       value: "true"
+      effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                  - system
 spec:
   values:
     loadBalancerIP: 10.2.9.250
