@@ -3,6 +3,25 @@ kind: HelmRelease
 metadata:
   name: traefik
   namespace: admin
+patch: 
+  affinity: 
+    nodeAffinity: 
+      preferredDuringSchedulingIgnoredDuringExecution: 
+        - 
+          preference: 
+            matchExpressions: 
+              - 
+                key: kubernetes.azure.com/mode
+                operator: In
+                values: 
+                  - system
+          weight: 1
+  tolerations: 
+    - 
+      effect: NoSchedule
+      key: CriticalAddonsOnly
+      operator: Equal
+      value: "true"
 spec:
   values:
     loadBalancerIP: 10.2.9.250
@@ -19,18 +38,3 @@ spec:
   valuesFrom:
     - kind: Secret
       name: traefik-values
-tolerations:
-          - key: CriticalAddonsOnly
-            operator: Equal
-            value: "true"
-            effect: NoSchedule
-        affinity:
-          nodeAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-              - weight: 1
-                preference:
-                  matchExpressions:
-                    - key: kubernetes.azure.com/mode
-                      operator: In
-                      values:
-                        - system
