@@ -2,13 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rd-judicial-api
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.job: glob:pr-183-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/rd/judicial-api:pr-183-a305c82-20211103084054   #{"$imagepolicy": "flux-system:demo-judicial-api"}
       environment:
         DELETE_ORG: true
         TEST_IDAM_ENABLED: true
