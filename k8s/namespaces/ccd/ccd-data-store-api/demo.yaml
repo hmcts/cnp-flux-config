@@ -9,9 +9,8 @@ spec:
       image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1708-a019e40-20211108000345 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
       memoryLimits: "8192Mi"
       cpuLimits: "4000m"
-      requests:
-        memory: "4096Mi"
-        cpu: "2000m"
+      memoryRequests: "4096Mi"
+      cpuRequests: "2000m"
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-demo\.service\.core-compute-demo\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-demo\.service\.core-compute-demo\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]))
