@@ -4,13 +4,33 @@ metadata:
   name: monitoring
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: prometheus-crd
   path: ./apps/monitoring/${ENVIRONMENT}/${CLUSTER}
-  sourceRef:
-    kind: GitRepository
-    name: kube-prometheus-stack-crd
-    namespace: monitoring
   postBuild:
     substitute:
       NAMESPACE: "monitoring"
       TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"
       ENV_INJECTOR: "disabled"
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: prometheus-crd
+  namespace: flux-system
+spec:
+  path: ./charts/kube-prometheus-stack/crds
+  sourceRef:
+    kind: GitRepository
+    name: kube-prometheus-stack-crd
+    namespace: monitoring
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: prometheus-crd-repo
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: prometheus-crd
+  path: ./apps/monitoring/kube-prometheus-stack/prometheus-crds-repo.yaml
