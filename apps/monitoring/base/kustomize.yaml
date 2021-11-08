@@ -19,6 +19,8 @@ metadata:
   name: prometheus-crd
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: prometheus-crd-repo
   path: ./charts/kube-prometheus-stack/crds
   sourceRef:
     kind: GitRepository
@@ -31,6 +33,4 @@ metadata:
   name: prometheus-crd-repo
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: prometheus-crd
   path: ./apps/monitoring/kube-prometheus-stack/prometheus-crds-repo.yaml
