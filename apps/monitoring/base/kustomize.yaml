@@ -16,19 +16,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: prometheus-crd-repo
-  namespace: flux-system
-spec:
-  path: ./apps/monitoring/kube-prometheus-stack/prometheus-crds-repo.yaml
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: prometheus-crd
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: prometheus-crd-repo
+  interval: 5m
+  prune: true
   path: ./charts/kube-prometheus-stack/crds
   sourceRef:
     kind: GitRepository
