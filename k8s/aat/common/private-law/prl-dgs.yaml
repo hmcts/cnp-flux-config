@@ -1,23 +1,28 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: finrem-dgcs
-  namespace: financial-remedy
+  name: prl-dgs
+  namespace: private-law
 spec:
-  releaseName: finrem-dgcs
+  releaseName: prl-dgs
   rollback:
     enable: true
     retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/finrem-dgcs
+    path: stable/prl-dgs
   values:
     java:
       replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/dgcs:prod-4025b87-20211025160925 #{"$imagepolicy": "flux-system:finrem-dgcs"}
+      image: hmctspublic.azurecr.io/prl/dgs:latest #{"$imagepolicy": "flux-system:prl-dgs"}
+      environment:
+        FEATURE_EXAMPLE: true
     global:
-      environment: perftest
+      environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

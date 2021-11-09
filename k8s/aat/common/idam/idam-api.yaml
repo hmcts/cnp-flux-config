@@ -15,10 +15,10 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.3.9
+    version: 0.4.2
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-6f564ff-20211025141538
+      image: hmctspublic.azurecr.io/idam/api:prod-4b23e8b-20211105121715
       replicas: 4
       ingressHost: idam-api.aat.platform.hmcts.net
       aadIdentityName: idam
@@ -40,6 +40,8 @@ spec:
         IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-aat2.internal:9292
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIME_TO_LIVE: "60s"
         SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-aat2.internal,emailAddress=devops@amido.com
+        SSL_TRUST_DNS_1: C=None,ST=None,L=None,OU=None,O=OpenDJ Self-Signed Certificate,CN=openidm-localhost
+        SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-aat2.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-aat2.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-aat2.internal
         STRATEGIC_SSO_PROVIDERS_0_providerName: azure
@@ -48,6 +50,11 @@ spec:
         STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
+        STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
+        STRATEGIC_SSO_PROVIDERS_1_providerName: moj
+        STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
+        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

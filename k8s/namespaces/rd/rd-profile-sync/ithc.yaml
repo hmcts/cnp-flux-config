@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-profile-sync
+spec:
+  values:
+    java:
+      environment:
+        DELETE_ORG: false
+        POSTGRES_HOST: rd-profile-sync-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
+        POSTGRES_USERNAME: dbsyncdata@rd-profile-sync-postgres-db-v11-{{ .Values.global.environment }}

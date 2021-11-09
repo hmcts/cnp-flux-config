@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prl-dgs
+  namespace: private-law
+spec:
+  releaseName: prl-dgs
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/prl-dgs
+  values:
+    java:
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/prl/dgs:aat-257e93c-20211102135659 #{"$imagepolicy": "flux-system:prl-dgs"}
+      environment:
+        FEATURE_EXAMPLE: true
