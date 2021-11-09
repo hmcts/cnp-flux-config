@@ -2,13 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: bulk-scan-orchestrator
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-2120-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      Image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-1631-d355fae-20211109071932 #{"$imagepolicy": "flux-system:demo-bulk-scan-orchestrator"}
       environment:
         REFORM_LOG_LEVEL: DEBUG
         TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
