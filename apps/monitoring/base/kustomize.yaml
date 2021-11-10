@@ -19,18 +19,4 @@ metadata:
   name: prometheus-crd
   namespace: flux-system
 spec:
-  interval: 10m
-  prune: true
-  path: "./charts/kube-prometheus-stack/crds"
-  sourceRef:
-    kind: GitRepository
-    name: kube-prometheus-stack-crd
-    namespace: monitoring
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: prometheus-crd-repo
-  namespace: flux-system
-spec:
-  path: ./apps/monitoring/base-repo
+  path: ./apps/monitoring/kube-prometheus-stack-crds
