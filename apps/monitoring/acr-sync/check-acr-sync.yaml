@@ -1,0 +1,44 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-acr-sync
+  namespace: monitoring
+  labels:
+    app: check-acr-sync
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 3
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: check-acr-sync
+              image: hmctspublic.azurecr.io/check-acr-sync:dbbbwb
+              imagePullPolicy: IfNotPresent
+              resources:
+                requests:
+                  memory: "64Mi"
+                  cpu: "250m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "500m"
+              env:
+                - name: SLACK_WEBHOOK
+                  valueFrom:
+                    secretKeyRef:
+                      name: monitoring-values
+                      key: slack-webhook
+                - name: SLACK_ICON
+                  value: flux
+                - name: ACR_MAX_RESULTS
+                  value: "3000"
+                - name: ACR_SYNC_DEBUG
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: acr-sync
