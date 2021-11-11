@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-  annotations:
-    fluxcd.io/automated: "true"
-    repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
 spec:
   values:
     java:
@@ -18,7 +14,3 @@ spec:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
-      smoketests:
-        enabled: false
-        image: hmctspublic.azurecr.io/dm/store-test:prod-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:dm-store-store-test"}
-      image: hmctspublic.azurecr.io/dm/store:aat-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:ithc-dm-store"}

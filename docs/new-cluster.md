@@ -162,7 +162,7 @@ Run (replace `<env>` with your env name ):
 ```bash
 ENV=<test>
 $ kubectl create secret generic kube-slack-values --from-file=/tmp/values.yaml --namespace admin --dry-run=client -o json > /tmp/values.json
-$ kubeseal --format=yaml --cert=apps/$ENV/pub-cert.pem < /tmp/values.json > apps/admin/$ENV/base/kube-slack-values.yaml
+$ kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/values.json > apps/admin/$ENV/base/kube-slack-values.yaml
 ```
 
 ### Azure DevOps

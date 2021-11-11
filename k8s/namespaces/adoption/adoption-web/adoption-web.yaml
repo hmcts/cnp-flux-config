@@ -1,0 +1,26 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: adoption-web
+  namespace: adoption
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.nodejs: glob:prod-*
+spec:
+  releaseName: adoption-web
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/adoption-web
+  values:
+    nodejs:
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/adoption/web:prod-d7882bd-20211027140014 #{"$imagepolicy": "flux-system:adoption-web"}
+      # ingressHost: adoption-web.aat.platform.hmcts.net

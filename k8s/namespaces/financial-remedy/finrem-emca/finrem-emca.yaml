@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-emca
+spec:
+  releaseName: finrem-emca
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-emca
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/emca:prod-6c08b1b-20211103114342 #{"$imagepolicy": "flux-system:finrem-emca"}
+      environment:
+        VAR_TA: trigger1

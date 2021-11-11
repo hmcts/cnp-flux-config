@@ -7,58 +7,21 @@ bases:
   - pcq
   - em
   - nfdiv
-  - ../../namespaces/admin/external-dns
-  - ../../namespaces/admin/external-dns-public
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
-  - ../../namespaces/admin/kube-slack
-  - ../../namespaces/admin/traefik
-  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
-  - ../../namespaces/kube-system/nodelocaldns
-  - ../../namespaces/kured
-  - ../../namespaces/monitoring/kube-prometheus-stack
-  - ../../namespaces/monitoring/node-problem-detector
-  - ../../namespaces/osba
-  - ../../namespaces/osba/namespace.yaml
-  - ../../namespaces/admin/env-injector
-  - ../../namespaces/admin/keda
-  - ../../namespaces/admin/aad-pod-id
-  - ../../namespaces/kube-system/aad-pod-id
-  - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
-  - ../../namespaces/kube-system/container-azm-ms-agentconfig
-  - ../../namespaces/admin/traefik-auth
-  - ../../namespaces/admin/traefik-no-proxy
-  - ../../namespaces/admin/traefik-private
+  - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
+  - ../../namespaces/admin/flux-helm-operator/rbac/demo-role-binding.yaml
 
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/demo/flux.yaml
   - ../../namespaces/admin/flux/patches/demo/cluster-00/flux.yaml
   - ../../namespaces/admin/flux-helm-operator/patches/demo/flux-helm-operator.yaml
+  - ../../namespaces/admin/flux-helm-operator/patches/disable-rbac.yaml
 
   #fluxcloud patch
   - ../../namespaces/admin/fluxcloud/patches/demo/cluster-00/fluxcloud.yaml
-
-  #kube-slack patch
-  - ../../namespaces/admin/kube-slack/patches/demo/cluster-00/kube-slack.yaml
-
-  #traefik patches
-  - ../../namespaces/admin/traefik/patches/demo/traefik.yaml
-  - ../../namespaces/admin/traefik/patches/demo/cluster-00/traefik.yaml
-  - ../../namespaces/admin/traefik-auth/patches/demo-00.yaml
-  - ../../namespaces/admin/traefik-no-proxy/patches/demo-00.yaml
-  - ../../namespaces/admin/traefik-private/patches/demo-00.yaml
-  #kured patch
-  - ../../namespaces/kured/patches/demo/cluster-00/kured.yaml
-
-  #osba patch
-  - ../../namespaces/osba/patches/demo/osba.yaml
-
-  - ../../namespaces/admin/env-injector/patches/demo/cluster-00/env-injector.yaml
-  - ../../namespaces/monitoring/kube-prometheus-stack/patches/demo/cluster-00/kube-prometheus-stack.yaml
-  - ../../namespaces/admin/external-dns/patches/demo/cluster-00/external-dns-deployment.yaml
-  - ../../namespaces/admin/external-dns-public/patches/demo-00.yaml
 
 patches:
   - path: ../demo-helmrelease.yaml

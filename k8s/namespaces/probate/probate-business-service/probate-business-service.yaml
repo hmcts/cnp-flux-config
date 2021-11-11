@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-business-service
+spec:
+  releaseName: probate-business-service
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-business-service
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/business-service:prod-8403e47-20211103153848 #{"$imagepolicy": "flux-system:probate-business-service"}

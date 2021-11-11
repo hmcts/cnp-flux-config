@@ -47,9 +47,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : preview-01-aks
+                        value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: preview-01-rg
+                        value: cft-preview-00-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -267,6 +267,24 @@ spec:
                     name: FPRL
                     recurse: true
                     title: Family Private Law
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*PRL.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api)\/master
+                    name: PRL
+                    recurse: true
+                    title: Private Law
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*FinRem.*\/.+\/master
+                    name: FinRem
+                    recurse: true
+                    title: FinRem Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*DA.*\/(da-cos-api)\/master
+                    name: DA
+                    recurse: true
+                    title: Domestic Abuse
           authentication: |
             jenkins:
               securityRealm:
@@ -459,10 +477,10 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "2.2.9"
-                          galleryName: "cnpimagegallery"
-                          galleryResourceGroup: "cnp-image-gallery-rg"
-                          gallerySubscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"
+                          galleryImageVersion: "1.0.3"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                         imageTopLevelType: "advanced"
                         initScript: |
                           usermod -a -G docker jenkinsssh

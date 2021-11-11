@@ -2,8 +2,15 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-npa
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-585-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/em/npa:pr-585-162bba1-20211101091919
       environment:
         TEST_VAR: value1
+        CDAM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        ENABLE_CDAM: false

@@ -1,0 +1,26 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dm-store-cdam
+spec:
+  releaseName: dm-store-cdam
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/dm-store
+  values:
+    java:
+      replicas: 0
+      memoryRequests: '2048Mi'
+      cpuRequests: '1000m'
+      memoryLimits: '4096Mi'
+      cpuLimits: '2000m'
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/dm/store:prod-0a300c1-20211103091920 #{"$imagepolicy": "flux-system:dm-store-cdam"}
+      ingressHost: dm-store-cdam-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+      environment:
+        ENABLE_TTL: false
+        HIKARI_MAX_POOL_SIZE: 2
+        ENABLE_METADATA_MIGRATION: 'true'
+        #        ENABLE_OVERRIDE_METADATA: 'true'
+        DOCUMENT_METADATA_UPDATE_MILLISECONDS: '900000'
