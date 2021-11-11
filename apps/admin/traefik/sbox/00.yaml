@@ -17,20 +17,20 @@ spec:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-resource-group: cft-sbox-network-rg
     tolerations:
-    - key: CriticalAddonsOnly
-      operator: Equal
-      value: "true"
-      effect: NoSchedule
+      - key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
     affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 1
           preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system    
+          matchExpressions:
+            - key: kubernetes.azure.com/mode
+              operator: In
+              values:
+                  - system   
   valuesFrom:
     - kind: Secret
       name: traefik-values
