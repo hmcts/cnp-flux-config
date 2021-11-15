@@ -7,12 +7,18 @@ metadata:
     flux.weave.works/automated: "false"
 spec:
   releaseName: traefik-neuvector-api
+  interval: 5m
   chart:
-    git: https://github.com/hmcts/charts
-    ref: master
-    path: stable/traefik
-  valueFileSecrets:
-    - name: "traefik-neuvector-api-values"
+    spec:
+      chart: ./stable/traefik
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-stable
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: traefik-neuvector-api-values
   values:
     imageTag: 1.7.26
     loadBalancerIP: 10.10.159.251
