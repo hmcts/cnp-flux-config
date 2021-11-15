@@ -9,15 +9,15 @@ spec:
     enable: true
     retry: true
   chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/probate-business-service
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+      name: stable/probate-business-service
+      version: 0.1.5
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:latest #{"$imagepolicy": "flux-system:probate-business-service"}
+      image: hmctspublic.azurecr.io/probate/business-service:prod-8403e47-20211103153848 #{"$imagepolicy": "flux-system:probate-business-service"}
     global:
-      environment: ithc
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
