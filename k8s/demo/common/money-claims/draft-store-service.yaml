@@ -1,4 +1,3 @@
----
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -21,11 +20,11 @@ spec:
       devMode: true
     java:
       postgresql:
-        enabled: true  #temporary till we get ccd working.
+        enabled: true #temporary till we get ccd working.
         initdbScripts:
           init.sql: |-
             CREATE DATABASE "send_letter" WITH OWNER = javapostgres ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
-      image: hmctspublic.azurecr.io/draft-store/service:prod-c7a879d-20210807222025   #{"$imagepolicy": "flux-system:cmc-draft-store"}
+      image: hmctspublic.azurecr.io/draft-store/service:prod-554fac3-20211115142727 #{"$imagepolicy": "flux-system:cmc-draft-store"}
       ingressHost: ""
       environment:
         DRAFT_STORE_DB_HOST: "{{ .Release.Name }}-postgresql"
