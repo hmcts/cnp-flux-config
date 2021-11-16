@@ -7,12 +7,13 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: ccpay-callback-function
-    version: 0.1.4
+    version: 0.2.0
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-c8977c7-20211112131935 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
+      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-2295040-20211116172458 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
       environment:
         DELAY_MESSAGE_MINUTES: 30
+        DUMMY_RESTART_VAR: true
       secrets:
         APPINSIGHTS_INSTRUMENTATIONKEY:
           secretRef: ccpay-callback-function

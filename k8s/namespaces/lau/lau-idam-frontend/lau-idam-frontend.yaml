@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: lau-idam-frontend
+spec:
+  releaseName: lau-idam-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/lau-idam-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/lau/idam-frontend:prod-d71547d-20211115165055 #{"$imagepolicy": "flux-system:lau-idam-frontend"}
