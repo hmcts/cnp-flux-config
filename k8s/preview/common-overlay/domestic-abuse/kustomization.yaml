@@ -1,20 +1,21 @@
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentity
-metadata:
-  name: da
-  namespace: domestic-abuse
-spec:
-  type: 0
-  resourceID: "/subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourcegroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/da-aat-mi"
-  clientID: "b5cdca62-430c-448c-8c6e-ed361c4c38c9"
-
----
-
-apiVersion: "aadpodidentity.k8s.io/v1"
-kind: AzureIdentityBinding
-metadata:
-  name: da-binding
-  namespace: domestic-abuse
-spec:
-  azureIdentity: da
-  selector: da
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: domestic-abuse
+bases:
+- ../../../namespaces/domestic-abuse/namespace.yaml
+- ../../../aat/common/domestic-abuse/identity.yaml
+- ../../../namespaces/all-namespaces/nonprod-role.yaml
+patchesJson6902:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: RoleBinding
+    name: nonprod-team-permissions
+    namespace: domestic-abuse
+  patch: |-
+    - op: add
+      path: "/subjects"
+      value:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: "f776b3d8-586b-4088-9d3d-d97a4251f01d"
