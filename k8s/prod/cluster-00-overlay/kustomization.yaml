@@ -11,20 +11,15 @@ bases:
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
   - ../../namespaces/admin/kube-slack
-  - ../../namespaces/monitoring/node-problem-detector
   - ../../namespaces/admin/traefik
   - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/kube-system/nodelocaldns
-  - ../../namespaces/monitoring/kube-prometheus-stack
   - ../../namespaces/admin/env-injector
-  - ../../namespaces/monitoring/botkube
   - ../../namespaces/admin/keda
-  - ../../namespaces/monitoring/dynatrace
   - ../../namespaces/admin/aad-pod-id
   - ../../namespaces/kube-system/aad-pod-id
   - ../../namespaces/admin/csi-secret-store-provider-v0.0.8
   - ../../namespaces/kube-system/container-azm-ms-agentconfig
-  - ../../namespaces/monitoring/acr-sync/check-acr-sync.yaml
   - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
   - ../../namespaces/admin/flux-helm-operator/rbac/prod-role-binding.yaml
 
@@ -43,18 +38,7 @@ patchesStrategicMerge:
   # traefik patch
   - ../../namespaces/admin/traefik/patches/prod/cluster-00/traefik.yaml
 
-  # prom-operator patch
-  - ../../namespaces/monitoring/kube-prometheus-stack/patches/prod/cluster-00/kube-prometheus-stack.yaml
-
   - ../../namespaces/admin/env-injector/patches/prod/cluster-00/env-injector.yaml
-
-  # botkube patch
-  - ../../namespaces/monitoring/botkube/patches/prod/cluster-00/botkube.yaml
-
-  #Dynatrace patch
-  - ../../namespaces/monitoring/dynatrace/patches/prod/oneagent.yaml
-
-  - ../../namespaces/monitoring/acr-sync/prod.yaml
 
 patches:
   - path: ../prod-helmrelease.yaml
