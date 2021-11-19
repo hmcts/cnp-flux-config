@@ -1,0 +1,37 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-cos
+spec:
+  releaseName: div-cos
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/div-cos
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/cos:prod-c05419b-20211104090818 #{"$imagepolicy": "flux-system:div-cos"}
+      environment:
+        IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
+        FEATURE_DN_REFUSAL: true
+        FEATURE_PAPER_UPDATE: true
+        SOLICITOR_DN_REJECT_AND_AMEND: true
+        PAY_BY_ACCOUNT: true
+        FEATURE_RESP_SOLICITOR_DETAILS: true
+        FEATURE_SHARE_A_CASE: true
+        FEATURE_REPRESENTED_RESPONDENT_JOURNEY: true
+        FEATURE_OBJECT_TO_COSTS: true
+        FEATURE_BAILIFF_JOURNEY: true
+        FEATURE_USE_USER_TOKEN: true
+        PBA_USING_CASE_TYPE: false
+        SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
+        BULKACTION_MINCASES: 2
+        DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
+        DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
+        DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
+        SCHEDULER_ENABLED: true
+        SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
+        SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true
+        VAR_TA: trigger1

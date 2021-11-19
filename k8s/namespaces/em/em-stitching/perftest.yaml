@@ -2,15 +2,26 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-stitching
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-551-*
-#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      memoryRequests: "3072Mi"
+      cpuRequests: "1500m"
       memoryLimits: "6144Mi"
       cpuLimits: "3000m"
-      #      image: hmctspublic.azurecr.io/em/stitching:pr-551-482c6023
+      keyVaults:
+        em-stitching:
+          resourceGroup: em-stitching
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: docmosis-access-key
+              alias: DOCMOSIS_ACCESS_KEY
+            - name: microservicekey-em-stitching-api
+              alias: S2S_KEY
+            - name: stitching-POSTGRES-PASS-V11
+              alias: SPRING_DATASOURCE_PASSWORD
       environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-v11-perftest.postgres.database.azure.com:5432/emstitch?ssl=disable
+        SPRING_DATASOURCE_USERNAME: emstitch@em-stitching-postgres-db-v11-perftest
         CALLBACK_MAX_ATTEMPTS: 1

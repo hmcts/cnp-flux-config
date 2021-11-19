@@ -1,0 +1,73 @@
+# required for apps that can't handle oauth-proxy and not public
+#  i.e. bulks-scan-processor
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik-private
+  namespace: admin
+spec:
+  releaseName: traefik-private
+  interval: 5m
+  chart:
+    spec:
+      chart: ./stable/traefik
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-stable
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: traefik-values
+  values:
+    imageTag: 1.7.26
+    kubernetes:
+      ingressClass: traefik-private
+      ingressEndpoint:
+        useDefaultPublishedService: true
+    service:
+      annotations:
+        service.beta.kubernetes.io/azure-load-balancer-resource-group: aks-infra-demo-rg
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    dashboard:
+      enabled: true
+      domain: traefik00-private.demo.platform.hmcts.net
+    resources:
+      requests:
+        cpu: 100m
+        memory: 20Mi
+      limits:
+        cpu: 1000m
+        memory: 300Mi
+    rbac:
+      enabled: true
+    ssl:
+      enabled: true
+      tlsMinVersion: VersionTLS12
+      cipherSuites:
+        [
+          "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+          "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+        ]
+      enforced: true
+      permanentRedirect: true
+    startupArguments:
+      - "--ping"
+      - "--ping.entrypoint=http"
+    autoscaling:
+      minReplicas: 2
+      maxReplicas: 4
+    podDisruptionBudget:
+      maxUnavailable: 50%
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: release
+                  operator: In
+                  values:
+                    - traefik-private
+            topologyKey: "kubernetes.io/hostname"

@@ -3,4 +3,8 @@ kind: Kustomization
 resources:
   - ../../base
   - kube-slack-values.yaml
+  - ../../keda
   - ../../../rbac/reader-clusterrole.yaml
+
+patchesStrategicMerge:
+  - keda-identity.yaml
