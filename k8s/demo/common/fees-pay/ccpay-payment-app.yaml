@@ -16,13 +16,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/payment/api:pr-1008-1fe0717-20211115112219 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:pr-1048-5d5cf2e-20211118145438 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
-        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service"
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         GOV_PAY_OPERATIONAL_SERVICES: "ccd_gw,api_gw,xui_webapp"
