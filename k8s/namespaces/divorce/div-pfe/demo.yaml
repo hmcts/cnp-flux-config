@@ -2,23 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-pfe
-  namespace: divorce
 spec:
   releaseName: div-pfe
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/div-pfe
   values:
     nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-0fdf8f8-20211029095437 #{"$imagepolicy": "flux-system:demo-div-pfe"}
       ingressClass: traefik-no-proxy
-      ingressHost: petitioner-frontend-aks.demo.platform.hmcts.net
       environment:
         PUBLIC_HOSTNAME: https://petitioner-frontend-aks.demo.platform.hmcts.net
         DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.demo.platform.hmcts.net
@@ -30,8 +18,3 @@ spec:
         ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
         FEATURE_NEW_FEES: "true"
         FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
-    global:
-      environment: demo
-      subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
