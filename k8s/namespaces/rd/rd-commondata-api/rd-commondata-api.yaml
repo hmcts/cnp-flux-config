@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-commondata-api
+spec:
+  releaseName: rd-commondata-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rd-commondata-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rd/commondata-api:prod-2f2ee01-20211119183711 #{"$imagepolicy": "flux-system:rd-commondata-api"}
