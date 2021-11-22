@@ -4,10 +4,6 @@ metadata:
   name: idam-web-public
   namespace: idam
 spec:
-  securityContext:
-    sysctls:
-      - name: net.ipv4.tcp_retries2
-        value: "3"
   values:
     java:
       image: hmctspublic.azurecr.io/idam/web-public:preview-084b767-20211122092805 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
@@ -21,3 +17,7 @@ spec:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+    securityContext:
+      sysctls:
+        - name: net.ipv4.tcp_retries2
+          value: "3"
