@@ -5,9 +5,18 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        dm:
+          resourceGroup: dm-shared
+          secrets:
+            - name: RpaAppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: dm-store-storage-account-primary-connection-string
+              alias: azure.storage.connection-string
+            - name: store-POSTGRES-PASS-V11
+              alias: spring.datasource.password
       environment:
-        #        ENABLE_METADATA_MIGRATION: 'true'
-        #        DOCUMENT_METADATA_UPDATE_MILLISECONDS: "600000"
-        #        ENABLE_OVERRIDE_METADATA: 'false'
+        SPRING_DATASOURCE_URL: jdbc:postgresql://dm-store-postgres-db-v11-perftest.postgres.database.azure.com:5432/evidence?ssl=disable
+        SPRING_DATASOURCE_USERNAME: evidence@dm-store-postgres-db-v11-perftest
         ENABLE_TTL: false
         REFRESH_FLAG: VAR1
