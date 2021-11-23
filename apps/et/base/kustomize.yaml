@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: et
+  namespace: flux-system
+spec:
+  path: ./apps/et/${ENVIRONMENT}
+  postBuild:
+    substitute:
+      NAMESPACE: "et"
+      TEAM_NOTIFICATION_CHANNEL: "et-builds"
