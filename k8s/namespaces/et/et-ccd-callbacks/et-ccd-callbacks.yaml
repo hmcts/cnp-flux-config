@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: et-ccd-callbacks
+  namespace: et
+spec:
+  releaseName: et-ccd-callbacks
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/et-ccd-callbacks
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/et/ccd-callbacks:latest
