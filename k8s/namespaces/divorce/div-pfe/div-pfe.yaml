@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-pfe
+spec:
+  releaseName: div-pfe
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/div-pfe
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/pfe:prod-c4cb997-20211122151445 #{"$imagepolicy": "flux-system:demo-div-pfe"}
