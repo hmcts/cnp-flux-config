@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:preview-c6c1ab7-20211101111657 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
+      image: hmctspublic.azurecr.io/idam/web-public:preview-4cfe919-20211123022835 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
       ingressHost: idam-web-public.service.core-compute-preview.internal
       replicas: 2
       environment:
@@ -17,3 +17,7 @@ spec:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+    securityContext:
+      sysctls:
+        - name: net.ipv4.tcp_retries2
+          value: "3"

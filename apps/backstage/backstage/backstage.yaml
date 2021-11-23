@@ -14,15 +14,15 @@ spec:
         kubernetes.io/ingress.class: traefik
       enabled: true
     backend:
-      replicaCount: 1   # scaffolder doesn't handle multiple instances atm: https://discord.com/channels/687207715902193673/687207715902193679/753621815133208637
-      image: hmctspublic.azurecr.io/backstage/backend:prod-9250c59 # {"$imagepolicy": "flux-system:backstage-backend"}
+      replicaCount: 1 # scaffolder doesn't handle multiple instances atm: https://discord.com/channels/687207715902193673/687207715902193679/753621815133208637
+      image: hmctspublic.azurecr.io/backstage/backend:prod-511fa3d-85 # {"$imagepolicy": "flux-system:backstage-backend"}
   valuesFrom:
     - kind: Secret
       name: backstage-values
   chart:
     spec:
       chart: backstage
-      version: 0.2.16
+      version: 0.2.19
       sourceRef:
         kind: HelmRepository
         name: backstage

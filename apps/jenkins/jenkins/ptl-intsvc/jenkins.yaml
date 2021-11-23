@@ -119,7 +119,7 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator)\/master
+                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -185,7 +185,7 @@ spec:
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance)\/master
+                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -285,6 +285,12 @@ spec:
                     name: DA
                     recurse: true
                     title: Domestic Abuse
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*ET.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure)\/master
+                    name: ET
+                    recurse: true
+                    title: Employment Tribunals
           authentication: |
             jenkins:
               securityRealm:
@@ -535,3 +541,76 @@ spec:
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftptl-intsvc-vnet"
                         virtualNetworkResourceGroupName: "aks-infra-cftptl-intsvc-rg"
+                      - agentLaunchMethod: "SSH"
+                        agentWorkspace: "/opt/jenkins"
+                        builtInImage: "Windows Server 2016"
+                        credentialsId: "vm_agent_creds"
+                        diskType: "managed"
+                        doNotUseMachineIfInitFails: true
+                        enableMSI: false
+                        enableUAMI: true
+                        ephemeralOSDisk: true
+                        executeInitScriptAsRoot: true
+                        existingStorageAccountName: "hmctsjenkinscftptl"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu"
+                          galleryImageVersion: "1.0.2"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        imageTopLevelType: "advanced"
+                        initScript: |
+                          usermod -a -G docker jenkinsssh
+                          umount /mnt/resource
+                          mkdir -pv /opt/jenkins
+                          mount /dev/sdb1 /opt/jenkins
+                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                          set -e
+                          cp /opt/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
+                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
+                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
+                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
+                          jenkinsssh soft nofile 40960
+                          jenkinsssh hard nofile 40960
+                          jenkinsssh soft
+                          proc 32768
+                          jenkinsssh hard nproc 32768
+                          jenkinsssh soft core unlimited
+                          jenkinsssh hard core unlimited
+                          EOF
+                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
+                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
+                        installDocker: false
+                        installGit: false
+                        installMaven: false
+                        javaPath: "java"
+                        jvmOptions: "-Xms4G -Xmx6G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
+                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
+                      \ -XX:G1SummarizeRSetStatsPeriod=1"
+                        labels: "ubuntu"
+                        location: "UK South"
+                        noOfParallelJobs: 1
+                        osDiskSize: 60
+                        osDiskStorageAccountType: "Standard_LRS"
+                        osType: "Linux"
+                        preInstallSsh: true
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
+                        shutdownOnIdle: false
+                        storageAccountNameReferenceType: "existing"
+                        storageAccountType: "Standard_LRS"
+                        subnetName: "iaas"
+                        templateDesc: "Jenkins build agents for HMCTS"
+                        templateDisabled: false
+                        templateName: "cnp-jenkins-ubuntu"
+                        uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
+                        usageMode: "Only build jobs with label expressions matching this node"
+                        usePrivateIP: true
+                        virtualMachineSize: "Standard_D4s_v3"
+                        virtualNetworkName: "core-cftptl-intsvc-vnet"
+                        virtualNetworkResourceGroupName: "aks-infra-cftptl-intsvc-rg"
+
