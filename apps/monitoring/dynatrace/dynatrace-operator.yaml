@@ -1,0 +1,24 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dynatrace-operator
+  namespace: monitoring
+spec:
+  releaseName: dynatrace-operator
+  interval: 5m
+  chart:
+    spec:
+      chart: dynatrace-operator
+      version: 0.2.2
+      sourceRef:
+        name: dynatrace-operator
+        kind: HelmRepository
+        namespace: monitoring
+  valuesFrom:
+    - kind: Secret
+      name: oneagent-values
+  values:
+    platform: "kubernetes"
+    oneagent:
+      apiUrl: https://yrk32651.live.dynatrace.com/api
