@@ -16,6 +16,8 @@ spec:
     java:
       image: hmctspublic.azurecr.io/plum/recipe-backend:prod-4573350-20211123172403 #{"$imagepolicy": "flux-system:plum-recipe-backend"}
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
+      startupPeriod: 120
+      startupFailureThreshold: 3
       testsConfig:
         environment:
           TEST_URL: http://plum-recipe-backend-java
