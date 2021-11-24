@@ -1,24 +1,263 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
+apiVersion: dynatrace.com/v1alpha1
+kind: DynaKube
 metadata:
-  name: dynatrace-operator
-  namespace: monitoring
+  name: dynakube
+  namespace: dynatrace
 spec:
-  releaseName: dynatrace-operator
-  interval: 5m
-  chart:
-    spec:
-      chart: dynatrace-operator
-      version: 0.2.2
-      sourceRef:
-        name: dynatrace-operator
-        kind: HelmRepository
-        namespace: monitoring
+  apiUrl: https://yrk32651.live.dynatrace.com/api
   valuesFrom:
     - kind: Secret
       name: oneagent-values
-  values:
-    platform: "kubernetes"
-    oneagent:
-      apiUrl: https://yrk32651.live.dynatrace.com/api
+
+  # name of secret holding `apiToken` and `paasToken`
+  # if unset, name of custom resource is used
+  #
+  # tokens: ""
+
+  # Optional: Disable certificate validation checks for installer download and API communication
+  #
+  # skipCertCheck: false
+
+  # Optional: Set custom proxy settings either directly or from a secret with the field 'proxy'
+  #
+  # proxy:
+  #   value: https://my-proxy-url.com
+  #   valueFrom: name-of-my-proxy-secret
+
+  # Optional: Adds custom RootCAs from a configmap
+  # trustedCAs: name-of-my-ca-configmap
+
+  # Optional: Sets Network Zone for OneAgent and ActiveGate pods
+  # Make sure networkZones are enabled on your cluster before (see https://www.dynatrace.com/support/help/setup-and-configuration/network-zones/network-zones-basic-info/)
+  #
+  # networkZone: name-of-my-network-zone
+
+  # Optional: Defines a custom pull secret in case you use a private registry when pulling images from the dynatrace environment
+  #
+  # customPullSecret:
+
+  # Optional: when enabled, and if Istio is installed on the Kubernetes environment, then the
+  # Operator will create the corresponding VirtualService and ServiceEntry objects to allow access
+  # to the Dynatrace cluster from the agent or the activeGate. Disabled by default.
+  #
+  # enableIstio: false
+
+  # Configuration for ActiveGate instances.
+  activeGate:
+    # Optional: to use a custom ActiveGate Docker image.
+    image: ""
+
+  oneAgent:
+    # Optional: The version of the OneAgent to be used when useImmutableImage is enabled. The latest is used by default.
+    #
+    # version:
+
+    # Optional: to use a custom OneAgent Docker image. Defaults to docker.io/dynatrace/oneagent in
+    # Kubernetes and registry.connect.redhat.com/dynatrace/oneagent in OpenShift.
+    #
+    image: ""
+
+    # Optional: disables automatic restarts of oneagent pods in case a new version is available. True
+    # by default.
+    #
+    # autoUpdate: true
+
+  classicFullStack:
+    # Enable classic oneagent monitoring
+    enabled: true
+
+    # Optional: node selector to control on which nodes the OneAgent will be deployed.
+    #
+    # nodeSelector: {}
+
+    # Optional: tolerations to include with the OneAgent DaemonSet.
+    # See more here: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+
+    # Optional: resource settings for OneAgent container. Consumption of the OneAgent heavily depends
+    # on the workload to monitor; please adjust values accordingly.
+    #
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 512Mi
+    #   limits:
+    #     cpu: 300m
+    #     memory: 1.5Gi
+
+    # Optional: arguments to add to the OneAgent installer.
+    # Available options: https://www.dynatrace.com/support/help/shortlink/linux-custom-installation
+    # Limitations: https://www.dynatrace.com/support/help/shortlink/oneagent-docker#limitations
+    # args: []
+
+
+
+    # Optional: additional environment variables to add to the OneAgent Pods.
+    #
+    # env: []
+
+    # Optional: priority class to assign to the OneAgent Pods. By default no class is set.
+    # See more here: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+    #
+    # priorityClassName: priority-class
+
+    # Optional: DNS Policy for OneAgent pods. Defaults to ClusterFirstWithHostNet.
+    # See more: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+    #
+    # dnsPolicy: "ClusterFirstWithHostNet"
+
+    # Optional: name of the ServiceAccount to assign to the OneAgent Pods. Defaults to
+    # "dynatrace-oneagent"
+    #
+    # serviceAccountName: service-account-name
+
+    # Optional: labels are customer defined labels for OneAgent Pods to structure workloads as desired.
+    #
+    # labels:
+    #   custom: label
+
+    # Optional: when enabled the OneAgent Pods will run as unprivileged. Enabled by default.
+    #
+    # useUnprivilegedMode: true
+
+    # Optional: if enabled, the Operator will use the immutable image from the Dynatrace environment or from your custom
+    # registry, otherwise an installer image is used. Disabled by default.
+    #
+    # useImmutableImage: false
+
+  # Enables and configures an ActiveGate instance that allows routing
+  # of OneAgent traffic
+  routing:
+    # Enable Kubernetes routing functionality
+    enabled: true
+
+    # Amount of replicas of activegate routing pods
+    #
+    # replicas: 1
+
+    # Optional: name of the ServiceAccount to assign to the ActiveGate Pods. Defaults to
+    # "dynatrace-routing"
+    #
+    # serviceAccountName: "dynatrace-routing"
+
+    # Optional: tolerations to include with the ActiveGate StatefulSet.
+    # See more here: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    #
+    # tolerations:
+    # - effect: NoSchedule
+    #   key: node-role.kubernetes.io/master
+    #   operator: Exists
+
+    # Optional: node selector to control on which nodes the routing ActiveGate will be deployed.
+    #
+    # nodeSelector: {}
+
+    # Optional: resource settings for ActiveGate container. Consumption of the ActiveGate heavily depends
+    # on the workload to monitor; please adjust values accordingly.
+    #
+    # Suggested starting point for resources below:
+    #
+    # resources:
+    #   requests:
+    #     cpu: 150m
+    #     memory: 250M
+    #   limits:
+    #     cpu: 300m
+    #     memory: 1G
+
+    # Optional: labels are customer defined labels for ActiveGate Pods to structure workloads as desired.
+    #
+    # labels:
+    #   custom: label
+
+    # Optional: arguments to add to the ActiveGate instances.
+    # Available options: https://www.dynatrace.com/support/help/shortlink/activegate-custom-installation#linux
+    #
+    # args: []
+
+    # Optional: additional environment variables to add to the ActiveGate Pods.
+    #
+    # env: []
+
+    # Optional: Set activation group for ActiveGate
+    #
+    # group: ""
+
+    # Optional: Add a custom properties file by providing it as a value or reference it from a secret
+    # If referenced from a secret, make sure the key is called 'customProperties'
+    #
+    # customProperties:
+    #   value: |
+    #     [connectivity]
+    #     networkZone=
+    #   valueFrom: myCustomPropertiesConfigMap
+
+  # Enables and configures an ActiveGate instance that allows monitoring
+  # of Kubernetes environments
+  kubernetesMonitoring:
+    # Enable Kubernetes monitoring functionality
+    enabled: true
+
+    # Amount of replicas of activegate pods
+    #
+    # replicas: 1
+
+    # Optional: name of the ServiceAccount to assign to the ActiveGate Pods. Defaults to
+    # "dynatrace-kubernetes-monitoring"
+    #
+    # serviceAccountName: "dynatrace-kubernetes-monitoring"
+
+    # Optional: tolerations to include with the ActiveGate StatefulSet.
+    # See more here: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    #
+    # tolerations:
+    # - effect: NoSchedule
+    #   key: node-role.kubernetes.io/master
+    #   operator: Exists
+
+    # Optional: node selector to control on which nodes the OneAgent will be deployed.
+    #
+    # nodeSelector: {}
+
+    # Optional: resource settings for ActiveGate container. Consumption of the ActiveGate heavily depends
+    # on the workload to monitor; please adjust values accordingly.
+    #
+    # Suggested starting point for resources below:
+    #
+    # resources:
+    #   requests:
+    #     cpu: 150m
+    #     memory: 250M
+    #   limits:
+    #     cpu: 300m
+    #     memory: 1G
+
+    # Optional: labels are customer defined labels for ActiveGate Pods to structure workloads as desired.
+    #
+    # labels:
+    #   custom: label
+
+    # Optional: arguments to add to the ActiveGate instances.
+    # Available options: https://www.dynatrace.com/support/help/shortlink/activegate-custom-installation#linux
+    #
+    # args: []
+
+    # Optional: additional environment variables to add to the ActiveGate Pods.
+    #
+    # env: []
+
+    # Optional: Set activation group for ActiveGate
+    #
+    # group: ""
+
+    # Optional: Add a custom properties file by providing it as a value or reference it from a secret
+    # If referenced from a secret, make sure the key is called 'customProperties'
+    #
+    # customProperties:
+    #   value: |
+    #     [connectivity]
+    #     networkZone=
+    #   valueFrom: myCustomPropertiesConfigMap
