@@ -12,6 +12,20 @@ spec:
       pullSecrets:
     extraArgs:
       slack-username: ${CLUSTER_FULL_NAME}-aks
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                  - system
   valuesFrom:
     - kind: Secret
       name: kured-values
