@@ -2,14 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-cos
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1174-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/cos:pr-1544-ead603a-20211126105335 #{"$imagepolicy": "flux-system:div-cos"}
+      image: hmctspublic.azurecr.io/div/cos:pr-1544-ead603a-20211126105335 #{"$imagepolicy": "flux-system:demo-div-cos"}
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: true
