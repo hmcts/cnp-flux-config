@@ -2,14 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1174-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/dm/store:pr-1174-57d3a63-20211128181724
       replicas: 0
       environment:
         ENABLE_TTL: "false"
