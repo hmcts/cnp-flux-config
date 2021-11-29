@@ -2,12 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-cfs
-  namespace: divorce
 spec:
   releaseName: div-cfs
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -17,8 +13,5 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/div/cfs:prod-230dae7-20211102180047 #{"$imagepolicy": "flux-system:div-cfs"}
-      aadIdentityName: divorce
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+      environment:
+        VAR_TA: trig1
