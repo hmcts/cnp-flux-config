@@ -2,6 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rd-commondata-dataload
+  annotations:
+    hmcts.github.com/global-defaults: enabled
+    hmcts.github.com/prod-automated: enabled
 spec:
   releaseName: rd-commondata-dataload
   chart:
@@ -10,6 +13,5 @@ spec:
     path: stable/rd-commondata-dataload
   values:
     java:
-      replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/commondata-dataload:prod-2f2ee01-20211119183711 #{"$imagepolicy": "flux-system:rd-commondata-dataload"}
+      image: hmctspublic.azurecr.io/rd/commondata-dataload:prod-099ded0-20211125141102 #{"$imagepolicy": "flux-system:rd-commondata-dataload"}
