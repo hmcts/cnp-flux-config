@@ -33,13 +33,13 @@ EOF
 
 (
 cat <<EOF
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: $NAMESPACE
   namespace: flux-system
 spec:
-  path: ./apps/$NAMESPACE/\${ENVIRONMENT}
+  path: ./apps/$NAMESPACE/\${ENVIRONMENT}/base
   postBuild:
     substitute:
       NAMESPACE: "$NAMESPACE"
