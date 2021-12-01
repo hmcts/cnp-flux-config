@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-user-dashboard
+  namespace: idam
+spec:
+  releaseName: idam-user-dashboard
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/user-dashboard:prod-2368453-20211201100522
+      ingressHost: idam-user-dashboard.platform.hmcts.net
+      aadIdentityName: idam
+      useInterpodAntiAffinity: true
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.platform.hmcts.net
+        STRATEGIC_PUBLIC_URL: https://hmcts-access.service.gov.uk
+  chart:
+    spec:
+      chart: idam-user-dashboard
+      version: 0.2.8
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

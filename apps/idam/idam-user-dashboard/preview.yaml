@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-user-dashboard
+  namespace: idam
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/user-dashboard:prod-2368453-20211201100522
+      ingressHost: idam-user-dashboard.service.core-compute-preview.internal
+      environment:
+        STRATEGIC_SERVICE_URL: http://idam-api
+        STRATEGIC_PUBLIC_URL: https://idam-web-public
+    global:
+      environment: preview
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
