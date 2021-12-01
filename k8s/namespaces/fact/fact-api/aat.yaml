@@ -1,0 +1,34 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fact-api
+spec:
+  releaseName: fact-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fact-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fact/api:prod-ffe4f9a-20211123161902 #{"$imagepolicy": "flux-system:fact-api"}
+      environment:
+        VAR_TA: trigger-aat-9
+      keyVaults:
+        fact:
+          secrets:
+            - name: api-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: api-POSTGRES-PASS
+              alias: POSTGRES_PASSWORD
+            - name: api-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
+            - name: api-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: mapit-key
+              alias: MAPIT_KEY
+            - name: launchdarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
