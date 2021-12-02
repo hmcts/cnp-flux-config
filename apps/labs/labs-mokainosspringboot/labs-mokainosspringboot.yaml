@@ -7,9 +7,14 @@ metadata:
 spec:
   releaseName: labs-mokainosspringboot
   chart:
-    git: git@github.com:hmcts/labs-mokainosspringboot
-    ref: master
-    path: charts/labs-mokainosspringboot
+    spec:
+      chart: ./charts/labs-mokainosspringboot
+      version: '4.0.x'
+      sourceRef:
+        kind: GitRepository
+        name: labs-mokainosspringboot
+        namespace: labs
+      interval: 1m
   values:
     java:
       image: hmctssandbox.azurecr.io/labs/mokainosspringboot:prod-9528287-20211202105315 #{"$imagepolicy": "flux-system:labs-mokainosspringboot"}
