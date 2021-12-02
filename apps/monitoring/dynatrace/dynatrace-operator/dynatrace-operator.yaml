@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: dynatrace-operator
-      version: 0.3.0
+      version: 0.2.2
       sourceRef:
         name: dynatrace-operator
         kind: HelmRepository
@@ -26,14 +26,15 @@ spec:
   classicFullStack:
     # Enable classic oneagent monitoring
     enabled: true
-    image: ""
-    version: ""
-    nodeSelector: ""
-    tolerations: []
-    oneAgentResources: {}
-    args: []
-    env: []
-    autoUpdate: true
-    priorityClassName: ""
-    dnsPolicy: ""
-    labels: ""
+
+  # Enables and configures an ActiveGate instance that allows routing
+  # of OneAgent traffic
+  routing:
+    # Enable Kubernetes routing functionality
+    enabled: true
+
+  # Enables and configures an ActiveGate instance that allows monitoring
+  # of Kubernetes environments
+  kubernetesMonitoring:
+    # Enable Kubernetes monitoring functionality
+    enabled: true
