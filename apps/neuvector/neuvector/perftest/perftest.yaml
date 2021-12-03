@@ -64,24 +64,36 @@ spec:
                         - system
       cve:
         scanner:
+          tolerations:
+            - key: "CriticalAddonsOnly"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                            - neuvector-scanner-pod
+                    topologyKey: "kubernetes.io/hostname"
+          nodeAffinity:
+             preferredDuringSchedulingIgnoredDuringExecution:
+               - weight: 1
+                 preference:
+                   matchExpressions:
+                     - key: kubernetes.azure.com/mode
+                       operator: In
+                       values:
+                         - system
           image:
             repository: neuvector/scanner
           replicas: 2
-          tolerations:
-            - key: CriticalAddonsOnly
-              operator: Equal
-              value: "true"
-              effect: NoSchedule
-          affinity:
-            nodeAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 1
-                  preference:
-                    matchExpressions:
-                      - key: kubernetes.azure.com/mode
-                        operator: In
-                        values:
-                          - system
+
     keyvault:
       name: cftapps-test
       resourcegroup: core-infra-test-rg
