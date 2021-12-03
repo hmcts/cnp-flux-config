@@ -7,7 +7,6 @@ metadata:
 spec:
   values:
     neuvector:
-      tag: 4.3.2
       controller:
         tolerations:
           - key: "CriticalAddonsOnly"
@@ -64,6 +63,9 @@ spec:
                         - system
       cve:
         scanner:
+          image:
+            repository: neuvector/scanner
+          replicas: 2
           tolerations:
             - key: "CriticalAddonsOnly"
               operator: "Equal"
@@ -82,17 +84,14 @@ spec:
                             - neuvector-scanner-pod
                     topologyKey: "kubernetes.io/hostname"
           nodeAffinity:
-             preferredDuringSchedulingIgnoredDuringExecution:
-               - weight: 1
-                 preference:
-                   matchExpressions:
-                     - key: kubernetes.azure.com/mode
-                       operator: In
-                       values:
-                         - system
-          image:
-            repository: neuvector/scanner
-          replicas: 2
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                preference:
+                  matchExpressions:
+                    - key: kubernetes.azure.com/mode
+                      operator: In
+                      values:
+                        - system
     keyvault:
       name: cftapps-test
       resourcegroup: core-infra-test-rg
@@ -100,6 +99,3 @@ spec:
       tenantid: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
       aadpodidbinding: neuvector
       licensesecretname: neuvector-license-dev
-  chart:
-    spec:
-      version: 1.2.5
