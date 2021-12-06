@@ -4,15 +4,23 @@ set -ex
 NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
+ENVIRONMENT="$4"
 
 function usage() {
-  echo 'usage: ./add-image-policies.sh <namespace> <product> <component>'
+  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> <env>'
 }
 
-if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ]
+if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z "${ENVIRONMENT}" ]
 then
   usage
   exit 1
+fi
+
+if [[ ${ENVIRONMENT} == "sbox" ]]
+then
+  ACR="hmctssandbox"
+else
+  ACR="hmctspublic"
 fi
 
 (
@@ -34,7 +42,7 @@ kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
 spec:
-  image: hmctspublic.azurecr.io/${PRODUCT}/${COMPONENT}
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
 
