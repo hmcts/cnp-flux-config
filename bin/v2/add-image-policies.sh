@@ -4,9 +4,9 @@ set -ex
 NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
-
+REGISTRY=$4
 function usage() {
-  echo 'usage: ./add-image-policies.sh <namespace> <product> <component>'
+  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
 }
 
 if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ]
@@ -14,6 +14,8 @@ then
   usage
   exit 1
 fi
+
+ACR=${REGISTRY:-hmctspublic}
 
 (
 cat <<EOF
@@ -34,7 +36,7 @@ kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
 spec:
-  image: hmctspublic.azurecr.io/${PRODUCT}/${COMPONENT}
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
 
