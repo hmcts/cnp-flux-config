@@ -16,7 +16,7 @@ then
   exit 1
 fi
 
-if [[ ${ENVIRONMENT} == "sbox" ]]
+if [[ ${ENVIRONMENT} == "sandbox" ]]
 then
   ACR="hmctssandbox"
 else
