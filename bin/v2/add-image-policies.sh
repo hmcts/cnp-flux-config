@@ -4,24 +4,18 @@ set -ex
 NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
-ENVIRONMENT="$4"
-
+REGISTRY=$4
 function usage() {
-  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> <env>'
+  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
 }
 
-if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z "${ENVIRONMENT}" ]
+if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ]
 then
   usage
   exit 1
 fi
 
-if [[ ${ENVIRONMENT} == "sandbox" ]]
-then
-  ACR="hmctssandbox"
-else
-  ACR="hmctspublic"
-fi
+ACR=${REGISTRY:-hmctspublic}
 
 (
 cat <<EOF
