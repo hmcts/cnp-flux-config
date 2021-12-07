@@ -63,9 +63,9 @@ All application deployments are managed with `HelmRelease`.
 - Run [add-image-policies.sh](/bin/v2/add-image-policies.sh) with your namespace, product,component
 
  ```bash
-    ./bin/v2/add-image-policies.sh <your namespace> <product> <component>
+    ./bin/v2/add-image-policies.sh <your namespace> <product> <component> <environment>
     #example
-    ./bin/v2/add-image-policies.sh divorce div frontend
+    ./bin/v2/add-image-policies.sh divorce div frontend sandbox
    ```
 - Add a comment next to `image` section in HelmRelease with ImagePolicy name as shown below.
     ```yaml
