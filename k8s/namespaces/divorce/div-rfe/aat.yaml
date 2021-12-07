@@ -2,16 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-rfe
-  namespace: divorce
 spec:
   releaseName: div-rfe
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/div-rfe
   values:
     nodejs:
       replicas: 2
@@ -30,7 +22,3 @@ spec:
         ANTENNA_WEBCHAT_SERVICE: Divorce
         ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
         FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
-    global:
-      environment: aat
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
