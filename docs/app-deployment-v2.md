@@ -60,12 +60,12 @@ All application deployments are managed with `HelmRelease`.
 
 - Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
 - Add a `HelmRelease` manifest in `apps/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/apps/rpe/draft-store-service/draft-store-service.yaml)
-- Run [add-image-policies.sh](/bin/v2/add-image-policies.sh) with your namespace, product,component
+- Run [add-image-policies.sh](/bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
 
  ```bash
-    ./bin/v2/add-image-policies.sh <your namespace> <product> <component> <environment>
+    ./bin/v2/add-image-policies.sh <your namespace> <product> <component> <registry>
     #example
-    ./bin/v2/add-image-policies.sh divorce div frontend sandbox
+    ./bin/v2/add-image-policies.sh divorce div frontend 
    ```
 - Add a comment next to `image` section in HelmRelease with ImagePolicy name as shown below.
     ```yaml
