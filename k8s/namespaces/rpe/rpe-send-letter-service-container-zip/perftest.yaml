@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rpe-send-letter-service-container-zip
+spec:
+  values:
+    function:
+      job:
+        parallelism: 5
+        completions: 5
+      pollingInterval: 5
+      image: hmctspublic.azurecr.io/rpe/send-letter-service-container-zip:prod-976bb66-20211105132551 #{"$imagepolicy": "flux-system:rpe-send-letter-service-container-zip"}

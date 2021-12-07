@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-automation-controller
+  namespace: flux-system
+spec:
+  selector:
+    matchLabels:
+      app: image-automation-controller
+  template:
+    spec:
+      containers:
+        - name: manager
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi

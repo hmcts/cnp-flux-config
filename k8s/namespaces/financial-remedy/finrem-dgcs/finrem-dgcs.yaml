@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-dgcs
+spec:
+  releaseName: finrem-dgcs
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-dgcs
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/dgcs:prod-ec1745d-20211103114354 #{"$imagepolicy": "flux-system:finrem-dgcs"}
+      environment:
+        VAR_TA: trigger1

@@ -1,0 +1,25 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-ps
+spec:
+  releaseName: finrem-ps
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/finrem-ps
+  values:
+    java:
+      replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/ps:prod-5c44349-20211103114345 #{"$imagepolicy": "flux-system:finrem-ps"}
+      environment:
+        VAR_TA: trigger1
+        FEATURE_FEE_PAY_KEYWORDS: "true"

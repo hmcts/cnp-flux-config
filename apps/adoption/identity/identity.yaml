@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: adoption
+  namespace: adoption
+spec:
+  type: 0
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: adoption-binding
+  namespace: adoption
+spec:
+  azureIdentity: adoption
+  selector: adoption

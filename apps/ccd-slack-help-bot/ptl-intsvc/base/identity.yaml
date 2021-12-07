@@ -1,0 +1,19 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ccd-slack-help-bot
+  namespace: ccd-slack-help-bot
+spec:
+  type: 0
+  resourceID: "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/slack-help-bot-cftptl-intsvc-mi"
+  clientID: "aaf72060-cc5f-4fd8-a322-1e6113d2cb9b"
+
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ccd-slack-help-bot-binding
+  namespace: ccd-slack-help-bot
+spec:
+  azureIdentity: ccd-slack-help-bot
+  selector: ccd-slack-help-bot

@@ -12,10 +12,10 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.3.9
+    version: 0.4.2
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-3805b26-20210818190558   #{"$imagepolicy": "flux-system:idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:prod-dab2796-20211108123445
       imagePullPolicy: Always
       ingressHost: idam-api.ithc.platform.hmcts.net
       replicas: 1
@@ -28,12 +28,18 @@ spec:
         STRATEGIC_ADMIN_URL: https://idam-web-admin.ithc.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.ithc.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.ithc.platform.hmcts.net
+        SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-ithc.internal,emailAddress=devops@hmcts
         STRATEGIC_SSO_PROVIDERS_0_providerName: azure
         STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_0_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
+        STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
+        STRATEGIC_SSO_PROVIDERS_1_providerName: moj
+        STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
+        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

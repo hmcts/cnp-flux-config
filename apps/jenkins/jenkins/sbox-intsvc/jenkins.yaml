@@ -15,7 +15,7 @@ spec:
         - name: ENVIRONMENT
           value: "sandbox"
         - name: AZURE_KEYVAULT_URL
-          value: https://dtscftptlsbox.vault.azure.net
+          value: https://cftsbox-intsvc.vault.azure.net
       JCasC:
         configScripts:
           welcome-message: |
@@ -29,7 +29,7 @@ spec:
                 - envVars:
                     env:
                       - key: INFRA_VAULT_NAME
-                        value: dtscftptlsbox
+                        value: cftsbox-intsvc
                       - key: NONPROD_ENVIRONMENT_NAME
                         value: sandbox
                       - key: NONPROD_SUBSCRIPTION_NAME
@@ -37,7 +37,7 @@ spec:
                       - key: PROD_ENVIRONMENT_NAME
                         value: sandbox
                       - key: PREVIEW_ENVIRONMENT_NAME
-                        value: saat
+                        value: sandbox
                       - key: PROD_SUBSCRIPTION_NAME
                         value: sandbox
                       - key: JENKINS_SUBSCRIPTION_NAME
@@ -73,6 +73,12 @@ spec:
                     name: Platform
                     recurse: true
                     title: Platform
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*LABS-.*\/.+\/master
+                    name: LABS
+                    recurse: true
+                    title: Labs
           authentication: |
             jenkins:
               securityRealm:
@@ -94,7 +100,7 @@ spec:
           azure-key-vault: |
             unclassified:
               azureKeyVault:
-                keyVaultURL: https://dtscftptlsbox.vault.azure.net
+                keyVaultURL: https://cftsbox-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
           kubernetes-agent: |
             jenkins:
@@ -315,7 +321,7 @@ spec:
                         templateDisabled: false
                         templateName: "cnp-jenkins-builders"
                         uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
-                        usageMode: "Use this node as much as possible"
+                        usageMode: "NORMAL"
                         usePrivateIP: true
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "cft-ptlsbox-vnet"

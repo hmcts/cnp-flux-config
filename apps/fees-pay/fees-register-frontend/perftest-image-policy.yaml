@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImagePolicy
+metadata:
+  name: perftest-fees-register-frontend
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: '^perftest-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
+  imageRepositoryRef:
+    name: fees-register-frontend

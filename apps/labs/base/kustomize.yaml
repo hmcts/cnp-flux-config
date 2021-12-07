@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: labs
+  namespace: flux-system
+spec:
+  path: ./apps/labs/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "labs"
+      TEAM_NOTIFICATION_CHANNEL: "platform-labs"

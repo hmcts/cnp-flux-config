@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: botkube
+  namespace: monitoring
+spec:
+  url: https://github.com/infracloudio/botkube
+  ref:
+    branch: develop
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm/botkube
+  interval: 10m

@@ -28,3 +28,17 @@ spec:
       NOT_READY_MIN_TIME: "180000"  # in ms
       SLACK_CHANNEL: "${TEAM_NOTIFICATION_CHANNEL}"
       SLACK_USERNAME: "${CLUSTER_FULL_NAME}-aks"
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                  - system

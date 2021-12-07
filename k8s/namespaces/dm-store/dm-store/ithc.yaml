@@ -2,15 +2,23 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-  annotations:
-    fluxcd.io/automated: "true"
-    repository.fluxcd.io/smoke: java.smoketests.image
-    filter.fluxcd.io/smoke: glob:prod-*
 spec:
   values:
     java:
       replicas: 4
+      keyVaults:
+        dm:
+          resourceGroup: dm-shared
+          secrets:
+            - name: RpaAppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: dm-store-storage-account-primary-connection-string
+              alias: azure.storage.connection-string
+            - name: store-POSTGRES-PASS-V11
+              alias: spring.datasource.password
       environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://dm-store-postgres-db-v11-ithc.postgres.database.azure.com:5432/evidence?ssl=disable
+        SPRING_DATASOURCE_USERNAME: evidence@dm-store-postgres-db-v11-ithc
         ENABLE_TTL: false
       testsConfig:
         memoryLimits: "3072Mi"
@@ -18,7 +26,3 @@ spec:
           TEST_URL: http://dm-store-java
           SLACK_CHANNEL: "em-dev-chat"
           SLACK_NOTIFY_SUCCESS: "true"
-      smoketests:
-        enabled: false
-        image: hmctspublic.azurecr.io/dm/store-test:prod-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:dm-store-store-test"}
-      image: hmctspublic.azurecr.io/dm/store:aat-b3798c7-20211008101451 #{"$imagepolicy": "flux-system:ithc-dm-store"}

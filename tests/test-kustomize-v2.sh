@@ -4,7 +4,7 @@ set -x
 curl -s "https://raw.githubusercontent.com/\
 kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && ./install_kustomize.sh 3.7.0
 
-ENVIRONMENTS="sbox sbox-intsvc preview ptl-intsvc"
+ENVIRONMENTS="sbox sbox-intsvc preview ptl-intsvc ithc perftest demo aat prod"
 EXCLUDE_APPS='example-exclude|flux-system'
 
 for ENVIRONMENT in $(echo ${ENVIRONMENTS}); do
@@ -16,11 +16,11 @@ kustomizepaths=()
 
         if [[ $FOLDER_SEARCH =~ "00" && $FOLDER_SEARCH =~ "01" ]]
         then
-            kustomizepaths+=("$FOLDER_FIND/00/base")
-            kustomizepaths+=("$FOLDER_FIND/01/base")
+            kustomizepaths+=("$FOLDER_FIND/00")
+            kustomizepaths+=("$FOLDER_FIND/01")
         elif [[ $FOLDER_SEARCH =~ "00" || $FOLDER_SEARCH =~ "01" ]]
         then
-            [[ $FOLDER_SEARCH =~ "00" ]] && kustomizepaths+=("$FOLDER_FIND/00/base") || kustomizepaths+=("$FOLDER_FIND/01/base") 
+            [[ $FOLDER_SEARCH =~ "00" ]] && kustomizepaths+=("$FOLDER_FIND/00") || kustomizepaths+=("$FOLDER_FIND/01") 
         elif [[ $FOLDER_SEARCH =~ "base" ]]
         then
             kustomizepaths+=("$FOLDER_FIND/base")

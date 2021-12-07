@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: admin
+spec:
+  template:
+    spec:
+      containers:
+      - name: external-dns
+        args:
+        - --source=service
+        - --source=ingress
+        - --domain-filter=demo.platform.hmcts.net
+        - --provider=azure
+        - --log-level=debug
+        - --txt-owner-id=demo-inactive

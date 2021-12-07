@@ -12,7 +12,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: "dbbuqp"
+      tag: "dbhhxp"
       podSecurityContextOverride:
         runAsUser: 0
       imagePullPolicy: "IfNotPresent"
@@ -385,12 +385,22 @@ spec:
                           description: "GitHub APP Key - lau"
                           id: "hmcts-jenkins-lau"
                           privateKey: "${hmcts-jenkins-lau-ghapp}"
+                      - gitHubApp:
+                          appID: "147799"
+                          description: "GitHub APP Key - prl"
+                          id: "hmcts-jenkins-prl"
+                          privateKey: "${hmcts-jenkins-prl-ghapp}"
+                      - gitHubApp:
+                          appID: "149849"
+                          description: "GitHub APP Key - cft"
+                          id: "hmcts-jenkins-cft"
+                          privateKey: "${hmcts-jenkins-cft-ghapp}"
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
       sidecars:
         configAutoReload:
-          image: kiwigrid/k8s-sidecar:0.1.275
+          image: kiwigrid/k8s-sidecar:1.14.2
           # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
           # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
           # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
@@ -452,7 +462,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 3.2.1
+      version: 3.8.8
       sourceRef:
         kind: HelmRepository
         name: jenkins

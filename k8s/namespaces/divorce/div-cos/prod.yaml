@@ -1,0 +1,41 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-cos
+spec:
+  values:
+    java:
+      replicas: 2
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      environment:
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        FEATURE_DN_REFUSAL: true
+        FEATURE_PAPER_UPDATE: true
+        SOLICITOR_DN_REJECT_AND_AMEND: true
+        PAY_BY_ACCOUNT: true
+        FEATURE_RESP_SOLICITOR_DETAILS: true
+        FEATURE_SHARE_A_CASE: true
+        FEATURE_REPRESENTED_RESPONDENT_JOURNEY: true
+        FEATURE_BAILIFF_JOURNEY: true
+        PBA_USING_CASE_TYPE: false
+        FEATURE_OBJECT_TO_COSTS: true
+        FEATURE_USE_USER_TOKEN: true
+        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
+        SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
+        DATAEXTRACTION_STATUS_DA_EMAILTO: StokeCTSC4.Auto@justice.gov.uk
+        DATAEXTRACTION_STATUS_DN_EMAILTO: StokeCTSC3.Auto@justice.gov.uk
+        DATAEXTRACTION_STATUS_AOS_EMAILTO: Auto.StokeCTSC2@justice.gov.uk
+        DATAEXTRACTION_EMAILFROM: noreply@mail-divorce.platform.hmcts.net
+        SCHEDULER_ENABLED: true
+        DOCUMENTATION_SWAGGER_ENABLED: "false"
+        SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
+        BSP_SERVICES_ALLOWED_TO_UPDATE:
+        BSP_SERVICES_ALLOWED_TO_VALIDATE:
+        SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true

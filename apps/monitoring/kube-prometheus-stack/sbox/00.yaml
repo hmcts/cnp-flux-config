@@ -11,6 +11,21 @@ spec:
           - prometheus-00.sandbox.platform.hmcts.net
       prometheusSpec:
         retention: 30d
+        tolerations:
+          - key: CriticalAddonsOnly
+            operator: Equal
+            value: "true"
+            effect: NoSchedule
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                preference:
+                  matchExpressions:
+                    - key: kubernetes.azure.com/mode
+                      operator: In
+                      values:
+                        - system
     alertmanager:
       ingress:
         hosts:
