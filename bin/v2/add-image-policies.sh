@@ -6,7 +6,7 @@ PRODUCT=$2
 COMPONENT=$3
 REGISTRY=$4
 function usage() {
-  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> <env>'
+  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
 }
 
 if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ]
