@@ -10,20 +10,19 @@ spec:
       cve:
         scanner:
           tolerations:
-            - key: "CriticalAddonsOnly"
-              operator: "Equal"
+            - key: CriticalAddonsOnly
+              operator: Equal
               value: "true"
-              effect: "NoSchedule"
-          affinity:
-            nodeAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 1
-                  preference:
-                    matchExpressions:
-                      - key: kubernetes.azure.com/mode
-                        operator: In
-                        values:
-                          - system
+              effect: NoSchedule
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                preference:
+                  matchExpressions:
+                    - key: kubernetes.azure.com/mode
+                      operator: In
+                      values:
+                        - system
       controller:
         azureFileShare:
           secretName: nv-storage-secret
