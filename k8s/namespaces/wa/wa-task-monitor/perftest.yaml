@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-task-monitor
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/wa/task-monitor:prod-fdb142f-20211207134654 #{"$imagepolicy": "flux-system:wa-task-monitor"}
+      environment:
+        REFRESH_FLAG: ""
+        LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG

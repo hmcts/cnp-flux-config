@@ -1,0 +1,13 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dynatrace-operator
+  namespace: monitoring
+spec:
+  values:
+    oneagent:
+      args:
+        - --set-host-group=PERF_CFT
+        - --set-network-zone=azure.cft
+
