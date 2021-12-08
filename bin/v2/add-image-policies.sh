@@ -17,6 +17,7 @@ fi
 
 ACR=${REGISTRY:-hmctspublic}
 
+
 (
 cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
@@ -29,6 +30,8 @@ spec:
 EOF
 ) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-policy.yaml"
 
+if [[ ${ACR} == "hmctspublic" ]]
+then
 (
 cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
@@ -39,6 +42,36 @@ spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+elif [[ ${ACR} == "hmctssandbox" ]]
+then
+(
+cat <<EOF
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImageRepository
+metadata:
+  name: ${PRODUCT}-${COMPONENT}
+  annotations:
+    hmcts.github.com/image-registry: hmctssandbox
+spec:
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
+EOF
+) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+elif [[ ${ACR} == "hmctsprivate" ]]
+then
+(
+cat <<EOF
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImageRepository
+metadata:
+  name: ${PRODUCT}-${COMPONENT}
+  annotations:
+    hmcts.github.com/image-registry: hmctsprivate
+spec:
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
+EOF
+) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+fi
+
 
 if [ ! -f "apps/${NAMESPACE}/au/kustomize.yaml" ]
 then
