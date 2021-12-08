@@ -6,6 +6,30 @@ metadata:
   namespace: neuvector
 spec:
   values:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - traefik
+            topologyKey: "kubernetes.io/hostname"
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                  - system
     neuvector:
       controller:
       manager:
@@ -14,21 +38,6 @@ spec:
           image:
             repository: neuvector/scanner
           replicas: 2
-          tolerations:
-            - key: "CriticalAddonsOnly"
-              operator: "Equal"
-              value: "true"
-              effect: "NoSchedule"
-          affinity:
-            nodeAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 1
-                  preference:
-                    matchExpressions:
-                      - key: kubernetes.azure.com/mode
-                        operator: In
-                        values:
-                          - system
     keyvault:
       name: cftapps-test
       resourcegroup: core-infra-test-rg
