@@ -2,19 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-pfe
-  namespace: divorce
 spec:
   releaseName: div-pfe
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/div-pfe
   values:
     nodejs:
-      replicas: 2
       memoryRequests: "512Mi"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
@@ -39,7 +30,3 @@ spec:
         WEBCHAT_BUTTON_SERVICE_CLOSED: "19684351645d232edee71e86.59595908"
         EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
         PRD_ORGANISATION_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal/refdata/external/v1/organisations/status
-    global:
-      environment: prod
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
