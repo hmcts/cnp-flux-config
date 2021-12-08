@@ -1,16 +1,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-applicant1-apply-conditional-order
+  name: nfdiv-cron-progress-to-awaiting-final-order
 spec:
-  releaseName: nfdiv-cron-applicant1-apply-conditional-order
+  releaseName: nfdiv-cron-progress-to-awaiting-final-order
   chart:
     git: git@github.com:hmcts/nfdiv-cron
     ref: 0.0.8
     path: nfdiv-cron
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-60ae485-20211202110641 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-956962e-20211208140156 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
@@ -27,5 +27,5 @@ spec:
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
       environment:
-        TASK_NAME: SystemNotifyApplicant1ApplyForConditionalOrder
+        TASK_NAME: SystemProgressCasesToAwaitingFinalOrderTask
       schedule: 0/10 * * * *

@@ -4,9 +4,9 @@ set -ex
 NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
-
+REGISTRY=$4
 function usage() {
-  echo 'usage: ./add-image-policies.sh <namespace> <product> <component>'
+  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
 }
 
 if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ]
@@ -14,6 +14,9 @@ then
   usage
   exit 1
 fi
+
+ACR=${REGISTRY:-hmctspublic}
+
 
 (
 cat <<EOF
@@ -27,6 +30,8 @@ spec:
 EOF
 ) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-policy.yaml"
 
+if [[ ${ACR} == "hmctspublic" ]]
+then
 (
 cat <<EOF
 apiVersion: image.toolkit.fluxcd.io/v1alpha2
@@ -34,9 +39,39 @@ kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
 spec:
-  image: hmctspublic.azurecr.io/${PRODUCT}/${COMPONENT}
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+elif [[ ${ACR} == "hmctssandbox" ]]
+then
+(
+cat <<EOF
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImageRepository
+metadata:
+  name: ${PRODUCT}-${COMPONENT}
+  annotations:
+    hmcts.github.com/image-registry: hmctssandbox
+spec:
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
+EOF
+) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+elif [[ ${ACR} == "hmctsprivate" ]]
+then
+(
+cat <<EOF
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImageRepository
+metadata:
+  name: ${PRODUCT}-${COMPONENT}
+  annotations:
+    hmcts.github.com/image-registry: hmctsprivate
+spec:
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
+EOF
+) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+fi
+
 
 if [ ! -f "apps/${NAMESPACE}/au/kustomize.yaml" ]
 then
