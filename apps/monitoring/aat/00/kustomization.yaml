@@ -1,7 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../base
+  - ../../botkube
+  - ../../acr-sync
+  - prometheus-values.yaml
+  - monitoring-values.yaml
+  - botkube-values.yaml
+  - list-all-pods-clusterrole.yaml
 
 patchesStrategicMerge:
   - ../../kube-prometheus-stack/aat/00.yaml
