@@ -3,11 +3,11 @@
 
 ## Creating the flux config for your Java lab application 
 
-Inside the labs/java directory run the `create-lab-flux-config.sh` script to create the flux config needed for your Java lab application.
+Inside the labs/java directory run the `create-lab-flux-config.sh` script to create the flux config needed for your Java lab application. Use the component name you used when creating your app with backstage, which should be your GitHub username.
 
 ```shell
 cd labs/java/
-./create-lab-flux-config.sh 
+./create-lab-flux-config.sh yourGitHubUsername
 ```
 
 The above script will do the following:
@@ -33,7 +33,7 @@ Inside the labs/java directory run the clean up script to remove the flux config
 
 ```shell
 cd labs/java/
-./clean-up-lab-flux-config.sh 
+./clean-up-lab-flux-config.sh yourGitHubUsername
 ```
 
 Once the script has been run, you will need to check and then commit the changes and push to GitHub and create a PR. 
