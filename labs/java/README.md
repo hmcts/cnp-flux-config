@@ -1,4 +1,4 @@
-# Creating and deleting Flux config for your Golden Path Java app
+# Golden Path Java - Creating and deleting Flux config
 [Golden Path tutorial](https://backstage.platform.hmcts.net/catalog/default/component/golden-path-java) - VPN needed.
 
 ## Creating the flux config for your Java lab application 
