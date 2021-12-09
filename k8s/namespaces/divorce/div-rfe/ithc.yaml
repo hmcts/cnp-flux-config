@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-rfe
+spec:
+  releaseName: div-rfe
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/rfe:prod-1d7b852-20211130124951 #{"$imagepolicy": "flux-system:div-rfe"}
+      ingressHost: respond-divorce-aks.ithc.platform.hmcts.net
+      environment:
+        GOOGLE_ANALYTICS_ID: "UA-93824767-2"
+        DECREE_NISI_FRONTEND_URL: "https://decree-nisi-aks.ithc.platform.hmcts.net"
+        DECREE_ABSOLUTE_FRONTEND_URL: https://decree-absolute-aks.ithc.platform.hmcts.net
+        EQUALITY_URL: https://pcq.ithc.platform.hmcts.net
+        FEATURE_RESP_EQUALITY: "true"
+        FEATURE_CORESP_EQUALITY: "true"

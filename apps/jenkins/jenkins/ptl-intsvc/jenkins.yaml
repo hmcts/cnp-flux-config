@@ -185,7 +185,7 @@ spec:
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api)\/master
+                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -519,6 +519,7 @@ spec:
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
                       \ -XX:G1SummarizeRSetStatsPeriod=1"
+                        labels: "centos"
                         location: "UK South"
                         noOfParallelJobs: 1
                         osDiskSize: 60
@@ -536,7 +537,7 @@ spec:
                         templateDisabled: false
                         templateName: "cnp-jenkins-builders"
                         uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
-                        usageMode: "NORMAL"
+                        usageMode: "EXCLUSIVE"
                         usePrivateIP: true
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftptl-intsvc-vnet"
@@ -554,7 +555,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.0.2"
+                          galleryImageVersion: "1.0.3"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -608,7 +609,7 @@ spec:
                         templateDisabled: false
                         templateName: "cnp-jenkins-ubuntu"
                         uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
-                        usageMode: "EXCLUSIVE"
+                        usageMode: "NORMAL"
                         usePrivateIP: true
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "core-cftptl-intsvc-vnet"
