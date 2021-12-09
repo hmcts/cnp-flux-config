@@ -1,16 +1,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: et-ccd-callbacks
+  name: et-cos
   namespace: et
 spec:
-  releaseName: et-ccd-callbacks
+  releaseName: et-cos
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/et-ccd-callbacks
+    path: stable/et-cos
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/ccd-callbacks:prod-3174550-20211208165229 #{"$imagepolicy": "flux-system:et-ccd-callbacks"}
+      image: hmctspublic.azurecr.io/et/cos:latest #{"$imagepolicy": "flux-system:et-cos"}
