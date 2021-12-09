@@ -5,8 +5,19 @@ metadata:
 spec:
   values:
     java:
-      replicas: 0
+      keyVaults:
+        dm:
+          resourceGroup: dm-shared
+          secrets:
+            - name: RpaAppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: dm-store-storage-account-primary-connection-string
+              alias: azure.storage.connection-string
+            - name: store-POSTGRES-PASS-V11
+              alias: spring.datasource.password
       environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://dm-store-postgres-db-v11-prod.postgres.database.azure.com:5432/evidence?ssl=disable
+        SPRING_DATASOURCE_USERNAME: evidence@dm-store-postgres-db-v11-prod
         FLAG: "refresh"
         ENABLE_TTL: "false"
         ENABLE_TESTING: "false"
