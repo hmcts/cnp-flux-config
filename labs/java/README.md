@@ -2,7 +2,7 @@
 
 ## Creating the flux config for your Java lab application 
 
-Inside the labs/java directory run the create-lab-flux-config.sh script to create the flux config needed for your Java lab application.
+Inside the labs/java directory run the `create-lab-flux-config.sh` script to create the flux config needed for your Java lab application.
 
 ```shell
 cd labs/java/
