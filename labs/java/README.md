@@ -1,5 +1,5 @@
 # Creating Flux config for your Golden Path Java app
-
+[Golden Path tutorial](https://backstage.platform.hmcts.net/catalog/default/component/golden-path-java)
 ## Creating the flux config for your Java lab application 
 
 Inside the labs/java directory run the `create-lab-flux-config.sh` script to create the flux config needed for your Java lab application.
