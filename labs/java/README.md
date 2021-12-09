@@ -10,7 +10,7 @@ cd labs/java/
 ```
 
 The above script will do the following:
-- The directory your app's config will live in `apps/labs/labs-yourGitHubUsername'`
+- The directory your app's config will live in `apps/labs/labs-'yourGitHubUsername'`
 - Create the imagePolicy and imageRepository config
 - Create the HelmRelease resource to deploy your app 
 - Add the image-policy and image-repo file references to the labs automation kustomization file so flux can automate image updates
