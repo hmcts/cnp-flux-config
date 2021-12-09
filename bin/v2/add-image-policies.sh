@@ -5,6 +5,9 @@ NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
 REGISTRY=$4
+ACR=${REGISTRY:-hmctspublic}
+COMPONENT_DIR="apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}"
+
 function usage() {
   echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
 }
@@ -15,8 +18,11 @@ then
   exit 1
 fi
 
-ACR=${REGISTRY:-hmctspublic}
-
+# Create component dir if it doesn't exist
+if [ ! -d "${COMPONENT_DIR}" ]; then
+  echo "Creating ${PRODUCT}-${COMPONENT} directory"
+  mkdir -p ${COMPONENT_DIR}
+fi
 
 (
 cat <<EOF
@@ -28,7 +34,7 @@ spec:
   imageRepositoryRef:
     name: ${PRODUCT}-${COMPONENT}
 EOF
-) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-policy.yaml"
+) > "${COMPONENT_DIR}/image-policy.yaml"
 
 if [[ ${ACR} == "hmctspublic" ]]
 then
@@ -41,7 +47,7 @@ metadata:
 spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
-) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+) > "${COMPONENT_DIR}/image-repo.yaml"
 elif [[ ${ACR} == "hmctssandbox" ]]
 then
 (
@@ -55,7 +61,7 @@ metadata:
 spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
-) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+) > "${COMPONENT_DIR}/image-repo.yaml"
 elif [[ ${ACR} == "hmctsprivate" ]]
 then
 (
@@ -69,7 +75,7 @@ metadata:
 spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
-) > "apps/${NAMESPACE}/${PRODUCT}-${COMPONENT}/image-repo.yaml"
+) > "${COMPONENT_DIR}/image-repo.yaml"
 fi
 
 
