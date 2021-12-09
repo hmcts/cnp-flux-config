@@ -1,4 +1,4 @@
-# Creating Flux config for your Golden path Java app
+# Creating Flux config for your Golden Path Java app
 
 ## Creating the flux config for your Java lab application 
 
