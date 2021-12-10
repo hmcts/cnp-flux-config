@@ -34,4 +34,4 @@ Inside the labs/java directory run the clean up script to remove the flux config
 ./clean-up-lab-flux-config.sh yourGitHubUsername
 ```
 
-Once the script has been run, you will need to check and then commit the changes and push to GitHub and create a PR. 
+Once the script has successfully finished, you will need to check and then commit the changes and push to GitHub and create a PR. 
