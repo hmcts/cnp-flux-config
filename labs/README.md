@@ -29,7 +29,7 @@ The above script will do the following:
 
 Once the script has been executed, you will need to add and commit the new config and push it to GitHub. 
 - Run `git status` to check which files have been create and modified.
-- Use `git add` to stage the newly created files for commit
+- Use `git add ../apps/labs-'yourGitHubUsername'` to stage the newly created files for commit
 - Run `git diff --staged` to view the changes made to the existing kustomization files. You should see references to the newly created files for your lab app.
 - When you're happy with the changes made, commit and push them and create a PR.
 
