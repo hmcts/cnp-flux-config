@@ -2,9 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
-  annotations:
-    hmcts.github.com/global-defaults: enabled
-    hmcts.github.com/prod-automated: enabled
 spec:
   releaseName: em-hrs-ingestor
   chart:
@@ -19,5 +16,4 @@ spec:
       cpuLimits: "2000m"
       image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-628f740-20211209112948 #{"$imagepolicy": "flux-system:em-hrs-ingestor"}
       environment:
-        DUMMYDEPLOY: nov16-1828
         MAX_FILES_TO_PROCESS: 50
