@@ -12,6 +12,13 @@ ENVIRONMENT=${6}
 
 cd "$(dirname "$0")"
 
+
+if [ ! -d "${NAMESPACE_DIR}/${ENVIRONMENT}" ]; then
+  echo "${ENVIRONMENT} folder not found... creating"
+  ./add-namespace-to-env.sh ${NAMESPACE} ${ENVIRONMENT}
+fi
+
+
 if [[ ${ENVIRONMENT} == sbox ]]; then
     FULL_ENVIRONMENT_NAME="sandbox"
 else
