@@ -6,19 +6,17 @@
 
 Inside the labs directory run the [`create-lab-flux-config.sh`](./create-lab-flux-config.sh) script to create the flux config needed for your lab application. Use the component name you used when creating your app with backstage, which should be your GitHub username and specify the type of application you are deploying.
 
-<details>
-<summary>Command to create the flux configuration for a Java app</summary>
+
+
+Command to create the flux configuration for a Java app
 ```shell
 ./create-lab-flux-config.sh yourGitHubUsername java
 ```
-</details>
 
-<details>
-<summary>Command to create the flux configuration for a Node.js app</summary>
+Command to create the flux configuration for a Node.js app
 ```shell
 ./create-lab-flux-config.sh yourGitHubUsername nodejs
 ```
-</details>
 
 The above script will do the following:
 - Create the directory that the new config will be created in `apps/labs/labs-'yourGitHubUsername'`
