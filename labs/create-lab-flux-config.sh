@@ -8,18 +8,18 @@ ACR=hmctssandbox
 NAMESPACE_DIR="../apps/${NAMESPACE}"
 COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
 ENVIRONMENT="sbox"
-APPLICATION=${2}
+LANGUAGE=${2}
 
 cd "$(dirname "$0")"
 
 function usage() {
   echo "Missing an input"
-  echo 'Usage: ./create-lab-flux-config.sh <component> <application>'
+  echo 'Usage: ./create-lab-flux-config.sh <component> <language>'
   echo 'Component name - this should be your GitHub username'
-  echo "Application - java or nodejs"
+  echo "Language - java or nodejs"
 }
 
-if [ -z "${COMPONENT}" ] || [ -z "${APPLICATION}" ]; then
+if [ -z "${COMPONENT}" ] || [ -z "${LANGUAGE}" ]; then
   usage
   exit 1
 fi
@@ -30,5 +30,5 @@ if [ -d "${COMPONENT_DIR}" ]; then
   exit 1
 else
   ../bin/v2/add-image-policies.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR}
-  ../bin/v2/add-helm-release.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR} ${APPLICATION} ${ENVIRONMENT}
+  ../bin/v2/add-helm-release.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR} ${LANGUAGE} ${ENVIRONMENT}
 fi

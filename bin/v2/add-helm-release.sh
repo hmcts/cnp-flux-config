@@ -7,7 +7,7 @@ COMPONENT=${3}
 ACR=${4}
 NAMESPACE_DIR="../../apps/${NAMESPACE}"
 COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
-APPLICATION=${5}
+LANGUAGE=${5}
 ENVIRONMENT=${6}
 
 cd "$(dirname "$0")"
@@ -25,20 +25,20 @@ else
 fi
 
 function usage() {
-  echo 'Usage: ./add-helm-release.sh <namespace> <product> <component> <ACR> <application> <environment>'
+  echo 'Usage: ./add-helm-release.sh <namespace> <product> <component> <ACR> <language> <environment>'
 }
 
-if [ -z "${COMPONENT}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z "${ACR}" ] || [ -z "${APPLICATION}" ] || [ -z "${ENVIRONMENT}" ]; then
+if [ -z "${COMPONENT}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z "${ACR}" ] || [ -z "${LANGUAGE}" ] || [ -z "${ENVIRONMENT}" ]; then
   usage
   exit 1
 fi
 
-if [[ ${APPLICATION} == java ]]; then
+if [[ ${LANGUAGE} == java ]]; then
   INGRESS_HOST="${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
-elif [[ ${APPLICATION} == nodejs ]]; then
+elif [[ ${LANGUAGE} == nodejs ]]; then
   INGRESS_HOST="${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.platform.hmcts.net"
 else
-  echo "Application type not recognised please use java or nodejs"
+  echo "Language type not recognised please use java or nodejs"
 fi
 
 # Create HR for lab
@@ -61,7 +61,7 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
-    ${APPLICATION}:
+    ${LANGUAGE}:
       image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:latest # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
       ingressHost: ${INGRESS_HOST}
       disableTraefikTls: true
@@ -71,7 +71,7 @@ spec:
 EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"
 
-if [[ ${APPLICATION} == "nodejs" ]]; then
+if [[ ${LANGUAGE} == "nodejs" ]]; then
   export BACKEND="http://${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
   yq eval -i '(.spec.values.nodejs.environment.RECIPE_BACKEND_URL) = env(BACKEND) ' ${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml 
 fi
