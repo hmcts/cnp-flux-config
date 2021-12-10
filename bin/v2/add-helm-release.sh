@@ -22,7 +22,6 @@ function usage() {
   echo 'Usage: ./add-helm-release.sh <namespace> <product> <component> <ACR> <application> <environment>'
 }
 
-
 if [ -z "${COMPONENT}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z "${ACR}" ] || [ -z "${APPLICATION}" ] || [ -z "${ENVIRONMENT}" ]; then
   usage
   exit 1
