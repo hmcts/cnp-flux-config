@@ -10,7 +10,7 @@ APPS_DIR="../../apps/"
 COMPONENT_DIR="${APPS_DIR}/${NAMESPACE}/${PRODUCT}-${COMPONENT}"
 
 cd "$(dirname "$0")"
-pwd
+
 function usage() {
   echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
 }
