@@ -10,14 +10,14 @@ Inside the labs directory run the [`create-lab-flux-config.sh`](./create-lab-flu
 <summary>Command to create the flux configuration for a Java app</summary>
 ```shell
 ./create-lab-flux-config.sh yourGitHubUsername java
-```
+\```
 </details>
 
 <details open>
 <summary>Command to create the flux configuration for a Node.js app</summary>
 ```shell
 ./create-lab-flux-config.sh yourGitHubUsername nodejs
-```
+\```
 </details>
 
 The above script will do the following:
