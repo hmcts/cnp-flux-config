@@ -73,7 +73,7 @@ EOF
 
 if [[ ${APPLICATION} == "nodejs" ]]; then
   export BACKEND="http://${PRODUCT}-${COMPONENT}-sandbox.service.core-compute-sandbox.internal"
-  yq eval  -i '(.spec.values.nodejs.environment.RECIPE_BACKEND_URL) = env(BACKEND) ' ${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml 
+  yq eval -i '(.spec.values.nodejs.environment.RECIPE_BACKEND_URL) = env(BACKEND) ' ${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml 
 fi
 
 # Configure sbox to manage HR resource
