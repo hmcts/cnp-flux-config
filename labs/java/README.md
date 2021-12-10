@@ -26,7 +26,7 @@ More information on flux v2, its components and custom resources can be found on
 
 ## Deleting the flux config for your Java lab application
 
-Once you're finished with your lab app you can clean up the flux configuration but running the `clean-up-lab-flux-config.sh` script. 
+Once you're finished with your lab app you can clean up the flux configuration but running the [`clean-up-lab-flux-config.sh`](./create-lab-flux-config.sh) script. 
 
 Inside the labs/java directory run the clean up script to remove the flux config you created earlier.
 
