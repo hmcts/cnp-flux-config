@@ -34,7 +34,7 @@ elif [[ ${APPLICATION} == nodejs ]]; then
 else
   echo "Application type not recognised please use java or nodejs"
 fi
-pwd
+
 # Create HR for lab
 (
 cat <<EOF
