@@ -22,7 +22,7 @@ Inside the labs directory run the [`create-lab-flux-config.sh`](./create-lab-flu
 
 The above script will do the following:
 - Create the directory that the new config will be created in `apps/labs/labs-'yourGitHubUsername'`
-- Create the imagePolicy and imageRepository config
+- Create the ImagePolicy and ImageRepository config
 - Create the HelmRelease resource to deploy your app 
 - Add the image-policy and image-repo file references to the labs automation kustomization file so flux can automate image updates
 - Add a reference to the HelmRelease file the sbox kustomization cluster so the resources are 
