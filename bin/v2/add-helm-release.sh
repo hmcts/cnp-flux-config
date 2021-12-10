@@ -67,7 +67,7 @@ EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"
 
 if [[ ${APPLICATION} == "nodejs" ]]; then
-  export BACKEND="http://${PRODUCT}-${COMPONENT}-sandbox.service.core-compute-sandbox.internal"
+  export BACKEND="http://${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
   yq eval -i '(.spec.values.nodejs.environment.RECIPE_BACKEND_URL) = env(BACKEND) ' ${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml 
 fi
 
