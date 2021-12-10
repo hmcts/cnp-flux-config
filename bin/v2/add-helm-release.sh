@@ -43,13 +43,13 @@ cat <<EOF
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: labs-${COMPONENT}
-  namespace: labs
+  name: ${PRODUCT}-${COMPONENT}
+  namespace: ${NAMESPACE}
 spec:
-  releaseName: labs-${COMPONENT}
+  releaseName: ${PRODUCT}-${COMPONENT}
   chart:
     spec:
-      chart: ./stable/labs-${COMPONENT}
+      chart: ./stable/${PRODUCT}-${COMPONENT}
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
@@ -57,7 +57,7 @@ spec:
       interval: 1m
   values:
     ${APPLICATION}:
-      image: hmctssandbox.azurecr.io/labs/${COMPONENT}:latest # {"\$imagepolicy": "flux-system:labs-${COMPONENT}"}
+      image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:latest # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
       ingressHost: ${INGRESS_HOST}
       disableTraefikTls: true
     global:
