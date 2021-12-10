@@ -8,6 +8,8 @@ NAMESPACE_DIR="../apps/${NAMESPACE}"
 COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
 ENVIRONMENT="sbox"
 
+cd "$(dirname "$0")"
+
 function usage() {
   echo 'Missing component name - this should be your GitHub username'
   echo 'usage: ./clean-up-lab-flux-config <component>'
