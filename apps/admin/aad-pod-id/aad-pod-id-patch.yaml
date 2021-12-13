@@ -23,19 +23,19 @@ spec:
         env:
         - name: FORCENAMESPACED
           value: "true"
-  mic:
-    tolerations:
-      - effect: NoSchedule
-        key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-    affinity:
-      nodeAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system
+mic:
+  tolerations:
+    - effect: NoSchedule
+      key: CriticalAddonsOnly
+      operator: Equal
+      value: "true"
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+          matchExpressions:
+            - key: kubernetes.azure.com/mode
+              operator: In
+              values:
+                - system
