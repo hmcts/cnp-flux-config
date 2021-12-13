@@ -29,7 +29,8 @@ The above script will do the following:
 - Add the image-policy and image-repo file references to the labs automation kustomization file so flux can automate image updates
 - Add a reference to the HelmRelease file the sbox kustomization cluster so the resources are 
 
-Once the script has been executed, you will need to add and commit the new config and push it to GitHub. 
+Once the script has been executed, you will need to create a new branch, add and commit the new config and then push the changes to GitHub. 
+- Switch to a new branch by using `git switch -c labs-yourGitHubUsername`
 - Run `git status` to check which files have been create and modified.
 - Use `git add ../apps/labs-'yourGitHubUsername'` to stage the newly created files for commit
 - Run `git diff --staged` to view the changes made to the existing kustomization files. You should see references to the newly created files for your lab app.
