@@ -71,11 +71,6 @@ spec:
 EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"
 
-if [[ ${LANGUAGE} == "nodejs" ]]; then
-  export BACKEND="http://${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
-  yq eval -i '(.spec.values.nodejs.environment.RECIPE_BACKEND_URL) = env(BACKEND) ' ${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml 
-fi
-
 # Configure sbox to manage HR resource
 export NAMESPACE_PATH="../../${PRODUCT}-${COMPONENT}/${PRODUCT}-${COMPONENT}.yaml"
 
