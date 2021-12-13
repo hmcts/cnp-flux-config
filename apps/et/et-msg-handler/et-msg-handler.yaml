@@ -1,17 +1,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: et-ccd-callbacks
+  name: et-msg-handler
 spec:
-  releaseName: et-ccd-callbacks
+  releaseName: et-msg-handler
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/ccd-callbacks:prod-5ae74ae-20211208155744 #{"$imagepolicy": "flux-system:et-ccd-callbacks"}
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-661f008-20211213093142 #{"$imagepolicy": "flux-system:et-msg-handler"}
   chart:
     spec:
-      chart: ./stable/et-ccd-callbacks
+      chart: ./stable/et-msg-handler
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
