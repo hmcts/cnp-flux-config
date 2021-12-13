@@ -2,12 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-cms
-  namespace: divorce
 spec:
   releaseName: div-cms
-  rollback:
-    enable: true
-    retry: true
+  timeout: 600
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -23,15 +20,12 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      applicationInsightsInstrumentKey: "686ed071-9c72-4dc3-9edb-191edceb6018"
+      applicationInsightsInstrumentKey: "baaed5d0-7666-4dce-bf74-edfceeb566f9"
       image: hmctspublic.azurecr.io/div/cms:prod-7022572-20211102185616 #{"$imagepolicy": "flux-system:div-cms"}
       environment:
-        IDAM_API_BASEURL: "https://idam-api.demo.platform.hmcts.net"
+        IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
+        DOCUMENTATION_SWAGGER_ENABLED: "false"
       aadIdentityName: divorce
       prometheus:
         enabled: true
-    global:
-      environment: demo
-      subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
