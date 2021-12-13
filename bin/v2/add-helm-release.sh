@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+set -ex
+
+NAMESPACE=${1}
+PRODUCT=${2}
+COMPONENT=${3}
+ACR=${4}
+NAMESPACE_DIR="../../apps/${NAMESPACE}"
+COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
+LANGUAGE=${5}
+ENVIRONMENT=${6}
+
+cd "$(dirname "$0")"
+
+if [ ! -d "${NAMESPACE_DIR}/${ENVIRONMENT}" ]; then
+  echo "${ENVIRONMENT} folder not found... creating"
+  ./add-namespace-to-env.sh ${NAMESPACE} ${ENVIRONMENT}
+fi
+
+
+if [[ ${ENVIRONMENT} == sbox ]]; then
+    FULL_ENVIRONMENT_NAME="sandbox"
+else
+    FULL_ENVIRONMENT_NAME="${ENVIRONMENT}"
+fi
+
+function usage() {
+  echo 'Usage: ./add-helm-release.sh <namespace> <product> <component> <ACR> <language> <environment>'
+}
+
+if [ -z "${COMPONENT}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z "${ACR}" ] || [ -z "${LANGUAGE}" ] || [ -z "${ENVIRONMENT}" ]; then
+  usage
+  exit 1
+fi
+
+if [[ ${LANGUAGE} == java ]]; then
+  INGRESS_HOST="${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+elif [[ ${LANGUAGE} == nodejs ]]; then
+  INGRESS_HOST="${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.platform.hmcts.net"
+else
+  echo "Language type not recognised please use java or nodejs"
+fi
+
+# Create HR for lab
+(
+cat <<EOF
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ${PRODUCT}-${COMPONENT}
+  namespace: ${NAMESPACE}
+spec:
+  releaseName: ${PRODUCT}-${COMPONENT}
+  chart:
+    spec:
+      chart: ./stable/${PRODUCT}-${COMPONENT}
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    ${LANGUAGE}:
+      image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:latest # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
+      ingressHost: ${INGRESS_HOST}
+      disableTraefikTls: true
+    global:
+      environment: ${FULL_ENVIRONMENT_NAME}
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+EOF
+) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"
+
+# Configure sbox to manage HR resource
+export NAMESPACE_PATH="../../${PRODUCT}-${COMPONENT}/${PRODUCT}-${COMPONENT}.yaml"
+
+if [[ $(yq eval '.resources[] | ( . == env(NAMESPACE_PATH))' ${NAMESPACE_DIR}/${ENVIRONMENT}/base/kustomization.yaml) =~ "true" ]]; then
+  echo "Reference to ../../${PRODUCT}-${COMPONENT}/${PRODUCT}-${COMPONENT}.yaml already exists ignoring.."
+else
+  yq eval -i '.resources += [env(NAMESPACE_PATH)]' ${NAMESPACE_DIR}/${ENVIRONMENT}/base/kustomization.yaml
+fi
