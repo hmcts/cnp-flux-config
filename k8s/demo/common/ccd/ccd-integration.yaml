@@ -47,7 +47,7 @@ spec:
       enableKeyVaults: false
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-6722c68-20211213193203 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-f46af03-20211206000844 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -55,11 +55,6 @@ spec:
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
-    ccd-case-management-web:
-      nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:prod-56cdf42-20211213194635 #{"$imagepolicy": "flux-system:ccd-case-management-web"}
-        ingressClass: traefik-no-proxy
-        ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
     ccd-api-gateway-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-b4b6b3b-20211210154332 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
