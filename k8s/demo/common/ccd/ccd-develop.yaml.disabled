@@ -9,8 +9,6 @@ metadata:
     flux.weave.works/tag.java: "glob:prod-*"
     repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
     filter.fluxcd.io/ccd-admin-web: glob:prod-*
-    repository.fluxcd.io/ccd-case-management-web: ccd-case-management-web.nodejs.image
-    filter.fluxcd.io/ccd-case-management-web: glob:pr-814-*
     repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
     filter.fluxcd.io/ccd-api-gateway-web: glob:pr-273-*
     repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
@@ -71,12 +69,6 @@ spec:
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
-
-    ccd-case-management-web:
-      nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-management-web:pr-814-ee967f83
-        ingressClass: traefik-no-proxy
-        ingressHost: www-{{ .Release.Name }}.demo.platform.hmcts.net
 
     ccd-api-gateway-web:
       nodejs:
