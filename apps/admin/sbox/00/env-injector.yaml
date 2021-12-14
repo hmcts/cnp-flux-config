@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: env-injector-webhook
+  namespace: admin
+spec:
+  tolerations:
+  - effect: NoSchedule
+    key: CriticalAddonsOnly
+    operator: Equal
+    value: "true"
+  affinity:
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 1
+      preference:
+    matchExpressions:
+    - key: kubernetes.azure.com/mode
+      operator: In
+      values:
+      - system
