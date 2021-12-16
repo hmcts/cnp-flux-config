@@ -16,12 +16,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-4a80991-20211213192754 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-4a80991-20211213192754 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         #PROBATE_POSTGRESQL_USER: probateman_user@probatemandb-postgres-db-v11-demo
         #PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-db-v11-demo.postgres.database.azure.com
         VAR1_DUMMY: DUMMY2
+        EXCEPTED_ESTATE_DATE_OF_DEATH: 2021-11-01
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
