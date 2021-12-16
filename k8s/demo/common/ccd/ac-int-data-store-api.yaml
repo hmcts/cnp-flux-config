@@ -16,7 +16,7 @@ spec:
     java:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1771-28f2322-20211215162642 #{"$imagepolicy": "flux-system:demo-ccd-ac-int-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1773-8bc63e2-20211216113141 #{"$imagepolicy": "flux-system:demo-ccd-ac-int-data-store-api"}
       ingressHost: ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
       environment:
         DEFINITION_STORE_HOST: http://ccd-ac-int-definition-store-api-demo.service.core-compute-demo.internal
@@ -39,6 +39,9 @@ spec:
         ENABLE_PSEUDO_ACCESS_PROFILES_GENERATION: true
         SPRING_FLYWAY_ENABLED: false
         ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        REQUEST_SCOPE_CACHED_CASE_TYPES: GrantOfRepresentation
+        REQUEST_SCOPE_CACHED_CASE_TYPES_FROM_HOUR: 0
+        REQUEST_SCOPE_CACHED_CASE_TYPES_TILL_HOUR: 24
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
