@@ -216,14 +216,14 @@ spec:
             rename => { "legacyId_classification" => "[data_classification][legacyId]" }
         }
     # mutate { remove_field => [ "@timestamp", "@version" ] }
-        mutate {
-          add_field => { "[data][legacyId]" => "%{id}"}
+          mutate {
+            add_field => { "[data][legacyId]" => "%{id}"}
         }
-        mutate {
-          add_field => { "index_id" => "%{case_type_id}_cases" }
+          mutate {
+            add_field => { "index_id" => "%{case_type_id}_cases" }
         }
-        mutate {
-          lowercase => [ "index_id" ]
+          mutate {
+            lowercase => [ "index_id" ]
         }
       }
       03_output.conf: |
