@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-pfe
+spec:
+  releaseName: div-pfe
+  values:
+    nodejs:
+      ingressHost: petitioner-frontend-aks.ithc.platform.hmcts.net
+      environment:
+        PUBLIC_HOSTNAME: https://petitioner-frontend-aks.ithc.platform.hmcts.net
+        DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.ithc.platform.hmcts.net
+        EQUALITY_URL: https://pcq.ithc.platform.hmcts.net
+        PRD_ORGANISATION_API_URL: http://rd-professional-api-ithc.service.core-compute-ithc.internal/refdata/external/v1/organisations/status

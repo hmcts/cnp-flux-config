@@ -9,6 +9,20 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        em-stitching:
+          resourceGroup: em-stitching
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: docmosis-access-key
+              alias: DOCMOSIS_ACCESS_KEY
+            - name: microservicekey-em-stitching-api
+              alias: S2S_KEY
+            - name: stitching-POSTGRES-PASS-V11
+              alias: SPRING_DATASOURCE_PASSWORD
 #      image: hmctspublic.azurecr.io/em/stitching:pr-723-d8ff7ca-20211011092157
       environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-v11-demo.postgres.database.azure.com:5432/emstitch?ssl=disable
+        SPRING_DATASOURCE_USERNAME: emstitch@em-stitching-postgres-db-v11-demo
         TEST_VAR: value1

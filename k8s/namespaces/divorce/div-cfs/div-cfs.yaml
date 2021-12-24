@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-cfs
+spec:
+  releaseName: div-cfs
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/div-cfs
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/cfs:prod-92d8ba6-20211217154908 #{"$imagepolicy": "flux-system:div-cfs"}
+      environment:
+        VAR_TA: trig1

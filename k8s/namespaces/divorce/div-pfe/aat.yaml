@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-pfe
+spec:
+  releaseName: div-pfe
+  values:
+    nodejs:
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
+      ingressHost: petitioner-frontend-aks.aat.platform.hmcts.net
+      environment:
+        PUBLIC_HOSTNAME: https://petitioner-frontend-aks.aat.platform.hmcts.net
+        DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.aat.platform.hmcts.net
+        EQUALITY_URL: https://pcq.aat.platform.hmcts.net
+        PRD_ORGANISATION_API_URL: http://rd-professional-api-aat.service.core-compute-aat.internal/refdata/external/v1/organisations/status
+        FEATURE_ANTENNA_WEBCHAT: "true"
+        FEATURE_WEBCHAT: "false"
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
+        FEATURE_NEW_FEES: "true"
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"

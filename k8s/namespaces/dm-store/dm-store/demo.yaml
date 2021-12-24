@@ -2,17 +2,12 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-1170-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/dm/store:pr-1170-7852b5f-20211101130426
       replicas: 2
       environment:
-        ENABLE_TTL: "false"
+        ENABLE_TTL: false
       testsConfig:
         memoryLimits: "3072Mi"
         environment:

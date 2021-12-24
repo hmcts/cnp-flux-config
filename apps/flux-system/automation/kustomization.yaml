@@ -4,6 +4,7 @@ namespace: flux-system
 resources:
   - registry-credential-sync/hmctspublic/kustomize.yaml
   - registry-credential-sync/hmctsprivate/kustomize.yaml
+  - registry-credential-sync/hmctssandbox/kustomize.yaml
   - ../../aac/automation
   - ../../adoption/automation
   - ../../am/automation
@@ -41,16 +42,22 @@ resources:
   - ../../sscs/automation
   - ../../wa/automation
   - ../../xui/automation
-
+  - ../../domestic-abuse/automation
+  - ../../et/automation
+  - ../../labs/automation
 patches:
   - path: hmctspublic-image-repo.yaml
     target:
       kind: ImageRepository
-      annotationSelector: hmcts.github.com/image-registry != hmctsprivate
+      annotationSelector: hmcts.github.com/image-registry != hmctsprivate,hmcts.github.com/image-registry != hmctssandbox
   - path: hmctsprivate-image-repo.yaml
     target:
       kind: ImageRepository
       annotationSelector: hmcts.github.com/image-registry == hmctsprivate
+  - path: hmctssandbox-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry == hmctssandbox
   - path: prod-image-policy.yaml
     target:
       kind: ImagePolicy

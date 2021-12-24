@@ -269,8 +269,8 @@ spec:
                         executeInitScriptAsRoot: true
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
-                          galleryImageDefinition: "jenkins-agent"
-                          galleryImageVersion: "1.0.3"
+                          galleryImageDefinition: "jenkins-ubuntu"
+                          galleryImageVersion: "1.0.6"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -292,6 +292,8 @@ spec:
                           jenkinsssh soft
                           proc 32768
                           jenkinsssh hard nproc 32768
+                          jenkinsssh soft core unlimited
+                          jenkinsssh hard core unlimited
                           EOF
                           ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
                           ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
@@ -299,7 +301,7 @@ spec:
                         installDocker: false
                         installGit: false
                         installMaven: false
-                        javaPath: /usr/lib/jvm/java-11-openjdk/bin/java
+                        javaPath: java
                         jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
@@ -321,7 +323,7 @@ spec:
                         templateDisabled: false
                         templateName: "cnp-jenkins-builders"
                         uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
-                        usageMode: "Use this node as much as possible"
+                        usageMode: "NORMAL"
                         usePrivateIP: true
                         virtualMachineSize: "Standard_D4s_v3"
                         virtualNetworkName: "cft-ptlsbox-vnet"
