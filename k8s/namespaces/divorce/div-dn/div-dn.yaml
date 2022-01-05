@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-dn
+spec:
+  releaseName: div-dn
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/div-dn
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/dn:prod-38e4758-20211217161815 #{"$imagepolicy": "flux-system:div-dn"}
+      environment:
+        VAR_TA: trig-base-0
