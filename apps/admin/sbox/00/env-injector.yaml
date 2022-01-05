@@ -5,6 +5,16 @@ metadata:
   namespace: admin
 spec:
   values:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - env-injector-webhook
+            topologyKey: "kubernetes.io/hostname"
     tolerations:
       - key: CriticalAddonsOnly
         operator: Equal
