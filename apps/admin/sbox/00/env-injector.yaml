@@ -9,13 +9,13 @@ spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
+            - labelSelector:
               matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                  - env-injector-webhook
-            topologyKey: "kubernetes.io/hostname"
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - env-injector-webhook
+              topologyKey: "kubernetes.io/hostname"
       tolerations:
         - key: CriticalAddonsOnly
           operator: Equal
@@ -23,10 +23,10 @@ spec:
           effect: NoSchedule
       nodeAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: kubernetes.azure.com/mode
+                  operator: In
+                  values:
+                    - system
