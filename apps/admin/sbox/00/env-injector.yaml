@@ -5,13 +5,14 @@ metadata:
   namespace: admin
 spec:
   values:
-    tolerations:
+    nodeAffinityTerms:
+      tolerations:
       - key: CriticalAddonsOnly
         operator: Equal
         value: "true"
         effect: NoSchedule
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 1
           preference:
             matchExpressions:
