@@ -6,11 +6,21 @@ metadata:
 spec:
   values:
     nodeAffinityTerms:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - env-injector-webhook
+            topologyKey: "kubernetes.io/hostname"
       tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
+        - key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       nodeAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 1
