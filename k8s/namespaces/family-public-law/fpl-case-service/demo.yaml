@@ -4,14 +4,15 @@ metadata:
   name: fpl-case-service
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-3213-*
+    fluxcd.io/tag.java: glob:pr-3264-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-3213-7e423d5-20211214135703
+      ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-3264-97d34e3-20211229150920
       environment:
-        RELEASE: AGAIN
+        RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
         TESTING_SUPPORT_ENABLED: true

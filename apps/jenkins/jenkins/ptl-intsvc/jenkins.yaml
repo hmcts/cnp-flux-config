@@ -47,9 +47,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-00-aks
+                        value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-00-rg
+                        value: cft-preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -101,13 +101,13 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_CDM.*\/(?!.*ccd-admin-web-api).+\/master
+                      ^HMCTS_CDM.*\/(?!.*ccd-admin-web-api|.*ccd-case-management-web).+\/master
                     name: CDM
                     recurse: true
                     title: CDM Master Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly.*CDM.*\/(?!.*ccd-admin-web-api).+\/master
+                      ^HMCTS_Nightly.*CDM.*\/(?!.*ccd-admin-web-api|.*ccd-case-management-web).+\/master
                     name: CDM Nightly
                     recurse: true
                     title: CDM Nightly Builds Dashboard
@@ -555,7 +555,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.0.5"
+                          galleryImageVersion: "1.0.6"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
