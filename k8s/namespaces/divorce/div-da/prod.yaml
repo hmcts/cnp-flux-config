@@ -2,21 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-da
-  namespace: divorce
 spec:
   releaseName: div-da
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/div-da
   values:
     nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/da:prod-d87c636-20211217161835 #{"$imagepolicy": "flux-system:div-da"}
       ingressHost: www.decree-absolute.apply-divorce.service.gov.uk
       environment:
         PUBLIC_HOSTNAME: https://www.decree-absolute.apply-divorce.service.gov.uk
@@ -35,7 +24,3 @@ spec:
         WEBCHAT_BUTTON_NO_AGENTS: "2806315905d232e71137898.81655511"
         WEBCHAT_BUTTON_AGENTS_BUSY: "6100617245d23302e383e79.04188400"
         WEBCHAT_BUTTON_SERVICE_CLOSED: "19684351645d232edee71e86.59595908"
-    global:
-      environment: prod
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
