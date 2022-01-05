@@ -2,20 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: div-dn
-  namespace: divorce
 spec:
   releaseName: div-dn
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/div-dn
   values:
     nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/div/dn:prod-38e4758-20211217161815 #{"$imagepolicy": "flux-system:demo-div-dn"}
       ingressClass: traefik-no-proxy
       ingressHost: decree-nisi-aks.demo.platform.hmcts.net
@@ -30,8 +20,3 @@ spec:
         ANTENNA_WEBCHAT_SERVICE: Divorce
         ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
         FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
-    global:
-      environment: demo
-      subscriptionId: "d025fece-ce99-4df2-b7a9-b649d3ff2060"
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
