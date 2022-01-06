@@ -2,10 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-stitching
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-828-*
-    hmcts.github.com/prod-automated: disabled
+#  annotations:
+#    fluxcd.io/automated: "true"
+#    fluxcd.io/tag.java: glob:pr-828-*
+#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -21,12 +21,9 @@ spec:
               alias: S2S_KEY
             - name: stitching-POSTGRES-PASS-V11
               alias: SPRING_DATASOURCE_PASSWORD
-      image: hmctspublic.azurecr.io/em/stitching:pr-828-e4557d5-20220104104243
+#      image: hmctspublic.azurecr.io/em/stitching:pr-828-e4557d5-20220104104243
       environment:
         SPRING_DATASOURCE_URL: jdbc:postgresql://em-stitching-postgres-db-v11-demo.postgres.database.azure.com:5432/emstitch?ssl=disable
         SPRING_DATASOURCE_USERNAME: emstitch@em-stitching-postgres-db-v11-demo
         TEST_VAR: value1
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 180
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
-        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 15 22 * * ?
 
