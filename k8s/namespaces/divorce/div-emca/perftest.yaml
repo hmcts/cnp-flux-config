@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-emca
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/div/emca:prod-51d2932-20211217161804 #{"$imagepolicy": "flux-system:div-emca"}
+      environment:
+        IDAM_API_HEALTH_URI: https://idam-api.perftest.platform.hmcts.net/health
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        TRIG_VA: perftest-trig1
+      aadIdentityName: divorce
+      prometheus:
+        enabled: true
