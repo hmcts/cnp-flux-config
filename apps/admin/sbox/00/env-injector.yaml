@@ -5,18 +5,27 @@ metadata:
   namespace: admin
 spec:
   values:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - env-injector-webhook
+            topologyKey: "kubernetes.io/hostname"
     tolerations:
       - key: CriticalAddonsOnly
         operator: Equal
         value: "true"
         effect: NoSchedule
-    affinity:
-      nodeAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
-              matchExpressions:
-                - key: kubernetes.azure.com/mode
-                  operator: In
-                  values:
-                    - system
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                  - system
