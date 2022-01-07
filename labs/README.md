@@ -32,8 +32,7 @@ The above script will do the following:
 Once the script has been executed, you will need to create a new branch, add and commit the new config and then push the changes to GitHub. 
 - Switch to a new branch by using `git switch -c labs-yourGitHubUsername`
 - Run `git status` to check which files have been create and modified.
-- Use `git add ../apps/labs/labs-'yourGitHubUsername'` to stage the newly created files for commit
-- Also commit the changes to kustomization files `git add ../apps/labs/automation/kustomization.yaml ../apps/labs/sbox/base/kustomization.yaml`
+- Use `git add .` from the root of the repo to stage the changes for commit
 - Run `git diff --staged` to view the changes made to the existing kustomization files. You should see references to the newly created files for your lab app.
 - When you're happy with the changes made, commit and push them and create a PR.
 
