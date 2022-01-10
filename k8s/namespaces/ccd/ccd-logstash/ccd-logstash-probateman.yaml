@@ -186,9 +186,9 @@ spec:
             "state" => "ReadOnly"
             "case_type_id" => "Legacy"
             "jurisdiction" => "PROBATE"
-        }
+        
             remove_field => ["src"]
-        }
+          }
           mutate {
             rename => { "probate_number" => "[data][probate_number]" }
             rename => { "deceased_forenames" => "[data][deceasedForenames]" }
@@ -214,18 +214,17 @@ spec:
             rename => { "legacy_case_type_classification" => "[data_classification][legacy_case_type]" }
             rename => { "ccd_case_no_classification" => "[data_classification][ccdCaseId]" }
             rename => { "legacyId_classification" => "[data_classification][legacyId]" }
-        }
-    # mutate { remove_field => [ "@timestamp", "@version" ] }
+          }
           mutate {
             add_field => { "[data][legacyId]" => "%{id}"}
-        }
+          }
           mutate {
             add_field => { "index_id" => "%{case_type_id}_cases" }
-        }
+          }
           mutate {
             lowercase => [ "index_id" ]
+          }
         }
-      }
       03_output.conf: |
         output {
             elasticsearch {
