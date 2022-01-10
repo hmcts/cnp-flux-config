@@ -6,10 +6,27 @@ metadata:
   namespace: neuvector
 spec:
   values:
+    neuvector:
+      tag: 4.4.2
+      cve:
+        scanner:
+          image:
+            repository: neuvector/scanner
+          replicas: 2
     keyvault:
-      name: cftapps-stg
+      name: cftapps
       resourcegroup: core-infra-stg-rg
       subscriptionid: 96c274ce-846d-4e48-89a7-d528432298a7
       tenantid: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
       aadpodidbinding: neuvector
       licensesecretname: neuvector-license-dev
+    keyVaults:
+      cftapps:
+        secrets:
+          - neuvector-admin-password
+          - neuvector-license-dev
+          - neuvector-slack-webhook
+          - neuvector-new-admin-password
+  chart:
+    spec:
+      version: 1.2.5
