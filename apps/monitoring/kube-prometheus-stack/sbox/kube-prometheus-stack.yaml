@@ -5,11 +5,14 @@ metadata:
   namespace: monitoring
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 30.0.0
-      sourceRef:
-        kind: HelmRepository
-        name: prometheus
-        namespace: monitoring
+  spec:
+  releaseName: kube-prometheus-stack
+  values:
+    chart:
+      spec:
+        chart: kube-prometheus-stack
+        version: 30.0.0
+        sourceRef:
+          kind: HelmRepository
+          name: prometheus
+          namespace: monitoring
