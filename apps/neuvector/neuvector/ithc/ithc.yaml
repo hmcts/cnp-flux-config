@@ -6,6 +6,11 @@ metadata:
   namespace: neuvector
 spec:
   values:
+    autoScan: true
+    rules:
+      admission:
+        rules:
+          - '{"config":{"id":1002,"category":"Kubernetes","comment":"Allow HMCTS registries","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/,https://ghcr.io/"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
     neuvector:
       tag: 4.4.2
       cve:
