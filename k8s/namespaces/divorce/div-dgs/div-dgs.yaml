@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: div-dgs
+spec:
+  releaseName: div-dgs
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/div-dgs
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/dgs:prod-7f074c0-20211217161648 #{"$imagepolicy": "flux-system:div-dgs"}
+      environment:
+        VAR_BASE: tr-1
