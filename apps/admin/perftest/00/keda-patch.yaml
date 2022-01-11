@@ -7,28 +7,29 @@ metadata:
 spec:
   releaseName: keda
   template:
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - keda-operator
+                      - keda-operator-metrics-apiserver
+              topologyKey: "kubernetes.io/hostname"
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
               matchExpressions:
-                - key: app
+                - key: kubernetes.azure.com/mode
                   operator: In
                   values:
-                    - keda-operator
-                    - keda-operator-metrics-apiserver
-            topologyKey: "kubernetes.io/hostname"
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system
+                    - system
