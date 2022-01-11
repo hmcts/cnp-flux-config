@@ -6,18 +6,30 @@ metadata:
   namespace: admin
 spec:
   releaseName: keda
-  values:
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system
+  template:
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - keda-operator
+                      - keda-operator-metrics-apiserver
+              topologyKey: "kubernetes.io/hostname"
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: kubernetes.azure.com/mode
+                  operator: In
+                  values:
+                    - system
