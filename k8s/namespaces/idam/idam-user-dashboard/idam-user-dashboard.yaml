@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: idam-user-dashboard
+  namespace: idam
+spec:
+  releaseName: idam-user-dashboard
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/idam-user-dashboard
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/idam/user-dashboard:latest #{"$imagepolicy": "flux-system:idam-user-dashboard"}
