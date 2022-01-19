@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: finrem-ns
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/finrem/ns:pr-263-0a11f93-20220117134930 #{"$imagepolicy": "flux-system:demo-finrem-ns"}
+      environment:
+        SWAGGER_ENABLED: false
+        VAR_TA: demo-t1
