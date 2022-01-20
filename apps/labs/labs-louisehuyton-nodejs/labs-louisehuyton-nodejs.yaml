@@ -1,0 +1,26 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: labs-louisehuyton-nodejs
+  namespace: labs
+spec:
+  releaseName: labs-louisehuyton-nodejs
+  chart:
+    spec:
+      chart: ./stable/labs-louisehuyton-nodejs
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctssandbox.azurecr.io/labs/louisehuyton-nodejs:latest # {"$imagepolicy": "flux-system:labs-louisehuyton-nodejs"}
+      ingressHost: labs-louisehuyton-nodejs-{{ .Values.global.environment }}.platform.hmcts.net
+      disableTraefikTls: true
+      environment:
+        RECIPE_BACKEND_URL: http://labs-louisehuyton-nodejs-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+    global:
+      environment: sandbox
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
