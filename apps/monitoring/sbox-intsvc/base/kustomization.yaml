@@ -3,7 +3,16 @@ kind: Kustomization
 resources:
   - ../../base
   - prometheus-values.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-alertmanagerconfigs.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-alertmanagers.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-podmonitors.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-probes.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-prometheuses.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-prometheusrules.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-servicemonitors.yaml
+  - https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-30.0.1/charts/kube-prometheus-stack/crds/crd-thanosrulers.yaml
 
 patchesStrategicMerge:
   - ../../kube-prometheus-stack/empty-nodelocaldns-alert-rules.yaml
   - ../../kube-prometheus-stack/jenkins-service-monitors.yaml
+  - ../../kube-prometheus-stack/sbox/kube-prometheus-stack.yaml
