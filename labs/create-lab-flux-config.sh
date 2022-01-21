@@ -1,4 +1,23 @@
 #!/usr/bin/env bash
+
+function check_packages() {
+
+  #check required packages are installed
+  packages=(yq)
+
+  for i in ${packages[@]}
+
+  do
+    if command -v ${i}; then :
+    else
+      echo ${i} is missing! Please first install ${i} via brew or your package manager.
+      exit 1
+    fi
+  done
+}
+
+check_packages
+
 set -ex
 
 NAMESPACE=labs
