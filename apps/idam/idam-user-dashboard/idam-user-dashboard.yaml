@@ -5,12 +5,16 @@ metadata:
   namespace: idam
 spec:
   releaseName: idam-user-dashboard
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/idam-user-dashboard
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/idam/user-dashboard:prod-89fae19-20220121125513 #{"$imagepolicy": "flux-system:idam-user-dashboard"}
+  chart:
+    spec:
+      chart: ./stable/idam-user-dashboard
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
