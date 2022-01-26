@@ -6,32 +6,6 @@ metadata:
   namespace: neuvector
 spec:
   values:
-    tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - fluentbit-log
-             topologyKey: "kubernetes.io/hostname"
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system
     neuvector:
       controller:
         azureFileShare:
@@ -82,3 +56,17 @@ spec:
       manager:
         ingress:
           host: neuvector00.service.core-compute-perftest.internal
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+    affinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                  - system
