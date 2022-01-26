@@ -56,17 +56,3 @@ spec:
       manager:
         ingress:
           host: neuvector00.service.core-compute-perftest.internal
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
-    affinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: kubernetes.azure.com/mode
-                operator: In
-                values:
-                  - system
