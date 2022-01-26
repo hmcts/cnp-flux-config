@@ -2,12 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: probate-frontend
-  namespace: probate
 spec:
   releaseName: probate-frontend
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -16,13 +12,6 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      ingressClass: traefik-no-proxy
-      ingressHost: probate.demo.platform.hmcts.net
       image: hmctspublic.azurecr.io/probate/frontend:prod-1639f3f-20220126115348 #{"$imagepolicy": "flux-system:probate-frontend"}
       environment:
-        VAR_TA: trigger8
-        EXCEPTED_ESTATE_DATE_OF_DEATH: 2021-11-01
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+        VAR_TA: trig-base-0
