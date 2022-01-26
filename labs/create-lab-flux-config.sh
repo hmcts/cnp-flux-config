@@ -1,4 +1,23 @@
 #!/usr/bin/env bash
+
+function check_packages() {
+
+  #check required packages are installed
+  packages=(yq)
+
+  for i in ${packages[@]}
+
+  do
+    if command -v ${i}; then :
+    else
+      echo ${i} is missing! Please first install ${i} via brew or your package manager.
+      exit 1
+    fi
+  done
+}
+
+check_packages
+
 set -ex
 
 NAMESPACE=labs
@@ -31,11 +50,4 @@ if [ -d "${COMPONENT_DIR}" ]; then
 else
   ../bin/v2/add-image-policies.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR}
   ../bin/v2/add-helm-release.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR} ${LANGUAGE} ${ENVIRONMENT}
-fi
-
-if [[ ${LANGUAGE} == "nodejs" ]]; then
-  export BACKEND="http://${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
-  # The name of the env var may need to change to something other than 
-  # RECIPE_BACKEND_URL depending on what the Golden Path for nodejs looks like
-  yq eval -i '(.spec.values.nodejs.environment.RECIPE_BACKEND_URL) = env(BACKEND) ' ${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml
 fi

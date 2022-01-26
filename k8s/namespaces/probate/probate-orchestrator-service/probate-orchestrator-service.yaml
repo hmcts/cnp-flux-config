@@ -1,0 +1,29 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-orchestrator-service
+spec:
+  releaseName: probate-orchestrator-service
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    name: probate-orchestrator-service
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    version: 1.0.11
+  values:
+    tags:
+      idam-pr: false
+    java:
+      replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-bfb971c-20220118103410 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
+      environment:
+        VAR_TA: trigger4

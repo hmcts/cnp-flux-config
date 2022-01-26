@@ -6,6 +6,9 @@ spec:
   releaseName: ccd-api-gateway-web
   values:
     nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-402-b59583c-20220119110456 #{"$imagepolicy": "flux-system:ithc-ccd-api-gateway-web"}
       environment:
-        CORS_ORIGIN_WHITELIST: "https://xui-webapp-ithc.service.core-compute-ithc.internal"
+        CORS_ORIGIN_WHITELIST: "https://xui-webapp-ithc.service.core-compute-ithc.internal,https://manage-case.ithc.platform.hmcts.net"
         TIMING-ALLOW-ORIGIN: "https://www-ccd.ithc.platform.hmcts.net"
