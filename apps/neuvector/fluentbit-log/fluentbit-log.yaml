@@ -25,22 +25,11 @@ spec:
     enableAzurePlugin: true
     enableStandardOutput: false
     tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Equal"
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
         value: "true"
-        effect: "NoSchedule"
     affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - fluentbit-log
-              topologyKey: "kubernetes.io/hostname"
       nodeAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
