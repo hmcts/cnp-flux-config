@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1alpha2
+kind: ImagePolicy
+metadata:
+  name: ithc-lau-idam-backend
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: '^prod-be14a82-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
+  imageRepositoryRef:
+    name: lau-idam-backend
