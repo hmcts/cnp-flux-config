@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-frontend
+spec:
+  releaseName: probate-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/frontend:prod-8cfc714-20220127122922 #{"$imagepolicy": "flux-system:probate-frontend"}
+      environment:
+        VAR_TA: trig-base-0
