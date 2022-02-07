@@ -1,0 +1,33 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-frontend
+  namespace: probate
+spec:
+  releaseName: probate-frontend
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-frontend
+  values:
+    nodejs:
+      replicas: 2
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/frontend:prod-36ff136-20220202202350 #{"$imagepolicy": "flux-system:probate-frontend"}
+      ingressHost: www.apply-for-probate.service.gov.uk
+      environment:
+        IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
+        VAR_TA: trigger2
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
