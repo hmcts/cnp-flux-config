@@ -33,14 +33,6 @@ if [ -z "${COMPONENT}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ] || [ -z
   exit 1
 fi
 
-if [[ ${LANGUAGE} == java ]]; then
-  INGRESS_HOST="${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
-elif [[ ${LANGUAGE} == nodejs ]]; then
-  INGRESS_HOST="${PRODUCT}-${COMPONENT}-{{ .Values.global.environment }}.platform.hmcts.net"
-else
-  echo "Language type not recognised please use java or nodejs"
-fi
-
 # Create HR for lab
 (
 cat <<EOF
@@ -63,11 +55,7 @@ spec:
   values:
     ${LANGUAGE}:
       image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:latest # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
-      ingressHost: ${INGRESS_HOST}
       disableTraefikTls: true
-    global:
-      environment: ${FULL_ENVIRONMENT_NAME}
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"
 
