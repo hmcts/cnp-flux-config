@@ -20,10 +20,9 @@ spec:
             jdbc_paging_enabled => true
             jdbc_page_size => "50000"
             parameters => {
-                "nfd" => "NFD"
-                "nfdexception" => "NFD_ExceptionRecord"
+                "divorce" => "DIVORCE"
             }
-            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data where jurisdiction IN (:nfd, :nfdexception) order by id"
+            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data where jurisdiction = :divorce order by id"
             clean_run => false
           }
         }
