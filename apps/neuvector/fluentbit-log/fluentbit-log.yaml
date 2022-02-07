@@ -24,6 +24,21 @@ spec:
     enableSecret: false
     enableAzurePlugin: true
     enableStandardOutput: false
+    tolerations:
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+    affinity:
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: kubernetes.azure.com/mode
+                  operator: In
+                  values:
+                    - system
   chart:
     spec:
       chart: fluentbit-log
