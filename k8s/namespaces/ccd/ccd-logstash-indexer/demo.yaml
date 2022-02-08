@@ -3,11 +3,14 @@ kind: HelmRelease
 metadata:
   name: ccd-logstash-indexer
   namespace: ccd
-
 spec:
   releaseName: ccd-logstash-indexer
   values:
+    replicas: 1
+    extraEnvs:
+      - name: LOGGING_LEVEL_ROOT
+        value: DEBUG
     java:
-      replicas: 1
       environment:
-        DUMMY_VAR: true
+        LOGGING_LEVEL_ROOT: DEBUG
+        DUMMY_VAR: 5
