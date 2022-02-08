@@ -37,6 +37,8 @@ spec:
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
+      - name: install-plugins
+        command: ['sh', '-c', 'bin/logstash-plugin install logstash-filter-json_encode']
     extraVolumes: |
       - name: logstash-lib
         emptyDir: {}
