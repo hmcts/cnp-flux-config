@@ -5,6 +5,11 @@ metadata:
 spec:
   template:
     spec:
+      containers:
+        - name: nmi
+          env:
+        - name: FORCENAMESPACED
+          value: "true"
       tolerations:
         - effect: NoSchedule
           key: CriticalAddonsOnly
@@ -20,11 +25,6 @@ spec:
                     operator: In
                     values:
                       - system
-      containers:
-        - name: nmi
-          env:
-        - name: FORCENAMESPACED
-          value: "true"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,6 +33,11 @@ metadata:
 spec:
   template:
     spec:
+      containers:
+        - name: mic
+          env:
+        - name: FORCENAMESPACED
+          value: "true"
       tolerations:
         - effect: NoSchedule
           key: CriticalAddonsOnly
@@ -48,8 +53,3 @@ spec:
                     operator: In
                     values:
                       - system
-      containers:
-        - name: mic
-          env:
-        - name: FORCENAMESPACED
-          value: "true"
