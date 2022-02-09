@@ -6,25 +6,25 @@ spec:
   template:
     spec:
       containers:
-        - name: nmi
-          env:
+      - name: nmi
+        env:
         - name: FORCENAMESPACED
           value: "true"
       tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: kubernetes.azure.com/mode
-                    operator: In
-                    values:
-                      - system
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                - system
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,22 +34,22 @@ spec:
   template:
     spec:
       containers:
-        - name: mic
-          env:
+      - name: mic
+        env:
         - name: FORCENAMESPACED
           value: "true"
       tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: kubernetes.azure.com/mode
-                    operator: In
-                    values:
-                      - system
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: In
+                values:
+                - system
