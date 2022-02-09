@@ -11,20 +11,20 @@ spec:
         - name: FORCENAMESPACED
           value: "true"
       tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: kubernetes.azure.com/mode
-                    operator: In
-                    values:
-                      - system
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: kubernetes.azure.com/mode
+                  operator: In
+                  values:
+                    - system
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,17 +39,17 @@ spec:
         - name: FORCENAMESPACED
           value: "true"
       tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: kubernetes.azure.com/mode
-                    operator: In
-                    values:
-                      - system
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: kubernetes.azure.com/mode
+                  operator: In
+                  values:
+                    - system
