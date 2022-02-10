@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-back-office
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-1797-a5a35a5-20220210080320 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
+        VAR1_DUMMY: DUMMY2
+        EXCEPTED_ESTATE_DATE_OF_DEATH: 2021-11-01
