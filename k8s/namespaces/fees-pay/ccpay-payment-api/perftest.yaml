@@ -1,21 +1,11 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccpay-payment-app
-  namespace: fees-pay
+  name: ccpay-payment-api
 spec:
   releaseName: ccpay-payment-api
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/payment-api
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/payment/api:pr-1008-86b9b84-20220209134500 #{"$imagepolicy": "flux-system:perftest-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
@@ -28,7 +18,3 @@ spec:
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         REFUND_API_URL: http://ccpay-refunds-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-    global:
-      environment: perftest
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
