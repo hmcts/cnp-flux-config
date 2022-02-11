@@ -7,30 +7,21 @@ spec:
   releaseName: ccd-logstash-indexer
   values:
     replicas: 1
-    logstashPipeline:
-      01_input.conf: |
-        input {
-          jdbc {
-            jdbc_connection_string => "${DATA_STORE_URL}"
-            jdbc_user => "${DATA_STORE_USER}"
-            jdbc_password => "${DATA_STORE_PASS}"
-            jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
-            jdbc_driver_class => "org.postgresql.Driver"
-            jdbc_default_timezone => "UTC"
-            jdbc_paging_enabled => true
-            jdbc_page_size => 20000
-            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data order by id"
-            clean_run => false
-          }
-        }
+    extraEnvs:
+      - name: LOGGING_LEVEL_ROOT
+        value: DEBUG
     logstashConfig:
       pipelines.yml: |
         - pipeline.id: main
           path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
-          pipeline.batch.size: 125
+          pipeline.workers: 2
+          pipeline.batch.size: 100
           queue.type: persisted
         - pipeline.id: index-dead-letter-to-es
           path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
           pipeline.workers: 1
           dead_letter_queue.enable: false
+    java:
+      environment:
+        LOGGING_LEVEL_ROOT: DEBUG
+        DUMMY_VAR: 6

@@ -4,17 +4,18 @@ metadata:
   name: fpl-case-service
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-3264-*
+    fluxcd.io/tag.java: glob:pr-3328-*
     hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-3264-093ba5d-20220118120354
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-3328-01426ff-20220207122358
       environment:
-        RELEASE: NOW
+        RELEASE: AGAIN
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         TESTING_SUPPORT_ENABLED: true
         C2_WITH_NOTICE: GAOnNotice
         ESO_EXTENSION: EduSupervisionChange
