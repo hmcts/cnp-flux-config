@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-payment-api
+spec:
+  releaseName: ccpay-payment-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/payment-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/payment/api:pr-972-bbd9000-20220119123414 #{"$imagepolicy": "flux-system:ithc-ccpay-payment-app"}
+      imagePullPolicy: Always
