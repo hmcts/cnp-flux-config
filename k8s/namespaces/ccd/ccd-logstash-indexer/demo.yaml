@@ -7,9 +7,6 @@ spec:
   releaseName: ccd-logstash-indexer
   values:
     replicas: 1
-    extraEnvs:
-      - name: LOGGING_LEVEL_ROOT
-        value: DEBUG
     logstashConfig:
       pipelines.yml: |
         - pipeline.id: main
@@ -21,7 +18,3 @@ spec:
           path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
           pipeline.workers: 1
           dead_letter_queue.enable: false
-    java:
-      environment:
-        LOGGING_LEVEL_ROOT: DEBUG
-        DUMMY_VAR: 6
