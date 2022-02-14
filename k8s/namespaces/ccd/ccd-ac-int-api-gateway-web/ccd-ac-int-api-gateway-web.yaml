@@ -2,12 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-ac-int-api-gateway-web
-  namespace: ccd
 spec:
   releaseName: ccd-ac-int-api-gateway-web
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -26,7 +22,3 @@ spec:
         PROXY_DATA: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
         PROXY_DEFINITION_IMPORT: http://ccd-ac-int-definition-store-api-demo.service.core-compute-demo.internal
         DUMMY_VAR_TO_REDEPLOY: 1
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
