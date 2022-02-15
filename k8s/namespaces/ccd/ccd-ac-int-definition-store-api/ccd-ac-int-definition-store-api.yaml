@@ -2,12 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-ac-int-definition-store-api
-  namespace: ccd
 spec:
   releaseName: ccd-ac-int-definition-store-api
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -27,8 +23,3 @@ spec:
         DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api
         DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
         DUMMY_RESTART_VAR: 2
-
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
