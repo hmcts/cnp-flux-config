@@ -1,13 +1,14 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: labs-louisehuyton-nodejs
+  name: labs-louisehuyton-walkthough
   namespace: labs
 spec:
-  releaseName: labs-louisehuyton-nodejs
+  releaseName: labs-louisehuyton-walkthough
   chart:
     spec:
-      chart: ./stable/labs-louisehuyton-nodejs
+      chart: ./stable/labs-louisehuyton-walkthough
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
@@ -15,5 +16,5 @@ spec:
       interval: 1m
   values:
     nodejs:
-      image: hmctssandbox.azurecr.io/labs/louisehuyton-nodejs:prod-c765faf-20220207104926 # {"$imagepolicy": "flux-system:labs-louisehuyton-nodejs"}
+      image: hmctssandbox.azurecr.io/labs/louisehuyton-walkthough:latest # {"$imagepolicy": "flux-system:labs-louisehuyton-walkthough"}
       disableTraefikTls: true
