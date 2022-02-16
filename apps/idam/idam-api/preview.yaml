@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:preview-4f6435f-20220121162423 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-2fc98a8-20220216094324 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.service.core-compute-preview.internal
       replicas: 2
       environment:
@@ -33,6 +33,9 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: true
+        IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        LOG_AND_AUDIT_IDAM_URL: http://lau-idam-backend-aat.service.core-compute-aat.internal
+        LOG_AND_AUDIT_IDAM_ENABLED: true
         trigger_deploy: true
     global:
       environment: preview

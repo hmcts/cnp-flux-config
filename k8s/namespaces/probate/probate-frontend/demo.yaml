@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-frontend
+spec:
+  releaseName: probate-frontend
+  values:
+    nodejs:
+      ingressClass: traefik-no-proxy
+      ingressHost: probate.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/probate/frontend:prod-b656155-20220215153505 #{"$imagepolicy": "flux-system:probate-frontend"}
+      environment:
+        VAR_TA: demo-2
+        EXCEPTED_ESTATE_DATE_OF_DEATH: 2021-11-01
