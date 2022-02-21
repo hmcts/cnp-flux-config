@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-ac-int-manage-case-assignment
+spec:
+  releaseName: ccd-ac-int-manage-case-assignment
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/aac-manage-case-assignment
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      ingressHost: ccd-ac-int-manage-case-assignment-demo.service.core-compute-demo.internal
+      environment:
+        SPRING_CACHE_CAFFEINE_SPEC: expireAfterWrite=1800s
