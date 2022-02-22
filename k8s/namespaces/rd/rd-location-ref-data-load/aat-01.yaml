@@ -5,8 +5,20 @@ metadata:
 spec:
   values:
     job:
-      schedule: "40 15 * * *"
+      schedule: "00 16 * * *"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/rd/location-ref-data-load:pr-240-e69ef9b-20220222145105
       environment:
         DELETE_ORG: false
+      keyVaults:
+        "rd":
+          resourceGroup: rd
+          secrets:
+            - location-ref-api-POSTGRES-PASS
+            - ApplicationInsightsInstrumentationKey
+            - name: rd-location-storage-account-name
+              alias: ACCOUNT_NAME
+            - name: rd-location-storage-account-primary-key
+              alias: ACCOUNT_KEY
+            - name: CONTAINER-NAME
+              alias: CONTAINER_NAME
