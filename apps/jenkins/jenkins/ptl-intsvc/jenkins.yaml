@@ -43,13 +43,13 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-01-aks
+                        value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-01-rg
+                        value: cft-preview-00-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -285,6 +285,12 @@ spec:
                     name: ET
                     recurse: true
                     title: Employment Tribunals
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_.*DS.*\/(document-submission-ui)\/master
+                    name: DS
+                    recurse: true
+                    title: Document Submission
           authentication: |
             jenkins:
               securityRealm:

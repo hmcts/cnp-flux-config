@@ -2,12 +2,8 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-ac-int-data-store-api
-  namespace: ccd
 spec:
   releaseName: ccd-ac-int-data-store-api
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
@@ -16,7 +12,6 @@ spec:
     java:
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1817-c861137-20220208155428 #{"$imagepolicy": "flux-system:demo-ccd-ac-int-data-store-api"}
       ingressHost: ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
       environment:
         DEFINITION_STORE_HOST: http://ccd-ac-int-definition-store-api-demo.service.core-compute-demo.internal
@@ -39,12 +34,10 @@ spec:
         ENABLE_PSEUDO_ACCESS_PROFILES_GENERATION: true
         SPRING_FLYWAY_ENABLED: false
         ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
-        LOG_AND_AUDIT_CASE_ENABLED: true
+        LOG_AND_AUDIT_CASE_ENABLED: false
         LOG_AND_AUDIT_CASE_URL: http://lau-case-backend-demo.service.core-compute-demo.internal
         REQUEST_SCOPE_CACHED_CASE_TYPES: GrantOfRepresentation
         REQUEST_SCOPE_CACHED_CASE_TYPES_FROM_HOUR: 0
         REQUEST_SCOPE_CACHED_CASE_TYPES_TILL_HOUR: 24
-    global:
-      environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
+        ROLE_ASSIGNMENT_PAGINATION_ENABLED: true
+        ROLE_ASSIGNMENT_PAGE_SIZE: 3
