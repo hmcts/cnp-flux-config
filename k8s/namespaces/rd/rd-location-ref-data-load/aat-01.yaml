@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     job:
-      schedule: "00 16 * * *"
+      schedule: "20 16 * * *"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/rd/location-ref-data-load:pr-240-e69ef9b-20220222145105
       environment:
@@ -14,7 +14,8 @@ spec:
         "rd":
           resourceGroup: rd
           secrets:
-            - location-ref-api-POSTGRES-PASS
+            - name: location-ref-api-POSTGRES-PASS
+              alias: spring.datasource.password
             - ApplicationInsightsInstrumentationKey
             - name: rd-location-storage-account-name
               alias: ACCOUNT_NAME
