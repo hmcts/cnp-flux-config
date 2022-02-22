@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,10 +15,6 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
-    java:
-      image: hmctssandbox.azurecr.io/labs/zc-hmcts:prod-a432205-20211221141816 # {"$imagepolicy": "flux-system:labs-zc-hmcts"}
-      ingressHost: labs-zc-hmcts-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+    nodejs:
+      image: hmctssandbox.azurecr.io/labs/zc-hmcts:latest # {"$imagepolicy": "flux-system:labs-zc-hmcts"}
       disableTraefikTls: true
-    global:
-      environment: sandbox
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
