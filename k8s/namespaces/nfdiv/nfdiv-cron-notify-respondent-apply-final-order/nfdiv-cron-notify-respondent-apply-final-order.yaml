@@ -1,9 +1,9 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-notify-applicant-dispute-form-overdue
+  name: nfdiv-cron-notify-respondent-apply-final-order
 spec:
-  releaseName: nfdiv-cron-notify-applicant-dispute-form-overdue
+  releaseName: nfdiv-cron-notify-respondent-apply-final-order
   chart:
     git: git@github.com:hmcts/nfdiv-cron
     ref: 0.0.8
@@ -27,5 +27,5 @@ spec:
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
       environment:
-        TASK_NAME: SystemNotifyApplicantDisputeFormOverdueTask
+        TASK_NAME: SystemNotifyRespondentApplyFinalOrder
       schedule: 0/10 * * * *
