@@ -1,14 +1,14 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: wa-task-batch-initiation
+  name: wa-task-batch-configuration
 spec:
   values:
     job:
-      schedule: "*/2 * * * *"
+      schedule: "0,30 * * * *"
       environment:
-        JOB_NAME: INITIATION
+        JOB_NAME: CONFIGURATION
     global:
-      environment: demo
+      environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       jobKind: CronJob
