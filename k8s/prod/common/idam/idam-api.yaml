@@ -15,10 +15,10 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.4.2
+    version: 0.4.3
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-03b8790-20211223111505
+      image: hmctspublic.azurecr.io/idam/api:prod-efb7cfc-20220214150644
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
@@ -53,6 +53,7 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/c6874728-71e6-41fe-a9e1-2e8c36776ad8/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        LOG_AND_AUDIT_IDAM_ENABLED: false
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

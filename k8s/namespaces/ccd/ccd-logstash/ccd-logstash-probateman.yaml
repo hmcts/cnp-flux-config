@@ -14,7 +14,7 @@ spec:
     name: logstash
     version: 6.8.13
   values:
-    image: "hmctspublic.azurecr.io/imported/logstash"
+    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
     imageTag: "7.16.1"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
@@ -37,12 +37,28 @@ spec:
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
+      - name: install-plugins
+        image: hmctspublic.azurecr.io/imported/logstash/logstash:7.16.1
+        command: ['sh', '-c', '/usr/share/logstash/bin/logstash-plugin install logstash-filter-json_encode']
+        volumeMounts:
+        - name: logstash-vendor
+          mountPath: /usr/share/logstash/vendor/
+        - name: logstash-bin
+          mountPath: /usr/share/logstash/bin/
     extraVolumes: |
       - name: logstash-lib
+        emptyDir: {}
+      - name: logstash-vendor
+        emptyDir: {}
+      - name: logstash-bin
         emptyDir: {}
     extraVolumeMounts: |
       - name: logstash-lib
         mountPath: /usr/share/logstash/ccd
+      - name: logstash-vendor
+        mountPath: /usr/share/logstash/vendor
+      - name: logstash-bin
+        mountPath: /usr/share/logstash/bin
     logstashConfig:
       logstash.yml: |
         http.host: 0.0.0.0

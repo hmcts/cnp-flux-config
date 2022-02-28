@@ -3,8 +3,20 @@ kind: HelmRelease
 metadata:
   name: em-hrs-api
   annotations:
-    hmcts.github.com/prod-automated: enabled #set to disabled to use a non-prod image
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-569-*
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-569-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/em/hrs-api:pr-569-0e38468-20220227223640 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
       environment:
+        SHAREE_LINK_TTL: 1 #ttl in hours
+        JSON_CONSOLE_PRETTY_PRINT: true
+        LOG_OUTPUT: single
+        ROOT_LOGGING_LEVEL: DEBUG
+        LOG_LEVEL_SPRING_WEB: DEBUG
+        LOG_LEVEL_DM: DEBUG
+        REFORM_LOG_LEVEL: DEBUG
