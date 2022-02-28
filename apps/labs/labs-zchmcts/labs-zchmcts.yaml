@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: labs-zc-hmcts
+  name: labs-zchmcts
   namespace: labs
 spec:
-  releaseName: labs-zc-hmcts
+  releaseName: labs-zchmcts
   chart:
     spec:
-      chart: ./stable/labs-zc-hmcts
+      chart: ./stable/labs-zchmcts
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
@@ -15,5 +15,5 @@ spec:
       interval: 1m
   values:
     nodejs:
-      image: hmctssandbox.azurecr.io/labs/zc-hmcts:prod-2e241aa-20220224145248 # {"$imagepolicy": "flux-system:labs-zc-hmcts"}
+      image: hmctssandbox.azurecr.io/labs/zchmcts:prod-ea01e1a-20220224173053 # {"$imagepolicy": "flux-system:labs-zchmcts"}
       disableTraefikTls: true
