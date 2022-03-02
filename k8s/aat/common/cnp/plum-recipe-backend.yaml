@@ -14,7 +14,7 @@ spec:
     path: stable/plum-recipe-backend
   values:
     java:
-      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-1d8dde6-20220228134552 #{"$imagepolicy": "flux-system:plum-recipe-backend"}
+      image: hmctspublic.azurecr.io/plum/recipe-backend:prod-6e60af4-20220302154131 #{"$imagepolicy": "flux-system:plum-recipe-backend"}
       ingressHost: plum-recipe-backend.service.core-compute-aat.internal
       startupPeriod: 120
       startupFailureThreshold: 3
@@ -24,15 +24,15 @@ spec:
           SLACK_CHANNEL: "platops-build-notices"
           SLACK_NOTIFY_SUCCESS: "false"
       smoketestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-1d8dde6-20220228134552 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-6e60af4-20220302154131 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
         schedule: "10 0/1 * * *"
       functionaltestscron:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-1d8dde6-20220228134552 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-6e60af4-20220302154131 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
         schedule: "20 0/3 * * *"
       smoketests:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-1d8dde6-20220228134552 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-6e60af4-20220302154131 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
       functionaltests:
-        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-1d8dde6-20220228134552 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
+        image: hmctspublic.azurecr.io/plum/recipe-backend-test:prod-6e60af4-20220302154131 #{"$imagepolicy": "flux-system:plum-recipe-backend-recipe-backend-test"}
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
