@@ -1,16 +1,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: et-sya-frontend
+  name: et-sya
   namespace: et
 spec:
-  releaseName: et-sya-frontend
+  releaseName: et-sya
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
-    path: stable/et-sya-frontend
+    path: stable/et-sya
   values:
-    java:
+    nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/sya-frontend:latest #{"$imagepolicy": "flux-system:et-sya-frontend"}
+      image: hmctspublic.azurecr.io/et/sya:prod-9c34e4d-20220302101355 #{"$imagepolicy": "flux-system:et-sya"}
