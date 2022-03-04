@@ -25,7 +25,8 @@ PRODUCT=labs
 COMPONENT=$1
 NAMESPACE_DIR="../apps/${NAMESPACE}"
 COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
-ENVIRONMENT="sbox"
+ENVIRONMENT_SBOX="sbox"
+ENVIRONMENT_AAT="aat"
 
 cd "$(dirname "$0")"
 
@@ -49,7 +50,8 @@ function clean_up() {
   FILE_PATH="../${PRODUCT}-${COMPONENT}/image-repo.yaml" yq eval -i 'del( .resources[] | select( . == env(FILE_PATH)) )' ${NAMESPACE_DIR}/automation/kustomization.yaml
 
   # Remove reference to lab HR
-  NAMESPACE_PATH="../../${PRODUCT}-${COMPONENT}/${PRODUCT}-${COMPONENT}.yaml" yq eval -i 'del( .resources[] | select( . == env(NAMESPACE_PATH)) )' ${NAMESPACE_DIR}/sbox/base/kustomization.yaml
+  NAMESPACE_PATH="../../${PRODUCT}-${COMPONENT}/${PRODUCT}-${COMPONENT}.yaml" yq eval -i 'del( .resources[] | select( . == env(NAMESPACE_PATH)) )' ${NAMESPACE_DIR}/sbox/base/kustomization.yaml  
+  NAMESPACE_PATH="../../${PRODUCT}-${COMPONENT}/${PRODUCT}-${COMPONENT}.yaml" yq eval -i 'del( .resources[] | select( . == env(NAMESPACE_PATH)) )' ${NAMESPACE_DIR}/aat/base/kustomization.yaml
 
 }
 
