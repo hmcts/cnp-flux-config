@@ -26,8 +26,7 @@ COMPONENT=$1
 ACR=hmctssandbox
 NAMESPACE_DIR="../apps/${NAMESPACE}"
 COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
-ENVIRONMENT_SBOX="sbox"
-ENVIRONMENT_AAT="aat"
+ENVIRONMENT="sbox"
 LANGUAGE=${2}
 
 cd "$(dirname "$0")"
@@ -50,6 +49,5 @@ if [ -d "${COMPONENT_DIR}" ]; then
   exit 1
 else
   ../bin/v2/add-image-policies.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR}
-  ../bin/v2/add-helm-release.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR} ${LANGUAGE} ${ENVIRONMENT_SBOX}
-  ../bin/v2/add-helm-release.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR} ${LANGUAGE} ${ENVIRONMENT_AAT}
+  ../bin/v2/add-helm-release.sh ${NAMESPACE} ${PRODUCT} ${COMPONENT} ${ACR} ${LANGUAGE} ${ENVIRONMENT}
 fi
