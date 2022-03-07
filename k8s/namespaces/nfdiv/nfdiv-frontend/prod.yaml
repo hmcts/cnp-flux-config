@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfdiv-frontend
+spec:
+  releaseName: nfdiv-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/nfdiv-frontend
+  values:
+    nodejs:
+      registerAdditionalDns:
+        enabled: true
+        prefix: www
+        primaryIngressHost: end-civil-partnership.service.gov.uk
+      environment:
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net/
+        IDAM_WEB_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token'
