@@ -18,6 +18,8 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-admin/sbox.yaml
   apps/idam/idam-web-public/preview.yaml
   apps/idam/idam-web-public/sbox.yaml
+  apps/idam/idam-testing-support-api/preview.yaml
+  apps/idam/idam-testing-support-api/sbox.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   k8s/demo/*
