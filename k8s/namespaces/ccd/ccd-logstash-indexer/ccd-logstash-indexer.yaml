@@ -6,6 +6,14 @@ spec:
   releaseName: ccd-logstash-indexer
   values:
     replicas: 0  # Override value in env patches when required
+    logstashJavaOpts: "-Xms8g -Xmx16g"
+    resources:
+      requests:
+        cpu: "2000m"
+        memory: "8Gi"
+      limits:
+        cpu: "4000m"
+        memory: "16Gi"
     logstashPipeline:
       01_input.conf: |
         input {
