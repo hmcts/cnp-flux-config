@@ -78,7 +78,7 @@ spec:
             statement => "SELECT 'CAVEAT' as legacy_case_type, id, caveat_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from caveats_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -97,7 +97,7 @@ spec:
             statement => "SELECT 'STANDING SEARCH' as legacy_case_type, id, ss_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from standing_searches_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -116,7 +116,7 @@ spec:
             statement => "select 'WILL' as legacy_case_type, id, rk_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from wills_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -135,7 +135,7 @@ spec:
             statement => "select 'LEGACY APPLICATION' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -154,7 +154,7 @@ spec:
             statement => "select 'LEGACY GRANT' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_derived_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
       02_filter.conf: |
