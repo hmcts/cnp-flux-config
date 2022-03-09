@@ -16,7 +16,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-8b433b2-20220204144814 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2519-67f0e01-20220309104225 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
       aadIdentityName: sscs
       environment:
         CREATE_CCD_ENDPOINT: true
@@ -32,8 +32,9 @@ spec:
         POSTPONEMENTS_FEATURE: true
         DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net
         SSCS2_FEATURE: true
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         WORK_ALLOCATION_FEATURE: true
+        RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
