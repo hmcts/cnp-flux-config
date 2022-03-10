@@ -6,14 +6,6 @@ spec:
   releaseName: ccd-logstash-indexer
   values:
     replicas: 0  # Override value in env patches when required
-    logstashJavaOpts: "-Xms4g -Xmx10g"
-    resources:
-      requests:
-        cpu: "2000m"
-        memory: "4Gi"
-      limits:
-        cpu: "4000m"
-        memory: "10Gi"
     logstashPipeline:
       01_input.conf: |
         input {
@@ -26,7 +18,7 @@ spec:
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_default_timezone => "UTC"
             jdbc_paging_enabled => true
-            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data order by id"
+            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data where id > 1960517 order by id"
             clean_run => false
           }
         }
