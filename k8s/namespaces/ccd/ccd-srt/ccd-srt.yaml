@@ -6,11 +6,10 @@ spec:
   releaseName: ccd-srt
   rollback:
     enable: false
-    force: true
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 7.1.0
+    version: 5.0.0
   values:
     tags:
       idam-pr: false
@@ -69,7 +68,6 @@ spec:
           REDIS_PORT: 6379
           REDIS_PASSWORD: fake-password
           REDIS_SSL_ENABLED: ""
-        keyVaults:
       redis:
         enabled: true
     ccd-case-print-service:
@@ -98,9 +96,6 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-5c52fd1-20220304135358 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
-    dm-store:
-      java:
-        keyVaults: []
     elasticsearch:
       persistence:
         enabled: true
