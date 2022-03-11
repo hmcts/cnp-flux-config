@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hmc-cft-hearing-service
+spec:
+  releaseName: hmc-cft-hearing-service
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/hmc-cft-hearing-service
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/hmc/cft-hearing-service:prod-c58f341-20220202085911 #{"$imagepolicy": "flux-system:hmc-cft-hearing-service"}
