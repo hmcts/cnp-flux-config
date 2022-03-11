@@ -15,7 +15,7 @@ spec:
     version: 6.8.13
   values:
     image: "hmctspublic.azurecr.io/imported/logstash/logstash"
-    imageTag: "7.16.1"
+    imageTag: "7.16.1-probateman"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
@@ -68,7 +68,7 @@ spec:
             jdbc_user => "${DB_USER}"
             jdbc_password => "${DB_PWD}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/postgresql.jar"
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_page_size => "20000"
             jdbc_default_timezone => "UTC"
@@ -78,7 +78,7 @@ spec:
             statement => "SELECT 'CAVEAT' as legacy_case_type, id, caveat_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from caveats_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -87,7 +87,7 @@ spec:
             jdbc_user => "${DB_USER}"
             jdbc_password => "${DB_PWD}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/postgresql.jar"
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_page_size => "20000"
             jdbc_default_timezone => "UTC"
@@ -97,7 +97,7 @@ spec:
             statement => "SELECT 'STANDING SEARCH' as legacy_case_type, id, ss_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from standing_searches_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -106,7 +106,7 @@ spec:
             jdbc_user => "${DB_USER}"
             jdbc_password => "${DB_PWD}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/postgresql.jar"
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_page_size => "20000"
             jdbc_default_timezone => "UTC"
@@ -116,7 +116,7 @@ spec:
             statement => "select 'WILL' as legacy_case_type, id, rk_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from wills_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -125,7 +125,7 @@ spec:
             jdbc_user => "${DB_USER}"
             jdbc_password => "${DB_PWD}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/postgresql.jar"
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_page_size => "20000"
             jdbc_default_timezone => "UTC"
@@ -135,7 +135,7 @@ spec:
             statement => "select 'LEGACY APPLICATION' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
         input  {
@@ -144,7 +144,7 @@ spec:
             jdbc_user => "${DB_USER}"
             jdbc_password => "${DB_PWD}"
             jdbc_validate_connection => true
-            jdbc_driver_library => "/usr/share/logstash/postgresql.jar"
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_page_size => "20000"
             jdbc_default_timezone => "UTC"
@@ -154,7 +154,7 @@ spec:
             statement => "select 'LEGACY GRANT' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_derived_flat where (last_modified > :sql_last_value)"
             clean_run => false
             last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
-            schedule => "/2 * * * * *"
+            schedule => "* * * * * *"
           }
         }
       02_filter.conf: |
