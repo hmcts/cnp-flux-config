@@ -42,14 +42,13 @@ patches:
   - path: ../demo-helmrelease.yaml
     target:
       kind: HelmRelease
-patchesJson6902:
-  - target:
-    group: helm.fluxcd.io
-    version: v1
-    kind: HelmRelease
-    name: ccd-srt
-    namespace: ccd
-  patch: |-
-    - op: replace
-      path: "/spec/values/global/enableKeyVaults"
-      value: false
+  - patch: |-
+      - op: replace
+        path: "/spec/values/global/enableKeyVaults"
+        value: false
+    target:
+      group: helm.fluxcd.io
+      version: v1
+      kind: HelmRelease
+      name: ccd-srt
+      namespace: ccd
