@@ -6,7 +6,6 @@ spec:
   releaseName: ccd-srt
   rollback:
     enable: false
-    force: true
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
@@ -26,7 +25,7 @@ spec:
       activityApi:
         enabled: true
       blobstorage:
-        enabled: true
+        enabled: false
       printService:
         enabled: true
       elastic:
@@ -42,7 +41,7 @@ spec:
       enableKeyVaults: false
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-1346ee0-20220309100732 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-ac09f1c-20220314073053 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -69,15 +68,14 @@ spec:
           REDIS_PORT: 6379
           REDIS_PASSWORD: fake-password
           REDIS_SSL_ENABLED: ""
-        keyVaults:
       redis:
         enabled: true
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-b0372b6-20220307125327 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-6005f9d-20220310133047 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3c84a6a-20220304135808 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-a43ee56-20220309195042 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -86,10 +84,10 @@ spec:
           STORAGE_ACCOUNT_KEY:
             disabled: false
         environment:
-          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: false
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-c3a41f1-20220307133138 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e473862-20220310182720 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -98,9 +96,6 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-5c52fd1-20220304135358 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
-    dm-store:
-      java:
-        keyVaults: []
     elasticsearch:
       persistence:
         enabled: true
