@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prl-cos
+  namespace: private-law
+spec:
+  releaseName: prl-cos
+  values:
+    java:
+      readinessDelay: 45
+      readinessTimeout: 10
+      readinessPeriod: 10
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/prl/cos:latest #{"$imagepolicy": "flux-system:prl-cos"}

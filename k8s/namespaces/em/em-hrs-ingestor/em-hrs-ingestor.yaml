@@ -15,8 +15,10 @@ spec:
     job:
       schedule: "0/22 * * * *"
       useInterpodAntiAffinity: true
-      memoryLimits: "4096Mi"
-      cpuLimits: "2000m"
-      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-d326d61-20220222183536 #{"$imagepolicy": "flux-system:em-hrs-ingestor"}
+      cpuLimits: "4000m"
+      cpuRequests: "2000m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "1024Mi"
+      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-4f7f456-20220314104439 #{"$imagepolicy": "flux-system:em-hrs-ingestor"}
       environment:
         MAX_FILES_TO_PROCESS: 50
