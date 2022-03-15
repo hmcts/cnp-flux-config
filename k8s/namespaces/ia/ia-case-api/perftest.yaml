@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-case-api
+  namespace: ia
 spec:
   values:
+    global:
+      environment: perftest
     java:
       image: hmctspublic.azurecr.io/ia/case-api:pr-1008-36a43df-20220310104417 #{"$imagepolicy": "flux-system:perftest-ia-case-api"}
       environment:

@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ia-aip-frontend
+  namespace: ia
+spec:
+  values:
+    nodejs:
+      ingressHost: immigration-appeal.perftest.platform.hmcts.net
+      environment:
+        IDAM_WEB_URL: "https://idam-web-public.perftest.platform.hmcts.net"
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+    global:
+      environment: perftest

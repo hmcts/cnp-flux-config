@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-home-office-integration-api
+  namespace: ia
 spec:
   values:
+    global:
+      environment: prod
     java:
       environment:
         OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"

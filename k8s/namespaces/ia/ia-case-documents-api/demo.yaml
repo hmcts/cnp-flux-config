@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-case-documents-api
+  namespace: ia
 spec:
   values:
+    global:
+      environment: demo
     java:
       image: hmctspublic.azurecr.io/ia/case-documents-api:prod-0a6b3cb-20220308182047 #{"$imagepolicy": "flux-system:ia-case-documents-api"}
       environment:

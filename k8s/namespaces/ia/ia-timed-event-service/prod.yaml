@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-timed-event-service
+  namespace: ia
 spec:
   values:
+    global:
+      environment: prod
     java:
       environment:
         IDAM_URL: "https://hmcts-access.service.gov.uk"

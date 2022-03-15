@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-case-api
+  namespace: ia
 spec:
   values:
+    global:
+      environment: ithc
     java:
       image: hmctspublic.azurecr.io/ia/case-api:pr-1008-111477d-20220210131026 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
       environment:

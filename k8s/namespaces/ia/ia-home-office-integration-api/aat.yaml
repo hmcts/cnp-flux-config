@@ -2,8 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ia-home-office-integration-api
+  namespace: ia
 spec:
   values:
+    global:
+      environment: aat
     java:
       environment:
         HOME_OFFICE_ENDPOINT: "http://ia-home-office-mock-api-aat.service.core-compute-aat.internal"
