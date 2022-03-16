@@ -1,21 +1,11 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccpay-payment-app
-  namespace: fees-pay
+  name: ccpay-payment-api
 spec:
   releaseName: ccpay-payment-api
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/payment-api
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/payment/api:pr-972-bbd9000-20220119123414 #{"$imagepolicy": "flux-system:ithc-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
@@ -28,7 +18,3 @@ spec:
         PBA_CONFIG1_SERVICE_NAMES: dummy
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         REFUND_API_URL: http://ccpay-refunds-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-    global:
-      environment: ithc
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
