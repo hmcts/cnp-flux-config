@@ -16,9 +16,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-b7c4c04-20220315151528 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-16bc1ce-20220316203327 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.aat.platform.hmcts.net
+        PROBATE_POSTGRESQL_USER: probateman_user@probatemandb-postgres-db-v11-aat
+        PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-db-v11-aat.postgres.database.azure.com
         DUMMY: trigger_refresh
     global:
       environment: aat
