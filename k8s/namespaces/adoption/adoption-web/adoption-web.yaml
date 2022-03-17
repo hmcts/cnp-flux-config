@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: adoption-web
-  namespace: adoption
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: adoption-web
   rollback:
@@ -23,4 +19,3 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/adoption/web:prod-0674222-20220316190740 #{"$imagepolicy": "flux-system:adoption-web"}
-      # ingressHost: adoption-web.aat.platform.hmcts.net
