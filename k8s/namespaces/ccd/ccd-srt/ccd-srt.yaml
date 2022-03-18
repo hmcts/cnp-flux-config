@@ -21,11 +21,11 @@ spec:
       draftStore:
         enabled: true
       dmStore:
-        enabled: true
+        enabled: false
       activityApi:
         enabled: true
       blobstorage:
-        enabled: true
+        enabled: false
       printService:
         enabled: true
       elastic:
@@ -75,7 +75,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/case-print-service:prod-6005f9d-20220310133047 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-2055999-20220316132322 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-915b41a-20220318140850 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -84,10 +84,10 @@ spec:
           STORAGE_ACCOUNT_KEY:
             disabled: false
         environment:
-          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: false
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e473862-20220310182720 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0dcfff0-20220317171224 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
