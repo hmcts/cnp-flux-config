@@ -2,15 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: fpl-case-service
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-3421-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-3421-8475484-20220318120910
       environment:
         RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
