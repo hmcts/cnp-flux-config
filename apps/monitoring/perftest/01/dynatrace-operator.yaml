@@ -19,20 +19,6 @@ spec:
     - kind: Secret
       name: oneagent-values
   values:
-    apiUrl: https://yrk32651.live.dynatrace.com/api
-    networkZone: 'azure.cft' # uses Active Gates from CFT
-    operator:
-      tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-      nodeSelector:
-        agentpool: system
-      classicFullStack:
-        enabled: true
-        tolerations:
-          - effect: NoSchedule
-            key: CriticalAddonsOnly
-            operator: Equal
-            value: "true"
+    platform: "kubernetes"
+    oneagent:
+      apiUrl: https://yrk32651.live.dynatrace.com/api
