@@ -12,10 +12,14 @@ spec:
         CDAM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         PRIVATELAW_ENABLED: true
         QUEUE_NOTIFICATIONS_NAMESPACE: reform-scan-servicebus-demo-premium
+        BULK_SCANNING_DB_USER_NAME: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
+        BULK_SCANNING_DB_HOST: bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
+        FLYWAY_USER: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
       keyVaults:
         "bulk-scan":
           secrets:
-            - name: processor-POSTGRES-PASS
+            - name: processor-POSTGRES-PASS-V11
               alias: BULK_SCANNING_DB_PASSWORD
             - name: s2s-secret
               alias: S2S_SECRET
