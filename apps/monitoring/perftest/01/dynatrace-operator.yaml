@@ -3,29 +3,27 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: dynatrace-operator
-  namespace: monitoring
+  namespace: dynatrace
 spec:
   chart:
     spec:
       sourceRef:
-        namespace: monitoring
+        namespace: dynatrace
   values:
-    platform: "kubernetes"
-    oneagent:
-      apiUrl: https://yrk32651.live.dynatrace.com/api
-      networkZone: 'azure.cft' # uses Active Gates from CFT
-      operator:
-        tolerations:
-          - effect: NoSchedule
-            key: CriticalAddonsOnly
-            operator: Equal
-            value: "true"
-        nodeSelector:
-          agentpool: system
-        classicFullStack:
-          enabled: true
-          tolerations:
-            - effect: NoSchedule
-              key: CriticalAddonsOnly
-              operator: Equal
-              value: "true"
+    apiUrl: https://yrk32651.live.dynatrace.com/api
+    networkZone: 'azure.cft' # uses Active Gates from CFT
+    operator:
+      tolerations:
+        - effect: NoSchedule
+          key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+      nodeSelector:
+        agentpool: system
+    classicFullStack:
+      enabled: true
+      tolerations:
+        - effect: NoSchedule
+          key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
