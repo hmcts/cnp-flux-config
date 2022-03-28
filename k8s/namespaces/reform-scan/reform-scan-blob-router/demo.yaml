@@ -15,5 +15,47 @@ spec:
         STORAGE_URL: https://reformscan.demo.platform.hmcts.net
         STORAGE_BULKSCAN_URL: https://bulkscandemo.blob.core.windows.net
         SCHEDULING_TASK_SCAN_ENABLED: true
+        DELETE_TO_REFRESH_PODS: false
         NFD_ENABLED: true
         PRIVATELAW_ENABLED: true
+        NOTIFICATIONS_QUEUE_NAMESPACE: reform-scan-servicebus-demo-premium
+      keyVaults:
+        reform-scan:
+          resourceGroup: reform-scan
+          secrets:
+            - name: app-insights-instrumentation-key
+              alias: azure.application-insights.instrumentation-key
+            - name: reports-email-username
+              alias: SMTP_USERNAME
+            - name: reports-email-password
+              alias: SMTP_PASSWORD
+            - name: reform-reports-recipients
+              alias: REPORTS_RECIPIENTS
+            - name: reconciliation-api-key
+              alias: RECONCILIATION_API_KEY
+            - name: reconciliation-report-api-key
+              alias: RECONCILIATION_REPORT_API_KEY
+            - name: s2s-secret-blob-router
+              alias: S2S_SECRET
+            - name: reconciliation-report-recipients
+              alias: RECONCILIATION_REPORT_RECIPIENTS
+            - name: storage-account-name
+              alias: storage.account-name
+            - name: storage-account-primary-key
+              alias: storage.account-key
+            - name: storage-account-secondary-key
+              alias: storage.account-secondary-key
+            - name: crime-storage-connection-string
+              alias: storage.crime.connection-string
+            - name: blob-router-POSTGRES-PASS
+              alias: DB_PASSWORD
+            - name: blob-router-POSTGRES-USER
+              alias: DB_USER
+            - name: blob-router-POSTGRES-HOST
+              alias: DB_HOST
+            - name: blob-router-POSTGRES-PORT
+              alias: DB_PORT
+            - name: blob-router-POSTGRES-DATABASE
+              alias: DB_NAME
+            - name: notification-queue-send-shared-access-key-premium
+              alias: NOTIFICATIONS_QUEUE_SEND_ACCESS_KEY
