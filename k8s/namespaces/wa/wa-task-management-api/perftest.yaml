@@ -5,6 +5,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/task-management-api:prod-2eed28f-20220301115357 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+      replicas: 4
+      image: hmctspublic.azurecr.io/wa/task-management-api:pr-545-10483e7-20220325073731 #{"$imagepolicy": "flux-system:perftest-wa-task-management-api"}
+      memoryLimits: "4096Mi"
+      memoryRequests: "2048Mi"
+      cpuLimits: "4000m"
+      cpuRequests: "2000m"
       environment:
         REFRESH_FLAG: ""
