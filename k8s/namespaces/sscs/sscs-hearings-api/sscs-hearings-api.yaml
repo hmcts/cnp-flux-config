@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-hearings-api
+spec:
+  releaseName: sscs-hearings-api
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-hearings-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
