@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-ccd-callback-orchestrator
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-07877d6-20220321224517 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
+      environment:
+        TEST_PROPERTY: true
+        DUMMY_PROPERTY: true
+    global:
+      environment: aat
