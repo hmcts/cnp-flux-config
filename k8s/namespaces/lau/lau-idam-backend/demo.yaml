@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: lau-idam-backend
+spec:
+  releaseName: lau-idam-backend
+  values:
+    java:
+      image: hmctspublic.azurecr.io/lau/idam-backend:pr-117-3d4ff90-20220329112634 #{"$imagepolicy": "flux-system:lau-idam-backend"}
+      environment:
+        DUMMY_RESTART_VAR: 1

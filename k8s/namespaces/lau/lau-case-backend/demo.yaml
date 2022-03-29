@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: lau-case-backend
+spec:
+  releaseName: lau-case-backend
+  values:
+    java:
+      image: hmctspublic.azurecr.io/lau/case-backend:pr-89-49938a2-20220329112617 #{"$imagepolicy": "flux-system:lau-case-backend"}
+      environment:
+        DUMMY_RESTART_VAR: 1
