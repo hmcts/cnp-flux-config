@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-ad-hoc-pending-termination
+  fluxcd.io/automated: "true"
+  fluxcd.io/tag.java: glob:pr-72-*
+  hmcts.github.com/prod-automated: disabled
+spec:
+  releaseName: wa-task-batch-ad-hoc-pending-termination
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/wa-task-batch-service
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/wa/task-batch-service:pr-72-fda910a-20220328140750 #{"$imagepolicy": "flux-system:wa-task-batch-ad-hoc-pending-termination"}
