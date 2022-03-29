@@ -5,30 +5,9 @@ metadata:
   name: dynatrace-operator
   namespace: dynatrace
 spec:
-  releaseName: dynatrace-operator
-  interval: 5m
-  chart:
-    spec:
-      chart: dynatrace-operator
-      sourceRef:
-        kind: HelmRepository
-        name: dynatrace-operator2
-        namespace: dynatrace
   values:
-    apiUrl: https://yrk32651.live.dynatrace.com/api
-    networkZone: 'azure.cft' # uses Active Gates from CFT.
-    operator:
-      tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
-      nodeSelector:
-        agentpool: system
     classicFullStack:
-      enabled: true
-      tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"
+      args:
+        - --set-host-group=PERF_CFT
+        - --set-network-zone=azure.cft
+        - --set-host-id-source=ip-addresses
