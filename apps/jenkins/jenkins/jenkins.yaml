@@ -12,7 +12,12 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: "dbhhxp"
+      tag: "dbnpun"
+      containerSecurityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+        allowPrivilegeEscalation: true
       podSecurityContextOverride:
         runAsUser: 0
       imagePullPolicy: "IfNotPresent"
@@ -36,7 +41,28 @@ spec:
           cpu: "2000m"
           memory: "4096Mi"
       javaOpts: >-
-        -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -XX:+UseG1GC -XX:+AlwaysPreTouch -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/jenkins_home/logs -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties -Djenkins.azure-keyvault.uami.enabled=true -Djenkins.ui.refresh=true -Djenkins.model.Jenkins.logStartupPerformance=true -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true -Dkubernetes.websocket.ping.interval=60000 -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Djava.net.preferIPv4Stack=true -Dhudson.model.WorkspaceCleanupThread.retainForDays=2 -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
+        -XX:InitialRAMPercentage=30.0
+        -XX:MaxRAMPercentage=65.0
+        -XX:MinRAMPercentage=30.0
+        -XX:+UseG1GC
+        -XX:+AlwaysPreTouch
+        -XX:+HeapDumpOnOutOfMemoryError
+        -XX:HeapDumpPath=/var/jenkins_home/logs
+        -XX:+UseStringDeduplication
+        -XX:+ParallelRefProcEnabled
+        -XX:+DisableExplicitGC
+        -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/logs/gc.log::filecount=5,filesize=40M
+        -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true
+        -Dkubernetes.websocket.ping.interval=60000
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Djava.net.preferIPv4Stack=true
+        -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
+        -Dcom.cloudbees.hudson.plugins.folder.computed.FolderComputation.EVENT_LOG_MAX_SIZE=15000
+        -Dcom.cloudbees.hudson.plugins.folder.computed.FolderComputation.BACKUP_LOG_COUNT=10
       installPlugins: false
       # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
       # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
@@ -425,6 +451,11 @@ spec:
         labels: {}
         annotations:
           kubernetes.io/ingress.class: traefik
+      secondaryingress:
+        enabled: true
+        paths: ["/"]
+        annotations:
+          kubernetes.io/ingress.class: traefik
     agent:
       enabled: false
     persistence:
@@ -463,7 +494,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 3.8.8
+      version: 3.11.8
       sourceRef:
         kind: HelmRepository
         name: jenkins

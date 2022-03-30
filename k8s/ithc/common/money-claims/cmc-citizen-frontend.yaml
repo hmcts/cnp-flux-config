@@ -9,14 +9,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc-citizen-frontend
-    version: 3.3.7
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/cmc-citizen-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-f34d88a-20220309192433 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-83e675f-20220330121349 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
       ingressHost: moneyclaims.ithc.platform.hmcts.net
       environment:
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
