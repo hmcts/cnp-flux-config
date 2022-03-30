@@ -9,16 +9,6 @@ spec:
     java:
       image: hmctspublic.azurecr.io/idam/web-admin:preview-ab22af9-20220321160645
       ingressHost: idam-web-admin.ithc.platform.hmcts.net
-      aadIdentityName: idam
-      useInterpodAntiAffinity: true
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.ithc.platform.hmcts.net
         STRATEGIC_PUBLIC_URL: https://idam-web-public.ithc.platform.hmcts.net
-  chart:
-    spec:
-      chart: idam-web-admin
-      version: 0.2.8
-      sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
-        namespace: flux-system
