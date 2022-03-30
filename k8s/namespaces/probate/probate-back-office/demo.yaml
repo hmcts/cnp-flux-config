@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-back-office
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/probate/back-office:prod-0870731-20220330105002 #{"$imagepolicy": "flux-system:probate-back-office"}
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
+        VAR1_DUMMY: DUMMY2
+        PROBATE_POSTGRESQL_USER: probateman_user@probatemandb-postgres-db-v11-demo
+        PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-db-v11-demo.postgres.database.azure.com
+        EXCEPTED_ESTATE_DATE_OF_DEATH: 2021-11-01
