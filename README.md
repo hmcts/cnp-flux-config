@@ -65,4 +65,4 @@ flux install --export --components image-reflector-controller,image-automation-c
 
 Currently, `image-automation-components.yaml` will contain some duplication like `namespace` and `clusterrole` and they need to be removed manually
 
-test2
+test23
