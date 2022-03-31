@@ -1,25 +1,15 @@
----
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
 spec:
   releaseName: idam-api
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: idam-api
-    version: 0.4.3
   values:
     java:
       image: hmctspublic.azurecr.io/idam/api:prod-f328bc2-20220329134034
-      imagePullPolicy: Always
       ingressHost: idam-api.ithc.platform.hmcts.net
       replicas: 1
-      aadIdentityName: idam
       environment:
         TESTING_SUPPORT_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
