@@ -21,14 +21,13 @@ spec:
       name: traefik-values
   values:
     imageTag: 1.7.26
-    loadBalancerIP: 51.11.5.163
     kubernetes:
       ingressClass: traefik-no-proxy
       ingressEndpoint:
         useDefaultPublishedService: true
     service:
       annotations:
-        service.beta.kubernetes.io/azure-load-balancer-resource-group: cft-demo-network-rg
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     dashboard:
       enabled: true
       domain: traefik00-no-proxy.demo.platform.hmcts.net
