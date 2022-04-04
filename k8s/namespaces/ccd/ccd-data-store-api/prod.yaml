@@ -6,11 +6,11 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      replicas: 12
+      replicas: 15
       autoscaling:
         enabled: false
-      memoryLimits: "4096Mi"
-      cpuLimits: "4000m"
+      memoryLimits: "5120Mi"
+      cpuLimits: "5000m"
       environment:
         CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
         CCD_DEFAULTPRINTURL: "https://return-case-doc.ccd.platform.hmcts.net/jurisdictions/:jid/case-types/:ctid/cases/:cid"
@@ -24,6 +24,7 @@ spec:
         ELASTIC_SEARCH_REQUEST_TIMEOUT: 16000
         SPRING_FLYWAY_ENABLED: false
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
+        DATA_STORE_DB_MAX_POOL_SIZE: 30
         IDAM_USER_URL: "https://hmcts-access.service.gov.uk"
         IDAM_API_BASE_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
