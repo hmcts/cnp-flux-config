@@ -4,7 +4,10 @@ metadata:
   name: dynatrace
   namespace: flux-system
 spec:
+  interval: 10m
   path: ./apps/dynatrace/${ENVIRONMENT}/base
+  dependsOn:
+    - name: dynatrace-crd
   postBuild:
     substitute:
       NAMESPACE: "dynatrace"
