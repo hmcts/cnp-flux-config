@@ -1,0 +1,13 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: adoption-web
+  namespace: adoption
+spec:
+  values:
+    nodejs:
+      ingressHost: apply-for-adoption.platform.hmcts.net
+      environment:
+        PCQ_ENABLED: "true"
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
