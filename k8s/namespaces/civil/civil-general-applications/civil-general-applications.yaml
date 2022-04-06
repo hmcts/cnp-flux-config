@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: civil-general-applications
+spec:
+  releaseName: civil-general-applications
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/civil-general-applications
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/civil/general-applications:latest #{"$imagepolicy": "flux-system:civil-general-applications"}
