@@ -124,7 +124,7 @@ ENV=<test>
 kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run=client -o yaml > tmp/traefiksecret.yaml
 mkdir -p apps/admin/traefik/$ENV
 mkdir -p apps/admin/traefik/$ENV/base
-kubeseal --format=yaml --cert=apps/<env>/pub-cert.pem <  tmp/traefiksecret.yaml >  apps/admin/traefik/$ENV/base/traefik-values.yaml
+kubeseal --format=yaml --cert=cluster/${ENV}/pub-cert.pem <  tmp/traefiksecret.yaml >  apps/admin/$ENV/base/traefik-values.yaml
 ```
 
 In demo, traefik-forward-auth is using the following sealed secret:
