@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dead-letter-queue-process
+spec:
+  values:
+    job:
+      schedule: "0 0 * * *"
+      environment:
+        REPORT_NAME: dead-letter-queue-process
+        DUMMY_RESTART_VAR: true
+    global:
+      environment: prod
