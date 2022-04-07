@@ -2,12 +2,16 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-data-store-api
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:prod-*
+    hmcts.github.com/prod-automated: enabled
 spec:
   releaseName: ccd-data-store-api
   values:
     java:
       replicas: 12
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-1835-1b495ff-20220328171425 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-4b82d7f-20220401113344 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: false
       memoryLimits: "4096Mi"
