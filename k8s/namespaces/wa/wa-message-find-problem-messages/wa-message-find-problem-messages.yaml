@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-message-find-problem-messages
+spec:
+  releaseName: wa-message-find-problem-messages
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/wa-message-cron-service
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/wa/wa-message-cron-service:prod-d84af96-20220407123809 #{"$imagepolicy": "flux-system:wa-message-find-problem-messages"}
+      environment:
+        JOB_NAME: FIND_PROBLEM_MESSAGES
