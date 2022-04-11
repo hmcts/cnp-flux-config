@@ -12,10 +12,10 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: idam-api
-    version: 0.4.3
+    version: 0.4.5
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-f328bc2-20220329134034
+      image: hmctspublic.azurecr.io/idam/api:preview-55d084b-20220408100234
       imagePullPolicy: Always
       replicas: 4
       ingressHost: idam-api.perftest.platform.hmcts.net
@@ -37,6 +37,7 @@ spec:
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
         LOG_AND_AUDIT_IDAM_ENABLED: true
+        FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
     keycloak:
       enabled: false
     global:
