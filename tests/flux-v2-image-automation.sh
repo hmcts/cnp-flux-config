@@ -7,20 +7,7 @@ kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize
 EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/docmosis.yaml
   apps/docmosis/docmosis/aat.yaml
-  apps/docmosis/docmosis/demo.yaml
-  apps/docmosis/docmosis/ithc.yaml
-  apps/docmosis/docmosis/perftest.yaml
-  apps/docmosis/docmosis/sbox.yaml
   apps/flux-system/base/image-automation-components.yaml
-  apps/idam/idam-api/preview.yaml
-  apps/idam/idam-api/sbox.yaml
-  apps/idam/idam-web-admin/preview.yaml
-  apps/idam/idam-web-admin/ithc.yaml
-  apps/idam/idam-web-admin/sbox.yaml
-  apps/idam/idam-web-public/preview.yaml
-  apps/idam/idam-web-public/sbox.yaml
-  apps/idam/idam-testing-support-api/preview.yaml
-  apps/idam/idam-testing-support-api/sbox.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   k8s/demo/*
@@ -28,6 +15,8 @@ EXCLUSIONS_LIST=(
   k8s/perftest/*
   k8s/ithc/*
   *ithc.yaml
+  *preview.yaml
+  *sbox.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
