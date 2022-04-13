@@ -8,18 +8,14 @@ spec:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: base
     version: 0.1.2
-  containers:
-    resources:
-      limits:
-        cpu: 2000m
-        memory: 3072Mi
-      requests:
-        cpu: 1000m
-        memory: 1024Mi
   values:
     language: java
     applicationPort: 8080
     replicas: 2
+    memoryRequests: 1024Mi
+    memoryLimits: 3072Mi
+    cpuLimits: 2000m
+    cpuRequests: 1000m
     useInterpodAntiAffinity: true
     readinessPath: /api/ping
     livenessPath: /api/ping
