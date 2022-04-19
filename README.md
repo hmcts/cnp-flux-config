@@ -11,8 +11,8 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 | Environment  | Instances running | Status |
 | ------------- | ------------- | ------------- |
-| Prod | Flux V1  | Not Migrated
-| AAT |  Flux V1  | Not Migrated
+| Prod | Flux V1 & V2  | Migration in progress
+| AAT |  Flux V1 & V2  | Migration in progress
 | Demo|  Flux V1 & V2  | Migration in progress
 | ITHC | Flux V1 & V2 | Migration in progress
 | Perftest | Flux V1 & V2 | Migration in progress

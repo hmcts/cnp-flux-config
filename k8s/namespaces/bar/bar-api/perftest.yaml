@@ -6,7 +6,8 @@ spec:
   releaseName: bar-api
   values:
     java:
+      image: hmctspublic.azurecr.io/bar/api:pr-520-197f43e-20220323080830 #{"$imagepolicy": "flux-system:perftest-bar-api"}
       environment:
-        DUMMY_RESTART_VAR: false
+        DUMMY_RESTART_VAR: true
         POSTGRES_HOST: bar-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_USERNAME: bar@bar-postgres-db-v11-{{ .Values.global.environment }}

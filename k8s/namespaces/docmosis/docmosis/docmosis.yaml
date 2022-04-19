@@ -12,12 +12,21 @@ spec:
     language: java
     applicationPort: 8080
     replicas: 2
+    memoryRequests: 1024Mi
+    memoryLimits: 3072Mi
+    cpuLimits: 2000m
+    cpuRequests: 1000m
     useInterpodAntiAffinity: true
     readinessPath: /api/ping
     livenessPath: /api/ping
     ingressSessionAffinity:
       enabled: true
     envFromSecret: docmosis-secret
-    image: hmctsprivate.azurecr.io/docmosis:prod-22b7f9f-215983 #{"$imagepolicy": "flux-system:docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:prod-b8d60d9-223541 #{"$imagepolicy": "flux-system:docmosis"}
     environment:
       VAR_TA: trigger1
+    java:
+      memoryRequests: '1024Mi'
+      cpuRequests: '1000m'
+      memoryLimits: '3072Mi'
+      cpuLimits: '2000m'
