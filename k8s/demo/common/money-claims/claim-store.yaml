@@ -9,14 +9,14 @@ spec:
     enable: true
     retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc-claim-store
-    version: 4.1.28
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/cmc-claim-store
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-95c535e-20220304113541 #{"$imagepolicy": "flux-system:cmc-claim-store"}
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2578-1ddd282-20220412171157 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc

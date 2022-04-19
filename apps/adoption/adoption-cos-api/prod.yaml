@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: adoption-cos-api
+spec:
+  releaseName: adoption-cos-api
+  interval: 1m
+  values:
+    java:
+      environment:
+        APP_INSIGHTS_KEY: 'e792bfea-7fdb-492a-92f6-5501c29b2fe3'
+        NOTIFY_TEMPLATE_SIGN_IN_ADOPTION_URL: https://apply-for-adoption.platform.hmcts.net/
+        IDAM_API_REDIRECT_URL: https://apply-for-adoption.platform.hmcts.net/receiver
+        IDAM_API_BASEURL: https://idam-api.platform.hmcts.net
