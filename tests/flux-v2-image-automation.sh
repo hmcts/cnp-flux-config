@@ -9,14 +9,17 @@ EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/aat.yaml
   apps/flux-system/base/image-automation-components.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
-  *demo*.yaml
+  *demo.yaml
+  *demo-0*.yaml
   k8s/demo/*
-  *perftest*.yaml
+  *perftest.yaml
+  *perftest-0*.yaml
   k8s/perftest/*
   k8s/ithc/*
-  *ithc*.yaml
-  *preview*.yaml
-  *sbox*.yaml
+  *ithc.yaml
+  *ithc-0*.yaml
+  *preview.yaml
+  *sbox.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
