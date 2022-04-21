@@ -23,6 +23,7 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-testing-support-api/sbox.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
+  *demo-0*.yaml
   k8s/demo/*
   *perftest.yaml
   k8s/perftest/*
