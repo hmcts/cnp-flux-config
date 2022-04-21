@@ -3,15 +3,10 @@ kind: ImagePolicy
 metadata:
   name: demo-fpl-case-service
   annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-3241-*
     hmcts.github.com/prod-automated: disabled
 spec:
-  values:
-    java:
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-3241-java-55d44dc596-lkpjs
   filterTags:
-    pattern: '^pr-3419-[a-f0-9]+-(?P<ts>[0-9]+)'
+    pattern: '^pr-3241-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
