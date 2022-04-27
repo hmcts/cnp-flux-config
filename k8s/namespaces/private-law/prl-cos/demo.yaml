@@ -3,6 +3,9 @@ kind: HelmRelease
 metadata:
   name: prl-cos
   namespace: private-law
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: prl-cos
   rollback:
@@ -23,7 +26,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-abacdf0-20220422171434 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-294-3a41e90-20220427115350 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
