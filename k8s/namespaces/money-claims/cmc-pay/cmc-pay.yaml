@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-pay
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    repository.fluxcd.io/payment-api: payment-api.java.image
+    filter.fluxcd.io/payment-api: glob:prod-*
+    repository.fluxcd.io/fees-register-api: fees-register-api.java.image
+    filter.fluxcd.io/fees-register-api: glob:prod-*
+spec:
+  releaseName: cmc-pay
