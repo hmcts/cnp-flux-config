@@ -7,7 +7,16 @@ spec:
   interval: 1m
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/adoption/web:prod-183a556-20220408163520 #{"$imagepolicy": "flux-system:adoption-web"}
+      cpuLimits: "1000m"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "512Mi"
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/adoption/web:prod-3a93917-20220429160407 #{"$imagepolicy": "flux-system:adoption-web"}
   chart:
     spec:
       chart: ./stable/adoption-web
