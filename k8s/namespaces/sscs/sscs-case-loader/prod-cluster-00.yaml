@@ -5,15 +5,9 @@ metadata:
   namespace: sscs
 spec:
   releaseName: sscs-case-loader
-  rollback:
-    enable: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/sscs-case-loader
   values:
     job:
-      schedule: "0 2 31 2 *"
+      schedule: "0 2-7/1 * * *"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/case-loader:prod-841ff22-20220504172554 #{"$imagepolicy": "flux-system:sscs-case-loader"}
       startingDeadlineSeconds: 1800
