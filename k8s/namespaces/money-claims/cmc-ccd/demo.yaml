@@ -5,15 +5,6 @@ metadata:
   namespace: money-claims
 spec:
   releaseName: cmc-ccd
-  timeout: 900
-  forceUpgrade: true
-  rollback:
-    enable: true
-    force: true
-  chart:
-    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
-    name: ccd
-    version: 4.3.3
   values:
     tags:
       idam-pr: true
@@ -68,7 +59,7 @@ spec:
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e6723d9-20220506093738 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-cd970dc-20220429121636 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
@@ -78,7 +69,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-4edc4d5-20220429103943 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-f6eee12-20220504184304 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-1ec90d3-20220503153016 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:

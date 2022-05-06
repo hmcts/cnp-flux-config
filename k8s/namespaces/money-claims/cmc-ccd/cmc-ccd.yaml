@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-ccd
+  namespace: money-claims
+spec:
+  releaseName: cmc-ccd
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
+    name: ccd
+    version: 4.3.3
