@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-ccd-callback-orchestrator
+  namespace: sscs
+spec:
+  releaseName: sscs-ccd-callback-orchestrator
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-ccd-callback-orchestrator

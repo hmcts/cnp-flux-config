@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-case-migration
+  namespace: sscs
+spec:
+  releaseName: sscs-case-migration
+  ttlSecondsAfterFinished: 3600
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-case-migration
