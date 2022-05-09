@@ -10,14 +10,12 @@ spec:
         OCR_VALIDATION_URL_FINREM: ""
         OCR_VALIDATION_URL_PROBATE: ""
         DELETE_COMPLETE_FILES_CRON: "* 0/10 * * * *"
-        BULK_SCANNING_DB_USER_NAME: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
-        BULK_SCANNING_DB_HOST: bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
-        FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
-        FLYWAY_USER: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
+        PRIVATELAW_ENABLED: "false"
+        REFRESH_PODS: "true"
       keyVaults:
         "bulk-scan":
           secrets:
-            - name: processor-POSTGRES-PASS-V11
+            - name: processor-POSTGRES-PASS
               alias: BULK_SCANNING_DB_PASSWORD
             - name: s2s-secret
               alias: S2S_SECRET
@@ -63,10 +61,6 @@ spec:
               alias: idam.users.publiclaw.username
             - name: idam-users-publiclaw-password
               alias: idam.users.publiclaw.password
-            - name: idam-users-privatelaw-username
-              alias: idam.users.privatelaw.username
-            - name: idam-users-privatelaw-password
-              alias: idam.users.privatelaw.password
             - name: idam-users-sscs-username
               alias: idam.users.sscs.username
             - name: idam-users-sscs-password
