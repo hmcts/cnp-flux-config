@@ -5,18 +5,11 @@ metadata:
   namespace: sscs
 spec:
   releaseName: sscs-cor-frontend
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/sscs-cor-frontend
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-9f58442-20220510094825 #{"$imagepolicy": "flux-system:sscs-cor-frontend"}
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-4ecc63d-20220505123500 #{"$imagepolicy": "flux-system:sscs-cor-frontend"}
       ingressHost: sscs-cor.demo.platform.hmcts.net
       environment:
         NODE_ENV: preprod
