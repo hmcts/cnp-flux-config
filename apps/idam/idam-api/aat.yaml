@@ -1,34 +1,17 @@
----
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
-  annotations:
-    flux.weave.works/automated: "false"
-    flux.weave.works/tag.java: glob:prod-*
 spec:
   releaseName: idam-api
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: idam-api
-    version: 0.4.5
   values:
     java:
       image: hmctspublic.azurecr.io/idam/api:prod-81ccbf4-20220504141739
-      replicas: 4
       ingressHost: idam-api.aat.platform.hmcts.net
-      aadIdentityName: idam
-      cpuLimits: 3000m
       environment:
         TESTING_SUPPORT_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
-        CACHING_USERS_MAXTHREADS: 2
-        CACHING_USERS_MAXHTTPCALLS: 1
-        CACHING_USERS_RECACHEINTERVAL: "1800000000"
         STRATEGIC_ADMIN_URL: https://idam-web-admin.aat.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.aat.platform.hmcts.net
@@ -62,3 +45,6 @@ spec:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+  chart:
+    spec:
+      version: 0.4.5
