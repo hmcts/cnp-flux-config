@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-redis
+spec:
+  releaseName: ccd-redis
+  chart:
+    repository: "https://charts.bitnami.com/bitnami"
+    name: redis
+    version: 10.5.6
+  values:
+    nameOverride: redis
+    master:
+      persistence:
+        enabled: false
+    cluster:
+      enabled: false
