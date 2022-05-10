@@ -5,18 +5,11 @@ metadata:
   namespace: sscs
 spec:
   releaseName: sscs-evidence-share
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/sscs-evidence-share
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:pr-1301-226854b-20220510105503 #{"$imagepolicy": "flux-system:demo-sscs-evidence-share"}
+      image: hmctspublic.azurecr.io/sscs/evidence-share:pr-1283-9665907-20220504171554 #{"$imagepolicy": "flux-system:demo-sscs-evidence-share"}
       environment:
         ROBOTICS_EMAIL_TO: jaya.jayasree@hmcts.net
         WLU_EMAIL_FROM: noreply@mail-sscs-nonprod.platform.hmcts.net
@@ -28,7 +21,7 @@ spec:
         SECURE_DOC_STORE_FEATURE: true
         ENHANCED_CONFIDENTIALITY_FEATURE: true
         RESTART: false
-        DUMMY_PROPERTY: false
+        DUMMY_PROPERTY: true
         GAPS_SWITCHOVER_FEATURE: true
     global:
       environment: demo
