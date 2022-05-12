@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-bulk-scan
+  namespace: sscs
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-67cc28f-20220510083123 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
+      environment:
+    global:
+      environment: perftest
