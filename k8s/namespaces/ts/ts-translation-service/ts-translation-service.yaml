@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ts-translation-service
+spec:
+  releaseName: ts-translation-service
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ts-translation-service
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ts/ts-translation-service:prod-c55468e-20220429135316 #{"$imagepolicy": "flux-system:ts-translation-service"}
+      environment:
+        HMC_ACCESS_CONTROL_ENABLED: false
+        DUMMY_VAR: 1
