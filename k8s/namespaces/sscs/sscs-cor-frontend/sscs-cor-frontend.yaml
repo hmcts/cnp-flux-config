@@ -12,3 +12,15 @@ spec:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
     path: stable/sscs-cor-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-23f0ef0-20220513104022 #{"$imagepolicy": "flux-system:sscs-cor-frontend"}
+      environment:
+        MYA_FEATURE_FLAG: "true"
+        FT_WELSH: "true"
+        POST_BULK_SCAN: "true"
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
