@@ -4,20 +4,13 @@ metadata:
   name: sscs-tribunals-frontend
   namespace: sscs
 spec:
-  releaseName: sscs-tribunals-frontend
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
     path: stable/sscs-tribunals-frontend
   values:
     nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-f6e3694-20220510113155 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
         FT_WELSH: "true"
@@ -35,5 +28,3 @@ spec:
         DUMMY_PROPERTY: false
     global:
       environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
