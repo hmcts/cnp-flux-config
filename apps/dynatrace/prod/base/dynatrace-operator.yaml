@@ -1,0 +1,15 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dynatrace-operator
+  namespace: dynatrace
+spec:
+  values:
+    apiUrl: https://ebe20728.live.dynatrace.com/api
+    classicFullStack:
+      args:
+        - --set-host-group=PROD_CFT
+    operator:
+      nodeSelector:
+        agentpool: nodepool
