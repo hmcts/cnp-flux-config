@@ -63,4 +63,4 @@ flux install --export > apps/flux-system/base/gotk-components.yaml
 flux install --export --components image-reflector-controller,image-automation-controller > apps/flux-system/base/image-automation-components.yaml 
 ```
 
-Currently, `image-automation-components.yaml` will contain some duplication like `namespace` and `clusterrole` and they need to be removed manually
+Currently, `image-automation-components.yaml` will contain some duplication like `namespace` and `clusterrole` and they need to be removed manually.
