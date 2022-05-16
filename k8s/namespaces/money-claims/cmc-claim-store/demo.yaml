@@ -4,18 +4,12 @@ metadata:
   name: cmc-claim-store
   namespace: money-claims
 spec:
-  releaseName: cmc-claim-store
-  rollback:
-    enable: true
-    retry: true
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
     path: stable/cmc-claim-store
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/cmc/claim-store:pr-2578-1ddd282-20220412171157 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
@@ -65,12 +59,9 @@ spec:
         RPA_NOTIFICATIONS_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
-        MANAGEMENT_HEALTH_MAIL_ENABLED: false
         REFRESH_PODS: true
         CMC_DB_USERNAME: cmc@cmc-db-v11-demo
         CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         FEATURE_TOGGLES_BREATHING_SPACE: true
     global:
       environment: demo
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
