@@ -9,7 +9,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 7.1.0
+    version: 8.0.0
   values:
     tags:
       idam-pr: false
@@ -29,6 +29,8 @@ spec:
       printService:
         enabled: true
       elastic:
+        enabled: true
+      mps:
         enabled: true
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -75,7 +77,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/case-print-service:prod-4a6c50d-20220510173049 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-c728909-20220512133935 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-f7deb08-20220516114632 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -87,7 +89,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: false
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ec0b353-20220512091903 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-5af1bc7-20220513152822 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -96,6 +98,21 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-f1866cb-20220512105611 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+    ccd-message-publisher:
+      java:
+        secrets:
+          SERVICE_BUS_CONNECTION_STRING:
+            secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
+            key: connectionString
+      servicebus:
+        enabled: true
+        teamName: CCD
+        resourceGroup: ccd-aks
+        serviceplan: standard
+        setup:
+          topics:
+            - name: ccd-case-events
+              subscriptionNeeded: yes
     elasticsearch:
       persistence:
         enabled: true
