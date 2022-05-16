@@ -9,7 +9,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 7.1.0
+    version: 8.0.0
   values:
     tags:
       idam-pr: false
@@ -29,6 +29,8 @@ spec:
       printService:
         enabled: true
       elastic:
+        enabled: true
+      mps:
         enabled: true
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
@@ -96,6 +98,21 @@ spec:
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-f1866cb-20220512105611 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+    ccd-message-publisher:
+      java:
+        secrets:
+          SERVICE_BUS_CONNECTION_STRING:
+            secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
+            key: connectionString
+      servicebus:
+        enabled: true
+        teamName: CCD
+        resourceGroup: ccd-aks
+        serviceplan: standard
+        setup:
+          topics:
+            - name: ccd-case-events
+              subscriptionNeeded: yes
     elasticsearch:
       persistence:
         enabled: true
