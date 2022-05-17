@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-legal-frontend
+  namespace: money-claims
+spec:
+  releaseName: cmc-legal-frontend
+  rollback:
+    enable: true
+    retry: true
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-07fc9ac-20220304131750 #{"$imagepolicy": "flux-system:cmc-legal-frontend"}
