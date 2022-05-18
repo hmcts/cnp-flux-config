@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-pay
+  namespace: money-claims
+spec:
+  releaseName: cmc-pay
+  timeout: 900
+  forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: ccpay
+    version: 0.1.21-alpha
