@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-case-loader
+  namespace: sscs
+spec:
+  values:
+    job:
+      schedule: "0/10 * * * *"
+      environment:
+        TEST_PROPERTY: true
+    global:
+      environment: aat
