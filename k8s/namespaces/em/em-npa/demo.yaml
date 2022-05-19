@@ -2,13 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-npa
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-812-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/npa:prod-37b07cb-20220519142207 #{"$imagepolicy": "flux-system:em-npa"}
+      image: hmctspublic.azurecr.io/em/npa:prod-37b07cb-20220519142207 #{"$imagepolicy": "flux-system:demo-em-npa"}
       environment:
         TEST_VAR: value1
