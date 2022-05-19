@@ -10,7 +10,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 8.0.0
+    version: 8.0.1
   values:
     tags:
       idam-pr: false
@@ -90,7 +90,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: false
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-751e231-20220517110003 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e2a1b3e-20220519152748 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -101,6 +101,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-f1866cb-20220512105611 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-64d0237-20220519135531 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
