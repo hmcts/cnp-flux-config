@@ -7,13 +7,7 @@ metadata:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.java: glob:prod-*
 spec:
-  releaseName: cmc-draft-store
-  rollback:
-    enable: true
-    retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: draft-store-service
     version: 2.0.3
   values:
     global:
@@ -24,7 +18,6 @@ spec:
         initdbScripts:
           init.sql: |-
             CREATE DATABASE "send_letter" WITH OWNER = javapostgres ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
-      image: hmctspublic.azurecr.io/draft-store/service:prod-b26e8fa-20220509112750 #{"$imagepolicy": "flux-system:cmc-draft-store"}
       ingressHost: ""
       environment:
         DRAFT_STORE_DB_HOST: "{{ .Release.Name }}-postgresql"
