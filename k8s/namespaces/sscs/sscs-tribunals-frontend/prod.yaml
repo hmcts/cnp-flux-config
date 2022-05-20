@@ -4,19 +4,12 @@ metadata:
   name: sscs-tribunals-frontend
   namespace: sscs
 spec:
-  releaseName: sscs-tribunals-frontend
-  rollback:
-    enable: true
-    retry: true
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: sscs-tribunals-frontend
     version: 0.2.26
   values:
     nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-bc5610d-20220518090733 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
       ingressHost: www.appeal-benefit-decision.service.gov.uk
       livenessPath: /health/readiness
       environment:
@@ -28,7 +21,6 @@ spec:
         SERVICES_BTN_SERVICE_CLOSED: "/aG1jdHN4MTAx/button_19684351645d232edee71e86.59595908/img/logo"
         SERVICES_IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
         SERVICES_IDAM_API_URL: https://idam-api.platform.hmcts.net
-        FT_WELSH: "true"
         PCQ_URL: https://equality-and-diversity.platform.hmcts.net
         PCQ_ENABLED: "true"
         FT_ALLOW_UC_HEARING_OPTIONS: "true"
@@ -52,7 +44,3 @@ spec:
         ALLOW_COOKIE_BANNER_ENABLED: "true"
         MULTIPLE_DRAFTS_ENABLED: "true"
         DUMMY_PROPERTY: "false"
-    global:
-      environment: prod
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
