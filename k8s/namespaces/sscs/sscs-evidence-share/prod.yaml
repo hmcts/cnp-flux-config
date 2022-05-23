@@ -4,19 +4,8 @@ metadata:
   name: sscs-evidence-share
   namespace: sscs
 spec:
-  releaseName: sscs-evidence-share
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/sscs-evidence-share
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/evidence-share:prod-4b38aa2-20220519123949 #{"$imagepolicy": "flux-system:sscs-evidence-share"}
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
@@ -33,7 +22,3 @@ spec:
         ENHANCED_CONFIDENTIALITY_FEATURE: true
         GAPS_SWITCHOVER_FEATURE: true
         DUMMY_PROPERTY: true
-    global:
-      environment: prod
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      enableKeyVaults: true
