@@ -15,6 +15,7 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-api/preview.yaml
   apps/idam/idam-api/sbox.yaml
   apps/idam/idam-web-admin/preview.yaml
+  apps/idam/idam-web-admin/ithc.yaml
   apps/idam/idam-web-admin/sbox.yaml
   apps/idam/idam-web-public/preview.yaml
   apps/idam/idam-web-public/sbox.yaml

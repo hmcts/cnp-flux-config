@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-public:prod-15401fd-20220523125700
+      ingressHost: idam-web-public.aat.platform.hmcts.net
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.aat.platform.hmcts.net
+    global:
+      environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+  chart:
+    spec:
+      version: 0.2.22

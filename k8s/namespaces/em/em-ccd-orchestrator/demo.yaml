@@ -2,16 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-831-*
-#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: em-ccdorc-demo.service.core-compute-demo.internal
-#      image: hmctspublic.azurecr.io/em/ccdorc:pr-831-025ab05-20220303172344 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
+      image: hmctspublic.azurecr.io/em/ccdorc:pr-881-d8d1f38-20220511072531 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
       environment:
         CALLBACK_DOMAIN: em-ccdorc-demo.service.core-compute-demo.internal
         DUMMY_VALUE: false
-        S2S_NAMES_WHITELIST: sscs,divorce,ccd,em_gw,jui_webapp,pui_webapp,ccd_data,iac,em_stitching_api,ia,civil_service

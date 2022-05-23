@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: finrem-cos
+  namespace: financial-remedy
+spec:
+  values:
+    java:
+      environment:
+        FEATURE_PBA_CASE_TYPE: false
+        FEATURE_USE_USER_TOKEN: true
+        FEATURE_SOLICITOR_NOC: true
+        FEATURE_CASEWORKER_NOC: true
+        VAR_FLUX_V2: trigger-aat-4
+      autoscaling:
+        minReplicas: 3

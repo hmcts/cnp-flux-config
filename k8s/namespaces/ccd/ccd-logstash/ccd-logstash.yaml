@@ -31,7 +31,7 @@ spec:
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctspublic.azurecr.io/curl:7.70.0
-        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.2.18.jar', '-o', '/logstash-lib/postgresql.jar']
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.3.3.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
@@ -48,6 +48,7 @@ spec:
         xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
         queue.type: persisted
         dead_letter_queue.enable: true
+        log.level: trace
       pipelines.yml: |
         - pipeline.id: main
           path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
@@ -66,6 +67,7 @@ spec:
             jdbc_user => "${DATA_STORE_USER}"
             jdbc_password => "${DATA_STORE_PASS}"
             jdbc_validate_connection => true
+            jdbc_validation_timeout => "1"
             jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_default_timezone => "UTC"

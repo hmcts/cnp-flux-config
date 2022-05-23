@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: civil-general-applications
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/civil/general-applications:latest #{"$imagepolicy": "flux-system:civil-general-applications"}
+      keyVaults:
+        civil:
+          resourceGroup: civil
+      environment:
+        TESTING_SUPPORT_ENABLED: true

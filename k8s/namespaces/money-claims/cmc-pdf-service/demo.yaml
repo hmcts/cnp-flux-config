@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-pdf-service
+  namespace: money-claims
+spec:
+  values:
+    global:
+      devMode: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: false
+    java:
+      ingressHost: ""
+      image: hmctspublic.azurecr.io/rpe/pdf-service:prod-0bfb4dc-20220303121341 #{"$imagepolicy": "flux-system:pdf-service"}

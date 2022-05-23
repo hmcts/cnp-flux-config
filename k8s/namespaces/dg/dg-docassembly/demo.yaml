@@ -2,13 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dg-docassembly
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-576-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/dg/docassembly:pr-576-75aea28-20220307205540  #{"$imagepolicy": "flux-system:dg-docassembly-test"}
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-75d71c0-20220520233343 #{"$imagepolicy": "flux-system:demo-dg-docassembly"}
       environment:
         TEST_VAR: value1

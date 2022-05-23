@@ -1,0 +1,9 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dead-letter-queue-process
+spec:
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:pr-30-cc716c0-20220512225658" #{"$imagepolicy": "flux-system:demo-dead-letter-queue-process"}
+      schedule: "*/2 * * * *"
