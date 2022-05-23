@@ -84,6 +84,20 @@ spec:
                     - "GROUP:Lockable Resources/Unlock:authenticated"
                     - "GROUP:Lockable Resources/View:authenticated"
                     - "GROUP:SCM/Tag:authenticated"
+          otel: |
+            unclassified:
+              openTelemetry:
+                authentication: "noAuthentication"
+                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
+                endpoint: "http://opentelemetry-collector.monitoring:4317"
+                exportOtelConfigurationAsEnvironmentVariables: false
+                ignoredSteps: "dir,echo,isUnix,pwd,properties"
+                serviceName: "jenkins"
+                serviceNamespace: "jenkins"
+                observabilityBackends:
+                  - dynatrace:
+                      dashboardId: "4a6a6184-f1b6-486f-b810-3b93ef05e5b2"
+                      url: "https://ebe20728.live.dynatrace.com/"
           views: |
             jenkins:
               views:
