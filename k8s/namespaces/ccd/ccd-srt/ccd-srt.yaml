@@ -10,7 +10,7 @@ spec:
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 8.0.1
+    version: 8.0.3
   values:
     tags:
       idam-pr: false
@@ -118,6 +118,8 @@ spec:
     am-role-assignment-service:
       java:
         image: hmctspublic.azurecr.io/am/role-assignment-service:prod-030cfb7-20220523150457 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+        environment:
+          RUN_DB_MIGRATION_ON_STARTUP: true
     elasticsearch:
       persistence:
         enabled: true
