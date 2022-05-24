@@ -4,19 +4,9 @@ metadata:
   name: prl-citizen-frontend
   namespace: private-law
 spec:
-  releaseName: prl-citizen-frontend
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/prl-citizen-frontend
   values:
     java:
       image: hmctspublic.azurecr.io/prl/citizen-frontend:latest #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
-      environment:
-        FEATURE_EXAMPLE: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

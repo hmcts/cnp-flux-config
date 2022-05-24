@@ -4,21 +4,12 @@ metadata:
   name: prl-cos
   namespace: private-law
 spec:
-  releaseName: prl-cos
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/prl-cos
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/prl/cos:prod-4bccd66-20220516112343 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
-        FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc
