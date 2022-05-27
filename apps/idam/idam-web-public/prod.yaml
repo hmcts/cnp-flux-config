@@ -6,6 +6,12 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/idam/web-public:prod-b515700-20220518095203
       environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.platform.hmcts.net
         FEDERATED_SSO: true
         GA_TRACKING_ID: "UA-122164129-4"
+        spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/c6874728-71e6-41fe-a9e1-2e8c36776ad8/
+  chart:
+    spec:
+      version: 0.2.22
