@@ -22,11 +22,11 @@ spec:
       draftStore:
         enabled: true
       dmStore:
-        enabled: false
+        enabled: true
       activityApi:
         enabled: true
       blobstorage:
-        enabled: false
+        enabled: true
       printService:
         enabled: true
       elastic:
@@ -76,6 +76,7 @@ spec:
     ccd-case-print-service:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/case-print-service:prod-4a6c50d-20220510173049 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
+        ingressHost: return-case-doc-ccd.{{ .Release.Name }}.demo.platform.hmcts.net
     ccd-definition-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7882e85-20220525201029 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
@@ -117,7 +118,7 @@ spec:
               subscriptionNeeded: yes
     am-role-assignment-service:
       java:
-        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-6968ffc-20220524160413 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-0520690-20220530162517 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
         environment:
           RUN_DB_MIGRATION_ON_STARTUP: true
     draft-store-service:
@@ -126,6 +127,11 @@ spec:
     em-anno:
       java:
         image: hmctspublic.azurecr.io/em/anno:prod-7482719-20220525093909 #{"$imagepolicy": "flux-system:em-anno"}
+        ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
+    dm-store:
+      java:
+        image: hmctspublic.azurecr.io/dm/store:prod-7e3b28f-20220527170748 #{"$imagepolicy": "flux-system:demo-dm-store"}
+        ingressHost: dm-store-{{ .Release.Name }}.demo.platform.hmcts.net
     rpe-service-auth-provider:
       java:
         image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-96ce685-20220518094136 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
