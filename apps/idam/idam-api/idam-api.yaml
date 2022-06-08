@@ -7,12 +7,13 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-055b9bc-20220518095156
+      image: hmctspublic.azurecr.io/idam/api:prod-4279b52-20220523123353
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
       useInterpodAntiAffinity: true
       environment:
+        DEBUG: 2022-05-26-10-00 #debug value, proof of kustomize deployment
         idam.scheduled.batch-processing.enabled: false
         ENDPOINTS_INFO_ENABLED: true
         STRATEGIC_ADMIN_URL: https://idam-web-admin.platform.hmcts.net
