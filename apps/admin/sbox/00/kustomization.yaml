@@ -1,17 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../base
-  - ../../traefik2
-  - ../../traefik2/identity-binding.yaml
-  - ../../traefik2/secret-provider.yaml
-  - ../../traefik2/tlsoptions.yaml
-  - ../../traefik2/tlsstore.yaml
-  - ../../traefik2/traefik2.yaml
-  - ../../traefik2/traefik2-helmrepo.yaml
+  - identity-binding.yaml
+  - secret-provider.yaml
+  - tlsoptions.yaml
+  - tlsstore.yaml
+  - traefik2.yaml
+  - traefik2-helmrepo.yaml
 namespace: admin
-
-patchesStrategicMerge:
-  - ../../traefik/sbox/00.yaml
-  - env-injector.yaml
-  - ../../traefik2/sbox/00-traefik2.yaml
