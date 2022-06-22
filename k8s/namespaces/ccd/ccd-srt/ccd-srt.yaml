@@ -44,7 +44,7 @@ spec:
       enableKeyVaults: false
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-4d9698b-20220615153519 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-4a05a2f-20220622110736 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -91,7 +91,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-d235554-20220620135044 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-51cbc95-20220622092949 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -99,10 +99,10 @@ spec:
           ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://{{ .Release.Name }}-es-master:9200"
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-6efe414-20220617113133 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-da09d5c-20220622142249 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-ae38db6-20220613121419 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-dc42f6b-20220622135226 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -126,7 +126,7 @@ spec:
         image: hmctspublic.azurecr.io/draft-store/service:prod-0a44e67-20220616163658 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
-        image: hmctspublic.azurecr.io/em/anno:prod-6fed082-20220620115055 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-b593289-20220621094523 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
     dm-store:
       java:
