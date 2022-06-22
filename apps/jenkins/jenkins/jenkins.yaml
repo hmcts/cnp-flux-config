@@ -12,7 +12,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: "dbp6x1"
+      tag: "2.348-79"
       containerSecurityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -101,25 +101,22 @@ spec:
               authorizationStrategy:
                 globalMatrix:
                   permissions:
-                    - "Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
-                    - "Overall/SystemRead:authenticated"
-                    - "Overall/Read:authenticated"
-                    - "View/Read:authenticated"
-                    - "Run/Replay:authenticated"
-                    - "Run/Update:authenticated"
-                    - "Agent/ExtendedRead:authenticated"
-                    - "Job/Configure:authenticated"
-                    - "Job/Cancel:authenticated"
-                    - "Job/Read:authenticated"
-                    - "Job/Build:authenticated"
-                    - "Job/Move:authenticated"
-                    - "Job/Discover:authenticated"
-                    - "Job/Discover:anonymous"
-                    - "Job/Workspace:authenticated"
-                    - "Credentials/View:authenticated"
-                    - "Lockable Resources/Unlock:authenticated"
-                    - "Lockable Resources/Reserve:authenticated"
-                    - "SCM/Tag:authenticated"
+                    - "GROUP:Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
+                    - "GROUP:Overall/SystemRead:authenticated"
+                    - "GROUP:Overall/Read:authenticated"
+                    - "GROUP:View/Read:authenticated"
+                    - "GROUP:Run/Replay:authenticated"
+                    - "GROUP:Run/Update:authenticated"
+                    - "GROUP:Agent/ExtendedRead:authenticated"
+                    - "GROUP:Job/Cancel:authenticated"
+                    - "GROUP:Job/Read:authenticated"
+                    - "GROUP:Job/Build:authenticated"
+                    - "USER:Job/Discover:anonymous"
+                    - "GROUP:Job/Workspace:authenticated"
+                    - "GROUP:Credentials/View:authenticated"
+                    - "GROUP:Lockable Resources/Unlock:authenticated"
+                    - "GROUP:Lockable Resources/Reserve:authenticated"
+                    - "GROUP:SCM/Tag:authenticated"
           global-library: |
             unclassified:
               globalLibraries:
@@ -171,16 +168,6 @@ spec:
             unclassified:
               timestamperConfig:
                 allPipelines: true
-          otel: |
-            unclassified:
-              openTelemetry:
-                authentication: "noAuthentication"
-                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
-                endpoint: "http://opentelemetry-collector.monitoring:4317"
-                exportOtelConfigurationAsEnvironmentVariables: false
-                ignoredSteps: "dir,echo,isUnix,pwd,properties"
-                serviceName: "jenkins"
-                serviceNamespace: "jenkins"
           theme: |
             unclassified:
               themeManager:
@@ -279,160 +266,25 @@ spec:
                           id: "hmcts-jenkins-cnp"
                           privateKey: "${hmcts-jenkins-cnp-ghapp}"
                       - gitHubApp:
-                          appID: "54542"
-                          description: "GitHub APP Key - pcq"
-                          id: "hmcts-jenkins-pcq"
-                          privateKey: "${hmcts-jenkins-pcq-ghapp}"
-                      - gitHubApp:
-                          appID: "54385"
-                          description: "GitHub APP Key - xui"
-                          id: "hmcts-jenkins-xui"
-                          privateKey: "${hmcts-jenkins-xui-ghapp}"
-                      - gitHubApp:
-                          appID: "54687"
-                          description: "GitHub APP Key - adoption"
-                          id: "hmcts-jenkins-adoption"
-                          privateKey: "${hmcts-jenkins-adoption-ghapp}"
-                      - gitHubApp:
-                          appID: "58060"
-                          description: "GitHub APP Key - am"
-                          id: "hmcts-jenkins-am"
-                          privateKey: "${hmcts-jenkins-am-ghapp}"
-                      - gitHubApp:
-                          appID: "58046"
-                          description: "GitHub APP Key - bsp"
-                          id: "hmcts-jenkins-bsp"
-                          privateKey: "${hmcts-jenkins-bsp-ghapp}"
-                      - gitHubApp:
-                          appID: "58044"
-                          description: "GitHub APP Key - cdm"
-                          id: "hmcts-jenkins-cdm"
-                          privateKey: "${hmcts-jenkins-cdm-ghapp}"
-                      - gitHubApp:
-                          appID: "58041"
-                          description: "GitHub APP Key - cmc"
-                          id: "hmcts-jenkins-cmc"
-                          privateKey: "${hmcts-jenkins-cmc-ghapp}"
-                      - gitHubApp:
-                          appID: "58067"
-                          description: "GitHub APP Key - ctsc"
-                          id: "hmcts-jenkins-ctsc"
-                          privateKey: "${hmcts-jenkins-ctsc-ghapp}"
-                      - gitHubApp:
-                          appID: "58042"
-                          description: "GitHub APP Key - div"
-                          id: "hmcts-jenkins-div"
-                          privateKey: "${hmcts-jenkins-div-ghapp}"
-                      - gitHubApp:
-                          appID: "58064"
-                          description: "GitHub APP Key - ethos"
-                          id: "hmcts-jenkins-ethos"
-                          privateKey: "${hmcts-jenkins-ethos-ghapp}"
-                      - gitHubApp:
-                          appID: "58052"
-                          description: "GitHub APP Key - feepay"
-                          id: "hmcts-jenkins-feepay"
-                          privateKey: "${hmcts-jenkins-feepay-ghapp}"
-                      - gitHubApp:
-                          appID: "58043"
-                          description: "GitHub APP Key - finrem"
-                          id: "hmcts-jenkins-finrem"
-                          privateKey: "${hmcts-jenkins-finrem-ghapp}"
-                      - gitHubApp:
-                          appID: "58059"
-                          description: "GitHub APP Key - fpl"
-                          id: "hmcts-jenkins-fpl"
-                          privateKey: "${hmcts-jenkins-fpl-ghapp}"
-                      - gitHubApp:
-                          appID: "58045"
-                          description: "GitHub APP Key - iac"
-                          id: "hmcts-jenkins-iac"
-                          privateKey: "${hmcts-jenkins-iac-ghapp}"
-                      - gitHubApp:
-                          appID: "58058"
-                          description: "GitHub APP Key - idam"
-                          id: "hmcts-jenkins-idam"
-                          privateKey: "${hmcts-jenkins-idam-ghapp}"
-                      - gitHubApp:
-                          appID: "58069"
-                          description: "GitHub APP Key - mi"
-                          id: "hmcts-jenkins-mi"
-                          privateKey: "${hmcts-jenkins-mi-ghapp}"
-                      - gitHubApp:
-                          appID: "58050"
-                          description: "GitHub APP Key - probate"
-                          id: "hmcts-jenkins-probate"
-                          privateKey: "${hmcts-jenkins-probate-ghapp}"
-                      - gitHubApp:
-                          appID: "58068"
-                          description: "GitHub APP Key - rd"
-                          id: "hmcts-jenkins-rd"
-                          privateKey: "${hmcts-jenkins-rd-ghapp}"
-                      - gitHubApp:
-                          appID: "58048"
-                          description: "GitHub APP Key - rpa"
-                          id: "hmcts-jenkins-rpa"
-                          privateKey: "${hmcts-jenkins-rpa-ghapp}"
-                      - gitHubApp:
-                          appID: "58049"
-                          description: "GitHub APP Key - sscs"
-                          id: "hmcts-jenkins-sscs"
-                          privateKey: "${hmcts-jenkins-sscs-ghapp}"
-                      - gitHubApp:
-                          appID: "60878"
-                          description: "GitHub APP Key - rse"
-                          id: "hmcts-jenkins-rse"
-                          privateKey: "${hmcts-jenkins-rse-ghapp}"
-                      - gitHubApp:
-                          appID: "62005"
-                          description: "GitHub APP Key - em"
-                          id: "hmcts-jenkins-em"
-                          privateKey: "${hmcts-jenkins-em-ghapp}"
-                      - gitHubApp:
-                          appID: "69800"
-                          description: "GitHub APP Key - hmi"
-                          id: "hmcts-jenkins-hmi"
-                          privateKey: "${hmcts-jenkins-hmi-ghapp}"
-                      - gitHubApp:
-                          appID: "75169"
-                          description: "GitHub APP Key - wa"
-                          id: "hmcts-jenkins-wa"
-                          privateKey: "${hmcts-jenkins-wa-ghapp}"
-                      - gitHubApp:
-                          appID: "79716"
-                          description: "GitHub APP Key - fact"
-                          id: "hmcts-jenkins-fact"
-                          privateKey: "${hmcts-jenkins-fact-ghapp}"
-                      - gitHubApp:
-                          appID: "90741"
-                          description: "GitHub APP Key - nfdiv"
-                          id: "hmcts-jenkins-nfdiv"
-                          privateKey: "${hmcts-jenkins-nfdiv-ghapp}"
-                      - gitHubApp:
-                          appID: "113725"
-                          description: "GitHub APP Key - civil"
-                          id: "hmcts-jenkins-civil"
-                          privateKey: "${hmcts-jenkins-civil-ghapp}"
-                      - gitHubApp:
-                          appID: "122466"
-                          description: "GitHub APP Key - fprl"
-                          id: "hmcts-jenkins-fprl"
-                          privateKey: "${hmcts-jenkins-fprl-ghapp}"
-                      - gitHubApp:
-                          appID: "132530"
-                          description: "GitHub APP Key - lau"
-                          id: "hmcts-jenkins-lau"
-                          privateKey: "${hmcts-jenkins-lau-ghapp}"
-                      - gitHubApp:
-                          appID: "147799"
-                          description: "GitHub APP Key - prl"
-                          id: "hmcts-jenkins-prl"
-                          privateKey: "${hmcts-jenkins-prl-ghapp}"
-                      - gitHubApp:
                           appID: "149849"
                           description: "GitHub APP Key - cft"
                           id: "hmcts-jenkins-cft"
                           privateKey: "${hmcts-jenkins-cft-ghapp}"
+                      - gitHubApp:
+                          appID: "${hmcts-jenkins-j-to-z-appid}"
+                          description: "GitHub APP Key - J to Z"
+                          id: "hmcts-jenkins-j-to-z"
+                          privateKey: "${hmcts-jenkins-j-to-z-ghapp}"
+                      - gitHubApp:
+                          appID: "${hmcts-jenkins-d-to-i-appid}"
+                          description: "GitHub APP Key - D to I"
+                          id: "hmcts-jenkins-d-to-i"
+                          privateKey: "${hmcts-jenkins-d-to-i-ghapp}"
+                      - gitHubApp:
+                          appID: "${hmcts-jenkins-a-to-c-appid}"
+                          description: "GitHub APP Key - A to C"
+                          id: "hmcts-jenkins-a-to-c"
+                          privateKey: "${hmcts-jenkins-a-to-c-ghapp}"
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy

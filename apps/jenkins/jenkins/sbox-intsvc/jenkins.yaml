@@ -100,6 +100,19 @@ spec:
                     name: LABS
                     recurse: true
                     title: Labs
+          otel: |
+            unclassified:
+              openTelemetry:
+                authentication: "noAuthentication"
+                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
+                endpoint: "http://opentelemetry-collector.monitoring:4317"
+                exportOtelConfigurationAsEnvironmentVariables: false
+                ignoredSteps: "dir,echo,isUnix,pwd,properties"
+                serviceName: "jenkins"
+                serviceNamespace: "jenkins"
+                observabilityBackends:
+                  - dynatrace:
+                      url: "https://yrk32651.live.dynatrace.com/"
           authentication: |
             jenkins:
               securityRealm:
@@ -273,6 +286,17 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
+                    cloudTags:
+                      - name: "application"
+                        value: "core"
+                      - name: "builtFrom"
+                        value: "hmcts/cnp-flux-config"
+                      - name: "businessArea"
+                        value: "CFT"
+                      - name: "criticality"
+                        value: "High"
+                      - name: "environment"
+                        value: "sandbox"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
                     maxVirtualMachinesLimit: 10

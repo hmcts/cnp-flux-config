@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-s2s
+  namespace: money-claims
+spec:
+  releaseName: cmc-s2s
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rpe-service-auth-provider
+  values:
+    java:
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-5e3041b-20220617090525 #{"$imagepolicy": "flux-system:cmc-s2s"}

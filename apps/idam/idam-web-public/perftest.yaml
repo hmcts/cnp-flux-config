@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-web-public
+  namespace: idam
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-public:prod-cf8f5eb-20220621122057
+      ingressHost: idam-web-public.perftest.platform.hmcts.net
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.perftest.platform.hmcts.net
+        SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUERURI: http://51.143.139.240:9080/auth/realms/jhipster
+        SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENTID: internal
+        SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENTSECRET: internal
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+  chart:
+    spec:
+      version: 0.2.22

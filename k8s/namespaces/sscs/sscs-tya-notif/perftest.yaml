@@ -1,0 +1,22 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tya-notif
+  namespace: sscs
+spec:
+  releaseName: sscs-tya-notif
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-994eb6b-20220121092259   #{"$imagepolicy": "flux-system:sscs-tya-notif"
+      environment:
+        COVID_19_NOTIFICATION_FEATURE: false
+        PDF_SERVICE_HEALTH_URL: https://docmosis.perftest.platform.hmcts.net/rs/status
+        PDF_SERVICE_BASE_URL: https://docmosis.perftest.platform.hmcts.net/rs/render
+        DUMMY_PROPERTY: true
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

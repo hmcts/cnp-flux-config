@@ -9,17 +9,18 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-b31f57e-20220414155746 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-4c5ea7c-20220622091541 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
         FEATURE_RESPONDENT_JOURNEY: true
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
         BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
-        VAR_TA: trigger1
+        VAR_TA: trigger2
+        FEATURE_MANAGE_BUNDLE: true
   chart:
     spec:
-      chart: finrem-cos
-      version: 0.2.8
+      chart: ./stable/finrem-cos
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m
