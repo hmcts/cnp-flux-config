@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hmc-hmi-inbound-adapter
+spec:
+  releaseName: hmc-hmi-inbound-adapter
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/hmc-hmi-inbound-adapter
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/hmc/hmi-inbound-adapter:prod-cc7bd73-20220622135528 #{"$imagepolicy": "flux-system:hmc-hmi-inbound-adapter"}

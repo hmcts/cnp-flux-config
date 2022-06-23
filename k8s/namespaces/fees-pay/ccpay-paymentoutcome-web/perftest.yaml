@@ -5,5 +5,9 @@ metadata:
 spec:
   values:
     nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:pr-24-b0dd015-20220622061210 #{"$imagepolicy": "flux-system:perftest-ccpay-paymentoutcome-web"}
+      imagePullPolicy: Always
       environment:
-        DUMMY_VARIABLE: true
+        DUMMY_VARIABLE: false

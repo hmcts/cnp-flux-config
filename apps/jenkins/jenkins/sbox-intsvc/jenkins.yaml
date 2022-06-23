@@ -8,9 +8,24 @@ spec:
     checkDeprecation: false
     controller:
       javaOpts: >-
-        -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=60.0 -XX:MinRAMPercentage=20.0 -XX:+UseParallelOldGC -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/workspace/gc.log::filecount=5,filesize=40M -Djava.util.logging.config.file=/var/jenkins_home/userconf/logging.properties -Djenkins.azure-keyvault.uami.enabled=true -Djenkins.ui.refresh=true -Djenkins.model.Jenkins.logStartupPerformance=true -Dkubernetes.websocket.ping.interval=30000 -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London -Dhudson.model.WorkspaceCleanupThread.retainForDays=2 -Dhudson.model.DirectoryBrowserSupport.CSP="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'"
+        -XX:InitialRAMPercentage=30.0
+        -XX:MaxRAMPercentage=60.0
+        -XX:MinRAMPercentage=20.0
+        -XX:+UseParallelOldGC
+        -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/workspace/gc.log::filecount=5,filesize=40M
+        -Djenkins.azure-keyvault.uami.enabled=true
+        -Djenkins.ui.refresh=true
+        -Djenkins.model.Jenkins.logStartupPerformance=true
+        -Dkubernetes.websocket.ping.interval=30000
+        -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
+        -Djava.net.preferIPv4Stack=true
+        -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
+        -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=11
+        -Dotel.instrumentation.jenkins.web.enabled=false
       ingress:
         hostName: sandbox-build.platform.hmcts.net
+      secondaryingress:
+        hostName: static-sandbox-build.platform.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -23,6 +38,10 @@ spec:
               systemMessage: >-
                   This jenkins is managed by configuration as code, update <a
                   href="https://github.com/hmcts/cnp-flux-config/blob/master/apps/jenkins/jenkins/sbox-intsvc/jenkins.yaml">here</a>
+          resource-root: |
+            unclassified:
+              resourceRoot:
+                url: "https://static-sandbox-build.platform.hmcts.net/"
           env-vars: |
             jenkins:
               globalNodeProperties:
@@ -62,6 +81,8 @@ spec:
                         value: dcdcftappssboxkv
                       - key: BUSINESS_AREA_TAG
                         value: CFT
+                      - key: PIPELINE_METRICS_URL
+                        value: https://sandbox-pipeline-metrics.documents.azure.com/
           views: |
             jenkins:
               views:
@@ -79,6 +100,19 @@ spec:
                     name: LABS
                     recurse: true
                     title: Labs
+          otel: |
+            unclassified:
+              openTelemetry:
+                authentication: "noAuthentication"
+                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
+                endpoint: "http://opentelemetry-collector.monitoring:4317"
+                exportOtelConfigurationAsEnvironmentVariables: false
+                ignoredSteps: "dir,echo,isUnix,pwd,properties"
+                serviceName: "jenkins"
+                serviceNamespace: "jenkins"
+                observabilityBackends:
+                  - dynatrace:
+                      url: "https://yrk32651.live.dynatrace.com/"
           authentication: |
             jenkins:
               securityRealm:
@@ -252,6 +286,17 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
+                    cloudTags:
+                      - name: "application"
+                        value: "core"
+                      - name: "builtFrom"
+                        value: "hmcts/cnp-flux-config"
+                      - name: "businessArea"
+                        value: "CFT"
+                      - name: "criticality"
+                        value: "High"
+                      - name: "environment"
+                        value: "sandbox"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
                     maxVirtualMachinesLimit: 10
@@ -305,7 +350,7 @@ spec:
                         jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
-                      \ -XX:G1SummarizeRSetStatsPeriod=1"
+                      \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
                         location: "UK South"
                         noOfParallelJobs: 1
                         osDiskSize: 60

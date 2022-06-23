@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hmc-hmi-outbound-adapter
+spec:
+  releaseName: hmc-hmi-outbound-adapter
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/hmc-hmi-outbound-adapter
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-2ba6fbb-20220622135610 #{"$imagepolicy": "flux-system:hmc-hmi-outbound-adapter"}

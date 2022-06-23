@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rpts-api
+spec:
+  releaseName: rpts-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/rpts-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rpts/api:prod-5d1d9b1-20220517152319 #{"$imagepolicy": "flux-system:rpts-api"}
+      environment:
+        VAR_TA: trigger1

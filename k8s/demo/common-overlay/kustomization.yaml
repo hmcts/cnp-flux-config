@@ -16,6 +16,7 @@ bases:
   - em
   - ethos
   - family-public-law
+  - hmc
   - ia
   - idam
   - money-claims
@@ -37,7 +38,20 @@ bases:
   - family-private-law
   - private-law
   - et
+  - ds
+  - rpts
+  - fis
 patches:
   - path: ../demo-helmrelease.yaml
     target:
       kind: HelmRelease
+  - patch: |-
+      - op: replace
+        path: "/spec/values/global/enableKeyVaults"
+        value: false
+    target:
+      group: helm.fluxcd.io
+      version: v1
+      kind: HelmRelease
+      name: ccd-srt
+      namespace: ccd

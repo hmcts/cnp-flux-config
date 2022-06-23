@@ -15,9 +15,12 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-api/preview.yaml
   apps/idam/idam-api/sbox.yaml
   apps/idam/idam-web-admin/preview.yaml
+  apps/idam/idam-web-admin/ithc.yaml
   apps/idam/idam-web-admin/sbox.yaml
   apps/idam/idam-web-public/preview.yaml
   apps/idam/idam-web-public/sbox.yaml
+  apps/idam/idam-testing-support-api/preview.yaml
+  apps/idam/idam-testing-support-api/sbox.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   k8s/demo/*
@@ -61,14 +64,9 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 
             if [ "$IMAGE_AUTOMATION" == "" ]
             then
-                echo "No ImagePolicy for $IMAGE_POLICY in clusters/ptl-intsvc/base"
-                IMAGE_AUTOMATION=false
-            else
-                IMAGE_AUTOMATION=true
+                echo "No ImagePolicy for $IMAGE_POLICY in clusters/ptl-intsvc/base" && exit 1
             fi
             
-            if [ "$IMAGE_AUTOMATION" == true ]
-            then
             IMAGE_AUTOMATION_CHECK=$(cat imagepolicies_list.yaml  | \
             IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' - | yq eval '.spec.filterTags.pattern == "^prod-[a-f0-9]+-(?P<ts>[0-9]+)"' -)
 
@@ -76,9 +74,6 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
             then
                 echo "Non whitelisted pattern found in ImagePolicy: $IMAGE_POLICY it should be ^prod-[a-f0-9]+-(?P<ts>[0-9]+)" && exit 1
             fi
-        
-            fi
-        
         done
 
     done

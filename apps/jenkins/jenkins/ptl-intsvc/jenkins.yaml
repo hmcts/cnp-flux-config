@@ -8,6 +8,8 @@ spec:
     controller:
       ingress:
         hostName: build.platform.hmcts.net
+      secondaryingress:
+        hostName: static-build.platform.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
@@ -27,6 +29,10 @@ spec:
               systemMessage: >-
                   This jenkins is managed by configuration as code, update <a
                   href="https://github.com/hmcts/cnp-flux-config/blob/master/apps/jenkins/jenkins/ptl-intsvc/jenkins.yaml">here</a>
+          resource-root: |
+            unclassified:
+              resourceRoot:
+                url: "https://static-build.platform.hmcts.net/"
           env-vars: |
             jenkins:
               globalNodeProperties:
@@ -43,9 +49,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -58,6 +64,41 @@ spec:
                         value: dcdcftappsstgkv
                       - key: BUSINESS_AREA_TAG
                         value: CFT
+          auth: |
+            jenkins:
+              authorizationStrategy:
+                globalMatrix:
+                  permissions:
+                    - "GROUP:Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
+                    - "GROUP:Overall/SystemRead:authenticated"
+                    - "GROUP:Overall/Read:authenticated"
+                    - "GROUP:View/Read:authenticated"
+                    - "GROUP:Agent/ExtendedRead:authenticated"
+                    - "GROUP:Job/Cancel:authenticated"
+                    - "GROUP:Job/Read:authenticated"
+                    - "GROUP:Job/Build:authenticated"
+                    - "USER:Job/Discover:anonymous"
+                    - "GROUP:Job/Workspace:authenticated"
+                    - "GROUP:Credentials/View:authenticated"
+                    - "GROUP:Lockable Resources/Reserve:authenticated"
+                    - "GROUP:Lockable Resources/Unlock:authenticated"
+                    - "GROUP:Lockable Resources/View:authenticated"
+                    - "GROUP:SCM/Tag:authenticated"
+          otel: |
+            unclassified:
+              openTelemetry:
+                authentication: "noAuthentication"
+                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
+                endpoint: "http://opentelemetry-collector.monitoring:4317"
+                exportOtelConfigurationAsEnvironmentVariables: false
+                ignoredSteps: "dir,echo,isUnix,pwd,properties"
+                serviceName: "jenkins"
+                serviceNamespace: "jenkins"
+                observabilityBackends:
+                  - dynatrace:
+                      dashboardId: "4a6a6184-f1b6-486f-b810-3b93ef05e5b2"
+                      url: "https://ebe20728.live.dynatrace.com/"
+                      managementZoneId: "6540375402790729445"
           views: |
             jenkins:
               views:
@@ -65,25 +106,25 @@ spec:
                     name: all
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(Platform|CNP).*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
+                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
                     name: Platform
                     recurse: true
                     title: Platform
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly.*.*\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/master
+                      ^HMCTS_Nightly\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/master
                     name: CC-SRT-FULL
                     recurse: true
                     title: Common Components - Service Regression Full Nightly Pipeline
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly.*.*\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/QA-588
+                      ^HMCTS_Nightly\/(.*fpl-ccd-configuration.*|.*ia-ccd-e2e-tests.*|.*cmc-ccd-e2e-tests.*|.*div-ccd-e2e-tests.*|.*finrem-ccd-definitions.*|.*finrem-ccd-e2e-tests.*|.*probate-back-office.*|.*sscs-ccd-e2e-tests.*|.*rpx-xui-webapp.*)\/QA-588
                     name: CC-SRT
                     recurse: true
                     title: Common Components - Service Regression Functional Only
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*BSP.*\/(send-letter-.*|blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
+                      ^HMCTS.*\/(send-letter-.*|blob-router-service|bulk-scan-.*|reform-scan-.*)\/master
                     name: BSP
                     recurse: true
                     title: BSP
@@ -101,190 +142,190 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_CDM.*\/(?!.*ccd-admin-web-api|.*ccd-case-management-web).+\/master
+                      ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(ccd.*|aac.*|cpo.*|hmc.*|ts.*)\/master
                     name: CDM
                     recurse: true
                     title: CDM Master Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly.*CDM.*\/(?!.*ccd-admin-web-api|.*ccd-case-management-web).+\/master
+                      ^HMCTS_(\w_to_\w_Nightly).*\/(ccd.*|aac.*|cpo.*|hmc.*|ts.*)\/master
                     name: CDM Nightly
                     recurse: true
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*CDM.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-399|.*cpo-case-payment-orders-api.*PR-54|.*ccd-api-gateway.*PR-353)
+                      ^HMCTS.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-399|.*cpo-case-payment-orders-api.*PR-54|.*ccd-api-gateway.*PR-353)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*SSCS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions)\/master
+                      ^HMCTS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions|sscs-hearings-api)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*IAC.*\/.+\/master
+                      ^HMCTS.*\/ia.*\/master
                     name: IA
                     recurse: true
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Fee.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|paybubble-performance-tests|ccpay-bubble|ccpay-paymentoutcome-web)\/master
+                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Probate.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/master
+                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Intestacy.*\/(intestacy-frontend|intestacy-orchestrator-service)\/(master|demo|cnp)
-                    name: INTESTACY
-                    recurse: true
-                    title: INTESTACY Dashboard
-                - buildMonitor:
-                    includeRegex: >-
-                      ^HMCTS_.*DIV.*\/(?!div-ansible|div-case-progression-service|div-feature-toggle-client|div-frontend-boilerplate|nfdiv-.*).+\/master
+                      ^HMCTS.*\/div-.+\/master
                     name: DIV
                     recurse: true
                     title: Divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*NFDIV.*\/(?!nfdiv-ccd-definitions|nfdiv-case-orchestration-service|nfdiv-case-maintenance-service).+\/master
+                      ^HMCTS.*\/nfdiv-.+\/master
                     name: NFDIV
                     recurse: true
                     title: No fault divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*AM.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
+                      ^HMCTS_j_to_z_Nightly\/(nfdiv-.*)\/master
+                    name: NFD Nightly
+                    recurse: true
+                    title: NFD Nightly Builds Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
                     name: AM
                     recurse: true
                     title: AM
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*CTSC.*\/(ctsc-shared-infrastructure|ctsc-work-.*)\/master
+                      ^HMCTS.*\/(ctsc-shared-infrastructure|ctsc-work-.*)\/master
                     name: CTSC
                     recurse: true
                     title: CTSC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(ETHOS|ECM).*\/(ecm-shared-infrastructure|ecm-consumer)\/master
+                      ^HMCTS.*\/(ecm-shared-infrastructure|ecm-consumer)\/master
                     name: ETHOS
                     recurse: true
                     title: ETHOS
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(CMC).*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test|cmc-ccd-e2e-tests)\/master
+                      ^HMCTS.*\/(cmc-citizen-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test|cmc-ccd-e2e-tests)\/master
                     name: CMC
                     recurse: true
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RD.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
+                      ^HMCTS.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Adoption.*\/.+\/master
+                      ^HMCTS.*\/adoption-.+\/master
                     name: ADOPTION
                     recurse: true
                     title: Adoption Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*FPL.*\/(fpl-ccd-configuration)\/(master|demo|ithc|perftest)
+                      ^HMCTS.*\/(fpl-ccd-configuration)\/(master|demo|ithc|perftest)
                     name: FPLA
                     recurse: true
                     title: FPLA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(MI).*\/(mi-integration-service|mi-staging-service|mi-presentation-service|mi-housekeeping-service|mi-shared-infrastructure)\/master
-                    name: MI
-                    recurse: true
-                    title: Management Information Dashboard
-                - buildMonitor:
-                    includeRegex: >-
-                      ^HMCTS_.*PCQ.*\/.+\/master
+                      ^HMCTS.*\/pcq-.+\/master
                     name: PCQ
                     recurse: true
                     title: PCQ
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*LAU.*\/.+\/master
+                      ^HMCTS.*\/lau-.+\/master
                     name: LAU
                     recurse: true
                     title: LAU
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*RSE.*\/.+\/master
+                      ^HMCTS.*\/rse-.+\/master
                     name: RSE
                     recurse: true
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*(EM).*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-icp-api|em-media-viewer|em-showcase|document-management-store-app|dg-docassembly-api|em-hrs-api|em-hrs-ingestor)\/master
+                      ^HMCTS.*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-media-viewer|em-showcase|document-management-store-app|dg-docassembly-api|em-hrs-api|em-hrs-ingestor)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*Civil.*\/.+\/master
+                      ^HMCTS.*\/civil-(?!damages).*\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*HMI.*\/.+\/master
-                    name: HMI
-                    recurse: true
-                    title: HMI
-                - buildMonitor:
-                    includeRegex: >-
-                      ^HMCTS_.*WA.*\/.+\/master
+                      ^HMCTS.*\/wa-.+\/master
                     name: WA
                     recurse: true
                     title: WA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*IDAM.*\/(idam-api|idam-web-public|idam-web-admin|idam-performance-tests)\/master
+                      ^HMCTS.*\/(idam-api|idam-web-public|idam-web-admin|idam-performance-tests)\/master
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly.*.*\/(.*performance.*|.*Performance.*)\/master
+                      ^HMCTS.*\/fact-.*\/master
+                    name: FACT
+                    recurse: true
+                    title: FACT Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/rpts-.*\/master
+                    name: RPTS
+                    recurse: true
+                    title: RPTS Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.+Nightly\/(.*performance.*|.*Performance.*)\/master
                     name: Performance
                     recurse: true
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*FPRL.*\/(fprl-cos-api|fprl-ccd-definitions)\/master
-                    name: FPRL
-                    recurse: true
-                    title: Family Private Law
-                - buildMonitor:
-                    includeRegex: >-
-                      ^HMCTS_.*PRL.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*FinRem.*\/.+\/master
+                      ^HMCTS.*\/finrem-.+\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_.*ET.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api|family-api-gateway)\/master
+                    name: FIS
+                    recurse: true
+                    title: Family Integration
           authentication: |
             jenkins:
               securityRealm:
@@ -459,9 +500,20 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
+                    cloudTags:
+                      - name: "application"
+                        value: "core"
+                      - name: "builtFrom"
+                        value: "hmcts/cnp-flux-config"
+                      - name: "businessArea"
+                        value: "CFT"
+                      - name: "criticality"
+                        value: "High"
+                      - name: "environment"
+                        value: "production"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 60
+                    maxVirtualMachinesLimit: 80
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - agentLaunchMethod: "SSH"
@@ -512,7 +564,7 @@ spec:
                         jvmOptions: "-XX:MaxRAMPercentage=30 -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
                       \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
                       \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
-                      \ -XX:G1SummarizeRSetStatsPeriod=1"
+                      \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
                         labels: "ubuntu"
                         location: "UK South"
                         noOfParallelJobs: 1

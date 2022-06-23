@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-ac-int-api-gateway-web
+spec:
+  releaseName: ccd-ac-int-api-gateway-web
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccd-api-gateway-web
+  values:
+    nodejs:
+      replicas: 1
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5bfc293-20220615155256 #{"$imagepolicy": "flux-system:ccd-ac-int-api-gateway-web"}
+      ingressHost: ac-int-gateway-ccd.demo.platform.hmcts.net
+      ingressClass: traefik-no-proxy
+      environment:
+        CORS_ORIGIN_WHITELIST: "*"
+        TIMING-ALLOW-ORIGIN: "https://ccd-ac-int.demo.platform.hmcts.net"
+        PROXY_AGGREGATED: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
+        PROXY_DATA: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
+        PROXY_DEFINITION_IMPORT: http://ccd-ac-int-definition-store-api-demo.service.core-compute-demo.internal
+        DUMMY_VAR_TO_REDEPLOY: 1

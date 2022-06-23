@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-api
+  namespace: sscs
+spec:
+  releaseName: sscs-tribunals-api
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-tribunals-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-a1cc816-20220622154933 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
+      environment:
+        MAX_FILE_SIZE: 500MB
+        MAX_REQUEST_SIZE: 500MB

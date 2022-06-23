@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fis-cos-api
+  namespace: fis
+spec:
+  releaseName: fis-cos-api
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fis-cos-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fis/cos-api:prod-9acf994-20220620174309 #{"$imagepolicy": "flux-system:fis-cos-api"}

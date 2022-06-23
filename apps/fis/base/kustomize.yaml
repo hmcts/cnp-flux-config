@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: fis
+  namespace: flux-system
+spec:
+  path: ./apps/fis/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "fis"
+      TEAM_NOTIFICATION_CHANNEL: "family-integration-cicd-notice"

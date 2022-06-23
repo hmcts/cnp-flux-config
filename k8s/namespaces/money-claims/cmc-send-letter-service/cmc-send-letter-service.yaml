@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-send-letter-service
+  namespace: money-claims
+spec:
+  releaseName: cmc-send-letter-service
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: rpe-send-letter-service
+    version: 0.1.2
+  values:
+    java:
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-bb7fc49-20220621094644 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}

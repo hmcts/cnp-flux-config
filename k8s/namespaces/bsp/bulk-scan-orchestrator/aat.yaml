@@ -21,18 +21,18 @@ spec:
               alias: IDAM_USER_PASSWORD
             - name: idam-client-secret
               alias: IDAM_CLIENT_SECRET
-            - name: envelopes-queue-send-shared-access-key
+            - name: envelopes-queue-send-shared-access-key-premium
               alias: ENVELOPES_QUEUE_WRITE_ACCESS_KEY
-            - name: envelopes-queue-listen-shared-access-key
+            - name: envelopes-queue-listen-shared-access-key-premium
               alias: ENVELOPES_QUEUE_READ_ACCESS_KEY
-            - name: payments-queue-send-shared-access-key
+            - name: payments-queue-send-shared-access-key-premium
               alias: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
               # following can be removed once https://github.com/hmcts/bulk-scan-orchestrator/pull/1141 is deployed
-            - name: envelopes-queue-send-connection-string
+            - name: envelopes-queue-send-connection-string-premium
               alias: ENVELOPES_QUEUE_WRITE_CONN_STRING
-            - name: envelopes-queue-listen-connection-string
+            - name: envelopes-queue-listen-connection-string-premium
               alias: ENVELOPES_QUEUE_READ_CONN_STRING
-            - name: payments-queue-send-connection-string
+            - name: payments-queue-send-connection-string-premium
               alias: PAYMENTS_QUEUE_WRITE_CONN_STRING
             - name: orchestrator-POSTGRES-PASS
               alias: DB_PASSWORD
@@ -55,7 +55,7 @@ spec:
           CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
           IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
           IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
-          QUEUE_NAMESPACE: "bulk-scan-servicebus-aat"
+          QUEUE_NAMESPACE: "bulk-scan-servicebus-aat-premium"
           QUEUE_ENVELOPES_NAME: "envelopes"
           QUEUE_PAYMENTS_NAME: "payments"
           QUEUE_READ_ACCESS_KEY_NAME: "ListenSharedAccessKey"
@@ -64,6 +64,7 @@ spec:
           DB_CONN_OPTIONS: "?sslmode=require"
           DB_DRIVER: "org.postgresql.Driver"
           DB_URI: "jdbc:postgresql"
+          CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-aat.service.core-compute-aat.internal"
       smoketests:
         enabled: true
       functionaltests:

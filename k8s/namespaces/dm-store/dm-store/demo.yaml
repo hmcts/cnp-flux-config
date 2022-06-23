@@ -2,14 +2,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-1273-*
-#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       replicas: 2
-#      image: hmctspublic.azurecr.io/dm/store:pr-1273-9992827-20220129082135
+      image: hmctspublic.azurecr.io/dm/store:prod-25bc9f0-20220616165315 #{"$imagepolicy": "flux-system:demo-dm-store"}
       environment:
         ENABLE_TTL: false
+        S2S_NAMES_WHITELIST: divorce,ccd,em_api,em_gw,ccd_gw,ccd_data,sscs,sscs_bulkscan,divorce_document_upload,divorce_frontend,divorce_document_generator,probate_backend,pui_webapp,cmc_claim_store,bulk_scan_processor,em_npa_app,bulk_scan_orchestrator,fpl_case_service,finrem_document_generator,iac,em_stitching_api,dg_docassembly_api,ethos_repl_service,employment_tribunals,xui_webapp,ccd_case_document_am_api,unspec_service,nfdiv_case_api,civil_service,wa_task_management_api,wa_task_configuration_api,wa_task_monitor,adoption_web,adoption_cos_api,et_cos,wa_case_event_handler,ccd_case_disposer

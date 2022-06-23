@@ -1,0 +1,23 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: dynatrace
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./apps/dynatrace/${ENVIRONMENT}/base
+  dependsOn:
+    - name: dynatrace-crd
+  postBuild:
+    substitute:
+      NAMESPACE: "dynatrace"
+      TEAM_NOTIFICATION_CHANNEL: "platops-build-notices"
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: dynatrace-crd
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./apps/dynatrace/dynatrace-crds

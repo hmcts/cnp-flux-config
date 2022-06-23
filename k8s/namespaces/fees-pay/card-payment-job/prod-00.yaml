@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: card-payment-job
+  namespace: fees-pay
+spec:
+  releaseName: card-payment-job
+  values:
+    job:
+      environment:
+        REPORT_NAME: card-csv-report
+    global:
+      environment: prod

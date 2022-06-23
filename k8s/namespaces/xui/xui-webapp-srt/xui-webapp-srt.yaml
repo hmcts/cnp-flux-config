@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-webapp-srt
+spec:
+  releaseName: xui-webapp-srt
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-webapp
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/xui/webapp:prod-4b4a930-20220622140726 #{"$imagepolicy": "flux-system:xui-webapp-srt"}

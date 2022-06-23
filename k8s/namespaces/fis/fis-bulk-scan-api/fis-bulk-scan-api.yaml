@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fis-bulk-scan-api
+  namespace: fis
+spec:
+  releaseName: fis-bulk-scan-api
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fis-bulk-scan-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fis/bulk-scan-api:prod-04b6d71-20220524165911 #{"$imagepolicy": "flux-system:fis-bulk-scan-api"}

@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fis-bulk-scan-api
+spec:
+  releaseName: fis-bulk-scan-api
+  interval: 1m
+  values:
+    java:
+      image: hmctspublic.azurecr.io/fis/bulk-scan-api:prod-04b6d71-20220524165911 #{"$imagepolicy": "flux-system:fis-bulk-scan-api"}
+  chart:
+    spec:
+      chart: ./stable/fis-bulk-scan-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

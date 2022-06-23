@@ -2,17 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: fpl-case-service
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java: glob:pr-3328-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-3328-01426ff-20220207122358
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-3548-b398c84-20220610131525 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
       environment:
-        RELEASE: AGAIN
+        RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
@@ -59,6 +55,7 @@ spec:
             - cafcass-notification-recipient-new-application
             - cafcass-notification-recipient-new-document
             - cafcass-notification-recipient-additional-document
+            - cafcass-notification-recipient-notice-of-hearing
             - ld-sdk-key
             - ctsc-inbox
             - ctsc-team-lead-inbox

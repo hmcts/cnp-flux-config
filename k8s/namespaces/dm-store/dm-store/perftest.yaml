@@ -2,14 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: dm-store
-#  annotations:
-#    fluxcd.io/automated: "true"
-#    fluxcd.io/tag.java: glob:pr-1229-*
-#    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-#      image: hmctspublic.azurecr.io/dm/store:pr-1229-067155e-20220119190152
+      image: hmctspublic.azurecr.io/dm/store:prod-25bc9f0-20220616165315 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
         ENABLE_TTL: false
         REFRESH_FLAG: VAR2

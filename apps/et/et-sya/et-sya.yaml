@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et-sya
+spec:
+  releaseName: et-sya
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/et/sya:prod-c85198b-20220621104221 #{"$imagepolicy": "flux-system:et-sya"}
+  chart:
+    spec:
+      chart: ./stable/et-sya
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

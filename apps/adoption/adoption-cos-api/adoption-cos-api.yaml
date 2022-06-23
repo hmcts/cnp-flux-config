@@ -7,7 +7,16 @@ spec:
   interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/adoption/cos-api:prod-4461b89-20220210160643 #{"$imagepolicy": "flux-system:adoption-cos-api"}
+      cpuLimits: "1000m"
+      cpuRequests: "500m"
+      memoryLimits: "1024Mi"
+      memoryRequests: "512Mi"
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/adoption/cos-api:prod-0ee520a-20220613142759 #{"$imagepolicy": "flux-system:adoption-cos-api"}
   chart:
     spec:
       chart: ./stable/adoption-cos-api

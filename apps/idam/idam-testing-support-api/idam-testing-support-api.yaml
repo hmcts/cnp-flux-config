@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-testing-support-api
+  namespace: idam
+spec:
+  releaseName: idam-testing-support-api
+  chart:
+    spec:
+      chart: idam-testing-support-api
+      version: 0.0.15
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/testing-support-api:prod-4124e1f-20220621100131 # {"$imagepolicy": "flux-system:idam-testing-support-api"}
+      disableTraefikTls: true

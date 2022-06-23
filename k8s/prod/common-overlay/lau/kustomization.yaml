@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: lau
+bases:
+- ../../../namespaces/lau
+- ../../../namespaces/lau/namespace.yaml
+patchesStrategicMerge:
+- ../../../namespaces/lau/lau-frontend/prod.yaml
+- ../../../namespaces/lau/lau-case-backend/prod.yaml
+- ../../../namespaces/lau/lau-idam-backend/prod.yaml

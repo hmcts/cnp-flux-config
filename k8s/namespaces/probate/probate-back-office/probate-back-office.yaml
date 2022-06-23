@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-back-office
+spec:
+  releaseName: probate-back-office
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/probate-back-office
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/back-office:prod-449f935-20220622132214 #{"$imagepolicy": "flux-system:probate-back-office"}
+      environment:
+        VAR_TA: base-1

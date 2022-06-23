@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-orchestrator-service
+spec:
+  values:
+    java:
+      ingressHost: probate-orchestrator-service-prod.service.core-compute-prod.internal
+      environment:
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        VAR_TA: prod-trig2

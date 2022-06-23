@@ -7,10 +7,11 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-dab2796-20211108123445
+      image: hmctspublic.azurecr.io/idam/api:preview-eaee81d-20220622161132 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.sandbox.platform.hmcts.net
       replicas: 4
       environment:
+        MANAGEMENT_HEALTH_IDAMSERVICEAUTH_ENABLED: false
         TESTING_SUPPORT_ENABLED: true
         STRATEGIC_ADMIN_URL: https://idam-web-admin.sandbox.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.sandbox.platform.hmcts.net
@@ -36,3 +37,6 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+  chart:
+    spec:
+      version: 0.4.5
