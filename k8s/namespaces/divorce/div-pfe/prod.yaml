@@ -10,10 +10,11 @@ spec:
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
+      ingressHost: www.manage-application.apply-divorce.service.gov.uk
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-a9f84ff-20220331153341 #{"$imagepolicy": "flux-system:div-pfe"}
+      image: hmctspublic.azurecr.io/div/pfe:prod-f95aada-20220615155744 #{"$imagepolicy": "flux-system:div-pfe"}
       environment:
-        PUBLIC_HOSTNAME: https://www.apply-divorce.service.gov.uk
+        PUBLIC_HOSTNAME: https://www.manage-application.apply-divorce.service.gov.uk
         DECREE_NISI_FRONTEND_URL: https://www.decree-nisi.apply-divorce.service.gov.uk
         IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -24,6 +25,9 @@ spec:
         FEATURE_NEW_APP_CUTOFF_DATE_BANNER: "true"
         ANTENNA_WEBCHAT_URL: webchat.ctsc.hmcts.net
         ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_VERSION: 1-6-12
+        ANTENNA_WEBCHAT_AVAILABILITY_DEBUG: "false"
+        FEATURE_ANTENNA_WEBCHAT_AVAILABILITY_TOGGLE: "true"
         WEBCHAT_CHAT_ID: 10308349715d949f6bd7a989.00577994
         WEBCHAT_TENANT: aG1jdHN4MTAx
         WEBCHAT_BUTTON_NO_AGENTS: "2806315905d232e71137898.81655511"

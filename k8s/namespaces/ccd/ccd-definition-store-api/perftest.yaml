@@ -2,10 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-definition-store-api
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:prod-*
-    hmcts.github.com/prod-automated: enabled
 spec:
   releaseName: ccd-definition-store-api
   values:
@@ -19,12 +15,12 @@ spec:
         enabled: false
         minReplicas: 3
         maxReplicas: 4
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-513e9f4-20220401113403 #{"$imagepolicy": "flux-system:perftest-ccd-definition-store-api"}
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-fc9216f-20220622143507 #{"$imagepolicy": "flux-system:perftest-ccd-definition-store-api"}
       environment:
         ELASTIC_SEARCH_FAIL_ON_IMPORT: false
         DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"
         DEFINITION_STORE_DB_MAX_POOL_SIZE: 50
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-perftest.postgres.database.azure.com
-        DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api,ds_ui
+        DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api,ds_ui,fis_cos_api
         DUMMY_VAR: true
         DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120

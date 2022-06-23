@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-draft-store
+  namespace: money-claims
+spec:
+  releaseName: cmc-draft-store
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: draft-store-service
+  values:
+    image: hmctspublic.azurecr.io/draft-store/service:prod-64ce24b-20220622154950 #{"$imagepolicy": "flux-system:cmc-draft-store"}
