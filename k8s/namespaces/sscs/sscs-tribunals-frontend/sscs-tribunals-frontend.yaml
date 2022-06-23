@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-frontend
+  namespace: sscs
+spec:
+  releaseName: sscs-tribunals-frontend
+  rollback:
+    enable: true
+    retry: true
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-6f9f418-20220614111650 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
+      environment:
+        FT_WELSH: "true"

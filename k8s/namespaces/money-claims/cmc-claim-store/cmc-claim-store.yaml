@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-claim-store
+  namespace: money-claims
+spec:
+  releaseName: cmc-claim-store
+  rollback:
+    enable: true
+    retry: true
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-fefb4bb-20220615095201 #{"$imagepolicy": "flux-system:cmc-claim-store"}
+      environment:
+        MANAGEMENT_HEALTH_MAIL_ENABLED: false

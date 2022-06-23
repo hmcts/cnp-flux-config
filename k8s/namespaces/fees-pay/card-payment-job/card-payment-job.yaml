@@ -1,0 +1,25 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: card-payment-job
+  namespace: fees-pay
+spec:
+  releaseName: card-payment-job
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/payment-jobs
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-b7ec88d-20220607114459" #{"$imagepolicy": "flux-system:card-csv-report"}
+      schedule: "30 2 * * *"
+      environment:
+        REPORT_NAME: card-csv-report
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+      jobKind: CronJob

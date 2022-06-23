@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: adoption-cos-api
+spec:
+  releaseName: adoption-cos-api
+  interval: 1m
+  values:
+    java:
+#      image: hmctspublic.azurecr.io/adoption/cos-api:pr-249-d9552cf-20220621141654 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
+      environment:
+        APP_INSIGHTS_KEY: '6c5278dd-ee76-4e7b-92f9-57b27ead382e'
