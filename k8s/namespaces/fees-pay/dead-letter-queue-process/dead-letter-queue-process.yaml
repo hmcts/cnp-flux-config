@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dead-letter-queue-process
+spec:
+  releaseName: dead-letter-queue-process
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/payment-jobs
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-b7ec88d-20220607114459" #{"$imagepolicy": "flux-system:dead-letter-queue-process"}
+      schedule: "30 2 * * *"
+      environment:
+        REPORT_NAME: dead-letter-queue-process
+        DUMMY_RESTART_VAR: true
+      global:
+        jobKind: CronJob

@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pba-payment-job
+  namespace: fees-pay
+spec:
+  releaseName: pba-payment-job
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-b7ec88d-20220607114459" #{"$imagepolicy": "flux-system:pba-csv-report"}
+      schedule: "30 2 * * *"
+      environment:
+        DUMMY_RESTART_VAR: false
+    global:
+      environment: demo

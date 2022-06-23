@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:preview-ae0bd0e-20220405134105 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-eaee81d-20220622161132 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.service.core-compute-preview.internal
       replicas: 2
       environment:
@@ -38,6 +38,7 @@ spec:
         LOG_AND_AUDIT_IDAM_ENABLED: true
         FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
         trigger_deploy: true
+        IDAM_CACHE_TTL: 2
     global:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-pdf-service
+  namespace: money-claims
+spec:
+  releaseName: cmc-pdf-service
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: rpe-pdf-service
+    version: 0.6.2

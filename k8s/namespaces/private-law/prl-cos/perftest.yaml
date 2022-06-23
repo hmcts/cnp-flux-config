@@ -5,12 +5,29 @@ metadata:
   namespace: private-law
 spec:
   releaseName: prl-cos
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/prl-cos
   values:
     java:
+      replicas: 2
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 15
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-60e0000-20220329154533 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-9fdd8f6-20220620152818 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
+        FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
