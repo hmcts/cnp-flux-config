@@ -44,7 +44,7 @@ spec:
       enableKeyVaults: false
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-4a05a2f-20220622110736 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-222206d-20220623095249 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -91,7 +91,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-51cbc95-20220622092949 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e92b73d-20220624163114 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -102,7 +102,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-da09d5c-20220622142249 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-dc42f6b-20220622135226 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-f357719-20220624121214 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -126,15 +126,15 @@ spec:
         image: hmctspublic.azurecr.io/draft-store/service:prod-64ce24b-20220622154950 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
-        image: hmctspublic.azurecr.io/em/anno:prod-b593289-20220621094523 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-dfe8ef0-20220626101901 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-25bc9f0-20220616165315 #{"$imagepolicy": "flux-system:demo-dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-e30d853-20220627091017 #{"$imagepolicy": "flux-system:demo-dm-store"}
         ingressHost: dm-store-{{ .Release.Name }}.demo.platform.hmcts.net
     rpe-service-auth-provider:
       java:
-        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-5e3041b-20220617090525 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-c0258af-20220624090045 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
     elasticsearch:
       persistence:
         enabled: true
