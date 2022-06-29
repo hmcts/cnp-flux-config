@@ -7,7 +7,7 @@ spec:
   chart:
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     name: base
-    version: 0.1.2
+    version: 0.2.0
   values:
     language: java
     applicationPort: 8080
@@ -22,6 +22,11 @@ spec:
     ingressSessionAffinity:
       enabled: true
     envFromSecret: docmosis-secret
-    image: hmctsprivate.azurecr.io/docmosis:prod-9a319ed-221574 #{"$imagepolicy": "flux-system:docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:prod-41d5c65-239402 #{"$imagepolicy": "flux-system:docmosis"}
     environment:
       VAR_TA: trigger1
+    java:
+      memoryRequests: '1024Mi'
+      cpuRequests: '1000m'
+      memoryLimits: '3072Mi'
+      cpuLimits: '2000m'

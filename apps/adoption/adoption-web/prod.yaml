@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: adoption-web
+  namespace: adoption
+spec:
+  values:
+    nodejs:
+      ingressHost: apply-for-adoption.platform.hmcts.net
+      environment:
+        PCQ_ENABLED: "true"
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
+        IDAM_WEB_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token
+        #Pilot local-court email-Ids
+        CHELMSFORD_FAMILY_COURT_EMAIL: 'chelmsfordadoptionapplication@justice.gov.uk'
+        OXFORD_FAMILY_COURT_EMAIL: 'Oxfordadoptionapplication@justice.gov.uk'
+        MEDWAY_FAMILY_COURT_EMAIL: 'Medwayadoptionapplication@justice.gov.uk'
+        PORTSMOUTH_FAMILY_COURT_EMAIL: 'PortsmouthAdoptionApplication@justice.gov.uk'
+        #Leedsadoptionapplication@justice.gov.uk(Business has asked to update Leeds court email id)
+        LEEDS_FAMILY_COURT_EMAIL: 'adoptionsleeds@justice.gov.uk'
+        NORTHAMPTON_FAMILY_COURT_EMAIL: 'Northamptonadoptionapplications@justice.gov.uk'
+        WORCESTER_FAMILY_COURT_EMAIL: 'Worcesteradoptionapplication@justice.gov.uk'
+        NEWPORT_GWENT_FAMILY_COURT_EMAIL: 'NewportGwentadoptionapplication@justice.gov.uk'
+        FALLBACK_EMAIL_ID_VALUE: 'adoptionproject@justice.gov.uk'

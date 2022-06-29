@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: ts
+  namespace: ts
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: ts-binding
+  namespace: ts
+spec:
+  azureIdentity: ts
+  selector: ts

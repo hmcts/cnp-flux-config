@@ -99,24 +99,50 @@ kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/fluentbit-log.js
 
 In case you are enforcing ssl on Traefik( Refer Demo for flux config) with an existing pfx in keyvault, extract the certificate and key using below: 
 
+Pre-requisites:
+
 ```bash
 mkdir tmp
 cd tmp
-KEY_VAULT=${1} # infra-vault-sandbox
-SECRET_NAME=${2} #STAR-sandbox-platform-hmcts-net
+KEY_VAULT=${1} # acmedcdcftapps${ENV}
+SECRET_NAME=${2} #wildcard-sandbox-platform-hmcts-net
+```
 
+Download the certificate from keyvault:
+
+```bash
 az keyvault secret show --vault-name ${KEY_VAULT} --name ${SECRET_NAME} --query value -o tsv | base64 -D > ${SECRET_NAME}.pfx
-openssl pkcs12 -in ${SECRET_NAME}.pfx -nokeys -nodes -passin pass:"" | base64 > ${SECRET_NAME}.crt
-openssl pkcs12 -in ${SECRET_NAME}.pfx -nocerts -nodes -passin pass:"" | base64 > ${SECRET_NAME}.key
+```
 
+Convert the certificate to x509 format:
+
+```bash
+openssl pkcs12 -in ${SECRET_NAME}.pfx -nokeys -nodes -passin pass:"" > ${SECRET_NAME}-crt.pem 
+```
+
+Check the domain specific cert is at the top and the root certificate it at the bottom. Reorder to match this format if not in this order.
+
+Encode the certificate and key in base64 format:
+
+```bash
+openssl x509 -in ${SECRET_NAME}-crt.pem -passin pass:"" | base64 > ${SECRET_NAME}.crt
+openssl pkcs12 -in ${SECRET_NAME}.pfx -nocerts -nodes -passin pass:"" | base64 > ${SECRET_NAME}.key
 ```
 
 Create a values.yaml file like below in tmp directory
+
 ```yaml
 ssl:
   defaultCert: <pbcopy the content of ${SECRET_NAME}.crt file created above>
   defaultKey: <pbcopy the content of ${SECRET_NAME}.key file created above>
 ```
+Use pbcopy to get the base64 value of the certificate and key and paste into the values.yaml file you just created:
+
+```bash
+cat $SECRET_NAME.crt | pbcopy
+cat $SECRET_NAME.key | pbcopy
+```
+
 Create traefik-values sealed secret from the values.yaml 
 
 ```bash
@@ -124,7 +150,7 @@ ENV=<test>
 kubectl create secret generic traefik-values --namespace=admin --from-file=values.yaml=tmp/values.yaml --dry-run=client -o yaml > tmp/traefiksecret.yaml
 mkdir -p apps/admin/traefik/$ENV
 mkdir -p apps/admin/traefik/$ENV/base
-kubeseal --format=yaml --cert=apps/<env>/pub-cert.pem <  tmp/traefiksecret.yaml >  apps/admin/traefik/$ENV/base/traefik-values.yaml
+kubeseal --format=yaml --cert=clusters/${ENV}/pub-cert.pem <  tmp/traefiksecret.yaml >  apps/admin/$ENV/base/traefik-values.yaml
 ```
 
 In demo, traefik-forward-auth is using the following sealed secret:

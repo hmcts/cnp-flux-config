@@ -1,0 +1,35 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: probate-cron-smee-and-ford-extract
+spec:
+  releaseName: probate-cron-smee-and-ford-extract
+  chart:
+    git: git@github.com:hmcts/probate-cron
+    ref: master
+    path: probate-cron
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-2518a81-20220623142434 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
+      keyVaults:
+        probate:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: s2s-probate-backend
+              alias: S2S_AUTH_TOTP_SECRET
+            - name: ccidam-idam-api-secrets-probate
+              alias: AUTH2_CLIENT_SECRET
+            - name: idamRedirectUrl
+              alias: IDAM_API_REDIRECT_URL
+            - name: payCaseWorkerPass
+              alias: PAYMENT_CASEWORKER_PASSWORD
+            - name: payCaseWorkerUser
+              alias: PAYMENT_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerUser
+              alias: SCHEDULER_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerPass
+              alias: SCHEDULER_CASEWORKER_PASSWORD
+      environment:
+        TASK_NAME: SmeeAndFordExtractTask
+      schedule: 0/10 * * * *
