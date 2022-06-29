@@ -5,9 +5,29 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/general-applications:latest #{"$imagepolicy": "flux-system:civil-general-applications"}
+      image: hmctspublic.azurecr.io/civil/general-applications:pr-366-1c0ecd8-20220624161557 #{"$imagepolicy": "flux-system:demo-civil-general-applications"}
       keyVaults:
         civil:
           resourceGroup: civil
+          secrets:
+            - civil-idam-client-secret
+            - microservicekey-civil-service
+            - system-update-user-username
+            - system-update-user-password
+            - cross-access-user-username
+            - cross-access-user-password
+            - prd-admin-user-username
+            - prd-admin-user-password
+            - name: AppInsightsInstrumentationKeyGeneralApplications
+              alias: azure.application-insights.instrumentation-key
+            - docmosis-api-key
+            - cmc-db-password-v11
+            - gov-notify-api-key
+            - sendgrid-api-key
+            - robotics-notification-sender
+            - robotics-notification-recipient
+            - launch-darkly-sdk-key
+            - robotics-notification-multipartyrecipient
+            - ordnance-survey-api-key
       environment:
         TESTING_SUPPORT_ENABLED: true

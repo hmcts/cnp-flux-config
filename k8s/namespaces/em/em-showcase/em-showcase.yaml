@@ -2,7 +2,6 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-showcase
-  #hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: em-showcase
   chart:
@@ -13,7 +12,7 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/showcase:prod-481acf9-20220324094724 #{"$imagepolicy": "flux-system:em-showcase"}
+      image: hmctspublic.azurecr.io/em/showcase:prod-520c678-20220609103003 #{"$imagepolicy": "flux-system:em-showcase"}
       ingressHost: em-showcase-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         VAR_T3: trigger6

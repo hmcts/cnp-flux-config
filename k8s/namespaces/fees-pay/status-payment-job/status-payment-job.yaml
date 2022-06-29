@@ -1,0 +1,25 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: status-payment-job
+  namespace: fees-pay
+spec:
+  releaseName: status-payment-job
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/payment-jobs
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-9e9b8fd-20220624160951" #{"$imagepolicy": "flux-system:status-update"}
+      schedule: "*/30 * * * *"
+      environment:
+        REPORT_NAME: status-update
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+      jobKind: CronJob
