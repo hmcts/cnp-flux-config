@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-refunds-api
+spec:
+  releaseName: ccpay-refunds-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-refunds-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-fb4676b-20220526170320 #{"$imagepolicy": "flux-system:ccpay-refunds-api"}
