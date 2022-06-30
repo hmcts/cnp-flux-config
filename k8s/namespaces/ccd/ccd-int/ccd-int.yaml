@@ -1,16 +1,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-srt
+  name: ccd-int
 spec:
-  releaseName: ccd-srt
+  releaseName: ccd-int
   timeout: 900
   rollback:
     enable: false
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 8.0.3
+    version: 8.0.6
   values:
     tags:
       idam-pr: false
@@ -48,7 +48,7 @@ spec:
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
-          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-srt-ccd-definition-store/health # odd hack to get import working?!?
+          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-int-ccd-definition-store/health # odd hack to get import working ?!?
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
@@ -140,7 +140,7 @@ spec:
         enabled: true
       ingress:
         hosts:
-          - es-ccd-srt.demo.platform.hmcts.net
+          - es-ccd-int.demo.platform.hmcts.net
     logstash:
       persistence:
         enabled: true
