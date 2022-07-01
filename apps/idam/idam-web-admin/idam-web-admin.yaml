@@ -7,16 +7,14 @@ spec:
   releaseName: idam-web-admin
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-admin:prod-6574093-20220614132015
+      image: hmctspublic.azurecr.io/idam/web-admin:prod-909ffd0-20220620124007
       ingressHost: idam-web-admin.platform.hmcts.net
       aadIdentityName: idam
       useInterpodAntiAffinity: true
       environment:
-        DEBUG: 2022-05-26-10-00 #debug value, proof of kustomize deployment
-        STRATEGIC_SERVICE_MANAGEMENT_ENABLED: true
+        STRATEGIC_SERVICE_MANAGEMENT_ENABLED: false
         STRATEGIC_SERVICE_URL: https://idam-api.platform.hmcts.net
         STRATEGIC_PUBLIC_URL: https://hmcts-access.service.gov.uk
-        service-management.enabled: false
   chart:
     spec:
       chart: idam-web-admin
