@@ -1,6 +1,8 @@
-- op: replace
-  path: /spec/resourceID
-  value: /subscriptions/b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb/resourcegroups/genesis-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-sbox-mi
-- op: replace
-  path: /spec/clientID
-  value: 96775d73-e4f3-49ee-8bb6-f8660a19ba85
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: aks-pod-identity-mi
+  namespace: admin
+spec:
+  resourceID: "/subscriptions/b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb/resourcegroups/genesis-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-sbox-mi"
+  clientID: "96775d73-e4f3-49ee-8bb6-f8660a19ba85"
