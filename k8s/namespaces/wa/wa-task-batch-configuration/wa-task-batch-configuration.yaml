@@ -2,8 +2,9 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: wa-task-batch-configuration
-  fluxcd.io/automated: "true"
-  fluxcd.io/tag.job: glob:prod-*
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.job: glob:prod-*
 spec:
   releaseName: wa-task-batch-configuration
   chart:
@@ -13,4 +14,4 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/task-batch-service:prod-b87e8f4-20220420155652 #{"$imagepolicy": "flux-system:wa-task-batch-configuration"}
+      image: hmctspublic.azurecr.io/wa/task-batch-service:prod-891b02b-20220629085940 #{"$imagepolicy": "flux-system:wa-task-batch-configuration"}

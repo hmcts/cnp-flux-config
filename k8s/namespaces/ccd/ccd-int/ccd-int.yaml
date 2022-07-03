@@ -1,16 +1,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: ccd-srt
+  name: ccd-int
 spec:
-  releaseName: ccd-srt
+  releaseName: ccd-int
   timeout: 900
   rollback:
     enable: false
   chart:
     repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
     name: ccd
-    version: 8.0.3
+    version: 8.0.6
   values:
     tags:
       idam-pr: false
@@ -44,17 +44,17 @@ spec:
       enableKeyVaults: false
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-222206d-20220623095249 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-405757b-20220630135454 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
-          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-srt-ccd-definition-store/health # odd hack to get import working?!?
+          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-int-ccd-definition-store/health # odd hack to get import working ?!?
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5bfc293-20220615155256 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-f017ae4-20220629175105 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
@@ -64,7 +64,7 @@ spec:
             disabled: false
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-a27dfc4-20220615162014 #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-6606061-20220629174719 #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           REDIS_HOST: "{{ .Release.Name }}-redis-master"
@@ -75,11 +75,11 @@ spec:
         enabled: true
     ccd-case-print-service:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-71a4413-20220615153216 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-b3757e3-20220629175526 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
         ingressHost: return-case-doc-ccd.{{ .Release.Name }}.demo.platform.hmcts.net
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-fc9216f-20220622143507 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-96c6d35-20220701130522 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -91,7 +91,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0bb237f-20220622153205 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-29e06dd-20220701155018 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -99,10 +99,10 @@ spec:
           ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://{{ .Release.Name }}-es-master:9200"
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-da09d5c-20220622142249 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-44d3f5a-20220630160459 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-dc42f6b-20220622135226 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-e5877cc-20220630105704 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -118,29 +118,29 @@ spec:
               subscriptionNeeded: yes
     am-role-assignment-service:
       java:
-        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-4676b3b-20220616171816 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-085c4b8-20220701145905 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
         environment:
           RUN_DB_MIGRATION_ON_STARTUP: true
     draft-store-service:
       java:
-        image: hmctspublic.azurecr.io/draft-store/service:prod-64ce24b-20220622154950 #{"$imagepolicy": "flux-system:draft-store-service"}
+        image: hmctspublic.azurecr.io/draft-store/service:prod-9776850-20220629155351 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
-        image: hmctspublic.azurecr.io/em/anno:prod-f5e1e17-20220622181834 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-0721cec-20220701151051 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-25bc9f0-20220616165315 #{"$imagepolicy": "flux-system:demo-dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-d804299-20220630093351 #{"$imagepolicy": "flux-system:demo-dm-store"}
         ingressHost: dm-store-{{ .Release.Name }}.demo.platform.hmcts.net
     rpe-service-auth-provider:
       java:
-        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-5e3041b-20220617090525 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-c0258af-20220624090045 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
     elasticsearch:
       persistence:
         enabled: true
       ingress:
         hosts:
-          - es-ccd-srt.demo.platform.hmcts.net
+          - es-ccd-int.demo.platform.hmcts.net
     logstash:
       persistence:
         enabled: true
