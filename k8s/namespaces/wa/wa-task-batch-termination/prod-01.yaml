@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-termination
+spec:
+  values:
+    job:
+      #at every 40. minutes e.g : 13:40:00, 14:40:00, 15:40:00
+      schedule: "40-59/20 * * * *"
+      environment:
+        JOB_NAME: TERMINATION
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob
