@@ -5,8 +5,8 @@ metadata:
 spec:
   values:
     job:
-      #at every 0. and 20. minutes e.g : 13:00:00, 13:20:00, 14:00:00, 14:20:00
-      schedule: "00-39/20 * * * 3"
+      # This starts at 0 to avoid running in parallel with prod-01.yml in both clusters
+      schedule: "0,4,8,12,16,20,24,28,32,36,40,44,48,52,56 * * * *"
       environment:
         JOB_NAME: TERMINATION
     global:
