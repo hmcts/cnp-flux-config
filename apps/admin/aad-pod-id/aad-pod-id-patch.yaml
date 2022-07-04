@@ -10,6 +10,11 @@ spec:
         env:
         - name: FORCENAMESPACED
           value: "true"
+      tolerations:
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
 ---
 apiVersion: apps/v1
 kind: Deployment
