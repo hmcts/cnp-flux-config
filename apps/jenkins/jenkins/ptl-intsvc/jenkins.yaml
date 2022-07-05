@@ -64,6 +64,107 @@ spec:
                         value: dcdcftappsstgkv
                       - key: BUSINESS_AREA_TAG
                         value: CFT
+          credentials: |
+            credentials:
+              system:
+                domainCredentials:
+                  - credentials:
+                      - string:
+                          scope: GLOBAL
+                          id: sonarcloud-api-token
+                          secret: '${sonarcloud-api-token}'
+                          description: SonarCloud API token
+                      - string:
+                          scope: GLOBAL
+                          id: "fortify-on-demand"
+                          secret: "${fortify-on-demand}"
+                          description: "Fortify - token"
+                      - string:
+                          scope: GLOBAL
+                          id: slack-token
+                          secret: '${slack-token}'
+                          description: Slack token
+                      - usernamePassword:
+                          description: "GitHub - Service account"
+                          id: "jenkins-github-hmcts-api-token"
+                          password: "${hmcts-github-apikey}"
+                          scope: GLOBAL
+                          username: "jenkins-reform-hmcts3"
+                      - usernamePassword:
+                          description: "SSH credentials for Jenkins agents"
+                          id: "vm_agent_creds"
+                          password: "${mgmt-bastion-creds-password}"
+                          scope: GLOBAL
+                          username: "jenkinsssh"
+                      - string:
+                          description: "Read/Write Key To Publish CosmosDB Metrics"
+                          id: "COSMOSDB_TOKEN_KEY"
+                          scope: GLOBAL
+                          secret: "${pipelinemetrics-cosmosdb-key}"
+                      - usernamePassword:
+                          description: "Username and password for the OWASP vulnerability database"
+                          id: "owasp-db-login"
+                          password: "${OWASPDb-Password}"
+                          scope: GLOBAL
+                          username: "owasp_administrator"
+                      - usernamePassword:
+                          description: "Storage account name and access key for storing build reports"
+                          id: "buildlog-storage-account"
+                          password: "${jenkins-build-logs-key}"
+                          scope: GLOBAL
+                          username: "mgmtbuildlogstoresandbox"
+                      - sauce:
+                          apiKey: "${sauce-access-key}"
+                          description: "Sauce Labs Reform Key"
+                          id: "reform_tunnel"
+                          scope: GLOBAL
+                          username: "reform"
+                          restEndpoint: "https://eu-central-1.saucelabs.com/"
+                      - azureImds:
+                          azureEnvName: "Azure"
+                          subscriptionId: "${subscription-id}"
+                          description: "Jenkins Azure identity"
+                          id: "jenkins-managed-identity"
+                          scope: GLOBAL
+                      - azure:
+                          azureEnvironmentName: "Azure"
+                          clientId: "${sp-app-id}"
+                          clientSecret: "${sp-app-password}"
+                          description: "Jenkins Service Principal"
+                          id: "jenkinsServicePrincipal"
+                          scope: GLOBAL
+                          subscriptionId: "${subscription-id}"
+                          tenant: "${jenkins-sp-tenant-id}"
+                      - gitHubApp:
+                          appID: "52866"
+                          description: "GitHub APP Key - RPE"
+                          id: "hmcts-jenkins-rpe"
+                          privateKey: "${hmcts-jenkins-rpe-ghapp}"
+                      - gitHubApp:
+                          appID: "52960"
+                          description: "GitHub APP Key - CNP"
+                          id: "hmcts-jenkins-cnp"
+                          privateKey: "${hmcts-jenkins-cnp-ghapp}"
+                      - gitHubApp:
+                          appID: "149849"
+                          description: "GitHub APP Key - cft"
+                          id: "hmcts-jenkins-cft"
+                          privateKey: "${hmcts-jenkins-cft-ghapp}"
+                      - gitHubApp:
+                          appID: "${hmcts-jenkins-j-to-z-appid}"
+                          description: "GitHub APP Key - J to Z"
+                          id: "hmcts-jenkins-j-to-z"
+                          privateKey: "${hmcts-jenkins-j-to-z-ghapp}"
+                      - gitHubApp:
+                          appID: "${hmcts-jenkins-d-to-i-appid}"
+                          description: "GitHub APP Key - D to I"
+                          id: "hmcts-jenkins-d-to-i"
+                          privateKey: "${hmcts-jenkins-d-to-i-ghapp}"
+                      - gitHubApp:
+                          appID: "${hmcts-jenkins-a-to-c-appid}"
+                          description: "GitHub APP Key - A to C"
+                          id: "hmcts-jenkins-a-to-c"
+                          privateKey: "${hmcts-jenkins-a-to-c-ghapp}"
           auth: |
             jenkins:
               authorizationStrategy:
