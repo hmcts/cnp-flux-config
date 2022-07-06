@@ -79,7 +79,7 @@ spec:
         ingressHost: return-case-doc-ccd.{{ .Release.Name }}.demo.platform.hmcts.net
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-96c6d35-20220701130522 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-9115d60-20220705161832 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -91,7 +91,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-29e06dd-20220701155018 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-88ce9a3-20220705163629 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -102,7 +102,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-44d3f5a-20220630160459 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-e5877cc-20220630105704 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-d9a410b-20220705144820 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
