@@ -1,0 +1,11 @@
+# Redirect with domain replacement
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: plum-web-redirect
+  namespace: cnp
+spec:
+  redirectRegex:
+    permanent: true
+    regex: ^https://plum.sandbox.platform.hmcts.net(.*)
+    replacement: https://idam-web-admin.sandbox.platform.hmcts.net
