@@ -1,0 +1,21 @@
+#this is to apply permanent redirect on plum
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://labs-mokainosspringboot-sandbox.service.core-compute-sandbox.internal(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://plum.sandbox.platform.hmcts.net
+  name: plum-web-redirect
+  namespace: cnp
+spec:
+  rules:
+    - host: labs-mokainosspringboot-sandbox.service.core-compute-sandbox.internal
+      http:
+        paths:
+          - backend:
+              serviceName: plum-frontend-nodejs
+              servicePort: 80
+            path: /
