@@ -1,0 +1,21 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: civil-citizen-ui
+  namespace: civil
+spec:
+  values:
+    nodejs:
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      ingressClass: traefik-no-proxy
+      ingressHost: civil-citizen-ui.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/civil/citizen-ui:pr-587-1d14273-20220707161541 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
+      environment:
+        GA_TRACKING_ID: UA-97111056-1
+        FEATURE_TESTING_SUPPORT: true
+        FEATURE_RETURN_ERROR_TO_USER: true
+        PCQ_URL: https://pcq.demo.platform.hmcts.net
