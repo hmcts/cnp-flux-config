@@ -24,8 +24,12 @@ spec:
         -Dotel.instrumentation.jenkins.web.enabled=false
       ingress:
         hostName: sandbox-build.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       secondaryingress:
         hostName: static-sandbox-build.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
