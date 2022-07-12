@@ -2,13 +2,14 @@
 #
 # Ingress
 #
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: artifactory-oss
   namespace: artifactory
   annotations:
     kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
     - host: artifactory.platform.hmcts.net
