@@ -3,11 +3,12 @@ kind: HelmRelease
 metadata:
   name: pact-broker
   namespace: pact-broker
-
+  annotations:
+  kubernetes.io/ingress.class: traefik
+  traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   values:
     ingressHost: pact-broker.sandbox.platform.hmcts.net
-    annotations: traefik.ingress.kubernetes.io/router.tls: "true"
     postgresqlHost: pact-broker-mgmt-sandbox.postgres.database.azure.com
     postgresqlServerName: pact-broker-mgmt-sandbox
     vaultName: dtscftptlsbox
