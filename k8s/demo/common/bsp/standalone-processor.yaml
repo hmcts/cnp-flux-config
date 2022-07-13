@@ -18,16 +18,16 @@ spec:
   values:
     bulk-scan-processor:
       java:
-        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-a4c33b4-20220704073415 #{"$imagepolicy": "flux-system:bulk-scan-processor"}
+        image: hmctspublic.azurecr.io/bulk-scan/processor:prod-a3c1227-20220713145104 #{"$imagepolicy": "flux-system:bulk-scan-processor"}
         ingressClass: traefik-private
         ingressHost: bsp-standalone-processor.demo.platform.hmcts.net
         releaseNameOverride: "{{ .Release.Name }}-bsp"
         secrets:
           STORAGE_ACCOUNT_NAME:
-            secretRef: bsp-storage-account-creds
+            secretRef: bsp-processor-creds
             key: storageAccountName
           STORAGE_KEY:
-            secretRef: bsp-storage-account-creds
+            secretRef: bsp-processor-creds
             key: accessKey
         environment:
           STORAGE_URL: "https://bulk-scanning.demo.platform.hmcts.net"
@@ -48,6 +48,6 @@ spec:
         enabled: true
       dmStore:
         enabled: true
-bsp:
-  blobstorage:
-    enabled: false
+    bsp:
+      blobstorage:
+        enabled: false
