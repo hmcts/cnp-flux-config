@@ -5,6 +5,13 @@ metadata:
   namespace: admin
 spec:
   values:
+    websecure:
+        tls:
+          enabled: true
+          domains:
+            - main: "service.core-compute-sandbox.internal"
+              sans: 
+                - "*.service.core-compute-sandbox.internal"
     deployment:
       additionalVolumes:
         - name: traefik-default-cert
