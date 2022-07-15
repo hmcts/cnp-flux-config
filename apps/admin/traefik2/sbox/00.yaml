@@ -4,6 +4,20 @@ metadata:
   name: traefik2
   namespace: admin
 spec:
+  releaseName: traefik
+    values:
+      deployment:
+        additionalVolumes:
+          - name: traefik-internal-cert
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: traefik-internal-cert
+      additionalVolumeMounts:
+        - name: traefik-internal-cert
+          mountPath: "/mnt/certs"
+          readOnly: true
   values:
     service:
       spec:
