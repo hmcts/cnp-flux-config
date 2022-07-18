@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: response
+  namespace: response
+spec:
+  type: 0
+  resourceID: "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourcegroups/managed-identities-ptl-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/response-ptl-mi"
+  clientID: "e02db912-1bf4-48e7-9293-19e1d1e968a3"
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: response-binding
+  namespace: response
+spec:
+  azureIdentity: response
+  selector: response

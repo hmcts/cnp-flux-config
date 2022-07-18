@@ -7,16 +7,22 @@ spec:
   releaseName: rpe-response-frontend
   values:
     replicas: 2
-    image: hmctspublic.azurecr.io/rpe/response-frontend:dbapb9
+    image: hmctspublic.azurecr.io/rpe/response-frontend:dbapb9 #{"$imagepolicy": "flux-system:response-frontend"}
+    aadIdentityName: response
     ingressHost: response.platform.hmcts.net
     livenessPath: /
     readinessPath: /
+    keyVaults:
+      response:
+        secrets:
+          - slack-signing-secret
+          - slack-bot-token
     environment:
       RESPONSE_URL: 'http://rpe-response-api-nodejs'
   chart:
     spec:
       chart: nodejs
-      version: 1.10.1
+      version: 2.4.4
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
