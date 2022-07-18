@@ -6,10 +6,26 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-b9d6bef-20220523151247 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:pr-736-2dbb3a1-20220718164009 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
-        VAR_FLUX_V2: trigger2
+        VAR_FLUX_V2: trigger1
+        VAR_RM: trigger1
+      keyVaults:
+        finrem:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: finrem-case-orchestration-service-s2s-key
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: idam-secret
+              alias: OAUTH2_CLIENT_FINREM
+            - name: finrem-system-update-username
+              alias: FINREM_SYSTEMUPDATE_USERNAME
+            - name: finrem-system-update-password
+              alias: FINREM_SYSTEMUPDATE_PASSWORD
+            - name: finrem-idam-client-secret
+              alias: FINREM_IDAM_CLIENT_SECRET

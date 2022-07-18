@@ -3,8 +3,11 @@ kind: ImagePolicy
 metadata:
   name: perftest-ccd-definition-store-api
   annotations:
-    hmcts.github.com/prod-automated: enabled
+    hmcts.github.com/prod-automated: disabled
 spec:
+  filterTags:
+    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
   policy:
     alphabetical:
       order: asc

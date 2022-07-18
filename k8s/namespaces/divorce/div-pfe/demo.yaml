@@ -8,7 +8,8 @@ spec:
     nodejs:
       ingressClass: traefik-no-proxy
       ingressHost: petitioner-frontend-aks.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/div/pfe:prod-38b33cb-20220523113522 #{"$imagepolicy": "flux-system:div-pfe"}
+      disableTraefikTls: false
+      image: hmctspublic.azurecr.io/div/pfe:prod-942c40b-20220708123719 #{"$imagepolicy": "flux-system:div-pfe"}
       environment:
         PUBLIC_HOSTNAME: https://petitioner-frontend-aks.demo.platform.hmcts.net
         DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.demo.platform.hmcts.net
@@ -21,9 +22,10 @@ spec:
         ANTENNA_WEBCHAT_VERSION: 1
         FEATURE_NEW_FEES: "true"
         FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
-        FEATURE_NEW_APP_CUTOFF_DATE_BANNER: "true"
+        FEATURE_NEW_APP_CUTOFF_DATE_BANNER: "false"
+        FEATURE_NEW_APP_CUTOFF: "false"
         VAR_TA: dem02
-        FEATURE_NEW_APP_CUTOFF: "true"
+        VAR_RUE: dem03
         ################################################################################################################
         # JS DateTime value representing when the new application cutoff will take effect
         # Servers use UTC!  Adjust values accordingly!

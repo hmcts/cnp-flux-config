@@ -5,6 +5,7 @@ metadata:
 spec:
   releaseName: docmosis
   values:
+    disableTraefikTls: true
     language: java
     applicationPort: 8080
     replicas: 2
@@ -14,11 +15,11 @@ spec:
     ingressSessionAffinity:
       enabled: true
     envFromSecret: docmosis-secret
-    image: hmctsprivate.azurecr.io/docmosis:prod-beb18e8-230066 #{"$imagepolicy": "flux-system:docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:prod-369bda2-246131 #{"$imagepolicy": "flux-system:docmosis"}
   chart:
     spec:
       chart: base
-      version: 0.1.2
+      version: 0.2.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

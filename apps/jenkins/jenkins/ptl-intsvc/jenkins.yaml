@@ -98,6 +98,7 @@ spec:
                   - dynatrace:
                       dashboardId: "4a6a6184-f1b6-486f-b810-3b93ef05e5b2"
                       url: "https://ebe20728.live.dynatrace.com/"
+                      managementZoneId: "6540375402790729445"
           views: |
             jenkins:
               views:
@@ -171,7 +172,7 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|paybubble-performance-tests|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app)\/master
+                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
@@ -219,7 +220,7 @@ spec:
                     title: ETHOS
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test|cmc-ccd-e2e-tests)\/master
+                      ^HMCTS.*\/(cmc-citizen-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test|cmc-ccd-e2e-tests)\/master
                     name: CMC
                     recurse: true
                     title: CMC
@@ -303,7 +304,7 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
@@ -315,13 +316,13 @@ spec:
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests|et-ccd-definitions-[a-z]+)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api)\/master
+                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api|family-api-gateway|fis-ds-update-web)\/master
                     name: FIS
                     recurse: true
                     title: Family Integration
@@ -499,6 +500,17 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
+                    cloudTags:
+                      - name: "application"
+                        value: "core"
+                      - name: "builtFrom"
+                        value: "hmcts/cnp-flux-config"
+                      - name: "businessArea"
+                        value: "CFT"
+                      - name: "criticality"
+                        value: "High"
+                      - name: "environment"
+                        value: "production"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
                     maxVirtualMachinesLimit: 80
@@ -517,7 +529,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.1.1"
+                          galleryImageVersion: "1.2.0"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"

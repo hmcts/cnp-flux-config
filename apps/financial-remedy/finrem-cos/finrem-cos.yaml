@@ -9,13 +9,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-b9d6bef-20220523151247 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-1baf51a-20220718131013 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
-        FEATURE_RESPONDENT_JOURNEY: true
         BSP_SERVICES_ALLOWED_TO_UPDATE: bulk_scan_orchestrator
         BSP_SERVICES_ALLOWED_TO_VALIDATE: bulk_scan_processor
+        CTSC_OPENING_HOURS: from 8am to 6pm, Monday to Friday
         VAR_TA: trigger2
-        FEATURE_MANAGE_BUNDLE: false
+        FEATURE_RESPONDENT_JOURNEY: true
+        FEATURE_MANAGE_BUNDLE: true
   chart:
     spec:
       chart: ./stable/finrem-cos

@@ -1,0 +1,21 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccd-case-disposer
+spec:
+  values:
+    job:
+      schedule: "15 11 * * *"
+      cpuLimits: "1500m"
+      environment:
+        ELASTIC_SEARCH_ENABLED: true
+        DATA_STORE_DB_PORT: 5432
+        DATA_STORE_DB_OPTIONS: "?sslmode=require"
+        DATA_STORE_DB_HOST: "ccd-data-store-api-postgres-db-v11-perftest.postgres.database.azure.com"
+        IDAM_S2S_URL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+        ROLE_ASSIGNMENT_HOST: "http://am-role-assignment-service-perftest.service.core-compute-perftest.internal"
+        DOCUMENT_STORE_HOST: "http://dm-store-perftest.service.core-compute-perftest.internal"
+        DEFINITION_STORE_HOST: "http://ccd-definition-store-api-perftest.service.core-compute-perftest.internal"
+        DELETE_CASE_TYPES: "MoneyClaimCase"
+        SIMULATED_CASE_TYPES:
