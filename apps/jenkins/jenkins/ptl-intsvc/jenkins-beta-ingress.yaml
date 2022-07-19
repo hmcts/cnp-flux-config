@@ -1,6 +1,6 @@
 #this is to apply permanent redirect on register-org domain
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -16,6 +16,9 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: jenkins
-              servicePort: 8080
+              service:
+                name: jenkins
+                port:
+                  number: 8080
             path: /
+            pathType: ImplementationSpecific
