@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -7,10 +7,13 @@ metadata:
   namespace: rpe
 spec:
   rules:
-  - host: cmc-pdf-service-demo.service.core-compute-demo.internal
-    http:
-      paths:
-      - backend:
-          serviceName: pdf-service-java
-          servicePort: 80
-        path: /
+    - host: cmc-pdf-service-demo.service.core-compute-demo.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: pdf-service-java
+                port:
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific 
