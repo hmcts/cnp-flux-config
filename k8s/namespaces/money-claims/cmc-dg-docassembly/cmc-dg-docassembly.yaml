@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-dg-docassembly
+  namespace: money-claims
+spec:
+  releaseName: cmc-dg-docassembly
+  rollback:
+    enable: true
+  chart:
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
+    name: dg-docassembly
+    version: 1.0.7
+  values:
+    java:
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-e57609a-20220719104205 #{"$imagepolicy": "flux-system:dg-docassembly"}

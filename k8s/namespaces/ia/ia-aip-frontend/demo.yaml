@@ -5,10 +5,15 @@ metadata:
 spec:
   values:
     nodejs:
+      disableTraefikTls: false
       ingressHost: immigration-appeal.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/ia/aip-frontend:pr-752-379420d-20220520105815 #{"$imagepolicy": "flux-system:demo-ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:pr-752-5b8f873-20220616155008
       environment:
         IDAM_WEB_URL: "https://idam-web-public.demo.platform.hmcts.net"
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         RESTART_ME: "1"
         ASK_FOR_MORE_TIME_ENABLED: true
+  chart:
+    git: git@github.com:hmcts/ia-aip-frontend
+    ref: RIA-5692
+    path: charts/ia-aip-frontend

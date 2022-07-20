@@ -12,7 +12,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: "2.347-59"
+      tag: "2.357-113"
       containerSecurityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -168,16 +168,6 @@ spec:
             unclassified:
               timestamperConfig:
                 allPipelines: true
-          otel: |
-            unclassified:
-              openTelemetry:
-                authentication: "noAuthentication"
-                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
-                endpoint: "http://opentelemetry-collector.monitoring:4317"
-                exportOtelConfigurationAsEnvironmentVariables: false
-                ignoredSteps: "dir,echo,isUnix,pwd,properties"
-                serviceName: "jenkins"
-                serviceNamespace: "jenkins"
           theme: |
             unclassified:
               themeManager:
@@ -295,6 +285,12 @@ spec:
                           description: "GitHub APP Key - A to C"
                           id: "hmcts-jenkins-a-to-c"
                           privateKey: "${hmcts-jenkins-a-to-c-ghapp}"
+                      - azureCosmosDB:
+                          credentialsId: "jenkins-managed-identity"
+                          id: "cosmos-connection"
+                          preferredRegion: "UK South"
+                          scope: GLOBAL
+                          url: "https://${pipeline-metrics-account-name}.documents.azure.com:443/"
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy

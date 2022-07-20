@@ -6,11 +6,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:preview-e86dedb-20220519151211 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
+      image: hmctspublic.azurecr.io/idam/web-public:preview-ceff625-20220719095729 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
       ingressHost: idam-web-public.sandbox.platform.hmcts.net
+      disableTraefikTls: true
       replicas: 2
       environment:
-        STRATEGIC_SERVICE_URL: https://idam-api.sandbox.platform.hmcts.net
+        STRATEGIC_SERVICE_URL: http://idam-api
   chart:
     spec:
       version: 0.2.22

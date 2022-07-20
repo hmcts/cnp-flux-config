@@ -3,9 +3,6 @@ kind: HelmRelease
 metadata:
   name: fis-bulk-scan-api
   namespace: fis
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.nodejs: glob:prod-*
 spec:
   releaseName: fis-bulk-scan-api
   rollback:
@@ -16,7 +13,7 @@ spec:
     ref: master
     path: stable/fis-bulk-scan-api
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fis/bulk-scan-api:prod-b066c3f-20220519104906 #{"$imagepolicy": "flux-system:fis-bulk-scan-api"}
+      image: hmctspublic.azurecr.io/fis/bulk-scan-api:prod-3cbca0b-20220719165911 #{"$imagepolicy": "flux-system:fis-bulk-scan-api"}

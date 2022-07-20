@@ -4,12 +4,9 @@ metadata:
   name: sscs-tribunals-frontend
   namespace: sscs
 spec:
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/sscs-tribunals-frontend
   values:
     nodejs:
+      disableTraefikTls: false
       ingressClass: traefik-no-proxy
       ingressHost: benefit-appeal.demo.platform.hmcts.net
       environment:
@@ -25,5 +22,3 @@ spec:
         WEBCHAT_CLIENT_URL: "webchat-client.pp.ctsc.hmcts.net"
         TEST_PROPERTY: "false"
         DUMMY_PROPERTY: false
-    global:
-      environment: demo

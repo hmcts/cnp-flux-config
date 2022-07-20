@@ -2,14 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: wa
 bases:
-  - ../../../namespaces/wa/wa-task-batch-configuration/wa-task-batch-configuration.yaml
   - ../../../namespaces/wa/wa-task-batch-initiation/wa-task-batch-initiation.yaml
   - ../../../namespaces/wa/wa-task-batch-termination/wa-task-batch-termination.yaml
   - ../../../namespaces/wa/wa-task-batch-ad-hoc-pending-termination/wa-task-batch-ad-hoc-pending-termination.yaml
   - ../../../namespaces/wa/wa-messages-find-problem-messages/wa-messages-find-problem-messages.yaml
+  - ../../../namespaces/wa/wa-task-batch-initiation-failure/wa-task-batch-initiation-failure.yaml
+  - ../../../namespaces/wa/wa-task-batch-termination-failure/wa-task-batch-termination-failure.yaml
+  - ../../../namespaces/wa/wa-task-batch-clean-up/wa-task-batch-clean-up.yaml
 patchesStrategicMerge:
-  - ../../../namespaces/wa/wa-task-batch-configuration/aat-00.yaml
   - ../../../namespaces/wa/wa-task-batch-initiation/aat-00.yaml
   - ../../../namespaces/wa/wa-task-batch-termination/aat-00.yaml
   - ../../../namespaces/wa/wa-task-batch-ad-hoc-pending-termination/aat-00.yaml
   - ../../../namespaces/wa/wa-messages-find-problem-messages/aat-00.yaml
+  - ../../../namespaces/wa/wa-task-batch-initiation-failure/aat-00.yaml
+  - ../../../namespaces/wa/wa-task-batch-termination-failure/aat-00.yaml
+  - ../../../namespaces/wa/wa-task-batch-clean-up/aat-00.yaml

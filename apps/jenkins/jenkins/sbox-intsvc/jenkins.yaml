@@ -24,8 +24,12 @@ spec:
         -Dotel.instrumentation.jenkins.web.enabled=false
       ingress:
         hostName: sandbox-build.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       secondaryingress:
         hostName: static-sandbox-build.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -66,9 +70,9 @@ spec:
                       - key: GRADLE_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: SANDBOX_AKS_CLUSTER_NAME
-                        value: cft-sbox-00-aks
+                        value: cft-sbox-01-aks
                       - key: SANDBOX_AKS_RESOURCE_GROUP
-                        value: cft-sbox-00-rg
+                        value: cft-sbox-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-SBOX
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -100,6 +104,19 @@ spec:
                     name: LABS
                     recurse: true
                     title: Labs
+          otel: |
+            unclassified:
+              openTelemetry:
+                authentication: "noAuthentication"
+                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
+                endpoint: "http://opentelemetry-collector.monitoring:4317"
+                exportOtelConfigurationAsEnvironmentVariables: false
+                ignoredSteps: "dir,echo,isUnix,pwd,properties"
+                serviceName: "jenkins"
+                serviceNamespace: "jenkins"
+                observabilityBackends:
+                  - dynatrace:
+                      url: "https://yrk32651.live.dynatrace.com/"
           authentication: |
             jenkins:
               securityRealm:
@@ -273,6 +290,17 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
+                    cloudTags:
+                      - name: "application"
+                        value: "core"
+                      - name: "builtFrom"
+                        value: "hmcts/cnp-flux-config"
+                      - name: "businessArea"
+                        value: "CFT"
+                      - name: "criticality"
+                        value: "High"
+                      - name: "environment"
+                        value: "sandbox"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
                     maxVirtualMachinesLimit: 10
@@ -291,7 +319,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.1.0"
+                          galleryImageVersion: "1.2.0"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
