@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: nfdiv-frontend-divorce-domain
+  namespace: nfdiv
+spec:
+  rules:
+    - host: www.apply-divorce.service.gov.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: nfdiv-frontend-nodejs
+                port:
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific
