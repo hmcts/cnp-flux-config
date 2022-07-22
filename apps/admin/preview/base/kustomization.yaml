@@ -3,7 +3,8 @@ kind: Kustomization
 resources:
   - ../../base
   - kube-slack-values.yaml
-  - ../../csi-secret-store-provider-v1.0.1
+  - ../../secrets-csi-driver-crds
+  - ../../secrets-csi-driver
   - traefik-values.yaml
   - external-dns.yaml
   - manage-configmaps-clusterrole.yaml
@@ -12,7 +13,7 @@ resources:
   - ../../keda
   - ../../traefik2
   - ../../traefik2/preview/secret-provider-internal.yaml
-  
+
 patchesStrategicMerge:
   - ../../aat/base/keda-identity.yaml
   - ../../traefik2/preview/secret-provider.yaml
