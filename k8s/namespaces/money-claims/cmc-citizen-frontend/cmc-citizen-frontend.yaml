@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+spec:
+  releaseName: cmc-citizen-frontend
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/cmc-citizen-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-8bd97c5-20220720160110 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}

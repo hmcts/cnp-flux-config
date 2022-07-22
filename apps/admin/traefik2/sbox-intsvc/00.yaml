@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik2
+  namespace: admin
+spec:
+  values:
+    service:
+      spec:
+        loadBalancerIP: "10.70.25.250"
+    additionalArguments:
+    - "--entryPoints.websecure.forwardedHeaders.insecure=true"

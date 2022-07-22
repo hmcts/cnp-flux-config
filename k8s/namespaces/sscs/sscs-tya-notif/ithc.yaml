@@ -1,0 +1,29 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-tya-notif
+  namespace: sscs
+spec:
+  releaseName: sscs-tya-notif
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-d983a40-20220721113023 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
+      environment:
+        JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-ithc"
+        JOB_SCHEDULER_DB_NAME: "notification"
+        JOB_SCHEDULER_DB_HOST: "sscs-tya-notif-postgres-v11-db-ithc.postgres.database.azure.com"
+        COVID_19_NOTIFICATION_FEATURE: false
+        PDF_SERVICE_HEALTH_URL: https://docmosis.ithc.platform.hmcts.net/rs/status
+        PDF_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
+        SECURE_DOC_STORE_FEATURE: true
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
+        SCOTTISH_PO_BOX_ENABLED: true
+        HOURS_START_TIME: 6
+        HOURS_END_TIME: 23
+        DUMMY: true
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

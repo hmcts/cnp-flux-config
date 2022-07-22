@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: card-payment-job
+  namespace: fees-pay
+spec:
+  releaseName: card-payment-job
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-7f5ce6e-20220704172137" #{"$imagepolicy": "flux-system:card-csv-report"}
+      schedule: "30 2 * * *"
+      environment:
+        DUMMY_RESTART_VAR: true
+    global:
+      environment: demo

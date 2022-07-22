@@ -53,9 +53,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-00-aks
+                        value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-00-rg
+                        value: cft-preview-01-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-DEV
                       - key: AKS_AAT_SUBSCRIPTION_NAME
@@ -64,6 +64,41 @@ spec:
                         value: dcdcftappsstgkv
                       - key: BUSINESS_AREA_TAG
                         value: CFT
+          auth: |
+            jenkins:
+              authorizationStrategy:
+                globalMatrix:
+                  permissions:
+                    - "GROUP:Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
+                    - "GROUP:Overall/SystemRead:authenticated"
+                    - "GROUP:Overall/Read:authenticated"
+                    - "GROUP:View/Read:authenticated"
+                    - "GROUP:Agent/ExtendedRead:authenticated"
+                    - "GROUP:Job/Cancel:authenticated"
+                    - "GROUP:Job/Read:authenticated"
+                    - "GROUP:Job/Build:authenticated"
+                    - "USER:Job/Discover:anonymous"
+                    - "GROUP:Job/Workspace:authenticated"
+                    - "GROUP:Credentials/View:authenticated"
+                    - "GROUP:Lockable Resources/Reserve:authenticated"
+                    - "GROUP:Lockable Resources/Unlock:authenticated"
+                    - "GROUP:Lockable Resources/View:authenticated"
+                    - "GROUP:SCM/Tag:authenticated"
+          otel: |
+            unclassified:
+              openTelemetry:
+                authentication: "noAuthentication"
+                disabledResourceProviders: "io.opentelemetry.sdk.extension.resources.ProcessResourceProvider"
+                endpoint: "http://opentelemetry-collector.monitoring:4317"
+                exportOtelConfigurationAsEnvironmentVariables: false
+                ignoredSteps: "dir,echo,isUnix,pwd,properties"
+                serviceName: "jenkins"
+                serviceNamespace: "jenkins"
+                observabilityBackends:
+                  - dynatrace:
+                      dashboardId: "4a6a6184-f1b6-486f-b810-3b93ef05e5b2"
+                      url: "https://ebe20728.live.dynatrace.com/"
+                      managementZoneId: "6540375402790729445"
           views: |
             jenkins:
               views:
@@ -107,13 +142,13 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS\/(ccd.*|aac.*|cpo.*|hmc.*)\/master
+                      ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(ccd.*|aac.*|cpo.*|hmc.*|ts.*)\/master
                     name: CDM
                     recurse: true
                     title: CDM Master Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly\/(ccd.*|aac.*|cpo.*|hmc.*)\/master
+                      ^HMCTS_(\w_to_\w_Nightly).*\/(ccd.*|aac.*|cpo.*|hmc.*|ts.*)\/master
                     name: CDM Nightly
                     recurse: true
                     title: CDM Nightly Builds Dashboard
@@ -137,7 +172,7 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|paybubble-performance-tests|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app|ccpay-notifications-service)\/master
+                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
@@ -161,6 +196,12 @@ spec:
                     title: No fault divorce Dashboard
                 - buildMonitor:
                     includeRegex: >-
+                      ^HMCTS_j_to_z_Nightly\/(nfdiv-.*)\/master
+                    name: NFD Nightly
+                    recurse: true
+                    title: NFD Nightly Builds Dashboard
+                - buildMonitor:
+                    includeRegex: >-
                       ^HMCTS.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
                     name: AM
                     recurse: true
@@ -179,7 +220,7 @@ spec:
                     title: ETHOS
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(cmc-citizen-frontend|cmc-legal-rep-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test|cmc-ccd-e2e-tests)\/master
+                      ^HMCTS.*\/(cmc-citizen-frontend|cmc-claim-store|cmc-shared-infrastructure|cmc-performance-test|cmc-ccd-e2e-tests)\/master
                     name: CMC
                     recurse: true
                     title: CMC
@@ -257,13 +298,13 @@ spec:
                     title: RPTS Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_Nightly\/(.*performance.*|.*Performance.*)\/master
+                      ^HMCTS.+Nightly\/(.*performance.*|.*Performance.*)\/master
                     name: Performance
                     recurse: true
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
@@ -275,13 +316,13 @@ spec:
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests|et-ccd-definitions-[a-z]+)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api)\/master
+                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api|family-api-gateway|fis-ds-update-web)\/master
                     name: FIS
                     recurse: true
                     title: Family Integration
@@ -459,6 +500,17 @@ spec:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
                     cloudName: "cnp-azure"
+                    cloudTags:
+                      - name: "application"
+                        value: "core"
+                      - name: "builtFrom"
+                        value: "hmcts/cnp-flux-config"
+                      - name: "businessArea"
+                        value: "CFT"
+                      - name: "criticality"
+                        value: "High"
+                      - name: "environment"
+                        value: "production"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
                     maxVirtualMachinesLimit: 80
@@ -477,7 +529,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.1.1"
+                          galleryImageVersion: "1.2.0"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"

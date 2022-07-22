@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+spec:
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-3409-f009fdf-20220720130830 #{"$imagepolicy": "flux-system:demo-cmc-citizen-frontend"}
+      ingressClass: traefik-no-proxy
+      ingressHost: moneyclaims.demo.platform.hmcts.net
+      disableTraefikTls: false
+      environment:
+        GA_TRACKING_ID: UA-97111056-1
+        FEATURE_TESTING_SUPPORT: true
+        FEATURE_RETURN_ERROR_TO_USER: true
+        PCQ_URL: https://pcq.demo.platform.hmcts.net

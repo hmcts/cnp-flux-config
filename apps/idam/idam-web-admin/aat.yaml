@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-web-admin
+  namespace: idam
+spec:
+  releaseName: idam-web-admin
+  values:
+    java:
+      image: hmctspublic.azurecr.io/idam/web-admin:prod-a204840-20220718112301
+      ingressHost: idam-web-admin.aat.platform.hmcts.net
+      environment:
+        STRATEGIC_SERVICE_URL: https://idam-api.aat.platform.hmcts.net
+        STRATEGIC_PUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
+  chart:
+    spec:
+      version: 0.2.10

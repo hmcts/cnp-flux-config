@@ -1,0 +1,82 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cmc-pay
+  namespace: money-claims
+  annotations:
+    flux.weave.works/automated: "true"
+    repository.fluxcd.io/payment-api: payment-api.java.image
+    filter.fluxcd.io/payment-api: glob:prod-*
+    repository.fluxcd.io/fees-register-api: fees-register-api.java.image
+    filter.fluxcd.io/fees-register-api: glob:prod-*
+spec:
+  values:
+    global:
+      idamApiUrl: "https://idam-api.demo.platform.hmcts.net"
+      idamWebUrl: "https://idam-web-public.demo.platform.hmcts.net"
+      ccdDataStoreUrl: "http://cmc-ccd-ccd-data-store-api"
+      s2sUrl: "http://cmc-s2s-java"
+    ccpay:
+      rpe-service-auth-provider:
+        enabled: false
+      ccpay-bubble-frontend:
+        enabled: false
+      ccpay-bulkscanning-api:
+        enabled: false
+    fees-register-api:
+      java:
+        image: hmctspublic.azurecr.io/fees-register/api:prod-270f958-20220718175225 #{"$imagepolicy": "flux-system:fees-register-api"}
+    payment-api:
+      java:
+        image: hmctspublic.azurecr.io/payment/api:prod-71d62bf-20220719175328 #{"$imagepolicy": "flux-system:ccpay-payment-app"}
+        ingressHost: ""
+        releaseNameOverride: "{{ .Release.Name }}-payment-api"
+        secrets:
+          PCI_PAL_ACCOUNT_ID_CMC:
+            secretRef: pci-pal-account-id-cmc
+            key: key
+            disabled: true
+          PCI_PAL_ACCOUNT_ID_PROBATE:
+            secretRef: pci-pal-account-id-probate
+            key: key
+            disabled: true
+          PCI_PAL_ACCOUNT_ID_DIVORCE:
+            secretRef: pci-pal-account-id-divorce
+            key: key
+            disabled: true
+          PCI_PAL_API_URL:
+            secretRef: pci-pal-api-url
+            key: key
+            disabled: true
+          PCI_PAL_API_KEY:
+            secretRef: pci-pal-api-key
+            key: key
+            disabled: true
+          GOV_PAY_KEYS_PROBATE:
+            secretRef: gov-pay-keys-probate
+            key: key
+            disabled: true
+          GOV_PAY_KEYS_DIVORCE:
+            secretRef: gov-pay-keys-divorce
+            key: key
+            disabled: true
+          GOV_PAY_KEYS_REFERENCE:
+            secretRef: gov-pay-keys-reference
+            key: key
+            disabled: true
+          LIBERATA_KEYS_OAUTH2_CLIENT_ID:
+            secretRef: liberata-keys-oauth2-client-id
+            key: key
+            disabled: true
+          LIBERATA_KEYS_OAUTH2_CLIENT_SECRET:
+            secretRef: liberata-keys-oauth2-client-secret
+            key: key
+            disabled: true
+          LIBERATA_KEYS_OAUTH2_USERNAME:
+            secretRef: liberata-keys-oauth2-username
+            key: key
+            disabled: true
+          LIBERATA_KEYS_OAUTH2_PASSWORD:
+            secretRef: liberata-keys-oauth2-password
+            key: key
+            disabled: true

@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sscs-bulk-scan
+  namespace: sscs
+spec:
+  releaseName: sscs-bulk-scan
+  rollback:
+    enable: true
+    retry: true
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sscs-bulk-scan
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-a5a073a-20220722094732 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}

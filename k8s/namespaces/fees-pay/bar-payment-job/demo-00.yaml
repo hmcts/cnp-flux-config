@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: bar-payment-job
+  namespace: fees-pay
+spec:
+  releaseName: bar-payment-job
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-7f5ce6e-20220704172137" #{"$imagepolicy": "flux-system:bar-csv-report"}
+      schedule: "30 2 * * *"
+      environment:
+        REPORT_NAME: bar-csv-report
+        DUMMY_RESTART_VAR: true
+    global:
+      environment: demo

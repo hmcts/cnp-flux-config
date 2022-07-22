@@ -5,6 +5,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/hearings-api:prod-a8b7c67-20220421101206 #{"$imagepolicy": "flux-system:sscs-hearings-api"}
-    global:
-      environment: demo
+      image: hmctspublic.azurecr.io/sscs/hearings-api:pr-267-7bed988-20220721134908 #{"$imagepolicy": "flux-system:demo-sscs-hearings-api"}
+      environment:
+        TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
+        SSCS_LOG_LEVEL: DEBUG
+        TRIBUNALS_EVENT_QUEUE_RETRY_TIMEOUT: 60
+        DUMMY_PROPERTY: false
+        HMC_HEARINGS_LISTENING_ENABLED: true
