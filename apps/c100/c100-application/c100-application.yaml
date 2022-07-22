@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: c100-application
+  namespace: c100
+spec:
+  releaseName: c100-application
+  values:
+    image: hmctspublic.azurecr.io/c100/application:demo-123  #{"$imagepolicy": "flux-system:application"} 
+  chart:
+    spec:
+      chart: ./stable/c100-application
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
