@@ -6,14 +6,14 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      replicas: 12
+      replicas: 15
       image: hmctspublic.azurecr.io/ccd/data-store-api:prod-08b3168-20220722114014 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: false
-      memoryLimits: "4096Mi"
-      memoryRequests: "2048Mi"
-      cpuLimits: "4000m"
-      cpuRequests: "2000m"
+      memoryLimits: "5120Mi"
+      memoryRequests: "2560Mi"
+      cpuLimits: "5000m"
+      cpuRequests: "2500m"
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
