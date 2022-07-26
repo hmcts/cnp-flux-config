@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-cpo-update-service
+spec:
+  releaseName: ccpay-cpo-update-service
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-cpo-update-service
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/cpo-update-service:prod-741677d-20220310134108 #{"$imagepolicy": "flux-system:ccpay-cpo-update-service"}
