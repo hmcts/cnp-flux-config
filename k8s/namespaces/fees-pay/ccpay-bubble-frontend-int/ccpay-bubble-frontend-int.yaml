@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-bubble-frontend-int
+spec:
+  releaseName: ccpay-bubble-frontend-int
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/ccpay-bubble-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-8d227b7-20220725202208 #{"$imagepolicy": "flux-system:ccpay-bubble-frontend"}
