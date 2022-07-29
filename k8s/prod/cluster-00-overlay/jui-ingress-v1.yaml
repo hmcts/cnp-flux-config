@@ -1,0 +1,24 @@
+# this is to apply permanent redirect on jcm.judiciary.uk
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://jcm.judiciary.uk/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://manage-case.platform.hmcts.net
+  name: jui-ingress
+  namespace: xui
+spec:
+  rules:
+    - host: jcm.judiciary.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: xui-webapp-nodejs
+                port:
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific
