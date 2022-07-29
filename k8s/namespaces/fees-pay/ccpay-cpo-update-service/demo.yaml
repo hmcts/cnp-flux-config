@@ -1,0 +1,10 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-cpo-update-service
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/ccpay/cpo-update-service:pr-103-c26a190-20220727163335 #{"$imagepolicy": "flux-system:demo-ccpay-cpo-update-service"}
+      environment:
+        DUMMY_VARIABLE: true
