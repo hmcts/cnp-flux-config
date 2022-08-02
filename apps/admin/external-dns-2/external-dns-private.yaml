@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns-private
+  namespace: admin
+  annotations:
+    flux.weave.works/automated: "false" 
+spec:
+  releaseName: external-dns-private
+  chart:
+    spec:
+      chart: external-dns
+      version: 6.1.4
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: admin
+  interval: 1m
+  values:
+    policy: sync
+    podLabels:
+      aadpodidbinding: external-dns
+    provider: azure-private-dns
+    sources:
+      - ingress
+    domainFilters: 
+      - service.core-compute-preview.internal
+    azure:
+      resourceGroup: core-infra-intsvc-rg
+      tenantId: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
+      subscriptionId: 1baf5470-1c3e-40d3-a6f7-74bfbce4b348
+      useManagedIdentityExtension: true
+      userAssignedIdentityID: dc9bf214-5644-4c23-a5ad-56a015626fae
