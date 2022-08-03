@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plum-recipe-receiver
+spec:
+  chart:
+    spec:
+      chart: ./charts/recipe-receiver
+      interval: 1m
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: plum-recipe-receiver
+        namespace: flux-system
+      version: '*'
+      valuesFiles:
+        - ./charts/recipe-receiver/values-cft.yaml
+  interval: 5m
+  releaseName: plum-recipe-receiver
+  values:
+    function:
+      image: hmctspublic.azurecr.io/plum/recipe-receiver:prod-1100a0e-20220609130124
+      triggers:
+        - type: azure-servicebus
+          namespace: plum-servicebus-${ENVIRONMENT}
+          queueName: recipes
+          queueLength: "5"
+      environment:
+        FULLY_QUALIFIED_NAMESPACE: "plum-servicebus-${ENVIRONMENT}.servicebus.windows.net"
