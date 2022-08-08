@@ -1,1 +1,15 @@
-
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ccpay-notifications-serviceint
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java: glob:pr-56-*
+    hmcts.github.com/prod-automated: disabled
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/ccpay/notifications-service:pr-71-dc50470-20220727122607 #{"$imagepolicy": "flux-system:demo-int-ccpay-notifications-service"}
+      environment:
+        DUMMY_VARIABLE: false
+        LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
