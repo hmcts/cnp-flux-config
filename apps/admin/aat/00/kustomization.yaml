@@ -2,14 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - ../../aad-pod-id/mi
-  - ../../traefik2
-  - ../../traefik2/preview/secret-provider-internal.yaml
-  - ../../secrets-csi-driver-crds
-  - ../../secrets-csi-driver
 
 patchesStrategicMerge:
-  - ../../traefik2/preview/secret-provider.yaml
   - ../../traefik2/aat/00.yaml
-  - ../../traefik2/preview/tlsstore-patch.yaml
-  - ../../aad-pod-id/mi/staging/azure-identity-patch.yaml
