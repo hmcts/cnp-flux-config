@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-user-dashboard
+  namespace: idam
+spec:
+  releaseName: idam-user-dashboard
+  values:
+    nodejs:
+      ingressHost: idam-user-dashboard.service.core-compute-sandbox.internal
+      environment:
+        STRATEGIC_SERVICE_URL: 'http://idam-api.sandbox.platform.hmcts.net'
+        STRATEGIC_PUBLIC_URL: 'http://idam-web-public.sandbox.platform.hmcts.net'
+        DASHBOARD_URL: 'http://idam-user-dashboard.sandbox.platform.hmcts.net'
+        OAUTH_CLIENT_REDIRECT: 'http://idam-user-dashboard.sandbox.platform.hmcts.net/oauth2/callback'
