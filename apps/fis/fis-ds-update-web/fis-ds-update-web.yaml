@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fis-ds-update-web
+spec:
+  releaseName: fis-ds-update-web
+  interval: 1m
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/fis/ds-update-web:prod-efc0aa9-20220720121457 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
+  chart:
+    spec:
+      chart: ./stable/fis-ds-update-web
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
