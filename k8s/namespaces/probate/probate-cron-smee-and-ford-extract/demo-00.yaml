@@ -12,6 +12,14 @@ spec:
       environment: demo
     job:
       image: hmctspublic.azurecr.io/probate/back-office:prod-3f0ec0f-20220803145214 #{"$imagepolicy": "flux-system:probate-back-office"}
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
+        DUMMY_PROPERTY: DUMMY7
+        PROBATE_POSTGRESQL_USER: probateman_user@probatemandb-postgres-db-v11-demo
+        PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-db-v11-demo.postgres.database.azure.com
+        EXCEPTED_ESTATE_DATE_OF_DEATH: 2022-01-01
+        BLOB_STORAGE_SMEEANDFORD_FEATURE_ENABLED: true
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
       keyVaults:
         probate:
           secrets:
