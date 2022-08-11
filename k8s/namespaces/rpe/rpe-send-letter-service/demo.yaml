@@ -2,14 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: rpe-send-letter-service
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: glob:pr-1675-*
-    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:pr-1675-2751c3d
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:pr-1675-64e2b51-20220804113335
       environment:
-        ENCRYPTION_ENABLED: false
-        REFRESH_PODS: "again"
+        ENCRYPTION_ENABLED: true
+        REFRESH_PODS: "yes"
