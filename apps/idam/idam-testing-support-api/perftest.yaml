@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-testing-support-api
+  namespace: idam
+spec:
+  releaseName: idam-testing-support-api
+  values:
+    java:
+      ingressHost: idam-testing-support-api.perftest.platform.hmcts.net
+      environment:
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-web-public.perftest.platform.hmcts.net/o/jwks
+        SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_IDAMTESTINGSUPPORTAPI_TOKENURI: https://idam-web-public.perftest.platform.hmcts.net/o/token
