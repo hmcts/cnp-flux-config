@@ -18,6 +18,10 @@ spec:
         namespace: admin
   interval: 1m
   values:
+    providers:
+      kubernetesIngress:
+        publishedService:
+          enabled: true
     deployment:
       podLabels:
         aadpodidbinding: traefik
@@ -32,6 +36,9 @@ spec:
       - name: traefik-default-cert
         mountPath: "/mnt/certs"
         readOnly: true
+    additionalArguments:
+      - "--entryPoints.web.forwardedHeaders.insecure=true"
+      - "--entryPoints.websecure.forwardedHeaders.insecure=true"
     service:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-internal: "true"
