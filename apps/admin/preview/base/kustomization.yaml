@@ -6,16 +6,17 @@ resources:
   - ../../secrets-csi-driver-crds
   - ../../secrets-csi-driver
   - traefik-values.yaml
-  - external-dns.yaml
+  - ../../aad-pod-id/mi
   - manage-configmaps-clusterrole.yaml
   - ../../../rbac/edit-clusterrole.yaml
-  - ../../external-dns/
   - ../../keda
   - ../../traefik2
   - ../../traefik2/preview/secret-provider-internal.yaml
-
+  - ../../external-dns-2/
+  
 patchesStrategicMerge:
   - ../../aat/base/keda-identity.yaml
   - ../../traefik2/preview/secret-provider.yaml
   - ../../traefik2/preview/tlsstore-patch.yaml
   - ../../traefik2/preview/internal-cert-release-patch.yaml
+  - ../../external-dns-2/preview/external-dns-private.yaml
