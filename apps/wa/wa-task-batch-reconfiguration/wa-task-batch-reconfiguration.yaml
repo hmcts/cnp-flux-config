@@ -5,10 +5,14 @@ metadata:
 spec:
   releaseName: wa-task-batch-reconfiguration
   chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/wa-task-batch-service
+    spec:
+      chart: ./stable/wa-task-batch-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/task-batch-service:prod-9b91244-20220408201022 #{"$imagepolicy": "flux-system:wa-task-batch-reconfiguration"}
+      image: hmctspublic.azurecr.io/wa/task-batch-service:prod-cb2fe4f-20220816141844 #{"$imagepolicy": "flux-system:wa-task-batch-reconfiguration"}
