@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-pfe
+  namespace: divorce
+spec:
+  releaseName: div-pfe
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/pfe:prod-0cdf4ab-20220725164638 #{"$imagepolicy": "flux-system:div-pfe"}
+      VAR_FV2: base01
