@@ -10,26 +10,7 @@ spec:
     path: probate-cron
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-fbc4ab7-20220526135216 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
-      keyVaults:
-        probate:
-          secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: s2s-probate-backend
-              alias: S2S_AUTH_TOTP_SECRET
-            - name: ccidam-idam-api-secrets-probate
-              alias: AUTH2_CLIENT_SECRET
-            - name: idamRedirectUrl
-              alias: IDAM_API_REDIRECT_URL
-            - name: payCaseWorkerPass
-              alias: PAYMENT_CASEWORKER_PASSWORD
-            - name: payCaseWorkerUser
-              alias: PAYMENT_CASEWORKER_USERNAME
-            - name: schedulerCaseWorkerUser
-              alias: SCHEDULER_CASEWORKER_USERNAME
-            - name: schedulerCaseWorkerPass
-              alias: SCHEDULER_CASEWORKER_PASSWORD
+      image: hmctspublic.azurecr.io/probate/back-office:prod-7c60114-20220816141606 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       environment:
         TASK_NAME: MakeDormantCasesTask
       schedule: 0/10 * * * *
