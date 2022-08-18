@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-pfe
+  namespace: divorce
+spec:
+  values:
+    nodejs:
+      ingressHost: petitioner-frontend-aks.perftest.platform.hmcts.net
+      environment:
+        PUBLIC_HOSTNAME: https://petitioner-frontend-aks.perftest.platform.hmcts.net
+        DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.perftest.platform.hmcts.net
+        EQUALITY_URL: https://pcq.perftest.platform.hmcts.net
+        PRD_ORGANISATION_API_URL: http://rd-professional-api-perftest.service.core-compute-perftest.internal/refdata/external/v1/organisations/status

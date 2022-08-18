@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-pfe
+  namespace: divorce
+spec:
+  values:
+    nodejs:
+      memoryRequests: "512Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1000m"
+      ingressHost: petitioner-frontend-aks.aat.platform.hmcts.net
+      environment:
+        PUBLIC_HOSTNAME: https://petitioner-frontend-aks.aat.platform.hmcts.net
+        DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.aat.platform.hmcts.net
+        EQUALITY_URL: https://pcq.aat.platform.hmcts.net
+        PRD_ORGANISATION_API_URL: http://rd-professional-api-aat.service.core-compute-aat.internal/refdata/external/v1/organisations/status
+        FEATURE_ANTENNA_WEBCHAT: "true"
+        FEATURE_WEBCHAT: "false"
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_VERSION: 1
+        ANTENNA_WEBCHAT_AVAILABILITY_DEBUG: "true"
+        FEATURE_ANTENNA_WEBCHAT_AVAILABILITY_TOGGLE: "true"
+        FEATURE_NEW_FEES: "true"
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
+        FEATURE_DYNATRACE: "true"
+        FEATURE_NEW_APP_CUTOFF_DATE_BANNER: "true"
+        FEATURE_NEW_APP_CUTOFF: "false"
+        ################################################################################################################
+        # JS DateTime value representing when the new application cutoff will take effect
+        # Servers use UTC!  Adjust values accordingly!
+        NEW_APP_CUTOFF_DATE: "2022-03-31T15:00:00"
+
+        # Boolean.  True: New app cutoff date test evaluates true.
+        #           False: New app cutoff is evaluated against current server datetime.
+        NEW_APP_CUTOFF_DATE_OVERRIDE: "false"
+
+        # Boolean. True: Test for existence of a caseId evaluates to true.
+        #          False: Check for caseId within session object.
+        NEW_APP_CUTOFF_CASEID_OVERRIDE: "false"
+
+        # Array of case states that will trigger a redirect.
+        NEW_APP_CUTOFF_REDIRECT_STATES: [
+          'AwaitingPayment',
+          'AwaitingHWFDecision',
+          'AwaitingDocuments',
+          'Withdrawn',
+          'PendingRejection',
+          'Rejected'
+        ]
+
+        # Boolean.  True: Case states from sessions will be overridden by NEW_APP_CUTOFF_STATE_TO_CHECK for landing
+        #                 page redirection
+        #           False: Case states from sessions will be evaluated for landing page redirection
+        # NB: Will be ignored if NEW_APP_CUTOFF_STATE_OVERRIDE is True.
+        NEW_APP_CUTOFF_USE_STATE_TO_CHECK: "false"
+
+        # String. Case state to validate against NEW_APP_CUTOFF_REDIRECT_STATES array when
+        #         NEW_APP_CUTOFF_USE_STATE_TO_CHECK is True.
+        #         Will be ignored if NEW_APP_CUTOFF_STATE_OVERRIDE is True, or NEW_APP_CUTOFF_USE_STATE_TO_CHECK is
+        #         False.
+        NEW_APP_CUTOFF_STATE_TO_CHECK: 'TestState'
+
+        # Boolean.  True: Case state redirect check evaluates to true.
+        #           False: Case state evaluated against array.
+        NEW_APP_CUTOFF_STATE_OVERRIDE: "false"
+
+        # Boolean.  Toggle verbose logging of new app cutoff evaluation steps.
+        NEW_APP_CUTOFF_DEBUG: "true"
+        ################################################################################################################
+        COURT_OPENINGHOURS_EN: 'Monday to Friday, 8am to 6pm'
