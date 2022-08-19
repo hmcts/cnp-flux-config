@@ -5,9 +5,12 @@ metadata:
 spec:
   releaseName: nfdiv-cron-eligible-for-switch-to-sole
   chart:
-    git: git@github.com:hmcts/nfdiv-cron
-    ref: master
-    path: nfdiv-cron
+    spec:
+      sourceRef:
+        kind: GitRepository
+        name: nfdiv-cron
+      path: git@github.com:hmcts/nfdiv-cron
+      interval: 1m
   values:
     job:
       useInterpodAntiAffinity: true
