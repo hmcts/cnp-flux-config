@@ -4,13 +4,6 @@ metadata:
   name: nfdiv-cron-eligible-for-switch-to-sole
 spec:
   releaseName: nfdiv-cron-eligible-for-switch-to-sole
-  chart:
-    spec:
-      sourceRef:
-        kind: GitRepository
-        name: nfdiv-cron
-      path: git@github.com:hmcts/nfdiv-cron
-      interval: 1m
   values:
     job:
       useInterpodAntiAffinity: true
@@ -33,3 +26,11 @@ spec:
     environment:
       TASK_NAME: SystemNotifyJointApplicantCanSwitchToSoleTask
     schedule: 0/10 * * * *
+  chart:
+    spec:
+      chart: base
+      version: 0.0.7
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
