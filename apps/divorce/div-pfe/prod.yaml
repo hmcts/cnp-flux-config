@@ -1,9 +1,9 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: div-pfe
+  namespace: divorce
 spec:
-  releaseName: div-pfe
   values:
     nodejs:
       memoryRequests: "512Mi"
@@ -12,7 +12,6 @@ spec:
       cpuLimits: "1000m"
       ingressHost: www.manage-application.apply-divorce.service.gov.uk
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/pfe:prod-0cdf4ab-20220725164638 #{"$imagepolicy": "flux-system:div-pfe"}
       environment:
         PUBLIC_HOSTNAME: https://www.manage-application.apply-divorce.service.gov.uk
         DECREE_NISI_FRONTEND_URL: https://www.decree-nisi.apply-divorce.service.gov.uk
@@ -35,12 +34,12 @@ spec:
         WEBCHAT_BUTTON_SERVICE_CLOSED: "19684351645d232edee71e86.59595908"
         EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
         PRD_ORGANISATION_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal/refdata/external/v1/organisations/status
-        VAR_TA: trigger-prd
+        VAR_FV2_PRD: trigger-prd
         FEATURE_NEW_APP_CUTOFF: "true"
         ################################################################################################################
         # JS DateTime value representing when the new application cutoff will take effect
         # Servers use UTC!  Adjust values accordingly!
         NEW_APP_CUTOFF_DATE: "2022-03-31T15:00:00"
         # Array of case states that will trigger a redirect.
-        NEW_APP_CUTOFF_REDIRECT_STATES: ['AwaitingPayment', 'AwaitingHWFDecision', 'AwaitingDocuments', 'Withdrawn', 'PendingRejection', 'Rejected']
+        NEW_APP_CUTOFF_REDIRECT_STATES: [ 'AwaitingPayment', 'AwaitingHWFDecision', 'AwaitingDocuments', 'Withdrawn', 'PendingRejection', 'Rejected' ]
         ################################################################################################################
