@@ -14,7 +14,6 @@ bases:
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/fluxcloud
   - ../../namespaces/admin/flux-helm-operator
-  - ../../namespaces/all-namespaces/reader-clusterrole.yaml
   - ../../namespaces/admin/flux-helm-operator/rbac/read-only-rbac.yaml
   - ../../namespaces/admin/flux-helm-operator/rbac/prod-role-binding.yaml
 
@@ -32,7 +31,3 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/global-defaults == enabled
-  - path: ../../namespaces/all-namespaces/reader-clusterrole/prod.yaml
-    target:
-      kind: ClusterRoleBinding
-      labelSelector: role-type=developer
