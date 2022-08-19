@@ -6,6 +6,8 @@ spec:
   releaseName: nfdiv-cron-eligible-for-switch-to-sole
   values:
     job:
+      environment:
+        TASK_NAME: SystemNotifyJointApplicantCanSwitchToSoleTask
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/nfdiv/case-api:prod-4219b50-20220819070030 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
     keyVaults:
@@ -23,8 +25,6 @@ spec:
             alias: IDAM_SYSTEM_UPDATE_USERNAME
           - name: idam-systemupdate-password
             alias: IDAM_SYSTEM_UPDATE_PASSWORD
-    environment:
-      TASK_NAME: SystemNotifyJointApplicantCanSwitchToSoleTask
     schedule: 0/10 * * * *
   chart:
     spec:
