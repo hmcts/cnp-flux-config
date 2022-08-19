@@ -5,7 +5,15 @@ resources:
   - kube-slack-values.yaml
   - ../../keda
   - ../../../rbac/reader-clusterrole.yaml
-
+  - ../../aad-pod-id/mi
+  - ../../traefik2
+  - ../../traefik2/aat/secret-provider-internal.yaml
+  - ../../secrets-csi-driver-crds
+  - ../../secrets-csi-driver
 
 patchesStrategicMerge:
   - keda-identity.yaml
+  - ../../traefik2/aat/secret-provider.yaml
+  - ../../traefik2/aat/tlsstore-patch.yaml
+  - ../../aad-pod-id/mi/staging/azure-identity-patch.yaml
+  - ../../traefik2/aat/internal-cert-patch.yaml
