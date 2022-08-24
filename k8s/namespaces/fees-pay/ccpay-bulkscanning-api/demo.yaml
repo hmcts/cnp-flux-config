@@ -1,15 +1,10 @@
-apiVersion: image.toolkit.fluxcd.io/v1alpha2
-kind: ImagePolicy
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
-  name: demo-ccpay-bulkscanning-api
-  annotations:
-    hmcts.github.com/prod-automated: disabled
+  name: ccpay-bulkscanning-api
 spec:
-  filterTags:
-    pattern: '^pr-424-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
-  policy:
-    alphabetical:
-      order: asc
-  imageRepositoryRef:
-    name: ccpay-bulkscanning-api
+  values:
+    java:
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:pr-424-63c6b6d-20220822140222   #{"$imagepolicy": "flux-system:demo-ccpay-bulkscanning-api"}
+      #Example below
+      #image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
