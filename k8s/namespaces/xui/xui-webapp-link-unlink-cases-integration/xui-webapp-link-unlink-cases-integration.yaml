@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: xui-webapp-link-unlink-cases-integration
+spec:
+  releaseName: xui-webapp-link-unlink-cases-integration
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/xui-webapp
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/xui/webapp:prod-81d51e3-20220905095756 #{"$imagepolicy": "flux-system:xui-webapp-link-unlink-cases-integration"}

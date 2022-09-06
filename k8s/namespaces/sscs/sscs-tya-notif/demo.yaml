@@ -9,7 +9,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-24c3030-20220805145716 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2149-e45bd8f-20220905154930 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-demo"
         JOB_SCHEDULER_DB_NAME: "notification"
@@ -22,7 +22,8 @@ spec:
         SCOTTISH_PO_BOX_ENABLED: true
         HOURS_START_TIME: 0
         HOURS_END_TIME: 23
-        TEST_PROPERTY: true
+        TEST_PROPERTY: false
+        TEST_RECIPIENTS_POSTCODE: "*"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
