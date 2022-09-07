@@ -2,12 +2,20 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+  - ../../secrets-csi-driver-crds
+  - ../../secrets-csi-driver
+  - ../../traefik2
+  - ../../traefik2-no-proxy
+  - ../../external-dns-2/
+
+  # to add to base look at external dns, aad-pod-mi
 
 patchesStrategicMerge:
   - ../../external-dns/demo/01.yaml
   - ../../external-dns-public/demo/01.yaml
-  - ../../traefik/demo/01.yaml
-  - ../../traefik/demo/traefik.yaml
+  # Not sure if single patch below this comment needed
+  - ../../traefik2/demo/traefik.yaml
+  - ../../traefik2/demo/01.yaml
+  - ../../traefik2/demo/traefik-private.yaml
+  - ../../traefik2-no-proxy/demo/01.yaml
   - ../../traefik-auth/demo/01.yaml
-  - ../../traefik-no-proxy/demo/01.yaml
-  - ../../traefik-private/demo/01.yaml
