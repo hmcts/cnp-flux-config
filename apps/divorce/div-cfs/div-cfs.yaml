@@ -12,3 +12,11 @@ spec:
       image: hmctspublic.azurecr.io/div/cfs:prod-9b6abf1-20220902131844 #{"$imagepolicy": "flux-system:div-cfs"}
       environment:
         VAR_FV2: trig1
+  chart:
+    spec:
+      chart: ./stable/div-cms
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
