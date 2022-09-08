@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rd
+nameSuffix: -triage
+bases:
+- ../rd-user-profile-api/rd-user-profile-api.yaml
+patchesStrategicMerge:
+- ../rd-user-profile-api/aat.yaml
+- triage-aat.yaml

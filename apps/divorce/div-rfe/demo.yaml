@@ -1,12 +1,14 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: div-rfe
+  namespace: divorce
 spec:
-  releaseName: div-rfe
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/div/rfe:pr-673-33c3041-20220826165957 #{"$imagepolicy": "flux-system:demo-div-rfe"}
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/rfe:prod-29a289e-20220905104830 #{"$imagepolicy": "flux-system:demo-div-rfe"}
       ingressClass: traefik-no-proxy
       ingressHost: respond-divorce-aks.demo.platform.hmcts.net
       disableTraefikTls: false
@@ -24,5 +26,5 @@ spec:
         ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
         ANTENNA_WEBCHAT_VERSION: 1
         FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
-        VAR_TA: triggerdemo1
         COURT_OPENINGHOURS_EN: 'Monday to Friday, 8am to 6pm'
+        VAR_FV2_DEMO: trig1
