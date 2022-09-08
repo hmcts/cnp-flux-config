@@ -1,0 +1,10 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: rd-user-profile-api
+spec:
+  releaseName: rd-user-profile-api-triage
+  values:
+    java:
+      ingressHost: rd-user-profile-api-triage-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+      replicas: 1
