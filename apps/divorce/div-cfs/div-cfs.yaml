@@ -1,17 +1,20 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: et-sya
+  name: div-cfs
+  namespace: divorce
 spec:
-  releaseName: et-sya
+  releaseName: div-cfs
   values:
-    nodejs:
+    java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/sya:prod-d048cc1-20220907162641 #{"$imagepolicy": "flux-system:et-sya"}
+      image: hmctspublic.azurecr.io/div/cfs:prod-9b6abf1-20220902131844 #{"$imagepolicy": "flux-system:div-cfs"}
+      environment:
+        VAR_FV2: trig1
   chart:
     spec:
-      chart: ./stable/et-sya
+      chart: ./stable/div-cms
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
