@@ -5,8 +5,11 @@ metadata:
 spec:
   releaseName: probate-cron-make-dormant-cases
   values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2018-b90888a-20220908085718 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "1/20 * * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      environment: aat
+      environment: demo
