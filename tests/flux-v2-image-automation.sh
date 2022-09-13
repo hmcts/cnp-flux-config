@@ -21,6 +21,8 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-public/sbox.yaml
   apps/idam/idam-testing-support-api/preview.yaml
   apps/idam/idam-testing-support-api/sbox.yaml
+  apps/probate/probate-cron-make-dormant-cases/demo.yaml
+  apps/probate/probate-cron-reactivate-dormant-cases/demo.yaml
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   k8s/demo/*
