@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-cron-reactivate-dormant-cases
+spec:
+  releaseName: probate-cron-reactivate-dormant-cases
+  values:
+    job:
+      environment:
+        TASK_NAME: ReactivateDormantCasesTask
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2018-b90888a-20220908085718 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+    schedule: 0 * * * *
+  chart:
+    spec:
+      chart: probate-cron
+      version: 0.0.8
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
