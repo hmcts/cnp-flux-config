@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: oauth-auth
+  namespace: admin
+spec:
+  forwardAuth:
+    # May need a new DNS record for this -- see ticket description
+    address: https://oauth-proxy.demo.platform.hmcts.net/oauth-proxy/auth_or_start
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Auth-Request-Access-Token
+      - Authorization
