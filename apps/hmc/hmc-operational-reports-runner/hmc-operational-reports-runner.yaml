@@ -6,11 +6,20 @@ spec:
   releaseName: hmc-operational-reports-runner
   rollback:
     enable: true
+  values:
+    job:
+      environment:
+        TASK_NAME: SystemHmcOperationalReportsTask
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/hmc/operational-reports-runner:prod-f6225b6-20220913145404 #{"$imagepolicy": "flux-system:hmc-operational-reports-runner"}
   chart:
     git: git@github.com:hmcts/hmcts-charts
     ref: master
     path: stable/hmc-operational-reports-runner
-  values:
-    job:
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/hmc/operational-reports-runner:prod-f6225b6-20220913145404 #{"$imagepolicy": "flux-system:hmc-operational-reports-runner"}
+    spec:
+      chart: nfdiv-cron
+      version: 0.0.7
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
