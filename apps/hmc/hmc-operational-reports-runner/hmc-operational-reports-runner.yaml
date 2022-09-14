@@ -4,14 +4,32 @@ metadata:
   name: hmc-operational-reports-runner
 spec:
   releaseName: hmc-operational-reports-runner
-  rollback:
-    enable: true
   values:
     job:
       environment:
         TASK_NAME: SystemHmcOperationalReportsTask
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/hmc/operational-reports-runner:prod-f6225b6-20220913145404 #{"$imagepolicy": "flux-system:hmc-operational-reports-runner"}
+    keyVaults:
+      nfdiv:
+        secrets:
+          - name: AppInsightsInstrumentationKey
+            alias: azure.application-insights.instrumentation-key
+          - name: notify-hmc-api-key
+            alias: NOTIFY_HMC_API_KEY
+          - name: notify-error-template-id
+            alias: NOTIFY_ERROR_TEMPLATE_ID
+          - name: notify-error-email-address
+            alias: NOTIFY_ERROR_EMAIL_ADDRESS
+          - name: notify-error-reply-to-email-address
+            alias: NOTIFY_ERROR_REPLY_TO_EMAIL_ADDRESS
+          - name: notify-awaiting-actuals-template-id
+            alias: NOTIFY_AWAITING_ACTUALS_TEMPLATE_ID
+          - name: notify-awaiting-actuals-email-address
+            alias: NOTIFY_AWAITING_ACTUALS_EMAIL_ADDRESS
+          - name: notify-awaiting-actuals-reply-to-email-address
+            alias: NOTIFY_AWAITING_ACTUALS_REPLY_TO_EMAIL_ADDRESS
+    schedule: 0 01 02 ? * * *
   chart:
     spec:
       chart: hmc-cron
