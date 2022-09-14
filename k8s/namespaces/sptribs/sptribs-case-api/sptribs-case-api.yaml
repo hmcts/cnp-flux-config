@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: sptribs-case-api
+spec:
+  releaseName: sptribs-case-api
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/sptribs-case-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-550d497-20220908072754 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      environment:
+        VAR_TA: trigger21
