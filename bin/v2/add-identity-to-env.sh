@@ -33,8 +33,8 @@ then
 fi
 
 
-CLIENT_ID=$(az identity show --name ${SHORT_NAME}-${MI_ENV}-mi --resource-group managed-identities-${MI_ENV}-rg --subscription ${SUBMAP[${MI_ENV}]} --query clientId)
-RESOURCE_ID=$(az identity show --name ${SHORT_NAME}-${MI_ENV}-mi --resource-group managed-identities-${MI_ENV}-rg --subscription ${SUBMAP[${MI_ENV}]} --query id)
+CLIENT_ID=$(az identity show --name ${MI}-${MI_ENV}-mi --resource-group managed-identities-${MI_ENV}-rg --subscription ${SUBMAP[${MI_ENV}]} --query clientId)
+RESOURCE_ID=$(az identity show --name ${MI}-${MI_ENV}-mi --resource-group managed-identities-${MI_ENV}-rg --subscription ${SUBMAP[${MI_ENV}]} --query id)
 
 # -----------------------------------------------------------
 (
