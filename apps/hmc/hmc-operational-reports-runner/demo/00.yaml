@@ -1,11 +1,11 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: hmc-operational-reports-runner
 spec:
   values:
     job:
-      schedule: "01 02 * * *"
+      schedule: "*/20 * * * *"
       environment:
     global:
       jobKind: CronJob

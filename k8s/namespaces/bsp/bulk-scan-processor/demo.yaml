@@ -5,7 +5,6 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-2562-bc7a54a-20220826092148
       environment:
         #60 days in seconds
         SAS_TOKEN_VALIDITY: "5184000"
@@ -17,4 +16,4 @@ spec:
         BULK_SCANNING_DB_HOST: bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
         FLYWAY_USER: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
-        REFRESH_PODS: "yes"
+        REFRESH_PODS: "true"
