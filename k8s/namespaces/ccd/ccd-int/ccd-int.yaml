@@ -50,7 +50,7 @@ spec:
         environment: "demo"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-fc12b1b-20220908140429 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-317e397-20220920172147 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
@@ -72,7 +72,7 @@ spec:
             disabled: false
     ccd-case-activity-api:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-6f3c098-20220908150452 #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-ed3fd83-20220920174244 #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
         environment:
@@ -93,7 +93,7 @@ spec:
         disableTraefikTls: false
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-1d69f40-20220912123519 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-18e33a6-20220920201954 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -105,7 +105,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0b19d2d-20220914152734 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-cd22064-20220920185959 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -116,7 +116,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-7a83248-20220912115803 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-1665346-20220913133009 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-4232f57-20220920175952 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -132,7 +132,7 @@ spec:
               subscriptionNeeded: yes
     am-role-assignment-service:
       java:
-        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-03873ed-20220915102216 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-06d7c89-20220920094832 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
         environment:
           RUN_DB_MIGRATION_ON_STARTUP: true
     draft-store-service:
@@ -140,12 +140,12 @@ spec:
         image: hmctspublic.azurecr.io/draft-store/service:prod-547c9ea-20220824092333 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
-        image: hmctspublic.azurecr.io/em/anno:prod-71fd5d8-20220916100852 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-48e06ba-20220921080058 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-8e7323e-20220916073354 #{"$imagepolicy": "flux-system:demo-dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-16bafa5-20220920175937 #{"$imagepolicy": "flux-system:demo-dm-store"}
         ingressHost: dm-store-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     rpe-service-auth-provider:
