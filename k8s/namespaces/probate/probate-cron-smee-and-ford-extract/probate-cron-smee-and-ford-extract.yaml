@@ -10,26 +10,70 @@ spec:
     path: probate-cron
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-7235004-20220913154803 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-404ff9f-20220923134049 #{"$imagepolicy": "flux-system:probate-back-office"}
       keyVaults:
         probate:
           secrets:
             - name: AppInsightsInstrumentationKey
               alias: azure.application-insights.instrumentation-key
+            - name: probatemandb-POSTGRES-PASS
+              alias: spring.datasource.password
             - name: s2s-probate-backend
-              alias: S2S_AUTH_TOTP_SECRET
-            - name: ccidam-idam-api-secrets-probate
-              alias: AUTH2_CLIENT_SECRET
+              alias: idam.s2s-auth.totp_secret
+            - name: probate-bo-govNotifyApiKey
+              alias: notifications.govNotifyApiKey
+            - name: authTokenEmail
+              alias: auth.provider.client.email
+            - name: authTokenPassword
+              alias: auth.provider.client.password
+            - name: excelaEmail
+              alias: excelaEmail
+            - name: smeeAndFordEmail
+              alias: smeeAndFordEmail
+            - name: ftpSignature
+              alias: ftp.client.signature
+            - name: ftpEnv
+              alias: ftp.client.environment
+            - name: probate-bo-grantSignatureKey
+              alias: pdf.service.grantSignatureSecretKey
+            - name: probate-bo-grantSignatureFile
+              alias: pdf.service.grantSignatureEncryptedFile
+            - name: pdfServiceBaseUrl
+              alias: docmosis.service.uri
+            - name: pdfServiceAccessKey
+              alias: docmosis.service.accessKey
+            - name: pdfServiceHealthUrl
+              alias: docmosis.service.health.uri
+            - name: idam-secret-probate
+              alias: auth.provider.client.secret
             - name: idamRedirectUrl
-              alias: IDAM_API_REDIRECT_URL
-            - name: payCaseWorkerPass
-              alias: PAYMENT_CASEWORKER_PASSWORD
-            - name: payCaseWorkerUser
-              alias: PAYMENT_CASEWORKER_USERNAME
+              alias: auth.provider.client.redirect
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
+            - name: levPublicCertificate
+              alias: lev.ssl.publicCertificate
+            - name: levPrivateKey
+              alias: lev.ssl.privateKey
+            - name: levAccessTokenUri
+              alias: lev.bearertoken.accessTokenUri
+            - name: levClientId
+              alias: lev.bearertoken.clientId
+            - name: levClientSecret
+              alias: lev.bearertoken.clientSecret
+            - name: levUsername
+              alias: lev.bearertoken.username
+            - name: levPassword
+              alias: lev.bearertoken.password
+            - name: levDeathUrl
+              alias: lev.death.url
             - name: schedulerCaseWorkerUser
               alias: SCHEDULER_CASEWORKER_USERNAME
             - name: schedulerCaseWorkerPass
               alias: SCHEDULER_CASEWORKER_PASSWORD
+            - name: blob-storage-connection-string
+              alias: BLOB_STORAGE_CONNECTION_STRING
       environment:
         TASK_NAME: SmeeAndFordExtractTask
       schedule: 0/10 * * * *
