@@ -7,13 +7,13 @@ spec:
   values:
     java:
       replicas: 15
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0b19d2d-20220914152734 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-3e6786d-20220923135242 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: false
-      memoryLimits: "5120Mi"
-      memoryRequests: "2560Mi"
-      cpuLimits: "5000m"
-      cpuRequests: "2500m"
+      memoryRequests: '4Gi'
+      memoryLimits: '5Gi'
+      cpuRequests: '1'
+      cpuLimits: '3'
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"

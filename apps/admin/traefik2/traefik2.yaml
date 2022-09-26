@@ -18,6 +18,13 @@ spec:
         namespace: admin
   interval: 1m
   values:
+    resources:
+      requests:
+        cpu: 300m
+        memory: 200Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
     providers:
       kubernetesIngress:
         publishedService:
@@ -51,8 +58,9 @@ spec:
     rbac:
       enabled: true
     autoscaling:
-      minReplicas: 1
-      maxReplicas: 3
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 4
     tolerations:
       - key: CriticalAddonsOnly
         operator: Equal
