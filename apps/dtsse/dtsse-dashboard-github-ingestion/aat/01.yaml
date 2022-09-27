@@ -6,6 +6,8 @@ spec:
   releaseName: dtsse-dashboard-github-ingestion
   values:
     job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/dtsse/dashboard-github-ingestion:prod-847e617-20220926131648 #{"$imagepolicy": "flux-system:dtsse-dashboard-github-ingestion"}
       schedule: "10,30,50 * * * *"
     global:
       jobKind: CronJob
