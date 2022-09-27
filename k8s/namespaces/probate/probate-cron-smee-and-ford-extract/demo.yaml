@@ -11,16 +11,17 @@ spec:
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: demo
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-2012-5868d4c-20220902153802 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2025-d2b3b4d-20220923140056 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
-        DUMMY_PROPERTY: DUMMY9
+        DUMMY_PROPERTY: DUMMY12
         PROBATE_POSTGRESQL_USER: probateman_user@probatemandb-postgres-db-v11-demo
         PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-db-v11-demo.postgres.database.azure.com
         EXCEPTED_ESTATE_DATE_OF_DEATH: 2022-01-01
         BLOB_STORAGE_SMEEANDFORD_FEATURE_ENABLED: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
+        ADHOC_JOB_DATE:
       keyVaults:
         probate:
           secrets:
@@ -80,8 +81,8 @@ spec:
               alias: lev.death.url
             - name: schedulerCaseWorkerUser
               alias: SCHEDULER_CASEWORKER_USERNAME
-            - name: schedulerCaseWorkerUser
+            - name: schedulerCaseWorkerPass
               alias: SCHEDULER_CASEWORKER_PASSWORD
             - name: blob-storage-connection-string
               alias: BLOB_STORAGE_CONNECTION_STRING
-      schedule: "25 2 * * *"
+      schedule: "0/15 * * * *"
