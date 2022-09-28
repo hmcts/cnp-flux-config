@@ -49,9 +49,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -184,7 +184,7 @@ spec:
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/master
+                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -206,6 +206,18 @@ spec:
                     name: NFD Nightly
                     recurse: true
                     title: NFD Nightly Builds Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/sptribs-.+\/master
+                    name: SPTRIBS
+                    recurse: true
+                    title: Special Tribunals Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_j_to_z_Nightly\/(sptribs-.*)\/master
+                    name: Special Tribunals Nightly
+                    recurse: true
+                    title: Special Tribunals Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
@@ -310,7 +322,7 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
@@ -328,7 +340,7 @@ spec:
                     title: Employment Tribunals
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api|family-api-gateway|fis-ds-update-web)\/master
+                      ^HMCTS.*\/(fis-hmc-api|fis-ds-web|fis-bulk-scan-api|family-api-gateway|fis-ds-update-web)\/master
                     name: FIS
                     recurse: true
                     title: Family Integration
