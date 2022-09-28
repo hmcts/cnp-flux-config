@@ -15,8 +15,30 @@ spec:
   values:
     nodejs:
       image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-4a6b74f-20220825082700 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      keyVaults:
+        prl:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - prl-citizen-frontend-idam-client-secret
+            - postcode-lookup-token
+            - prl-cos-idam-client-secret
+            - microservicekey-prl-cos-api
+            - microservicekey-prl-citizen-frontend
+            - system-update-user-username
+            - system-update-user-password
+            - idam-solicitor-username
+            - idam-solicitor-password
+            - launchDarkly-sdk-key
+            - citizen-upload-docs-email
       environment:
-        FEATURE_EXAMPLE: true
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/login
+        REFORM_SERVICE_NAME: prl-citizen-frontend
+        REFORM_TEAM: prl
+        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        CCD_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+        CDAM_API_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+        COS_URL: http://prl-cos-aat.service.core-compute-aat.internal
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
