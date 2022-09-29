@@ -8,6 +8,7 @@ metadata:
     traefik.ingress.kubernetes.io/redirect-permanent: "true"
     traefik.ingress.kubernetes.io/redirect-regex: ^https://labs-mokainosspringboot-sandbox.service.core-compute-sandbox.internal(.*)
     traefik.ingress.kubernetes.io/redirect-replacement: https://plum.sandbox.platform.hmcts.net
+    traefik.ingress.kubernetes.io/router.middlewares: cnp-registerorgredirect@kubernetescrd
   name: plum-web-redirect
   namespace: cnp
 spec:
@@ -22,3 +23,14 @@ spec:
                   number: 80
             path: /
             pathType: ImplementationSpecific
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: registerorgredirect
+  namespace: xui
+spec:
+  redirectRegex:
+    permanent: true
+    regex: ^http://register-org.platform.hmcts.net/(.*)
+    replacement: http://manage-org.platform.hmcts.net/register-org/register
