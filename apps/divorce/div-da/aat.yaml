@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-da
+  namespace: divorce
+spec:
+  values:
+    nodejs:
+      ingressHost: decree-absolute-aks.aat.platform.hmcts.net
+      environment:
+        PUBLIC_HOSTNAME: https://decree-absolute-aks.aat.platform.hmcts.net
+        PETITIONER_FRONTEND_URL: https://petitioner-frontend-aks.aat.platform.hmcts.net
+        DECREE_NISI_FRONTEND_URL: https://decree-nisi-aks.aat.platform.hmcts.net
+        FEATURE_ANTENNA_WEBCHAT: "true"
+        FEATURE_WEBCHAT: "false"
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_VERSION: 1
+        ANTENNA_WEBCHAT_AVAILABILITY_DEBUG: "true"
+        FEATURE_ANTENNA_WEBCHAT_AVAILABILITY_TOGGLE: "true"
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
+        FEATURE_PING_REDIS: "true"
+        FEATURE_DYNATRACE: "true"
+        COURT_OPENINGHOURS_EN: 'Monday to Friday, 8am to 6pm'
