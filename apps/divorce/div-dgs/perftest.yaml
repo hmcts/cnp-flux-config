@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-dgs
+  namespace: divorce
+spec:
+  values:
+    java:
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      environment:
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+        FEATURE_RESP_SOLICITOR_DETAILS: "true"
+        DOCMOSIS_SERVICE_BASE_URL: "https://docmosis.perftest.platform.hmcts.net"
+        DOCMOSIS_SERVICE_DEV_MODE_FLAG: "true"
+        PDF_TEST_ENABLED: "true"
