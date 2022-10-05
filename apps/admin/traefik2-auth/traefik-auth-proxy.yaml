@@ -17,7 +17,10 @@ spec:
         name: traefik
         namespace: admin
   interval: 1m
-  values:
+  values:    
+    ports:
+      web:
+        redirectTo: websecure
     additionalArguments:
       - --providers.kubernetesingress.ingressclass=traefik
       - --entryPoints.web.forwardedHeaders.insecure
