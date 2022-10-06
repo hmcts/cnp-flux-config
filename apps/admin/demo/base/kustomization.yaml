@@ -2,18 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - external-dns.yaml
-  - traefik-values.yaml
   - kube-slack-values.yaml
   - ../../keda
-  - ../../external-dns/
-  - ../../external-dns-public/
-  - ../../traefik-auth
-  - ../../traefik-no-proxy
-  - ../../traefik-private
-  - ../../csi-secret-store-provider-v1.0.1
   - ../../../rbac/reader-clusterrole.yaml
-  - ../../traefik/traefik.yaml
   - ../../reply-urls-operator/demo
 patchesStrategicMerge:
   - keda-identity.yaml
