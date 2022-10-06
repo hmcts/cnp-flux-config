@@ -2,8 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../div-dgs/div-dgs.yaml
 namespace: divorce
 patchesStrategicMerge:
+  - ../../div-dgs/perftest.yaml
+  - ../../div-da/perftest.yaml
   - ../../div-fps/perftest.yaml
   - ../../div-emca/perftest.yaml
   - ../../div-cms/perftest.yaml

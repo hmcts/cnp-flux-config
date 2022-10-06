@@ -1,9 +1,9 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: div-da
+  namespace: divorce
 spec:
-  releaseName: div-da
   values:
     nodejs:
       image: hmctspublic.azurecr.io/div/da:prod-48afe49-20220901141426 #{"$imagepolicy": "flux-system:demo-div-da"}
@@ -21,3 +21,4 @@ spec:
         ANTENNA_WEBCHAT_VERSION: 1
         FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
         COURT_OPENINGHOURS_EN: 'Monday to Friday, 8am to 6pm'
+
