@@ -2,6 +2,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: glob:pr-970-*
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -9,4 +13,3 @@ spec:
       image: hmctspublic.azurecr.io/em/ccdorc:prod-5bd2982-20221007144953 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
       environment:
         CALLBACK_DOMAIN: em-ccdorc-demo.service.core-compute-demo.internal
-        FLAG: "refresh"
