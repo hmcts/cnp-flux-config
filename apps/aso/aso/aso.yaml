@@ -5,10 +5,14 @@ metadata:
   name: aso
   namespace: aso
 spec:
+  interval: 5m
   chart:
-    git: https://github.com/Azure/azure-service-operator
-    ref: main
-    path: v2/charts/azure-service-operator
+    spec:
+      chart: v2/charts
+      sourceRef:
+        kind: GitRepository
+        name: aso
+        namespace: aso
   # dependencies:
   #   - name: cert-manager
   #     version: v1.9.1
