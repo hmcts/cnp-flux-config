@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: fis-hmc-api
@@ -23,7 +23,7 @@ spec:
       readinessTimeout: 10
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fis/hmc-api:pr-28-94c1b8c-20221010120714 #{"$imagepolicy": "flux-system:demo-fis-hmc-api"}
+      image: hmctspublic.azurecr.io/fis/hmc-api:pr-28-cca03f7-20221011171636 #{"$imagepolicy": "flux-system:demo-fis-hmc-api"}
       environment:
         FEATURE_EXAMPLE: true
         REFORM_TEAM: fis
@@ -31,6 +31,8 @@ spec:
         SERVICE_AUTH_PROVIDER_URL: 'http://rpe-service-auth-provider-demo.service.core-compute-demo.internal'
         IDAM_WEB_URL: 'https://idam-web-public.demo.platform.hmcts.net/login'
         IDAM_API_URL: 'https://idam-api.demo.platform.hmcts.net/o/token'
+        HMC_FIS_TOPIC_NAME: 'hmc-to-cft-demo'
+        HMC_FIS_SUBSCRIPTION_NAME: 'hmc-fis-subscription-demo'
 
     global:
       environment: demo

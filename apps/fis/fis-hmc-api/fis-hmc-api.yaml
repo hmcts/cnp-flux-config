@@ -4,10 +4,12 @@ metadata:
   name: fis-hmc-api
 spec:
   releaseName: fis-hmc-api
-  interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/fis/hmc-api:prod-0468e73-20221006171923 #{"$imagepolicy": "flux-system:fis-hmc-api"}
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fis/hmc-api:prod-0c00b56-20221012122129 #{"$imagepolicy": "flux-system:fis-hmc-api"}
   chart:
     spec:
       chart: ./stable/fis-hmc-api
