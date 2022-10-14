@@ -1,10 +1,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: external-dns-private-2
+  name: external-dns
   namespace: admin
 spec:
-  releaseName: external-dns-private
+  releaseName: external-dns
   chart:
     spec:
       chart: external-dns
@@ -18,7 +18,6 @@ spec:
     policy: sync
     podLabels:
       aadpodidbinding: external-dns
-    provider: azure-private-dns
     sources:
       - ingress
     azure:
