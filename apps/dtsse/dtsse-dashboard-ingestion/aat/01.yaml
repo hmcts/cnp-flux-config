@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dtsse-dashboard-ingestion
+spec:
+  releaseName: dtsse-dashboard-ingestion
+  values:
+    job:
+      schedule: "5,15,25,35,45,55 * * * *"
+    global:
+      jobKind: CronJob
