@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-next-hearing-date-updater
+spec:
+  releaseName: ccd-next-hearing-date-updater
+  values:
+    job:
+      environment:
+        TASK_NAME: SystemHmcOperationalReportsTask
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/next-hearing-date-updater:prod-8815544-20221017111820 #{"$imagepolicy": "flux-system:ccd-next-hearing-date-updater"}
+  chart:
+    spec:
+      chart: ./stable/ccd-next-hearing-date-updater
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
