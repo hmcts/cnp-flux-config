@@ -11,3 +11,14 @@ spec:
     service:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-resource-group: cft-perftest-network-rg
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - traefik
+                    - konnectivity-agent
+            topologyKey: "kubernetes.io/hostname"
