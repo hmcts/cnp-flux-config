@@ -5,6 +5,9 @@ metadata:
   namespace: admin
 spec:
   values:
+    deployment:
+      podLabels:
+        app: traefik
     service:
       spec:
         loadBalancerIP: "10.48.95.250"
@@ -13,13 +16,10 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                    - traefik
                 - key: app
                   operator: In
                   values:
+                    - traefik
                     - konnectivity-agent
             topologyKey: "kubernetes.io/hostname"
             namespaces: ["admin", "kube-system"]
