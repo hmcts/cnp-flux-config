@@ -51,6 +51,19 @@ We use Managed Identity to access keyvaults secrets in application. This should 
     #example
     ./bin/v2/add-identity-to-env.sh divorce div div aat
    ```
+### Add managed identity to another project
+
+Sometimes you may need your pods to connect to another projects resources like Key Vaults. You can use the below to add their Managed Identity to your configuration which will allow it access.
+
+- Please note Preview applications use AAT key vaults and thus AAT managed identities, you can reuse identity created for AAT by adding it to preview kustomization.
+
+- Run [add-identity-from-another-project.sh](/bin/v2/add-identity-from-another-project.sh) with your namespace, Other Teams namespace, environment
+
+ ```bash
+    ./bin/v2/add-identity-from-another-project.sh <your namespace> <calling teams namespace> <environment>
+    #example
+    ./bin/v2/add-identity-from-another-project.sh divorce aac aat
+   ```
 
 ## Application
 
