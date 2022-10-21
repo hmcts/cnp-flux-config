@@ -8,3 +8,13 @@ spec:
     service:
       spec:
         loadBalancerIP: "10.90.79.250"
+    affinity:
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: kubernetes.azure.com/mode
+                  operator: In
+                  values:
+                    - linux
