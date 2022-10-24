@@ -61,3 +61,13 @@ spec:
       enabled: true
       minReplicas: 2
       maxReplicas: 4
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - traefik
+            topologyKey: "kubernetes.io/hostname"
