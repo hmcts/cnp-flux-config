@@ -11,15 +11,3 @@ spec:
     service:
       spec:
         loadBalancerIP: "10.48.79.250"
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - traefik
-                    - konnectivity-agent
-            topologyKey: "kubernetes.io/hostname"
-            namespaces: ["admin", "kube-system"]
