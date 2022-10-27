@@ -10,6 +10,25 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2191-5d64974-20221026173616 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
+      keyVaults:
+        sscs:
+          secrets:
+          - idam-api
+          - idam-oauth-user
+          - idam-redirect
+          - idam-sscs-systemupdate-user
+          - idam-sscs-systemupdate-password
+          - sscs-email-mac-secret-text
+          - idam-sscs-oauth2-client-secret
+          - sscs-s2s-secret
+          - s2s-micro
+          - sscs-asb-primary-send-and-listen-shared-access-key
+          - evidence-share-topic-shared-access-key
+          - docmosis-api-key
+          - notification-job-scheduler-db-password
+          - notification-key
+          - notification-test-key
+          - AppInsightsInstrumentationKey
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-demo"
         JOB_SCHEDULER_DB_NAME: "notification"
