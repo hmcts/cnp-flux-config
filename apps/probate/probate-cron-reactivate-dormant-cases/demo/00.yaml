@@ -6,10 +6,11 @@ spec:
   releaseName: probate-cron-reactivate-dormant-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-2081-1f07baf-20221026154420 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "15,35,55 * * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2018-3aa69ae-20221025175404 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0 17 * * *"
       environment:
         VAR: trigger1
+        ADHOC_JOB_DATE: "2022-10-27"
     global:
       jobKind: CronJob
       enableKeyVaults: true
