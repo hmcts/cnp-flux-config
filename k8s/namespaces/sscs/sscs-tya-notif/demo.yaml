@@ -9,7 +9,25 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2199-426c8ee-20221019094241 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2191-5d64974-20221026173616 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
+      keyVaults:
+        sscs:
+          secrets:
+          - idam-api
+          - idam-oauth-user
+          - idam-redirect
+          - idam-sscs-systemupdate-user
+          - idam-sscs-systemupdate-password
+          - sscs-email-mac-secret-text
+          - idam-sscs-oauth2-client-secret
+          - sscs-s2s-secret
+          - s2s-micro
+          - evidence-share-topic-shared-access-key
+          - docmosis-api-key
+          - notification-job-scheduler-db-password
+          - notification-key
+          - notification-test-key
+          - AppInsightsInstrumentationKey
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-demo"
         JOB_SCHEDULER_DB_NAME: "notification"
@@ -20,7 +38,7 @@ spec:
         SECURE_DOC_STORE_FEATURE: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         SCOTTISH_PO_BOX_ENABLED: true
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         HOURS_START_TIME: 0
         HOURS_END_TIME: 23
         TEST_PROPERTY: false
