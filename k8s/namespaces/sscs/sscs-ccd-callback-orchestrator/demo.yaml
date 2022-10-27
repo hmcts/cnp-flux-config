@@ -10,6 +10,20 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:pr-962-8f04a89-20221026171713 #{"$imagepolicy": "flux-system:demo-sscs-ccd-callback-orchestrator"}
+      keyVaults:
+        sscs:
+          resourceGroup: sscs
+          secrets:
+            - idam-api
+            - idam-oauth-user
+            - idam-redirect
+            - idam-sscs-systemupdate-user
+            - idam-sscs-systemupdate-password
+            - idam-sscs-oauth2-client-secret
+            - sscs-s2s-secret
+            - s2s-micro
+            - evidence-share-topic-shared-access-key
+            - AppInsightsInstrumentationKey
       environment:
         TEST_PROPERTY: true
         DUMMY_PROPERTY: true
