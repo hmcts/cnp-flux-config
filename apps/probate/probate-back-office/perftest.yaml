@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-back-office
+  namespace: probate
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/probate/back-office:prod-4df63c8-20221027150718 #{"$imagepolicy": "flux-system:probate-back-office"}
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.perftest.platform.hmcts.net
+        BLOB_STORAGE_SMEEANDFORD_FEATURE_ENABLED: true
