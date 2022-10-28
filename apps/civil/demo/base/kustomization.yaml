@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: civil
+resources:
+  - ../../base
+  - ../../../xui/identity/identity.yaml
+  - ../../../am/identity/identity.yaml
+  - ../../../money-claims/identity/identity.yaml
+  - ../../../rbac/nonprod-role.yaml
+  - ../../civil-service/demo-image-policy.yaml
+  - ../../civil-general-applications/demo-image-policy.yaml
+  - ../../civil-citizen-ui/demo-image-policy.yaml
+  - ../../civil-general-applications/civil-general-applications.yaml
+  - ../../civil-citizen-ui/civil-citizen-ui.yaml
+patchesStrategicMerge:
+  - ../../identity/ithc.yaml
+  - ../../../xui/identity/aat.yaml
+  - ../../../am/identity/aat.yaml
+  - ../../../money-claims/identity/aat.yaml
+  - ../../civil-citizen-ui/demo.yaml
+  - ../../civil-service/demo.yaml
+  - ../../civil-general-applications/demo.yaml
