@@ -61,18 +61,13 @@ spec:
       enabled: true
       minReplicas: 2
       maxReplicas: 4
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
     affinity:
-      nodeAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
               matchExpressions:
-                - key: kubernetes.azure.com/mode
+                - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - system
+                    - traefik
+            topologyKey: "kubernetes.io/hostname"
