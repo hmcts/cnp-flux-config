@@ -27,8 +27,9 @@ spec:
         memory: 1Gi
     providers:
       kubernetesIngress:
-        publishedService:
-          enabled: true
+        ingressEndpoint:
+          publishedService:
+            enabled: true
     deployment:
       podLabels:
         aadpodidbinding: traefik
@@ -61,18 +62,13 @@ spec:
       enabled: true
       minReplicas: 2
       maxReplicas: 4
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
     affinity:
-      nodeAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
               matchExpressions:
-                - key: kubernetes.azure.com/mode
+                - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - system
+                    - traefik
+            topologyKey: "kubernetes.io/hostname"
