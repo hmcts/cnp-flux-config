@@ -1,11 +1,11 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: civil-service
+  name: civil-general-applications
+  namespace: civil
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-1646-be40773-20221027161401 #{"$imagepolicy": "flux-system:demo-civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -18,18 +18,17 @@ spec:
             - cross-access-user-password
             - prd-admin-user-username
             - prd-admin-user-password
-            - AppInsightsInstrumentationKey
+            - name: AppInsightsInstrumentationKeyGeneralApplications
+              alias: azure.application-insights.instrumentation-key
             - docmosis-api-key
             - cmc-db-password-v11
             - gov-notify-api-key
             - sendgrid-api-key
             - robotics-notification-sender
             - robotics-notification-recipient
-            - robotics-notification-recipient-spec
             - launch-darkly-sdk-key
             - robotics-notification-multipartyrecipient
             - ordnance-survey-api-key
       environment:
         TESTING_SUPPORT_ENABLED: true
-        EM_CCD_ORCHESTRATOR_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
         DOCUMENT_MANAGEMENT_SECURED: true

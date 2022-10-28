@@ -1,10 +1,12 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: civil-service
+  namespace: civil
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/civil/service:pr-1646-be40773-20221027161401 #{"$imagepolicy": "flux-system:demo-civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -29,6 +31,6 @@ spec:
             - robotics-notification-multipartyrecipient
             - ordnance-survey-api-key
       environment:
-        OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         TESTING_SUPPORT_ENABLED: true
+        EM_CCD_ORCHESTRATOR_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
         DOCUMENT_MANAGEMENT_SECURED: true
