@@ -7,7 +7,8 @@ spec:
   values:
     nodejs:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/fees-register/frontend:pr-432-d700dd3-20221013102945 #{"$imagepolicy": "flux-system:demo-int-fees-register-frontend"}
+      ingressClass: traefik-no-proxy
+      image: hmctspublic.azurecr.io/fees-register/frontend:pr-432-23f36e4-20221024180147 #{"$imagepolicy": "flux-system:demo-int-fees-register-frontend"}
       environment:
         DUMMY_RESTART_VAR: true
         FEES_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

@@ -4,26 +4,17 @@ metadata:
   name: prl-citizen-frontend
   namespace: private-law
 spec:
-  releaseName: prl-citizen-frontend
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/prl-citizen-frontend
   values:
     nodejs:
-      memoryRequests: "768Mi"
-      cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
-      cpuLimits: "2500m"
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-9fe9c75-20221025114458 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      cpuLimits: "1000m"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "512Mi"
+      replicas: 2
       readinessDelay: 45
-      readinessTimeout: 5
-      readinessPeriod: 10
-      useInterpodAntiAffinity: true
-      disableTraefikTls: false
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-8c40f3e-20221017115017 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      readinessTimeout: 10
+      readinessPeriod: 15
       keyVaults:
         prl:
           secrets:
@@ -49,7 +40,7 @@ spec:
         CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         CDAM_API_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         COS_URL: http://prl-cos-demo.service.core-compute-demo.internal
-        REDIS_HOST: prl-citizen-frontend-redis-demmo.redis.cache.windows.net
+        REDIS_HOST: prl-citizen-frontend-redis-demo.redis.cache.windows.net
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

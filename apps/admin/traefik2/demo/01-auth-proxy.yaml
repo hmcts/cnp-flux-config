@@ -5,10 +5,11 @@ metadata:
   namespace: admin
 spec:
   values:
-    loadBalancerIP: 10.50.95.251
-    kubernetes:
-      ingressEndpoint:
-        ip: 51.142.81.236
+    additionalArguments:
+      - --providers.kubernetesingress.ingressendpoint.ip=51.142.81.236
+    service:
+      spec:
+        loadBalancerIP: "10.50.95.251"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
