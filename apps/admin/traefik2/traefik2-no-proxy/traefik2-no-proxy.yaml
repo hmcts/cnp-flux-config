@@ -8,8 +8,10 @@ metadata:
 spec:
   releaseName: traefik-no-proxy
   values:
-    additionalArguments:
-      - --providers.kubernetesingress.ingressclass=traefik-no-proxy
+    providers:
+      kubernetesIngress:
+        publishedService:
+          enabled: false
     ingressClass:
       enabled: true
       isDefaultClass: false

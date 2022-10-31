@@ -5,13 +5,14 @@ metadata:
   namespace: admin
 spec:
   values:
+    additionalArguments:
+      - --providers.kubernetesingress.ingressendpoint.ip=51.142.81.236
+      - --providers.kubernetesingress.ingressclass=traefik
+      - --entryPoints.web.forwardedHeaders.insecure
+      - --entryPoints.websecure.forwardedHeaders.insecure
     service:
       spec:
         loadBalancerIP: "10.50.95.251"
-    providers:
-      kubernetesIngress:
-        ingressEndpoint:
-          ip: 51.142.81.236
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
