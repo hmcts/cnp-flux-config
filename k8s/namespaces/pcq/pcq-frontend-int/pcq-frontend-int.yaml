@@ -1,0 +1,19 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pcq-frontend-int
+spec:
+  releaseName: pcq-frontend-int
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/pcq-frontend
+  values:
+    nodejs:
+      memoryRequests: "1024Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/pcq/frontend:prod-4fb7b95-20221026120231 #{"$imagepolicy": "flux-system:pcq-frontend"}
