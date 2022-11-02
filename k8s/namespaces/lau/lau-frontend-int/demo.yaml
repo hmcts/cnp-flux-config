@@ -1,0 +1,17 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: lau-frontend-int
+spec:
+  releaseName: lau-frontend-int
+  values:
+    nodejs:
+      disableTraefikTls: false
+      ingressClass: traefik-no-proxy
+      image: hmctspublic.azurecr.io/lau/frontend:prod-1b4f312-20221031130950 #{"$imagepolicy": "flux-system:lau-frontend"}
+      environment:
+        DUMMY_RESTART_VAR: true
+        REFORM_SERVICE_NAME: lau-frontend-int
+        LAU_CASE_BACKEND_URL: http://lau-case-backend-int-demo.service.core-compute-demo.internal
+        LAU_IDAM_BACKEND_URL: http://lau-idam-backend-int-demo.service.core-compute-demo.internal
+        OAUTH_CLIENT_REDIRECT: https://lau-int.demo.platform.hmcts.net/oauth2/callback

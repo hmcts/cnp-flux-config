@@ -6,14 +6,14 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-220-707764f-20221004111354 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-b09be38-20221024011448 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       memoryRequests: "512Mi"
       replicas: 2
       readinessDelay: 45
-      readinessTimeout: 10
+      readinessTimeout: 15
       readinessPeriod: 15
       keyVaults:
         prl:
@@ -30,6 +30,7 @@ spec:
             - idam-solicitor-password
             - launchDarkly-sdk-key
             - citizen-upload-docs-email
+            - redis-access-key
       environment:
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.ithc.platform.hmcts.net/login
@@ -39,6 +40,7 @@ spec:
         CCD_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
         CDAM_API_URL: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
         COS_URL: http://prl-cos-ithc.service.core-compute-ithc.internal
+        REDIS_HOST: prl-citizen-frontend-redis-ithc.redis.cache.windows.net
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

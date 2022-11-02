@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-dgs
+  namespace: divorce
+spec:
+  releaseName: div-dgs
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/dgs:prod-316eca6-20221006153705 #{"$imagepolicy": "flux-system:div-dgs"}
+      environment:
+        VAR_FV2: base-1
+        CTSC_OPENING_HOURS: "8am to 6pm, Monday to Friday"
+  chart:
+    spec:
+      chart: ./stable/div-dgs
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

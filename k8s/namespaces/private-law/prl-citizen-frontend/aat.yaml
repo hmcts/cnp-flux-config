@@ -4,17 +4,17 @@ metadata:
   name: prl-citizen-frontend
   namespace: private-law
 spec:
-  releaseName: prl-citizen-frontend
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/prl-citizen-frontend
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-4a6b74f-20220825082700 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-1454c9b-20221017232044 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      cpuLimits: "1000m"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "512Mi"
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 15
+      readinessPeriod: 15
       keyVaults:
         prl:
           secrets:
@@ -30,12 +30,14 @@ spec:
             - idam-solicitor-password
             - launchDarkly-sdk-key
             - citizen-upload-docs-email
+            - redis-access-key
       environment:
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/login
         REFORM_SERVICE_NAME: prl-citizen-frontend
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        REDIS_HOST: prl-citizen-frontend-redis-aat.redis.cache.windows.net
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

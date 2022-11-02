@@ -6,14 +6,14 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-130-2b08af5-20221004010645 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-a871dfa-20221031192042 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       memoryRequests: "512Mi"
       replicas: 2
       readinessDelay: 45
-      readinessTimeout: 5
+      readinessTimeout: 10
       readinessPeriod: 15
       keyVaults:
         prl:
@@ -30,6 +30,7 @@ spec:
             - idam-solicitor-password
             - launchDarkly-sdk-key
             - citizen-upload-docs-email
+            - redis-access-key
       environment:
         IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/login
@@ -39,6 +40,7 @@ spec:
         CCD_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
         CDAM_API_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
         COS_URL: http://prl-cos-perftest.service.core-compute-perftest.internal
+        REDIS_HOST: prl-citizen-frontend-redis-perftest.redis.cache.windows.net
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

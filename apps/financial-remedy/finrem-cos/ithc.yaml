@@ -6,7 +6,14 @@ metadata:
 spec:
   values:
     java:
+      replicas: 3
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        targetCPUUtilizationPercentage: 80 # Default is 80% target CPU utilization
       environment:
         FEATURE_PBA_CASE_TYPE: false
         FEATURE_USE_USER_TOKEN: true
-        VAR_FLUX_V2: trigger2
+        FEATURE_SOLICITOR_NOC: true
+        FEATURE_CASEWORKER_NOC: true
+        VAR_FLUX_V2: trigger4
