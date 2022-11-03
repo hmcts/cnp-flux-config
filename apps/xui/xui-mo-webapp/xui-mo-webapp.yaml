@@ -1,15 +1,19 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: xui-mo-webapp
 spec:
   releaseName: xui-mo-webapp
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/xui-mo-webapp
   values:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/xui/mo-webapp:prod-1270d1b-20221024110255 #{"$imagepolicy": "flux-system:xui-mo-webapp"}
+  chart:
+    spec:
+      chart: ./stable/xui-mo-webapp
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
