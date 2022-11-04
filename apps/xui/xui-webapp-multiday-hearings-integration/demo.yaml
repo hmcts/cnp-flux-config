@@ -1,14 +1,15 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: xui-webapp-link-unlink-cases-integration
+  name: xui-webapp-multiday-hearings-integration
 spec:
   values:
     nodejs:
       disableTraefikTls: false
       ingressClass: traefik-no-proxy
-      ingressHost: manage-case-link-unlink-cases-int.demo.platform.hmcts.net
+      ingressHost: manage-case-multiday-hearings-int.demo.platform.hmcts.net
       environment:
+        DUMMY_VAR: 1
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL,AUTOTEST1,CMC,HRS,BEFTA_JURISDICTION_1,PRIVATELAW,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3
@@ -29,4 +30,4 @@ spec:
         SERVICES_PRD_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         SERVICES_PRD_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
         SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/xui/webapp:prod-a60491d-20221101155918 #{"$imagepolicy": "flux-system:xui-webapp-link-unlink-cases-integration"}
+      image: hmctspublic.azurecr.io/xui/webapp:pr-2156-e4a15da-20221026133215 #{"$imagepolicy": "flux-system:demo-xui-webapp-multiday-hearings-integration"}
