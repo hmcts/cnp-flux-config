@@ -7,8 +7,6 @@ metadata:
   annotations:
     flux.weave.works/automated: "false"
 spec:
-  rbac:
-    create: false
   releaseName: flux-helm-operator
   rollback:
     enable: true
@@ -18,6 +16,10 @@ spec:
     name: helm-operator
     version: 1.4.2
   values:
+    rbac:
+      create: false
+    serviceAccount:
+      create: false
     helm:
       versions: v3
     workers: 3
