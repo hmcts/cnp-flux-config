@@ -6,8 +6,9 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      enableOAuth: true
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-f9a3861-20221103110853 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-2133-62e0065-20221104161550 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
       replicas: 4
       autoscaling:
         enabled: false
