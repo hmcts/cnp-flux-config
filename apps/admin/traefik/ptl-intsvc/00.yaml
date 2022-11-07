@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  values:
+    loadBalancerIP: 10.10.73.250
+    dashboard:
+      domain: traefik00.platform.hmcts.net
+    ssl:
+      enforced: true
+      permanentRedirect: true
+  valuesFrom:
+    - kind: Secret
+      name: traefik-values

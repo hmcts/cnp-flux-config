@@ -78,16 +78,12 @@ spec:
               path: /metrics
       ingress:
         enabled: true
-        annotations:
-          traefik.ingress.kubernetes.io/router.tls: "true"
     kubelet:
       serviceMonitor:
         https: false
     alertmanager:
       ingress:
         enabled: true
-        annotations:
-          traefik.ingress.kubernetes.io/router.tls: "true"
       config:
         global:
           resolve_timeout: "5m"
@@ -132,7 +128,7 @@ spec:
       ingress:
         enabled: true
         annotations:
-          traefik.ingress.kubernetes.io/router.tls: "true"
+          kubernetes.io/ingress.class: traefik
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1

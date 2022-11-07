@@ -9,12 +9,16 @@ spec:
       ingress:
         hosts:
           - prometheus-mgmt-sbox.sandbox.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       prometheusSpec:
         retention: 30d
     alertmanager:
       ingress:
         hosts:
           - alertmanager-mgmt-sbox.sandbox.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       config:
         receivers:
           - name: "slack_alerting"
@@ -33,6 +37,8 @@ spec:
       ingress:
         hosts:
           - grafana.sandbox.platform.hmcts.net
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
       additionalDataSources:
         - name: prometheus-00
           type: prometheus
