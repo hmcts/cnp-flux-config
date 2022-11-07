@@ -11,3 +11,31 @@ subjects:
   - name: flux-helm-operator
     namespace: admin
     kind: ServiceAccount
+
+---
+# needed for creating flux rbac
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    name: flux-helm-operator-cluster-roles
+  name: flux-helm-operator-cluster-roles
+rules:
+  - apiGroups: ['rbac.authorization.k8s.io']
+    resources: ['clusterroles', 'clusterrolebindings']
+    verbs: ['*']
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: flux-helm-operator-cluster-roles
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: flux-helm-operator-cluster-roles
+subjects:
+  - kind: ServiceAccount
+    name: flux-helm-operator
+    namespace: admin
