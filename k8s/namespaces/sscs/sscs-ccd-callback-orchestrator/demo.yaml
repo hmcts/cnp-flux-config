@@ -8,8 +8,10 @@ spec:
   values:
     java:
       replicas: 2
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:pr-962-8f04a89-20221026171713 #{"$imagepolicy": "flux-system:demo-sscs-ccd-callback-orchestrator"}
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-8910263-20221104164409 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
       environment:
         TEST_PROPERTY: true
         DUMMY_PROPERTY: true

@@ -6,6 +6,9 @@ spec:
   values:
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/dm/store:prod-6840307-20221030201822 #{"$imagepolicy": "flux-system:demo-dm-store"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/dm/store:prod-24fcf83-20221107065247 #{"$imagepolicy": "flux-system:demo-dm-store"}
       environment:
         ENABLE_TTL: false
+        DUMMY_VAR: delete_me

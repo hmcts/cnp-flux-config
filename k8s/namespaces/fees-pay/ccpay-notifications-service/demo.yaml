@@ -9,7 +9,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/notifications-service:pr-71-b1115c9-20220914145907 #{"$imagepolicy": "flux-system:demo-ccpay-notifications-service"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccpay/notifications-service:prod-dc19e8c-20220607162624 #{"$imagepolicy": "flux-system:ccpay-notifications-service"}
       environment:
         DUMMY_VARIABLE: true
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"

@@ -6,7 +6,8 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-a871dfa-20221031192042 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      enableOAuth: true
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-1454c9b-20221017232044 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
@@ -38,7 +39,7 @@ spec:
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
-        CDAM_API_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         COS_URL: http://prl-cos-demo.service.core-compute-demo.internal
         REDIS_HOST: prl-citizen-frontend-redis-demo.redis.cache.windows.net
     global:
