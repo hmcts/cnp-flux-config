@@ -6,7 +6,9 @@ spec:
   releaseName: bar-api-int
   values:
     java:
-      image: hmctspublic.azurecr.io/bar/api:prod-9b64ade-20220811171838 #{"$imagepolicy": "flux-system:demo-int-bar-api"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/bar/api:prod-047f802-20221103151746 #{"$imagepolicy": "flux-system:bar-api"}
       environment:
         DUMMY_RESTART_VAR: false
         POSTGRES_NAME: postgresqldb2

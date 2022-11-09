@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: xui-webapp
+spec:
+  values:
+    nodejs:
+      replicas: 20
+      memoryLimits: "3Gi"
+      memoryRequests: "1Gi"
+      cpuLimits: "2000m"
+      cpuRequests: "1000m"
+      ingressHost: manage-case.perftest.platform.hmcts.net
+      environment:
+        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,HRS,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,PRIVATELAW,BEFTA_JURISDICTION_3,DISPOSER_MASTER
+        FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
+        DEBUG: xuiNode:*,-xuiNode:auth:s2s
+        SERVICES_IDAM_OAUTH_CALLBACK_URL: /oauth2/callback
+        SERVICES_PRD_API: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+        SERVICES_CASE_JUDICIAL_API: http://rd-judicial-api-perftest.service.core-compute-perftest.internal
+        SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-manage-case-assignment-perftest.service.core-compute-perftest.internal
+        SERVICES_IDAM_LOGIN_URL: https://idam-web-public.perftest.platform.hmcts.net
+        SERVICES_IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        SERVICES_MARKUP_API: http://em-npa-perftest.service.core-compute-perftest.internal
+        LAUNCH_DARKLY_CLIENT_ID: 1
+        SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        FEATURE_OIDC_ENABLED: true
+        FEATURE_SECURE_COOKIE_ENABLED: false
+        STUB: false
+        SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal
+        UV_THREADPOOL_SIZE: 96
+        HEALTH_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal/health
+        SERVICES_ICP_API: http://em-icp-perftest.service.core-compute-perftest.internal
+        SERVICES_EM_DOCASSEMBLY_API: http://dg-docassembly-perftest.service.core-compute-perftest.internal
+        SERVICES_REFUNDS_API_URL: http://ccpay-refunds-api-perftest.service.core-compute-perftest.internal
+        SERVICES_LOCATION_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
+        SERVICES_HEARINGS_COMPONENT_API: http://jurisdiction-hearings-api-perftest.service.core-compute-perftest.internal
+        SERVICES_HMC_HEARINGS_COMPONENT_API: http://hmc-cft-hearing-service-perftest.service.core-compute-perftest.internal
+        SERVICES_PRD_LOCATION_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
+        SERVICES_PRD_JUDICIAL_API: http://rd-judicial-api-perftest.service.core-compute-perftest.internal
+        SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
+      image: hmctspublic.azurecr.io/xui/webapp:pr-1774-6872caa-20221104202139 #{"$imagepolicy": "flux-system:perftest-xui-webapp"}

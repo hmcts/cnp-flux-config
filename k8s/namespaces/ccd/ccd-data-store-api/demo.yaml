@@ -6,7 +6,9 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-2133-994d59c-20221028103953 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-2133-9cf2b9b-20221107093825 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
       replicas: 4
       autoscaling:
         enabled: false
@@ -42,5 +44,5 @@ spec:
         LOG_AND_AUDIT_CASE_ENABLED: true
         LOG_AND_AUDIT_CASE_URL: http://lau-case-backend-demo.service.core-compute-demo.internal
         LOG_CALLBACK_DETAILS: "*"
-        HTTP_CLIENT_READ_TIMEOUT: 10000
-        FEIGN_CLIENT_READ_TIMEOUT: 10000
+        HTTP_CLIENT_READ_TIMEOUT: 29000
+        FEIGN_CLIENT_READ_TIMEOUT: 29000
