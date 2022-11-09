@@ -21,16 +21,5 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     AAD_GROUP_ID=$(kubectl get rolebinding -n ccd --context cft-aat-00-aks-admin nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
     yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/aac/base/kustomize.yaml
 
+    # k8s/namespaces/admin/flux-helm-operator/rbac/perftest-role-binding.yaml
 done
-
-
-
-
-
-# kubectl get rolebinding -n ccd --context cft-aat-00-aks-admin nonprod-team-permissions -o jsonpath='{.subjects[0].name}'
-
-# yq search
-# TEST=$(kubectl get rolebinding -n ccd --context cft-aat-00-aks-admin nonprod-team-permissions -o yaml)
-# # SECRET_CHECK=$(az keyvault secret list --vault-name $DESTINATION_KEYVAULT --query "[?name=='$SECRETNAME']" -o tsv)
-
-# yq eval '.subjects[].name' $TEST
