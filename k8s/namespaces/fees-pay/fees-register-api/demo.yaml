@@ -1,0 +1,14 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fees-register-api
+spec:
+  releaseName: fees-register-api
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/fees-register/api:prod-c6ff398-20221103151821 #{"$imagepolicy": "flux-system:fees-register-api"}
+      imagePullPolicy: Always
+      environment:
+        DUMMY_RESTART_VAR: true
