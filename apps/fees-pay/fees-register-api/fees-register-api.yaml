@@ -5,9 +5,13 @@ metadata:
 spec:
   releaseName: fees-register-api
   chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/fees-register-api
+    spec:
+      chart: ./stable/fees-register-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
   values:
     java:
       replicas: 2
