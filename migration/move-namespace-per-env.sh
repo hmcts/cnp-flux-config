@@ -21,5 +21,6 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     AAD_GROUP_ID=$(kubectl get rolebinding -n ccd --context cft-aat-00-aks-admin nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
     yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/aac/base/kustomize.yaml
 
-    # k8s/namespaces/admin/flux-helm-operator/rbac/perftest-role-binding.yaml
+    # Remove roleBinding from v1
+    yq -i 'select(.metadata.namespace != "ts")' k8s/namespaces/admin/flux-helm-operator/rbac/$ENV-role-binding.yaml
 done
