@@ -3,7 +3,7 @@ set -ex
 
 # Example of script ./migration/move-namespace-per-env.sh perftest aac
 # Run first ./migration/create-namespaces-per-env.sh perftest aac
-# Sample based of https://github.com/hmcts/cnp-flux-config/pull/18858/files
+# Sample based of https://github.com/hmcts/cnp-flux-config/pull/18858/files & https://github.com/hmcts/cnp-flux-config/pull/18862
 ENV=$1
 NAMESPACE=$2
 
