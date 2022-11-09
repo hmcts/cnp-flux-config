@@ -18,7 +18,7 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     NAMESPACE_PATH="../../../rbac/nonprod-role.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
 
     # add AAD Group to base kustomize
-    AAD_GROUP_ID=$(kubectl get rolebinding -n ccd --context cft-aat-00-aks-admin nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
+    AAD_GROUP_ID=$(kubectl get rolebinding -n $NAMESPACE --context cft-$ENV-00-aks-admin nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
     yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/$NAMESPACE/base/kustomize.yaml
 
     # Remove roleBinding from v1
