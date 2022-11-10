@@ -54,8 +54,7 @@ done
     yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/common-overlay/kustomization.yaml
 
     # Run helmrelease-migrate script
-    ./migration/helmrelease-migrate.sh apps/$NAMESPACE/$APPLICATION/
-
+    ./migration/helmrelease-migrate.sh apps/$NAMESPACE/
     # Remove fluxv1 kustomization for environment
     rm -r k8s/$ENV/common-overlay/$NAMESPACE
     

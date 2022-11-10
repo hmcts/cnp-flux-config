@@ -1,15 +1,19 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: ccpay-notifications-service
 spec:
   releaseName: ccpay-notifications-service
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/ccpay-notifications-service
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccpay/notifications-service:prod-dc19e8c-20220607162624 #{"$imagepolicy": "flux-system:ccpay-notifications-service"}
+  chart:
+    spec:
+      chart: ./stable/ccpay-notifications-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
