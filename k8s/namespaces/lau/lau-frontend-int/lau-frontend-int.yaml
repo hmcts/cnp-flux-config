@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: lau-frontend-int
+spec:
+  releaseName: lau-frontend-int
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/lau-frontend
+  values:
+    nodejs:
+      replicas: 2
+      memoryLimits: "2048Mi"
+      cpuLimits: "2000m"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/lau/frontend:prod-0375953-20221110094403 #{"$imagepolicy": "flux-system:lau-frontend"}
+      ingressHost: lau-int.demo.platform.hmcts.net

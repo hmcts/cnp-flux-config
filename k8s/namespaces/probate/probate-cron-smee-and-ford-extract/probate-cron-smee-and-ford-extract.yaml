@@ -10,7 +10,7 @@ spec:
     path: probate-cron
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-9918d56-20221010131906 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-29df907-20221103222349 #{"$imagepolicy": "flux-system:probate-back-office"}
       keyVaults:
         probate:
           secrets:
@@ -72,8 +72,8 @@ spec:
               alias: SCHEDULER_CASEWORKER_USERNAME
             - name: schedulerCaseWorkerPass
               alias: SCHEDULER_CASEWORKER_PASSWORD
-            - name: blob-storage-connection-string
-              alias: BLOB_STORAGE_CONNECTION_STRING
+            - name: probate-storage-account-primary-connection-string
+              alias: PROBATE_STORAGE_ACCOUNT_PRIMARY_CONNECTION_STRING
       environment:
         TASK_NAME: SmeeAndFordExtractTask
       schedule: 0/10 * * * *

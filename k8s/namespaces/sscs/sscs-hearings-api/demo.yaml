@@ -5,10 +5,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/hearings-api:pr-378-98f0e86-20221010134105 #{"$imagepolicy": "flux-system:demo-sscs-hearings-api"}
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/sscs/hearings-api:pr-367-be7604c-20221110094455 #{"$imagepolicy": "flux-system:demo-sscs-hearings-api"}
       environment:
         TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
         SSCS_LOG_LEVEL: DEBUG
         TRIBUNALS_EVENT_QUEUE_RETRY_TIMEOUT: 60
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         HMC_HEARINGS_LISTENING_ENABLED: true

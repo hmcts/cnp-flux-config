@@ -6,14 +6,14 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-b40daec-20221012105155 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-3d8f5fb-20221110140307 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       memoryRequests: "512Mi"
       replicas: 2
       readinessDelay: 45
-      readinessTimeout: 5
+      readinessTimeout: 10
       readinessPeriod: 15
       keyVaults:
         prl:
@@ -38,7 +38,7 @@ spec:
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
         CCD_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
-        CDAM_API_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
         COS_URL: http://prl-cos-perftest.service.core-compute-perftest.internal
         REDIS_HOST: prl-citizen-frontend-redis-perftest.redis.cache.windows.net
     global:

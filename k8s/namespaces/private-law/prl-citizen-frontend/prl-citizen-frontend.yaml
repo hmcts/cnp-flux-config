@@ -13,9 +13,11 @@ spec:
     ref: master
     path: stable/prl-citizen-frontend
   values:
-    java:
+    nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-569a1e6-20221010154502 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      memoryRequests: 512Mi
+      memoryLimits: 2Gi
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-1454c9b-20221017232044 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       environment:
         FEATURE_EXAMPLE: true

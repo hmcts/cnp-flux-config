@@ -4,17 +4,20 @@ metadata:
   name: prl-citizen-frontend
   namespace: private-law
 spec:
-  releaseName: prl-citizen-frontend
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/prl-citizen-frontend
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-569a1e6-20221010154502 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-no-proxy
+      disableTraefikTls: false
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-1454c9b-20221017232044 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      cpuLimits: "1000m"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "512Mi"
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 15
+      readinessPeriod: 15
       keyVaults:
         prl:
           secrets:
@@ -38,7 +41,7 @@ spec:
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         CCD_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
-        CDAM_API_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
         COS_URL: http://prl-cos-aat.service.core-compute-aat.internal
         REDIS_HOST: prl-citizen-frontend-redis-aat.redis.cache.windows.net
     global:

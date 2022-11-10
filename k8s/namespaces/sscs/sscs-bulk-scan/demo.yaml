@@ -6,7 +6,8 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:pr-1301-43daf88-20221004131328 #{"$imagepolicy": "flux-system:demo-sscs-bulk-scan"}
+      enableOAuth: true
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-c0cf33c-20221104120725 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
       keyVaults:
         sscs-bulk-scan:
           secrets:
@@ -23,7 +24,7 @@ spec:
       environment:
         DO_NOT_REMOVE_PROPERTY: true
         UC_OFFICE_FEATURE: true
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         WORK_ALLOCATION_FEATURE: true
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         CASE_ACCESS_MANAGEMENT_FEATURE: true
