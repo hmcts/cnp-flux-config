@@ -29,11 +29,11 @@ for file in $(yq eval '.patchesStrategicMerge[]' k8s/$ENV/common-overlay/$NAMESP
     if [[ $(yq '.bases[] | select(. == "*'$APPLICATION'*")' k8s/namespaces/$NAMESPACE/kustomization.yaml) ]]; then
 
         if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/base/kustomization.yaml) ]]; then
-            NAMESPACE_PATH="../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/base/kustomization.yaml
+            NAMESPACE_PATH="../../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/base/kustomization.yaml
         fi
 
         if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
-            NAMESPACE_PATH="../$APPLICATION/$ENV_FILE" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
+            NAMESPACE_PATH="../../$APPLICATION/$ENV_FILE" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
         fi
 
     else
