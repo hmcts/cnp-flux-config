@@ -15,6 +15,10 @@ for file in $(yq eval '.patchesStrategicMerge[]' k8s/$ENV/common-overlay/$NAMESP
     APPLICATION=$(echo $file | sed 's|./*||'  | cut -d '/' -f6)
     ENV_FILE=$(echo $file | sed 's|.*/||'  | cut -d '/' -f1)
 
+    if [ ! -d "apps/$NAMESPACE/$APPLICATION" ]
+    then
+        mkdir -p apps/$NAMESPACE/$APPLICATION
+    fi
     # Move the env file to fluxv2 folder 
     mv k8s/namespaces/$NAMESPACE/$APPLICATION/$ENV_FILE apps/$NAMESPACE/$APPLICATION/$ENV_FILE
     # Copy application file to fluxv2 folder
