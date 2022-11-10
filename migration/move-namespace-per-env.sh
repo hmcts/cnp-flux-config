@@ -22,5 +22,5 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/$NAMESPACE/base/kustomize.yaml
 
     # Remove roleBinding from v1
-    yq -i 'select(.metadata.namespace != "ts")' k8s/namespaces/admin/flux-helm-operator/rbac/$ENV-role-binding.yaml
+    # yq -i 'select(.metadata.namespace != "ts")' k8s/namespaces/admin/flux-helm-operator/rbac/$ENV-role-binding.yaml
 done
