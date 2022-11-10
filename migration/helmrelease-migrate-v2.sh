@@ -39,7 +39,7 @@ for file in $(yq eval '.patchesStrategicMerge[]' k8s/$ENV/common-overlay/$NAMESP
         fi
 
         if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
-            NAMESPACE_PATH="../../$APPLICATION/$ENV_FILE" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/demo/base/kustomization.yaml
+            NAMESPACE_PATH="../../$APPLICATION/$ENV_FILE" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
         fi
 
     fi
