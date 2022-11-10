@@ -1,17 +1,13 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: probate-cron-smee-and-ford-extract
 spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
-    global:
-      jobKind: CronJob
-      enableKeyVaults: true
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      environment: demo
     job:
       image: hmctspublic.azurecr.io/probate/back-office:prod-29df907-20221103222349 #{"$imagepolicy": "flux-system:probate-back-office"}
+      schedule: "0/15 * * * *"
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         DUMMY_PROPERTY: DUMMY18
@@ -85,4 +81,8 @@ spec:
               alias: SCHEDULER_CASEWORKER_PASSWORD
             - name: probate-storage-account-primary-connection-string
               alias: PROBATE_STORAGE_ACCOUNT_PRIMARY_CONNECTION_STRING
-      schedule: "0/15 * * * *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
