@@ -91,8 +91,8 @@ fi
 
 done
 
-    if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "'*../../identity/ithc.yaml*'")' apps/fees-pay/ithc/base/kustomization.yaml) ]]; then
+    if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "'*../../identity/$ENV.yaml*'")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
        echo "yes"
-        NAMESPACE_PATH="../../identity/ithc.yaml" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/fees-pay/ithc/base/kustomization.yaml
+        NAMESPACE_PATH="../../identity/$ENV.yaml" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
     fi
 
