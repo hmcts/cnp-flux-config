@@ -89,9 +89,10 @@ fi
         
     fi
 
+done
+
     if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "'*../../identity/$ENV.yaml*'")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
+       echo "yes"
         NAMESPACE_PATH="../../identity/$ENV.yaml" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
     fi
-
-done
 
