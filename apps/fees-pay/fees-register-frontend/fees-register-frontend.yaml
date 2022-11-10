@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fees-register-frontend
+spec:
+  releaseName: fees-register-frontend
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fees-register-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fees-register/frontend:prod-2ce7177-20221026161234 #{"$imagepolicy": "flux-system:fees-register-frontend"}

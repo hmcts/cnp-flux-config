@@ -1,17 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: fees-register-api
 spec:
   releaseName: fees-register-api
   chart:
-    spec:
-      chart: ./stable/fees-register-api
-      sourceRef:
-        kind: GitRepository
-        name: hmcts-charts
-        namespace: flux-system
-      interval: 1m
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/fees-register-api
   values:
     java:
       replicas: 2
