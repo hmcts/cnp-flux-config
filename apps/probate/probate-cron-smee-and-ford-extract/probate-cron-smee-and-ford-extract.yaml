@@ -5,6 +5,7 @@ metadata:
 spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
+    schedule: "0/10 * * * *"
     job:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/back-office:prod-29df907-20221103222349 #{"$imagepolicy": "flux-system:probate-back-office"}
@@ -73,7 +74,6 @@ spec:
               alias: SCHEDULER_CASEWORKER_PASSWORD
             - name: probate-storage-account-primary-connection-string
               alias: PROBATE_STORAGE_ACCOUNT_PRIMARY_CONNECTION_STRING
-   schedule: 0/10 * * * *
   chart:
     spec:
       chart: probate-cron
