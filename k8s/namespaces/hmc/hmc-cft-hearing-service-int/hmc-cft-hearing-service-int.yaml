@@ -1,0 +1,52 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: hmc-cft-hearing-service-int
+spec:
+  releaseName: hmc-cft-hearing-service-int
+  chart:
+    git: git@github.com:hmcts/hmcts-charts
+    ref: master
+    path: stable/hmc-cft-hearing-service
+  values:
+    java:
+      postgresql:
+        enabled: true
+      useInterpodAntiAffinity: true
+      ingressHost: hmc-cft-hearing-service-int-demo.service.core-compute-demo.internal
+      environment:
+        HMC_SERVICE_BUS_TOPIC: hmc-to-cft
+        HMC_SERVICE_BUS_SUBSCRIPTION: hmc-subs-to-cft
+        HMC_SERVICE_BUS_QUEUE: hmc-from-hmi
+        HMC_OUTBOUND_SERVICE_BUS_QUEUE: hmc-to-hmi
+        CFT_HEARING_SERVICE_DB_HOST: "{{ .Release.Name }}-postgresql"
+        CFT_HEARING_SERVICE_DB_NAME: "{{ .Values.postgresql.auth.database}}"
+        CFT_HEARING_SERVICE_DB_USERNAME: "{{ .Values.postgresql.auth.username}}"
+        CFT_HEARING_SERVICE_DB_PASSWORD: "{{ .Values.postgresql.auth.password}}"
+        CFT_HEARING_SERVICE_DB_OPTIONS: "?stringtype=unspecified"
+        CFT_HEARING_SERVICE_DB_PORT: 5432
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-int-demo.service.core-compute-demo.internal
+      secrets:
+        HMC_SERVICE_BUS_CONNECTION_STRING:
+          secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-hmc-to-cft
+          key: connectionString
+        HMC_QUEUE_CONNECTION_STRING:
+          secretRef: servicebus-secret-queue-{{ .Release.Name }}-servicebus-hmc-from-hmi
+          key: connectionString
+        HMC_OUTBOUND_QUEUE_CONNECTION_STRING:
+          secretRef: servicebus-secret-queue-{{ .Release.Name }}-servicebus-hmc-to-hmi
+          key: connectionString
+
+    servicebus:
+      enabled: true
+      teamName: CCD
+      resourceGroup: hmc-aks
+      serviceplan: standard
+      setup:
+        topics:
+          - name: hmc-to-cft
+        subscriptions:
+          - name: hmc-subs-to-cft
+        queues:
+          - name: hmc-from-hmi
+          - name: hmc-to-hmi
