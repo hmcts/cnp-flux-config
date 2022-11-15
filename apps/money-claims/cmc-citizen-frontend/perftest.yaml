@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+spec:
+  values:
+    nodejs:
+      ingressHost: moneyclaims.perftest.platform.hmcts.net
+      environment:
+        GA_TRACKING_ID: UA-97111056-1
+        FEATURE_TESTING_SUPPORT: true
+        FEATURE_RETURN_ERROR_TO_USER: true
+        PCQ_URL: https://pcq.perftest.platform.hmcts.net
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net
