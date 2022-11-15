@@ -2,32 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: fees-pay
 bases:
-- ../../../namespaces/fees-pay
-- ../../../namespaces/fees-pay/namespace.yaml
-- ../../../namespaces/all-namespaces/nonprod-role.yaml
-- ../../../namespaces/fees-pay/ccpay-notifications-service/ccpay-notifications-service.yaml
+  - ../../../namespaces/fees-pay
+  - ../../../namespaces/fees-pay/ccpay-notifications-service/ccpay-notifications-service.yaml
+  - ../../../namespaces/fees-pay/fees-register-api/fees-register-api.yaml
 patchesStrategicMerge:
-- ../../../namespaces/fees-pay/ccpay-callback-function/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-refunds-api/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-cpo-update-service/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-notifications-service/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-bulkscanning-api/ithc.yaml
-- ../../../namespaces/fees-pay/fees-register-api/ithc.yaml
-- ../../../namespaces/fees-pay/fees-register-frontend/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-bubble-frontend/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-paymentoutcome-web/ithc.yaml
-- ../../../namespaces/fees-pay/ccpay-payment-api/ithc.yaml
-patchesJson6902:
-- target:
-    group: rbac.authorization.k8s.io
-    version: v1
-    kind: RoleBinding
-    name: nonprod-team-permissions
-    namespace: fees-pay
-  patch: |-
-    - op: add
-      path: "/subjects"
-      value:
-        - apiGroup: rbac.authorization.k8s.io
-          kind: Group
-          name: "8215e978-44be-4b26-948f-dbcb6536c3ff"
+  - ../../../namespaces/fees-pay/ccpay-callback-function/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-refunds-api/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-cpo-update-service/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-notifications-service/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-bulkscanning-api/ithc.yaml
+  - ../../../namespaces/fees-pay/fees-register-api/ithc.yaml
+  - ../../../namespaces/fees-pay/fees-register-frontend/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-bubble-frontend/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-paymentoutcome-web/ithc.yaml
+  - ../../../namespaces/fees-pay/ccpay-payment-api/ithc.yaml
