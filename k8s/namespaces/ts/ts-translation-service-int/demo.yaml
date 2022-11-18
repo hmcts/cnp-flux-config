@@ -1,0 +1,10 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ts-translation-service-int
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/ts/translation-service:prod-1b61ceb-20221117112516 #{"$imagepolicy": "flux-system:ts-translation-service"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private

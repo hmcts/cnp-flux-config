@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: xui-mo-webapp
+spec:
+  values:
+    nodejs:
+      ingressHost: manage-org.ithc.platform.hmcts.net
+      environment:
+        IDAM_WEB_SERVICE: https://idam-web-public.ithc.platform.hmcts.net
+        IDAM_API_SERVICE: https://idam-api.ithc.platform.hmcts.net
+        LAUNCH_DARKLY_CLIENT_ID: 123456789
+        DEBUG: xuiNode:*,-xuiNode:auth:s2s
+        SERVICES_MCA_PROXY_API: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
+        CASE_TYPES: CIVIL,MoneyClaimCase,DIVORCE,FinancialRemedyContested,FinancialRemedyMVP2,Asylum,Caveat,GrantOfRepresentation,StandingSearch,WillLodgement,CARE_SUPERVISION_EPO,Benefit
+      image: hmctspublic.azurecr.io/xui/mo-webapp:prod-c9e5e19-20221116103157 #{"$imagepolicy": "flux-system:ithc-xui-mo-webapp"}

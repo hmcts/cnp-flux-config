@@ -8,11 +8,13 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-baf1f6c-20221026093546 #{"$imagepolicy": "flux-system:preview-idam-api"}
-      ingressHost: idam-api.service.core-compute-preview.internal
+      image: hmctspublic.azurecr.io/idam/api:preview-eeb5d08-20221116135759 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
         TESTING_SUPPORT_ENABLED: true
+        TESTINGSUPPORTAPI_ENABLED: true
+        TESTINGSUPPORTAPI_URL: http://idam-testing-support-api
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-preview.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-preview.internal:8443
         IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-preview.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
@@ -24,9 +26,9 @@ spec:
         SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-preview.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-preview.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-preview.internal
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.service.core-compute-preview.internal
-        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.service.core-compute-preview.internal
-        STRATEGIC_API_URL: https://idam-api.service.core-compute-preview.internal
+        STRATEGIC_ADMIN_URL: https://idam-web-admin.preview.platform.hmcts.net
+        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.preview.platform.hmcts.net
+        STRATEGIC_API_URL: https://idam-api.preview.platform.hmcts.net
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
         STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
         STRATEGIC_SSO_PROVIDERS_1_providerName: moj
@@ -51,4 +53,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.6
+      version: 0.4.8

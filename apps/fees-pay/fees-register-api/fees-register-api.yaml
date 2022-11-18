@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fees-register-api
+spec:
+  releaseName: fees-register-api
+  chart:
+    spec:
+      chart: ./stable/fees-register-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fees-register/api:prod-c95f3c8-20221117172654 #{"$imagepolicy": "flux-system:fees-register-api"}

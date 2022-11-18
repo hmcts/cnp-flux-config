@@ -6,7 +6,8 @@ spec:
   values:
     java:
       ingressHost: em-ccdorc-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-02b88a7-20221026084019 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-8190f62-20221118075552 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
       environment:
         CALLBACK_DOMAIN: em-ccdorc-demo.service.core-compute-demo.internal
-        FLAG: "refresh"

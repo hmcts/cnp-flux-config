@@ -6,6 +6,9 @@ metadata:
 spec:
   values:
     nodejs:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-no-proxy
+      disableTraefikTls: false
       image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-1454c9b-20221017232044 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
@@ -38,7 +41,7 @@ spec:
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         CCD_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
-        CDAM_API_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
         COS_URL: http://prl-cos-aat.service.core-compute-aat.internal
         REDIS_HOST: prl-citizen-frontend-redis-aat.redis.cache.windows.net
     global:
