@@ -8,11 +8,13 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-cf64666-20221110135435 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-eeb5d08-20221116135759 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
         TESTING_SUPPORT_ENABLED: true
+        TESTINGSUPPORTAPI_ENABLED: true
+        TESTINGSUPPORTAPI_URL: http://idam-testing-support-api
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-preview.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-preview.internal:8443
         IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-preview.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
@@ -51,4 +53,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.6
+      version: 0.4.8

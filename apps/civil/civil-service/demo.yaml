@@ -8,7 +8,7 @@ spec:
     java:
       ingressClass: traefik-private
       disableIngressClassAnnotation: true
-      image: hmctspublic.azurecr.io/civil/service:pr-1748-594324d-20221110160610 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-84b9380-20221116113042 #{"$imagepolicy": "flux-system:civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -32,6 +32,7 @@ spec:
             - launch-darkly-sdk-key
             - robotics-notification-multipartyrecipient
             - ordnance-survey-api-key
+            - notification-caseworker-spec-receiver
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
