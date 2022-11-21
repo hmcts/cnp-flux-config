@@ -1,17 +1,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: fees-register-api
+  name: ccpay-bubble-frontend
 spec:
-  releaseName: fees-register-api
+  releaseName: ccpay-bubble-frontend
   values:
-    java:
+    nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/api:prod-c6ff398-20221103151821 #{"$imagepolicy": "flux-system:fees-register-api"}
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-e390002-20221102094542 #{"$imagepolicy": "flux-system:ccpay-bubble-frontend"}
   chart:
     spec:
-      chart: ./stable/fees-register-api
+      chart: ./stable/ccpay-bubble-frontend
       sourceRef:
         kind: GitRepository
         name: hmcts-charts

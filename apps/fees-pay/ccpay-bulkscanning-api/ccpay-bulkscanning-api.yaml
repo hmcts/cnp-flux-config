@@ -1,17 +1,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: fees-register-api
+  name: ccpay-bulkscanning-api
 spec:
-  releaseName: fees-register-api
+  releaseName: ccpay-bulkscanning-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/api:prod-c6ff398-20221103151821 #{"$imagepolicy": "flux-system:fees-register-api"}
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-3f9a178-20221103180906 #{"$imagepolicy": "flux-system:ccpay-bulkscanning-api"}
   chart:
     spec:
-      chart: ./stable/fees-register-api
+      chart: ./stable/ccpay-bulkscanning-api
       sourceRef:
         kind: GitRepository
         name: hmcts-charts

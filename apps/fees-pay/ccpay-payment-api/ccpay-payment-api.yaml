@@ -1,17 +1,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: fees-register-api
+  name: ccpay-payment-api
 spec:
-  releaseName: fees-register-api
+  releaseName: ccpay-payment-api
   values:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/api:prod-c6ff398-20221103151821 #{"$imagepolicy": "flux-system:fees-register-api"}
+      image: hmctspublic.azurecr.io/payment/api:prod-1074a11-20221109124102 #{"$imagepolicy": "flux-system:ccpay-payment-app"}
   chart:
     spec:
-      chart: ./stable/fees-register-api
+      chart: ./stable/payment-api
       sourceRef:
         kind: GitRepository
         name: hmcts-charts

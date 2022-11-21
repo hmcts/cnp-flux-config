@@ -29,17 +29,17 @@ for file in $(yq eval '.patchesStrategicMerge[]' k8s/$ENV/common-overlay/$NAMESP
     if [[ $(yq '.bases[] | select(. == "*'$APPLICATION'*")' k8s/namespaces/$NAMESPACE/kustomization.yaml) ]]; then
 
         if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/base/kustomization.yaml) ]]; then
-            NAMESPACE_PATH="../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/base/kustomization.yaml
+            NAMESPACE_PATH="../../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/base/kustomization.yaml
         fi
 
         if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
-            NAMESPACE_PATH="../$APPLICATION/$ENV_FILE" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
+            NAMESPACE_PATH="../../$APPLICATION/$ENV_FILE" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
         fi
 
     else
 
         if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
-            NAMESPACE_PATH="../../$APPLICATION/$ENV_FILE" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
+            NAMESPACE_PATH="../../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
         fi
 
         if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
@@ -50,9 +50,11 @@ for file in $(yq eval '.patchesStrategicMerge[]' k8s/$ENV/common-overlay/$NAMESP
 
 done
 
-    # Run helmrelease-migrate script
-    ./migration/helmrelease-migrate.sh apps/$NAMESPACE/$APPLICATION/
+    # Remove namespace from environment common-overlay
+    yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/common-overlay/kustomization.yaml
 
+    # Run helmrelease-migrate script
+    ./migration/helmrelease-migrate.sh apps/$NAMESPACE/
     # Remove fluxv1 kustomization for environment
     rm -r k8s/$ENV/common-overlay/$NAMESPACE
-    yq 'del( .bases[] | select(. == "$NAMESPACE") )' -i k8s/$ENV/common-overlay/kustomization.yaml
+    
