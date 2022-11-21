@@ -5,9 +5,13 @@ metadata:
 spec:
   releaseName: wa-messages-reset-null-event-timestamp-problem-messages
   chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/wa-message-cron-service
+    spec:
+      chart: ./stable/wa-message-cron-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
   values:
     job:
       useInterpodAntiAffinity: true
