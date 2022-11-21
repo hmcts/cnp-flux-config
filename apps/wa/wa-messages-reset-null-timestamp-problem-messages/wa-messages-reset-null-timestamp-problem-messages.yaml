@@ -1,9 +1,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: wa-messages-reset-timestamp-problem-messages
+  name: wa-messages-reset-null-timestamp-problem-messages
 spec:
-  releaseName: wa-messages-reset-timestamp-problem-messages
+  releaseName: wa-messages-reset-null-timestamp-problem-messages
   chart:
     spec:
       chart: ./stable/wa-message-cron-service
@@ -15,6 +15,6 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/message-cron-service:prod-9176d2a-20221117152000 #{"$imagepolicy": "flux-system:wa-messages-reset-timestamp-problem-messages"}
+      image: hmctspublic.azurecr.io/wa/message-cron-service:prod-9176d2a-20221117152000 #{"$imagepolicy": "flux-system:wa-messages-reset-null-timestamp-problem-messages"}
       environment:
         JOB_NAME: RESET_NULL_EVENT_TIMESTAMP_MESSAGES
