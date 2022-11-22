@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dg-docassembly
+  namespace: dg
+spec:
+  releaseName: dg-docassembly
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-806304b-20221122083720 #{"$imagepolicy": "flux-system:dg-docassembly"}
+      environment:
+        TEST_VAR: value1
