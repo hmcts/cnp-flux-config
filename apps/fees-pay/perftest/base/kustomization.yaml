@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../ccpay-refunds-api/ccpay-refunds-api.yaml
+  - ../../ccpay-cpo-update-service/ccpay-cpo-update-service.yaml
+  - ../../ccpay-notifications-service/ccpay-notifications-service.yaml
+  - ../../ccpay-bulkscanning-api/ccpay-bulkscanning-api.yaml
+  - ../../fees-register-api/fees-register-api.yaml
+  - ../../fees-register-frontend/fees-register-frontend.yaml
+  - ../../ccpay-bubble-frontend/ccpay-bubble-frontend.yaml
+  - ../../ccpay-paymentoutcome-web/ccpay-paymentoutcome-web.yaml
+  - ../../ccpay-payment-api/ccpay-payment-api.yaml
+  - ../../ccpay-callback-function/ccpay-callback-function.yaml
+namespace: fees-pay
+patchesStrategicMerge:
+  - ../../identity/perftest.yaml
+  - ../../ccpay-refunds-api/perftest.yaml
+  - ../../ccpay-cpo-update-service/perftest.yaml
+  - ../../ccpay-notifications-service/perftest.yaml
+  - ../../ccpay-bulkscanning-api/perftest.yaml
+  - ../../fees-register-api/perftest.yaml
+  - ../../fees-register-frontend/perftest.yaml
+  - ../../ccpay-bubble-frontend/perftest.yaml
+  - ../../ccpay-paymentoutcome-web/perftest.yaml
+  - ../../ccpay-payment-api/perftest.yaml
+  - ../../ccpay-callback-function/perftest.yaml
+    
+    
+    
+
