@@ -84,7 +84,7 @@ EOF
 
 (
 cat <<EOF
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
   name: flux-system
@@ -102,7 +102,7 @@ EOF
 
 (
 cat <<EOF
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
   name: flux-system
