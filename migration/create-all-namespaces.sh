@@ -35,7 +35,7 @@ EOF
 
 (
 cat <<EOF
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: $namespace
