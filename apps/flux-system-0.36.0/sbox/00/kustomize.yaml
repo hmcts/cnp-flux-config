@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  path: ./clusters/sbox/00
+  postBuild:
+    substitute:
+      ENVIRONMENT: "sbox"
+      CLUSTER: "00"
+      ENV_MONITOR_CHANNEL: "aks-monitor-sbox"
+      KEYVAULT_ENVIRONMENT: "sandbox"

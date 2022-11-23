@@ -1,0 +1,71 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+resources:
+  - registry-credential-sync/hmctspublic/kustomize.yaml
+  - registry-credential-sync/hmctsprivate/kustomize.yaml
+  - registry-credential-sync/hmctssandbox/kustomize.yaml
+  - ../../aac/automation
+  - ../../adoption/automation
+  - ../../am/automation
+  - ../../backstage/automation
+  - ../../bar/automation
+  - ../../bsp/automation
+  - ../../ccd/automation
+  - ../../civil/automation
+  - ../../cnp/automation
+  - ../../cpo/automation
+  - ../../dg/automation
+  - ../../divorce/automation
+  - ../../dm-store/automation
+  - ../../docmosis/automation
+  - ../../em/automation
+  - ../../ethos/automation
+  - ../../fact/automation
+  - ../../rpts/automation
+  - ../../family-public-law/automation
+  - ../../fees-pay/automation
+  - ../../financial-remedy/automation
+  - ../../hmc/automation
+  - ../../ia/automation
+  - ../../idam/automation
+  - ../../idam-slack-help-bot/automation
+  - ../../lau/automation
+  - ../../money-claims/automation
+  - ../../nfdiv/automation
+  - ../../pcq/automation
+  - ../../probate/automation
+  - ../../rd/automation
+  - ../../reform-scan/automation
+  - ../../rpe/automation
+  - ../../slack-help-bot/automation
+  - ../../response/automation
+  - ../../ccd-slack-help-bot/automation
+  - ../../sscs/automation
+  - ../../wa/automation
+  - ../../xui/automation
+  - ../../et/automation
+  - ../../labs/automation
+  - ../../camunda/automation
+  - ../../fis/automation
+  - ../../private-law/automation
+  - ../../ts/automation
+  - ../../dtsse/automation
+  - ../../sptribs/automation
+patches:
+  - path: hmctspublic-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry != hmctsprivate,hmcts.github.com/image-registry != hmctssandbox
+  - path: hmctsprivate-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry == hmctsprivate
+  - path: hmctssandbox-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry == hmctssandbox
+  - path: prod-image-policy.yaml
+    target:
+      kind: ImagePolicy
+      annotationSelector: hmcts.github.com/prod-automated != disabled
