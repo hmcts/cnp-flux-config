@@ -93,7 +93,7 @@ spec:
         disableTraefikTls: false
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-eedc6e9-20221123112540 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-e39c123-20221123131855 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -105,7 +105,7 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1d0fb8e-20221123113945 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-20b95a2-20221123155150 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -116,7 +116,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-1ff1073-20221123131308 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-7e791e2-20221123100009 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-c3d9742-20221123131211 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -140,7 +140,7 @@ spec:
         image: hmctspublic.azurecr.io/draft-store/service:prod-5f9c9f4-20221123121603 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
-        image: hmctspublic.azurecr.io/em/anno:prod-71b6b2a-20221121072654 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-1328c2b-20221123185305 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     dm-store:
