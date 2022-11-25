@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dg-docassembly
+  namespace: dg
+spec:
+  releaseName: dg-docassembly
+  values:
+    java:
+      useInterpodAntiAffinity: true
+      replicas: 2
+      memoryRequests: "1Gi"
+      cpuRequests: "250m"
+      memoryLimits: "2Gi"
+      cpuLimits: "1500m"
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-8be0ddd-20221124201805 #{"$imagepolicy": "flux-system:dg-docassembly"}
+      environment:
+        TEST_VAR: Trigger-2
+  chart:
+    spec:
+      chart: ./stable/dg-docassembly
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
