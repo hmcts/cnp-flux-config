@@ -49,9 +49,9 @@ spec:
                       - key: REGISTRY_NAME
                         value: hmcts
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -148,19 +148,19 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(ccd.*|aac.*|cpo.*|hmc.*|ts.*)\/master
+                      ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(?!.*ccd-case-disposer|.*ccd-case-migration-starter|.*ccd-next-hearing-date-updater)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
                     name: CDM
                     recurse: true
                     title: CDM Master Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_(\w_to_\w_Nightly).*\/(ccd.*|aac.*|cpo.*|hmc.*|ts.*)\/master
+                      ^HMCTS_(\w_to_\w_Nightly).*\/(?!.*ccd-case-disposer|.*ccd-cache-warm-performance|.*ccd-cdm-performance|.*ccd-case-migration-starter|.*ccd-next-hearing-date-updater)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
                     name: CDM Nightly
                     recurse: true
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(.*ac-manage-case-assignment.*PR-272|.*ccd-admin-web.*PR-325|.*ccd-data-store-api.*PR-1260|.*ccd-definition-store-api.*PR-575|.*ccd-user-profile-api.*PR-399|.*cpo-case-payment-orders-api.*PR-54|.*ccd-api-gateway.*PR-353)
+                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|.*ac-manage-case-assignment.*PR-272|.*ccd-api-gateway.*PR-353|.*ccd-case-migration-starter\/master|.*ccd-next-hearing-date-updater\/master)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
@@ -184,7 +184,7 @@ spec:
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service)\/master
+                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -206,6 +206,18 @@ spec:
                     name: NFD Nightly
                     recurse: true
                     title: NFD Nightly Builds Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/sptribs-.+\/master
+                    name: SPTRIBS
+                    recurse: true
+                    title: Special Tribunals Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS_j_to_z_Nightly\/(sptribs-.*)\/master
+                    name: Special Tribunals Nightly
+                    recurse: true
+                    title: Special Tribunals Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
@@ -256,7 +268,7 @@ spec:
                     title: PCQ
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/lau-.+\/master
+                      ^HMCTS.*\/(lau-.+|.*ccd-case-disposer)\/master
                     name: LAU
                     recurse: true
                     title: LAU
@@ -286,7 +298,7 @@ spec:
                     title: WA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(idam-api|idam-web-public|idam-web-admin|idam-performance-tests)\/master
+                      ^HMCTS.*\/(idam-api|idam-web-public|idam-web-admin|idam-user-dashboard|idam-performance-tests)\/master
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
@@ -310,7 +322,7 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
@@ -328,7 +340,7 @@ spec:
                     title: Employment Tribunals
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fis-ds-web|fis-bulk-scan-api|family-api-gateway|fis-ds-update-web)\/master
+                      ^HMCTS.*\/(fis-hmc-api|fis-ds-web|fis-bulk-scan-api|family-api-gateway|fis-ds-update-web)\/master
                     name: FIS
                     recurse: true
                     title: Family Integration
@@ -535,7 +547,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.5"
+                          galleryImageVersion: "1.4.19"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"

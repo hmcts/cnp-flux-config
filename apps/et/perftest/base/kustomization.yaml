@@ -2,8 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - ../../et-sya/et-sya.yaml
-  - ../../et-sya-api/et-sya-api.yaml
+  - ../../../rbac/nonprod-role.yaml
+  - ../../et-wa-task-configuration/et-wa-task-configuration.yaml
+  - ../../et-wa-post-deployment-ft-tests/et-wa-post-deployment-ft-tests.yaml
 namespace: et
 patchesStrategicMerge:
   - ../../identity/perftest.yaml
+  - ../../et-cos/perftest.yaml
+  - ../../et-msg-handler/perftest.yaml
+  - ../../et-sya/perftest.yaml
+  - ../../et-sya-api/perftest.yaml

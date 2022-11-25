@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+namespace: xui
+patchesStrategicMerge:
+  - ../../xui-webapp/perftest.yaml
+  - ../../xui-ao-webapp/perftest.yaml
+  - ../../xui-mo-webapp/perftest.yaml

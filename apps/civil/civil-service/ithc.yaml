@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: civil-service
+  namespace: civil
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/civil/service:pr-1714-974ab55-20221107162951 #{"$imagepolicy": "flux-system:ithc-civil-service"}
+      keyVaults:
+        civil:
+          resourceGroup: civil
+          secrets:
+            - civil-idam-client-secret
+            - microservicekey-civil-service
+            - system-update-user-username
+            - system-update-user-password
+            - cross-access-user-username
+            - cross-access-user-password
+            - prd-admin-user-username
+            - prd-admin-user-password
+            - AppInsightsInstrumentationKey
+            - docmosis-api-key
+            - cmc-db-password-v11
+            - gov-notify-api-key
+            - sendgrid-api-key
+            - robotics-notification-sender
+            - robotics-notification-recipient
+            - robotics-notification-recipient-spec
+            - launch-darkly-sdk-key
+            - robotics-notification-multipartyrecipient
+            - ordnance-survey-api-key
+            - notification-caseworker-spec-receiver
+      environment:
+        TESTING_SUPPORT_ENABLED: true
+        EM_CCD_ORCHESTRATOR_URL: http://em-ccdorc-ithc.service.core-compute-ithc.internal
+        CMC_DB_USERNAME: 'cmc@cmc-db-v11-ithc'
+        CMC_DB_HOST: cmc-db-v11-ithc.postgres.database.azure.com
+        REFERENCE_DATABASE_MIGRATION: true
+        POLLING_EVENT_EMITTER_ENABLED: false

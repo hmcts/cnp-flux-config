@@ -6,7 +6,9 @@ spec:
   releaseName: ccd-definition-store-api
   values:
     java:
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-dbad8a0-20220826155825 #{"$imagepolicy": "flux-system:demo-ccd-definition-store-api"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-77f0d3d-20221124102155 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
       environment:
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
         DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"

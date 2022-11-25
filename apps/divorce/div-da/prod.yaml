@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-da
+  namespace: divorce
+spec:
+  values:
+    nodejs:
+      ingressHost: www.decree-absolute.apply-divorce.service.gov.uk
+      environment:
+        PUBLIC_HOSTNAME: https://www.decree-absolute.apply-divorce.service.gov.uk
+        PETITIONER_FRONTEND_URL: https://www.apply-divorce.service.gov.uk
+        DECREE_NISI_FRONTEND_URL: https://www.decree-nisi.apply-divorce.service.gov.uk
+        IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        GOOGLE_ANALYTICS_ID: UA-93824767-5
+        RATE_LIMITER_ENABLED: "true"
+        FEATURE_ANTENNA_WEBCHAT: "true"
+        FEATURE_WEBCHAT: "false"
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
+        ANTENNA_WEBCHAT_URL: webchat.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_VERSION: 1-6-12
+        ANTENNA_WEBCHAT_AVAILABILITY_DEBUG: "false"
+        FEATURE_ANTENNA_WEBCHAT_AVAILABILITY_TOGGLE: "true"
+        WEBCHAT_CHAT_ID: 10308349715d949f6bd7a989.00577994
+        WEBCHAT_TENANT: aG1jdHN4MTAx
+        WEBCHAT_BUTTON_NO_AGENTS: "2806315905d232e71137898.81655511"
+        WEBCHAT_BUTTON_AGENTS_BUSY: "6100617245d23302e383e79.04188400"
+        WEBCHAT_BUTTON_SERVICE_CLOSED: "19684351645d232edee71e86.59595908"
+        COURT_OPENINGHOURS_EN: 'Monday to Friday, 8am to 6pm'

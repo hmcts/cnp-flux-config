@@ -5,9 +5,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/redirect-permanent: "true"
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://track-appeal.aat.platform.hmcts.net/evidence/(.*)|https://track-appeal.aat.platform.hmcts.net/trackyourappeal/(.*)|https://track-appeal.aat.platform.hmcts.net/expenses/(.*)|https://track-appeal.aat.platform.hmcts.net/abouthearing/(.*)|https://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/evidence|https://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/trackyourappeal|https://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/expenses|https://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/abouthearing|https://track-appeal.aat.platform.hmcts.net/(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://sscs-cor.aat.platform.hmcts.net/validate-surname/:tya/trackyourappeal?tya=${1}${2}${3}${4}${5}${6}${7}${8}
+    traefik.ingress.kubernetes.io/router.middlewares: sscs-trackappealredirect@kubernetescrd
   name: sscs-track-appeal-redirect-ingress
   namespace: sscs
 spec:
@@ -22,3 +20,14 @@ spec:
                   number: 80
             path: /
             pathType: ImplementationSpecific
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: trackappealredirect
+  namespace: sscs
+spec:
+  redirectRegex:
+    permanent: true
+    regex: ^http://track-appeal.aat.platform.hmcts.net/evidence/(.*)|http://track-appeal.aat.platform.hmcts.net/trackyourappeal/(.*)|http://track-appeal.aat.platform.hmcts.net/expenses/(.*)|http://track-appeal.aat.platform.hmcts.net/abouthearing/(.*)|http://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/evidence|http://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/trackyourappeal|http://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/expenses|http://track-appeal.aat.platform.hmcts.net/validate-surname/(.*)/abouthearing|http://track-appeal.aat.platform.hmcts.net/(.*)
+    replacement: https://sscs-cor.aat.platform.hmcts.net/validate-surname/:tya/trackyourappeal?tya=${1}${2}${3}${4}${5}${6}${7}${8}

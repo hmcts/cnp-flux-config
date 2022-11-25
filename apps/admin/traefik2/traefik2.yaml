@@ -11,17 +11,27 @@ spec:
     spec:
       chart: traefik
       # update the crd version in traefik-crds when updating this
-      version: 10.24.0
+      version: 10.24.2
       sourceRef:
         kind: HelmRepository
         name: traefik
         namespace: admin
   interval: 1m
   values:
+    resources:
+      requests:
+        cpu: 300m
+        memory: 200Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
     providers:
       kubernetesIngress:
         publishedService:
           enabled: true
+    ingressClass:
+      enabled: true
+      isDefaultClass: false
     deployment:
       podLabels:
         aadpodidbinding: traefik
@@ -39,6 +49,10 @@ spec:
     additionalArguments:
       - "--entryPoints.web.forwardedHeaders.insecure=true"
       - "--entryPoints.websecure.forwardedHeaders.insecure=true"
+      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=30"
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=30"
+      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=30"
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=30"
     service:
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-internal: "true"
@@ -47,20 +61,16 @@ spec:
     rbac:
       enabled: true
     autoscaling:
-      minReplicas: 1
-      maxReplicas: 3
-    tolerations:
-      - key: CriticalAddonsOnly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 4
     affinity:
-      nodeAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
               matchExpressions:
-                - key: kubernetes.azure.com/mode
+                - key: app.kubernetes.io/name
                   operator: In
                   values:
-                    - system
+                    - traefik
+            topologyKey: "kubernetes.io/hostname"

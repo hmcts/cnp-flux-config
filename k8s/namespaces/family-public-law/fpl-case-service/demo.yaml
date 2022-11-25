@@ -6,7 +6,9 @@ spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-3651-2959567-20220826144615 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-978551e-20221124154605 #{"$imagepolicy": "flux-system:fpl-case-service"}
       environment:
         RELEASE: AGAIN
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net

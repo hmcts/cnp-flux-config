@@ -6,8 +6,12 @@ spec:
   releaseName: bar-api-int
   values:
     java:
-      image: hmctspublic.azurecr.io/bar/api:prod-9b64ade-20220811171838 #{"$imagepolicy": "flux-system:demo-int-bar-api"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/bar/api:prod-ffee791-20221124125650 #{"$imagepolicy": "flux-system:bar-api"}
       environment:
         DUMMY_RESTART_VAR: false
+        POSTGRES_NAME: postgresqldb2
         POSTGRES_HOST: bar-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_USERNAME: bar@bar-postgres-db-v11-{{ .Values.global.environment }}
+        PAYMENT_API_URL: http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

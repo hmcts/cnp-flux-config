@@ -9,9 +9,18 @@ rules:
 - apiGroups: ['']
   resources: ['secrets']
   verbs: ['list']
-- apiGroups: ['helm.fluxcd.io']
+- apiGroups: ['batch']
+  resources: ['jobs']
+  verbs: ['delete']
+- apiGroups: ['helm.fluxcd.io', 'helm.toolkit.fluxcd.io']
   resources: ['helmreleases']
   verbs: ['delete']
+- apiGroups: ['']
+  resources: ['pods/portforward']
+  verbs: ['create']
+- apiGroups: ['']
+  resources: ['pods/exec']
+  verbs: ['create']
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1

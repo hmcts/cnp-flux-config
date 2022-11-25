@@ -5,8 +5,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-224-357a9e0-20220830125726 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-284-dacfab3-20221122130243 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
       environment:
-        DUMMY_VARIABLE: false
+        DUMMY_VARIABLE: true
+        POSTGRES_NAME: postgresqldb2
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
-        PAYMENT_API_URL: "http://payment-api-int-demo.service.core-compute-demo.internal"
+        PAYMENT_API_URL: "http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        NOTIFICATION_API_URL: "http://ccpay-notifications-service-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        REFUND_SERVICE_ACCOUNT_REDIRECT_URI: "http://ccpay-refunds-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/oauth2/callback"
