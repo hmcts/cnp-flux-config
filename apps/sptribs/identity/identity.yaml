@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: sptribs
+  namespace: sptribs
+spec:
+  type: 0
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: sptribs-binding
+  namespace: sptribs
+spec:
+  azureIdentity: sptribs
+  selector: sptribs

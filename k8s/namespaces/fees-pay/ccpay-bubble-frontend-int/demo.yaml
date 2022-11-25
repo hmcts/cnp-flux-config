@@ -8,8 +8,13 @@ spec:
     nodejs:
       disableTraefikTls: false
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:pr-675-5c405f1-20220808211222 #{"$imagepolicy": "flux-system:demo-int-ccpay-bubble-frontend"}
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:pr-637-3ff776e-20221103154639 #{"$imagepolicy": "flux-system:demo-int-ccpay-bubble-frontend"}
       environment:
-        PCIPAL_ANTENNA_URL: https://paybubble.demo.platform.hmcts.net/ccd-search
         DUMMY_RESTART_VAR: true
-        CCPAY_REFUNDS_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
+        PCIPAL_ANTENNA_URL: https://paybubble-int.{{ .Values.global.environment }}.platform.hmcts.net/ccd-search
+        PAYHUB_API_URL: http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        CCPAY_REFUNDS_API_URL: http://ccpay-refunds-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        CCPAY_BUBBLE_URL: https://ccpay-bubble-frontend-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        CCPAY_BULKSCAN_API_URL: http://ccpay-bulkscanning-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        FEE_REGISTRATION_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/fees-register/fees
+        FEE_JURISDICTION_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/jurisdictions

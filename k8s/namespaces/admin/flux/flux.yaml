@@ -14,13 +14,13 @@ spec:
   chart:
     repository: https://charts.fluxcd.io
     name: flux
-    version: 1.10.0
+    version: 1.13.0
   values:
     git:
       url: git@github.com:hmcts/cnp-flux-config
-      pollInterval: 3m
+      pollInterval: 4m
       secretName: flux-git-deploy
-      timeout: "180s"
+      timeout: "360s"
     syncGarbageCollection:
       enabled: false
     registry:
@@ -29,9 +29,8 @@ spec:
         secretName: "acr-credentials"
       includeImage: "hmcts*.azurecr.io/*"
     sync:
-      timeout: 3m
+      timeout: 6m
     additionalArgs:
-      - --connect=ws://fluxcloud
       - --manifest-generation=true
     resources:
       limits:

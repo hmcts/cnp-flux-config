@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et-msg-handler
+spec:
+  releaseName: et-msg-handler
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-8ac93d3-20221109124310 #{"$imagepolicy": "flux-system:et-msg-handler"}

@@ -5,7 +5,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:pr-425-8fce095-20220831134450 #{"$imagepolicy": "flux-system:demo-manage-case-assignment"}
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-8bd8de3-20221123160910 #{"$imagepolicy": "flux-system:manage-case-assignment"}
       keyVaults:
         aac:
           secrets:
@@ -18,7 +20,7 @@ spec:
             - idam-noc-approver-password
             - notify-mca-api-key-secret
       environment:
-        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,nfdiv_case_api,civil_service,prl_cos_api
+        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,nfdiv_case_api,civil_service,probate_backend,prl_cos_api
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
         CCD_DEFINITION_STORE_API_BASE_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal
         MCA_DEF_STORE_PROXY_URLS_ALLOWED_LIST: /api/display/challenge-questions.*

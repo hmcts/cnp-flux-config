@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-for file in $(grep -lr "kind: HelmRelease" k8s/namespaces  --exclude-dir={admin,monitoring,neuvector,pact-broker,osba,jenkins,kured}); do
+for file in $(grep -lr "kind: HelmRelease" k8s/namespaces --exclude-dir={admin,monitoring,neuvector,pact-broker,osba,jenkins,kured}); do
   
   NAMESPACE="$( echo $file | cut -d'/' -f3)"
   FILE_NAMESPACE=$(yq eval .metadata.name k8s/namespaces/$NAMESPACE/namespace.yaml)
@@ -11,6 +11,7 @@ for file in $(grep -lr "kind: HelmRelease" k8s/namespaces  --exclude-dir={admin,
   SPEC_RELEASE_NAME=$(yq eval .spec.releaseName $BASE_MANIFEST)
   
   [[ "$HELM_RELEASE_NAME" =~ "ccd-logstash" ]] && continue
+  [[ "$file" =~ "k8s/namespaces/rd/rd-user-profile-triage/triage-aat.yaml" ]] && continue
 
   # Make sure spec release name is matching helm release name
   [ "$HELM_RELEASE_NAME" == "$SPEC_RELEASE_NAME" ] || (echo "spec.releaseName not matching HelmRelease name for $HELM_RELEASE_NAME" && exit 1 ) 

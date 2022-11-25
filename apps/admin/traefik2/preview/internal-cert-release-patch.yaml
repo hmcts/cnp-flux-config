@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik2
+  namespace: admin
+spec:
+  values:
+    deployment:
+      additionalVolumes:
+        - name: traefik-default-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: traefik-default-cert
+        - name: traefik-internal-cert
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: traefik-internal-cert
+    additionalVolumeMounts:
+      - name: traefik-internal-cert
+        mountPath: "/mnt/certs"
+        readOnly: true
+      - name: traefik-default-cert
+        mountPath: "/mnt/certs-default"
+        readOnly: true

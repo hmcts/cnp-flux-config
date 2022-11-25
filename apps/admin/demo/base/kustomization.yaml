@@ -2,17 +2,26 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - external-dns.yaml
-  - traefik-values.yaml
   - kube-slack-values.yaml
   - ../../keda
-  - ../../external-dns/
-  - ../../external-dns-public/
-  - ../../traefik-auth
-  - ../../traefik-no-proxy
-  - ../../traefik-private
-  - ../../csi-secret-store-provider-v1.0.1
+  - ../../secrets-csi-driver-crds
+  - ../../secrets-csi-driver
+  - ../../traefik2/demo
+  - ../../traefik2/traefik2-private
+  - ../../traefik2/traefik2-no-proxy
+  - ../../traefik2/traefik2-auth-proxy
+  - ../../external-dns-2/
+  - ../../external-dns-2/external-dns-public
+  - ../../external-dns-2/external-dns-private
+  - ../../aad-pod-id/mi
+  - ../../oauth2-proxy
+  - ../../traefik2/traefik2-auth-middlewares
   - ../../../rbac/reader-clusterrole.yaml
-  - ../../traefik/traefik.yaml
+  - ../../reply-urls-operator/demo
+
 patchesStrategicMerge:
   - keda-identity.yaml
+  - ../../external-dns-2/demo/external-dns-private.yaml
+  - ../../external-dns-2/demo/external-dns.yaml
+  - ../../traefik2/demo/secret-provider.yaml
+  - ../../aad-pod-id/mi/demo/azure-identity-patch.yaml

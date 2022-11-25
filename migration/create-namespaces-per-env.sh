@@ -28,4 +28,3 @@ EOF
 fi
 
 NAMESPACE_PATH="../../../apps/$NAMESPACE/base/kustomize.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' clusters/$ENVIRONMENT/base/kustomization.yaml
-done

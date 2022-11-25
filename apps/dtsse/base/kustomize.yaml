@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: dtsse
+  namespace: flux-system
+spec:
+  path: ./apps/dtsse/${ENVIRONMENT}/${CLUSTER}
+  postBuild:
+    substitute:
+      NAMESPACE: "dtsse"
+      TEAM_NOTIFICATION_CHANNEL: "rse"
+      TEAM_AAD_GROUP_ID: "c2c7af6e-4427-45c2-8ca8-03b8ebe2d11f"

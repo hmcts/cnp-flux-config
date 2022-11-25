@@ -7,6 +7,7 @@ spec:
   values:
     checkDeprecation: false
     controller:
+      tag: 2.375-222
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
@@ -24,12 +25,8 @@ spec:
         -Dotel.instrumentation.jenkins.web.enabled=false
       ingress:
         hostName: sandbox-build.platform.hmcts.net
-        annotations:
-          traefik.ingress.kubernetes.io/router.tls: "true"
       secondaryingress:
         hostName: static-sandbox-build.platform.hmcts.net
-        annotations:
-          traefik.ingress.kubernetes.io/router.tls: "true"
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -319,7 +316,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinssbox"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.5"
+                          galleryImageVersion: "1.4.19"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"

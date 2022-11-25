@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: sptribs
+  namespace: flux-system
+spec:
+  path: ./apps/sptribs/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "sptribs"
+      TEAM_NOTIFICATION_CHANNEL: "special-tribunals-builds"
+      TEAM_AAD_GROUP_ID: "7f84be52-28f9-46cd-b409-757993c061b2"

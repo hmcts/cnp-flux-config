@@ -17,7 +17,7 @@ All the applications owned by a team are deployed to a single namespace (usually
 
 - Run [add-namespace.sh](/bin/v2/add-namespace.sh) with your namespace and team build notices slack channel.
    ```bash
-    ./bin/v2/add-namespace.sh <your namespace> <team slack channel>
+    ./bin/v2/add-namespace.sh <your namespace> <team slack channel> <team AD Group ID>
    ```
    
 ### Add namespace kustomization to an environment

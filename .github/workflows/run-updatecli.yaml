@@ -1,0 +1,34 @@
+name: updatecli
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Run once a week
+    - cron: '0 2 * * 1' # Every monday at 2am UTC
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@v2
+        with:
+          version: v0.36.1
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.DEPENDENCY_UPDATER_APP_ID }}
+          private_key: ${{ secrets.DEPENDENCY_UPDATER_APP_PRIVATE_KEY }}
+      - name: Run Updatecli in Dry Run mode
+        run: updatecli diff --config ./updatecli/updatecli.d --values ./updatecli/values.github-action.yaml
+        env:
+          UPDATECLI_GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+      - name: Run Updatecli in Apply mode
+        if: github.ref == 'refs/heads/master'
+        run: updatecli apply --config ./updatecli/updatecli.d --values ./updatecli/values.github-action.yaml
+        env:
+          UPDATECLI_GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}

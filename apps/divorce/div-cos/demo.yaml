@@ -6,7 +6,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/cos:prod-f58d093-20220802152257 #{"$imagepolicy": "flux-system:div-cos"}
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/div/cos:prod-91bf310-20221110093523 #{"$imagepolicy": "flux-system:div-cos"}
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: true
@@ -36,4 +38,4 @@ spec:
         IDAM_API_XUI_REDIRECT_URL: "https://manage-case.demo.platform.hmcts.net/oauth2/callback"
         SCHEDULER_NFD_NOTIFIER_ENABLED: false
         SCHEDULER_NFD_NOTIFIER_CRON: "0 0 9 3 6 ? 2024"
-        TRIGGER_DEPLOY: 2
+        TRIGGER_DEPLOY: 3

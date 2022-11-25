@@ -7,9 +7,10 @@ spec:
   releaseName: pba-payment-job-int
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:pr-43-ac6a2ba-20220826134120" #{"$imagepolicy": "flux-system:demo-int-pba-csv-report"}
-      schedule: "30 2 * * *"
+      image: "hmctspublic.azurecr.io/payment/jobs:pr-44-15cfff7-20221007115353" #{"$imagepolicy": "flux-system:demo-int-pba-csv-report"}
+      schedule: "30 02 * * *"
       environment:
         DUMMY_RESTART_VAR: false
+        PAYMENT_SERVER_URL: http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     global:
       environment: demo

@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-emca
+  namespace: divorce
+spec:
+  values:
+    java:
+      environment:
+        IDAM_API_HEALTH_URI: https://idam-api.aat.platform.hmcts.net/health
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+      prometheus:
+        enabled: true

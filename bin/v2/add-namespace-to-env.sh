@@ -23,7 +23,6 @@ then
     BASE_PATH=../../../base
 fi
 
-
 if [ ! -d "${APPS_DIR}/${NAMESPACE}/${ENVIRONMENT}" ]; then
   
   echo "Creating ${ENVIRONMENT} for ${NAMESPACE}"
@@ -38,6 +37,10 @@ resources:
 namespace: $NAMESPACE
 EOF
 ) > "${APPS_DIR}/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml"
+fi
+
+if [[ "${ENVIRONMENT}"  != "preview" ]] && [[ "${ENVIRONMENT}"  != "prod" ]]; then
+  yq eval -i '.resources += "../../../rbac/nonprod-role.yaml"' ${APPS_DIR}/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml
 fi
 
 export NAMESPACE_PATH="../../../apps/$NAMESPACE/base/kustomize.yaml"

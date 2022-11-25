@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et-cos
+spec:
+  releaseName: et-cos
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/et/cos:pr-549-a01b40c-20221121114726 #{"$imagepolicy": "flux-system:demo-et-cos"}
+      environment:
+        REFERRAL_TEMPLATE_ID: 6ad8c05b-5c0b-4d10-a5e3-f39fdea4647e
+        REJECTED_TEMPLATE_ID: 3f932a27-3960-4135-9ef5-5f2b9ec35da0
+        ET1SERVING_TEMPLATE_ID: 2d839d00-88f0-4136-a65e-364da046c6f8
+        ET3NOTIFICATION_TEMPLATE_MYHMCTS_ID: 6983b7cf-a492-46da-8eaf-9751191eb736
+        ET3NOTIFICATION_TEMPLATE_CITIZEN_ID: dd211d08-ba0a-4e9e-8502-31b4ed5515e9

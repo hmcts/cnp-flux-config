@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: em-ped-api
+spec:
+  releaseName: em-ped-api
+  values:
+    java:
+      useInterpodAntiAffinity: true
+      replicas: 2
+      image: hmctspublic.azurecr.io/em/ped-api:prod-f2ee914-20221101111629 #{"$imagepolicy": "flux-system:em-ped-api"}
+      environment:
+  chart:
+    spec:
+      chart: ./stable/em-ped-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

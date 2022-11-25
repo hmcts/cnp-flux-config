@@ -6,9 +6,13 @@ spec:
   releaseName: nfdiv-cron-migrate-cases
   values:
     job:
-      schedule: "0,20,40 20-23,0-7 * * *"
+      schedule: "50 20-23,0-7 * * *"
       environment:
         IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
+        ENABLE_PAPER_APPLICATION_MIGRATION: true
+        ENABLE_CONFIRM_READ_PETITION_MIGRATION: true
+        MIGRATE_AOS_IS_DRAFTED: false
+        MIGRATE_CASE_COURT_HEARING: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
