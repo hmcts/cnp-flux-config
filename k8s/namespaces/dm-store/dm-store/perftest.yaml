@@ -5,8 +5,12 @@ metadata:
 spec:
   values:
     java:
+      replicas: 7
       memoryRequests: "3Gi"
-      image: hmctspublic.azurecr.io/dm/store:pr-1515-0c6da21-20221031084848 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      cpuRequests: "1000m"
+      memoryLimits: "6Gi"
+      cpuLimits: "2000m"
+      image: hmctspublic.azurecr.io/dm/store:pr-1515-93f3f60-20221125091402 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
         ENABLE_TTL: true
         DOCUMENT_TASK_MILLISECONDS: 300000

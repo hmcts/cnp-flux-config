@@ -1,0 +1,84 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-cron-smee-and-ford-extract
+spec:
+  releaseName: probate-cron-smee-and-ford-extract
+  values:
+    schedule: "0/10 * * * *"
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/back-office:prod-5c64065-20221124145818 #{"$imagepolicy": "flux-system:probate-back-office"}
+      environment:
+        TASK_NAME: SmeeAndFordExtractTask
+      keyVaults:
+        probate:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: probatemandb-POSTGRES-PASS
+              alias: spring.datasource.password
+            - name: s2s-probate-backend
+              alias: idam.s2s-auth.totp_secret
+            - name: probate-bo-govNotifyApiKey
+              alias: notifications.govNotifyApiKey
+            - name: authTokenEmail
+              alias: auth.provider.client.email
+            - name: authTokenPassword
+              alias: auth.provider.client.password
+            - name: excelaEmail
+              alias: excelaEmail
+            - name: smeeAndFordEmail
+              alias: smeeAndFordEmail
+            - name: ftpSignature
+              alias: ftp.client.signature
+            - name: ftpEnv
+              alias: ftp.client.environment
+            - name: probate-bo-grantSignatureKey
+              alias: pdf.service.grantSignatureSecretKey
+            - name: probate-bo-grantSignatureFile
+              alias: pdf.service.grantSignatureEncryptedFile
+            - name: pdfServiceBaseUrl
+              alias: docmosis.service.uri
+            - name: pdfServiceAccessKey
+              alias: docmosis.service.accessKey
+            - name: pdfServiceHealthUrl
+              alias: docmosis.service.health.uri
+            - name: idam-secret-probate
+              alias: auth.provider.client.secret
+            - name: idamRedirectUrl
+              alias: auth.provider.client.redirect
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
+            - name: levPublicCertificate
+              alias: lev.ssl.publicCertificate
+            - name: levPrivateKey
+              alias: lev.ssl.privateKey
+            - name: levAccessTokenUri
+              alias: lev.bearertoken.accessTokenUri
+            - name: levClientId
+              alias: lev.bearertoken.clientId
+            - name: levClientSecret
+              alias: lev.bearertoken.clientSecret
+            - name: levUsername
+              alias: lev.bearertoken.username
+            - name: levPassword
+              alias: lev.bearertoken.password
+            - name: levDeathUrl
+              alias: lev.death.url
+            - name: schedulerCaseWorkerUser
+              alias: SCHEDULER_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerPass
+              alias: SCHEDULER_CASEWORKER_PASSWORD
+            - name: probate-storage-account-primary-connection-string
+              alias: PROBATE_STORAGE_ACCOUNT_PRIMARY_CONNECTION_STRING
+  chart:
+    spec:
+      chart: probate-cron
+      version: 0.0.12
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
