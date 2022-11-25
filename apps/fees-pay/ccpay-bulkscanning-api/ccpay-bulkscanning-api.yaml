@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-bulkscanning-api
+spec:
+  releaseName: ccpay-bulkscanning-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-069ac89-20221117172809 #{"$imagepolicy": "flux-system:ccpay-bulkscanning-api"}
+  chart:
+    spec:
+      chart: ./stable/ccpay-bulkscanning-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
