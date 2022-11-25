@@ -28,6 +28,7 @@ EXCLUSIONS_LIST=(
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
   apps/probate/*
   k8s/namespaces/docmosis/docmosis/aat.yaml
+  apps/*/demo
   *demo.yaml
   k8s/demo/*
   *perftest.yaml
