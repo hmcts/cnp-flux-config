@@ -26,6 +26,15 @@ spec:
                         values:
                           - neuvector-controller-pod
                   topologyKey: "kubernetes.io/hostname"
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - konnectivity-agent
+                topologyKey: "kubernetes.io/hostname"
+                namespaces: ["kube-system"]
           nodeAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
               - weight: 1
@@ -53,6 +62,15 @@ spec:
                         values:
                           - neuvector-manager-pod
                   topologyKey: "kubernetes.io/hostname"
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - konnectivity-agent
+                topologyKey: "kubernetes.io/hostname"
+                namespaces: ["kube-system"]
           nodeAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
               - weight: 1
@@ -81,6 +99,15 @@ spec:
                           values:
                             - neuvector-scanner-pod
                     topologyKey: "kubernetes.io/hostname"
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - konnectivity-agent
+                  topologyKey: "kubernetes.io/hostname"
+                  namespaces: ["kube-system"]
             nodeAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
                 - weight: 1

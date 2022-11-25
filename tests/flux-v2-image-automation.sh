@@ -12,6 +12,7 @@ EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/perftest.yaml
   apps/docmosis/docmosis/sbox.yaml
   apps/flux-system/base/image-automation-components.yaml
+  apps/flux-system/base/image-automation-components-0.36.0.yaml
   apps/idam/idam-api/preview.yaml
   apps/idam/idam-api/sbox.yaml
   apps/idam/idam-web-admin/preview.yaml
@@ -21,6 +22,11 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-public/sbox.yaml
   apps/idam/idam-testing-support-api/preview.yaml
   apps/idam/idam-testing-support-api/sbox.yaml
+  apps/probate/probate-cron-make-dormant-cases/demo.yaml
+  apps/probate/probate-cron-reactivate-dormant-cases/demo.yaml
+  apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
+  apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
+  apps/probate/*
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   k8s/demo/*

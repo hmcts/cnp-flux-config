@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-emca
+  namespace: divorce
+spec:
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/div/emca:prod-b611daf-20221110110257 #{"$imagepolicy": "flux-system:div-emca"}
+      environment:
+        IDAM_API_HEALTH_URI: https://idam-api.demo.platform.hmcts.net/health
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        SECURE_DOC_STORE_FEATURE: true
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        VAR_DEMO_V2: trig-d1
+      prometheus:
+        enabled: true

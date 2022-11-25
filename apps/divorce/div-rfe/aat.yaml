@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: div-rfe
+  namespace: divorce
+spec:
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/div/rfe:prod-52110ae-20221024150854 #{"$imagepolicy": "flux-system:div-rfe"}
+      ingressHost: respond-divorce-aks.aat.platform.hmcts.net
+      environment:
+        GOOGLE_ANALYTICS_ID: "UA-93824767-2"
+        DECREE_NISI_FRONTEND_URL: "https://decree-nisi-aks.aat.platform.hmcts.net"
+        DECREE_ABSOLUTE_FRONTEND_URL: https://decree-absolute-aks.aat.platform.hmcts.net
+        EQUALITY_URL: https://pcq.aat.platform.hmcts.net
+        FEATURE_RESP_EQUALITY: "true"
+        FEATURE_CORESP_EQUALITY: "true"
+        FEATURE_ANTENNA_WEBCHAT: "true"
+        FEATURE_WEBCHAT: "false"
+        FEATURE_PING_REDIS: "true"
+        ANTENNA_WEBCHAT_SERVICE: Divorce
+        ANTENNA_WEBCHAT_URL: webchat.pp.ctsc.hmcts.net
+        ANTENNA_WEBCHAT_VERSION: 1
+        ANTENNA_WEBCHAT_AVAILABILITY_DEBUG: "true"
+        FEATURE_ANTENNA_WEBCHAT_AVAILABILITY_TOGGLE: "true"
+        FEATURE_ANTENNA_WEBCHAT_USER_ATTRIBUTE: "true"
+        VAR_FV2: aat-1
+        FEATURE_DYNATRACE: "true"
+        COURT_OPENINGHOURS_EN: 'Monday to Friday, 8am to 6pm'
