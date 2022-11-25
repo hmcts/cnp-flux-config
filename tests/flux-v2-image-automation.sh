@@ -30,6 +30,7 @@ EXCLUSIONS_LIST=(
   k8s/namespaces/docmosis/docmosis/aat.yaml
   apps/*/demo
   *demo.yaml
+  apps/*/demo-image-policy.yaml
   k8s/demo/*
   *perftest.yaml
   k8s/perftest/*
