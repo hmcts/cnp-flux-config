@@ -5,7 +5,7 @@ set -e
 ENVIRONMENT=$1
 NAMESPACE=$2
  
-if [[ $NAMESPACE == "kube-"* ]] || [[ $NAMESPACE == "default" ]]; 
+if [[ $NAMESPACE == "kube-"* ]] || [[ $NAMESPACE == "default" ]] || [[ $NAMESPACE == "flux-system" ]];
 then
   echo "skipping $NAMESPACE"
   exit 0
@@ -26,7 +26,7 @@ EOF
 ) > "apps/$NAMESPACE/$ENVIRONMENT/base/kustomization.yaml"
 fi
 
-if [[ $(NAMESPACE=$NAMESPACE yq '.resources | has("../../../apps/env(NAMESPACE)/base/kustomize.yaml")' clusters/$ENVIRONMENT/base/kustomization.yaml) ]]
+if ! grep -q "../../../apps/$NAMESPACE/base" "clusters/$ENVIRONMENT/base/kustomization.yaml";
 then
   NAMESPACE_PATH="../../../apps/$NAMESPACE/base/kustomize.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' clusters/$ENVIRONMENT/base/kustomization.yaml
 fi
