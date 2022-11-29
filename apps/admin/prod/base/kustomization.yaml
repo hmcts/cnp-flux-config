@@ -3,12 +3,16 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../keda
-  - ../../csi-secret-store-provider-v1.0.1
+  - ../../traefik2
+  - ../../aad-pod-id/mi
+  - ../../secrets-csi-driver-crds
+  - ../../secrets-csi-driver
   - kube-slack-values.yaml
   - ../../../rbac/reader-clusterrole.yaml
-  - ../../traefik/traefik.yaml
 patchesStrategicMerge:
   - keda-identity.yaml
+  - ../../traefik2/prod/secret-provider.yaml
+  - ../../aad-pod-id/mi/prod/azure-identity-patch.yaml
 patches:
   - path: ../../../rbac/prod-reader-clusterrole.yaml
     target:

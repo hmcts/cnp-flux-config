@@ -2,27 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: divorce
 bases:
-- ../../../namespaces/divorce
-- ../../../namespaces/divorce/namespace.yaml
-- ../../../namespaces/all-namespaces/nonprod-role.yaml
-patchesStrategicMerge:
-- ../../../namespaces/divorce/div-rfe/ithc.yaml
-- ../../../namespaces/divorce/div-cms/ithc.yaml
-- ../../../namespaces/divorce/div-da/ithc.yaml
-- ../../../namespaces/divorce/div-emca/ithc.yaml
-- ../../../namespaces/divorce/div-dgs/ithc.yaml
-- ../../../namespaces/divorce/div-fps/ithc.yaml
-patchesJson6902:
-- target:
-    group: rbac.authorization.k8s.io
-    version: v1
-    kind: RoleBinding
-    name: nonprod-team-permissions
-    namespace: divorce
-  patch: |-
-    - op: add
-      path: "/subjects"
-      value:
-        - apiGroup: rbac.authorization.k8s.io
-          kind: Group
-          name: "f2ef9d16-488a-4b84-b433-3eb4225923cb"
+  - ../../../namespaces/divorce

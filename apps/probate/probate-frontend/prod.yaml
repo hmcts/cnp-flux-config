@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-frontend
+  namespace: probate
+spec:
+  values:
+    nodejs:
+      ingressHost: www.apply-for-probate.service.gov.uk
+      environment:
+        IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net

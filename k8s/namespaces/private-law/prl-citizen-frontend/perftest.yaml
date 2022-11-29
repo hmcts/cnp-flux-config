@@ -6,17 +6,41 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-bb87e25-20220617153040 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-404-1d4c3e5-20221123111033 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       memoryRequests: "512Mi"
       replicas: 2
       readinessDelay: 45
-      readinessTimeout: 5
+      readinessTimeout: 10
       readinessPeriod: 15
+      keyVaults:
+        prl:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - prl-citizen-frontend-idam-client-secret
+            - postcode-lookup-token
+            - prl-cos-idam-client-secret
+            - microservicekey-prl-cos-api
+            - microservicekey-prl-citizen-frontend
+            - system-update-user-username
+            - system-update-user-password
+            - idam-solicitor-username
+            - idam-solicitor-password
+            - launchDarkly-sdk-key
+            - citizen-upload-docs-email
+            - redis-access-key
       environment:
-        FEATURE_EXAMPLE: true
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/login
+        REFORM_SERVICE_NAME: prl-citizen-frontend
+        REFORM_TEAM: prl
+        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CCD_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
+        COS_URL: http://prl-cos-perftest.service.core-compute-perftest.internal
+        REDIS_HOST: prl-citizen-frontend-redis-perftest.redis.cache.windows.net
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -5,7 +5,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:pr-1726-f8d1db0-20220824111126
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
       environment:
-        ENCRYPTION_ENABLED: "false"
+        ENCRYPTION_ENABLED: false
+        FILE_CLEANUP_ENABLED: "false"
+        OLD_LETTER_CONTENT_CLEANUP_ENABLED: "false"
+        CIVIL_SERVICE_ENABLED: true
         REFRESH_PODS: "yes"

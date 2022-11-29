@@ -7,6 +7,10 @@ spec:
   values:
     nodejs:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/bar/web:prod-9dcca15-20220808172206 #{"$imagepolicy": "flux-system:demo-int-bar-web"}
+      ingressClass: traefik-no-proxy
+      image: hmctspublic.azurecr.io/bar/web:pr-749-b2e670a-20221018153548 #{"$imagepolicy": "flux-system:demo-int-bar-web"}
       environment:
         DUMMY_RESTART_VAR: true
+        BAR_API_URL: http://bar-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        FEE_API_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/fees-register
+        FEE_API_JURISDICTIONS_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

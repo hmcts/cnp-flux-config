@@ -5,9 +5,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/redirect-permanent: "true"
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://build-beta.platform.hmcts.net/(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://build.platform.hmcts.net/$1
+    traefik.ingress.kubernetes.io/router.middlewares: jenkins-jenkinbuildbetaredirect@kubernetescrd
   name: build-beta-ingress
   namespace: jenkins
 spec:
@@ -22,3 +20,14 @@ spec:
                   number: 8080
             path: /
             pathType: ImplementationSpecific
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: jenkinbuildbetaredirect
+  namespace: jenkins
+spec:
+  redirectRegex:
+    permanent: true
+    regex: ^http://build-beta.platform.hmcts.net/(.*)
+    replacement: https://build.platform.hmcts.net/$1

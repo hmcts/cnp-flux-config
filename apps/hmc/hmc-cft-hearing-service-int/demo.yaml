@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hmc-cft-hearing-service-int
+  namespace: hmc
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/hmc/cft-hearing-service:prod-d7d686c-20221123094604 #{"$imagepolicy": "flux-system:demo-hmc-cft-hearing-service"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private

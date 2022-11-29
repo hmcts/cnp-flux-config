@@ -6,11 +6,39 @@ spec:
   values:
     nodejs:
       disableTraefikTls: false
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-no-proxy
       ingressHost: immigration-appeal.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-bf4a2ba-20220826094556 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-7d19a9b-20221124104752 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
       environment:
         NODE_ENV: development
         IDAM_WEB_URL: "https://idam-web-public.demo.platform.hmcts.net"
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
+        DOCMOSIS_RENDER_URL: "https://docmosis.demo.platform.hmcts.net/rs/render"
         RESTART_ME: "1"
         ASK_FOR_MORE_TIME_ENABLED: true
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - idam-secret
+            - addressLookupToken
+            - s2s-secret
+            - ia-redis-access-key
+            - ia-redis-connection-string
+            - launch-darkly-sdk-key
+            - AppInsightsInstrumentationKey
+            - hearing-centre-bradford-email
+            - hearing-centre-manchester-email
+            - hearing-centre-newport-email
+            - hearing-centre-taylor-house-email
+            - hearing-centre-north-shields-email
+            - hearing-centre-birmingham-email
+            - hearing-centre-hatton-cross-email
+            - hearing-centre-glasgow-email
+            - pcq-token-key
+            - system-username
+            - system-password
+            - docmosis-access-key
+            - customer-services-telephone
+            - customer-services-email

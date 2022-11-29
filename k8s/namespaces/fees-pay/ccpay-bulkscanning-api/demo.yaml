@@ -5,11 +5,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:pr-424-5493450-20220831144702 #{"$imagepolicy": "flux-system:demo-ccpay-bulkscanning-api"}
-      #Example below
-      #image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:pr-434-dd98572-20221118095121 #{"$imagepolicy": "flux-system:demo-ccpay-bulkscanning-api"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         S2S_AUTHORISED_SERVICES: "payment_app,ccpay_bubble,cmc,bulk_scan_payment_processor,api_gw,probate_frontend,divorce_frontend,ccd_gw,xui_webapp"

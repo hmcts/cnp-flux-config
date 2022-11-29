@@ -12,7 +12,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: "2.364-151"
+      tag: 2.375-222
       containerSecurityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -319,12 +319,12 @@ spec:
         enabled: true
         labels: {}
         annotations:
-          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.tls: "true"
       secondaryingress:
         enabled: true
         paths: ["/"]
         annotations:
-          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.tls: "true"
     agent:
       enabled: false
     persistence:

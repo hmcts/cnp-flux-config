@@ -7,8 +7,11 @@ spec:
   interval: 1m
   values:
     nodejs:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-no-proxy
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/adoption/web:pr-395-7fc1fa8-20220831052451 #{"$imagepolicy": "flux-system:demo-adoption-web"}
+      readinessPeriod: 15
+      image: hmctspublic.azurecr.io/adoption/web:pr-395-9aa680f-20221122103854 #{"$imagepolicy": "flux-system:demo-adoption-web"}
       environment:
         PCQ_ENABLED: "true"
         APPINSIGHTS_KEY: '6c5278dd-ee76-4e7b-92f9-57b27ead382e'
