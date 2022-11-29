@@ -8,11 +8,10 @@ NAMESPACE=$2
 if [[ $NAMESPACE == "kube-"* ]] || [[ $NAMESPACE == "default" ]]; 
 then
   echo "skipping $NAMESPACE"
-  continue
+  exit 0
 fi
-git clean -f apps/$NAMESPACE/$ENVIRONMENT
 if [ ! -d "apps/$NAMESPACE/$ENVIRONMENT" ]; then
-  
+
   echo "Creating $ENVIRONMENT for $NAMESPACE"
   mkdir apps/$NAMESPACE/$ENVIRONMENT/
   mkdir apps/$NAMESPACE/$ENVIRONMENT/base
@@ -27,4 +26,8 @@ EOF
 ) > "apps/$NAMESPACE/$ENVIRONMENT/base/kustomization.yaml"
 fi
 
-NAMESPACE_PATH="../../../apps/$NAMESPACE/base/kustomize.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' clusters/$ENVIRONMENT/base/kustomization.yaml
+if [[ $(NAMESPACE=$NAMESPACE yq '.resources | has("../../../apps/env(NAMESPACE)/base/kustomize.yaml")' clusters/$ENVIRONMENT/base/kustomization.yaml) ]]
+then
+  NAMESPACE_PATH="../../../apps/$NAMESPACE/base/kustomize.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' clusters/$ENVIRONMENT/base/kustomization.yaml
+fi
+echo "done"
