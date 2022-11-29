@@ -29,6 +29,8 @@ EXCLUSIONS_LIST=(
   apps/probate/*
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
+  apps/*/*/demo
+  apps/*/demo
   k8s/demo/*
   *perftest.yaml
   k8s/perftest/*
