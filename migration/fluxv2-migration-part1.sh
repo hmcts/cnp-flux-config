@@ -6,7 +6,7 @@ ENV=$1
 
 git clean -f apps/ clusters/ k8s/
 git checkout apps/ clusters/ k8s/
-kubectx "cft-$ENV-00-aks-admin"
+kubectx "cft-$ENV-01-aks-admin"
 
 echo "Starting Fluxv2 Migration Part 1"
 
