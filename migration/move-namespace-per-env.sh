@@ -8,6 +8,7 @@ ENV=$1
 NAMESPACE=$2
 
 # Remove namespace ownership from v1 file
+if [ -d "k8s/$ENV/common-overlay/$NAMESPACE" ]; then
 for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE); do
 
     yq eval 'del(.patchesJson6902)' -i $file
@@ -18,9 +19,10 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     NAMESPACE_PATH="../../../rbac/nonprod-role.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
 
     # add AAD Group to base kustomize
-    AAD_GROUP_ID=$(kubectl get rolebinding -n $NAMESPACE --context cft-$ENV-00-aks-admin nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
+    AAD_GROUP_ID=$(kubectl get rolebinding -n $NAMESPACE nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
     yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/$NAMESPACE/base/kustomize.yaml
 
     # Remove roleBinding from v1
     # yq -i 'select(.metadata.namespace != "ts")' k8s/namespaces/admin/flux-helm-operator/rbac/$ENV-role-binding.yaml
 done
+fi
