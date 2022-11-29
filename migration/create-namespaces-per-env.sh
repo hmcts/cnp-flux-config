@@ -4,12 +4,7 @@ set -e
 # Example of script ./migration/create-namespaces-per-env.sh perftest camunda
 ENVIRONMENT=$1
 NAMESPACE=$2
- 
-if [[ $NAMESPACE == "kube-"* ]] || [[ $NAMESPACE == "default" ]] || [[ $NAMESPACE == "flux-system" ]];
-then
-  echo "skipping $NAMESPACE"
-  exit 0
-fi
+
 if [ ! -d "apps/$NAMESPACE/$ENVIRONMENT" ]; then
 
   echo "Creating $ENVIRONMENT for $NAMESPACE"
