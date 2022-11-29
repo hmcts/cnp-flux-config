@@ -17,8 +17,8 @@ then
   echo "skipping $NAMESPACE"
   continue
 fi
-  #./migration/create-namespaces-per-env.sh $ENV $NAMESPACE || error_exit "ERROR: Unable to complete namespace creation."
-  #./migration/move-namespace-per-env.sh $ENV $NAMESPACE || error_exit "ERROR: Unable to move namespace."
+  ./migration/create-namespaces-per-env.sh $ENV $NAMESPACE || error_exit "ERROR: Unable to complete namespace creation."
+  ./migration/move-namespace-per-env.sh $ENV $NAMESPACE || error_exit "ERROR: Unable to move namespace."
   ./migration/identity-migration-v2.sh $ENV $NAMESPACE || error_exit "ERROR: Unable to complete identity migration."
 done
 
