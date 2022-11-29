@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # set -ex
 
-# Example ./migration/fluxv2-migration-part1.sh perftest dm-store
+# Example ./migration/fluxv2-migration-part1.sh perftest
 ENV=$1
 
 git clean -f apps/ clusters/ k8s/
