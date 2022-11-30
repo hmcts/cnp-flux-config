@@ -9,10 +9,6 @@ spec:
     language: java
     applicationPort: 8080
     replicas: 2
-    memoryRequests: 1024Mi
-    memoryLimits: 3072Mi
-    cpuLimits: 2000m
-    cpuRequests: 1000m
     useInterpodAntiAffinity: true
     readinessPath: /api/ping
     livenessPath: /api/ping
@@ -20,6 +16,11 @@ spec:
       enabled: true
     envFromSecret: docmosis-secret
     image: hmctsprivate.azurecr.io/docmosis:prod-5bc2480-304609 #{"$imagepolicy": "flux-system:docmosis"}
+    java:
+      memoryRequests: '1024Mi'
+      cpuRequests: '1000m'
+      memoryLimits: '3072Mi'
+      cpuLimits: '2000m'
   chart:
     spec:
       chart: base
