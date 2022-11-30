@@ -233,5 +233,5 @@ kubectl create secret generic dynakube \
   --dry-run=client \
   -o json > /tmp/dynakube.json
 
-kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/dynakube.json > apps/dynatrace/$ENV/base/dynakube.yaml
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/dynakube.json > apps/dynatrace/$ENV/base/dynakube-secret.yaml
 ```
