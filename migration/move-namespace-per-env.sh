@@ -19,11 +19,11 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     then
       # add non-prod role to flux v2 environment
       NAMESPACE_PATH="../../../rbac/nonprod-role.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
-    fi
+      # add AAD Group to base kustomize
+      AAD_GROUP_ID=$(kubectl get rolebinding -n $NAMESPACE nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
+      yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/$NAMESPACE/base/kustomize.yaml
 
-    # add AAD Group to base kustomize
-    AAD_GROUP_ID=$(kubectl get rolebinding -n $NAMESPACE nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
-    yq eval -i '.spec.postBuild.substitute += {"TEAM_AAD_GROUP_ID": "'$AAD_GROUP_ID'"}' apps/$NAMESPACE/base/kustomize.yaml
+    fi
 
     # Remove roleBinding from v1
     # yq -i 'select(.metadata.namespace != "ts")' k8s/namespaces/admin/flux-helm-operator/rbac/$ENV-role-binding.yaml
