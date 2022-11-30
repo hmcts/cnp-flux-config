@@ -15,8 +15,11 @@ for file in $(grep -lr "kind: Kustomization" k8s/$ENV/common-overlay/$NAMESPACE)
     yq 'del( .bases[] | select(. == "*namespace.yaml") )' -i $file
     yq 'del( .bases[] | select(. == "*nonprod-role.yaml") )' -i $file
 
-    # add non-prod role to flux v2 environment
-    NAMESPACE_PATH="../../../rbac/nonprod-role.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
+    if [ "${ENV}"  != "prod" ]
+    then
+      # add non-prod role to flux v2 environment
+      NAMESPACE_PATH="../../../rbac/nonprod-role.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
+    fi
 
     # add AAD Group to base kustomize
     AAD_GROUP_ID=$(kubectl get rolebinding -n $NAMESPACE nonprod-team-permissions -o jsonpath='{.subjects[0].name}')
