@@ -6,6 +6,9 @@ NAMESPACE=$2
 
 # Example of script ./migration/identity-migration.sh perftest camunda
 
+if [ ! -d "k8s/$ENV/common/$NAMESPACE" ]; then
+ exit 0
+fi
 for file in $(grep -lr "kind: AzureIdentity" k8s/$ENV/common/$NAMESPACE); do
   
    if [ $(echo $file | cut -d'/' -f5) != "identity.yaml" ]
@@ -82,17 +85,16 @@ fi
     if [ ! -f "apps/$NAMESPACE/identity/$ENV.yaml" ]
     then
         cp $file apps/$NAMESPACE/identity/
-        cp $file /tmp/
-        sed -n '/---/q;p' /tmp/identity.yaml > apps/$NAMESPACE/identity/$ENV.yaml
         yq eval 'del(.spec.resourceID) | del(.spec.clientID)' -i apps/$NAMESPACE/identity/identity.yaml
-        yq eval 'del(.spec.type)' -i apps/$NAMESPACE/identity/$ENV.yaml
-        
     fi
-
-done
 
     if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "'*../../identity/$ENV.yaml*'")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
-       echo "yes"
-        NAMESPACE_PATH="../../identity/$ENV.yaml" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
+      sed -n '/---/q;p' $file > apps/$NAMESPACE/identity/$ENV.yaml
+      yq eval 'del(.spec.type)' -i apps/$NAMESPACE/identity/$ENV.yaml
+      NAMESPACE_PATH="../../identity/$ENV.yaml" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
     fi
+
+    rm $file
+
+done
 

@@ -217,5 +217,21 @@ kubectl create secret generic external-dns --from-literal AZURE_TENANT_ID=531ff9
   --dry-run=client \
   -o json > /tmp/external-dns.json
 
-kubeseal --format=yaml --cert=apps/$ENV/pub-cert.pem < /tmp/external-dns.json > apps/$ENV/base/external-dns.yaml
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/external-dns.json > apps/$ENV/base/external-dns.yaml
+```
+
+### Dynatrace
+
+```bash
+ENV=perftest
+API_TOKEN=
+DATA_INGEST_TOKEN=
+
+kubectl create secret generic dynakube \
+  --from-literal="apiToken=$API_TOKEN" \
+  --from-literal="dataIngestToken=${DATA_INGEST_TOKEN}" \
+  --dry-run=client \
+  -o json > /tmp/dynakube.json
+
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/dynakube.json > apps/dynatrace/$ENV/base/dynakube-secret.yaml
 ```
