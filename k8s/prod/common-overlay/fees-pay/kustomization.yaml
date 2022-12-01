@@ -2,17 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: fees-pay
 bases:
-- ../../../namespaces/fees-pay
-- ../../../namespaces/fees-pay/namespace.yaml
-- ../../../namespaces/fees-pay/fees-register-api/fees-register-api.yaml
+  - ../../../namespaces/fees-pay
+  - ../../../namespaces/fees-pay/fees-register-api/fees-register-api.yaml
+  - ../../../namespaces/fees-pay/dead-letter-queue-process/dead-letter-queue-process.yaml
 patchesStrategicMerge:
-- ../../../namespaces/fees-pay/ccpay-refunds-api/prod.yaml
-- ../../../namespaces/fees-pay/ccpay-bulkscanning-api/prod.yaml
-- ../../../namespaces/fees-pay/fees-register-api/prod.yaml
-- ../../../namespaces/fees-pay/fees-register-frontend/prod.yaml
-- ../../../namespaces/fees-pay/ccpay-paymentoutcome-web/prod.yaml
-- ../../../namespaces/fees-pay/ccpay-bubble-frontend/prod.yaml
-- ../../../namespaces/fees-pay/ccpay-payment-api/prod.yaml
-- ../../../namespaces/fees-pay/ccpay-callback-function/prod.yaml
-- ../../../namespaces/fees-pay/dead-letter-queue-process/prod.yaml
-- ../../../namespaces/fees-pay/ccpay-cpo-update-service/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-refunds-api/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-bulkscanning-api/prod.yaml
+  - ../../../namespaces/fees-pay/fees-register-api/prod.yaml
+  - ../../../namespaces/fees-pay/fees-register-frontend/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-paymentoutcome-web/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-bubble-frontend/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-payment-api/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-callback-function/prod.yaml
+  - ../../../namespaces/fees-pay/ccpay-cpo-update-service/prod.yaml
+  - ../../../namespaces/fees-pay/dead-letter-queue-process/prod.yaml
