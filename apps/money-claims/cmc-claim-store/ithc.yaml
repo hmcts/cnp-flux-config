@@ -1,5 +1,4 @@
----
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -7,7 +6,6 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2459-dd7fbf7-20210722095059   #{"$imagepolicy": "flux-system:ithc-cmc-claim-store"}
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true

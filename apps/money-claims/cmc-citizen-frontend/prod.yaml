@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+spec:
+  values:
+    nodejs:
+      replicas: 4
+      readinessDelay: 45
+      livenessDelay: 45
+      ingressHost: www.moneyclaims.service.gov.uk
+      environment:
+        GA_TRACKING_ID: UA-97111056-2
+        SERVICE_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCMVPT1/
+        FEEDBACK_SURVEY_URL: https://www.smartsurvey.co.uk/s/CMC_Feedback/
+        REPORT_PROBLEM_SURVEY_URL: http://www.smartsurvey.co.uk/s/CMCMVPPB/
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_AUTHENTICATION_WEB_URL: https://hmcts-access.service.gov.uk
+        PAY_RETURN_URL: https://www.moneyclaims.service.gov.uk
+        FEATURE_WEB_CHAT: false
+        PCQ_URL: https://equality-and-diversity.platform.hmcts.net
+        FEATURE_PLACE_HOLDER: false
