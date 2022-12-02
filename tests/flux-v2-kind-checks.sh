@@ -1,7 +1,7 @@
 # #!/usr/bin/env bash
 # set -ex
 
-for file in $(grep -lr "kind: HelmRelease*" apps/  --exclude-dir=base); do
+for file in $(grep -lr "kind: HelmRelease*" apps/money-claims  --exclude-dir=base); do
   
   KIND=$(yq eval '.kind' $file)
 
