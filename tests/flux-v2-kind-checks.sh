@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -ex
+# #!/usr/bin/env bash
+# set -ex
 
 for file in $(grep -lr "kind: HelmRelease*" apps/  --exclude-dir=base); do
   
