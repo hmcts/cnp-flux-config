@@ -7,13 +7,14 @@ spec:
   releaseName: cmc-demo
   timeout: 900
   forceUpgrade: true
-  rollback:
-    enable: true
-    force: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: cmc
-    version: 2.0.4
+    spec:
+      chart: ./stable/cmc
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
   values:
     ### CMC SERVICES ####
     cmc-claim-store:
