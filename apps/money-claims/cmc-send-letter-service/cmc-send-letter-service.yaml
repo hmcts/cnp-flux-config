@@ -5,13 +5,14 @@ metadata:
   namespace: money-claims
 spec:
   releaseName: cmc-send-letter-service
-  rollback:
-    enable: true
-    retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: rpe-send-letter-service
-    version: 0.1.2
+    spec:
+      chart: ./stable/rpe-send-letter-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-be04e74-20221130164544 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-ad8018a-20221205093714 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}
