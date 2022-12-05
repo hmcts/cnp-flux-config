@@ -5,11 +5,13 @@ metadata:
   namespace: money-claims
 spec:
   releaseName: cmc-draft-store
-  rollback:
-    enable: true
-    retry: true
   chart:
-    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
-    name: draft-store-service
+    spec:
+      chart: ./stable/draft-store-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
   values:
     image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-25cf716-20221201174658 #{"$imagepolicy": "flux-system:cmc-draft-store"}
