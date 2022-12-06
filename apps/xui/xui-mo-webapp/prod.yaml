@@ -5,6 +5,11 @@ metadata:
 spec:
   values:
     nodejs:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        targetCPUUtilizationPercentage: 80
       ingressHost: manage-org.platform.hmcts.net
       environment:
         IDAM_API_SERVICE: https://idam-api.platform.hmcts.net

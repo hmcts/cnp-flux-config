@@ -4,6 +4,11 @@ metadata:
   name: fees-register-api
 spec:
   releaseName: fees-register-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fees-register/api:prod-c95f3c8-20221117172654 #{"$imagepolicy": "flux-system:fees-register-api"}
   chart:
     spec:
       chart: ./stable/fees-register-api
@@ -12,8 +17,3 @@ spec:
         name: hmcts-charts
         namespace: flux-system
       interval: 1m
-  values:
-    java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fees-register/api:prod-c6ff398-20221103151821 #{"$imagepolicy": "flux-system:fees-register-api"}

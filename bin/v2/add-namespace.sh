@@ -9,7 +9,7 @@ function usage() {
   echo 'usage: ./add-namespace.sh <namespace> <slack-channel> <team-ad-groupid>'
 }
 
-if [ -z "${NAMESPACE}" ] || [ -z "${SLACK_CHANNEL}" || [ -z "${TEAM_AAD_GROUP_ID}" ]
+if [ -z "${NAMESPACE}" ] || [ -z "${SLACK_CHANNEL}" ] || [ -z "${TEAM_AAD_GROUP_ID}" ]
 then
   usage
   exit 1

@@ -1,5 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: money-claims
 resources:
   - ../../../base   # This is apps/base instead of apps/money-claims/base as preview doesn't install everything
   - ../sealed-secrets
@@ -9,7 +10,6 @@ resources:
   - ../../../ccd/identity/identity.yaml
   - ../../../xui/identity/identity.yaml
   - ../../../am/identity/identity.yaml
-namespace: money-claims
 patchesStrategicMerge:
   - ../../identity/aat.yaml
   - ../../../ccd/identity/aat.yaml

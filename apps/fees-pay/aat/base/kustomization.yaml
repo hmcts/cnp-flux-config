@@ -2,5 +2,30 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../ccpay-refunds-api/ccpay-refunds-api.yaml
+  - ../../ccpay-cpo-callback-function/ccpay-cpo-callback-function.yaml
+  - ../../ccpay-cpo-update-service/ccpay-cpo-update-service.yaml
+  - ../../ccpay-notifications-service/ccpay-notifications-service.yaml
+  - ../../ccpay-bulkscanning-api/ccpay-bulkscanning-api.yaml
+  - ../../fees-register-api/fees-register-api.yaml
+  - ../../fees-register-frontend/fees-register-frontend.yaml
+  - ../../ccpay-bubble-frontend/ccpay-bubble-frontend.yaml
+  - ../../ccpay-paymentoutcome-web/ccpay-paymentoutcome-web.yaml
+  - ../../ccpay-payment-api/ccpay-payment-api.yaml
+  - ../../ccpay-callback-function/ccpay-callback-function.yaml
+  - ccpay-callback-function.yaml
+namespace: fees-pay
 patchesStrategicMerge:
   - ../../identity/aat.yaml
+  - ../../ccpay-refunds-api/aat.yaml
+  - ../../ccpay-cpo-callback-function/aat.yaml
+  - ../../ccpay-cpo-update-service/aat.yaml
+  - ../../ccpay-notifications-service/aat.yaml
+  - ../../ccpay-bulkscanning-api/aat.yaml
+  - ../../fees-register-api/aat.yaml
+  - ../../fees-register-frontend/aat.yaml
+  - ../../ccpay-bubble-frontend/aat.yaml
+  - ../../ccpay-paymentoutcome-web/aat.yaml
+  - ../../ccpay-payment-api/aat.yaml
+  - ../../ccpay-callback-function/aat.yaml

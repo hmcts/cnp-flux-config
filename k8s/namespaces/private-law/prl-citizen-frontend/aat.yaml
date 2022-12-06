@@ -6,17 +6,17 @@ metadata:
 spec:
   values:
     nodejs:
-      disableIngressClassAnnotation: true
-      ingressClass: traefik-no-proxy
-      disableTraefikTls: false
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-1454c9b-20221017232044 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-b3d1c7a-20221206173403 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       memoryRequests: "512Mi"
       replicas: 2
       readinessDelay: 45
-      readinessTimeout: 15
+      readinessTimeout: 10
       readinessPeriod: 15
       keyVaults:
         prl:
