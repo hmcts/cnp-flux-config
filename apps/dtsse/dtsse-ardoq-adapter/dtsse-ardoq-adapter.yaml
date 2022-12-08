@@ -5,6 +5,16 @@ metadata:
 spec:
   releaseName: dtsse-ardoq-adapter
   interval: 1m
+  values:
+    job:
+      image: hmctspublic.azurecr.io/dtsse/ardoq-adapter:prod-* #{"$imagepolicy": "flux-system:dtsse-ardoq-adapter"}
+    keyVaults:
+      dtsse:
+        secrets:
+          - AppInsightsConnectionString
+          - ardoq-api-key
+          - ardoq-api-url
+          - ardoq-api-workspace
   chart:
     spec:
       chart: ./stable/dtsse-ardoq-adapter
