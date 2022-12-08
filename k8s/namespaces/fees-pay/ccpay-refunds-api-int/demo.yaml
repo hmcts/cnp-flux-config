@@ -7,9 +7,9 @@ spec:
     java:
       ingressClass: traefik-private
       disableIngressClassAnnotation: true
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-288-a5be31d-20221129160805 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-12616d2-20221130170603 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
       environment:
-        DUMMY_VARIABLE: true
+        DUMMY_VARIABLE: false
         POSTGRES_NAME: postgresqldb2
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
         PAYMENT_API_URL: "http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
