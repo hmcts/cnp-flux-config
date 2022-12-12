@@ -2,26 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: am
 bases:
-- ../../../namespaces/am
-- ../../../namespaces/am/namespace.yaml
-- ../../../namespaces/all-namespaces/nonprod-role.yaml
-- ../../../namespaces/am/am-judicial-booking-service/am-judicial-booking-service.yaml
+  - ../../../namespaces/am
 patchesStrategicMerge:
-- ../../../namespaces/am/am-org-role-mapping-service/ithc.yaml
-- ../../../namespaces/am/am-role-assignment-service/ithc.yaml
-- ../../../namespaces/am/am-judicial-booking-service/ithc.yaml
-
-patchesJson6902:
-- target:
-    group: rbac.authorization.k8s.io
-    version: v1
-    kind: RoleBinding
-    name: nonprod-team-permissions
-    namespace: am
-  patch: |-
-    - op: add
-      path: "/subjects"
-      value:
-        - apiGroup: rbac.authorization.k8s.io
-          kind: Group
-          name: "3e235565-1054-4b83-86c1-318d05dd4342"
+  - ../../../namespaces/am/am-org-role-mapping-service/ithc.yaml
+  - ../../../namespaces/am/am-role-assignment-service/ithc.yaml
+  - ../../../namespaces/am/am-judicial-booking-service/ithc.yaml

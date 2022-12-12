@@ -12,6 +12,7 @@ EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/perftest.yaml
   apps/docmosis/docmosis/sbox.yaml
   apps/flux-system/base/image-automation-components.yaml
+  apps/flux-system/base/image-automation-components-0.36.0.yaml
   apps/idam/idam-api/preview.yaml
   apps/idam/idam-api/sbox.yaml
   apps/idam/idam-web-admin/preview.yaml
@@ -28,6 +29,8 @@ EXCLUSIONS_LIST=(
   apps/probate/*
   k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
+  apps/*/*/demo
+  apps/*/demo
   k8s/demo/*
   *perftest.yaml
   k8s/perftest/*

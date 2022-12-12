@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-dg-docassembly
+  namespace: money-claims
+spec:
+  releaseName: cmc-dg-docassembly
+  interval: 1m
+  chart:
+    spec:
+      chart: ./stable/dg-docassembly
+      sourceRef:
+        name: hmcts-charts
+        kind: GitRepository
+        namespace: flux-system
+  values:
+    java:
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-69f3d37-20221212072607 #{"$imagepolicy": "flux-system:dg-docassembly"}

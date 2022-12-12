@@ -1,0 +1,59 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-claim-store
+  namespace: money-claims
+spec:
+  values:
+    java:
+      keyVaults:
+        cmc:
+          resourceGroup: cmc
+          secrets:
+            - AppInsightsInstrumentationKey
+            - cmc-db-password-v11
+            - citizen-oauth-client-secret
+            - claim-store-s2s-secret
+            - anonymous-caseworker-username
+            - anonymous-caseworker-password
+            - system-update-username
+            - system-update-password
+            - notify-api-key
+            - milo-recipient
+            - staff-email
+            - live-support-email
+            - rpa-email-sealed-claim
+            - rpa-email-breathing-space
+            - rpa-email-legal-sealed-claim
+            - rpa-email-more-time-requested
+            - rpa-email-response
+            - rpa-email-ccj
+            - rpa-email-paid-in-full
+            - launchDarkly-sdk-key
+            - sendgrid-api-key
+            - staff-email-legal-rep
+      environment:
+        CLAIM_STORE_TEST_SUPPORT_ENABLED: true
+        FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: false
+        FEATURE_TOGGLES_REMINDER_EMAILS: true
+        MILO_CSV_SCHEDULE: "0 0 8 * * ?"
+        CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
+        SCHEDULE_STATE_TRANSITION_WAITING_TRANSFER: ""
+        REFORM_ENVIRONMENT: perftest
+        FEATURE_AUTO_CANCEL_PAYMENTS: true
+        FEATURE_TOGGLES_CTSC_ENABLED: true
+        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net
+        OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
+        FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
+        STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: civilmoneyclaimsdemo@gmail.com
+        RPA_NOTIFICATIONS_LEGALSEALEDCLAIMRECIPIENT: civilmoneyclaimsdemo@gmail.com
+        SCHEDULE_ISSUE_CREATED_CLAIMS: 0 30 15 * * ?
+        STAFF_NOTIFICATIONS_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
+        RPA_NOTIFICATIONS_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
+        MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
+        RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
+        TEMP_VARIABLE_TO_RESTART: true
+        CMC_DB_USERNAME: cmc@cmc-db-v11-perftest
+        CMC_DB_HOST: cmc-db-v11-perftest.postgres.database.azure.com

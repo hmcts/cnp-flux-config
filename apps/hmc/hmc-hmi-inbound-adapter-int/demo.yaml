@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hmc-hmi-inbound-adapter-int
+  namespace: hmc
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/hmc/hmi-inbound-adapter:prod-af7cef8-20221208100148 #{"$imagepolicy": "flux-system:demo-hmc-hmi-inbound-adapter"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private

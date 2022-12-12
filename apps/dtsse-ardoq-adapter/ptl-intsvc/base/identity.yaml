@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: dtsse-ardoq-adapter
+  namespace: dtsse-ardoq-adapter
+spec:
+  type: 0
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: dtsse-ardoq-adapter-binding
+  namespace: dtsse-ardoq-adapter
+spec:
+  azureIdentity: dtsse-ardoq-adapter
+  selector: dtsse-ardoq-adapter
