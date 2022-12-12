@@ -1,13 +1,9 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: camunda-api
 spec:
   releaseName: camunda-api
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/camunda-bpm
   values:
     java:
       replicas: 4
@@ -16,3 +12,11 @@ spec:
       ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         CAMUNDA_API_AUTH_ENABLED: false
+  chart:
+    spec:
+      chart: ./stable/camunda-bpm
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
