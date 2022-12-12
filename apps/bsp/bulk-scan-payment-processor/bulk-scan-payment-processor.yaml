@@ -1,13 +1,9 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bulk-scan-payment-processor
 spec:
   releaseName: bulk-scan-payment-processor
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    path: stable/bulk-scan-payment-processor
-    ref: master
   values:
     java:
       replicas: 2
@@ -17,3 +13,11 @@ spec:
         image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-df7069d-20221212085057 #{"$imagepolicy": "flux-system:bulk-scan-payment-processor-payment-processor-test"}
       functionaltests:
         image: hmctspublic.azurecr.io/bulk-scan/payment-processor-test:prod-df7069d-20221212085057 #{"$imagepolicy": "flux-system:bulk-scan-payment-processor-payment-processor-test"}
+  chart:
+    spec:
+      chart: ./stable/bulk-scan-payment-processor
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

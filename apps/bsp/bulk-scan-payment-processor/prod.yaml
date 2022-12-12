@@ -1,14 +1,8 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bulk-scan-payment-processor
   namespace: bsp
-  annotations:
-    fluxcd.io/automated: "true"
-    repository.fluxcd.io/java: java.image
-    filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/java.smoketests: java.smoketests.image
-    filter.fluxcd.io/java.smoketests: glob:prod-*
 spec:
   values:
     java:
