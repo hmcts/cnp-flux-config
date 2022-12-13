@@ -1,14 +1,10 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: repl-docmosis-service
   namespace: ethos
 spec:
   releaseName: repl-docmosis-service
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/ethos-repl-docmosis-backend
   values:
     java:
       replicas: 2
@@ -16,3 +12,11 @@ spec:
       image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-1bd98da-20221213105644 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
     environment:
       SECURE_DOC_STORE_FEATURE: false
+  chart:
+    spec:
+      chart: ./stable/ethos-repl-docmosis-backend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
