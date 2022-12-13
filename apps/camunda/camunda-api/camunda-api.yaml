@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: camunda-api
+spec:
+  releaseName: camunda-api
+  values:
+    java:
+      replicas: 4
+      useInterpodAntiAffinity: true
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-813cde2-20221111121936 #{"$imagepolicy": "flux-system:camunda"}
+      ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+      environment:
+        CAMUNDA_API_AUTH_ENABLED: false
+  chart:
+    spec:
+      chart: ./stable/camunda-bpm
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

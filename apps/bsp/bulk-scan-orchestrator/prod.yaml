@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-orchestrator
+spec:
+  values:
+    java:
+      environment:
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        TRANSFORMATION_URL_DIVORCE: ""
+        DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "0 30 0/2 * * *"
+        DELETE_ENVELOPES_DLQ_MESSAGES_TTL: "PT72H"
+        CDAM_ENABLED: "true"
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        environment:
+          TEST_URL: "http://bulk-scan-orchestrator-java"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+      smoketests:
+        enabled: true

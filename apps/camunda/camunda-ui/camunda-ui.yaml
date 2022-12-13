@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: camunda-ui
+spec:
+  releaseName: camunda-ui
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-813cde2-20221111121936 #{"$imagepolicy": "flux-system:camunda"}
+      ingressHost: camunda-bpm.{{ .Values.global.environment }}.platform.hmcts.net
+      ingressSessionAffinity:
+        enabled: true
+      environment:
+        SPRING_PROFILES_ACTIVE: springauth
+      keyVaults:
+        camunda:
+          secrets:
+            - name: bpm-POSTGRES-PASS
+              alias: spring.datasource.password
+            - name: camunda-admin-password
+              alias: CAMUNDA_ADMIN_PASSWORD
+            - name: openid-client-id
+              alias: CLIENT_ID
+            - name: openid-client-secret
+              alias: CLIENT_SECRET
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+  chart:
+    spec:
+      chart: ./stable/camunda-bpm
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
