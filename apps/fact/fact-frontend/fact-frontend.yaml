@@ -1,13 +1,9 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: fact-frontend
 spec:
   releaseName: fact-frontend
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/fact-frontend
   values:
     nodejs:
       replicas: 2
@@ -20,3 +16,11 @@ spec:
           resourceGroup: fact
           secrets:
             - AppInsightsInstrumentationKey
+  chart:
+    spec:
+      chart: ./stable/fact-frontend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
