@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
@@ -13,14 +13,14 @@ spec:
         keyVaults:
           bulk-scan:
             secrets:
-            - name: storage-account-primary-key
-              alias: TEST_STORAGE_ACCOUNT_KEY
-            - name: storage-account-name
-              alias: TEST_STORAGE_ACCOUNT_NAME
-            - name: processed-envelopes-queue-send-shared-access-key-premium
-              alias: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
-            - name: test-s2s-secret
-              alias: TEST_S2S_SECRET
+              - name: storage-account-primary-key
+                alias: TEST_STORAGE_ACCOUNT_KEY
+              - name: storage-account-name
+                alias: TEST_STORAGE_ACCOUNT_NAME
+              - name: processed-envelopes-queue-send-shared-access-key-premium
+                alias: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+              - name: test-s2s-secret
+                alias: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://bulk-scan-processor-java"
           SLACK_CHANNEL: "bsp-test-notices"

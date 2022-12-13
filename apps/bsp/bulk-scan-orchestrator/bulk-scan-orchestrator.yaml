@@ -1,14 +1,10 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bulk-scan-orchestrator
 spec:
   releaseName: bulk-scan-orchestrator
   timeout: 600
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    path: stable/bulk-scan-orchestrator
-    ref: master
   values:
     java:
       replicas: 2
@@ -18,3 +14,11 @@ spec:
         image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-8494426-20221212121702 #{"$imagepolicy": "flux-system:bulk-scan-orchestrator-orchestrator-test"}
       functionaltests:
         image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-8494426-20221212121702 #{"$imagepolicy": "flux-system:bulk-scan-orchestrator-orchestrator-test"}
+  chart:
+    spec:
+      chart: ./stable/bulk-scan-orchestrator
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

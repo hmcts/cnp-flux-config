@@ -1,13 +1,7 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
-  annotations:
-    fluxcd.io/automated: "true"
-    repository.fluxcd.io/java: java.image
-    filter.fluxcd.io/java: glob:prod-*
-    repository.fluxcd.io/java.smoketests: java.smoketests.image
-    filter.fluxcd.io/java.smoketests: glob:prod-*
 spec:
   values:
     java:
@@ -27,8 +21,8 @@ spec:
         keyVaults:
           bulk-scan:
             secrets:
-            - name: test-s2s-secret
-              alias: TEST_S2S_SECRET
+              - name: test-s2s-secret
+                alias: TEST_S2S_SECRET
         environment:
           TEST_URL: "http://bulk-scan-processor-prod.service.core-compute-prod.internal"
           SLACK_CHANNEL: "bsp-test-notices"
