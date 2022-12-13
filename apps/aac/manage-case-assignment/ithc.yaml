@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: manage-case-assignment
@@ -8,14 +8,14 @@ spec:
       keyVaults:
         aac:
           secrets:
-          - AppInsightsInstrumentationKey
-          - aac-manage-case-s2s-secret
-          - idam-mca-client-secret
-          - idam-mca-system-user-username
-          - idam-mca-system-user-password
-          - idam-noc-approver-username
-          - idam-noc-approver-password
-          - notify-mca-api-key-secret
+            - AppInsightsInstrumentationKey
+            - aac-manage-case-s2s-secret
+            - idam-mca-client-secret
+            - idam-mca-system-user-username
+            - idam-mca-system-user-password
+            - idam-noc-approver-username
+            - idam-noc-approver-password
+            - notify-mca-api-key-secret
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,prl_cos_api
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
