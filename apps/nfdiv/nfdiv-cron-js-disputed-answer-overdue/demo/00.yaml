@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-js-disputed-answer-overdue
+spec:
+  releaseName: nfdiv-cron-js-disputed-answer-overdue
+  values:
+    job:
+      schedule: "0,20,40 * * * *"
+      environment:
+        NOTIFY_TEMPLATE_SIGN_IN_DIVORCE_URL: https://nfdiv-apply-for-divorce.demo.platform.hmcts.net/
+        NOTIFY_TEMPLATE_SIGN_IN_DISSOLUTION_URL: https://nfdiv-end-civil-partnership.demo.platform.hmcts.net/
+        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DIVORCE_URL: https://nfdiv-apply-for-divorce.demo.platform.hmcts.net/applicant2
+        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DISSOLUTION_URL: https://nfdiv-end-civil-partnership.demo.platform.hmcts.net/applicant2
+        S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        FEE_API_URL: http://fees-register-api-demo.service.core-compute-demo.internal
+        IDAM_API_REDIRECT_URL: https://div-pfe-demo.service.core-compute-demo.internal/authenticated
+        IDAM_API_BASEURL: https://idam-api.demo.platform.hmcts.net
+        CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        DOC_ASSEMBLY_URL: http://dg-docassembly-demo.service.core-compute-demo.internal
+        DOCUMENT_MANAGEMENT_URL: http://dm-store-demo.service.core-compute-demo.internal
+        PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
+        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

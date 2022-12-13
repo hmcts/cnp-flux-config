@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-js-disputed-answer-overdue
@@ -6,7 +6,7 @@ spec:
   releaseName: nfdiv-cron-js-disputed-answer-overdue
   values:
     job:
-      schedule: "10,30,50 * * * *"
+      schedule: "50 * * * *"
       environment:
         IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
         S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
@@ -27,3 +27,4 @@ spec:
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: prod
+
