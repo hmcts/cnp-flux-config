@@ -1,18 +1,19 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: bar-web-int
 spec:
   releaseName: bar-web-int
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/bar-web
   values:
     nodejs:
       replicas: 2
       image: hmctspublic.azurecr.io/bar/web:prod-73259c8-20221213122023 #{"$imagepolicy": "flux-system:bar-web"}
       ingressHost: bar-int.demo.platform.hmcts.net
+  chart:
+    spec:
+      chart: ./stable/bar-web
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
