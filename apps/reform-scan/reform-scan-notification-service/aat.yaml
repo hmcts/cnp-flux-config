@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: reform-scan-notification-service
@@ -14,10 +14,10 @@ spec:
         keyVaults:
           reform-scan:
             secrets:
-            - name: notification-queue-send-shared-access-key-premium
-              alias: NOTIFICATION_QUEUE_ACCESS_KEY_WRITE
-            - name: test-s2s-secret
-              alias: TEST_S2S_SECRET
+              - name: notification-queue-send-shared-access-key-premium
+                alias: NOTIFICATION_QUEUE_ACCESS_KEY_WRITE
+              - name: test-s2s-secret
+                alias: TEST_S2S_SECRET
         environment:
           NOTIFICATION_QUEUE_ACCESS_KEY_NAME_WRITE: "SendSharedAccessKey"
           NOTIFICATION_QUEUE_NAME: "notifications"

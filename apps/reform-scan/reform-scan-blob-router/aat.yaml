@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reform-scan-blob-router
+spec:
+  values:
+    java:
+      environment:
+        DELETE_DISPATCHED_FILES_CRON: "0/10 * * * * *"
+        SEND_NOTIFICATIONS_CRON: "0/10 * * * * *"
+        CREATE_RECONCILIATION_SUMMARY_REPORT_CRON: "* */1 * * * *"
+        CREATE_RECONCILIATION_SUMMARY_REPORT_ENABLED: "false"
+        CREATE_RECONCILIATION_DETAILED_REPORT_CRON: "* */5 * * * *"
+        CREATE_RECONCILIATION_DETAILED_REPORT_ENABLED: "false"
+      testsConfig:
+        serviceAccountName: tests-service-account
+        keyVaults:
+          reform-scan:
+            secrets:
+              - name: test-valid-key-store # Base64-encoded PKCS 12 key store, containing client's private key and certificate known to the API
+                alias: TEST_VALID_KEY_STORE
+              - name: test-valid-key-store-password
+                alias: TEST_VALID_KEY_STORE_PASSWORD
+              - name: test-expired-key-store # Base64-encoded PKCS 12 key store containing private key and certificate known to the API, but expired
+                alias: TEST_EXPIRED_KEY_STORE
+              - name: test-expired-key-store-password
+                alias: TEST_EXPIRED_KEY_STORE_PASSWORD
+              - name: test-not-yet-valid-key-store # Base64-encoded PKCS12 key store containing private key and certificate known to the API, but not yet valid
+                alias: TEST_NOT_YET_VALID_KEY_STORE
+              - name: test-not-yet-valid-key-store-password
+                alias: TEST_NOT_YET_VALID_KEY_STORE_PASSWORD
+              - name: test-subscription-key
+                alias: TEST_SUBSCRIPTION_KEY
+              - name: storage-account-secondary-key
+                alias: TEST_STORAGE_ACCOUNT_KEY
+              - name: storage-account-name
+                alias: TEST_STORAGE_ACCOUNT_NAME
+              - name: reconciliation-api-key
+                alias: TEST_RECONCILIATION_API_KEY
+        environment:
+          TEST_URL: "http://reform-scan-blob-router-java"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          TEST_STORAGE_CONTAINER_NAME: "bulkscan"
+          TEST_STORAGE_ACCOUNT_URL: "https://reformscan.aat.platform.hmcts.net"
+          API_GATEWAY_URL: "https://core-api-mgmt-aat.azure-api.net/reform-scan"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true
