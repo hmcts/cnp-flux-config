@@ -1,14 +1,10 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
 spec:
   releaseName: reform-scan-blob-router
   timeout: 600
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    path: stable/reform-scan-blob-router
-    ref: master
   values:
     java:
       replicas: 2
@@ -19,3 +15,11 @@ spec:
         image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-ef489f9-20221213095518 #{"$imagepolicy": "flux-system:reform-scan-blob-router-blob-router-test"}
       functionaltests:
         image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-ef489f9-20221213095518 #{"$imagepolicy": "flux-system:reform-scan-blob-router-blob-router-test"}
+  chart:
+    spec:
+      chart: ./stable/reform-scan-blob-router
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
