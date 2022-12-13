@@ -1,13 +1,9 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: dm-store-cdam
 spec:
   releaseName: dm-store-cdam
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/dm-store
   values:
     java:
       replicas: 0
@@ -24,3 +20,11 @@ spec:
         ENABLE_METADATA_MIGRATION: 'true'
         #        ENABLE_OVERRIDE_METADATA: 'true'
         DOCUMENT_METADATA_UPDATE_MILLISECONDS: '900000'
+  chart:
+    spec:
+      chart: ./stable/dm-store
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
