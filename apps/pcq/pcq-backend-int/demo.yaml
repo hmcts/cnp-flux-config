@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pcq-backend-int
+spec:
+  values:
+    java:
+      ingressHost: pcq-backend-int-demo.service.core-compute-demo.internal
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      environment:
+        S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+        DB_ALLOW_DELETE_RECORD: "false"
