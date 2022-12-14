@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-aip-frontend
+spec:
+  values:
+    nodejs:
+      disableTraefikTls: false
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-no-proxy
+      ingressHost: immigration-appeal.perftest.platform.hmcts.net
+      environment:
+        NODE_ENV: development
+        IDAM_WEB_URL: "https://idam-web-public.perftest.platform.hmcts.net"
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+        ASK_FOR_MORE_TIME_ENABLED: true
+        RESTART_ME: "Update due to vault change"
