@@ -3,12 +3,6 @@ kind: HelmRelease
 metadata:
   name: cmc-pay
   namespace: money-claims
-  annotations:
-    flux.weave.works/automated: "true"
-    repository.fluxcd.io/payment-api: payment-api.java.image
-    filter.fluxcd.io/payment-api: glob:prod-*
-    repository.fluxcd.io/fees-register-api: fees-register-api.java.image
-    filter.fluxcd.io/fees-register-api: glob:prod-*
 spec:
   values:
     global:
@@ -28,7 +22,7 @@ spec:
         image: hmctspublic.azurecr.io/fees-register/api:prod-c95f3c8-20221117172654 #{"$imagepolicy": "flux-system:fees-register-api"}
     payment-api:
       java:
-        image: hmctspublic.azurecr.io/payment/api:prod-b04b2f7-20221130171936 #{"$imagepolicy": "flux-system:ccpay-payment-app"}
+        image: hmctspublic.azurecr.io/payment/api:prod-c38634f-20221209101512 #{"$imagepolicy": "flux-system:ccpay-payment-app"}
         ingressHost: ""
         releaseNameOverride: "{{ .Release.Name }}-payment-api"
         secrets:

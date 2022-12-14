@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reform-scan-blob-router
+spec:
+  values:
+    java:
+      memoryLimits: "2048Mi"
+      environment:
+        # settings should be as prod-like as possible
+        STORAGE_BULKSCAN_URL: https://bulkscanperftest.blob.core.windows.net
+        HANDLE_REJECTED_FILES_CRON: "0 0 7 * * *"
+        REJECT_DUPLICATES_CRON: "0 0 6 * * *"
+        TASK_SCAN_DELAY: 300000

@@ -5,10 +5,14 @@ metadata:
   namespace: money-claims
 spec:
   releaseName: cmc-s2s
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/rpe-service-auth-provider
   values:
     java:
-      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-f2933e7-20221130145947 #{"$imagepolicy": "flux-system:cmc-s2s"}
+      image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-4186b8f-20221207093511 #{"$imagepolicy": "flux-system:cmc-s2s"}
+  chart:
+    spec:
+      chart: ./stable/rpe-service-auth-provider
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

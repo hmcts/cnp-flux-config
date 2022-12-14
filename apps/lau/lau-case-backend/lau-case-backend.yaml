@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: lau-case-backend
+spec:
+  releaseName: lau-case-backend
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/lau/case-backend:prod-2227b89-20221212134411 #{"$imagepolicy": "flux-system:lau-case-backend"}
+  chart:
+    spec:
+      chart: ./stable/lau-case-backend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
