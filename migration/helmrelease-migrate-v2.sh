@@ -91,6 +91,14 @@ git checkout apps/ clusters/ k8s/
     ./migration/helmrelease-migrate.sh apps/$NAMESPACE/
 
     for ENV in $ENVIRONMENTS; do
+      if [ -d "k8s/$ENV/cluster-00-overlay/$NAMESPACE/" ]; then
+          yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/cluster-00-overlay/kustomization.yaml
+          rm -r k8s/$ENV/cluster-00-overlay/$NAMESPACE
+      fi
+      if [ -d "k8s/$ENV/cluster-01-overlay/$NAMESPACE/" ]; then
+          yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/cluster-01-overlay/kustomization.yaml
+          rm -r k8s/$ENV/cluster-01-overlay/$NAMESPACE
+      fi
       # Remove namespace from environment common-overlay
       yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/common-overlay/kustomization.yaml
       # Remove fluxv1 kustomization for environment
