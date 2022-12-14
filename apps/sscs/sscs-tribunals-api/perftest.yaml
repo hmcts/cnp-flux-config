@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-api
+  namespace: sscs
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-2799-a344222-20220726150318 #{"$imagepolicy": "flux-system:perftest-sscs-tribunals-api"}
+      aadIdentityName: sscs
+      environment:
+        UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
+        PDF_SERVICE_CONVERT_URL: https://docmosis.perftest.platform.hmcts.net/rs/convert
+        PDF_SERVICE_HEALTH_URL: https://docmosis.perftest.platform.hmcts.net/rs/status
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.perftest.platform.hmcts.net/rs/render
+        ROOT_LOGGING_LEVEL: INFO
+        DUMMY_PARAM: true
+        ENHANCED_CONFIDENTIALITY_FEATURE: true
+        SSCS2_FEATURE: true
+        WORK_ALLOCATION_FEATURE: true
+        RD_LOCATION_REF_API_URL: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
+        GAPS_SWITCHOVER_FEATURE: true
+        CASE_ACCESS_MANAGEMENT_FEATURE: true
+        SCHEDULE_LISTING_FEATURE: true
