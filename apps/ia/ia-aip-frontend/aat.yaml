@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-aip-frontend
+spec:
+  values:
+    nodejs:
+      ingressHost: immigration-appeal.aat.platform.hmcts.net
+      environment:
+        IDAM_WEB_URL: "https://idam-web-public.aat.platform.hmcts.net"
+        IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
+        RESTART_ME: "1"
+        ASK_FOR_MORE_TIME_ENABLED: true
