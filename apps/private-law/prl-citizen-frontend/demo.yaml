@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: prl-citizen-frontend
@@ -6,9 +6,9 @@ metadata:
 spec:
   values:
     nodejs:
-      ingressSessionAffinity:
-        enabled: true
-        sessionCookieName: sticky
+      ingressClass: traefik-no-proxy
+      disableIngressClassAnnotation: true
+      disableTraefikTls: false
       image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-847ce88-20221212224053 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
@@ -16,7 +16,7 @@ spec:
       memoryRequests: "512Mi"
       replicas: 2
       readinessDelay: 45
-      readinessTimeout: 10
+      readinessTimeout: 15
       readinessPeriod: 15
       keyVaults:
         prl:
@@ -35,16 +35,16 @@ spec:
             - citizen-upload-docs-email
             - redis-access-key
       environment:
-        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
-        IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/login
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
         REFORM_SERVICE_NAME: prl-citizen-frontend
         REFORM_TEAM: prl
-        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
-        CCD_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
-        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
-        COS_URL: http://prl-cos-aat.service.core-compute-aat.internal
-        REDIS_HOST: prl-citizen-frontend-redis-aat.redis.cache.windows.net
+        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        COS_URL: http://prl-cos-demo.service.core-compute-demo.internal
+        REDIS_HOST: prl-citizen-frontend-redis-demo.redis.cache.windows.net
     global:
-      environment: aat
+      environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

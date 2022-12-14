@@ -1,17 +1,10 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: prl-cos
   namespace: private-law
 spec:
   releaseName: prl-cos
-  rollback:
-    enable: true
-    retry: true
-  chart:
-    git: git@github.com:hmcts/hmcts-charts
-    ref: master
-    path: stable/prl-cos
   values:
     java:
       replicas: 2
@@ -30,3 +23,11 @@ spec:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+  chart:
+    spec:
+      chart: ./stable/prl-cos
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
