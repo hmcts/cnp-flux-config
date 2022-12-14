@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ccd
-  - am
   - rd
   - em
   - nfdiv
@@ -10,12 +9,10 @@ bases:
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/flux-helm-operator
   - ../../namespaces/admin/flux-helm-operator/rbac/perftest-role-binding.yaml
-
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/perftest/flux.yaml
   - ../../namespaces/admin/flux/patches/perftest/cluster-00/flux.yaml
-
 patches:
   - path: ../perftest-helmrelease.yaml
     target:

@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: am-org-role-mapping-service
+spec:
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      environment:
+        AM_INFO: true
+        APPLICATION_LOGGING_LEVEL: DEBUG
+        REFRESH_JOB: LEGAL_OPERATIONS-CMC,UNSPEC-NEW-0-6
