@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-management-api
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-56d4a4d-20221213111551 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+      environment:
+        REFRESH_FLAG: ""

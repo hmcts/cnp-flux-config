@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-monitor
+spec:
+  values:
+    java:
+      environment:
+        OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
+        CONFIGURATION_CAMUNDA_MAX_RESULTS: "100"
+        PENDING_TERMINATION_CAMUNDA_MAX_RESULTS: "10"
+        INITIATION_CAMUNDA_MAX_RESULTS: 100
+        INITIATION_TIME_LIMIT: 180
+        INITIATION_TIME_LIMIT_FLAG: true
+        TERMINATION_CAMUNDA_MAX_RESULTS: 100
+        TERMINATION_TIME_LIMIT: 180
+        TERMINATION_TIME_LIMIT_FLAG: true

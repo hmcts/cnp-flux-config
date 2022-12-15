@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-management-api
+spec:
+  releaseName: wa-task-management-api
+  values:
+    java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 6
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-56d4a4d-20221213111551 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+  chart:
+    spec:
+      chart: ./stable/wa-task-management-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
