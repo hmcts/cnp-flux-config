@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: em-stitching
+spec:
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/em/stitching:pr-1288-fd3a2ca-20221215074324 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      environment:
+        TEST_VAR: value2
+        SHOW_SQL: true
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/10 7-20 * * *
