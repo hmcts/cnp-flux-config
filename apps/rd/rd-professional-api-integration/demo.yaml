@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rd-professional-api-integration
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      ingressHost: rd-professional-api-int-demo.service.core-compute-demo.internal
+      environment:
+        USER_PROFILE_URL: http://rd-user-profile-api-int-demo.service.core-compute-demo.internal
+        DELETE_ORG: true
+        ACTIVE_ORG_EXT: true
+        PRD_S2S_AUTHORISED_SERVICES: rd_professional_api,rd_user_profile_api,xui_webapp,finrem_payment_service,finrem_case_orchestration,fpl_case_service,iac,aac_manage_case_assignment,divorce_frontend,unspec_service,nfdiv_case_api,am_org_role_mapping_service,probate_backend
