@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-frontend
+  namespace: sscs
+spec:
+  values:
+    nodejs:
+      ingressHost: benefit-appeal.perftest.platform.hmcts.net
+      environment:
+        NODE_ENV: preprod
+        SERVICES_IDAM_CLIENTID: sscs
+        DUMMY2: false
+        CONTACT_US_WEBCHAT_ENABLED: "false"
+        FT_ALLOW_UC_HEARING_OPTIONS: "true"
+        MEDIA_FILES_ALLOWED_ENABLED: "true"
+        MULTIPLE_DRAFTS_ENABLED: "true"
+        DUMMY_PARAM: true

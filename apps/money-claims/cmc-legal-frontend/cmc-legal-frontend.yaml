@@ -5,6 +5,11 @@ metadata:
   namespace: money-claims
 spec:
   releaseName: cmc-legal-frontend
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-138edca-20220705151509 #{"$imagepolicy": "flux-system:cmc-legal-frontend"}
   chart:
     spec:
       chart: ./stable/cmc-legal-frontend
@@ -13,8 +18,3 @@ spec:
         name: hmcts-charts
         namespace: flux-system
       interval: 1m
-  values:
-    nodejs:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/legal-frontend:prod-138edca-20220705151509 #{"$imagepolicy": "flux-system:cmc-legal-frontend"}

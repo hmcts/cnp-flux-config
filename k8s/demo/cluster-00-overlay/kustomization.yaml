@@ -2,21 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ccd
-  - am
   - rd
-  - pcq
   - em
   - wa
   - nfdiv
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/flux-helm-operator
   - ../../namespaces/admin/flux-helm-operator/rbac/demo-role-binding.yaml
-
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/demo/flux.yaml
   - ../../namespaces/admin/flux/patches/demo/cluster-00/flux.yaml
-
 patches:
   - path: ../demo-helmrelease.yaml
     target:

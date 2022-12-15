@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bar-api
+spec:
+  releaseName: bar-api
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/bar/api:prod-23ad636-20221209002225 #{"$imagepolicy": "flux-system:bar-api"}
+      environment:
+        DUMMY_RESTART_VAR: false
+        POSTGRES_HOST: bar-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
+        POSTGRES_USERNAME: bar@bar-postgres-db-v11-{{ .Values.global.environment }}

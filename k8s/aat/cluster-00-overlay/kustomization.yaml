@@ -2,25 +2,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ccd
-  - am
   - em
   - rd
-  - pcq
-  - sscs
   - wa
   - nfdiv
   - ../../namespaces/admin/flux
   - ../../namespaces/admin/flux-helm-operator
   - ../../namespaces/admin/flux-helm-operator/rbac/aat-role-binding.yaml
-
 patchesStrategicMerge:
   #flux patches
   - ../../namespaces/admin/flux/patches/aat/flux.yaml
   - ../../namespaces/admin/flux/patches/aat/cluster-00/flux.yaml
-
 patches:
   - path: ../aat-helmrelease.yaml
     target:
       kind: HelmRelease
       annotationSelector: hmcts.github.com/global-defaults == enabled
-

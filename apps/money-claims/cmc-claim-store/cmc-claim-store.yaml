@@ -6,8 +6,12 @@ metadata:
 spec:
   releaseName: cmc-claim-store
   values:
-    nodejs:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-d7415bf-20221122154815 #{"$imagepolicy": "flux-system:cmc-claim-store"}
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-995ddc0-20221214174256 #{"$imagepolicy": "flux-system:cmc-claim-store"}
+      environment:
+        MANAGEMENT_HEALTH_MAIL_ENABLED: false
   chart:
     spec:
       chart: ./stable/cmc-claim-store
