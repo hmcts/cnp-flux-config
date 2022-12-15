@@ -2,4 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+  - ../../rd-commondata-dataload/rd-commondata-dataload.yaml
+  - ../../rd-judicial-data-load/rd-judicial-data-load.yaml
+  - ../../rd-location-ref-data-load-integration/rd-location-ref-data-load-integration.yaml
+  - ../../rd-judicial-data-load-integration/rd-judicial-data-load-integration.yaml
 namespace: rd
+patchesStrategicMerge:
+  - ../../rd-commondata-dataload/demo-00.yaml
+  - ../../rd-judicial-data-load/demo-00.yaml
+  - ../../rd-location-ref-data-load-integration/demo-00.yaml
+  - ../../rd-location-ref-data-load/demo-00.yaml
+  - ../../rd-judicial-data-load-integration/demo-00.yaml
