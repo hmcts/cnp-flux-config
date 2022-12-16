@@ -1,38 +1,16 @@
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: ccd-develop
   namespace: ccd
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java: "glob:prod-*"
-    repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
-    filter.fluxcd.io/ccd-admin-web: glob:prod-*
-    repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
-    filter.fluxcd.io/ccd-api-gateway-web: glob:pr-273-*
-    repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
-    filter.fluxcd.io/ccd-definition-store-api: glob:pr-469-*
-    repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
-    filter.fluxcd.io/ccd-user-profile-api: glob:pr-224-*
-    repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
-    filter.fluxcd.io/ccd-data-store-api: glob:pr-601-*
-
 spec:
   releaseName: ccd-develop
   timeout: 900
   forceUpgrade: true
-  rollback:
-    enable: true
-    force: true
-  chart:
-    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
-    name: ccd
-    version: 4.1.0
   values:
     tags:
       idam-pr: true
-
     ccd:
       managementWeb:
         enabled: true
@@ -52,7 +30,6 @@ spec:
         enabled: true
       testStubsService:
         enabled: true
-
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -60,7 +37,6 @@ spec:
       ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
       ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
       devMode: true
-
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-856ea531
@@ -69,7 +45,6 @@ spec:
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
-
     ccd-api-gateway-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-273-8f9561b0
@@ -78,7 +53,6 @@ spec:
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
-
     ccd-definition-store-api:
       java:
         devmemoryRequests: "1024Mi"
@@ -91,23 +65,27 @@ spec:
             disabled: false
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
-
     ccd-data-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-9ec48de2
-
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:pr-224-6d42bb16
-
     ccd-user-profile-importer:
       users:
-      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
-
+        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
     ccd-definition-importer:
       definitions:
-      - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
       userRoles:
-      - caseworker-autotest1
-      - caseworker-test
-      - caseworker
+        - caseworker-autotest1
+        - caseworker-test
+        - caseworker
+  chart:
+    spec:
+      chart: ccd
+      version: 4.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

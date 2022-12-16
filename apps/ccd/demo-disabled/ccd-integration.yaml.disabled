@@ -1,4 +1,4 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: ccd-integration
@@ -6,14 +6,6 @@ metadata:
 spec:
   releaseName: ccd-integration
   timeout: 900
-  #forceUpgrade: true
-  rollback:
-    enable: false
-    force: true
-  chart:
-    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
-    name: ccd
-    version: 5.0.0
   values:
     tags:
       idam-pr: false
@@ -122,3 +114,11 @@ spec:
         - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
       userRoles:
         - caseworker-autotest1
+  chart:
+    spec:
+      chart: ccd
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
