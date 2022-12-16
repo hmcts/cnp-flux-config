@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rd-commondata-dataload
+spec:
+  releaseName: rd-commondata-dataload
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/rd/commondata-dataload:prod-09e737a-20221208172315 #{"$imagepolicy": "flux-system:rd-commondata-dataload"}
+  chart:
+    spec:
+      chart: ./stable/rd-commondata-dataload
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
