@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ccd
 bases:
-- ../base
+  - ../base
 patchesStrategicMerge:
-- ../../ccd-next-hearing-date-updater/demo/01.yaml
+  - ../../ccd-next-hearing-date-updater/demo/01.yaml
+resources:
+  - ../../message-publisher/message-publisher.yaml

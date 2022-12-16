@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-case-print-service
+spec:
+  releaseName: ccd-case-print-service
+  values:
+    nodejs:
+      disableTraefikTls: false
+      java:
+      enableOAuth: true
+      image: hmctspublic.azurecr.io/ccd/case-print-service:pr-428-e318a2c-20221206135254 #{"$imagepolicy": "flux-system:demo-ccd-case-print-service"}
+      environment:
+        DUMMY_VAR_TO_REDEPLOY: 1
