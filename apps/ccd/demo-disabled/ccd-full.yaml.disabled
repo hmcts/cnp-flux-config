@@ -1,16 +1,38 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ccd-full
   namespace: ccd
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.java: "glob:prod-*"
+    repository.fluxcd.io/ccd-admin-web: ccd-admin-web.nodejs.image
+    filter.fluxcd.io/ccd-admin-web: glob:prod-*
+    repository.fluxcd.io/ccd-api-gateway-web: ccd-api-gateway-web.nodejs.image
+    filter.fluxcd.io/ccd-api-gateway-web: glob:prod-*
+    repository.fluxcd.io/ccd-definition-store-api: ccd-definition-store-api.java.image
+    filter.fluxcd.io/ccd-definition-store-api: glob:prod-*
+    repository.fluxcd.io/ccd-user-profile-api: ccd-user-profile-api.java.image
+    filter.fluxcd.io/ccd-user-profile-api: glob:prod-*
+    repository.fluxcd.io/ccd-data-store-api: ccd-data-store-api.java.image
+    filter.fluxcd.io/ccd-data-store-api: glob:prod-*
+
 spec:
   releaseName: ccd-full
   timeout: 900
   forceUpgrade: true
+  rollback:
+    enable: true
+    force: true
+  chart:
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
+    name: ccd
+    version: 4.2.4
   values:
     tags:
       idam-pr: true
+
     ccd:
       managementWeb:
         enabled: true
@@ -28,6 +50,7 @@ spec:
         enabled: true
       printService:
         enabled: true
+
     global:
       idamApiUrl: https://idam-api.demo.platform.hmcts.net
       idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
@@ -37,6 +60,7 @@ spec:
       devMode: true
       environment: demo
       dummy: true
+
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-358bf5d6
@@ -45,6 +69,7 @@ spec:
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
+
     ccd-api-gateway-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
@@ -55,6 +80,7 @@ spec:
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
+
     ccd-case-activity-api:
       nodejs:
         ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
@@ -66,6 +92,7 @@ spec:
         keyVaults:
       redis:
         enabled: true
+
     ccd-definition-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-396d9e70
@@ -76,29 +103,24 @@ spec:
             disabled: false
         environment:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+
     ccd-data-store-api:
       java:
         image: hmctspublic.azurecr.io/ccd/data-store-api:prod-a4a655ea
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
+
     ccd-user-profile-api:
       java:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-5e9bc0de
     ccd-user-profile-importer:
       users:
-        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+      - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+
     ccd-definition-importer:
       waitHosts: "ccd-full-ccd-definition-store:80"
       waitHostsTimeout: 600
       definitions:
-        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+      - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
       userRoles:
-        - caseworker-autotest1
-  chart:
-    spec:
-      chart: ccd
-      version: 4.2.4
-      sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
-        namespace: flux-system
+      - caseworker-autotest1
