@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-aip-frontend
+spec:
+  releaseName: ia-aip-frontend
+  values:
+    nodejs:
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-7235c4b-20221208112210 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
+      environment:
+        TIMELINE_ENABLED: true
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+  chart:
+    spec:
+      chart: ./stable/ia-aip-frontend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

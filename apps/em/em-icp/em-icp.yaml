@@ -5,11 +5,14 @@ metadata:
 spec:
   releaseName: em-icp
   values:
-    java:
+    nodejs:
+      replicas: 0
       useInterpodAntiAffinity: true
-      replicas: 2
-      image: hmctspublic.azurecr.io/em/icp:prod-394eca8-20221205113747 #{"$imagepolicy": "flux-system:em-icp"}
+      image: hmctspublic.azurecr.io/em/icp:prod-3ebd541-20221215171801 #{"$imagepolicy": "flux-system:em-icp"}
+      ingressHost: em-icp-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
+        SLACK_CHANNEL: "em-dev-chat"
+        SLACK_NOTIFY_SUCCESS: "true"
   chart:
     spec:
       chart: ./stable/em-icp

@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fact-admin
+spec:
+  values:
+    nodejs:
+      disableTraefikTls: false
+      enableOAuth: true
+      image: hmctspublic.azurecr.io/fact/admin:prod-1e57c87-20221209152415 #{"$imagepolicy": "flux-system:fact-admin"}
+      environment:
+        NODE_ENV: development
+        SECURE_FLAG: false

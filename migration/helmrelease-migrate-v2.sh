@@ -28,8 +28,9 @@ git checkout apps/ clusters/ k8s/
       mkdir -p apps/$NAMESPACE/$APPLICATION
    fi
 
+   git mv k8s/namespaces/$NAMESPACE/$APPLICATION/$FILE_NAME apps/$NAMESPACE/$APPLICATION/
+
    if [[ "$ENVIRONMENTS" == *"$FILE_SHORT_NAME"* ]] ; then
-     mv k8s/namespaces/$NAMESPACE/$APPLICATION/$FILE_NAME apps/$NAMESPACE/$APPLICATION/
 
      if [[ $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION/$FILE_NAME'*")' k8s/$FILE_SHORT_NAME/common-overlay/$NAMESPACE/kustomization.yaml) ]]; then
 
@@ -39,8 +40,6 @@ git checkout apps/ clusters/ k8s/
      fi
 
    elif [[ "$APPLICATION" == *"$FILE_SHORT_NAME"* ]] ; then
-     mv k8s/namespaces/$NAMESPACE/$APPLICATION/$FILE_NAME apps/$NAMESPACE/$APPLICATION/
-
      if [[ $(yq '.bases[] | select(. == "*'$APPLICATION'*")' k8s/namespaces/$NAMESPACE/kustomization.yaml) ]]; then
 
          if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/base/kustomization.yaml) ]]; then
@@ -56,12 +55,34 @@ git checkout apps/ clusters/ k8s/
          if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/base/kustomization.yaml) ]]; then
              NAMESPACE_PATH="../../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/base/kustomization.yaml
          fi
+    fi
+    if [ -d "k8s/$ENV/cluster-00-overlay/$NAMESPACE/" ]; then
+      if [[ $(yq '.bases[] | select(. == "*'$APPLICATION/$FILE_NAME'*")' k8s/$ENV/cluster-00-overlay/$NAMESPACE/kustomization.yaml) ]]; then
+          if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/00/kustomization.yaml) ]]; then
+                       NAMESPACE_PATH="../../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/00/kustomization.yaml
+          fi
 
       fi
+    fi
+    if [ -d "k8s/$ENV/cluster-01-overlay/$NAMESPACE/" ]; then
+      if [[ $(yq '.bases[] | select(. == "*'$APPLICATION/$FILE_NAME'*")' k8s/$ENV/cluster-01-overlay/$NAMESPACE/kustomization.yaml) ]]; then
+          if [[ -z $(yq '.resources[] | select(. == "*'$APPLICATION'*")' apps/$NAMESPACE/$ENV/01/kustomization.yaml) ]]; then
+                       NAMESPACE_PATH="../../$APPLICATION/$APPLICATION.yaml" yq eval -i '.resources += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$ENV/01/kustomization.yaml
+          fi
 
+      fi
+    fi
     done
    else
-     echo "this $FILE_NAME is not handled" && exit 1
+     PATCH_ENV=$(echo $FILE_SHORT_NAME | cut -d '-' -f1)
+     PATCH_CLUSTER=$(echo $FILE_SHORT_NAME | cut -d '-' -f2)
+      if [[ $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION/$FILE_NAME'*")' k8s/$PATCH_ENV/cluster-$PATCH_CLUSTER-overlay/$NAMESPACE/kustomization.yaml) ]]; then
+
+              if [[ -z $(yq '.patchesStrategicMerge[] | select(. == "*'$APPLICATION/$FILE_NAME'*")' apps/$NAMESPACE/$PATCH_ENV/$PATCH_CLUSTER/kustomization.yaml) ]]; then
+                    NAMESPACE_PATH="../../$APPLICATION/$FILE_NAME" yq eval -i '.patchesStrategicMerge += [env(NAMESPACE_PATH)]' apps/$NAMESPACE/$PATCH_ENV/$PATCH_CLUSTER/kustomization.yaml
+              fi
+      fi
+
    fi
   done
 
@@ -70,6 +91,14 @@ git checkout apps/ clusters/ k8s/
     ./migration/helmrelease-migrate.sh apps/$NAMESPACE/
 
     for ENV in $ENVIRONMENTS; do
+      if [ -d "k8s/$ENV/cluster-00-overlay/$NAMESPACE/" ]; then
+          yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/cluster-00-overlay/kustomization.yaml
+          rm -r k8s/$ENV/cluster-00-overlay/$NAMESPACE
+      fi
+      if [ -d "k8s/$ENV/cluster-01-overlay/$NAMESPACE/" ]; then
+          yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/cluster-01-overlay/kustomization.yaml
+          rm -r k8s/$ENV/cluster-01-overlay/$NAMESPACE
+      fi
       # Remove namespace from environment common-overlay
       yq 'del( .bases[] | select(. == "'$NAMESPACE'") )' -i k8s/$ENV/common-overlay/kustomization.yaml
       # Remove fluxv1 kustomization for environment

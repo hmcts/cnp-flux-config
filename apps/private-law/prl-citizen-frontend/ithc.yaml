@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prl-citizen-frontend
+  namespace: private-law
+spec:
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-674-33e7196-20221212113313 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
+      cpuLimits: "1000m"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "512Mi"
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 15
+      readinessPeriod: 10
+      keyVaults:
+        prl:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - prl-citizen-frontend-idam-client-secret
+            - postcode-lookup-token
+            - prl-cos-idam-client-secret
+            - microservicekey-prl-cos-api
+            - microservicekey-prl-citizen-frontend
+            - system-update-user-username
+            - system-update-user-password
+            - idam-solicitor-username
+            - idam-solicitor-password
+            - launchDarkly-sdk-key
+            - citizen-upload-docs-email
+            - redis-access-key
+      environment:
+        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.ithc.platform.hmcts.net/login
+        REFORM_SERVICE_NAME: prl-citizen-frontend
+        REFORM_TEAM: prl
+        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        CCD_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
+        COS_URL: http://prl-cos-ithc.service.core-compute-ithc.internal
+        REDIS_HOST: prl-citizen-frontend-redis-ithc.redis.cache.windows.net
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

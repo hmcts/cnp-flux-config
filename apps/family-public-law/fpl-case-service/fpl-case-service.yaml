@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  labels:
+    hmcts.github.com/envInjector: enabled
+    slackChannel: fpla-tech
+  name: fpl-case-service
+spec:
+  releaseName: fpl-case-service
+  values:
+    java:
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-961f80e-20221215104924 #{"$imagepolicy": "flux-system:fpl-case-service"}
+  chart:
+    spec:
+      chart: ./stable/fpl-case-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

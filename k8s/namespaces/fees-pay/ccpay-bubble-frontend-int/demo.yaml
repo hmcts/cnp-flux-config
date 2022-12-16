@@ -8,7 +8,7 @@ spec:
     nodejs:
       disableTraefikTls: false
       ingressClass: traefik-no-proxy
-      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:pr-719-f9b4af3-20221212133637 #{"$imagepolicy": "flux-system:demo-int-ccpay-bubble-frontend"}
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:pr-719-a8ca7eb-20221215151202 #{"$imagepolicy": "flux-system:demo-int-ccpay-bubble-frontend"}
       environment:
         DUMMY_RESTART_VAR: false
         PCIPAL_ANTENNA_URL: https://paybubble-int.{{ .Values.global.environment }}.platform.hmcts.net/ccd-search
@@ -18,3 +18,4 @@ spec:
         CCPAY_BULKSCAN_API_URL: http://ccpay-bulkscanning-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         FEE_REGISTRATION_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/fees-register/fees
         FEE_JURISDICTION_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/jurisdictions
+        CCPAY_NOTIFICATION_API_URL: http://ccpay-notifications-service-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
