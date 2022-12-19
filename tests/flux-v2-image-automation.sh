@@ -27,19 +27,15 @@ EXCLUSIONS_LIST=(
   apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
   apps/probate/*
-  k8s/namespaces/docmosis/docmosis/aat.yaml
   *demo.yaml
   apps/*/*/demo
   apps/*/demo
-  k8s/demo/*
   *perftest.yaml
-  k8s/perftest/*
-  k8s/ithc/*
   *ithc.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
-FILE_LOCATIONS="apps k8s"
+FILE_LOCATIONS="apps"
 
 for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 
