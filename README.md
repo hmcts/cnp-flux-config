@@ -1,27 +1,9 @@
 # cnp-flux-config
-Flux config for AKS clusters
+Flux v2 config for CFT AKS clusters
 
 ## Repo Structure
 
-This repo is currently being migrated to Flux V2.
-
 Please see [Repo setup](docs/repo-setup.md) for details on how this repo is organized and meant to work.
-
-### Migration status
-
-| Environment  | Instances running | Status |
-| ------------- | ------------- | ------------- |
-| Prod | Flux V1 & V2  | Migration in progress
-| AAT |  Flux V1 & V2  | Migration in progress
-| Demo|  Flux V1 & V2  | Migration in progress
-| ITHC | Flux V1 & V2 | Migration in progress
-| Perftest | Flux V1 & V2 | Migration in progress
-| Preview | Flux V2  | Migrated
-| Sandbox | Flux V2  | Migrated
-| Mgmt (cftptl) | Flux V2  | Migrated
-| Mgmt sbox | Flux V2  | Migrated
-
-**Note**: Image automation responsibility for all environments has been moved to Flux v2
 
 ## Adding an app to flux
 
