@@ -27,11 +27,11 @@ EXCLUSIONS_LIST=(
   apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
   apps/probate/*
-  *demo.yaml
+  *demo*.yaml
   apps/*/*/demo
   apps/*/demo
-  *perftest.yaml
-  *ithc.yaml
+  *perftest*.yaml
+  *ithc*.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
