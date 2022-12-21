@@ -30,8 +30,8 @@ EXCLUSIONS_LIST=(
   *demo*.yaml
   apps/*/*/demo
   apps/*/demo
-  *perftest.yaml
-  *ithc.yaml
+  *perftest*.yaml
+  *ithc*.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
