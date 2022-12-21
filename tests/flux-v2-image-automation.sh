@@ -7,8 +7,6 @@ kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize
 EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/docmosis.yaml
   apps/docmosis/docmosis/aat.yaml
-  apps/docmosis/docmosis/ithc.yaml
-  apps/docmosis/docmosis/perftest.yaml
   apps/docmosis/docmosis/sbox.yaml
   apps/flux-system/base/image-automation-components.yaml
   apps/flux-system/base/image-automation-components-0.36.0.yaml
