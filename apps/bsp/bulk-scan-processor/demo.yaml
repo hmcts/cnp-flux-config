@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-processor
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      environment:
+        #60 days in seconds
+        SAS_TOKEN_VALIDITY: "5184000"
+        DELETE_REJECTED_FILES_TTL: PT1H
+        CDAM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
+        PRIVATELAW_ENABLED: true
+        QUEUE_NOTIFICATIONS_NAMESPACE: reform-scan-servicebus-demo-premium
+        BULK_SCANNING_DB_USER_NAME: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
+        BULK_SCANNING_DB_HOST: bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
+        FLYWAY_USER: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
+        REFRESH_PODS: "yes"

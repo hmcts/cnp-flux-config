@@ -1,0 +1,157 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-case-notifications-api
+spec:
+  values:
+    java:
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: ia-gov-notify-key
+              alias: IA_GOV_NOTIFY_KEY
+            - name: ia-bail-gov-notify-key
+              alias: IA_BAIL_GOV_NOTIFY_KEY
+            - name: hearing-centre-bradford-email
+              alias: IA_HEARING_CENTRE_BRADFORD_EMAIL
+            - name: hearing-centre-manchester-email
+              alias: IA_HEARING_CENTRE_MANCHESTER_EMAIL
+            - name: hearing-centre-newport-email
+              alias: IA_HEARING_CENTRE_NEWPORT_EMAIL
+            - name: hearing-centre-taylor-house-email
+              alias: IA_HEARING_CENTRE_TAYLOR_HOUSE_EMAIL
+            - name: hearing-centre-north-shields-email
+              alias: IA_HEARING_CENTRE_NORTH_SHIELDS_EMAIL
+            - name: hearing-centre-birmingham-email
+              alias: IA_HEARING_CENTRE_BIRMINGHAM_EMAIL
+            - name: hearing-centre-hatton-cross-email
+              alias: IA_HEARING_CENTRE_HATTON_CROSS_EMAIL
+            - name: hearing-centre-glasgow-email
+              alias: IA_HEARING_CENTRE_GLASGOW_EMAIL
+            - name: home-office-bradford-email
+              alias: IA_HOME_OFFICE_BRADFORD_EMAIL
+            - name: home-office-manchester-email
+              alias: IA_HOME_OFFICE_MANCHESTER_EMAIL
+            - name: home-office-newport-email
+              alias: IA_HOME_OFFICE_NEWPORT_EMAIL
+            - name: home-office-taylor-house-email
+              alias: IA_HOME_OFFICE_TAYLOR_HOUSE_EMAIL
+            - name: home-office-north-shields-email
+              alias: IA_HOME_OFFICE_NORTH_SHIELDS_EMAIL
+            - name: home-office-birmingham-email
+              alias: IA_HOME_OFFICE_BIRMINGHAM_EMAIL
+            - name: home-office-hatton-cross-email
+              alias: IA_HOME_OFFICE_HATTON_CROSS_EMAIL
+            - name: home-office-glasgow-email
+              alias: IA_HOME_OFFICE_GLASGOW_EMAIL
+            - name: home-office-apc-email
+              alias: IA_HOME_OFFICE_APC_EMAIL
+            - name: ftpa-home-office-bradford-email
+              alias: IA_FTPA_HOME_OFFICE_BRADFORD_EMAIL
+            - name: ftpa-home-office-taylor-house-email
+              alias: IA_FTPA_HOME_OFFICE_TAYLOR_HOUSE_EMAIL
+            - name: ftpa-home-office-north-shields-email
+              alias: IA_FTPA_HOME_OFFICE_NEWCASTLE_EMAIL
+            - name: ftpa-home-office-hatton-cross-email
+              alias: IA_FTPA_HOME_OFFICE_HATTON_CROSS_EMAIL
+            - name: hearing-centre-bradford-telephone
+              alias: IA_HEARING_CENTRE_BRADFORD_TELEPHONE
+            - name: hearing-centre-manchester-telephone
+              alias: IA_HEARING_CENTRE_MANCHESTER_TELEPHONE
+            - name: hearing-centre-newport-telephone
+              alias: IA_HEARING_CENTRE_NEWPORT_TELEPHONE
+            - name: hearing-centre-taylor-house-telephone
+              alias: IA_HEARING_CENTRE_TAYLOR_HOUSE_TELEPHONE
+            - name: hearing-centre-north-shields-telephone
+              alias: IA_HEARING_CENTRE_NORTH_SHIELDS_TELEPHONE
+            - name: hearing-centre-birmingham-telephone
+              alias: IA_HEARING_CENTRE_BIRMINGHAM_TELEPHONE
+            - name: hearing-centre-hatton-cross-telephone
+              alias: IA_HEARING_CENTRE_HATTON_CROSS_TELEPHONE
+            - name: hearing-centre-glasgow-telephone
+              alias: IA_HEARING_CENTRE_GLASGOW_TELEPHONE
+            - name: respondent-evidence-direction-email
+              alias: IA_RESPONDENT_EVIDENCE_DIRECTION_EMAIL
+            - name: respondent-review-direction-email
+              alias: IA_RESPONDENT_REVIEW_DIRECTION_EMAIL
+            - name: respondent-non-standard-direction-until-listing-email
+              alias: IA_RESPONDENT_NON_STANDARD_DIRECTION_UNTIL_LISTING_EMAIL
+            - name: home-office-end-appeal-email
+              alias: IA_HOME_OFFICE_END_APPEAL_EMAIL
+            - name: home-office-allowed-appeal-email
+              alias: IA_HOME_OFFICE_ALLOWED_APPEAL_EMAIL
+            - name: home-office-dismissed-appeal-email
+              alias: IA_HOME_OFFICE_DISMISSED_APPEAL_EMAIL
+            - name: admin-officer-review-hearing-requirements-email
+              alias: IA_ADMIN_OFFICER_REVIEW_HEARING_REQUIREMENTS_EMAIL
+            - name: ctsc-admin-ftpa-decision-email
+              alias: IA_CTSC_ADMIN_FTPA_DECISION
+            - name: ctsc-admin-ftpa-submitted-email
+              alias: IA_CTSC_ADMIN_FTPA_SUBMITTED
+            - name: respondent-ftpa-submitted-email
+              alias: IA_RESPONDENT_FTPA_SUBMITTED
+            - name: customer-services-telephone
+              alias: IA_CUSTOMER_SERVICES_TELEPHONE
+            - name: customer-services-email
+              alias: IA_CUSTOMER_SERVICES_EMAIL
+            - name: system-username
+              alias: IA_SYSTEM_USERNAME
+            - name: system-password
+              alias: IA_SYSTEM_PASSWORD
+            - name: idam-client-id
+              alias: IA_IDAM_CLIENT_ID
+            - name: idam-secret
+              alias: IA_IDAM_SECRET
+            - name: idam-redirect-uri
+              alias: IA_IDAM_REDIRECT_URI
+            - name: s2s-secret
+              alias: IA_S2S_SECRET
+            - name: s2s-microservice
+              alias: IA_S2S_MICROSERVICE
+            - name: dm-url
+              alias: DM_URL
+            - name: ccd-url
+              alias: CCD_URL
+            - name: idam-url
+              alias: IDAM_URL
+            - name: s2s-url
+              alias: S2S_URL
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: fees-admin-officer-email
+              alias: FEES_ADMIN_OFFICER_EMAIL
+            - name: payment-exceptions-admin-officer-email
+              alias: PAYMENT_EXCEPTIONS_ADMIN_OFFICER_EMAIL
+            - name: home-office-email-apc
+              alias: HOME_OFFICE_EMAIL_APC
+            - name: home-office-email-lart
+              alias: HOME_OFFICE_EMAIL_LART
+            - name: upper-tribunal-notices-email
+              alias: IA_UPPER_TRIBUNAL_NOTICES_EMAIL
+            - name: nbc-email
+              alias: IA_NBC_EMAIL
+            - name: ctsc-email
+              alias: IA_CTSC_EMAIL
+            - name: launch-darkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: bail-hearing-centre-bradford-email
+              alias: IA_BAIL_HEARING_CENTRE_BRADFORD_EMAIL
+            - name: bail-hearing-centre-birmingham-email
+              alias: IA_BAIL_HEARING_CENTRE_BIRMINGHAM_EMAIL
+            - name: bail-hearing-centre-newport-email
+              alias: IA_BAIL_HEARING_CENTRE_NEWPORT_EMAIL
+            - name: bail-hearing-centre-taylor-house-email
+              alias: IA_BAIL_HEARING_CENTRE_TAYLOR_HOUSE_EMAIL
+            - name: bail-hearing-centre-hatton-cross-email
+              alias: IA_BAIL_HEARING_CENTRE_HATTON_CROSS_EMAIL
+            - name: bail-hearing-centre-manchester-email
+              alias: IA_BAIL_HEARING_CENTRE_MANCHESTER_EMAIL
+            - name: bail-hearing-centre-glasgow-email
+              alias: IA_BAIL_HEARING_CENTRE_GLASGOW_EMAIL
+            - name: bail-hearing-centre-yarlswood-email
+              alias: IA_BAIL_HEARING_CENTRE_YARLSWOOD_EMAIL
+            - name: bail-home-office-email
+              alias: IA_BAIL_HOME_OFFICE_EMAIL
+            - name: bail-test-applicant-mobile
+              alias: IA_TEST_APPLICANT_MOBILE

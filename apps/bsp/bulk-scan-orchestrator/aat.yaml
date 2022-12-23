@@ -1,0 +1,72 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-orchestrator
+spec:
+  values:
+    java:
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            secrets:
+              - name: s2s-secret-bulk-scan-orchestrator
+                alias: S2S_SECRET
+              - name: s2s-secret
+                alias: PROCESSOR_S2S_SECRET
+              - name: idam-users-bulkscan-username
+                alias: IDAM_USER_NAME
+              - name: idam-users-bulkscan-password
+                alias: IDAM_USER_PASSWORD
+              - name: idam-client-secret
+                alias: IDAM_CLIENT_SECRET
+              - name: envelopes-queue-send-shared-access-key-premium
+                alias: ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+              - name: envelopes-queue-listen-shared-access-key-premium
+                alias: ENVELOPES_QUEUE_READ_ACCESS_KEY
+              - name: payments-queue-send-shared-access-key-premium
+                alias: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
+                # following can be removed once https://github.com/hmcts/bulk-scan-orchestrator/pull/1141 is deployed
+              - name: envelopes-queue-send-connection-string-premium
+                alias: ENVELOPES_QUEUE_WRITE_CONN_STRING
+              - name: envelopes-queue-listen-connection-string-premium
+                alias: ENVELOPES_QUEUE_READ_CONN_STRING
+              - name: payments-queue-send-connection-string-premium
+                alias: PAYMENTS_QUEUE_WRITE_CONN_STRING
+              - name: orchestrator-POSTGRES-PASS
+                alias: DB_PASSWORD
+              - name: orchestrator-POSTGRES-USER
+                alias: DB_USER
+              - name: orchestrator-POSTGRES-HOST
+                alias: DB_HOST
+              - name: orchestrator-POSTGRES-PORT
+                alias: DB_PORT
+              - name: orchestrator-POSTGRES-DATABASE
+                alias: DB_NAME
+        environment:
+          TEST_URL: "http://bulk-scan-orchestrator-java"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          S2S_NAME: "bulk_scan_orchestrator"
+          PROCESSOR_S2S_NAME: "bulk_scan_processor"
+          S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          DOCUMENT_MANAGEMENT_URL: "http://dm-store-aat.service.core-compute-aat.internal"
+          CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+          IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
+          IDAM_CLIENT_REDIRECT_URI: "https://bulk-scan-orchestrator-aat.service.core-compute-aat.internal/oauth2/callback"
+          QUEUE_NAMESPACE: "bulk-scan-servicebus-aat-premium"
+          QUEUE_ENVELOPES_NAME: "envelopes"
+          QUEUE_PAYMENTS_NAME: "payments"
+          QUEUE_READ_ACCESS_KEY_NAME: "ListenSharedAccessKey"
+          QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
+          FLYWAY_SKIP_MIGRATIONS: true
+          DB_CONN_OPTIONS: "?sslmode=require"
+          DB_DRIVER: "org.postgresql.Driver"
+          DB_URI: "jdbc:postgresql"
+          CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-aat.service.core-compute-aat.internal"
+          CDAM_ENABLED: "true"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

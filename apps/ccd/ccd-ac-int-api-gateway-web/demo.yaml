@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-ac-int-api-gateway-web
+spec:
+  releaseName: ccd-ac-int-api-gateway-web
+  values:
+    nodejs:
+      disableTraefikTls: false
+      enableOAuth: true
+      image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5b5a491-20221216113241 #{"$imagepolicy": "flux-system:ccd-ac-int-api-gateway-web"}

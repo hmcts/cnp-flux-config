@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-case-payments-api
+spec:
+  releaseName: ia-case-payments-api
+  values:
+    java:
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/case-payments-api:prod-8f28905-20221208104308 #{"$imagepolicy": "flux-system:ia-case-payments-api"}
+  chart:
+    spec:
+      chart: ./stable/ia-case-payments-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

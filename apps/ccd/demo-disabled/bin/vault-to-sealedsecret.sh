@@ -3,7 +3,7 @@
 # <eg., ccd-importer-autotest-email>  and create encrypted secret
 # which will be used in Kubernetes cluster. 
 # eg, run as follows on Demo
-# vault-to-sealedsecret.sh demo /workspace/hmcts/cnp-flux-config/k8s/demo/pub-cert.pem ccd 
+# vault-to-sealedsecret.sh demo /workspace/hmcts/cnp-flux-config/clusters/demo/pub-cert.pem ccd
 
 env=$1
 cert=$2

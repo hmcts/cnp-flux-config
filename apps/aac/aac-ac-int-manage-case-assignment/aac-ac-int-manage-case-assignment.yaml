@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aac-ac-int-manage-case-assignment
+spec:
+  releaseName: aac-ac-int-manage-case-assignment
+  values:
+    java:
+      replicas: 1
+      useInterpodAntiAffinity: true
+      ingressHost: aac-ac-int-manage-case-assignment-demo.service.core-compute-demo.internal
+      environment:
+        SPRING_CACHE_CAFFEINE_SPEC: expireAfterWrite=1800s
+        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,nfdiv_case_api,prl-cos-api
+        MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
+        CCD_DEFINITION_STORE_API_BASE_URL: http://ccd-ac-int-definition-store-api-demo.service.core-compute-demo.internal
+        MCA_DEF_STORE_PROXY_URLS_ALLOWED_LIST: /api/display/challenge-questions.*
+        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        DUMMMY_TO_START: 1
+  chart:
+    spec:
+      chart: ./stable/aac-manage-case-assignment
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-aip-frontend
+spec:
+  values:
+    nodejs:
+      ingressHost: www.appeal-immigration-asylum-decision.service.gov.uk
+      environment:
+        IDAM_WEB_URL: "https://hmcts-access.service.gov.uk"
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        PCQ_URL: "https://equality-and-diversity.platform.hmcts.net"
+        PCQ_RETURN_URL: "www.appeal-immigration-asylum-decision.service.gov.uk/about-appeal"
+        DOCMOSIS_RENDER_URL: "https://docmosis.platform.hmcts.net/rs/render"
+        TRACKING_SCRIPTS: true
+        RESTART_ME: "1"

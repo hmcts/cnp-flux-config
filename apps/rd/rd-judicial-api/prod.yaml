@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rd-judicial-api
+spec:
+  values:
+    java:
+      environment:
+        DELETE_ORG: false
+        IDAM_URL: https://idam-api.platform.hmcts.net
+        OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
+        JRD_S2S_AUTHORISED_SERVICES: rd_judicial_api,am_org_role_mapping_service,iac,xui_webapp,ccd_data,sscs,sscs_bulkscan
+        JRD_SEARCH_SERVICE_CODE: bfa1,bba3,aaa6,aaa7,aba5,aba3

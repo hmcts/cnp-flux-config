@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: message-publisher
+spec:
+  releaseName: message-publisher
+  values:
+    java:
+      replicas: 1 #Must always be 1
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/message-publisher:prod-af2657c-20221221160318 #{"$imagepolicy": "flux-system:message-publisher"}
+  chart:
+    spec:
+      chart: ./stable/ccd-message-publisher
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

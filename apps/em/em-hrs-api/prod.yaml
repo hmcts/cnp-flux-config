@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: em-hrs-api
+spec:
+  values:
+    java:
+      memoryLimits: "3Gi"
+      memoryRequests: "1Gi"
+      environment:
+        IDAM_API_BASE_URI: "https://idam-api.platform.hmcts.net"
+        OPEN_ID_API_BASE_URI: "https://hmcts-access.service.gov.uk/o"
+        XUI_API_URL: https://manage-case.platform.hmcts.net
+        SMTP_HOST: smtp.office365.com
+        SUMMARY_REPORT_ENABLED: true
+        SUMMARY_REPORT_CRON: "0 */30 * * * *"
+        DUMMY_VAR: "delete_me"

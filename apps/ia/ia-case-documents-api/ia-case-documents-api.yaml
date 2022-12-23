@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-case-documents-api
+spec:
+  releaseName: ia-case-documents-api
+  values:
+    java:
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-2f5eec7-20221208110113 #{"$imagepolicy": "flux-system:ia-case-documents-api"}
+  chart:
+    spec:
+      chart: ./stable/ia-case-documents-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
