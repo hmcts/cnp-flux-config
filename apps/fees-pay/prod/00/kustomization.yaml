@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../base
+  - ../../card-payment-job/card-payment-job.yaml
+  - ../../bar-payment-job/bar-payment-job.yaml
+  - ../../finrem-payment-job/finrem-payment-job.yaml
+  - ../../pba-payment-job/pba-payment-job.yaml
+  - ../../status-payment-job/status-payment-job.yaml
+namespace: fees-pay
+patchesStrategicMerge:
+  - ../../card-payment-job/prod-00.yaml
+  - ../../bar-payment-job/prod-00.yaml
+  - ../../finrem-payment-job/prod-00.yaml
+  - ../../pba-payment-job/prod-00.yaml
+  - ../../status-payment-job/prod-00.yaml

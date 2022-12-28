@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reform-scan-blob-router
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      memoryLimits: "1024Mi"
+      environment:
+        TASK_SCAN_DELAY: 300000
+        CREATE_RECONCILIATION_SUMMARY_REPORT_ENABLED: "false"
+        CREATE_RECONCILIATION_DETAILED_REPORT_ENABLED: "false"
+        SEND_RECONCILIATION_REPORT_MAIL_ENABLED: "false"
+        SMTP_HOST: smtp.office365.com
+        STORAGE_URL: https://reformscan.demo.platform.hmcts.net
+        STORAGE_BULKSCAN_URL: https://bulkscandemo.blob.core.windows.net
+        SCHEDULING_TASK_SCAN_ENABLED: true
+        PRIVATELAW_ENABLED: true
+        REFRESH_PODS: "true"

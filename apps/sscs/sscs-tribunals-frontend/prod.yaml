@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-frontend
+  namespace: sscs
+spec:
+  values:
+    nodejs:
+      ingressHost: www.appeal-benefit-decision.service.gov.uk
+      livenessPath: /health/readiness
+      environment:
+        CONTACT_US_WEB_FORM_ENABLED: false
+        SERVICES_WEBCHAT_UUID: "script_1519925245d3ec86ead6a15.79946496"
+        SERVICES_WEBCHAT_TENANT: "aG1jdHN4MTAx"
+        SERVICES_BTN_NO_AGENTS: "/aG1jdHN4MTAx/button_2806315905d232e71137898.81655511/img/logo"
+        SERVICES_BTN_AGENTS_BUSY: "/aG1jdHN4MTAx/button_6100617245d23302e383e79.04188400/img/logo"
+        SERVICES_BTN_SERVICE_CLOSED: "/aG1jdHN4MTAx/button_19684351645d232edee71e86.59595908/img/logo"
+        SERVICES_IDAM_LOGIN_URL: https://hmcts-access.service.gov.uk/login
+        SERVICES_IDAM_API_URL: https://idam-api.platform.hmcts.net
+        PCQ_URL: https://equality-and-diversity.platform.hmcts.net
+        PCQ_ENABLED: "true"
+        FT_ALLOW_UC_HEARING_OPTIONS: "true"
+        MEDIA_FILES_ALLOWED_ENABLED: "true"
+        FT_ANTENNA_WEBCHAT: "true"
+        CONTACT_US_WEBCHAT_ENABLED: "true"
+        ALLOW_DLA_ENABLED: "true"
+        ALLOW_CA_ENABLED: "true"
+        ALLOW_AA_ENABLED: "true"
+        ALLOW_BB_ENABLED: "true"
+        ALLOW_IIDB_ENABLED: "true"
+        ALLOW_JSA_ENABLED: "true"
+        ALLOW_MA_ENABLED: "true"
+        ALLOW_BSPS_ENABLED: "true"
+        ALLOW_IDB_ENABLED: "true"
+        ALLOW_PC_ENABLED: "true"
+        ALLOW_RP_ENABLED: "true"
+        ALLOW_SF_ENABLED: "true"
+        ALLOW_IS_ENABLED: "true"
+        ALLOW_RFE_ENABLED: "true"
+        ALLOW_COOKIE_BANNER_ENABLED: "true"
+        MULTIPLE_DRAFTS_ENABLED: "true"
+        DUMMY_PROPERTY: "false"

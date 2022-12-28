@@ -7,7 +7,9 @@ spec:
   releaseName: cmc-citizen-frontend
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-abdd241-20221205161710 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-ffde5b2-20221216130256 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
   chart:
     spec:
       chart: ./stable/cmc-citizen-frontend

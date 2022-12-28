@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-initiation
+spec:
+  values:
+    job:
+      #    This starts at 2 to avoid running in parallel with prod-00.yml in both clusters
+      schedule: "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58 * * * *"
+      environment:
+        JOB_NAME: INITIATION
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

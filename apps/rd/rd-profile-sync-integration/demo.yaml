@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rd-profile-sync-integration
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      ingressHost: rd-profile-sync-int-demo.service.core-compute-demo.internal
+      environment:
+        USER_PROFILE_URL: http://rd-user-profile-api-int-demo.service.core-compute-demo.internal
+        DELETE_ORG: false
+        CRON_SCHEDULE: 30 */2 * * *

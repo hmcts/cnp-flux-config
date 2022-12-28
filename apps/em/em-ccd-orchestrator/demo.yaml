@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: em-ccd-orchestrator
+spec:
+  values:
+    java:
+      ingressHost: em-ccdorc-demo.service.core-compute-demo.internal
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-90f1a93-20221216095628 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
+      environment:
+        CALLBACK_DOMAIN: em-ccdorc-demo.service.core-compute-demo.internal

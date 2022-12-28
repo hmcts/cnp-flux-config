@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: repl-docmosis-service
+  namespace: ethos
+spec:
+  releaseName: repl-docmosis-service
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:pr-1976-ff541e2-20221208161113 #{"$imagepolicy": "flux-system:demo-repl-docmosis-service"}
+      environment:
+        SECURE_DOC_STORE_FEATURE: false

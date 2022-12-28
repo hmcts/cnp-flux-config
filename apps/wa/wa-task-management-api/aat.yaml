@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-management-api
+spec:
+  values:
+    java:
+      memoryRequests: "512Mi"
+      cpuRequests: "2500m"
+      memoryLimits: "3Gi"
+      cpuLimits: "2500m"
+      environment:
+        LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        TEMP_FLAG: true
+        ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,PUBLICLAW,PRIVATELAW
+        ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,CARE_SUPERVISION_EPO,PRLAPPS
