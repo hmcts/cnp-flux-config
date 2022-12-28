@@ -8,5 +8,6 @@ spec:
       disableIngressClassAnnotation: true
       ingressClass: traefik-private
       image: hmctspublic.azurecr.io/ccpay/cpo-update-service:prod-ff3ee17-20221209002033 #{"$imagepolicy": "flux-system:demo-int-ccpay-cpo-update-service"}
+      AMQP_HOST: "ccpay-servicebus-{{ .Values.global.environment }}-premium.servicebus.windows.net"
       environment:
         DUMMY_VARIABLE: true
