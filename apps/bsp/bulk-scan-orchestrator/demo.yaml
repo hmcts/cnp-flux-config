@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-orchestrator
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      disableIngressClassAnnotation: true
+      environment:
+        TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
+        AUTO_CASE_CREATION_ENABLED_SSCS: "false"
+        CASE_DEFINITION_HAS_ENVELOPE_IDS_SSCS: "false"
+        CAN_SEARCH_CASES_BY_ENVELOPE_ID_SSCS: "false"
+        AUTO_CASE_CREATION_ENABLED_PRIVATELAW: "true"
+        CASE_DEFINITION_HAS_ENVELOPE_IDS_PRIVATELAW: "true"
+        CAN_SEARCH_CASES_BY_ENVELOPE_ID_PRIVATELAW: "true"
+        DELETE_ENVELOPES_DLQ_MESSAGES_ENABLED: "true"
+        DELETE_ENVELOPES_DLQ_MESSAGES_TTL: "60s"
+        DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "* */2 * * * *"
+        CDAM_ENABLED: "true"
+        SUPPLEMENTARY_DATA_ENABLED_SSCS: "true"
+        REFRESH_PODS: "yes"

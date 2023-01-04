@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - sscs-track-appeal-redirect-ingress.yaml
+  - ../../sscs-hearings-api/sscs-hearings-api.yaml
+  - ../../sscs-bulk-scan/sscs-bulk-scan.yaml
+  - ../../sscs-case-loader/sscs-case-loader.yaml
+patchesStrategicMerge:
+  - ../../identity/prod.yaml
+  - ../../sscs-cor-frontend/prod.yaml
+  - ../../sscs-tribunals-api/prod.yaml
+  - ../../sscs-ccd-callback-orchestrator/prod.yaml
+  - ../../sscs-hearings-api/prod.yaml
+  - ../../sscs-tya-notif/prod.yaml
+  - ../../sscs-tribunals-frontend/prod.yaml
+  - ../../sscs-evidence-share/prod.yaml
+  - ../../sscs-bulk-scan/prod.yaml

@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-submit-service
+  namespace: probate
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-ddd1cec-20221216170306 #{"$imagepolicy": "flux-system:perftest-probate-submit-service"}
+      environment:
+        LOG_LEVEL: INFO
+        AUTH_IDAM_CLIENT_BASEURL: "https://idam-api.platform.hmcts.net"
+        VAR_FV2: prod-trig1

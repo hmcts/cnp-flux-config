@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-case-activity-api
+spec:
+  releaseName: ccd-case-activity-api
+  values:
+    nodejs:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      java:
+      image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-88d6968-20221229145846 #{"$imagepolicy": "flux-system:demo-ccd-case-activity-api"}
+      environment:
+        DUMMY_VAR_TO_REDEPLOY: 1

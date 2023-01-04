@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../sscs-hearings-api/sscs-hearings-api.yaml
+namespace: sscs
+patchesStrategicMerge:
+  - ../../identity/ithc.yaml
+  - ../../sscs-cor-frontend/ithc.yaml
+  - ../../sscs-tribunals-api/ithc.yaml
+  - ../../sscs-ccd-callback-orchestrator/ithc.yaml
+  - ../../sscs-hearings-api/ithc.yaml
+  - ../../sscs-tya-notif/ithc.yaml
+  - ../../sscs-tribunals-frontend/ithc.yaml
+  - ../../sscs-evidence-share/ithc.yaml

@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../ia-home-office-mock-api/ia-home-office-mock-api.yaml
+namespace: ia
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../ia-case-access-api/demo.yaml
+  - ../../ia-timed-event-service/demo.yaml
+  - ../../ia-bail-case-api/demo.yaml
+  - ../../ia-home-office-integration-api/demo.yaml
+  - ../../ia-aip-frontend/demo.yaml
+  - ../../ia-case-api/demo.yaml
+  - ../../ia-home-office-mock-api/demo.yaml
+  - ../../ia-case-documents-api/demo.yaml
+  - ../../ia-case-payments-api/demo.yaml
+  - ../../ia-case-notifications-api/demo.yaml

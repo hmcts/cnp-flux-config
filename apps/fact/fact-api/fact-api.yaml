@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fact-api
+spec:
+  releaseName: fact-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fact/api:prod-7c2a643-20221215113359 #{"$imagepolicy": "flux-system:fact-api"}
+      environment:
+        VAR_TA: trigger13
+  chart:
+    spec:
+      chart: ./stable/fact-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

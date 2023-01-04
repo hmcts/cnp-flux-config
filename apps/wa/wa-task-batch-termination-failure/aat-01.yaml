@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-termination-failure
+spec:
+  values:
+    job:
+      schedule: "5-59/10 * * * *"
+      environment:
+        JOB_NAME: TASK_TERMINATION_FAILURES
+    global:
+      environment: aat
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

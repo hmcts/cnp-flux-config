@@ -1,0 +1,104 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-full
+  namespace: ccd
+spec:
+  releaseName: ccd-full
+  timeout: 900
+  forceUpgrade: true
+  values:
+    tags:
+      idam-pr: true
+    ccd:
+      managementWeb:
+        enabled: true
+      apiGatewayWeb:
+        enabled: true
+      emAnnotation:
+        enabled: true
+      draftStore:
+        enabled: true
+      dmStore:
+        enabled: true
+      activityApi:
+        enabled: true
+      blobstorage:
+        enabled: true
+      printService:
+        enabled: true
+    global:
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      devMode: true
+      environment: demo
+      dummy: true
+    ccd-admin-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-358bf5d6
+        ingressClass: traefik-no-proxy
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_AW_CLIENT_SECRET:
+            disabled: false
+    ccd-api-gateway-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
+        ingressClass: traefik-no-proxy
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          PROXY_CASE_ACTIVITY: http://ccd-full-ccd-case-activity-api
+        secrets:
+          IDAM_OAUTH2_CLIENT_SECRET:
+            disabled: false
+    ccd-case-activity-api:
+      nodejs:
+        ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          REDIS_HOST: "{{ .Release.Name }}-redis-master"
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: fake-password
+          REDIS_SSL_ENABLED: ""
+        keyVaults:
+      redis:
+        enabled: true
+    ccd-definition-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-396d9e70
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            disabled: false
+          STORAGE_ACCOUNT_KEY:
+            disabled: false
+        environment:
+          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+    ccd-data-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-a4a655ea
+        environment:
+          CCD_DM_DOMAIN: https?://.*dm-store.*
+    ccd-user-profile-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-5e9bc0de
+    ccd-user-profile-importer:
+      users:
+        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+    ccd-definition-importer:
+      waitHosts: "ccd-full-ccd-definition-store:80"
+      waitHostsTimeout: 600
+      definitions:
+        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+      userRoles:
+        - caseworker-autotest1
+  chart:
+    spec:
+      chart: ccd
+      version: 4.2.4
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

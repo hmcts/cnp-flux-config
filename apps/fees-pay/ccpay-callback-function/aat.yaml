@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-callback-function
+spec:
+  values:
+    function:
+      aadIdentityName: ccpay
+      environment:
+        S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        MICROSERVICE_PAYMENT_APP: "payment_app"
+        DUMMY_RESTART_VAR: false
+      keyVaults:
+        "ccpay":
+          secrets:
+            - payment-s2s-secret

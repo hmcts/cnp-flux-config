@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-send-letter-service
+  namespace: money-claims
+spec:
+  releaseName: cmc-send-letter-service
+  chart:
+    spec:
+      chart: ./stable/rpe-send-letter-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-8fab20c-20230103161635 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}

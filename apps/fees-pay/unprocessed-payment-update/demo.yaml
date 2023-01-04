@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: unprocessed-payment-update
+spec:
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-26d82a4-20230103171755" #{"$imagepolicy": "flux-system:unprocessed-payment-update"}
+    global:
+      environment: demo

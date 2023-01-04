@@ -7,9 +7,6 @@ kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize
 EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/docmosis.yaml
   apps/docmosis/docmosis/aat.yaml
-  apps/docmosis/docmosis/demo.yaml
-  apps/docmosis/docmosis/ithc.yaml
-  apps/docmosis/docmosis/perftest.yaml
   apps/docmosis/docmosis/sbox.yaml
   apps/flux-system/base/image-automation-components.yaml
   apps/flux-system/base/image-automation-components-0.36.0.yaml
@@ -22,22 +19,18 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-web-public/sbox.yaml
   apps/idam/idam-testing-support-api/preview.yaml
   apps/idam/idam-testing-support-api/sbox.yaml
-  apps/probate/probate-cron-make-dormant-cases/demo.yaml
-  apps/probate/probate-cron-reactivate-dormant-cases/demo.yaml
   apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
   apps/probate/*
-  k8s/namespaces/docmosis/docmosis/aat.yaml
-  *demo.yaml
-  k8s/demo/*
-  *perftest.yaml
-  k8s/perftest/*
-  k8s/ithc/*
-  *ithc.yaml
+  .*demo.*.yaml
+  apps/*/*/demo
+  apps/*/demo
+  .*perftest.*.yaml
+  .*ithc.*.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
-FILE_LOCATIONS="apps k8s"
+FILE_LOCATIONS="apps"
 
 for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 

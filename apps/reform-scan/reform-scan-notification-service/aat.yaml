@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reform-scan-notification-service
+spec:
+  values:
+    java:
+      environment:
+        PENDING_NOTIFICATIONS_SEND_DELAY_IN_MINUTE: 0
+        DUMMY_VAR: "delete_me"
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          reform-scan:
+            secrets:
+              - name: notification-queue-send-shared-access-key-premium
+                alias: NOTIFICATION_QUEUE_ACCESS_KEY_WRITE
+              - name: test-s2s-secret
+                alias: TEST_S2S_SECRET
+        environment:
+          NOTIFICATION_QUEUE_ACCESS_KEY_NAME_WRITE: "SendSharedAccessKey"
+          NOTIFICATION_QUEUE_NAME: "notifications"
+          NOTIFICATION_QUEUE_NAMESPACE: "reform-scan-servicebus-aat-premiun"
+          TEST_URL: http://reform-scan-notification-service-java
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          TEST_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+      smoketests:
+        enabled: false
+      functionaltests:
+        enabled: false

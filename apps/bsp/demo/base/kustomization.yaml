@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - bsp-processor-creds-demo.yaml
+  - ../../bulk-scan-sample-app/bulk-scan-sample-app.yaml
+namespace: bsp
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../bulk-scan-orchestrator/demo.yaml
+  - ../../bulk-scan-payment-processor/demo.yaml
+  - ../../bulk-scan-sample-app/demo.yaml
+  - ../../bulk-scan-processor/demo.yaml

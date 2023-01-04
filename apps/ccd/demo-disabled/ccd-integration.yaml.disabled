@@ -1,0 +1,124 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-integration
+  namespace: ccd
+spec:
+  releaseName: ccd-integration
+  timeout: 900
+  values:
+    tags:
+      idam-pr: false
+    ccd:
+      managementWeb:
+        enabled: true
+      apiGatewayWeb:
+        enabled: true
+      emAnnotation:
+        enabled: true
+      draftStore:
+        enabled: true
+      dmStore:
+        enabled: true
+      activityApi:
+        enabled: true
+      blobstorage:
+        enabled: true
+      printService:
+        enabled: true
+      elastic:
+        enabled: true
+    global:
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      devMode: true
+      environment: demo
+      enableKeyVaults: false
+    ccd-admin-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-c06995a-20220127094614 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        ingressClass: traefik-no-proxy
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          ADMINWEB_IMPORT_AUDITS_URL: http://ccd-integration-ccd-definition-store/health # odd hack to get import working?!?
+        secrets:
+          IDAM_OAUTH2_AW_CLIENT_SECRET:
+            disabled: false
+    ccd-api-gateway-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-141faa1-20220127082440 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
+        ingressClass: traefik-no-proxy
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          PROXY_CASE_ACTIVITY: "http://{{ .Release.Name }}-ccd-case-activity-api"
+        secrets:
+          IDAM_OAUTH2_CLIENT_SECRET:
+            disabled: false
+    ccd-case-activity-api:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-activity-api:prod-5c43b33-20220128110143 #{"$imagepolicy": "flux-system:ccd-case-activity-api"}
+        ingressHost: ccd-case-activity-api-{{ .Release.Name }}.demo.platform.hmcts.net
+        environment:
+          REDIS_HOST: "{{ .Release.Name }}-redis-master"
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: fake-password
+          REDIS_SSL_ENABLED: ""
+        keyVaults:
+      redis:
+        enabled: true
+    ccd-case-print-service:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/case-print-service:prod-2f7647b-20220127185925 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
+    ccd-definition-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-ec032bf-20220201134501 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        autoscaling:
+          enabled: false
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            disabled: false
+          STORAGE_ACCOUNT_KEY:
+            disabled: false
+        environment:
+          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+    ccd-data-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-8da5432-20220201184308 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        environment:
+          CCD_DM_DOMAIN: https?://.*dm-store.*
+          ELASTIC_SEARCH_ENABLED: true
+          ELASTIC_SEARCH_HOSTS: "{{ .Release.Name }}-es-master:9200"
+          ELASTIC_SEARCH_DATA_NODES_HOSTS: "http://{{ .Release.Name }}-es-master:9200"
+    ccd-user-profile-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-213d5b4-20220201112521 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+    elasticsearch:
+      persistence:
+        enabled: true
+      ingress:
+        hosts:
+          - es-ccd-integration.demo.platform.hmcts.net
+    logstash:
+      persistence:
+        enabled: true
+        #     ccd-user-profile-importer:
+        #       users:
+        #       - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+    ccd-definition-importer:
+      waitHosts: "ccd-integration-ccd-definition-store:80"
+      waitHostsTimeout: 600
+      definitions:
+        - https://github.com/hmcts/befta-fw/raw/master/src/main/resources/uk/gov/hmcts/befta/dse/ccd/definitions/excel/CCD_CNP_27.xlsx
+      userRoles:
+        - caseworker-autotest1
+  chart:
+    spec:
+      chart: ccd
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

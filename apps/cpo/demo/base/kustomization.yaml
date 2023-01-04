@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../case-payment-orders-api-int/case-payment-orders-api-int.yaml
+namespace: cpo
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../case-payment-orders-api/demo.yaml
+  - ../../case-payment-orders-api-int/demo.yaml

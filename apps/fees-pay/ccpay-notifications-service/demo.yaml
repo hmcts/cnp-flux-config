@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-notifications-service
+spec:
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccpay/notifications-service:pr-90-0c66254-20221229185206 #{"$imagepolicy": "flux-system:demo-ccpay-notifications-service"}
+      environment:
+        DUMMY_VARIABLE: true
+        LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"

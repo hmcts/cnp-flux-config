@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-sample-app
+spec:
+  releaseName: bulk-scan-sample-app
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/bulk-scan/sample-app:prod-dd095be-20230103100307 #{"$imagepolicy": "flux-system:bulk-scan-sample-app"}
+  chart:
+    spec:
+      chart: ./stable/bulk-scan-sample-app
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

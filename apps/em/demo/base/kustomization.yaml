@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../em-showcase/em-showcase.yaml
+namespace: em
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../em-ccd-orchestrator/demo.yaml
+  - ../../em-anno/demo.yaml
+  - ../../em-hrs-ingestor/demo.yaml
+  - ../../em-npa/demo.yaml
+  - ../../em-stitching/demo.yaml
+  - ../../em-hrs-api/demo.yaml
+  - ../../em-showcase/demo.yaml
