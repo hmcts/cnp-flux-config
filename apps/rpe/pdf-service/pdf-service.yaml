@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pdf-service
+spec:
+  releaseName: pdf-service
+  values:
+    java:
+      replicas: 2
+      image: hmctspublic.azurecr.io/rpe/pdf-service:prod-267b540-20221130130539 #{"$imagepolicy": "flux-system:pdf-service"}
+      smoketestscron:
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-267b540-20221130130539 #{"$imagepolicy": "flux-system:pdf-service-pdf-service-test"}
+      functionaltestscron:
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-267b540-20221130130539 #{"$imagepolicy": "flux-system:pdf-service-pdf-service-test"}
+      smoketests:
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-267b540-20221130130539 #{"$imagepolicy": "flux-system:pdf-service-pdf-service-test"}
+      functionaltests:
+        image: hmctspublic.azurecr.io/rpe/pdf-service-test:prod-267b540-20221130130539 #{"$imagepolicy": "flux-system:pdf-service-pdf-service-test"}
+  chart:
+    spec:
+      chart: ./stable/rpe-pdf-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

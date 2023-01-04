@@ -1,0 +1,239 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-logstash-probateman
+spec:
+  releaseName: ccd-logstash-probateman
+  values:
+    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
+    imageTag: "7.16.1-probateman"
+    imagePullPolicy: "IfNotPresent"
+    logstashJavaOpts: "-Xms4g -Xmx8g"
+    resources:
+      requests:
+        cpu: "2000m"
+        memory: "4Gi"
+      limits:
+        cpu: "4000m"
+        memory: "8Gi"
+    envFrom:
+      - secretRef:
+          name: logstash-secret
+      - secretRef:
+          name: probatemandb
+    extraInitContainers: |
+      - name: download-postgres-jdbc
+        image: hmctspublic.azurecr.io/curl:7.70.0
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.2.18.jar', '-o', '/logstash-lib/postgresql.jar']
+        volumeMounts:
+        - name: logstash-lib
+          mountPath: /logstash-lib
+    extraVolumes: |
+      - name: logstash-lib
+        emptyDir: {}
+    extraVolumeMounts: |
+      - name: logstash-lib
+        mountPath: /usr/share/logstash/ccd
+    logstashConfig:
+      logstash.yml: |
+        http.host: 0.0.0.0
+        xpack.monitoring.enabled: true
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        queue.type: persisted
+        dead_letter_queue.enable: true
+      pipelines.yml: |
+        - pipeline.id: main
+          path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
+          pipeline.workers: 4
+          pipeline.batch.size: 500
+          queue.type: persisted
+        - pipeline.id: index-dead-letter-to-es
+          path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
+          pipeline.workers: 1
+          dead_letter_queue.enable: false
+    logstashPipeline:
+      01_input.conf: |
+        input  {
+          jdbc {
+            jdbc_connection_string => "${DB_URL}"
+            jdbc_user => "${DB_USER}"
+            jdbc_password => "${DB_PWD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_page_size => "20000"
+            jdbc_default_timezone => "UTC"
+            use_column_value => true
+            tracking_column => last_modified
+            tracking_column_type => "timestamp"
+            statement => "SELECT 'CAVEAT' as legacy_case_type, id, caveat_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from caveats_flat where (last_modified > :sql_last_value)"
+            clean_run => false
+            last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+            schedule => "* * * * * *"
+          }
+        }
+        input  {
+          jdbc {
+            jdbc_connection_string => "${DB_URL}"
+            jdbc_user => "${DB_USER}"
+            jdbc_password => "${DB_PWD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_page_size => "20000"
+            jdbc_default_timezone => "UTC"
+            use_column_value => true
+            tracking_column => last_modified
+            tracking_column_type => "timestamp"
+            statement => "SELECT 'STANDING SEARCH' as legacy_case_type, id, ss_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from standing_searches_flat where (last_modified > :sql_last_value)"
+            clean_run => false
+            last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+            schedule => "* * * * * *"
+          }
+        }
+        input  {
+          jdbc {
+            jdbc_connection_string => "${DB_URL}"
+            jdbc_user => "${DB_USER}"
+            jdbc_password => "${DB_PWD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_page_size => "20000"
+            jdbc_default_timezone => "UTC"
+            use_column_value => true
+            tracking_column => last_modified
+            tracking_column_type => "timestamp"
+            statement => "select 'WILL' as legacy_case_type, id, rk_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from wills_flat where (last_modified > :sql_last_value)"
+            clean_run => false
+            last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+            schedule => "* * * * * *"
+          }
+        }
+        input  {
+          jdbc {
+            jdbc_connection_string => "${DB_URL}"
+            jdbc_user => "${DB_USER}"
+            jdbc_password => "${DB_PWD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_page_size => "20000"
+            jdbc_default_timezone => "UTC"
+            use_column_value => true
+            tracking_column => last_modified
+            tracking_column_type => "timestamp"
+            statement => "select 'LEGACY APPLICATION' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_flat where (last_modified > :sql_last_value)"
+            clean_run => false
+            last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+            schedule => "* * * * * *"
+          }
+        }
+        input  {
+          jdbc {
+            jdbc_connection_string => "${DB_URL}"
+            jdbc_user => "${DB_USER}"
+            jdbc_password => "${DB_PWD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_page_size => "20000"
+            jdbc_default_timezone => "UTC"
+            use_column_value => true
+            tracking_column => last_modified
+            tracking_column_type => "timestamp"
+            statement => "select 'LEGACY GRANT' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_derived_flat where (last_modified > :sql_last_value)"
+            clean_run => false
+            last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+            schedule => "* * * * * *"
+          }
+        }
+      02_filter.conf: |
+        filter{
+          json{
+            source => "json_data"
+            target => "data"
+            remove_field => ["json_data"]
+          }
+          json{
+            source => "json_data_classification"
+            target => "data_classification"
+            remove_field => ["json_data_classification"]
+          }
+          json_encode {
+            source => "src"
+            add_field => {
+              "probate_number_classification" => "PUBLIC"
+              "deceased_forenames_classification" => "PUBLIC"
+              "deceased_surname_classification" => "PUBLIC"
+              "date_of_death_classification" => "PUBLIC"
+              "date_of_death2_classification" => "PUBLIC"
+              "date_of_birth_classification" => "PUBLIC"
+              "alias_names_classification" => "PUBLIC"
+              "record_id_classification" => "PUBLIC"
+              "imported_to_ccd_classification" => "PUBLIC"
+              "legacy_case_type_classification" => "PUBLIC"
+              "ccd_case_no_classification" => "PUBLIC"
+              "legacyId_classification" => "PUBLIC"
+              "security_classification" => "PUBLIC"
+              "state" => "ReadOnly"
+              "case_type_id" => "Legacy"
+              "jurisdiction" => "PROBATE"
+            }
+            remove_field => ["src"]
+          }
+          mutate {
+            rename => { "probate_number" => "[data][probate_number]" }
+            rename => { "deceased_forenames" => "[data][deceasedForenames]" }
+            rename => { "deceased_surname" => "[data][deceasedSurname]" }
+            rename => { "date_of_death" => "[data][deceasedDateOfDeath]" }
+            rename => { "date_of_death2" => "[data][deceasedDateOfDeath2]" }
+            rename => { "date_of_birth" => "[data][deceasedDateOfBirth]" }
+            rename => { "alias_names" => "[data][alias_names]" }
+            rename => { "record_id" => "[data][record_id]" }
+            rename => { "imported_to_ccd" => "[data][imported_to_ccd]" }
+            rename => { "legacy_case_type" => "[data][legacy_case_type]" }
+            rename => { "ccd_case_no" => "[data][ccdCaseId]" }
+            rename => { "legacyId" => "[data][legacyId]" }
+            rename => { "probate_number_classification" => "[data_classification][probate_number]"}
+            rename => { "deceased_forenames_classification" => "[data_classification][deceasedForenames]"}
+            rename => { "deceased_surname_classification" => "[data_classification][deceasedSurname]"}
+            rename => { "date_of_death_classification" => "[data_classification][deceasedDateOfDeath]"}
+            rename => { "date_of_death2_classification" => "[data_classification][deceasedDateOfDeath2]"}
+            rename => { "date_of_birth_classification" => "[data_classification][deceasedDateOfBirth]"}
+            rename => { "alias_names_classification" => "[data_classification][alias_names]"}
+            rename => { "record_id_classification" => "[data_classification][record_id]"}
+            rename => { "imported_to_ccd_classification" => "[data_classification][imported_to_ccd]"}
+            rename => { "legacy_case_type_classification" => "[data_classification][legacy_case_type]" }
+            rename => { "ccd_case_no_classification" => "[data_classification][ccdCaseId]" }
+            rename => { "legacyId_classification" => "[data_classification][legacyId]" }
+          }
+          mutate {
+            add_field => { "[data][legacyId]" => "%{id}"}
+          }
+          mutate {
+            add_field => { "index_id" => "%{case_type_id}_cases" }
+          }
+          mutate {
+            lowercase => [ "index_id" ]
+          }
+        }
+      03_output.conf: |
+        output {
+            elasticsearch {
+                hosts => ["${ES_HOSTS}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{id}"
+                timeout => 60
+            }
+        }
+  chart:
+    spec:
+      chart: logstash
+      version: 6.8.13
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+        namespace: ccd

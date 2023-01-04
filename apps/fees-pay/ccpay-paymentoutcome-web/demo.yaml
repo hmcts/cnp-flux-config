@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-paymentoutcome-web
+spec:
+  values:
+    nodejs:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-no-proxy
+      disableTraefikTls: false
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:prod-6a1bc21-20230103214011 #{"$imagepolicy": "flux-system:ccpay-paymentoutcome-web"}
+      imagePullPolicy: Always
+      environment:
+        DUMMY_VARIABLE: true

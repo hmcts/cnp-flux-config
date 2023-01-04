@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bulk-scan-processor
+spec:
+  values:
+    java:
+      environment:
+        DELETE_ME: "dummy_var"
+      testsConfig:
+        memoryLimits: "3072Mi"
+        serviceAccountName: tests-service-account
+        keyVaults:
+          bulk-scan:
+            secrets:
+              - name: storage-account-primary-key
+                alias: TEST_STORAGE_ACCOUNT_KEY
+              - name: storage-account-name
+                alias: TEST_STORAGE_ACCOUNT_NAME
+              - name: processed-envelopes-queue-send-shared-access-key-premium
+                alias: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
+              - name: test-s2s-secret
+                alias: TEST_S2S_SECRET
+        environment:
+          TEST_URL: "http://bulk-scan-processor-java"
+          SLACK_CHANNEL: "bsp-test-notices"
+          SLACK_NOTIFY_SUCCESS: false
+          TEST_S2S_NAME: "bulk_scan_processor_tests"
+          TEST_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+          TEST_SCAN_DELAY: "4000"
+          TEST_STORAGE_CONTAINER_NAME: "bulkscan"
+          TEST_STORAGE_ACCOUNT_URL: "https://bulkscanaat.blob.core.windows.net"
+          RUN_END_TO_END_TESTS: true
+          STORAGE_BLOB_SELECTED_CONTAINER: ALL
+          FLUX_FUNC_TEST: "true"
+          PROCESSED_ENVELOPES_QUEUE_NAME: "processed-envelopes"
+          PROCESSED_ENVELOPES_QUEUE_NAMESPACE: "bulk-scan-servicebus-aat-premium"
+          PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY_NAME: "SendSharedAccessKey"
+      smoketests:
+        enabled: true
+      functionaltests:
+        enabled: true

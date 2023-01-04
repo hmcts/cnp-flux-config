@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: am-role-assignment-refresh-batch
+spec:
+  releaseName: am-role-assignment-refresh-batch
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/am/role-assignment-refresh-batch:prod-75ef806-20221208155211 #{"$imagepolicy": "flux-system:am-role-assignment-refresh-batch"}
+  chart:
+    spec:
+      chart: ./stable/am-role-assignment-refresh-batch
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

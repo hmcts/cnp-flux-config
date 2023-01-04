@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: am-role-assignment-refresh-batch
+spec:
+  values:
+    job:
+      schedule: "40 16 * * *"
+      environment:
+        DELETE_ORG: false

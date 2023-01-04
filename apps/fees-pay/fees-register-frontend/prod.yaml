@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fees-register-frontend
+spec:
+  releaseName: fees-register-frontend
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/fees-register/frontend:prod-b5f1487-20230103181651 #{"$imagepolicy": "flux-system:fees-register-frontend"}
+      ingressHost: fees-register.platform.hmcts.net
+      environment:
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_AUTHENTICATION_WEB_URL: https://hmcts-access.service.gov.uk
+        IDAM_LOGIN_WEB_URL: https://hmcts-access.service.gov.uk/login
+        DUMMY_RESTART_VAR: false

@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-payment-api
+spec:
+  releaseName: ccpay-payment-api
+  values:
+    java:
+      environment:
+        TRUSTED_S2S_SERVICE_NAMES: "cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,civil_service,probate_backend,iac,refunds_api,nfdiv_case_api,prl_cos_api,adoption_web,paymentoutcome_web"
+        DUMMY_RESTART_VAR: false
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        CARD_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        BAR_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_CMC_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_CIVIL_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_PROBATE_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_FINREM_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_DIVORCE_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_FPL_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_PRL_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net
+        PBA_IAC_PAYMENTS_EMAIL_FROM: no-reply@mail-payment.platform.hmcts.net

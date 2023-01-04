@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-refunds-api
+spec:
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-299-cfb43a5-20221213172904 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
+      environment:
+        DUMMY_VARIABLE: false
+        LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"

@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: em-anno
+spec:
+  values:
+    java:
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/em/anno:pr-1113-6d70dc5-20221216163219 #{"$imagepolicy": "flux-system:demo-em-anno"}
+      environment:
+        TEST_VAR: value1
