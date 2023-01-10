@@ -122,7 +122,7 @@ spec:
 - Create an image policy like below (or update an existing environment image policy) with your pr number (pr-332 taken as example) along side your HelmRelease file.
 
 ```yaml
-apiVersion: image.toolkit.fluxcd.io/v1alpha2
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: <env>-<component-name>
