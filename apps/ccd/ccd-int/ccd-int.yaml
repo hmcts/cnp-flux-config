@@ -4,7 +4,11 @@ metadata:
   name: ccd-int
 spec:
   releaseName: ccd-int
-  timeout: 900s
+  timeout: 900
+  chart:
+    repository: "https://hmctspublic.azurecr.io/helm/v1/repo/"
+    name: ccd
+    version: 8.0.21
   values:
     tags:
       idam-pr: false
@@ -160,11 +164,3 @@ spec:
       primary:
         persistence:
           enabled: true
-  chart:
-    spec:
-      chart: ccd
-      version: 8.0.21
-      sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
-        namespace: flux-system
