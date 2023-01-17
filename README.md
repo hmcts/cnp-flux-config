@@ -23,7 +23,7 @@ kubectl create secret generic my-secret \
   --namespace namespace \
   --dry-run=client -o json > my-secret.json
 
-kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
+kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 ### From a File
 ```
@@ -32,7 +32,7 @@ kubectl create secret generic my-secret \
   --namespace namespace \
   --dry-run=client -o json > my-secret.json
 
-kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
+kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 
 ## Bootstrapping sealed secrets for a new cluster
