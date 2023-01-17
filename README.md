@@ -21,7 +21,8 @@ GOOS=$(go env GOOS)
 GOARCH=$(go env GOARCH)
 wget https://github.com/bitnami/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-$GOOS-$GOARCH.tar.gz -O /tmp/kubeseal.tar.gz
 tar -xzvf /tmp/kubeseal.tar.gz
-sudo install -m 755 /tmp/kubeseal /usr/local/bin/kubeseal
+mkdir -p ~/bin
+install -m 755 /tmp/kubeseal ~/bin/kubeseal
 kubeseal --version
 ```
 
