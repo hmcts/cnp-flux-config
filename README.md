@@ -14,7 +14,16 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 ## Creating Sealed Secrets
 
-Install version 0.5.1 from https://github.com/bitnami-labs/sealed-secrets/releases
+Install version 0.17.5 from https://github.com/bitnami-labs/sealed-secrets/releases
+
+```
+GOOS=$(go env GOOS)
+GOARCH=$(go env GOARCH)
+wget https://github.com/bitnami/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-$GOOS-$GOARCH.tar.gz -O /tmp/kubeseal.tar.gz
+tar -xzvf /tmp/kubeseal.tar.gz
+sudo install -m 755 /tmp/kubeseal /usr/local/bin/kubeseal
+kubeseal --version
+```
 
 #### From a Literal
 ```
