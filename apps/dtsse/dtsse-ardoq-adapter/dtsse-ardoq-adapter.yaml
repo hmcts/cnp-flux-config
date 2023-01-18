@@ -2,16 +2,14 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: dtsse-ardoq-adapter
-  namespace: dtsse-ardoq-adapter
 spec:
   releaseName: dtsse-ardoq-adapter
   interval: 1m
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/dtsse/ardoq-adapter:prod-5fd9c6f-20230116135802 #{"$imagepolicy": "flux-system:dtsse-ardoq-adapter"}
+      image: hmctspublic.azurecr.io/dtsse/ardoq-adapter:prod-d42330f-20230118142308 #{"$imagepolicy": "flux-system:dtsse-ardoq-adapter"}
     keyVaults:
-      dtsse-aat:
-        excludeEnvironmentSuffix: true
+      dtsse:
         secrets:
           - AppInsightsConnectionString
           - ardoq-api-key
