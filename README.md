@@ -14,7 +14,17 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 ## Creating Sealed Secrets
 
-Install version 0.5.1 from https://github.com/bitnami-labs/sealed-secrets/releases
+Install version 0.17.5 from https://github.com/bitnami-labs/sealed-secrets/releases
+
+```
+GOOS=$(go env GOOS)
+GOARCH=$(go env GOARCH)
+wget https://github.com/bitnami/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-$GOOS-$GOARCH.tar.gz -O /tmp/kubeseal.tar.gz
+tar -xzvf /tmp/kubeseal.tar.gz
+mkdir -p ~/bin
+install -m 755 /tmp/kubeseal ~/bin/kubeseal
+kubeseal --version
+```
 
 #### From a Literal
 ```
@@ -23,7 +33,7 @@ kubectl create secret generic my-secret \
   --namespace namespace \
   --dry-run=client -o json > my-secret.json
 
-kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
+kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 ### From a File
 ```
@@ -32,7 +42,7 @@ kubectl create secret generic my-secret \
   --namespace namespace \
   --dry-run=client -o json > my-secret.json
 
-kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
+kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 
 ## Bootstrapping sealed secrets for a new cluster
