@@ -1,0 +1,17 @@
+apiVersion: resources.azure.com/v1beta20200601
+kind: ResourceGroup
+metadata:
+  name: aso-aks-rg
+  namespace: chart-tests
+spec:
+  location: uksouth
+---
+apiVersion: managedidentity.azure.com/v1beta20181130
+kind: UserAssignedIdentity
+metadata:
+  name: aso-aks-mi
+  namespace: chart-tests
+spec:
+  location: uksouth
+  owner:
+    name: aso-aks-rg
