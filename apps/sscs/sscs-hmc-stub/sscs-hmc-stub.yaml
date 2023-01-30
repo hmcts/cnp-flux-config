@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-hmc-stub
+spec:
+  releaseName: sscs-hmc-stub
+  values:
+    java:
+      replicas: 2
+      image: hmctspublic.azurecr.io/sscs/hmc-stub:prod-76f33dd-20230127181601 #{"$imagepolicy": "flux-system:sscs-hmc-stub"}
+      useInterpodAntiAffinity: true
+  chart:
+    spec:
+      chart: ./stable/sscs-hmc-stub
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

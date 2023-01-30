@@ -8,11 +8,12 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-a36b3f2-20230125143819 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-ae14642-20230130113539 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
         TESTING_SUPPORT_ENABLED: true
+        TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         TESTINGSUPPORTAPI_ENABLED: true
         TESTINGSUPPORTAPI_URL: http://idam-testing-support-api
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-preview.internal:8443/openam
