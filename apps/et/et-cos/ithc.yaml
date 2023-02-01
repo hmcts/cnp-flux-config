@@ -6,11 +6,42 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctspublic.azurecr.io/et/cos:pr-483-a83378e-20221028164407 #{"$imagepolicy": "flux-system:ithc-et-cos"}
+      disableIngressClassAnnotation: true
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/et/cos:pr-556-ff12241-20230201111455 #{"$imagepolicy": "flux-system:ithc-et-cos"}
       environment:
+        AAC_URL: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
         REFERRAL_TEMPLATE_ID: 9f3d0c67-d484-42e0-9ee1-91a44c4968d6
+        REJECTED_TEMPLATE_ID: 2a842474-feb4-4a2d-bd82-393656016180
+        ET1SERVING_TEMPLATE_ID: d09cd595-76b5-45d9-a63b-350f133a4cc5
         ET3NOTIFICATION_TEMPLATE_MYHMCTS_ID: 750ded38-eada-476d-85d1-72640fd4eb1f
         ET3NOTIFICATION_TEMPLATE_CITIZEN_ID: c8f12b6e-5fb6-4fe0-ad99-da6ea4888769
-        REJECTED_TEMPLATE_ID: f41406ab-1422-4785-9ca3-c3bee1094edf
-        ET1SERVING_TEMPLATE_ID: d09cd595-76b5-45d9-a63b-350f133a4cc5
         ET1SERVING_RESPONDENT_TEMPLATE_ID: 204c4674-6d4b-4cee-8537-9ea1cda0e9f2
+        NOC_NOTIFICATION_TEMPLATE_RESPONDENT_ID: a3539d79-65c0-491c-b578-b58cf321f83e
+        NOC_NOTIFICATION_TEMPLATE_CLAIMANT_ID: 3d0c5784-0055-4863-9c03-7d37d9b2ad8d
+        NOC_NOTIFICATION_TEMPLATE_OLD_REP_ID: fe52b39f-852c-43ca-a42a-b9a27c43b130
+        NOC_NOTIFICATION_TEMPLATE_NEW_REP_ID: 8fe52f24-40b2-4986-8f86-4dd1af311cbd
+        NOC_NOTIFICATION_TEMPLATE_TRIBUNAL_ID: 1d5efcbd-1971-4ebe-bfe8-72ba36b5abac
+      keyVaults:
+        et-cos:
+          secrets:
+            - name: cos-POSTGRES-PASS
+              alias: ET_COS_DB_PASSWORD
+            - name: et-cos-s2s-secret
+              alias: ET_COS_S2S_SECRET
+            - name: cos-system-user
+              alias: ET_COS_SYSTEM_USER
+            - name: cos-system-user-password
+              alias: ET_COS_SYSTEM_USER_PASSWORD
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+        et:
+          secrets:
+            - name: create-updates-queue-send-connection-string
+              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
+            - name: AppInsightsInstrumentationKey
+              alias: APP_INSIGHTS_KEY
+            - name: tornado-access-key
+              alias: TORNADO_ACCESS_KEY
+            - name: gov-notify-api-key
+              alias: GOV_NOTIFY_API_KEY
