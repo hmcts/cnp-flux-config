@@ -7,7 +7,7 @@ spec:
   location: uksouth
 ---
 
-apiVersion: servicebus.azure.com/v1alpha1api20210101preview
+apiVersion: servicebus.azure.com/v1beta20210101preview
 kind: Namespace
 metadata:
   name: civil-work-allocation
@@ -28,13 +28,26 @@ spec:
   zoneRedundant: false
 
 ---
-apiVersion: servicebus.azure.com/v1alpha1api20210101preview
-kind: NamespacesQueue
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: NamespacesTopic
 metadata:
-  name: civil-work-allocation
+  name: ccd-case-events
   namespace: civil
 spec:
-  azureName: civil-work-allocation
+  azureName: ccd-case-events
   owner:
     name: civil-work-allocation
+
+---
+
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: NamespacesTopicsSubscription
+metadata:
+  name: ccd-case-events
+  namespace: civil
+spec:
+  owner:
+    name: ccd-case-events
   requiresSession: true
+
+---
