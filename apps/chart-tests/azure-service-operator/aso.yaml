@@ -6,12 +6,20 @@ metadata:
 spec:
   location: uksouth
 ---
-apiVersion: managedidentity.azure.com/v1beta20181130
-kind: UserAssignedIdentity
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: Namespace
 metadata:
-  name: aso-aks-mi
-  namespace: chart-tests
+  name: servicebus-namespace-chart-servicebus-ci
 spec:
+  tags:
+    app.kubernetes.io_name: chart-servicebus
+    application: core
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
   location: uksouth
   owner:
     name: aso-aks-rg
+  sku:
+    name: Standard
+  zoneRedundant: false
