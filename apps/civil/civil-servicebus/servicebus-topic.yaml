@@ -1,0 +1,53 @@
+apiVersion: resources.azure.com/v1beta20200601
+kind: ResourceGroup
+metadata:
+  name: civil-aks-rg
+  namespace: civil
+spec:
+  location: uksouth
+---
+
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: Namespace
+metadata:
+  name: civil-work-allocation
+  namespace: civil
+spec:
+  azureName: civil-work-allocation
+  location: uksouth
+  owner:
+    name: civil-aks-rg
+  sku:
+    name: Standard
+  tags:
+    app.kubernetes.io_name: civil-work-allocation
+    application: civil
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
+  zoneRedundant: false
+
+---
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: NamespacesTopic
+metadata:
+  name: ccd-case-events
+  namespace: civil
+spec:
+  azureName: ccd-case-events
+  owner:
+    name: civil-work-allocation
+
+---
+
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: NamespacesTopicsSubscription
+metadata:
+  name: ccd-case-events
+  namespace: civil
+spec:
+  owner:
+    name: ccd-case-events
+  requiresSession: true
+
+---

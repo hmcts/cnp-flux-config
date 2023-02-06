@@ -99,7 +99,7 @@ spec:
     ccd-definition-store-api:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-5ad420c-20230131161527 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-930a102-20230202163728 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         autoscaling:
           enabled: false
         secrets:
@@ -112,7 +112,7 @@ spec:
     ccd-data-store-api:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-00f32e0-20230131183057 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-f773a2c-20230206102245 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
           ELASTIC_SEARCH_ENABLED: true
@@ -121,11 +121,11 @@ spec:
     ccd-user-profile-api:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-ae2efd5-20230131160437 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-3816410-20230203130818 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     ccd-message-publisher:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-7f99e75-20230201105238 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-aa1743f-20230201130757 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -142,23 +142,23 @@ spec:
     am-role-assignment-service:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-a6129f8-20230130155513 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-4499282-20230201183234 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
         environment:
           RUN_DB_MIGRATION_ON_STARTUP: true
     draft-store-service:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/draft-store/service:prod-7d82650-20230124114925 #{"$imagepolicy": "flux-system:draft-store-service"}
+        image: hmctspublic.azurecr.io/draft-store/service:prod-04f919c-20230202142237 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/em/anno:prod-9e485bd-20230201080722 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-06ef2be-20230203212749 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     dm-store:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/dm/store:prod-735643b-20230131190825 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-00f63e9-20230203193648 #{"$imagepolicy": "flux-system:dm-store"}
         ingressHost: dm-store-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     rpe-service-auth-provider:
