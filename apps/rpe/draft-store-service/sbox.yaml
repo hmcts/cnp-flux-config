@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: draft-store-service
+spec:
+  values:
+    java:
+      environment:
+        DRAFT_STORE_DB_HOST: rpe-draft-store-v14-sandbox.postgres.database.azure.com
+        DRAFT_STORE_DB_USER_NAME: pgadmin
+      keyVaults:
+        draft-store:
+          secrets:
+            - name: service-POSTGRES-PASS-V14
+              alias: DRAFT_STORE_DB_PASSWORD
