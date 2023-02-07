@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: adoption-cron-draft-case-deletion-alert
+spec:
+  releaseName: adoption-cron-draft-case-deletion-alert
+  values:
+    job:
+      environment:
+        TASK_NAME: AlertDraftCaseApplicantBeforeDeletion
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/back-office:prod-a08e0ab-20230206160505 #{"$imagepolicy": "flux-system:adoption-cos-api"}
+    schedule: 0/5 * * * *
+  chart:
+    spec:
+      chart: adoption-cron
+      version: 0.0.17
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
