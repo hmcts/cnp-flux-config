@@ -1,8 +1,6 @@
 
 # Application Configuration
 
->Note: Only use for Flux v2 applications
-
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
 
 **It is important to follow below discussed naming convention, file and folder names should match application helm release name**
