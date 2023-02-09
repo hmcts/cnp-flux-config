@@ -125,7 +125,7 @@ spec:
     ccd-message-publisher:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-aa1743f-20230201130757 #{"$imagepolicy": "flux-system:message-publisher"}
+        image: hmctspublic.azurecr.io/ccd/message-publisher:prod-e4d4d56-20230209100316 #{"$imagepolicy": "flux-system:message-publisher"}
         secrets:
           SERVICE_BUS_CONNECTION_STRING:
             secretRef: servicebus-secret-topic-{{ .Release.Name }}-servicebus-ccd-case-events
@@ -142,29 +142,29 @@ spec:
     am-role-assignment-service:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-4499282-20230201183234 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+        image: hmctspublic.azurecr.io/am/role-assignment-service:prod-7de2d78-20230207154140 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
         environment:
           RUN_DB_MIGRATION_ON_STARTUP: true
     draft-store-service:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/draft-store/service:prod-04f919c-20230202142237 #{"$imagepolicy": "flux-system:draft-store-service"}
+        image: hmctspublic.azurecr.io/draft-store/service:prod-8ac0071-20230208095813 #{"$imagepolicy": "flux-system:draft-store-service"}
     em-anno:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/em/anno:prod-06ef2be-20230203212749 #{"$imagepolicy": "flux-system:em-anno"}
+        image: hmctspublic.azurecr.io/em/anno:prod-cebf71d-20230208074748 #{"$imagepolicy": "flux-system:em-anno"}
         ingressHost: em-anno-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     dm-store:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/dm/store:prod-00f63e9-20230203193648 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-b437056-20230208082344 #{"$imagepolicy": "flux-system:dm-store"}
         ingressHost: dm-store-{{ .Release.Name }}.demo.platform.hmcts.net
         disableTraefikTls: false
     rpe-service-auth-provider:
       java:
         disableKeyVaults: true
-        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-a59f546-20230124104326 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
+        image: hmctspublic.azurecr.io/rpe/service-auth-provider:prod-45eaf68-20230207113642 #{"$imagepolicy": "flux-system:rpe-service-auth-provider"}
         disableTraefikTls: false
     elasticsearch:
       persistence:
