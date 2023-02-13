@@ -5,13 +5,13 @@ cd "$(dirname "$0")"
 # script that migrates sealedSecrets to sops secrets
 
 # script searches for sealedSecret files
-# takes the name and namespace of the sealedsecret
+# gets the name and namespace of the sealedsecret
 # searches for the k8s secret
 # creates a temp file locally with the secret information
 # it encrypts the secret using sops and overwrites the current sealedSecret file
 # deletes the temp file
 
-# it is down the to user of the script to commit and push the sops files to GitHub
+# it is then down to the user of the script to commit and push the sops files to GitHub
 
 env=${1}
 
@@ -82,6 +82,6 @@ for file in ${sealed_secret_files}; do
   rm -rf "${temp_file}"
 
   # Uncomment if you would like to just do one secret at a time.
-  break
+  #break
 done
 
