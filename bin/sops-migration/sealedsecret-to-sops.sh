@@ -38,7 +38,9 @@ if [[ ! $(kubectl config get-contexts "${kube_context}" -o name) ]]; then
   if [[ ! $(kubectl config get-contexts "${kube_context}-admin" -o name ) ]]; then
      echo "Couldn't find ${kube_context}-admin context either. Please authenticate with cluster."
      echo "Example: az aks get-credentials --resource-group cft-${env}-00-rg --name cft-${env}-00-aks --subscription {{subscription}}"
+     exit 1
   else
+    kube_context=${kube_context}-admin
     echo "admin context found. continuing..."
   fi
 fi
@@ -57,7 +59,7 @@ if [[ ${sealed_secret_files} == "" ]]; then
 fi
 
 for file in ${sealed_secret_files}; do
-  echo working on "$file"
+  echo -e "\n\n####### "$file" ########"
 
   file_path=$(dirname "${file}")
   file_name=$(basename "${file}")
@@ -65,7 +67,13 @@ for file in ${sealed_secret_files}; do
   name=$(yq '.metadata.name' "${file}" )
   namespace=$(yq '.metadata.namespace' "${file}" )
 
-  kubectl get secret -n "${namespace}" "${name}" --context "${kube_context}" -o name || continue
+  if [[ ! $(kubectl get secret -n "${namespace}" "${name}" --context "${kube_context}" -o name) ]]; then
+    echo "Secret ${name} not found, checking if any deployments are using the secret.."
+    if [[ ! $(kubectl get deployments.apps -n "${namespace}" -o yaml | grep -i "${name}") ]]; then
+      echo "Secret ${name} in the ${namespace} namespace doesn't look like it's used by any deployment and can probably be deleted."
+      continue
+    fi
+  fi
   kubectl get secret -n "${namespace}" "${name}" --context "${kube_context}" -o json | jq 'del(.metadata.uid,.metadata.ownerReferences,.metadata.creationTimestamp,.metadata.resourceVersion)' > "${temp_file}"
 
   sops --encrypt --encrypted-regex '^(data|stringData)$' --azure-kv "${sops_key}" "${temp_file}" > "${file}"
@@ -74,6 +82,6 @@ for file in ${sealed_secret_files}; do
   rm -rf "${temp_file}"
 
   # Uncomment if you would like to just do one secret at a time.
-  #break
+  break
 done
 
