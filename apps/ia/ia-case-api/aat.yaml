@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-case-api
+spec:
+  values:
+    java:
+      environment:
+        IA_TIMED_EVENT_SERVICE_ENABLED: "true"
+        IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
+        paymentAfterRemissionRejection.dueInMinutes: 1440
+        paymentEaHuNoRemission.dueInMinutes: 1440

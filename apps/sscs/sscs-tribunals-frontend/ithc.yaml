@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-frontend
+  namespace: sscs
+spec:
+  values:
+    nodejs:
+      ingressHost: benefit-appeal.ithc.platform.hmcts.net
+      environment:
+        CONTACT_US_WEBCHAT_ENABLED: "true"
+        FT_ALLOW_UC_HEARING_OPTIONS: "true"
+        MEDIA_FILES_ALLOWED_ENABLED: "true"
+        MULTIPLE_DRAFTS_ENABLED: "true"
+        PCQ_URL: https://pcq.ithc.platform.hmcts.net
+        PCQ_ENABLED: "true"
+        ALLOW_COOKIE_BANNER_ENABLED: "true"
+        ALLOW_JSA_ENABLED: "true"
+        WEBCHAT_URL: "webchat.pp.ctsc.hmcts.net"
+        WEBCHAT_CLIENT_URL: "webchat-client.pp.ctsc.hmcts.net"
+        TEST_PROPERTY: "false"
+        DUMMY_PROPERTY: false

@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-s2s
+  namespace: money-claims
+spec:
+  values:
+    java:
+      enableOAuth: true
+      ingressHost: ""
+      secrets:
+        MICROSERVICEKEYS_CMC:
+          secretRef: cmc-s2s-secret
+          key: key
+        MICROSERVICEKEYS_CMC_CLAIM_STORE:
+          secretRef: claim-store-s2s-secret
+          key: key
+      environment:
+        TESTING_SUPPORT_ENABLED: "true"
+        MICROSERVICEKEYS_CMC_CLAIM_SUBMIT_API: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_CMC_LEGAL_FRONTEND: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_EM_GW: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_CCD_DATA: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_CCD_DEFINITION: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_CCD_GATEWAY: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_CCD_GW: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_CCD_ADMIN: AAAAAAAAAAAAAAAA
+        MICROSERVICEKEYS_DG_DOCASSEMBLY_API: AAAAAAAAAAAAAAAA

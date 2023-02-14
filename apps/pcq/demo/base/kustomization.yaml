@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../pcq-frontend-int/pcq-frontend-int.yaml
+  - ../../pcq-backend-int/pcq-backend-int.yaml
+  - ../../pcq-loader/pcq-loader.yaml
+  - ../../pcq-consolidation-service/pcq-consolidation-service.yaml
+namespace: pcq
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../pcq-frontend-int/demo.yaml
+  - ../../pcq-backend-int/demo.yaml
+  - ../../pcq-backend/demo.yaml
+  - ../../pcq-frontend/demo.yaml

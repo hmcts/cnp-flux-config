@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-initiation
+spec:
+  values:
+    job:
+      schedule: "0,4,8,12,16,20,24,28,32,36,40,44,48,52,56 * * * *"
+      environment:
+        JOB_NAME: INITIATION
+        REFRESH_FLAG: ""
+    global:
+      environment: demo
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

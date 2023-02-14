@@ -1,0 +1,66 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-back-front
+  namespace: ccd
+spec:
+  releaseName: ccd-back-front
+  timeout: 900
+  forceUpgrade: true
+  values:
+    tags:
+      idam-pr: true
+    ccd:
+      managementWeb:
+        enabled: true
+      apiGatewayWeb:
+        enabled: true
+    global:
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      devMode: true
+    ccd-admin-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-1f77564f
+        ingressClass: traefik-no-proxy
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_AW_CLIENT_SECRET:
+            disabled: false
+    ccd-api-gateway-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eb012c9f
+        ingressClass: traefik-no-proxy
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_CLIENT_SECRET:
+            disabled: false
+    ccd-definition-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-77f5956b
+    ccd-data-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-1f9a7531
+    ccd-user-profile-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-a7b8709b
+    ccd-user-profile-importer:
+      users:
+        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+    ccd-definition-importer:
+      definitions:
+        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+      userRoles:
+        - caseworker-autotest1
+  chart:
+    spec:
+      chart: ccd
+      version: 4.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfdiv-frontend
+spec:
+  releaseName: nfdiv-frontend
+  values:
+    nodejs:
+      ingressHost: www.end-civil-partnership.service.gov.uk
+      environment:
+        EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net/
+        IDAM_WEB_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token
+        DECREE_NISI_URL: https://www.decree-nisi.apply-divorce.service.gov.uk
+        WEBCHAT_AVAYA_URL: webchat.ctsc.hmcts.net
+        WEBCHAT_AVAYA_CLIENT_URL: webchat-client.ctsc.hmcts.net
+        WEBCHAT_AVAYA_SERVICE: Divorce
+        IGNORE_LINKED_INVITES: ENABLED
+        IDAM_TOKEN_CACHE: false
+  chart:
+    spec:
+      chart: ./stable/nfdiv-frontend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

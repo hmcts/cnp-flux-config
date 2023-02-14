@@ -44,22 +44,11 @@ spec:
                 values:
                   - system
     prometheus:
-      additionalServiceMonitors:
-        - name: "flux-monitor"
-          selector:
-            matchLabels:
-              app: flux
-          namespaceSelector:
-            matchNames:
-              - admin
-          endpoints:
-            - targetPort: 3030
-          path: /metrics
       additionalPodMonitors:
         - name: "nodelocaldns"
           selector:
             matchLabels:
-              k8s-app: node-local-dns
+              app.kubernetes.io/name: node-local-dns
           namespaceSelector:
             matchNames:
               - kube-system
@@ -188,7 +177,8 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 30.0.1
+      # Update kube-prometheus-stack-crds/kustomization.yaml when updating this
+      version: 44.4.1
       sourceRef:
         kind: HelmRepository
         name: prometheus

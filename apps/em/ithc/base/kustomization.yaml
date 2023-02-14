@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+namespace: em
+patchesStrategicMerge:
+  - ../../identity/ithc.yaml
+  - ../../em-ccd-orchestrator/ithc.yaml
+  - ../../em-anno/ithc.yaml
+  - ../../em-hrs-ingestor/ithc.yaml
+  - ../../em-npa/ithc.yaml
+  - ../../em-stitching/ithc.yaml
+  - ../../em-hrs-api/ithc.yaml

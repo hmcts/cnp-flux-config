@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../rd-commondata-api/rd-commondata-api.yaml
+  - ../../rd-location-ref-api/rd-location-ref-api.yaml
+  - ../../rd-judicial-api/rd-judicial-api.yaml
+  - ../../rd-commondata-dataload/rd-commondata-dataload.yaml
+  - ../../rd-judicial-data-load/rd-judicial-data-load.yaml
+  - ../../rd-location-ref-data-load/rd-location-ref-data-load.yaml
+namespace: rd
+patchesStrategicMerge:
+  - ../../identity/ithc.yaml
+  - ../../rd-caseworker-ref-api/ithc.yaml
+  - ../../rd-profile-sync/ithc.yaml
+  - ../../rd-commondata-api/ithc.yaml
+  - ../../rd-professional-api/ithc.yaml
+  - ../../rd-user-profile-api/ithc.yaml
+  - ../../rd-location-ref-api/ithc.yaml
+  - ../../rd-judicial-api/ithc.yaml

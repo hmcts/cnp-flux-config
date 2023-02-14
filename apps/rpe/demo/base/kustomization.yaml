@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - pdf-service-ingress.yaml
+namespace: rpe
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../identity/send-letter-identity-demo.yaml
+  - ../../draft-store-service/demo.yaml
+  - ../../rpe-service-auth-provider/demo.yaml
+  - ../../pdf-service/demo.yaml
+  - ../../rpe-send-letter-service/demo.yaml

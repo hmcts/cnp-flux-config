@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ts-translation-service-int
+spec:
+  releaseName: ts-translation-service-int
+  values:
+    java:
+      postgresql:
+        enabled: true
+      useInterpodAntiAffinity: true
+      ingressHost: ts-translation-service-int-demo.service.core-compute-demo.internal
+      environment:
+        TS_TRANSLATION_SERVICE_DB_HOST: "{{ .Release.Name }}-postgresql"
+        TS_TRANSLATION_SERVICE_DB_NAME: "{{ .Values.postgresql.auth.database}}"
+        TS_TRANSLATION_SERVICE_DB_USERNAME: "{{ .Values.postgresql.auth.username}}"
+        TS_TRANSLATION_SERVICE_DB_PASSWORD: "{{ .Values.postgresql.auth.password}}"
+        TS_TRANSLATION_SERVICE_DB_OPTIONS: "?stringtype=unspecified"
+        TS_TRANSLATION_SERVICE_DB_PORT: 5432
+        TESTING_SUPPORT_ENABLED: true
+  chart:
+    spec:
+      chart: ./stable/ts-translation-service
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

@@ -155,7 +155,7 @@ kubeseal --format=yaml --cert=clusters/${ENV}/pub-cert.pem <  tmp/traefiksecret.
 
 In demo, traefik-forward-auth is using the following sealed secret:
 
-[oauth2-cert-key.yaml](../k8s/demo/common/sealed-secrets/oauth2-cert-key.yaml)
+[oauth2-cert-key.yaml](../apps/admin/demo/base/oauth2-cert-key.yaml)
 
  this can be generated starting from the .crt and .key files obtained after running openssl on the .pfx file:
 
@@ -199,8 +199,8 @@ Only complete this step for management clusters
 ENV=mgmt-sandbox
 AZ_DEVOPS_TOKEN=$(az keyvault secret show --vault-name infra-vault-nonprod --name azure-devops-token --query value -o tsv)
 kubectl create secret generic vsts-token --from-literal=token=$AZ_DEVOPS_TOKEN --namespace vsts --dry-run=client -o json > /tmp/values.json
-mkdir -p k8s/$ENV/common/vsts/
-kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > apps/vsts/$ENV/base/vsts-token.yaml
+mkdir -p apps/vsts/$ENV/base/
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/values.json > apps/vsts/$ENV/base/vsts-token.yaml
 ```
 
 ### External DNS (ideally we'll move this to managed identity)
@@ -208,7 +208,6 @@ kubeseal --format=yaml --cert=k8s/$ENV/pub-cert.pem < /tmp/values.json > apps/vs
 ```bash
 ENV=demo
 VAULT=cftapps-${ENV}
-mkdir -p k8s/$ENV/common/sealed-secrets/
 CLIENT_ID=$(az keyvault secret show --vault-name ${VAULT} --name aks-sp-app-id --query value -o tsv)
 CLIENT_SECRET=$(az keyvault secret show --vault-name ${VAULT} --name aks-sp-app-password --query value -o tsv)
 
@@ -217,5 +216,21 @@ kubectl create secret generic external-dns --from-literal AZURE_TENANT_ID=531ff9
   --dry-run=client \
   -o json > /tmp/external-dns.json
 
-kubeseal --format=yaml --cert=apps/$ENV/pub-cert.pem < /tmp/external-dns.json > apps/$ENV/base/external-dns.yaml
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/external-dns.json > apps/$ENV/base/external-dns.yaml
+```
+
+### Dynatrace
+
+```bash
+ENV=perftest
+API_TOKEN=
+DATA_INGEST_TOKEN=
+
+kubectl create secret generic dynakube \
+  --from-literal="apiToken=$API_TOKEN" \
+  --from-literal="dataIngestToken=${DATA_INGEST_TOKEN}" \
+  --dry-run=client \
+  -o json > /tmp/dynakube.json
+
+kubeseal --format=yaml --cert=clusters/$ENV/pub-cert.pem < /tmp/dynakube.json > apps/dynatrace/$ENV/base/dynakube-secret.yaml
 ```

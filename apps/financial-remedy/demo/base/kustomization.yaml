@@ -2,9 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../../rbac/nonprod-role.yaml
 namespace: financial-remedy
 patchesStrategicMerge:
   - ../../finrem-cos/demo.yaml
   - ../../identity/demo.yaml
   - ../../finrem-emca/demo.yaml
   - ../../finrem-dgcs/demo.yaml
+  - ../../finrem-ns/demo.yaml

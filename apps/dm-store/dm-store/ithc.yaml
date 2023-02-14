@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dm-store
+spec:
+  values:
+    java:
+      environment:
+        ENABLE_TTL: false
+      testsConfig:
+        memoryLimits: "3072Mi"
+        environment:
+          TEST_URL: http://dm-store-java
+          SLACK_CHANNEL: "em-dev-chat"
+          SLACK_NOTIFY_SUCCESS: "true"

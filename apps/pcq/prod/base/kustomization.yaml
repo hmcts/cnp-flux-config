@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../pcq-loader/pcq-loader.yaml
+  - ../../pcq-consolidation-service/pcq-consolidation-service.yaml
+namespace: pcq
+patchesStrategicMerge:
+  - ../../identity/prod.yaml
+  - ../../pcq-frontend/prod.yaml

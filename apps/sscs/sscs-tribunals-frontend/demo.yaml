@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sscs-tribunals-frontend
+  namespace: sscs
+spec:
+  values:
+    nodejs:
+      disableTraefikTls: false
+      ingressClass: traefik-no-proxy
+      ingressHost: benefit-appeal.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-32cbe82-20220825134712 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
+      environment:
+        CONTACT_US_WEBCHAT_ENABLED: "true"
+        FT_ALLOW_UC_HEARING_OPTIONS: "true"
+        MEDIA_FILES_ALLOWED_ENABLED: "true"
+        MULTIPLE_DRAFTS_ENABLED: "true"
+        PCQ_URL: https://pcq.demo.platform.hmcts.net
+        PCQ_ENABLED: "true"
+        ALLOW_COOKIE_BANNER_ENABLED: "true"
+        ALLOW_JSA_ENABLED: "true"
+        WEBCHAT_URL: "webchat.pp.ctsc.hmcts.net"
+        WEBCHAT_CLIENT_URL: "webchat-client.pp.ctsc.hmcts.net"
+        TEST_PROPERTY: "false"
+        DUMMY_PROPERTY: false

@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-develop
+  namespace: ccd
+spec:
+  releaseName: ccd-develop
+  timeout: 900
+  forceUpgrade: true
+  values:
+    tags:
+      idam-pr: true
+    ccd:
+      managementWeb:
+        enabled: true
+      apiGatewayWeb:
+        enabled: true
+      emAnnotation:
+        enabled: true
+      draftStore:
+        enabled: true
+      dmStore:
+        enabled: true
+      activityApi:
+        enabled: true
+      blobstorage:
+        enabled: true
+      printService:
+        enabled: true
+      testStubsService:
+        enabled: true
+    global:
+      idamApiUrl: https://idam-api.demo.platform.hmcts.net
+      idamWebUrl: https://idam-web-public.demo.platform.hmcts.net
+      ccdAdminWebIngress: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdApiGatewayIngress: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+      ccdCaseManagementWebIngress: www-{{ .Release.Name }}.demo.platform.hmcts.net
+      devMode: true
+    ccd-admin-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-856ea531
+        ingressClass: traefik-no-proxy
+        ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_AW_CLIENT_SECRET:
+            disabled: false
+    ccd-api-gateway-web:
+      nodejs:
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:pr-273-8f9561b0
+        ingressClass: traefik-no-proxy
+        ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
+        secrets:
+          IDAM_OAUTH2_CLIENT_SECRET:
+            disabled: false
+    ccd-definition-store-api:
+      java:
+        devmemoryRequests: "1024Mi"
+        devmemoryLimits: "2048Mi"
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-469-33c730c9
+        secrets:
+          STORAGE_ACCOUNT_NAME:
+            disabled: false
+          STORAGE_ACCOUNT_KEY:
+            disabled: false
+        environment:
+          AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
+    ccd-data-store-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/data-store-api:pr-601-9ec48de2
+    ccd-user-profile-api:
+      java:
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:pr-224-6d42bb16
+    ccd-user-profile-importer:
+      users:
+        - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO
+    ccd-definition-importer:
+      definitions:
+        - https://github.com/hmcts/ccd-definition-store-api/raw/master/aat/src/resource/CCD_CNP_27.xlsx
+      userRoles:
+        - caseworker-autotest1
+        - caseworker-test
+        - caseworker
+  chart:
+    spec:
+      chart: ccd
+      version: 4.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

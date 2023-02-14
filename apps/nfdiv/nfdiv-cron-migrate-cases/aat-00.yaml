@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-migrate-cases
+spec:
+  releaseName: nfdiv-cron-migrate-cases
+  values:
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: aat
+    job:
+      schedule: 0/10 7-21,0-7 * * *
+      environment:
+        ENABLE_PAPER_APPLICATION_MIGRATION: true
+        ENABLE_CONFIRM_READ_PETITION_MIGRATION: true
+        MIGRATE_AOS_IS_DRAFTED: false
+        MIGRATE_CASE_COURT_HEARING: false
+        MIGRATE_CREATE_DOUBLE_LINKED_LIST: true

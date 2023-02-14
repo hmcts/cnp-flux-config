@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+namespace: em
+patchesStrategicMerge:
+  - ../../identity/perftest.yaml
+  - ../../em-ccd-orchestrator/perftest.yaml
+  - ../../em-anno/perftest.yaml
+  - ../../em-hrs-ingestor/schedule-off.yaml
+  - ../../em-stitching/perftest.yaml
+  - ../../em-npa/perftest.yaml
+  - ../../em-hrs-api/perftest.yaml

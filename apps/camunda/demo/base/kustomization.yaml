@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+namespace: camunda
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../camunda-optimize/demo.yaml
+  - ../../camunda-api/demo.yaml
+  - ../../camunda-ui/demo.yaml

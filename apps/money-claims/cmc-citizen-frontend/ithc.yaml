@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-citizen-frontend
+  namespace: money-claims
+spec:
+  values:
+    nodejs:
+      ingressHost: moneyclaims.ithc.platform.hmcts.net
+      environment:
+        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
+        IDAM_AUTHENTICATION_WEB_URL: https://idam-web-public.ithc.platform.hmcts.net
+        FEATURE_TESTING_SUPPORT: true

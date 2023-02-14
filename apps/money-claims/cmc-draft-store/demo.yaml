@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-draft-store
+  namespace: money-claims
+spec:
+  values:
+    global:
+      devMode: true
+    java:
+      enableOAuth: true
+      postgresql:
+        enabled: true #temporary till we get ccd working.
+        initdbScripts:
+          init.sql: |-
+            CREATE DATABASE "send_letter" WITH OWNER = javapostgres ENCODING = 'UTF-8' CONNECTION LIMIT = -1;
+      ingressHost: ""
+      environment:
+        DRAFT_STORE_DB_HOST: "{{ .Release.Name }}-postgresql"
+        DRAFT_STORE_DB_NAME: "{{ .Values.postgresql.postgresqlDatabase}}"
+        DRAFT_STORE_DB_USER_NAME: "{{ .Values.postgresql.postgresqlUsername}}"
+        DRAFT_STORE_DB_PASSWORD: "{{ .Values.postgresql.postgresqlPassword}}"
+        RUN_DB_MIGRATION_ON_STARTUP: true
+        DRAFT_STORE_DB_CONN_OPTIONS: ""
+        IDAM_URL: "https://idam-api.demo.platform.hmcts.net"
+        S2S_URL: "http://cmc-s2s-java"

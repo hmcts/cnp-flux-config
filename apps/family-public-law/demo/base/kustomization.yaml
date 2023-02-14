@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+namespace: family-public-law
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../fpl-case-service/demo.yaml

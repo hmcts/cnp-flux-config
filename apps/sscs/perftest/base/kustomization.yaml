@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../sscs-hearings-api/sscs-hearings-api.yaml
+  - ../../sscs-bulk-scan/sscs-bulk-scan.yaml
+namespace: sscs
+patchesStrategicMerge:
+  - ../../identity/perftest.yaml
+  - ../../sscs-cor-frontend/perftest.yaml
+  - ../../sscs-tribunals-api/perftest.yaml
+  - ../../sscs-ccd-callback-orchestrator/perftest.yaml
+  - ../../sscs-hearings-api/perftest.yaml
+  - ../../sscs-tya-notif/perftest.yaml
+  - ../../sscs-tribunals-frontend/perftest.yaml
+  - ../../sscs-evidence-share/perftest.yaml
+  - ../../sscs-bulk-scan/perftest.yaml

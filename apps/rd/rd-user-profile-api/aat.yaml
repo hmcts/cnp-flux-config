@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rd-user-profile-api
+spec:
+  values:
+    java:
+      environment:
+        SPRING_JPA_OPEN-IN-VIEW: false
+        DELETE_ORG: true
+        PRD_S2S_AUTHORISED_SERVICES: rd_professional_api,rd_user_profile_api,rd_profile_sync,rd_caseworker_ref_api,iac
+        APPLICATION_LOGGING_LEVEL: DEBUG
+        FEIGN_CLIENT_CONFIG_DEFAULT_CONNECTTIMEOUT: 30000
+        FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT: 30000
+        FEIGN_HTTPCLIENT_ENABLED: false
+        FEIGN_OKHTTP_ENABLED: true
+        IDAM_APACHEHTTPCLIENT_ENABLED: false

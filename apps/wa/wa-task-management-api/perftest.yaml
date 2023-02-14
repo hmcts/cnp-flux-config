@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-management-api
+spec:
+  values:
+    java:
+      replicas: 4
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-f053f73-20230208094440 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+      memoryLimits: "4096Mi"
+      memoryRequests: "2048Mi"
+      cpuLimits: "4000m"
+      cpuRequests: "2000m"
+      environment:
+        REFRESH_FLAG: "5"

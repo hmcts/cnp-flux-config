@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fact-admin
+spec:
+  values:
+    nodejs:
+      ingressHost: admin.find-court-tribunal.service.gov.uk
+      environment:
+        IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_USER_DASHBOARD_URL: https://idam-user-dashboard.platform.hmcts.net
+        IDAM_ADD_USER_URL: https://idam-api.platform.hmcts.net/api/v1/users/registration
+        IDAM_UPDATE_USER_URL: https://idam-api.platform.hmcts.net/api/v1/users/
+        OAUTH_CLIENT_REDIRECT: https://admin.find-court-tribunal.service.gov.uk/oauth2/callback
+        FRONTEND_URL: https://www.find-court-tribunal.service.gov.uk

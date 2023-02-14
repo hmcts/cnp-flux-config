@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-monitor
+spec:
+  values:
+    java:
+      environment:
+        LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        INITIATION_CAMUNDA_MAX_RESULTS: 100
+        INITIATION_TIME_LIMIT_FLAG: true
+        INITIATION_TIME_LIMIT: 10
+        TERMINATION_CAMUNDA_MAX_RESULTS: 100
+        TERMINATION_TIME_LIMIT_FLAG: true
+        TERMINATION_TIME_LIMIT: 120
+        CLEAN_UP_CAMUNDA_MAX_RESULTS: 500
+        CLEAN_UP_STARTED_DAYS_BEFORE: 1

@@ -1,8 +1,6 @@
 
 # Application Configuration
 
->Note: Only use for Flux v2 applications
-
 The section covers how to configure a new application in this repository to deploy to various environments. We use [kustomize](https://github.com/kubernetes-sigs/kustomize) for templating/patching manifests in this repo. 
 
 **It is important to follow below discussed naming convention, file and folder names should match application helm release name**
@@ -122,7 +120,7 @@ spec:
 - Create an image policy like below (or update an existing environment image policy) with your pr number (pr-332 taken as example) along side your HelmRelease file.
 
 ```yaml
-apiVersion: image.toolkit.fluxcd.io/v1alpha2
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: <env>-<component-name>
@@ -170,5 +168,5 @@ If you want to find the effective yaml that will get applied to an environment f
   kustomize build --load_restrictor none apps/<namespace>/<env>/base
   
   #version 4.x
-  kustomize build --load-restrictor LoadRestrictionsNone apps/<namespace>/<env>/base
+  kustomize build --load_restrictor none apps/<namespace>/<env>/base
   ```

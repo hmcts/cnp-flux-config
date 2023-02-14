@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rd-judicial-data-load
+spec:
+  values:
+    job:
+      schedule: "45 22 * * *"
+      environment:
+        DELETE_ORG: false
+        JRD_SIDAM_SEARCH_QUERY: "(roles:judiciary) AND lastModified:>now-%sh"
+        MAIL_FROM: no-reply@mail-rd-nonprod.platform.hmcts.net

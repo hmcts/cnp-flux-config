@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-case-event-handler-clean-up-messages
+spec:
+  values:
+    job:
+      schedule: "15,45 * * * *"
+      environment:
+        JOB_NAME: CLEAN_UP_MESSAGES
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

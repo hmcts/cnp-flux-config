@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../aac-ac-int-manage-case-assignment/aac-ac-int-manage-case-assignment.yaml
+namespace: aac
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../manage-case-assignment/demo.yaml
+  - ../../aac-ac-int-manage-case-assignment/demo.yaml

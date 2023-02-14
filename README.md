@@ -1,38 +1,28 @@
 # cnp-flux-config
-Flux config for AKS clusters
+Flux v2 config for CFT AKS clusters
 
 ## Repo Structure
 
-This repo is currently being migrated to Flux V2.
-
 Please see [Repo setup](docs/repo-setup.md) for details on how this repo is organized and meant to work.
-
-### Migration status
-
-| Environment  | Instances running | Status |
-| ------------- | ------------- | ------------- |
-| Prod | Flux V1 & V2  | Migration in progress
-| AAT |  Flux V1 & V2  | Migration in progress
-| Demo|  Flux V1 & V2  | Migration in progress
-| ITHC | Flux V1 & V2 | Migration in progress
-| Perftest | Flux V1 & V2 | Migration in progress
-| Preview | Flux V2  | Migrated
-| Sandbox | Flux V2  | Migrated
-| Mgmt (cftptl) | Flux V2  | Migrated
-| Mgmt sbox | Flux V2  | Migrated
-
-**Note**: Image automation responsibility for all environments has been moved to Flux v2
 
 ## Adding an app to flux
 
 - All App deployments are managed through `HelmRelease` manifests.
 - Any new/existing application that is getting added to an environment for the first time should use [Flux v2](docs/app-deployment-v2.md).
-- See [App Deployment section](docs/app-deployment.md) for more details to manage existing apps already on flux v1.    
-
 
 ## Creating Sealed Secrets
 
-Install version 0.5.1 from https://github.com/bitnami-labs/sealed-secrets/releases
+Install version 0.17.5 from https://github.com/bitnami-labs/sealed-secrets/releases
+
+```
+GOOS=$(go env GOOS)
+GOARCH=$(go env GOARCH)
+wget https://github.com/bitnami/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-$GOOS-$GOARCH.tar.gz -O /tmp/kubeseal.tar.gz
+tar -xzvf /tmp/kubeseal.tar.gz
+mkdir -p ~/bin
+install -m 755 /tmp/kubeseal ~/bin/kubeseal
+kubeseal --version
+```
 
 #### From a Literal
 ```
@@ -41,7 +31,7 @@ kubectl create secret generic my-secret \
   --namespace namespace \
   --dry-run=client -o json > my-secret.json
 
-kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
+kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 ### From a File
 ```
@@ -50,7 +40,7 @@ kubectl create secret generic my-secret \
   --namespace namespace \
   --dry-run=client -o json > my-secret.json
 
-kubeseal --format=yaml --cert=pub-cert.pem < my-secret.json > my-secret.yaml
+kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
 ```
 
 ## Bootstrapping sealed secrets for a new cluster
@@ -65,4 +55,4 @@ flux install --export > apps/flux-system/base/gotk-components.yaml
 flux install --export --components image-reflector-controller,image-automation-controller > apps/flux-system/base/image-automation-components.yaml 
 ```
 
-Currently, `image-automation-components.yaml` will contain some duplication like `namespace` and `clusterrole` and they need to be removed manually
+Currently, `image-automation-components.yaml` will contain some duplication like `namespace` , `clusterrole` and `NetworkPolicy` and they need to be removed manually

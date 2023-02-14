@@ -3,12 +3,11 @@ kind: HelmRelease
 metadata:
   name: traefik2
   namespace: admin
-  annotations:
-    flux.weave.works/automated: "false"
 spec:
   releaseName: traefik-auth-proxy
   interval: 1m
   values:
+    instanceLabelOverride: traefik-auth-proxy
     providers:
       kubernetesIngress:
         publishedService:

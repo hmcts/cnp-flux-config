@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-ccd
+  namespace: money-claims
+spec:
+  releaseName: cmc-ccd
+  timeout: 900
+  forceUpgrade: true
+  chart:
+    spec:
+      chart: ./stable/ccd
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

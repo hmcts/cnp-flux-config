@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-dg-docassembly
+  namespace: money-claims
+spec:
+  values:
+    java:
+      enableOAuth: true
+      secrets:
+        DOCMOSIS_ACCESS_KEY:
+          secretRef: docmosis-secret
+          key: accessKey
+        DOCMOSIS_TEMPLATES_ENDPOINT_AUTH:
+          secretRef: docmosis-secret
+          key: templatesAuth
+      environment:
+        S2S_BASE_URI: http://cmc-s2s-java
+        IDAM_WEBSHOW_WHITELIST: https://em-show-demo.service.core-compute-demo.internal/oauth2/callback
+        DM_STORE_APP_URL: "http://cmc-ccd-dm-store"
+        S2S_KEY: AAAAAAAAAAAAAAAA

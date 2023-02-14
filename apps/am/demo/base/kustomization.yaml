@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../am-role-assignment-refresh-batch/am-role-assignment-refresh-batch.yaml
+  - ../../am-role-assignment-batch-service/am-role-assignment-batch-service.yaml
+namespace: am
+patchesStrategicMerge:
+  - ../../identity/demo.yaml
+  - ../../am-role-assignment-service/demo.yaml
+  - ../../am-org-role-mapping-service/demo.yaml
+  - ../../am-judicial-booking-service/demo.yaml

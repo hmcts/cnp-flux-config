@@ -12,7 +12,7 @@ spec:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       image: "hmctspublic.azurecr.io/jenkins/jenkins"
-      tag: 2.375-222
+      tag: 2.385-283
       containerSecurityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -109,6 +109,7 @@ spec:
                     - "GROUP:Run/Update:authenticated"
                     - "GROUP:Agent/ExtendedRead:authenticated"
                     - "GROUP:Job/Cancel:authenticated"
+                    - "GROUP:Job/ExtendedRead:authenticated"
                     - "GROUP:Job/Read:authenticated"
                     - "GROUP:Job/Build:authenticated"
                     - "USER:Job/Discover:anonymous"
@@ -363,7 +364,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 3.11.8
+      version: 4.3.0
       sourceRef:
         kind: HelmRepository
         name: jenkins

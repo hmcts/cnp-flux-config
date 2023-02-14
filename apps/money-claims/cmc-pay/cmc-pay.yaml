@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cmc-pay
+  namespace: money-claims
+spec:
+  releaseName: cmc-pay
+  chart:
+    spec:
+      chart: ./stable/ccpay
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

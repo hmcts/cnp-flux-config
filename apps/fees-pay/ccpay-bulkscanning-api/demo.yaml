@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccpay-bulkscanning-api
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:pr-442-bd9b720-20230207171319 #{"$imagepolicy": "flux-system:demo-ccpay-bulkscanning-api"}
+      imagePullPolicy: Always
+      environment:
+        DUMMY_RESTART_VAR: false
+        IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
+        S2S_AUTHORISED_SERVICES: "payment_app,ccpay_bubble,cmc,bulk_scan_payment_processor,api_gw,probate_frontend,divorce_frontend,ccd_gw,xui_webapp"
