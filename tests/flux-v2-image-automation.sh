@@ -20,7 +20,6 @@ EXCLUSIONS_LIST=(
   apps/idam/idam-testing-support-api/sbox.yaml
   apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
-  apps/probate/probate-cron-hmrc-extract/probate-cron-hmrc-extract.yaml
   apps/probate/*
   .*demo.*.yaml
   apps/*/*/demo
