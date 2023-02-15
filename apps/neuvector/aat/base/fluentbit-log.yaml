@@ -1,17 +1,25 @@
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
+apiVersion: v1
+data:
+  azure_log_workspace_id: ENC[AES256_GCM,data:kXlxvBe0H1WB9OkwIZQDbfpPvv0IklPnzConwNdFFOxa5m6JRC/VhNgEu8kFDVz9,iv:rjeYcsNVKDAMUaeFdOjok+VSDWUqu7vZMNUWY79watw=,tag:/5xl8B8l40m+XqIV9lDPyw==,type:str]
+  azure_log_workspace_shared_key: ENC[AES256_GCM,data:R+Aljk44PBARNJzjj8yJrzF3Cq9ZL8AqCyOSpXLU5lrg+6RPyYoYiNJNKJ55xX5J5ikFJDakHvnJ76Zf4Dn/T3Biyw7i0rmWf4uWLknf4ECTErBYjoemjXAlGbP8GsQaxEx/0UB+MxJZErM617t8xr4SrqyWkrEp,iv:qDhkT/LQi4lB6QAHMrO7cMCOz78oXhF2M4Xo1G/VzNQ=,tag:r9L67cwQDtccE3izDbIXKw==,type:str]
+kind: Secret
 metadata:
-  creationTimestamp: null
   name: fluentbit-log
   namespace: neuvector
-spec:
-  encryptedData:
-    azure_log_workspace_id: AgBcSYzCbAZ9TAl18AArzbkknfXYZC2IAaP5DyCE91+SRQp+SsrntXuioCg0pmk7Bcv/AqYjr6v10NoB3P0f4HV1OBuuFcRLK1yZ8XNSjVEpo3JIS09dSu7ZdPcBqjg2B6HsamqUfRmefKYRwcYNtVMWR48wdq8jwb9y6fHpRz9Cs3BMRyqzex/TPXygGIx6munyuRIaDGwxHV2a7KMaopWqk0E1aoGNr4ckrqhICM+hdxVg/UC8q17lQ6U+tDp4AtLcNqSIo3iDJ88DoqrmA+BsQ+iZV+NK+CC9ZFADsd2ZyLmlsgvNFKrA2zJQ4FGUBJQq56yprzGOI2ToWWWtVhLPt+Z/MBXBElBiA6GHAdq/XDU+ETU+PtD02nYab8Q922VFScCHH3FmXfB21jxe2u3LTdZFaHKnhyusJMsRzTsS26iUHfyrd5ZS0WeTEbEGIqF8M89h7czfxR854EFpH0/mNue8yLzCpVJ1hbAGxDzt3UjWFDtuHenOThcf+v2OHfHDy8nCPxXiLcXDrEeRHWEAGGeIa3Z6Qd2FNbz5PwwroZG/gNPzJsXnVZawhJhlBZb2SYcaL5fJf4lWEYkHShBWPgXd+q4yud8vdoF5udBnUCvuLZRz45OoMVTZEDznaDS8QP58dwzTN4WgEnYiveCJkPzSx1pQcjVQ3eOS0UIJsK2oZfvv34E+N3Z7UOMeVVV7uI3PuLZVg9L7N4Hk+P1jUSaDiEhDhyUaGgazw9WVoXEGcrI=
-    azure_log_workspace_shared_key: AgBJerTquO/56eu4QCaqRUBgAi+u1998DWrIZkyJ13/zEQ8ZpZNvo1Tyv/PjPcLpxaEs+ABEi0X4HYuiTT56yjuald4WlGVn3g2QbatVLfR7FeNgkm0gqU60VBHjKedlZrLn90awzQemOQi/+gtJBYSPNEehO4Y0M89ybFaugNoBg70LACBRNzYtf/+wuvfCJg02rRdPySRj0UzfZAceIT1OJp4QmxdRg1gTUyEeQUhUjh/D90ijbUpoyswKfE8D6DOAX7iywl0cE29JiQ2f6SzzkST8oByLyH251vsMhzLU1iEIAU7sXRGrJQHAjOFqyGeEo2qWLT9G/43ex7F8J3H/u1PsghBaF2QkCbOvoKrMQwXJmyyNsnqUKOUZqH8uxmR0TPJ/AHaDRIUnjrP/qmDlOcMpoLAn3aRRd0VA+zTnX89+id1Ud8mS+8WsDYVqQuEpmbaDkT8Vil6mEPkn+gyEtUrVmtHUUaWHN0/rdltVggqnYHvImDh9OxAXu5W+kfVeR6/bv5HoEnUYYfHBnUbTvXyKYZ6ugHKE8/lYMhBY9uG7+GkYqt7l9LcWCORt7wn7jVQ3+jjUIdx5MhPus8DuPQhUZB46Vj2KYCT++EEdD6llJQJ7z5PGyFj7GYHNBZV0l6fKyzdHBz8m37jYFn9j7cxPtpNJaYbtKPzZ0PUP30hfGY2QeCfjpoggvnatgzGAEoMh+WO6x6SXZiXpLqsXHxzaaROqimW2Plt//QGziJyVZBkFqH6HR8JcfAbs+CkwGnQmf4gIbaWwME+bEdauiG3X5lYHnd5niH0tLMlp4avUDhL0CEPD
-  template:
-    metadata:
-      creationTimestamp: null
-      name: fluentbit-log
-      namespace: neuvector
-    type: Opaque
-
+type: Opaque
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv:
+    - vault_url: https://dcdcftappsstgkv.vault.azure.net
+      name: sops-key
+      version: 04939605492d4c4384d4ed1343df61b2
+      created_at: "2023-02-15T13:40:41Z"
+      enc: jz10pNBEoIZqgU76SzE1RDdOt2WidbcrVtslEMvRIsbuglxGNHQkSTtkuW8LtNnfqs2It9ttU3zAHWxhPTjQrpHjjMBEPOO26S4V2Rr9tqMnIx2CE-uB8EVGA0pH-favl02KuyY6PL_8wZZuEg0O-zZ53guC_hZyDEzdrfr9jFZX9GbXRF7GP95nS4njhsT2BV4lckeapJZ4tj6csDBdmuqvASaQIziB53stThZHcuVJRDss_1-0B_G6OSQhIEbac5gLsjd42LkSVbuolQ21_4ijlG7W520CfNicL-0OYeoGIl6ojjNmfp0x8ldbNPuKkbiIWocGDKRPGo5PGkTBrQ
+  hc_vault: []
+  age: []
+  lastmodified: "2023-02-15T13:40:42Z"
+  mac: ENC[AES256_GCM,data:7w9iSb29dyzlMBY9lhG1U3wOtn/Q9MCuCzJB/po9m1iNl8PKe0isrLVVvaRHK6RfJ3nLi4bniXIPWN02NqRb2icR50Ec1IkFsWFqF6I78YgfNW6YA+1PBOCFUGlrobDSJhmMTGwC4pX8JGI9PjiOtQPWwhRq0jMaVYryWwq2fLY=,iv:VlQ7QYAuL7QjydpiIm5mCWmsY4j/nism1sP5pN51bIU=,tag:Bxrm9SpGP9b45179sMu5yw==,type:str]
+  pgp: []
+  encrypted_regex: ^(data|stringData)$
+  version: 3.7.3
