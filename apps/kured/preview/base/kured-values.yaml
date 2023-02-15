@@ -1,16 +1,24 @@
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
+apiVersion: v1
+data:
+  values.yaml: ENC[AES256_GCM,data:sEK+8mxf9klQgakIHPmjxFDPPb0v0qt2ZJtQqJaSFhd6Sd9p++mpNDmZEeoYrdMYZOqHXbwSiCsynObLTsN6xVsyEfu3d6xsTnxQ+yE+EWbm+O51fYZTJBndeBPj4lJBrcbor1Ecu2hBbw1fHILBEOPmqP9wc1N2DbFcOEDhbU3RwJEaUulOXPTQaCD7X1K1fNUUQw==,iv:ZYNcPfiKF+AMdPRxfUTOuyV3SGrn0vHJ3YT6vKX8G8U=,tag:E+XqdhcCH7/BtddSGMCEDw==,type:str]
+kind: Secret
 metadata:
-  creationTimestamp: null
   name: kured-values
   namespace: kured
-spec:
-  encryptedData:
-    values.yaml: AgBcM7kZCru9N9WjpHjg6JifwH6MeE8pRacanM0tRGGDfGtKbSS9THoJ0XjJ2B4AAN8OwpjY2BAeEiSh842kqwWYYjvELglqxo27vC31NfOmuOpupBXKD2qajaqjbBAVfB7Dvs3ry9lBGvlewqqk3PFfjPBf4EJvKZEjKzlsoH7K6jaQOF24EqvhuF0ZIudgD3t2liqfjNO4DOJ0xYTezLngVBCCMr+oq+YdFQhaHHcWN0ii6xOSWAI/Vltqpg5mG2h0hM0kwQR4RUug//YqGlUMrEtJ0mSQewbHVuxNUw770sP9E0XCWp+frWGvdxN+v/pcwBQ1XHWHRRwBmZa2WMEI8ZUAhE9VMLNjFc0jpJC1TrgRHWOQ3hrc9E21NsBvbpzhiigOS1H1+lmvCfgqZpfh5p8KUmGYffiMym9JdiROpaueDCWApijnv4cyHuJAjIEG8WoB41s6M9S5hemzSff0KOYY657shiKnGCz1lPAv+sp+aQX5H9MfRnqXUYodmxe0rzi9P8c/jIy7VGXSaWxYvZsEA93K3te6i2VSvJd0yeh0Z8PL9j5idBIsKXE8LSWhai52LCO922W1DEDlHBdKHp89ZMxR9BUSJGBklPLo7VsqzQdtNwAa+wweBJ7Wc4GJoKeWVj8x+zDeglrovUvxYWDLvc2at4ybR9ewqMFcr0lhPlCbiW71Y1aFw9dWZQci3ZG36PISqYOqo5JxPuigKI0+mpUZMf8bR9UCnh+maM30EZDCFVLGev1i5tWzyXG/P9qaMNYledtOcVUX3vvPuvnPY9pTdMoK9679tpgICuE7itrrwIPTKZ4J+iC8UWyxWqoR/Pm+ijM0wh86
-  template:
-    metadata:
-      creationTimestamp: null
-      name: kured-values
-      namespace: kured
-    type: Opaque
-
+type: Opaque
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv:
+    - vault_url: https://dcdcftappsdevkv.vault.azure.net
+      name: sops-key
+      version: aedb9ea38954430ca1d0a46ed589c049
+      created_at: "2023-02-15T13:05:08Z"
+      enc: UtKCdUHnBQTWQp4PQk9dInmc5ME4fWeQ9MI5V67f1aPs3S1j1-VHQrruxKDA4yMfXLT5UZWreslw_XH9FcKI6V9EoOECKbXUfQjxR-x83xFPbhSYe2jVVc6an7KQfvB2h0-8aq7F-aPh1xlou2NVpZ7Z6u5DJ2DL0qzADTnj9OU1lb4xAElGE6KUp3hO_g5Fnmt9tAv1XE0ivBL0XMnxOrQuKKHB0HzXT55OzyfCKywsYBAilQcngl_GAI3EVF16gY-6HP3u_M_JinWQaHqPEH6_A8Vd-jd1eRDA-1SCqYh7b95-WPkvqs0dyt6CA8QrPDbJHM0LKH_Sd4uqXRQmTw
+  hc_vault: []
+  age: []
+  lastmodified: "2023-02-15T13:05:09Z"
+  mac: ENC[AES256_GCM,data:a2fJzxo+WAGePxCHTRS2E27bITEhSQhP1t7kgqqF0VDkD/Clmk9rYwvhiB7NFfqfJ8A8QvcZHk/kan25ljV97+/wM1PWtstUapyu0OgnFndrmE62VS2sUGeD9hcXUfDuby0MoRD69rnKDvrtDjrfsOxvZP0BUkgDRFW+PZ9gk+o=,iv:CGBcNN7sVGkSMU7dDU9JiKBF3UzPR8SJ4yOalukspIs=,tag:IZ5Ob8kCC7fJnmeNx0ecAw==,type:str]
+  pgp: []
+  encrypted_regex: ^(data|stringData)$
+  version: 3.7.3
