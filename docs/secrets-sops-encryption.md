@@ -1,7 +1,6 @@
 ## Secrets SOPS Encryption
 
 Install sops:
-
 ```
 brew install sops
 ```
@@ -52,7 +51,7 @@ The number after sops-key is the CURRENT VERSION this can be found in azure keyv
 ```
 sops --encrypt --azure-kv https://dcdcftappssboxkv.vault.azure.net/keys/sops-key/4dfa9dd4b0444f03bd64e2128e347537 --encrypted-regex "^(data|stringData)$" --in-place prometheus-values.enc.yaml
 ```
-Once created it is place in apps/namespace/environment
+Once created place it in apps/namespace/environment
 
 example for kube-prometheus-stack: app/monitoring/sbox
 
