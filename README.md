@@ -10,42 +10,9 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 - All App deployments are managed through `HelmRelease` manifests.
 - Any new/existing application that is getting added to an environment for the first time should use [Flux v2](docs/app-deployment-v2.md).
 
-## Creating Sealed Secrets
+## Encrypting Secrets With Sops
 
-Install version 0.17.5 from https://github.com/bitnami-labs/sealed-secrets/releases
-
-```
-GOOS=$(go env GOOS)
-GOARCH=$(go env GOARCH)
-wget https://github.com/bitnami/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-$GOOS-$GOARCH.tar.gz -O /tmp/kubeseal.tar.gz
-tar -xzvf /tmp/kubeseal.tar.gz
-mkdir -p ~/bin
-install -m 755 /tmp/kubeseal ~/bin/kubeseal
-kubeseal --version
-```
-
-#### From a Literal
-```
-kubectl create secret generic my-secret \
-  --from-literal key=secret-value \
-  --namespace namespace \
-  --dry-run=client -o json > my-secret.json
-
-kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
-```
-### From a File
-```
-kubectl create secret generic my-secret \
-  --from-file=./some-file.txt \
-  --namespace namespace \
-  --dry-run=client -o json > my-secret.json
-
-kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
-```
-
-## Bootstrapping sealed secrets for a new cluster
-
-See [new cluster creation](docs/new-cluster.md) steps.
+(docs/secrets-sops-encryption.md)
 
 ## Upgrading flux v2
 
