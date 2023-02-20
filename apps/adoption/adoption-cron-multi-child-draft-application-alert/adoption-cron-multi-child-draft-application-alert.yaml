@@ -1,14 +1,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: adoption-cron-draft-case-deletion-alert
+  name: adoption-multi-child-draft-application-alert
 spec:
-  releaseName: adoption-cron-draft-case-deletion-alert
+  releaseName: adoption-multi-child-draft-application-alert
   values:
     job:
       environment:
-        TASK_NAME: AlertDraftCaseApplicantBeforeDeletionTask
-    schedule: 0 3 * * *
+        TASK_NAME: AlertMultiChildApplicationToSubmitTask
+    schedule: 0/5 * * * *
   chart:
     spec:
       chart: adoption-cron
