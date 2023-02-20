@@ -7,14 +7,14 @@ brew install sops
 
 #### Steps to SOPS Encrypt
 
-This is an example for kube-prometheus-stack:
+The following is an example for kube-prometheus-stack:
 
 In your Helm File: apps/monitoring/kube-prometheus-stack/kube-prometheus-stack.yaml
 you will define what the secret file name for kube-prometheus-stack is looking for, here is an example:
 ```
   valuesFrom:
-    - kind: Secret
-      name: prometheus-values
+    - name: "prometheus-values"
+      kind: Secret
 ```
 
 Create a file called values.yaml
@@ -31,7 +31,7 @@ Create the secret:
  kubectl create secret generic prometheus-values -n monitoring --from-file=values.yaml --type=Opaque -o yaml --dry-run=client > prometheus-values.enc.yaml
 ```
 
-Your Kube-values.yaml content will look like:
+Your prometheus-values.enc.yaml content will look like this:
 ```
 apiVersion: v1
 data:
@@ -51,10 +51,9 @@ The number after sops-key is the CURRENT VERSION this can be found in azure keyv
 ```
 sops --encrypt --azure-kv https://dcdcftappssboxkv.vault.azure.net/keys/sops-key/4dfa9dd4b0444f03bd64e2128e347537 --encrypted-regex "^(data|stringData)$" --in-place prometheus-values.enc.yaml
 ```
-Once created place it in apps/namespace/environment
+Once created place it in apps environment folder.
 
-example for kube-prometheus-stack: app/monitoring/sbox
-
+example for kube-prometheus-stack: app/monitoring/kube-prometheus-stack/sbox
 ```
 apiVersion: v1
 data:
@@ -82,7 +81,16 @@ sops:
     encrypted_regex: ^(data|stringData)$
     version: 3.7.3
 ```
+You then need to edit the Kustomization.yaml file which corresponds with your environment adding prometheus-values.enc.yaml to the resources section.
+example: apps/monitoring/sbox/base
+```
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../kube-prometheus-stack/sbox/prometheus-values.enc.yaml
+namespace: monitoring
 
 You can then delete the Values.yaml file from the directory
 
-Commit your changes and push to master
+Commit your changes.

@@ -14,6 +14,17 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 (docs/secrets-sops-encryption.md)
 
+### SOPs
+
+Sops fails linting by default as we require 2 spaces while it uses 4 spaces.
+You can use `yq` to fix this:
+
+```
+yq eval -I 2 --inplace apps/mi/mi-adf-shir/sbox/mi-adf-auth-values.enc.yaml
+```
+
+upstream issue: https://github.com/mozilla/sops/issues/900
+
 ## Upgrading flux v2
 
 Update `flux` cli in your local and run 
