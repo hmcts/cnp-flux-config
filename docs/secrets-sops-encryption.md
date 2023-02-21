@@ -17,7 +17,7 @@ you will define what the secret file name for kube-prometheus-stack is looking f
       kind: Secret
 ```
 
-Create a file called values.yaml in a tmp folder
+Create a file called values.yaml in a temporary folder e.g. /tmp on macOS, Linux
   Enter your Secrets:
 
 Example secret
