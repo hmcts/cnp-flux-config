@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: adoption-multi-child-draft-application-alert
+spec:
+  releaseName: adoption-multi-child-draft-application-alert
+  values:
+    java:
+      environment:
+        VAR: trigger1
+        NOTIFY_TEMPLATE_SIGN_IN_ADOPTION_URL: https://apply-for-adoption.platform.hmcts.net/
+        IDAM_API_REDIRECT_URL: https://apply-for-adoption.platform.hmcts.net/receiver
+        IDAM_API_BASEURL: https://idam-api.platform.hmcts.net
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod
+
