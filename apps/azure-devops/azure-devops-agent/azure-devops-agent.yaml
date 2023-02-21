@@ -1,0 +1,53 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: azure-devops-agent
+spec:
+  jobTargetRef:
+    template:
+      metadata:
+        labels:
+          app: azure-devops-agent
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/component
+                      operator: In
+                      values:
+                        - jenkins-master
+                topologyKey: "kubernetes.io/hostname"
+        containers:
+          - name: azure-devops-agent
+            image: hmctspublic.azurecr.io/hmcts/vsts-agent:prod-372955293bd51db78a0677ea50caba2db1b450c7-20221206-120940z
+            env:
+              - name: AZP_URL
+                value: https://dev.azure.com/hmcts
+              - name: AZP_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    name: azure-devops-token
+                    key: token
+              - name: AZP_POOL
+                value: hmcts-sandbox-agent-pool-test
+            resources:
+              requests:
+                memory: "512Mi"
+                cpu: "25m"
+              limits:
+                memory: "2048Mi"
+                cpu: "1000m"
+  pollingInterval: 30
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+  maxReplicaCount: 5
+  scalingStrategy:
+    strategy: "default"
+  triggers:
+    - type: azure-pipelines
+      metadata:
+        poolID: "53"
+        organizationURLFromEnv: "AZP_URL"
+        personalAccessTokenFromEnv: "AZP_TOKEN"
