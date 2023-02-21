@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../../base
   - kube-slack-values.yaml
+  - ../../keda
   - ../../../rbac/reader-clusterrole.yaml
   - ../../secrets-csi-driver-crds
   - ../../secrets-csi-driver
@@ -10,6 +11,7 @@ resources:
   - ../../aad-pod-id/mi
 
 patchesStrategicMerge:
+  - keda-identity.yaml
   - ../../traefik2/sbox-intsvc/secret-provider.yaml
   - ../../aad-pod-id/mi/sbox-intsvc/azure-identity-patch.yaml
   - ../../aad-pod-id/mi/ds-patch.yaml
