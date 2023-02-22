@@ -12,7 +12,7 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 ## Encrypting Secrets With Sops
 
-(docs/secrets-sops-encryption.md)
+ [Sops setup](docs/secrets-sops-encryption.md)
 
 ### SOPs
 
