@@ -1,8 +1,10 @@
 apiVersion: resources.azure.com/v1beta20200601
 kind: ResourceGroup
 metadata:
-  name: aso-aks-rg
+  name: chart-tests-aks-rg
   namespace: chart-tests
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete   
 spec:
   location: uksouth
 ---
@@ -11,6 +13,8 @@ kind: Namespace
 metadata:
   name: chart-tests-servicebus
   namespace: chart-tests
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
 spec:
   tags:
     app.kubernetes.io_name: chart-servicebus
@@ -20,8 +24,8 @@ spec:
     environment: development
   location: uksouth
   owner:
-    name: aso-aks-rg
-  azureName: ${NAMESPACE}-sb-${CLUSTER_FULL_NAME}
+    name: chart-tests-aks-rg
+  azureName: ${NAMESPACE}-sb-${ENVIRONMENT}
   sku:
     name: Basic
   zoneRedundant: false

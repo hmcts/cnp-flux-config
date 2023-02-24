@@ -3,6 +3,8 @@ kind: ResourceGroup
 metadata:
   name: bulk-scan-aks-rg
   namespace: bsp
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
 spec:
   location: uksouth
 ---
@@ -11,6 +13,8 @@ kind: Namespace
 metadata:
   name: bsp-servicebus
   namespace: bsp
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
 spec:
   tags:
     app.kubernetes.io_name: bulk-scan-print
@@ -21,7 +25,7 @@ spec:
   location: uksouth
   owner:
     name: bulk-scan-aks-rg
-  azureName: ${NAMESPACE}-sb-${CLUSTER_FULL_NAME}
+  azureName: ${NAMESPACE}-sb-${ENVIRONMENT}
   sku:
     name: Basic
   zoneRedundant: false
