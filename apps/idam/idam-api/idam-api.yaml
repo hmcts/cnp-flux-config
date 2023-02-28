@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-72f0b70-20230109160323
+      image: hmctspublic.azurecr.io/idam/api:prod-bb62d79-20230202111908
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
@@ -46,13 +46,13 @@ spec:
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
-        FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: false
+        FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
   chart:
     spec:
       chart: idam-api
-      version: 0.4.9
+      version: 0.4.10
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

@@ -27,12 +27,12 @@ elif [[ ! ${1} =~ ^(ithc|preview|demo|sbox|prod|ptl-intsvc|sbox-intsvc|aat|perft
   exit 1
 fi
 
-
+echo "Env is ${env}"
 config_file=config.json
-kube_context=$(jq -r ".${env}.context" ${config_file})
-sops_key=$(jq -r ".${env}.key" ${config_file})
+kube_context=$(jq -r ".\"${env}\".context" ${config_file})
+sops_key=$(jq -r ".\"${env}\".key" ${config_file})
 
-
+echo "Current kube context is ${kube_context} "
 if [[ ! $(kubectl config get-contexts "${kube_context}" -o name) ]]; then
   echo "trying admin..."
   if [[ ! $(kubectl config get-contexts "${kube_context}-admin" -o name ) ]]; then
