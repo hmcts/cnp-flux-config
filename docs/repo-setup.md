@@ -43,7 +43,7 @@ Below section covers how the repo is set up to handle multiple environments and 
     │   │   ├── <env>        
     │   │   │   └── base                          
     │   │   │       └── kustomization.yaml          # namespace env overlay containing patches for a specific environment.
-    │   │   │       └── sealed-secrets              # Optional sealed secrets manifests.
+    │   │   │       └── sops-secrets                # Optional sops secrets manifests.
     │   │   │   └── 00/01
     │   │   │       └── kustomization.yaml          # Optional cluster overlay containing patches for a specific environment.
     │   │   │
@@ -70,8 +70,6 @@ Below section covers how the repo is set up to handle multiple environments and 
         │   │      
         │   ├── base
         │   │   └── kustomization.yaml                # Env Base which includes Flux Kustomizations for all namespaces in that cluster.
-        │   │
-        │   └── pub-cert.pem                          # pem file for sealed-secrets
         │     
         └──<environment2>
            └── ...
