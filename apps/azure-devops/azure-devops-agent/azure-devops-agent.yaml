@@ -22,25 +22,20 @@ spec:
     environment:
       AZP_URL: https://dev.azure.com/hmcts
       CMD_ARGS: "--once"
-      AZP_POOL: hmcts-sandbox-agent-pool-test
+      AZP_POOL: hmcts-cftptl-agent-pool
     job:
       activeDeadlineSeconds: 10800
     secrets:
       AZP_TOKEN:
         secretRef: azure-devops-token
         key: token
-    memoryRequests: 512Mi
-    cpuRequests: 25m
-    memoryLimits: 2048Mi
-    cpuLimits: 1000m
+    memoryRequests: 1024Mi
+    cpuRequests: 250m
+    memoryLimits: 4096Mi
+    cpuLimits: 2000m
     successfulJobsHistoryLimit: 5
     failedJobsHistoryLimit: 5
     maxReplicaCount: 5
-    triggers:
-      - type: azure-pipelines
-        poolID: "53"
-        organizationURLFromEnv: "AZP_URL"
-        personalAccessTokenFromEnv: "AZP_TOKEN"
   chart:
     spec:
       chart: function
