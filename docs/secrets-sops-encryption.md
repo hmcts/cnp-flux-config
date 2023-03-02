@@ -99,5 +99,5 @@ Commit your changes.
 If you ever need to decrypt the file e.g. to update the secret value or change the secret name, you can use the same command that you used to encrypt the secret and change the `--encrypt` switch to `--decrypt`
 
 ```
-sops --decrypt --azure-kv https://dcdcftappssboxkv.vault.azure.net/keys/sops-key/4dfa9dd4b0444f03bd64e2128e347537 --encrypted-regex "^(data|stringData)$" --in-place prometheus-values.enc.yaml
+sops --decrypt --in-place prometheus-values.enc.yaml
 ```
