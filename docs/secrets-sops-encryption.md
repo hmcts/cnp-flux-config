@@ -96,7 +96,7 @@ You can then delete the Values.yaml file from the directory
 
 Commit your changes.
 
-If you ever need to decrypt the file e.g. to update the secret value or change the secret name, you can use the same command that you used to encrypt the secret and change the `--encrypt` switch to `--decrypt`
+If you ever need to decrypt the file e.g. to update the secret value or change the secret name, you can use something like the command below:
 
 ```
 sops --decrypt --in-place prometheus-values.enc.yaml
