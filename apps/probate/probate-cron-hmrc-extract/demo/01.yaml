@@ -7,9 +7,11 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/probate/back-office:prod-cbf7b16-20230302170411 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "5,25,45 * * * *"
+      schedule: "50 11 * * *"
       environment:
         TRIG: trig-1
+        ADHOC_JOB_DATE: 2023-03-01
+        ADHOC_JOB_TO_DATE: 2023-03-03
     global:
       jobKind: CronJob
       enableKeyVaults: true
