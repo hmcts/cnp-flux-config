@@ -18,7 +18,8 @@ spec:
             jdbc_driver_class => "org.postgresql.Driver"
             jdbc_default_timezone => "UTC"
             jdbc_paging_enabled => true
-            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data order by id"
+            jdbc_page_size => 5000
+            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data WHERE case_type_id='CARE_SUPERVISION_EPO' order by id"
             clean_run => false
           }
         }
