@@ -6,8 +6,22 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-7cc7082-20230302152355 #{"$imagepolicy": "flux-system:fpl-cron-ccd-data-migration-tool"}
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-7cc7082-20230302152355 #{"$imagepolicy": "flux-system:demo-image-policy"}
       schedule: "*/20 * 6-8 * *"
+      keyVaults:
+        fpl:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: system-update-user-username
+              alias: IDAM_USERNAME
+            - name: system-update-user-password
+              alias: IDAM_PASSWORD
+            - name: fpl-case-service-idam-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: fpl-case-service-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
       environment:
+        MIGRATION_ID: DFPL-1124
         ENABLED: true
         UPDATE: now
