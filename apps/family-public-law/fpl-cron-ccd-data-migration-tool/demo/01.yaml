@@ -7,7 +7,7 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-101-eea1bc0-20230306174245 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
-      schedule: "25 12 6-8 * *"
+      schedule: "45 12 6-8 * *"
       environment:
         MIGRATION_ID: DFPL-1124Rollback
         ENABLED: true
@@ -16,8 +16,8 @@ spec:
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
-        DEFAULT_THREAD_LIMIT: 10
-        DEFAULT_QUERY_SIZE: 1000
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100
       keyVaults:
         fpl:
           secrets:
