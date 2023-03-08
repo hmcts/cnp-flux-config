@@ -1,55 +1,45 @@
-apiVersion: keda.sh/v1alpha1
-kind: ScaledJob
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
   name: azure-devops-agent
+  namespace: azure-devops
 spec:
-  jobTargetRef:
-    template:
-      metadata:
-        labels:
-          app: azure-devops-agent
-      spec:
-        affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/component
-                      operator: In
-                      values:
-                        - jenkins-master
-                topologyKey: "kubernetes.io/hostname"
-        containers:
-          - name: azure-devops-agent
-            image: hmctspublic.azurecr.io/hmcts/vsts-agent:test-tag-3
-            env:
-              - name: AZP_URL
-                value: https://dev.azure.com/hmcts
-              - name: CMD_ARGS
-                value: "--once"
-              - name: AZP_TOKEN
-                valueFrom:
-                  secretKeyRef:
-                    name: azure-devops-token
-                    key: token
-              - name: AZP_POOL
-                value: hmcts-sandbox-agent-pool-test
-            resources:
-              requests:
-                memory: "512Mi"
-                cpu: "25m"
-              limits:
-                memory: "2048Mi"
-                cpu: "1000m"
-  pollingInterval: 30
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 5
-  maxReplicaCount: 5
-  scalingStrategy:
-    strategy: "default"
-  triggers:
-    - type: azure-pipelines
-      metadata:
-        poolID: "53"
-        organizationURLFromEnv: "AZP_URL"
-        personalAccessTokenFromEnv: "AZP_TOKEN"
+  releaseName: azure-devops-agent
+  values:
+    scaleType: Job
+    image: hmctspublic.azurecr.io/azure-devops-agent:prod-cb09685d-1678281568 # {"$imagepolicy": "flux-system:azure-devops-agent"}
+    runAsRoot: true
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - jenkins-master
+            topologyKey: "kubernetes.io/hostname"
+    environment:
+      AZP_URL: https://dev.azure.com/hmcts
+      CMD_ARGS: "--once"
+      AZP_POOL: hmcts-cftptl-agent-pool
+    job:
+      activeDeadlineSeconds: 10800
+    secrets:
+      AZP_TOKEN:
+        secretRef: azure-devops-token
+        key: token
+    memoryRequests: 1024Mi
+    cpuRequests: 250m
+    memoryLimits: 4096Mi
+    cpuLimits: 2000m
+    successfulJobsHistoryLimit: 5
+    failedJobsHistoryLimit: 5
+  chart:
+    spec:
+      chart: function
+      version: 2.3.4
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
