@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-cron-hmrc-extract
+spec:
+  releaseName: probate-cron-hmrc-extract
+  values:
+    job:
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
+        IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
+        PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
+      schedule: "0 2 2-30/2 * *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod
