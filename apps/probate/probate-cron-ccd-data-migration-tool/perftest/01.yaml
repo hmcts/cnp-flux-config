@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-cron-ccd-data-migration-tool
+spec:
+  releaseName: probate-cron-ccd-data-migration-tool
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/cron-ccd-data-migration-tool:pr-2-2fd8493-20230216182110 #{"$imagepolicy": "flux-system:perftest-probate-cron-ccd-data-migration-tool"}
+      schedule: "30 12 30 2 *"
+      environment:
+        TRIG: trig-2
+
