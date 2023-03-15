@@ -1,0 +1,115 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ccd-logstash
+  namespace: ccd
+spec:
+  releaseName: ccd-logstash
+  values:
+    logstashPipeline:
+      02_filter.conf: |
+        filter{
+          json{
+             	source => "json_data"
+             	target => "data"
+             	remove_field => ["json_data"]
+             }
+
+             json{
+                  source => "json_supplementary_data"
+                  target => "supplementary_data"
+                  remove_field => ["json_supplementary_data"]
+             }
+
+             json{
+                  source => "json_data_classification"
+                  target => "data_classification"
+                  remove_field => ["json_data_classification"]
+             }
+
+             if [data][SearchCriteria] {
+                 clone {
+                     clones => ["SearchCriteria"]
+                 }
+             }
+
+             if [type] == "SearchCriteria" {
+                 if [data][SearchCriteria] {
+                     mutate {
+                        rename => {"[data][SearchCriteria]" => "[data_new][SearchCriteria]" }
+                     }
+                 }
+                 if [data][caseManagementLocation] {
+                     mutate {
+                        rename => {"[data][caseManagementLocation]" => "[data_new][caseManagementLocation]" }
+                     }
+                 }
+                 if [data][CaseAccessCategory] {
+                    mutate {
+                       rename => {"[data][CaseAccessCategory]" => "[data_new][CaseAccessCategory]" }
+                    }
+                 }
+                 if [data][caseNameHmctsInternal] {
+                     mutate {
+                        rename => {"[data][caseNameHmctsInternal]" => "[data_new][caseNameHmctsInternal]" }
+                     }
+                 }
+                 if [data][caseManagementCategory] {
+                     mutate {
+                        rename => {"[data][caseManagementCategory]" => "[data_new][caseManagementCategory]" }
+                     }
+                 }
+                 if [supplementary_data][HMCTSServiceId] {
+                     mutate {
+                        rename => {"[supplementary_data][HMCTSServiceId]" => "[supplementary_data_new][HMCTSServiceId]" }
+                     }
+                 }
+                 if [data_classification][SearchCriteria] {
+                     mutate {
+                        rename => {"[data_classification][SearchCriteria]" => "[data_classification_new][SearchCriteria]" }
+                     }
+                 }
+                 if [data_classification][CaseAccessCategory] {
+                    mutate {
+                         rename => {"[data_classification][CaseAccessCategory]" => "[data_classification_new][CaseAccessCategory]" }
+                    }
+                 }
+                 if [data_classification][caseManagementLocation] {
+                    mutate {
+                       rename => {"[data_classification][caseManagementLocation]" => "[data_classification_new][caseManagementLocation]" }
+                    }
+                 }
+                 if [data_classification][caseNameHmctsInternal] {
+                     mutate {
+                        rename => {"[data_classification][caseNameHmctsInternal]" => "[data_classification_new][caseNameHmctsInternal]" }
+                     }
+                 }
+
+                 if [data_classification][caseManagementCategory] {
+                     mutate {
+                        rename => {"[data_classification][caseManagementCategory]" => "[data_classification_new][caseManagementCategory]" }
+                     }
+                 }
+                 mutate { remove_field =>[ "data" ,"supplementary_data", "data_classification", "last_state_modified_date", "type" ] }
+
+                 mutate {
+                         rename => { "[data_new]" => "data" }
+                         rename => { "[supplementary_data_new]"  => "supplementary_data" }
+                         rename => { "[data_classification_new]"  => "data_classification" }
+                 }
+
+                 mutate {
+                    add_field => { "index_id" => "global_search" }
+                 }
+                 mutate {
+                    lowercase => [ "index_id" ]
+                 }
+             } else {
+                 mutate {
+                     add_field => { "index_id" => "%{case_type_id}_cases" }
+               	}
+              mutate {
+          	    lowercase => [ "index_id" ]
+              }
+             }
+        }
