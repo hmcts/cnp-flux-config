@@ -6,8 +6,11 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-2-2fd8493-20230216182110 #{"$imagepolicy": "flux-system:perftest-fpl-cron-ccd-data-migration-tool"}
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-101-1c7a9ab-20230308102945 #{"$imagepolicy": "flux-system:perftest-fpl-cron-ccd-data-migration-tool"}
       schedule: "30 12 30 2 *"
       environment:
-        TRIG: trig-2
-
+        MIGRATION_ID: DFPL-1124
+        ENABLED: false
+        UPDATE: migration
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100
