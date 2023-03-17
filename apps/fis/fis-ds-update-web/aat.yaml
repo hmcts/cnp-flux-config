@@ -6,9 +6,10 @@ metadata:
 spec:
   values:
     nodejs:
-      ingressClass: traefik-no-proxy
-      disableTraefikTls: false
-      image: hmctspublic.azurecr.io/fis/ds-update-web:pr-89-01c0859-20230315164613 #{"$imagepolicy": "flux-system:demo-fis-ds-update-web"}
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      image: hmctspublic.azurecr.io/fis/ds-update-web:prod-58dc492-20230316221023 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       replicas: 2
