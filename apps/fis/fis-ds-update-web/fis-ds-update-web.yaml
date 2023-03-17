@@ -8,9 +8,14 @@ spec:
   interval: 1m
   values:
     nodejs:
-      disableTraefikTls: true 
+      disableTraefikTls: true
+      replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/fis/ds-update-web:prod-58dc492-20230316221023 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
+      memoryRequests: "2048Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "4096Mi"
+      cpuLimits: "2000m"
   chart:
     spec:
       chart: ./stable/fis-ds-update-web
