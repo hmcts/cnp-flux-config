@@ -6,6 +6,11 @@ metadata:
 spec:
   values:
     nodejs:
+      ingressClass: traefik-no-proxy
+      ingressHost: probate.perftest.platform.hmcts.net
+      disableTraefikTls: false
+      image: hmctspublic.azurecr.io/probate/frontend:prod-42e50c4-20230310091106 #{"$imagepolicy": "flux-system:perftest-probate-frontend"}
       environment:
         EQUALITY_URL: https://pcq.perftest.platform.hmcts.net
         LAUNCHDARKLY_ENABLED: true
+        EXCEPTED_ESTATE_DATE_OF_DEATH: "2021-11-01"
