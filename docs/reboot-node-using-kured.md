@@ -1,6 +1,6 @@
 # Testing Kured
 
-To do a manual test connect to a node you want to restart within the cluster and create a file on the node itself.
+To do a manual test connect to a node using these [instructions](https://learn.microsoft.com/en-us/azure/aks/node-access) and create a file on the node itself.
 ```
 sudo touch /var/run/reboot-required
 ```
