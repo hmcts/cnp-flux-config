@@ -15,6 +15,7 @@ spec:
       cpuRequests: '1'
       cpuLimits: '3'
       environment:
+        CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-perftest\.service\.core-compute-perftest\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-perftest\.service\.core-compute-perftest\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]+))
@@ -26,26 +27,17 @@ spec:
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120 #remove when version 1.3.1 of the chart is available.
         DUMMY_VAR_TO_RESTART: 2
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
+        DATA_STORE_DB_MAX_POOL_SIZE: 50
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
-        SERVER_MAX_HTTP_HEADER_SIZE: 100KB
-        ENABLE_ATTRIBUTE_BASED_ACCESS_CONTROL: true
-        ENABLE_PSEUDO_ROLE_ASSIGNMENTS_GENERATION: true
-        ENABLE_PSEUDO_ACCESS_PROFILES_GENERATION: true
-        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-perftest.service.core-compute-perftest.internal
         CCD_MULTIPARTY_LOG_LEVEL: DEBUG
         LOG_AND_AUDIT_CASE_ENABLED: true
-        LOG_AND_AUDIT_CASE_URL: http://lau-case-backend-perftest.service.core-compute-perftest.internal
         REQUEST_SCOPE_CACHED_CASE_TYPES: GrantOfRepresentation
         REQUEST_SCOPE_CACHED_CASE_TYPES_FROM_HOUR: 0
         REQUEST_SCOPE_CACHED_CASE_TYPES_TILL_HOUR: 24
         ROLE_ASSIGNMENT_PAGINATION_ENABLED: true
         ROLE_ASSIGNMENT_PAGE_SIZE: 500
-        TTL_GUARD: 0
         HTTP_CLIENT_READ_TIMEOUT: 29000
         FEIGN_CLIENT_READ_TIMEOUT: 29000
-        CACHE_TYPE: redis
-        REDIS_PORT: 6380
-        REDIS_HOST: ccd-redis-perftest.redis.cache.windows.net
       keyVaults:
         ccd:
           secrets:
