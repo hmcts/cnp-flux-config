@@ -8,12 +8,13 @@ spec:
       disableTraefikTls: false
       ingressClass: traefik-no-proxy
       ingressHost: immigration-appeal.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/ia/aip-frontend:pr-847-a958810-20230321205708 #{"$imagepolicy": "flux-system:demo-ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-a4100e6-20230222151510 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
       environment:
         NODE_ENV: development
         IDAM_WEB_URL: "https://idam-web-public.demo.platform.hmcts.net"
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         DOCMOSIS_RENDER_URL: "https://docmosis.demo.platform.hmcts.net/rs/render"
+        CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         RESTART_ME: "1"
         ASK_FOR_MORE_TIME_ENABLED: true
       keyVaults:

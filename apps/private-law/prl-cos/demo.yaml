@@ -7,6 +7,25 @@ spec:
   releaseName: prl-cos
   values:
     java:
+      keyVaults:
+        prl:
+          secrets:
+            - prl-cos-idam-client-secret
+            - microservicekey-prl-cos-api
+            - system-update-user-username
+            - system-update-user-password
+            - notification-client-api-key
+            - test-genericpassword
+            - launchDarkly-sdk-key
+            - send-grid-api-key
+            - rpa-notify-to-email
+            - rpa-notify-from-email
+            - AppInsightsInstrumentationKey
+            - southampton-court-email-address
+            - idam-solicitor-username
+            - idam-solicitor-password
+            - filtered-court-ids
+            - postcode-lookup-token
       replicas: 2
       ingressClass: traefik-private
       memoryRequests: "768Mi"
@@ -17,7 +36,7 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 20
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:pr-1126-fc80d7d-20230321114815 #{"$imagepolicy": "flux-system:demo-prl-cos-api"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-1198-2ee445a-20230322124207 #{"$imagepolicy": "flux-system:demo-prl-cos-api"}
       environment:
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
@@ -38,6 +57,7 @@ spec:
         FACT_API: http://fact-api-demo.service.core-compute-demo.internal
         LOCATION_REF_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         BUNDLE_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
+        REFDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
