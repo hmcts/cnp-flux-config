@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: artifactory-oss
+  namespace: artifactory
+spec:
+  serviceName: "artifactory"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: artifactory-oss
+  template:
+    metadata:
+      labels:
+        app: artifactory-oss
+    spec:
+      containers:
+        - image: docker.bintray.io/jfrog/artifactory-oss:7.55.8
+          name: artifactory-oss
