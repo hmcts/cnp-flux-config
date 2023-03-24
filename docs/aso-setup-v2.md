@@ -46,9 +46,10 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
       tags:
         app.kubernetes.io_name: <application tag value>
         application: <application tag value >
-    sku:
-      name: Standard
+      sku:
+        name: Standard
      ```
+- Add the patch   `- ../aso/bsp-servicebus.yaml` to `patchesStrategicMerge:` in `apps/<namespace>/<environment>/base/kustomization.yaml`
 - Raise a PR with above steps and get it merged, you should see a new servicebus instance `bsp-sb-preview` in Azure portal.
 - Once the service bus instance is created, run `./bin/v2/add-servicebus-secret.sh <namespace> <environment>` to create a sops secret.
 - Once you merge above changes, you can refer to the servicebus secrets in your application helm charts as below:
