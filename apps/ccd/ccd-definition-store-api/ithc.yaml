@@ -6,19 +6,19 @@ spec:
   releaseName: ccd-definition-store-api
   values:
     java:
-      memoryRequests: "2048Mi"
-      cpuRequests: "2000m"
-      memoryLimits: "4096Mi"
-      cpuLimits: "4000m"
-      replicas: 1
+      cpuRequests: '2'
+      cpuLimits: '4'
+      memoryRequests: '1Gi'
+      memoryLimits: '5Gi'
+      replicas: 2
       autoscaling:
         enabled: false
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-1903368-20230321161115 #{"$imagepolicy": "flux-system:ithc-ccd-definition-store-api"}
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e47eff-20230323104218 #{"$imagepolicy": "flux-system:ithc-ccd-definition-store-api"}
       environment:
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-ithc.postgres.database.azure.com
         DEFINITION_STORE_DB_USERNAME: ccd@ccd-definition-store-api-postgres-db-v11-ithc
-        DEFINITION_STORE_DB_MAX_POOL_SIZE: 25
-        FLYWAY_NOOP_STRATEGY: true
+        DEFINITION_STORE_DB_MAX_POOL_SIZE: 50
+#         FLYWAY_NOOP_STRATEGY: true
         DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api,ds_ui,fis_cos_api
-        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
+        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 60
         DUMMY_VAR: 0

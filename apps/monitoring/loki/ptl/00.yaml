@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  labels:
+    release: kube-prometheus-stack
+spec:
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.tls: "true"
+      ingressClassName: traefik
+      hosts:
+        - loki-00.ptl.platform.hmcts.net
