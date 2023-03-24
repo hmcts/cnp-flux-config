@@ -3,8 +3,5 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../artifactory/sbox-intsvc-ingress.yaml
-patches:
-  - path: ../../artifactory/artifactory-sbox.yaml
-    target:
-      kind: StatefulSet
-      labelSelector: app=artifactory-oss
+patchesStrategicMerge:
+  - ../../artifactory/artifactory-sbox.yaml
