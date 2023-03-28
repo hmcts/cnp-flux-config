@@ -8,10 +8,11 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/showcase:prod-0c6c045-20230118145831 #{"$imagepolicy": "flux-system:em-showcase"}
+      image: hmctspublic.azurecr.io/em/showcase:prod-1d26efa-20230328131329 #{"$imagepolicy": "flux-system:em-showcase"}
       ingressHost: em-showcase-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         VAR_T3: trigger6
+        ICP_API_URL: "http://em-icp-nodejs"
   chart:
     spec:
       chart: ./stable/em-showcase

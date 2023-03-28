@@ -1,0 +1,41 @@
+# TODO: update resource group name in storage chart and clean up
+apiVersion: resources.azure.com/v1beta20200601
+kind: ResourceGroup
+metadata:
+  name: aso-aks-rg
+  namespace: chart-tests
+spec:
+  location: uksouth
+---
+apiVersion: resources.azure.com/v1beta20200601
+kind: ResourceGroup
+metadata:
+  name: chart-tests-aso-rg
+  namespace: chart-tests
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  location: uksouth
+  azureName: chart-tests-aso-${ENVIRONMENT}-rg
+---
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: Namespace
+metadata:
+  name: chart-tests-servicebus
+  namespace: chart-tests
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  tags:
+    app.kubernetes.io_name: chart-servicebus
+    application: core
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
+  location: uksouth
+  owner:
+    name: chart-tests-aso-rg
+  azureName: ${NAMESPACE}-sb-${ENVIRONMENT}
+  sku:
+    name: Standard
+  zoneRedundant: false

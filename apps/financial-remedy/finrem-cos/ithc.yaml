@@ -6,14 +6,19 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/finrem/cos:pr-799 #{"$imagepolicy": "flux-system:ithc-finrem-cos"}
       replicas: 3
       autoscaling:
         enabled: true
         maxReplicas: 4
         targetCPUUtilizationPercentage: 80 # Default is 80% target CPU utilization
       environment:
-        FEATURE_PBA_CASE_TYPE: false
+        FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
-        VAR_FLUX_V2: trigger1
+        FEES_API_URL: "http://fees-register-api-ithc.service.core-compute-ithc.internal"
+        PAYMENT_API_URL: "http://payment-api-ithc.service.core-compute-ithc.internal"
+        DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-ithc.service.core-compute-ithc.internal"
+        SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal"
+        VAR_FLUX_V2: trigger

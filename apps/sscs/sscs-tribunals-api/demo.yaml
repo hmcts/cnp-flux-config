@@ -7,13 +7,12 @@ spec:
   values:
     java:
       ingressClass: traefik-private
-      disableIngressClassAnnotation: true
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3073-9dd1960-20230119113619 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3159-429c0a2-20230324120059 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
       environment:
         CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
-        BUNDLE_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
+        BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
         PDF_SERVICE_CONVERT_URL: https://docmosis.demo.platform.hmcts.net/rs/convert
         PDF_SERVICE_HEALTH_URL: https://docmosis.demo.platform.hmcts.net/rs/status
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net/rs/render
@@ -22,7 +21,7 @@ spec:
         POSTPONEMENTS_FEATURE: true
         DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net
         SSCS2_FEATURE: true
-        DUMMY_PROPERTY: false
+        DUMMY_PROPERTY: true
         WORK_ALLOCATION_FEATURE: true
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal

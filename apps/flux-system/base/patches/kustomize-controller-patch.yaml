@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kustomize-controller
+  namespace: flux-system
+spec:
+  template:
+    metadata:
+      labels:
+        aadpodidbinding: aks-pod-identity-mi
+    spec:
+      containers:
+      - name: manager
+        env:
+        - name: AZURE_AUTH_METHOD
+          value: msi

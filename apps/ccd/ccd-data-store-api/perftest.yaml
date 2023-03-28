@@ -7,7 +7,7 @@ spec:
   values:
     java:
       replicas: 15
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-2161-d8d17ec-20230104121353 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ec45279-20230328135557 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: false
       memoryRequests: '4Gi'
@@ -15,37 +15,29 @@ spec:
       cpuRequests: '1'
       cpuLimits: '3'
       environment:
+        CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
         CCD_DEFAULTPRINTURL: "http://ccd-case-print-service-perftest.service.core-compute-perftest.internal/jurisdictions/:jid/case-types/:ctid/cases/:cid"
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-perftest\.service\.core-compute-perftest\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-perftest\.service\.core-compute-perftest\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]+))
-        CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service,iac,finrem_case_orchestration,civil_service,divorce_frontend,nfdiv_case_api,civil_service,adoption_cos_api,adoption_web,prl_cos_api
+        CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service,iac,finrem_case_orchestration,civil_service,divorce_frontend,nfdiv_case_api,civil_service,adoption_cos_api,adoption_web,prl_cos_api,et_cos
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-perftest.postgres.database.azure.com
         DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-v11-perftest
-        DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,am_role_assignment_service,nfdiv_cms,nfdiv_cos,divorce_frontend,wa_task_configuration_api,wa_task_management_api,wa_workflow_api,em_hrs_api,nfdiv_case_api,civil_service,wa_task_monitor,ccd_case_document_am_api,adoption_cos_api,adoption_web,prl_cos_api,et_sya_api,ds_ui,prl_citizen_frontend,hmc_cft_hearing_service,prl_cos_api,ccd_next_hearing_date_updater,sptribs_dss_backend,civil_general_applications
+        DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,am_role_assignment_service,nfdiv_cms,nfdiv_cos,divorce_frontend,wa_task_configuration_api,wa_task_management_api,wa_workflow_api,em_hrs_api,nfdiv_case_api,civil_service,wa_task_monitor,ccd_case_document_am_api,adoption_cos_api,adoption_web,prl_cos_api,et_sya_api,ds_ui,prl_citizen_frontend,hmc_cft_hearing_service,prl_cos_api,ccd_next_hearing_date_updater,sptribs_dss_backend,civil_general_applications,fis_hmc_api,fis_cos_api,et_cos
         DEFAULT_CACHE_TTL_SEC: 30
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120 #remove when version 1.3.1 of the chart is available.
-        DUMMY_VAR_TO_RESTART: 0
+        DUMMY_VAR_TO_RESTART: 2
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
+        DATA_STORE_DB_MAX_POOL_SIZE: 50
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
-        SERVER_MAX_HTTP_HEADER_SIZE: 100KB
-        ENABLE_ATTRIBUTE_BASED_ACCESS_CONTROL: true
-        ENABLE_PSEUDO_ROLE_ASSIGNMENTS_GENERATION: true
-        ENABLE_PSEUDO_ACCESS_PROFILES_GENERATION: true
-        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-perftest.service.core-compute-perftest.internal
         CCD_MULTIPARTY_LOG_LEVEL: DEBUG
         LOG_AND_AUDIT_CASE_ENABLED: true
-        LOG_AND_AUDIT_CASE_URL: http://lau-case-backend-perftest.service.core-compute-perftest.internal
         REQUEST_SCOPE_CACHED_CASE_TYPES: GrantOfRepresentation
         REQUEST_SCOPE_CACHED_CASE_TYPES_FROM_HOUR: 0
         REQUEST_SCOPE_CACHED_CASE_TYPES_TILL_HOUR: 24
         ROLE_ASSIGNMENT_PAGINATION_ENABLED: true
         ROLE_ASSIGNMENT_PAGE_SIZE: 500
-        TTL_GUARD: 0
         HTTP_CLIENT_READ_TIMEOUT: 29000
         FEIGN_CLIENT_READ_TIMEOUT: 29000
-        CACHE_TYPE: redis
-        REDIS_PORT: 6380
-        REDIS_HOST: ccd-redis-perftest.redis.cache.windows.net
       keyVaults:
         ccd:
           secrets:

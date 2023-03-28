@@ -36,9 +36,9 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     IMAGE_POLICIES=()
     for FILE in $(grep -lr "imagepolicy" $FILE_LOCATION | grep -Ev "$EXCLUSIONS" ); do
 
-        if [ $(yq eval '.kind' $FILE) != "HelmRelease" ] 
+        if [ $(yq eval '.kind' $FILE) != "HelmRelease" ]
         then
-            continue 
+            continue
         fi
 
         IFS=$'\n'
@@ -64,7 +64,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
             then
                 echo "No ImagePolicy for $IMAGE_POLICY in clusters/ptl-intsvc/base" && exit 1
             fi
-            
+
             IMAGE_AUTOMATION_CHECK=$(cat imagepolicies_list.yaml  | \
             IMAGE_POLICY_NAME="${IMAGE_POLICY}" yq eval 'select(.metadata and .kind == "ImagePolicy" and .metadata.name == env(IMAGE_POLICY_NAME) )' - | yq eval '.spec.filterTags.pattern == "^prod-[a-f0-9]+-(?P<ts>[0-9]+)"' -)
 

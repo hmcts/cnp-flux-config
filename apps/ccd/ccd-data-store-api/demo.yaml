@@ -6,9 +6,8 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      disableIngressClassAnnotation: true
       ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e183707-20230119130841 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ec45279-20230328135557 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
       replicas: 4
       autoscaling:
         enabled: false
@@ -21,12 +20,12 @@ spec:
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-demo\.service\.core-compute-demo\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-demo\.service\.core-compute-demo\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/segments\/[0-9]+))
-        CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service,iac,finrem_case_orchestration,divorce_frontend,nfdiv_cos,civil_service,adoption_cos_api,adoption_web,prl_cos_api,nfdiv_case_api
+        CCD_S2S_AUTHORISED_SERVICES_CASE_USER_ROLES: aac_manage_case_assignment,fpl_case_service,iac,finrem_case_orchestration,divorce_frontend,nfdiv_cos,civil_service,adoption_cos_api,adoption_web,prl_cos_api,nfdiv_case_api,et_cos
         DATA_STORE_CROSS_JURISDICTIONAL_ROLES: caseworker-caa,caseworker-approver,next-hearing-date-admin
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-demo.postgres.database.azure.com
         DATA_STORE_DB_OPTIONS: ?stringtype=unspecified&gssEncMode=disable
         DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-v11-demo
-        DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,am_role_assignment_service,nfdiv_cms,nfdiv_cos,divorce_frontend,em_hrs_api,nfdiv_case_api,civil_service,ccd_case_document_am_api,wa_task_monitor,wa_task_management_api,adoption_cos_api,adoption_web,et_cos,et_msg_handler,prl_cos_api,et_sya_api,ds_ui,hmc_cft_hearing_service,prl_citizen_frontend,prl_cos_api,fis_hmc_api,ccd_next_hearing_date_updater,sptribs_dss_backend,civil_general_applications
+        DATA_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_ps,probate_backend,divorce_ccd_submission,sscs,sscs_bulkscan,cmc,cmc_claim_store,cmc_claim_external_api,jui_webapp,pui_webapp,bulk_scan_orchestrator,fpl_case_service,iac,finrem_ccd_data_migrator,finrem_case_orchestration,employment_tribunals,ethos_repl_service,ccpay_bubble,ctsc_work_allocation,em_ccd_orchestrator,xui_webapp,bulk_scan_payment_processor,pcq_consolidation_service,em_npa_app,ecm_consumer,aac_manage_case_assignment,am_role_assignment_service,nfdiv_cms,nfdiv_cos,divorce_frontend,em_hrs_api,nfdiv_case_api,civil_service,ccd_case_document_am_api,wa_task_monitor,wa_task_management_api,adoption_cos_api,adoption_web,et_cos,et_msg_handler,prl_cos_api,et_sya_api,ds_ui,hmc_cft_hearing_service,prl_citizen_frontend,prl_cos_api,fis_hmc_api,ccd_next_hearing_date_updater,sptribs_dss_backend,civil_general_applications,fis_cos_api
         DEFAULT_CACHE_TTL_SEC: 30
         DEFINITION_CACHE_JURISDICTION_TTL_SEC: 120
         DUMMY_RESTART_VAR: 4

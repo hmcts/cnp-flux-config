@@ -6,16 +6,36 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        prl:
+          secrets:
+            - prl-cos-idam-client-secret
+            - microservicekey-prl-cos-api
+            - system-update-user-username
+            - system-update-user-password
+            - notification-client-api-key
+            - test-genericpassword
+            - launchDarkly-sdk-key
+            - send-grid-api-key
+            - rpa-notify-to-email
+            - rpa-notify-from-email
+            - AppInsightsInstrumentationKey
+            - southampton-court-email-address
+            - idam-solicitor-username
+            - idam-solicitor-password
+            - filtered-court-ids
+            - da-filtered-court-ids
+            - postcode-lookup-token
       replicas: 2
       memoryRequests: "768Mi"
       cpuRequests: "1000m"
       memoryLimits: "3072Mi"
       cpuLimits: "2500m"
       readinessDelay: 45
-      readinessTimeout: 15
+      readinessTimeout: 45
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:pr-734-25a7db9-20230118110316 #{"$imagepolicy": "flux-system:ithc-prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-81430ec-20230328145726 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal

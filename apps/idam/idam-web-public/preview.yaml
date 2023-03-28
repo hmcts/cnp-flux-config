@@ -7,13 +7,14 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/web-public:preview-b294309-20230110095249 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
+      image: hmctspublic.azurecr.io/idam/web-public:preview-40aba08-20230328112516 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
       ingressHost: idam-web-public.preview.platform.hmcts.net
       replicas: 2
       environment:
         GA_TRACKING_ID: "UA-122164129-3"
         STRATEGIC_SERVICE_URL: http://idam-api
-        STEP_UP_AUTHENTICATION: true
+        FEATURES_STEP_UP_AUTHENTICATION: true
+        FEATURES_GOOGLE_TAG_MANAGER: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/
     global:
       environment: preview
@@ -21,4 +22,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.2.23
+      version: 0.2.25

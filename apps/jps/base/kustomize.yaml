@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: jps
+  namespace: flux-system
+spec:
+  path: ./apps/jps/${ENVIRONMENT}/${CLUSTER}
+  postBuild:
+    substitute:
+      NAMESPACE: "jps"
+      TEAM_NOTIFICATION_CHANNEL: "ccd-master-builds"
+      TEAM_AAD_GROUP_ID: 7df9d173-631b-47a6-8737-0f15616d25f0

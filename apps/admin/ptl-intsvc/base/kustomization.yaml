@@ -4,11 +4,11 @@ resources:
   - ../../base
   - kube-slack-values.yaml
   - ../../../rbac/reader-clusterrole.yaml
-  - ../../secrets-csi-driver-crds
-  - ../../secrets-csi-driver
   - ../../traefik2
   - ../../aad-pod-id/mi
+  - ../../keda
 
 patchesStrategicMerge:
+  - keda-identity.yaml
   - ../../traefik2/ptl-intsvc/secret-provider.yaml
   - ../../aad-pod-id/mi/ptl-intsvc/azure-identity-patch.yaml

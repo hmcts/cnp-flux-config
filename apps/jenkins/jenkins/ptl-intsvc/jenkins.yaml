@@ -112,7 +112,7 @@ spec:
                     name: all
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure)\/master
+                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure|camunda-.*)\/master
                     name: Platform
                     recurse: true
                     title: Platform
@@ -148,19 +148,19 @@ spec:
                     title: RPX-PR
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(?!.*ccd-case-disposer|.*ccd-case-migration-starter|.*ccd-next-hearing-date-updater)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
+                      ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(?!.*ccd-case-disposer|.*ccd-case-migration-starter)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
                     name: CDM
                     recurse: true
                     title: CDM Master Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_(\w_to_\w_Nightly).*\/(?!.*ccd-case-disposer|.*ccd-cache-warm-performance|.*ccd-cdm-performance|.*ccd-case-migration-starter|.*ccd-next-hearing-date-updater)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
+                      ^HMCTS_(\w_to_\w_Nightly).*\/(?!.*ccd-case-disposer|.*ccd-cache-warm-performance|.*ccd-cdm-performance|.*ccd-case-migration-starter)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
                     name: CDM Nightly
                     recurse: true
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|.*ac-manage-case-assignment.*PR-272|.*ccd-api-gateway.*PR-353|.*ccd-case-migration-starter\/master|.*ccd-next-hearing-date-updater\/master)
+                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|jps.*\/master|.*ccd-case-migration-starter\/master)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
@@ -178,7 +178,7 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app)\/master
+                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app|ccpay-notifications-service)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
@@ -256,10 +256,10 @@ spec:
                     title: Adoption Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fpl-ccd-configuration)\/(master|demo|ithc|perftest)
+                      ^HMCTS.*\/(fpl-ccd-configuration|fpl-wa-task-configuration|fpl-cron-ccd-data-migration-tool)\/master
                     name: FPLA
                     recurse: true
-                    title: FPLA
+                    title: Family Public Law
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/pcq-.+\/master
@@ -298,7 +298,7 @@ spec:
                     title: WA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(idam-api|idam-web-public|idam-web-admin|idam-user-dashboard|idam-performance-tests)\/master
+                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests)\/master
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
@@ -322,13 +322,13 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/finrem-.+\/master
+                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-notification-service|finrem-ccd-definitions|finrem-performance-tests)\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard
@@ -547,7 +547,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.19"
+                          galleryImageVersion: "1.4.39"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"

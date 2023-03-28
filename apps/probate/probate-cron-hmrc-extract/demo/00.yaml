@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: probate-cron-hmrc-extract
+spec:
+  releaseName: probate-cron-hmrc-extract
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2182-8db49d1-20230328123837 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0,20,40 * * * *"
+      environment:
+        TRIG: trig-1
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

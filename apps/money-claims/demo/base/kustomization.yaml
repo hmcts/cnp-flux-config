@@ -1,23 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: money-claims
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
   - ../../cmc-mailhog/cmc-mailhog.yaml
-  - ../../cmc-dg-docassembly/cmc-dg-docassembly.yaml
   - ../../cmc-pay/cmc-pay.yaml
   - ../../cmc-pdf-service/cmc-pdf-service.yaml
-  - ../../cmc-s2s/cmc-s2s.yaml
-  - ../../cmc-send-letter-service/cmc-send-letter-service.yaml
-  - ../../cmc-draft-store/cmc-draft-store.yaml
+  - ../../../rpe/identity/identity.yaml
+  - ../../../dg/identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
 patchesStrategicMerge:
   - ../../identity/demo.yaml
   - ../../cmc-citizen-frontend/demo.yaml
   - ../../cmc-claim-store/demo.yaml
-  - ../../cmc-dg-docassembly/demo.yaml
-  - ../../cmc-draft-store/demo.yaml
-  - ../../cmc-legal-frontend/demo.yaml
   - ../../cmc-pay/demo.yaml
   - ../../cmc-pdf-service/demo.yaml
-  - ../../cmc-s2s/demo.yaml
-  - ../../cmc-send-letter-service/demo.yaml
+  - ../../../rpe/identity/demo.yaml
+  - ../../../dg/identity/demo.yaml
+  - ../../../xui/identity/demo.yaml

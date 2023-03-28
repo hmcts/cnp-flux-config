@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: jps
+  namespace: jps
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: jps-binding
+  namespace: jps
+spec:
+  azureIdentity: jps
+  selector: jps

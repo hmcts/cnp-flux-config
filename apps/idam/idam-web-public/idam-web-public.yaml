@@ -7,19 +7,20 @@ spec:
   releaseName: idam-web-public
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-f970c5e-20230109151833
+      image: hmctspublic.azurecr.io/idam/web-public:prod-68f7aeb-20230202091952
       ingressHost: hmcts-access.service.gov.uk
       aadIdentityName: idam
       useInterpodAntiAffinity: true
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.platform.hmcts.net
         FEATURES_DYNATRACE_MONITOR_ENDPOINT: /rb_bf00910jpo
+        FEATURES_GOOGLE_TAG_MANAGER: false
         FEDERATED_SSO: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/c6874728-71e6-41fe-a9e1-2e8c36776ad8/
   chart:
     spec:
       chart: idam-web-public
-      version: 0.2.24
+      version: 0.2.25
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

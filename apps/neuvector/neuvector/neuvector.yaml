@@ -16,7 +16,7 @@ spec:
         mode: "protect" # one of: monitor, protect
         rules:
           - '{"config":{"id":1000,"category":"Kubernetes","comment":"Allow system namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"neuvector,kube-system,knode-system"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
-          - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kured,monitoring,dynatrace,flux-system"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
+          - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kubecost,kured,monitoring,dynatrace,flux-system"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
           - '{"config":{"id":1002,"category":"Kubernetes","comment":"Allow HMCTS registries","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
           - '{"config":{"id":1003,"category":"Kubernetes","comment":"Default deny","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://localhost/,https://*.*/"}],"disable":false,"rule_type": "deny","cfg_type":"user_created"}}'
         defaultAction: "allow"
@@ -59,7 +59,7 @@ spec:
       - '{"config":{"name":"Mta","criteria":[{"key": "address", "value": "mta.reform.hmcts.net", "op": "="}]}}'
       - '{"config":{"name":"Idam","criteria":[{"key": "address", "value": "idam-api.platform.hmcts.net", "op": "="}]}}'
     neuvector:
-      tag: 4.2.0
+      tag: 5.1.1
       containerd:
         enabled: true
       resources:
@@ -101,7 +101,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.2.10
+      version: 1.2.11
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

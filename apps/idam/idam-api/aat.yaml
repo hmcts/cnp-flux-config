@@ -7,10 +7,11 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-72f0b70-20230109160323
+      image: hmctspublic.azurecr.io/idam/api:prod-6ed31fd-20230324162715
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
+        TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
         STRATEGIC_ADMIN_URL: https://idam-web-admin.aat.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
@@ -38,11 +39,12 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
-        LOG_AND_AUDIT_IDAM_ENABLED: false
+        STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
+        LOG_AND_AUDIT_IDAM_ENABLED: true
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: true
         IDAM_SCHEDULED_BATCH_PROCESSING_ENABLED: false
         FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
-        FEATUREFLAGS_PULLREQUESTREWRITEENABLED: false
+        FEATUREFLAGS_PULLREQUESTREWRITEENABLED: true
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
@@ -59,4 +61,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.9
+      version: 0.4.11

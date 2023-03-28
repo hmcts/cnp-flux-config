@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    component: nmi
+    tier: node
+    k8s-app: aad-pod-id
+  name: nmi
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        component: nmi
+        tier: node
+    spec:
+      priorityClassName: system-node-critical

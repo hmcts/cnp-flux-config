@@ -7,11 +7,12 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/web-public:prod-f970c5e-20230109151833
+      image: hmctspublic.azurecr.io/idam/web-public:prod-f35245a-20230327152200
       ingressClass: traefik-no-proxy
       ingressHost: idam-web-public.demo.platform.hmcts.net
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.demo.platform.hmcts.net
+        FEATURES_GOOGLE_TAG_MANAGER: true
         STEP_UP_AUTHENTICATION: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/
     global:
@@ -20,4 +21,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.2.24
+      version: 0.2.26

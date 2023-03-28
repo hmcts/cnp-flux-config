@@ -9,45 +9,25 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 - All App deployments are managed through `HelmRelease` manifests.
 - Any new/existing application that is getting added to an environment for the first time should use [Flux v2](docs/app-deployment-v2.md).
-- See [App Deployment section](docs/app-deployment.md) for more details to manage existing apps already on flux v1.    
 
+## Encrypting Secrets With Sops
 
-## Creating Sealed Secrets
+ [Sops setup](docs/secrets-sops-encryption.md)
 
-Install version 0.17.5 from https://github.com/bitnami-labs/sealed-secrets/releases
+### SOPs
+
+Sops fails linting by default as we require 2 spaces while it uses 4 spaces.
+You can use `yq` to fix this:
 
 ```
-GOOS=$(go env GOOS)
-GOARCH=$(go env GOARCH)
-wget https://github.com/bitnami/sealed-secrets/releases/download/v0.17.5/kubeseal-0.17.5-$GOOS-$GOARCH.tar.gz -O /tmp/kubeseal.tar.gz
-tar -xzvf /tmp/kubeseal.tar.gz
-mkdir -p ~/bin
-install -m 755 /tmp/kubeseal ~/bin/kubeseal
-kubeseal --version
+yq eval -I 2 --inplace apps/mi/mi-adf-shir/sbox/mi-adf-auth-values.enc.yaml
 ```
 
-#### From a Literal
-```
-kubectl create secret generic my-secret \
-  --from-literal key=secret-value \
-  --namespace namespace \
-  --dry-run=client -o json > my-secret.json
+upstream issue: https://github.com/mozilla/sops/issues/900
 
-kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
-```
-### From a File
-```
-kubectl create secret generic my-secret \
-  --from-file=./some-file.txt \
-  --namespace namespace \
-  --dry-run=client -o json > my-secret.json
+## Rebooting nodes with kured
 
-kubeseal --format=yaml --cert=clusters/<ENV>/pub-cert.pem < my-secret.json > my-secret.yaml
-```
-
-## Bootstrapping sealed secrets for a new cluster
-
-See [new cluster creation](docs/new-cluster.md) steps.
+[Documentation](docs/reboot-node-using-kured.md)
 
 ## Upgrading flux v2
 

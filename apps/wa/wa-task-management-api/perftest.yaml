@@ -6,10 +6,14 @@ spec:
   values:
     java:
       replicas: 4
-      image: hmctspublic.azurecr.io/wa/task-management-api:prod-8abb404-20230123093919 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-792f982-20230327143940 #{"$imagepolicy": "flux-system:wa-task-management-api"}
       memoryLimits: "4096Mi"
       memoryRequests: "2048Mi"
       cpuLimits: "4000m"
       cpuRequests: "2000m"
       environment:
-        REFRESH_FLAG: "5"
+        LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        REFRESH_FLAG: "8"
+        ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw
+        ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps
+        RESTART: true

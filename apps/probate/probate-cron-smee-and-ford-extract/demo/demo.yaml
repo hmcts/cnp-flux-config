@@ -6,7 +6,7 @@ spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-8c0e45d-20230120105748 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2182-8db49d1-20230328123837 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       schedule: "0/15 * * * *"
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
@@ -18,6 +18,7 @@ spec:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
         ADHOC_JOB_DATE:
+        JOB_SHUTDOWN_DELAY: 10
       keyVaults:
         probate:
           secrets:

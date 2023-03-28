@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: xui-slack-help-bot
+  namespace: flux-system
+spec:
+  path: ./apps/xui-slack-help-bot/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "xui-slack-help-bot"
+      TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"

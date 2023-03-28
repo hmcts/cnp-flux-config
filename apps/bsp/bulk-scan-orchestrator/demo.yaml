@@ -5,8 +5,8 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-2384-20fa22f-20230327114405 #{"$imagepolicy": "flux-system:demo-bulk-scan-orchestrator"}
       ingressClass: traefik-private
-      disableIngressClassAnnotation: true
       environment:
         TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
         AUTO_CASE_CREATION_ENABLED_SSCS: "false"
@@ -20,4 +20,4 @@ spec:
         DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "* */2 * * * *"
         CDAM_ENABLED: "true"
         SUPPLEMENTARY_DATA_ENABLED_SSCS: "true"
-        REFRESH_PODS: "yes"
+        DELETE_ME: "true"

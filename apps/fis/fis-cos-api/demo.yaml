@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fis-cos-api
+spec:
+  values:
+    java:
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/fis/cos-api:prod-fb1ff66-20230327211414 #{"$imagepolicy": "flux-system:demo-fis-cos-api"}
+      environment:
+        DUMMY_VAR_TO_REDEPLOY: 2

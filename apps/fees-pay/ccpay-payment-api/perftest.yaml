@@ -6,14 +6,14 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:pr-1248-184c6ba-20230116105905 #{"$imagepolicy": "flux-system:perftest-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:pr-1391-39067dd-20230328122114 #{"$imagepolicy": "flux-system:perftest-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-        TRUSTED_S2S_SERVICE_NAMES: "prl_cos_api,adoption_web,refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,probate_backend,nfdiv_case_api,civil_service"
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         PBA_CONFIG1_SERVICE_NAMES: dummy
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

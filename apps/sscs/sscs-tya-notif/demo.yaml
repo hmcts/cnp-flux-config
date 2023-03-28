@@ -8,11 +8,10 @@ spec:
   values:
     java:
       ingressClass: traefik-private
-      disableIngressClassAnnotation: true
       replicas: 2
       enableOAuth: true
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2242-d5b0e8f-20230106114105 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-7cf2f8e-20230328092633 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-demo"
         JOB_SCHEDULER_DB_NAME: "notification"
@@ -26,7 +25,7 @@ spec:
         DUMMY_PROPERTY: true
         HOURS_START_TIME: 0
         HOURS_END_TIME: 23
-        TEST_PROPERTY: true
+        TEST_PROPERTY: false
         TEST_RECIPIENTS_POSTCODE: "*"
     global:
       environment: demo

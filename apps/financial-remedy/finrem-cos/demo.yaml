@@ -6,9 +6,8 @@ metadata:
 spec:
   values:
     java:
-      disableIngressClassAnnotation: true
       ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/finrem/cos:pr-859-c5e6a67-20230117104033 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:pr-975-dfc92dc-20230328111008 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -18,23 +17,4 @@ spec:
         PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
-        TRIGGER_DEPLOY: trigger
-      keyVaults:
-        finrem:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: finrem-case-orchestration-service-s2s-key
-              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
-            - name: idam-secret
-              alias: OAUTH2_CLIENT_FINREM
-            - name: finrem-system-update-username
-              alias: FINREM_SYSTEMUPDATE_USERNAME
-            - name: finrem-system-update-password
-              alias: FINREM_SYSTEMUPDATE_PASSWORD
-            - name: finrem-idam-client-secret
-              alias: FINREM_IDAM_CLIENT_SECRET
-            - name: docmosis-api-key
-              alias: PDF_SERVICE_ACCESS_KEY
-            - name: docmosis-endpoint
-              alias: PDF_SERVICE_BASEURL
+        TRIGGER_DEPLOY: trigger2

@@ -7,8 +7,7 @@ spec:
   values:
     java:
       ingressClass: traefik-private
-      disableIngressClassAnnotation: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2689-ed8d9e8-20230120141147 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-2dc4ead-20230326185457 #{"$imagepolicy": "flux-system:cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc
@@ -48,6 +47,10 @@ spec:
         IDAM_API_BASE_URL: https://idam-api.demo.platform.hmcts.net
         IDAM_OIDC_URL: https://idam-web-public.demo.platform.hmcts.net
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
+        DOC_ASSEMBLY_URL: http://dg-docassembly-demo.service.core-compute-demo.internal
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
         STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: Win10UAT_006@test.justice.gov.uk
@@ -61,5 +64,4 @@ spec:
         CMC_DB_USERNAME: cmc@cmc-db-v11-demo
         CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         FEATURE_TOGGLES_BREATHING_SPACE: true
-        DOCUMENT_MANAGEMENT_SECURED: true
-        CASE_DOCUMENT_AM_URL: http://dm-store-demo.service.core-compute-demo.internal
+        FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true
