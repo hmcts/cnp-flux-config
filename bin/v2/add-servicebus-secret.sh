@@ -9,8 +9,8 @@ SOPS_KEY=${4:-https://dcdcftappsdevkv.vault.azure.net/keys/sops-key/aedb9ea38954
 SERVICE_BUS_NAMESPACE="${NAMESPACE}-sb-${ENVIRONMENT}"
 SECRET_FILE_NAME="$SERVICE_BUS_NAMESPACE.enc.yaml"
 
-PRIMARY_KEY=$(az servicebus namespace authorization-rule keys list -n RootManageSharedAccessKey --namespace-name "$SERVICE_BUS_NAMESPACE"  --resource-group "${NAMESPACE}-aso-${ENVIRONMENT}-rg" --subscription "$SUBSCRIPTION"  --query "primaryKey" )
-CONNECTION_STRING=$(az servicebus namespace authorization-rule keys list -n RootManageSharedAccessKey --namespace-name "$SERVICE_BUS_NAMESPACE"  --resource-group "${NAMESPACE}-aso-${ENVIRONMENT}-rg" --subscription "$SUBSCRIPTION"  --query "primaryConnectionString" )
+PRIMARY_KEY=$(az servicebus namespace authorization-rule keys list -n RootManageSharedAccessKey --namespace-name "$SERVICE_BUS_NAMESPACE"  --resource-group "${NAMESPACE}-aso-${ENVIRONMENT}-rg" --subscription "$SUBSCRIPTION"  --query "primaryKey" -o tsv)
+CONNECTION_STRING=$(az servicebus namespace authorization-rule keys list -n RootManageSharedAccessKey --namespace-name "$SERVICE_BUS_NAMESPACE"  --resource-group "${NAMESPACE}-aso-${ENVIRONMENT}-rg" --subscription "$SUBSCRIPTION"  --query "primaryConnectionString" -o tsv )
 
 if [ ! -d "apps/${NAMESPACE}/${ENVIRONMENT}/sops-secrets" ]; then
 
