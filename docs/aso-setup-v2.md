@@ -60,7 +60,7 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
       secretRef: <your namespace>-sb-preview
       key: primaryKey
     SB_CONNECTION_STRING:
-      secretRef: servicebus-access
+      secretRef: <your namespace>-sb-preview
       key: connectionString
   ```
 - Follow [chart-servicebus](https://github.com/hmcts/chart-servicebus) documentation for configuring queues and topics.

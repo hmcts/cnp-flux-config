@@ -46,7 +46,7 @@ spec:
             disabled: false
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e47eff-20230323104218 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-a9979b4-20230328191110 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -58,17 +58,17 @@ spec:
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-b81016f-20230321160423 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-ec45279-20230328135557 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-3753aaa-20230323092240 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-1801502-20230328190426 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-6e9f979-20230324185613 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-ee0e25c-20230327205154 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
