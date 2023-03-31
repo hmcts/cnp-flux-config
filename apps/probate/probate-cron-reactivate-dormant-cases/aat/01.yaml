@@ -6,9 +6,19 @@ spec:
   releaseName: probate-cron-reactivate-dormant-cases
   values:
     job:
-      schedule: "30 0 2-30/2 * *"
+      schedule: "05 18 2-30/2 * *"
+      environment:
+        TASK_NAME: ReactivateDormantCasesTask
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: aat
+  chart:
+    spec:
+      chart: probate-cron
+      version: 0.0.19
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
