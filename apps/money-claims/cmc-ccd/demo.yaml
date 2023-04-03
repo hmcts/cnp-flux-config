@@ -31,7 +31,6 @@ spec:
     ccd-admin-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/admin-web:prod-a2eb00d-20230303104712 #{"$imagepolicy": "flux-system:ccd-admin-web"}
-        ingressClass: traefik-no-proxy
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
@@ -39,7 +38,6 @@ spec:
     ccd-api-gateway-web:
       nodejs:
         image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-5fe4fe0-20230303104742 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
-        ingressClass: traefik-no-proxy
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
@@ -68,7 +66,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-1801502-20230328190426 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-e2f77d9-20230330095726 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-88520b8-20230331215301 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
