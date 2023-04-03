@@ -19,7 +19,7 @@ spec:
             jdbc_default_timezone => "UTC"
             jdbc_paging_enabled => true
             jdbc_page_size => 5000
-            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data WHERE data -> 'SearchCriteria' is not null order by id"
+            statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data from case_data WHERE jurisdiction in ('CIVIL', 'IA', 'PRIVATELAW', 'SSCS') order by id"
             clean_run => false
           }
         }
