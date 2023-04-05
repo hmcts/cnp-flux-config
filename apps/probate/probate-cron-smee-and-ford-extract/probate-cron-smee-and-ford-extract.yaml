@@ -5,10 +5,10 @@ metadata:
 spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
-    schedule: "0/10 * * * *"
     job:
+      schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-fb38c5f-20230329123417 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-1cd1e5e-20230405120748 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
         TASK_NAME: SmeeAndFordExtractTask
       keyVaults:
@@ -77,7 +77,7 @@ spec:
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.17
+      version: 0.0.20
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
