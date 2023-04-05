@@ -10,5 +10,24 @@ spec:
       image: hmctspublic.azurecr.io/adoption/cos-api:pr-677-54ea939-20230405114401 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
       environment:
         APP_INSIGHTS_KEY: '811b0b32-53bb-4c50-ae35-279b5cd91c40'
-        SEND_GRID_API_KEY: ${SEND_GRID_API_KEY}
-        SEND_GRID_NOTIFY_FROM_EMAIL: ${SEND_GRID_NOTIFY_FROM_EMAIL}
+      keyVaults:
+        adoption:
+          secrets:
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: s2s-secret-cos-api
+              alias: S2S_SECRET
+            - name: s2s-secret
+              alias: S2S_SECRET_WEB
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-system-user-name
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-system-user-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: send-grid-api-key
+              alias: SEND_GRID_API_KEY
+            - name: sendgrid-notify-from-email
+              alias: SEND_GRID_NOTIFY_FROM_EMAIL
