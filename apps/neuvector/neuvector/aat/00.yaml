@@ -81,14 +81,3 @@ spec:
             traefik.ingress.kubernetes.io/router.middlewares: neuvector-neuvectorredirect@kubernetescrd
             traefik.ingress.kubernetes.io/frontend-entry-points: http,https
             traefik.ingress.kubernetes.io/redirect-entry-point: https
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: neuvectorredirect
-  namespace: neuvector
-spec:
-  redirectRegex:
-  permanent: true
-  regex: ^http://cft-neuvector00.aat.platform.hmcts.net/(.*)
-  replacement: https://cft-neuvector00.aat.platform.hmcts.net/$1
