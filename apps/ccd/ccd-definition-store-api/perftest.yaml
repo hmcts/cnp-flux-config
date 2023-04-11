@@ -6,16 +6,16 @@ spec:
   releaseName: ccd-definition-store-api
   values:
     java:
-      replicas: 4
-      memoryRequests: "2048Mi"
-      memoryLimits: "4096Mi"
-      cpuRequests: "2000m"
-      cpuLimits: "4000m"
+      replicas: 2
+      memoryRequests: "2Gi"
+      memoryLimits: "8Gi"
+      cpuRequests: "2"
+      cpuLimits: "4"
       autoscaling:
         enabled: false
         minReplicas: 3
         maxReplicas: 4
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-e2661d6-20230309091646 #{"$imagepolicy": "flux-system:perftest-ccd-definition-store-api"}
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7aff08b-20230405110131 #{"$imagepolicy": "flux-system:perftest-ccd-definition-store-api"}
       environment:
         ELASTIC_SEARCH_FAIL_ON_IMPORT: false
         DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"
@@ -23,4 +23,3 @@ spec:
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v11-perftest.postgres.database.azure.com
         DEFINITION_STORE_S2S_AUTHORISED_SERVICES: ccd_data,ccd_gw,ccd_admin,jui_webapp,pui_webapp,aac_manage_case_assignment,em_hrs_api,ds_ui,fis_cos_api
         DUMMY_VAR: 1
-        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120

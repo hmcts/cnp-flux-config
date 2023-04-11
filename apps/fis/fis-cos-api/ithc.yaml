@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fis-cos-api
+  namespace: fis
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/fis/cos-api:prod-fb1ff66-20230327211414 #{"$imagepolicy": "flux-system:ithc-fis-cos-api"}
+      environment:
+        FEATURE_EXAMPLE: true
+    global:
+      environment: ithc
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true

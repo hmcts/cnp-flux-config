@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: xui-slack-help-bot
+  namespace: xui-slack-help-bot
+spec:
+  releaseName: xui-slack-help-bot
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/xui/slack-help-bot:prod-c5d5181-20230324095336 #{"$imagepolicy": "flux-system:xui-slack-help-bot"}
+    environment:
+      SLACK_REPORT_CHANNEL: exui-support
+      SLACK_REPORT_CHANNEL_ID: C05040YT891
+      JIRA_PROJECT: EXUI
+      JIRA_ISSUE_TYPE_ID: 10900
+      JIRA_ISSUE_TYPE_NAME: "Bug"
+    aadIdentityName: xui-slack-help-bot
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - xui-slack-bot-token
+          - xui-slack-app-token
+          - jira-username
+          - jira-api-token
+  chart:
+    spec:
+      chart: nodejs
+      version: 2.4.14
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

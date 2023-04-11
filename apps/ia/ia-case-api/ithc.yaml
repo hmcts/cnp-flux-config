@@ -2,9 +2,12 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: ia-case-api
+  namespace: ia
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/case-api:pr-1273-1e5f5e0-20230315111856 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
+      image: hmctspublic.azurecr.io/ia/case-api:pr-1273-250fb75-20230405112706 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
+      aadIdentityName: ia
       environment:
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "false"
+        DUMMY: true

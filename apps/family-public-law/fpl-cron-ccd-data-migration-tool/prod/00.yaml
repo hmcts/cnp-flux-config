@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fpl-cron-ccd-data-migration-tool
+spec:
+  releaseName: fpl-cron-ccd-data-migration-tool
+  values:
+    job:
+      schedule: "55 00 29 3 *"
+      environment:
+        ENABLED: true
+        MIGRATION_ID: DFPL-1233Rollback
+        IDAM_API_URL: https://idam-api.platform.hmcts.net

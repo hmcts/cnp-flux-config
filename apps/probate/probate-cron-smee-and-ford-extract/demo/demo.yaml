@@ -6,11 +6,11 @@ spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-f567e43-20230315160254 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-09f4c13-20230411114342 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       schedule: "0/15 * * * *"
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
-        DUMMY_PROPERTY: DUMMY18
+        DUMMY_PROPERTY: DUMMY19
         PROBATE_POSTGRESQL_USER: probateman_user@probatemandb-postgres-db-v11-demo
         PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-db-v11-demo.postgres.database.azure.com
         EXCEPTED_ESTATE_DATE_OF_DEATH: "2022-01-01"
@@ -18,6 +18,7 @@ spec:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
         ADHOC_JOB_DATE:
+        JOB_SHUTDOWN_DELAY: 10
       keyVaults:
         probate:
           secrets:

@@ -2,12 +2,16 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: fis-ds-update-web
+  namespace: fis
 spec:
   releaseName: fis-ds-update-web
   interval: 1m
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/fis/ds-update-web:prod-5bd66df-20230314162347 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fis/ds-update-web:prod-a722bbe-20230328212759 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
       memoryRequests: "2048Mi"
       cpuRequests: "1000m"
       memoryLimits: "4096Mi"

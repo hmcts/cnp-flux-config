@@ -7,9 +7,29 @@ spec:
   interval: 1m
   values:
     java:
-      ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/adoption/cos-api:pr-677-c54e361-20230315144233 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
+      image: hmctspublic.azurecr.io/adoption/cos-api:pr-677-54ea939-20230405114401 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
       environment:
         APP_INSIGHTS_KEY: '6c5278dd-ee76-4e7b-92f9-57b27ead382e'
         LA_PORTAL_BASEURL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/la-portal/kba-case-ref
         MULTI_CHILDREN_CUI_URL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/new-application-redirect
+      keyVaults:
+        adoption:
+          secrets:
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: s2s-secret-cos-api
+              alias: S2S_SECRET
+            - name: s2s-secret
+              alias: S2S_SECRET_WEB
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-system-user-name
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-system-user-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: send-grid-api-key
+              alias: SEND_GRID_API_KEY
+            - name: sendgrid-notify-from-email
+              alias: SEND_GRID_NOTIFY_FROM_EMAIL

@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fis-ds-update-web
+  namespace: fis
+spec:
+  values:
+    nodejs:
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      image: hmctspublic.azurecr.io/fis/ds-update-web:prod-a722bbe-20230328212759 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
