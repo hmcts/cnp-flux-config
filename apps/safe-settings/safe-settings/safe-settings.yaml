@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: safe-settings
+  namespace: safe-settings
+spec:
+  chart:
+    spec:
+      chart: safe-settings
+      sourceRef:
+        kind: HelmRepository
+        name: safe-settings-hemrepo
+        namespace: flux-system
+      interval: 5m
+  interval: 5m
+  releaseName: safe-settings
+  values:
+    appEnv:
+      APP_ID:
+        secretKeyRef:
+          name: safe-settings-values
+          value: app_id
+      CRON: "0 */1 * * *"
+      PRIVATE_KEY:
+        secretKeyRef:
+          name: safe-settings-values
+          value: private_key
+      WEBHOOK_SECRET:
+        secretKeyRef:
+          name: safe-settings-values
+          value: webhook_secret
+    deploymentConfig: 
+      restrictedRepos:
+        include:
+          - ek-test-repo
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.tls: "true"
+      hosts:
+        - host: safe-settings.platform.hmcts.net
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: safe-settings
+                  port:
+                    number: 80
+  valuesFrom:
+    - kind: Secret
+      name: safe-settings-values
