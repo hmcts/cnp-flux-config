@@ -18,18 +18,21 @@ spec:
   values:
     appEnv:
       APP_ID:
-        secretKeyRef:
-          name: safe-settings-values
-          value: app_id
+        valueFrom:
+          secretKeyRef:
+            name: safe-settings-values
+            value: app_id
       CRON: "0 */1 * * *"
       PRIVATE_KEY:
-        secretKeyRef:
-          name: safe-settings-values
-          value: private_key
+        valueFrom:
+          secretKeyRef:
+            name: safe-settings-values
+            value: private_key
       WEBHOOK_SECRET:
-        secretKeyRef:
-          name: safe-settings-values
-          value: webhook_secret
+        valueFrom:
+          secretKeyRef:
+            name: safe-settings-values
+            value: webhook_secret
     deploymentConfig:
       restrictedRepos:
         include:
@@ -49,6 +52,3 @@ spec:
                   name: safe-settings
                   port:
                     number: 80
-  valuesFrom:
-    - kind: Secret
-      name: safe-settings-values
