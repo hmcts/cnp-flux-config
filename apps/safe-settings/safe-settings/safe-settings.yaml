@@ -6,10 +6,10 @@ metadata:
 spec:
   chart:
     spec:
-      chart: safe-settings
-      version: 0.1.0
+      chart: helm-charts/safe-settings
+      version: 0.1.1
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: safe-settings
         namespace: safe-settings
       interval: 5m
@@ -17,7 +17,22 @@ spec:
   releaseName: safe-settings
   values:
     appEnv:
+      APP_ID:
+        valueFrom:
+          secretKeyRef:
+            name: app-env
+            value: APP_ID
       CRON: "0 */1 * * *"
+      PRIVATE_KEY:
+        valueFrom:
+          secretKeyRef:
+            name: app-env
+            value: PRIVATE_KEY
+      WEBHOOK_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: app-env
+            value: WEBHOOK_SECRET
     deploymentConfig:
       restrictedRepos:
         include:
@@ -37,6 +52,3 @@ spec:
                   name: safe-settings
                   port:
                     number: 80
-  valuesFrom:
-    - kind: Secret
-      name: safe-settings-values
