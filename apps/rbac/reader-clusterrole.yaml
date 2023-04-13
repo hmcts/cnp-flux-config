@@ -45,6 +45,15 @@ rules:
 - apiGroups: ['kustomize.toolkit.fluxcd.io']
   resources: ['kustomizations']
   verbs: ['watch', 'list', 'get']
+- apiGroups: ['servicebus.azure.com']
+  resources: ['Namespace', 'NamespacesQueue', 'NamespacesTopic', 'NamespacesTopicsSubscription']
+  verbs: ['watch', 'list', 'get']
+- apiGroups: ['storage.azure.com']
+  resources: ['StorageAccount', 'StorageAccountsBlobService', 'StorageAccountsBlobServicesContainer']
+  verbs: ['watch', 'list', 'get']
+- apiGroups: ['resources.azure.com']
+  resources: ["ResourceGroup"]
+  verbs: ['watch', 'list', 'get']
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
