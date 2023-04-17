@@ -3,5 +3,11 @@ kind: ImagePolicy
 metadata:
   name: demo-int-ccpay-refunds-api
 spec:
+  filterTags:
+    pattern: '^pr-351-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: ccpay-refunds-api
