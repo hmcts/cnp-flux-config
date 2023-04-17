@@ -6,10 +6,18 @@ spec:
   releaseName: probate-cron-reactivate-dormant-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-84f5831-20230322153708 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-c83f753-20230413112946 #{"$imagepolicy": "flux-system:probate-back-office"}
       schedule: "10,30,50 * * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: perftest
+  chart:
+    spec:
+      chart: probate-cron
+      version: 0.0.20
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

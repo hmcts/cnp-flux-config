@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: safe-settings
+  namespace: safe-settings
+spec:
+  url: https://github.com/hmcts/safe-settings
+  interval: 10m
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm-charts/

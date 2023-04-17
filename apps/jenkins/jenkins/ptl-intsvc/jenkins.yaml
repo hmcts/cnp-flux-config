@@ -53,9 +53,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-00-aks
+                        value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-00-rg
+                        value: cft-preview-01-rg
                       - key: PTL_AKS_CLUSTER_NAME
                         value: cft-ptl-00-aks
                       - key: PTL_AKS_RESOURCE_GROUP
@@ -160,7 +160,7 @@ spec:
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|.*ccd-api-gateway.*PR-353|.*ccd-case-migration-starter\/master)
+                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|jps.*\/master|.*ccd-case-migration-starter\/master)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
@@ -286,10 +286,16 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/civil-(?!damages).*\/master
+                      ^HMCTS.*\/civil-(?!damages|sdt).*\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/civil-sdt.*\/master
+                    name: Civil-SDT
+                    recurse: true
+                    title: Civil SDT Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/wa-.+\/master

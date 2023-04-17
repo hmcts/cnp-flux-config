@@ -5,13 +5,12 @@ metadata:
 spec:
   values:
     nodejs:
-      disableTraefikTls: false
-      ingressClass: traefik-no-proxy
       ingressHost: manage-case-caa-assigned-case-view.demo.platform.hmcts.net
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL,AUTOTEST1,CMC,HRS,BEFTA_JURISDICTION_1,PRIVATELAW,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,SSCS,EMPLOYMENT
         FEATURE_OIDC_ENABLED: true
         SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
         DEBUG: xuiNode:*
@@ -30,4 +29,4 @@ spec:
         SERVICES_PRD_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         SERVICES_PRD_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
         SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/xui/webapp:pr-2824-036f087-20230315130718 #{"$imagepolicy": "flux-system:demo-xui-webapp-caa-assigned-case-view"}
+      image: hmctspublic.azurecr.io/xui/webapp:prod-01bbf35-20230413155747 #{"$imagepolicy": "flux-system:demo-xui-webapp-caa-assigned-case-view"}

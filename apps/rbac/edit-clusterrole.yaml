@@ -35,6 +35,21 @@ rules:
 - apiGroups: ['helm.toolkit.fluxcd.io']
   resources: ['helmreleases']
   verbs: ['create', 'update', 'delete']
+- apiGroups: ['servicebus.azure.com']
+  resources: ['Namespace', 'NamespacesQueue', 'NamespacesTopic', 'NamespacesTopicsSubscription']
+  verbs: ['create', 'update', 'delete']
+- apiGroups: ['servicebus.azure.com']
+  resources: ['namespaces', 'namespacesqueues', 'namespacestopics', 'namespacestopicssubscriptions']
+  verbs: ['create', 'update', 'delete']
+- apiGroups: ['storage.azure.com']
+  resources: ['StorageAccount', 'StorageAccountsBlobService', 'StorageAccountsBlobServicesContainer']
+  verbs: ['create', 'update', 'delete']
+- apiGroups: ['storage.azure.com']
+  resources: ['storageaccounts', 'storageaccountsblobservices', 'storageaccountsblobservicescontainers']
+  verbs: ['watch', 'list', 'get']
+- apiGroups: ['resources.azure.com']
+  resources: ["ResourceGroup"]
+  verbs: ['create', 'update', 'delete']
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

@@ -12,7 +12,15 @@ spec:
           secretName: nv-storage-secret
           shareName: neuvector-data-00
         ingress:
-          host: neuvector00-api.service.core-compute-perftest.internal
+          host: cft-neuvector00-api.perftest.platform.hmcts.net
+          enabled: true
+          path: "/"
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
+        apisvc:
+          annotations:
+            traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -55,4 +63,8 @@ spec:
               Cluster_Name: perftest00
       manager:
         ingress:
-          host: neuvector00.service.core-compute-perftest.internal
+          host: cft-neuvector00.perftest.platform.hmcts.net
+          enabled: true
+          annotations:
+            traefik.ingress.kubernetes.io/router.tls: "true"
+            kubernetes.io/ingress.class: traefik

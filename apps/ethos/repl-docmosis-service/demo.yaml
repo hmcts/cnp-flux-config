@@ -7,7 +7,20 @@ spec:
   releaseName: repl-docmosis-service
   values:
     java:
-      ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:pr-2037-1e640e2-20230320112615 #{"$imagepolicy": "flux-system:demo-repl-docmosis-service"}
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-0c7e488-20230412151229 #{"$imagepolicy": "flux-system:demo-repl-docmosis-service"}
       environment:
         SECURE_DOC_STORE_FEATURE: false
+      keyVaults:
+        ethos-shared:
+          resourceGroup: ethos
+          secrets:
+            - name: create-updates-queue-send-connection-string
+              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
+            - name: EcmAppInsightsInstrumentationKey
+              alias: APP_INSIGHTS_KEY
+            - name: tornado-access-key
+              alias: TORNADO_ACCESS_KEY
+            - name: ethos-repl-service-s2s-secret
+              alias: ETHOS_REPL_SERVICE_S2S_SECRET
+            - name: repl-docmosis-backend-POSTGRES-PASS
+              alias: ETHOS_REPL_DB_PASSWORD

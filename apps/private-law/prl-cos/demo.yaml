@@ -25,9 +25,11 @@ spec:
             - idam-solicitor-username
             - idam-solicitor-password
             - filtered-court-ids
+            - da-filtered-court-ids
             - postcode-lookup-token
+            - prl-rd-api-system-username
+            - prl-rd-api-system-user-password
       replicas: 2
-      ingressClass: traefik-private
       memoryRequests: "768Mi"
       cpuRequests: "1000m"
       memoryLimits: "3072Mi"
@@ -36,7 +38,7 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 20
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:pr-1198-c2343f5-20230323130632 #{"$imagepolicy": "flux-system:demo-prl-cos-api"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-a76de9a-20230412192019 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net

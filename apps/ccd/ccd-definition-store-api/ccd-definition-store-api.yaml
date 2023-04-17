@@ -8,7 +8,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-3e47eff-20230323104218 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7aff08b-20230405110131 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+      environment:
+        DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
   chart:
     spec:
       chart: ./stable/ccd-definition-store-api
