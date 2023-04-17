@@ -8,6 +8,15 @@ spec:
   values:
     neuvector:
       controller:
+        ingress:
+          enabled: true
+          path: "/"
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
+        apisvc:
+          annotations:
+            traefik.ingress.kubernetes.io/service.serversscheme: https
         tolerations:
           - key: "CriticalAddonsOnly"
             operator: "Equal"
