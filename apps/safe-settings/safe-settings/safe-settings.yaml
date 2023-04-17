@@ -32,6 +32,7 @@ spec:
           secretKeyRef:
             name: app-env
             value: CRON
+      LOG_LEVEL: "trace"
       PRIVATE_KEY:
         valueFrom:
           secretKeyRef:
@@ -46,16 +47,12 @@ spec:
       restrictedRepos:
         include:
           - ek-test-repo
-    ingress:
-      enabled: true
-      className: traefik
-      hosts:
-        - host: safe-settings.sandbox.platform.hmcts.net
-          paths:
-            - path: /
-              pathType: Prefix
-              backend:
-                service:
-                  name: safe-settings
-                  port:
-                    number: 80
+      overridevalidators:
+        - plugin: branches
+          error: |
+            `Allow force pushes on default branch cannot be overridden`
+          script: |
+            console.log(`baseConfig ${JSON.stringify(baseconfig)}`)
+            console.log(`overrideConfig ${JSON.stringify(overrideconfig)}`)
+            if (overrideconfig && overrideconfig.protection) {
+              return overrideconfig.protection.allow_force_pushes != true
