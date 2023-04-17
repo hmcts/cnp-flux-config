@@ -31,6 +31,8 @@ spec:
         azureFileShare:
           secretName: nv-storage-secret
           shareName: neuvector-data-00
+        ingress:
+          enabled: false
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -74,8 +76,3 @@ spec:
       manager:
         ingress:
           host: cft-neuvector00.aat.platform.hmcts.net
-          enabled: true
-          httpredirect: true
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"

@@ -13,13 +13,9 @@ spec:
           shareName: neuvector-data-01
         ingress:
           enabled: true
-          host: cft-neuvector01-api.aat.platform.hmcts.net
-          path: "/"
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
         apisvc:
           annotations:
+            host: cft-neuvector01-api.aat.platform.hmcts.net
             traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           data:
@@ -65,8 +61,3 @@ spec:
       manager:
         ingress:
           host: cft-neuvector01.aat.platform.hmcts.net
-          enabled: true
-          httpredirect: true
-          annotations:
-            traefik.ingress.kubernetes.io/router.tls: "true"
-            kubernetes.io/ingress.class: traefik
