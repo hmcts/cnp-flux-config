@@ -30,7 +30,15 @@ spec:
           secretName: nv-storage-secret
           shareName: neuvector-data-01
         ingress:
-          host: neuvector01-api.service.core-compute-prod.internal
+          host: cft-neuvector01-api.platform.hmcts.net
+          enabled: true
+          path: "/"
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
+        apisvc:
+          annotations:
+            traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -73,4 +81,9 @@ spec:
               Cluster_Name: prod01
       manager:
         ingress:
-          host: neuvector01.service.core-compute-prod.internal
+          host: cft-neuvector01.platform.hmcts.net
+          enabled: true
+          httpredirect: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
