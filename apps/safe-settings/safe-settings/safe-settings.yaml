@@ -48,13 +48,13 @@ spec:
         include:
           - ek-test-repo
       overridevalidators:
-        - plugin: branches
+        - plugin: branches   
           error: |
-            `Allow force pushes on default branch cannot be overridden`
+            `Branch protection required_approving_review_count cannot be overidden to a lower value`
           script: |
             console.log(`baseConfig ${JSON.stringify(baseconfig)}`)
             console.log(`overrideConfig ${JSON.stringify(overrideconfig)}`)
-            if (overrideconfig && overrideconfig.protection) {
-              return overrideconfig.protection.allow_force_pushes != true
+            if (baseconfig.protection.required_pull_request_reviews.required_approving_review_count && overrideconfig.protection.required_pull_request_reviews.required_approving_review_count ) {
+              return overrideconfig.protection.required_pull_request_reviews.required_approving_review_count >= baseconfig.protection.required_pull_request_reviews.required_approving_review_count 
             }
             return true
