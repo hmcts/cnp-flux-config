@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: civil-sdt
+  namespace: civil
+spec:
+  releaseName: civil-sdt
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/civil/sdt:prod-083c1ed-20221019232728 #{"$imagepolicy": "flux-system:demo-civil-sdt"}
+      environment:
+      DUMMY_RESTART_VAR: 0
+  chart:
+    spec:
+      chart: ./stable/civil-sdt
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
