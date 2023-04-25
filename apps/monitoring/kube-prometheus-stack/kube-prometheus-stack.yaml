@@ -107,11 +107,13 @@ spec:
           - name: "slack_alerting"
             slack_configs:
               - channel: prometheus-alerting
-                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+                text: "{{ range .Alerts }}{{ .Annotations.message }}
+{{ end }}"
           - name: "slack_critical"
             slack_configs:
               - channel: prometheus-critical
-                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+                text: "{{ range .Alerts }}{{ .Annotations.message }}
+{{ end }}"
           - name: "null"
     grafana:
       enabled: false
