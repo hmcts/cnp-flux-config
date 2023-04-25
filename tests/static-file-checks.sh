@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Script to check if apiVersion is present in all yaml files in apps/
 
 for FILE in $(find apps/* -type f -name "*.yaml"); do
