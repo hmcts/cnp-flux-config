@@ -6,7 +6,7 @@ spec:
   values:
     java:
       replicas: 4
-      image: hmctspublic.azurecr.io/wa/task-management-api:prod-ff28fc0-20230425131616 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-ff28fc0-20230425131616 #{"$imagepolicy": "flux-system:perftest-wa-task-management-api"}
       memoryLimits: "4096Mi"
       memoryRequests: "2048Mi"
       cpuLimits: "4000m"
@@ -18,3 +18,5 @@ spec:
         ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps
         RESTART: true
         SPRING_PROFILES_ACTIVE: "replica"
+        POSTGRES_USERNAME: "pgreplication"
+        REPLICATION_USERNAME: "pgreplication"
