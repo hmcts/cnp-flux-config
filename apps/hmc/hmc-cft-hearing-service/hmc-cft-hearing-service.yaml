@@ -8,10 +8,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/hmc/cft-hearing-service:prod-d7f0796-20230328190445 #{"$imagepolicy": "flux-system:hmc-cft-hearing-service"}
+      image: hmctspublic.azurecr.io/hmc/cft-hearing-service:prod-61e018f-20230421190427 #{"$imagepolicy": "flux-system:hmc-cft-hearing-service"}
       environment:
         HMC_ACCESS_CONTROL_ENABLED: true
         DUMMY_VAR: 1
+        CFT_HEARING_SERVICE_S2S_AUTHORISED_SERVICES: xui_webapp,hmc_hmi_inbound_adapter,sscs,fis_hmc_api,civil_service
   chart:
     spec:
       chart: ./stable/hmc-cft-hearing-service

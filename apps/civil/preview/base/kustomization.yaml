@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base   # This is apps/base instead of apps/civil/base as preview doesn't install everything
+  - ../../../base # This is apps/base instead of apps/civil/base as preview doesn't install everything
   - ../../identity/identity.yaml
   - ../../../xui/identity/identity.yaml
   - ../../../am/identity/identity.yaml
@@ -10,10 +10,10 @@ resources:
   - ../../../aac/identity/identity.yaml
   - ../../../wa/identity/identity.yaml
   - ../../../em/identity/identity.yaml
-  - ../../civil-servicebus/servicebus-topic.yaml
   - ../../../azureserviceoperator-system/resources/resource-group.yaml
-  - ../secrets/civil-work-allocation-secret.enc.yaml
+  - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
   - resource-limits.yaml
+  - ../sops-secrets
 namespace: civil
 patchesStrategicMerge:
   - ../../identity/aat.yaml
@@ -24,3 +24,4 @@ patchesStrategicMerge:
   - ../../../aac/identity/aat.yaml
   - ../../../wa/identity/aat.yaml
   - ../../../em/identity/aat.yaml
+  - ../aso/civil-servicebus.yaml

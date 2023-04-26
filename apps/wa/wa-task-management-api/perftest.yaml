@@ -6,15 +6,15 @@ spec:
   values:
     java:
       replicas: 4
-      image: hmctspublic.azurecr.io/wa/task-management-api:pr-1026-a32f3f7-20230403104517 #{"$imagepolicy": "flux-system:perftest-wa-task-management-api"}
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-ff28fc0-20230425131616 #{"$imagepolicy": "flux-system:wa-task-management-api"}
       memoryLimits: "4096Mi"
       memoryRequests: "2048Mi"
       cpuLimits: "4000m"
       cpuRequests: "2000m"
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
-        REFRESH_FLAG: "8"
+        REFRESH_FLAG: "9"
         ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw
         ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps
         RESTART: true
-        POSTGRES_HOST: cft-task-postgres-db-flexible-perftest.postgres.database.azure.com
+        SPRING_PROFILES_ACTIVE: "replica"

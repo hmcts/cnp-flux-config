@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: duplicate-payment-process
+spec:
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:pr-56-b41f894-20230420120551" #{"$imagepolicy": "flux-system:demo-duplicate-payment-process"}
+      #      schedule: "*/1 * * * *"
+    global:
+      environment: demo

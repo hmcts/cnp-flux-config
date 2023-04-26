@@ -12,15 +12,8 @@ spec:
           secretName: nv-storage-secret
           shareName: neuvector-data-01
         ingress:
+          host: cft-neuvector01-api.aat.platform.hmcts.net
           enabled: true
-          host: neuvector01-api.aat.platform.hmcts.net
-          path: "/"
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
-        apisvc:
-          annotations:
-            traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -28,20 +21,20 @@ spec:
               Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
               X509_Cert: |
                 -----BEGIN CERTIFICATE-----
-                MIIC8DCCAdigAwIBAgIQbQJAlN1qaJdHGmSq+WLaJTANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
-                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0xOTA3MDkxNTEx
-                NTRaFw0yMjA3MDkxNTExNTRaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
-                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwwbGg22FyO5v
-                C/DVXSqIgpq9hx4Q4t9s4b65pKivru1vS/dScKEw6VM0NcyqedPljkuua2kE+pP+cEh5aKpZjulz
-                0VwpE/tzuiPcDGozTh+Ko1zbkFwMS5JB8Usx1YR2lQKJQ0Wlu9yg2t/s9EyWHgqfoj+ItaNAhGVE
-                XI4EaZ8ttUdfxNZMTfZzRor/gwWrIeoGkmHj/32Ey0c+33tc2APx/lQNp3XStffsOxb03dSxI4fg
-                06opNSVcVVBamyzqdGhVJrLmMXOsLEYZRQqeTkmqi2+9vbIKPFb8gUQqpAmb18KZZXW9q0kxN+YS
-                qNzwpQYkf/VipHzpDg87ukvJYwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCc+hDI64dH2yFUT/Pm
-                lqeQBGrnij5IvR/rRqm75ilZSNE1YCl/R0yLAWMjduCMHHyeemJErvZ1PFRt784Ol8QdisgfGwES
-                B30nyoYbYi5DP63NMi9T9kmUHuHQtj7Zsn3kD4rblNfqMdu38LswTdEn3i4+E0GtZqQBGCLoQ5fV
-                IW7QI4KkQgdhQdALSD4/a2hrRzMUPa7dU/IkWONcVmisAgmLqmWueAAASe+UeFf0zAqOhZTYEnkB
-                CCbYjayYoRPQJcnVxD/ah9ORz7cpA0+Sx739UhUGTJuE8nsHk2PaDOu1cp1enrPeVKVx89QGI334
-                d5aFwSi7eu7giQob+XD8
+                MIIC8DCCAdigAwIBAgIQcZZhGLBMEbpBEbKsHaYzfzANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
+                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0yMzA0MTgxMTQw
+                NDNaFw0yNjA0MTgxMTQwMThaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
+                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzWasSx7G3SuI
+                u2S4l3qKWYVo6UMefGLIeJl9Rm5uwSl6+Ue0lKbPK3y01bENW6r7nqv+bt9S6VIq6HI3mwP0PMfY
+                oGC6R+gGsVGCAzs4q4I+3oY+0pdt5JiASsQZLrKqGEP99N1XJto3U1Z9rlpRWByEAm18nUXMVB1R
+                FFWpmOn/2pDZqQ/B7/WU0V3VEF/gkgqBrqmWvUrFZfnYxU18X3uzX2uoUbXLXxdpfYfTDM/3dVYS
+                x9lKUU5oPWne08WqjQPaIvaU9DWtiBiPT2hR1bNygTXB3/d6Jsu2cZ2mbpuX8IUSYGPo+cprisej
+                0HfrAXtzITanRc/4tJZByPAOhQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCJXcOP5q+CYGmpEtn2
+                UlHmjNjdxSA8sYqEqmP6ZblSk1bsBp1o188qpjeY14TpYthY0ENWLrjUfAtwhmpWf0nQzm1O8icw
+                eGwRVh0HiKode9pnkTELPh6W8CSnQb1luyUNuo+WeWKexXa/lKgCb8WNAm1lc0RzZDwO0tkYYLaz
+                qOwAPlNOeTXcaWrhJccOzg7y5GGDT+BN5xu/2alSMHk4xVU1RFDAMOI235zc/+9d0UYLhCm7RnxU
+                a8EW4XnRgKFqgXFTTfcG11nUkbalJvGEJzX9AoGJ02OgWJKIA0oWwlaKP3zaICbwZ1IRcSBIue4g
+                aaIb8K5Uub9y/fEvGSzM
                 -----END CERTIFICATE-----
               Enable: true
               Default_Role: reader
@@ -64,8 +57,4 @@ spec:
               Cluster_Name: aat01
       manager:
         ingress:
-          host: neuvector01.service.core-compute-aat.internal
-          enabled: true
-          annotations:
-            traefik.ingress.kubernetes.io/router.tls: "true"
-            kubernetes.io/ingress.class: traefik
+          host: cft-neuvector01.aat.platform.hmcts.net

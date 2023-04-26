@@ -6,4 +6,55 @@ spec:
   releaseName: et-msg-handler
   values:
     java:
-      image: hmctspublic.azurecr.io/et/msg-handler:prod-26f13f8-20230330134417 #{"$imagepolicy": "flux-system:et-msg-handler"}
+      image: hmctspublic.azurecr.io/et/msg-handler:pr-235-73e1c48-20230422000720 #{"$imagepolicy": "flux-system:perftest-et-msg-handler"}
+      environment:
+        REFORM_TEAM: et
+        REFORM_SERVICE_NAME: et-msg-handler
+        REFORM_SERVICE_TYPE: java
+        REFORM_ENVIRONMENT: preview
+        ROOT_LOGGING_LEVEL: INFO
+        LOG_OUTPUT: single
+        ET_MSG_HANDLER_URL: "http://et-msg-handler-perftest.service.core-compute-perftest.internal"
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+        IDAM_API_JWK_URL: "https://idam-api.perftest.platform.hmcts.net/jwks"
+        IDAM_API_OIDC_URL: "https://idam-api.perftest.platform.hmcts.net/o/token"
+        IDAM_CLIENT_REDIRECT_URL: "https://et-msg-handler-perftest.service.core-compute-perftest.internal/oauth2redirect"
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
+        CCD_DATA_STORE_API_URL: "http://ccd-data-store-api-perftest.service.core-compute-perftest.internal"
+        MICRO_SERVICE: "et_msg_handler"
+        ET_MSG_HANDLER_DB_CONN_OPTIONS: ?sslmode=require
+      keyVaults:
+        et-msg-handler:
+          secrets:
+            - name: msg-handler-POSTGRES-HOST
+              alias: ET_MSG_HANDLER_POSTGRES_HOST
+            - name: msg-handler-POSTGRES-PORT
+              alias: ET_MSG_HANDLER_POSTGRES_PORT
+            - name: msg-handler-POSTGRES-DATABASE
+              alias: ET_MSG_HANDLER_POSTGRES_DATABASE
+            - name: msg-handler-POSTGRES-USER
+              alias: ET_MSG_HANDLER_POSTGRES_USER
+            - name: msg-handler-POSTGRES-PASS
+              alias: ET_MSG_HANDLER_POSTGRES_PASSWORD
+            - name: caseworker-user-name
+              alias: CASEWORKER_USER_NAME
+            - name: caseworker-password
+              alias: CASEWORKER_PASSWORD
+            - name: gov-notify-api-key
+              alias: GOV_NOTIFY_API_KEY
+            - name: et-msg-handler-s2s-secret
+              alias: ET_MSG_HANDLER_S2S_SECRET
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+        et:
+          secrets:
+            - name: create-updates-queue-send-connection-string
+              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
+            - name: create-updates-queue-listen-connection-string
+              alias: CREATE_UPDATES_QUEUE_LISTEN_CONNECTION_STRING
+            - name: update-case-queue-send-connection-string
+              alias: UPDATE_CASE_QUEUE_SEND_CONNECTION_STRING
+            - name: update-case-queue-listen-connection-string
+              alias: UPDATE_CASE_QUEUE_LISTEN_CONNECTION_STRING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string

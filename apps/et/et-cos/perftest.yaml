@@ -6,7 +6,7 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctspublic.azurecr.io/et/cos:pr-783-0e97b95-20230331092940 #{"$imagepolicy": "flux-system:perftest-et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:pr-860-db3c553-20230425135307 #{"$imagepolicy": "flux-system:perftest-et-cos"}
       environment:
         REFERRAL_TEMPLATE_ID: 92d9c506-c3ca-4063-996b-270861c38261
         ET3NOTIFICATION_TEMPLATE_MYHMCTS_ID: 2995e4fb-1353-4960-804e-632bdc9192ce
@@ -14,3 +14,22 @@ spec:
         REJECTED_TEMPLATE_ID: f41406ab-1422-4785-9ca3-c3bee1094edf
         ET1SERVING_TEMPLATE_ID: e2d6bb47-9b96-4183-a753-867c942bcd49
         ET1SERVING_RESPONDENT_TEMPLATE_ID: 6096c167-f0ca-416c-8317-b6f4fdb74a14
+      keyVaults:
+        et-cos:
+          secrets:
+            - name: cos-POSTGRES-PASS
+              alias: ET_COS_DB_PASSWORD
+            - name: et-cos-s2s-secret
+              alias: ET_COS_S2S_SECRET
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+        et:
+          secrets:
+            - name: create-updates-queue-send-connection-string
+              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: tornado-access-key
+              alias: TORNADO_ACCESS_KEY
+            - name: gov-notify-api-key
+              alias: GOV_NOTIFY_API_KEY

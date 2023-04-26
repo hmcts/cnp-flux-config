@@ -7,13 +7,11 @@ spec:
   interval: 1m
   values:
     java:
-      ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/adoption/cos-api:pr-677-bf87585-20230330171344 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
+      image: hmctspublic.azurecr.io/adoption/cos-api:pr-677-1079f2b-20230425130933 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
       environment:
         APP_INSIGHTS_KEY: '6c5278dd-ee76-4e7b-92f9-57b27ead382e'
         LA_PORTAL_BASEURL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/la-portal/kba-case-ref
         MULTI_CHILDREN_CUI_URL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/new-application-redirect
-        SEND_GRID_API_KEY: $(SEND_GRID_API_KEY)
       keyVaults:
         adoption:
           secrets:
@@ -35,3 +33,7 @@ spec:
               alias: SEND_GRID_API_KEY
             - name: sendgrid-notify-from-email
               alias: SEND_GRID_NOTIFY_FROM_EMAIL
+      memoryRequests: 1024Mi
+      cpuRequests: "500m"
+      memoryLimits: 1527Mi
+      cpuLimits: "2500m"

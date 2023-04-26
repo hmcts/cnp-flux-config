@@ -1,0 +1,11 @@
+apiVersion: managedidentity.azure.com/v1beta20181130
+kind: UserAssignedIdentity
+metadata:
+  name: ${NAMESPACE}-${WI_ENVIRONMENT}-mi
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: skip
+spec:
+  location: uksouth
+  owner:
+    name: managed-identities-${WI_ENVIRONMENT}-rg
