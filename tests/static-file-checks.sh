@@ -4,8 +4,9 @@
 
 for FILE in $(find apps/* -type f -name "*.yaml"); do
 
-    if [[ ! $(grep -E "apiVersion:" $FILE) ]]
+    if [ $(yq eval '.apiVersion' $FILE) = null ]
     then
         echo "apiVersion: missing in $FILE" && exit 1
     fi
+
 done
