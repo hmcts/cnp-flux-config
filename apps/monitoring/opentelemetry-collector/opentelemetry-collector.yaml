@@ -14,8 +14,6 @@ spec:
       clusterMetrics:
         enabled: true
     config:
-      exporters:
-        logging:
       processors:
         batch:
           send_batch_max_size: 1000
@@ -37,6 +35,9 @@ spec:
               - otlp
     autoscaling:
       enabled: true
+      minReplicas: 1
+      maxReplicas: 10
+      targetCPUUtilizationPercentage: 80
   valuesFrom:
     - kind: Secret
       name: opentelemetry-values
