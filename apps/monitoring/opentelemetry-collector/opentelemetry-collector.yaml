@@ -9,38 +9,31 @@ spec:
   releaseName: opentelemetry-collector
   interval: 10m
   values:
-    standaloneCollector:
-      enabled: true
-      configOverride:
-        exporters:
-          logging:
-        processors:
-          batch:
-            send_batch_max_size: 1000
-            send_batch_size: 1000
-            timeout: 30s
-
-        service:
-          pipelines:
-            metrics:
-              exporters:
-                - logging
-                - dynatrace
-              receivers:
-                - otlp
-            traces:
-              exporters:
-                - logging
-                - otlphttp
-              receivers:
-                - otlp
-
-    agentCollector:
-      enabled: false
-
+    mode: deployment
+    config:
+      exporters:
+        logging:
+      processors:
+        batch:
+          send_batch_max_size: 1000
+          send_batch_size: 1000
+          timeout: 30s
+      service:
+        pipelines:
+          metrics:
+            exporters:
+              - logging
+              - dynatrace
+            receivers:
+              - otlp
+          traces:
+            exporters:
+              - logging
+              - otlphttp
+            receivers:
+              - otlp
     autoscaling:
       enabled: true
-
   valuesFrom:
     - kind: Secret
       name: opentelemetry-values
