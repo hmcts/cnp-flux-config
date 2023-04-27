@@ -75,6 +75,14 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
+        ingress:
+          path: "/"
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
+        apisvc:
+          annotations:
+            traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           enabled: true
       enforcer:
@@ -87,8 +95,10 @@ spec:
           ssl: false
         ingress:
           enabled: true
+          httpredirect: true
           annotations:
             kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
       cve:
         updater:
           # If false, cve updater will not be installed
@@ -100,7 +110,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.2.11
+      version: 1.3.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
