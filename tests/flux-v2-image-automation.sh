@@ -21,6 +21,7 @@ EXCLUSIONS_LIST=(
   apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
   apps/probate/*
+  apps/sscs/sscs-tribunals-frontend/*
   .*demo.*.yaml
   apps/*/*/demo
   apps/*/demo
