@@ -12,7 +12,7 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 ## Encrypting Secrets With Sops
 
-(docs/secrets-sops-encryption.md)
+ [Sops setup](docs/secrets-sops-encryption.md)
 
 ### SOPs
 
@@ -24,6 +24,10 @@ yq eval -I 2 --inplace apps/mi/mi-adf-shir/sbox/mi-adf-auth-values.enc.yaml
 ```
 
 upstream issue: https://github.com/mozilla/sops/issues/900
+
+## Rebooting nodes with kured
+
+[Documentation](docs/reboot-node-using-kured.md)
 
 ## Upgrading flux v2
 

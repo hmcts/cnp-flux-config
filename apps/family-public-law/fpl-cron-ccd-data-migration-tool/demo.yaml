@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fpl-cron-ccd-data-migration-tool
+spec:
+  releaseName: fpl-cron-ccd-data-migration-tool
+  values:
+    job:
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-101-1c7a9ab-20230308102945 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
+      schedule: "15 17 6-8 * *"
+      environment:
+        MIGRATION_ID: DFPL-1124
+        ENABLED: false
+        UPDATE: rollback
+        IDAM_REDIRECT_URL: https://fpl-case-service-demo.service.core-compute-demo.internal/oauth2/callback
+        IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100
+      keyVaults:
+        fpl:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: system-update-user-username
+              alias: IDAM_USERNAME
+            - name: system-update-user-password
+              alias: IDAM_PASSWORD
+            - name: fpl-case-service-idam-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: fpl-case-service-s2s-secret
+              alias: DATA_STORE_IDAM_KEY

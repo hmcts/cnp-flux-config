@@ -90,7 +90,14 @@ resources:
   - ../../base
   - ../../kube-prometheus-stack/sbox/prometheus-values.enc.yaml
 namespace: monitoring
+```
 
 You can then delete the Values.yaml file from the directory
 
 Commit your changes.
+
+If you ever need to decrypt the file e.g. to update the secret value or change the secret name, you can use something like the command below:
+
+```
+sops --decrypt --in-place prometheus-values.enc.yaml
+```

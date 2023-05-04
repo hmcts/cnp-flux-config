@@ -6,13 +6,12 @@ metadata:
 spec:
   values:
     java:
-      ingressClass: traefik-private
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3143-dc984f8-20230220144223 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3143-d9ac361-20230503082849
       environment:
         CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
-        BUNDLE_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
+        BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
         PDF_SERVICE_CONVERT_URL: https://docmosis.demo.platform.hmcts.net/rs/convert
         PDF_SERVICE_HEALTH_URL: https://docmosis.demo.platform.hmcts.net/rs/status
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net/rs/render
@@ -28,5 +27,5 @@ spec:
         GAPS_SWITCHOVER_FEATURE: true
         CASE_ACCESS_MANAGEMENT_FEATURE: true
         SCHEDULE_LISTING_FEATURE: true
-        POST_HEARINGS_FEATURE: true
+        POST_HEARINGS_FEATURE: false
         ADJOURNMENT_FEATURE: true
