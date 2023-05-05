@@ -5,13 +5,16 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 10
+      replicas: 5
       memoryLimits: "1Gi"
       cpuLimits: "2000m"
       autoscaling:
         enabled: true
         maxReplicas: 20
-        targetCPUUtilizationPercentage: 80
+        cpu:
+          averageUtilization: 60
+        memory:
+          averageUtilization: 60
       ingressHost: manage-case-int.demo.platform.hmcts.net
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false
