@@ -5,9 +5,16 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 20
+      replicas: 18
       memoryLimits: "3Gi"
       memoryRequests: "1Gi"
+      autoscaling:
+        enabled: true
+        maxReplicas: 20
+        cpu:
+          averageUtilization: 70
+        memory:
+          averageUtilization: 60
       ingressHost: manage-case.platform.hmcts.net
       environment:
         HEALTH_CCD_COMPONENT_API: https://gateway.ccd.platform.hmcts.net/health
