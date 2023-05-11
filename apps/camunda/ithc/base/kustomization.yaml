@@ -8,3 +8,13 @@ patchesStrategicMerge:
   - ../../identity/ithc.yaml
   - ../../camunda-optimize/ithc.yaml
   - ../../camunda-api/ithc.yaml
+patches:
+  - target:
+      kind: HelmRelease
+      name: camunda-api
+    patch: |
+      - op: replace
+        path: /spec/values/java/keyVaults/camunda/secrets/0
+        value: 
+          name: bpm-v14-POSTGRES-PASS
+          alias: spring.datasource.password
