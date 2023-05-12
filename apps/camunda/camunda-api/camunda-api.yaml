@@ -12,6 +12,17 @@ spec:
       ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         CAMUNDA_API_AUTH_ENABLED: false
+      keyVaults:
+        camunda:
+          secrets:
+            - name: bpm-POSTGRES-PASS
+              alias: spring.datasource.password
+            - name: camunda-admin-password
+              alias: CAMUNDA_ADMIN_PASSWORD
+            - name: s2s-secret-camunda-bpm
+              alias: S2S_SECRET_CAMUNDA_BPM
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
   chart:
     spec:
       chart: ./stable/camunda-bpm
