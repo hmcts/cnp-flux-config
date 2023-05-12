@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+patchesStrategicMerge:
+  - ../../identity/sbox.yaml
+  - ../../camunda-optimize/sbox.yaml
+  - ../../camunda-api/sbox.yaml
+patches:
+  - target:
+      kind: HelmRelease
+      name: camunda-api
+    patch: |
+      - op: replace
+        path: /spec/values/java/keyVaults/camunda/secrets/0
+        value:
+          name: bpm-v14-POSTGRES-PASS
+          alias: spring.datasource.password

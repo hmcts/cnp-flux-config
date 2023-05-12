@@ -5,8 +5,6 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-2859-d5c993a-20230302115522 #{"$imagepolicy": "flux-system:demo-bulk-scan-processor"}
-      ingressClass: traefik-private
       environment:
         #60 days in seconds
         SAS_TOKEN_VALIDITY: "5184000"
@@ -18,4 +16,4 @@ spec:
         BULK_SCANNING_DB_HOST: bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
         FLYWAY_USER: bulk_scanner@bulk-scan-processor-postgres-db-v11-{{ .Values.global.environment }}
-        DELETE_ME: "yes"
+        REFRESH_PODS: "yes"
