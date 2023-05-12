@@ -1,0 +1,19 @@
+apiVersion: servicebus.azure.com/v1beta20210101preview
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}-servicebus-${ENVIRONMENT}
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  tags:
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
+  location: uksouth
+  owner:
+    name: ${NAMESPACE}-aso-${ENVIRONMENT}-rg
+  azureName: ${NAMESPACE}-sb-${ENVIRONMENT}
+  sku:
+    name: Basic
+  zoneRedundant: false

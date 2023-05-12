@@ -42,11 +42,13 @@ spec:
             - mountPath: "/var/opt/jfrog/artifactory"
               name: artifactory-data
       containers:
-        - image: docker.bintray.io/jfrog/artifactory-oss:6.23.13
+        - image: docker.bintray.io/jfrog/artifactory-oss:7.55.8
           name: artifactory-oss
           env:
             - name: EXTRA_JAVA_OPTIONS
               value: "-Xms2g -Xmx8g"
+            - name: ENABLE_MIGRATION
+              value: "y"
           resources:
             requests:
               memory: "1024Mi"

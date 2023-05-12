@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-task-batch-update-search-index
+spec:
+  values:
+    job:
+      schedule: "5,15,25,35,45,55 * * * *"
+      environment:
+        JOB_NAME: UPDATE_SEARCH_INDEX

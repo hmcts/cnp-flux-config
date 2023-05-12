@@ -25,6 +25,10 @@ yq eval -I 2 --inplace apps/mi/mi-adf-shir/sbox/mi-adf-auth-values.enc.yaml
 
 upstream issue: https://github.com/mozilla/sops/issues/900
 
+## Rebooting nodes with kured
+
+[Documentation](docs/reboot-node-using-kured.md)
+
 ## Upgrading flux v2
 
 Update `flux` cli in your local and run 
