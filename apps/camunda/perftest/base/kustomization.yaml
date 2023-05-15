@@ -8,3 +8,23 @@ patchesStrategicMerge:
   - ../../identity/perftest.yaml
   - ../../camunda-optimize/perftest.yaml
   - ../../camunda-api/perftest.yaml
+  - ../../camunda-ui/perftest.yaml
+patches:
+  - target:
+      kind: HelmRelease
+      name: camunda-api
+    patch: |
+      - op: replace
+        path: /spec/values/java/keyVaults/camunda/secrets/0
+        value:
+          name: bpm-v14-POSTGRES-PASS
+          alias: spring.datasource.password
+  - target:
+      kind: HelmRelease
+      name: camunda-ui
+    patch: |
+      - op: replace
+        path: /spec/values/java/keyVaults/camunda/secrets/0
+        value:
+          name: bpm-v14-POSTGRES-PASS
+          alias: spring.datasource.password
