@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: help-with-fees
+  namespace: flux-system
+spec:
+  path: ./apps/help-with-fees/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "help-with-fees"
+      TEAM_NOTIFICATION_CHANNEL: "pet"
+      TEAM_AAD_GROUP_ID: "dcd_group_pet_v2"
