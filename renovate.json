@@ -1,9 +1,24 @@
 {
-  "extends": ["config:base","docker:disable", ":disableRateLimiting"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>hmcts/.github:renovate-config",
+    "docker:disable",
+    ":disableRateLimiting"
+  ],
   "kubernetes": {
     "fileMatch": ["\\.yaml$"]
   },
   "flux": {
     "fileMatch": ["apps\/flux-config\/base\/.+.yaml$"]
-  }
+  },
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "\\.yaml$"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: versioning=(?<versioning>[a-z-]+?))?\\s+.+tag: (?<currentValue>.*)\\s+"
+      ]
+    }
+  ]
 }
