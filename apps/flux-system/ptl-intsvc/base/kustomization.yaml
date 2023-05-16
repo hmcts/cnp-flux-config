@@ -2,11 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-  - ../../base
-  - ../../base/image-automation-components.yaml
+  - ./gotk-components.yaml
+  - ../../base/hmcts-charts-gitrepo.yaml
+  - ../../base/hmctspublic-helmrepo.yaml
+  - ../../base/hmcts-stable-charts-gitrepo.yaml
+  - ../../base/plum-recipe-receiver-gitrepo.yaml
   - ../../base/image-update-automation.yaml
+  - ../../base/flux-config-gitrepo.yaml
   - ../../automation
   - aks-sops-aadpodidentity.yaml
 
 patchesStrategicMerge:
+  - ../../base/patches/kustomize-controller-patch.yaml
   - ../../base/patches/image-automation-components-patch.yaml
