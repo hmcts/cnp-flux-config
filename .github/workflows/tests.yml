@@ -33,6 +33,11 @@ jobs:
       matrix:
         environment: [ sbox, sbox-intsvc, preview, ptl-intsvc, ithc, perftest, demo, aat, prod ]
         cluster: [ "00", "01" ]
+        exclude:
+          - environment: sbox-intsvc
+            cluster: "01"
+          - environment: ptl-intsvc
+            cluster: "01"
     steps:
     - uses: actions/checkout@v3
     - name: Install yq
