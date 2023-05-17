@@ -39,9 +39,10 @@ jobs:
       run: |
         ./tests/install-yq.sh
         curl -s https://fluxcd.io/install.sh | sudo bash
-        curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz  > /usr/local/bin/kubeconform-linux-amd64.tar.gz
+        curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz
+        ls
+        tar xf kubeconform-linux-amd64.tar.gz -C /usr/local/bin/
         ls /usr/local/bin/
-        tar xf /usr/local/bin/kubeconform-linux-amd64.tar.gz
         chmod +x /usr/local/bin/kubeconform
     - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
       run: ./tests/dry-run-kustomize.sh ${{ matrix.environment }} ${{ matrix.cluster }}
