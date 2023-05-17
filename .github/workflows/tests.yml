@@ -35,11 +35,15 @@ jobs:
         cluster: [ "00", "01" ]
     steps:
     - uses: actions/checkout@v3
-    - name: Install pre requisites
+    - name: Install yq
+      run: ./tests/install-yq.sh
+    - name: Install Flux CLI
+      run:  curl -s https://fluxcd.io/install.sh | sudo bash
+    - name: Install kubeconform
       run: |
-        ./tests/install-yq.sh
-        curl -s https://fluxcd.io/install.sh | sudo bash
-        curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz
+        set -ex
+        curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz | tar xz
+        cp kubeconform /usr/local/bin/
         ls /usr/local/bin/
         chmod +x /usr/local/bin/kubeconform
     - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
