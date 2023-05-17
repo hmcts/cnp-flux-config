@@ -38,7 +38,9 @@ jobs:
     - name: Install yq
       run: ./tests/install-yq.sh
     - name: Install Flux CLI
-      run:  curl -s https://fluxcd.io/install.sh | sudo bash
+      run:  |
+        FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml)
+        curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
     - name: Install kubeconform
       run: |
         set -ex
