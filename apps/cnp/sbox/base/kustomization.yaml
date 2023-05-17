@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../../base/workload-identity
   - crumble-identity.yaml
   - test-ingress-redirect.yaml
 namespace: cnp
@@ -10,3 +11,4 @@ patchesStrategicMerge:
   - ../../plum-recipe-backend/sbox.yaml
   - ../../identity/sbox.yaml
   - ../../plum-recipe-receiver/sbox.yaml
+  - workload-identity.yaml

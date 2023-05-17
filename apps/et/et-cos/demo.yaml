@@ -6,13 +6,13 @@ spec:
   releaseName: et-cos
   values:
     java:
-      ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/et/cos:pr-576-1a1397f-20230316112709 #{"$imagepolicy": "flux-system:demo-et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:pr-576-1fbb754-20230515165637 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
         AAC_URL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
         REFERRAL_TEMPLATE_ID: 6ad8c05b-5c0b-4d10-a5e3-f39fdea4647e
         REJECTED_TEMPLATE_ID: 3f932a27-3960-4135-9ef5-5f2b9ec35da0
         ET1SERVING_TEMPLATE_ID: 43477bad-e63f-44a7-a0e5-39e984987044
+        ET3RESPONSE_NOTIFICATION_TRIBUNAL_TEMPLATE_ID: 34e5ed0e-e39d-4ea7-acd7-751a1d7fb467
         ET3NOTIFICATION_TEMPLATE_MYHMCTS_ID: 6983b7cf-a492-46da-8eaf-9751191eb736
         ET3NOTIFICATION_TEMPLATE_CITIZEN_ID: dd211d08-ba0a-4e9e-8502-31b4ed5515e9
         ET1SERVING_RESPONDENT_TEMPLATE_ID: bf00082e-2709-472a-b0e8-11e53473741e
@@ -21,6 +21,7 @@ spec:
         NOC_NOTIFICATION_TEMPLATE_OLD_REP_ID: fe52b39f-852c-43ca-a42a-b9a27c43b130
         NOC_NOTIFICATION_TEMPLATE_NEW_REP_ID: 8fe52f24-40b2-4986-8f86-4dd1af311cbd
         NOC_NOTIFICATION_TEMPLATE_TRIBUNAL_ID: 1d5efcbd-1971-4ebe-bfe8-72ba36b5abac
+        RD_PROFESSIONAL_API_URL: http://rd-professional-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       keyVaults:
         et-cos:
           secrets:
@@ -38,8 +39,8 @@ spec:
           secrets:
             - name: create-updates-queue-send-connection-string
               alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
-            - name: AppInsightsInstrumentationKey
-              alias: APP_INSIGHTS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: tornado-access-key
               alias: TORNADO_ACCESS_KEY
             - name: gov-notify-api-key

@@ -7,7 +7,9 @@ spec:
   interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-2524af6-20230321113437 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-3a9a104-20230509120518 #{"$imagepolicy": "flux-system:sptribs-case-api"}
   chart:
     spec:
       chart: ./stable/sptribs-case-api

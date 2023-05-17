@@ -2,14 +2,6 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: perftest-cron-ccd-data-migration-tool
-  annotations:
-    hmcts.github.com/prod-automated: disabled
 spec:
-  filterTags:
-    pattern: '^pr-101-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
-  policy:
-    alphabetical:
-      order: asc
   imageRepositoryRef:
     name: fpl-cron-ccd-data-migration-tool
