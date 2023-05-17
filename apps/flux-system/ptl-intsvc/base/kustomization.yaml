@@ -3,10 +3,11 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ../../base
-  - ../../base/image-automation-components.yaml
-  - ../../base/image-update-automation.yaml
+  - ./gotk-components.yaml
   - ../../automation
+  - ../../base/image-update-automation.yaml
   - aks-sops-aadpodidentity.yaml
 
 patchesStrategicMerge:
+  - ../../base/patches/kustomize-controller-patch.yaml
   - ../../base/patches/image-automation-components-patch.yaml
