@@ -350,6 +350,18 @@ spec:
                     name: FIS
                     recurse: true
                     title: Family Integration
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(tax-tribunals-shared-infrastructure|tax-tribunals-datacapture)\/master
+                    name: TT
+                    recurse: true
+                    title: Tax Tribunals
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(help-with-fees-shared-infrastructure|hwf-staffapp|hwf-publicapp)\/master
+                    name: HWF
+                    recurse: true
+                    title: Help with Fees
           authentication: |
             jenkins:
               securityRealm:
@@ -540,7 +552,7 @@ spec:
                     maxVirtualMachinesLimit: 80
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
-                      - agentLaunchMethod: "SSH"
+                      - launcher: "ssh"
                         agentWorkspace: "/opt/jenkins"
                         builtInImage: "Windows Server 2016"
                         credentialsId: "vm_agent_creds"
@@ -553,7 +565,7 @@ spec:
                         existingStorageAccountName: "hmctsjenkinscftptl"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.39"
+                          galleryImageVersion: "1.4.44"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -595,7 +607,6 @@ spec:
                         osDiskSize: 60
                         osDiskStorageAccountType: "Standard_LRS"
                         osType: "Linux"
-                        preInstallSsh: true
                         retentionStrategy:
                           azureVMCloudRetentionStrategy:
                             idleTerminationMinutes: 60
