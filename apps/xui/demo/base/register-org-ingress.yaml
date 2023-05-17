@@ -4,13 +4,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/ingress.class: traefik-no-proxy
-    traefik.ingress.kubernetes.io/redirect-permanent: "true"
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://register-org.demo.platform.hmcts.net/(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://manage-org.demo.platform.hmcts.net/register-org/register
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.middlewares: xui-registerorgredirect@kubernetescrd
   name: register-org-ingress
   namespace: xui
 spec:
+  ingressClassName: traefik
   rules:
     - host: register-org.demo.platform.hmcts.net
       http:
@@ -22,3 +21,14 @@ spec:
                   number: 80
             path: /
             pathType: ImplementationSpecific
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: registerorgredirect
+  namespace: xui
+spec:
+  redirectRegex:
+    permanent: true
+    regex: ^http://register-org.demo.platform.hmcts.net/(.*)
+    replacement: https://manage-org.demo.platform.hmcts.net/register-org/register

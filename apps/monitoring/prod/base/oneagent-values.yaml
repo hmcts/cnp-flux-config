@@ -1,16 +1,24 @@
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
+apiVersion: v1
+data:
+  values.yaml: ENC[AES256_GCM,data:b6MxrAvQtD9yFP5YzxkNpBk4TcizEhKvOcgYfpR2iraUa5Zr8f+68ZoMOj7waHADyGWLnASlDwDV+YeuySPcTmPPLwyXd3nQJqZ6mcubAhxEdTLS7igYBhP/cqDnFxZGmfPPixBbVZM=,iv:YsNBvQxPwYiSJYGMPFuL23lHUNWhR98j4zgqV+2o8os=,tag:RPRI/1tn+XY7cFVTvz0TlA==,type:str]
+kind: Secret
 metadata:
-  creationTimestamp: null
   name: oneagent-values
   namespace: monitoring
-spec:
-  encryptedData:
-    values.yaml: AgB1IL7zGfndyFhNnI3UlI6UMSw96yJYkBcQkLYJfY6jv2o5UiBj/eVro2xpr3E7rAiUUTX/R3v7cj2sOQQdjGe1P1/9hVpmvmU2kQ4is8L5tCshCeqYxS06SjNJWugiLFol1GJ2FsVEpXX6Ejg2DLaLNsQ8ugSNJBQJ7ak5TCTfIpxzgluzFVJcoE6GWja/8nUuwC+7Mg4xBEWRW+W0F6bvVdlRmApWxddZIhKpRKKOH6bDQ8zbXmYSYOBXRj1IfFIOLk4VezEG2GwYfCk3ibiJyf1cYz8Ihmlf6OvCfbTdiA33knV9Q/3trOuAWU0kqmMh4jGNOvqYd5bOwaISDiG3thvq7uWtWPBiDOZ3zubw/WLV4vo/xbj44M+76ReIVZtDqYTGkCSqaz9AKUP0OiIlYcwNCdk0t3L7WcOlXVJD8i6miGtBguXe3PASWq+enkwKmKxStGbQnw7gr4OBTynAOzZKR4Xltafdkq2Si0iDDpo06V0TcyUa+6VSlCmqXiVNBKs14D8ArdHLtMVtypAayUSJA9mYa8UZQ7/wywqfbNKURb57ZMb9hUC0ONR33kAEL4vETo0GoLMCRwmJspn6HpqyD4WM1+C8O3LjCRm3+y7vNsNWHdfqLzkV05N5/GncwJEhHgsHhrZYU/u/vxy6Q+4FKXXfx6Qcz4sfZysCzs2zzONW2e67/Ejcw/AhKA9SJJU/NkQ1IjC6mXiRawQSyX3YbdW/6lGHXozIMf9/GNfo+KeWOdRZlyRz1PF2vLIDYDW49iF3O2UPjHuts9ClX1UjRJ6XYzis9LBtfQ==
-  template:
-    metadata:
-      creationTimestamp: null
-      name: oneagent-values
-      namespace: monitoring
-    type: Opaque
-
+type: Opaque
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv:
+    - vault_url: https://dcdcftappsprodkv.vault.azure.net
+      name: sops-key
+      version: 44f7be9dc801456688ba4ddea9d552e8
+      created_at: "2023-02-20T14:45:35Z"
+      enc: bLDr3ODB-l1eZm074qstQ_QYQODoHIVrdQnVCZG1xTUvHJPFugxe2a5nWHwzdnLqa7IPk8NjgzP-VNHU4DLgJecBvbrbac_X8StyRg_qjl0P3ouBId5CTbDtqLLS8-XZ3sfhiFn3SB5swc6gOe_DTJEQkrGm5p7hJIaV2e1ypjXMAD5P4N7SRPq6vD6NkX3rsVcJPnhMQ2ZkW7W5DU35CNlr1Pwh9TR9Iwfg460Ub0DUt0OPvyKPcWctHLGo1RR5V6s6Kki1DIU288ud3TEVC_HcZoTJYcxIbjgp0sCMA_KDlunysAaOLCAZZgoY5b-M94h1cwKSaPsVZofb64UHlQ
+  hc_vault: []
+  age: []
+  lastmodified: "2023-02-20T14:45:36Z"
+  mac: ENC[AES256_GCM,data:PAWHOetVIuQ9uL99BrETzKeWBMRzx+4Lj0q0atjX88bzuPOD69cPeyo0ydA0DLwBGoNhduKurO1ofLkJraYYjQbZNxYzWMW7iYO1JGk02wZGBMHH7v9hkOBes10qa9MWjpuepSrtSoEB8XHn1DEP6NQSknvAraNfqZMBS45C5mU=,iv:MRkmkXlnbkRTsTAuvkpx7fUkITghClVafUF9EmpB49k=,tag:8FixEv+PzDAwZRbg2IvAQA==,type:str]
+  pgp: []
+  encrypted_regex: ^(data|stringData)$
+  version: 3.7.3

@@ -4,6 +4,8 @@ metadata:
   name: sample-kustomize
   namespace: flux-system
 spec:
+  decryption:
+    provider: sops
   interval: 1m0s
   prune: true
   sourceRef:
@@ -38,4 +40,6 @@ spec:
       CLUSTER: "\"${CLUSTER}\""
       CLUSTER_PATH: "${ENVIRONMENT}/${CLUSTER}"
       CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
+      ISSUER_URL: "${ISSUER_URL:-not-set-yet}"
+      WI_ENVIRONMENT: "${WI_ENVIRONMENT}"
       KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fpl-cron-ccd-data-migration-tool
+spec:
+  releaseName: fpl-cron-ccd-data-migration-tool
+  values:
+    job:
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-102-1511ef2-20230327093303 #{"$imagepolicy": "flux-system:perftest-fpl-cron-ccd-data-migration-tool"}
+      schedule: "30 12 30 2 *"
+      environment:
+        ENABLED: false

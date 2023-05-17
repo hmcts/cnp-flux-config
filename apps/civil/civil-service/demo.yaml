@@ -6,8 +6,7 @@ metadata:
 spec:
   values:
     java:
-      ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/civil/service:pr-2181-9050840-20230217151533 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-e6c47b5-20230517132906 #{"$imagepolicy": "flux-system:civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -34,7 +33,8 @@ spec:
             - notification-caseworker-spec-receiver
       environment:
         TESTING_SUPPORT_ENABLED: true
-        EM_CCD_ORCHESTRATOR_URL: http://em-ccdorc-demo.service.core-compute-demo.internal
+        EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
         DOCUMENT_MANAGEMENT_SECURED: true
         SERVICE_REQUEST_UPDATE: http://civil-service-demo.service.core-compute-demo.internal/service-request-update
         SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-demo.service.core-compute-demo.internal/service-request-update-claim-issued
+        WA_TOGGLE: "WA 4"

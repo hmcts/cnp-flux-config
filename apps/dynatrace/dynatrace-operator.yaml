@@ -10,14 +10,19 @@ spec:
     spec:
       chart: dynatrace-operator
       # update the CRDs in dynatrace-crds when changing this value
-      version: 0.10.1
+      version: 0.10.4
       sourceRef:
         name: dynatrace-operator
         kind: HelmRepository
         namespace: dynatrace
   values:
-    apiUrl: https://yrk32651.live.dynatrace.com/api
-    networkZone: 'azure.cft' # uses Active Gates from CFT
+    csidriver:
+      enabled: true
+      tolerations:
+        - effect: NoSchedule
+          key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
     operator:
       tolerations:
         - effect: NoSchedule
@@ -26,10 +31,3 @@ spec:
           value: "true"
       nodeSelector:
         agentpool: system
-    classicFullStack:
-      enabled: true
-      tolerations:
-        - effect: NoSchedule
-          key: CriticalAddonsOnly
-          operator: Equal
-          value: "true"

@@ -6,10 +6,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-bb62d79-20230202111908
+      image: hmctspublic.azurecr.io/idam/api:preview-0457d49-20230516162237
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
+        TESTING_SUPPORT_BULKDELETE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3
         CACHING_USERS_MAXHTTPCALLS: 1
@@ -28,7 +29,7 @@ spec:
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-perftest.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-perftest.internal
         STRATEGIC_SSO_PROVIDERS_0_providerName: keycloak
-        STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: http://51.143.139.240:9080/auth/realms/jhipster/protocol/openid-connect/userinfo
+        STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: http://10.120.15.4:9080/auth/realms/jhipster/protocol/openid-connect/userinfo
         STRATEGIC_SSO_PROVIDERS_0_uniqueIdClaim: sub
         STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
         STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
@@ -50,4 +51,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.10
+      version: 0.4.11
