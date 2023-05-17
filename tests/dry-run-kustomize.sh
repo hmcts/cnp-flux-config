@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+
+# -----
+# This script dry-runs the cluster and namespace kustomizations to generate the manifests.
+# It extracts all CRDs from the dry-run output and extracts json schema using a utility.
+# Adds any missing schemas which are not directly added to flux config.
+# Uses KubeConform to validate all the manifests generated above.
+# -----
+
 set -ex
 
 ENVIRONMENT=$1
