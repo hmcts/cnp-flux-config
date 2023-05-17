@@ -44,7 +44,6 @@ jobs:
         set -ex
         curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz | tar xz
         cp kubeconform /usr/local/bin/
-        ls /usr/local/bin/
         chmod +x /usr/local/bin/kubeconform
     - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
       run: ./tests/dry-run-kustomize.sh ${{ matrix.environment }} ${{ matrix.cluster }}
