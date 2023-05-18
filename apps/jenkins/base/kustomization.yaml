@@ -3,8 +3,10 @@ kind: Kustomization
 resources:
   - ../../base
   - ../jenkins/jenkins.yaml
-  - ../jenkins/jenkins-controller-version.yaml
   - ../jenkins/jenkins-helmrepo.yaml
   - ../jenkins/logging.yaml
   - ../jenkins/disk.yaml
   - ../jenkins/identity.yaml
+
+patchesStrategicMerge:
+  - ../jenkins/jenkins-controller-version.yaml
