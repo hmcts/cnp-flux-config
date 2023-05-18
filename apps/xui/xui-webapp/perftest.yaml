@@ -5,11 +5,16 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 20
+      replicas: 14
       memoryLimits: "3Gi"
-      memoryRequests: "1Gi"
-      cpuLimits: "2000m"
-      cpuRequests: "1000m"
+      memoryRequests: "1.5Gi"
+      autoscaling:
+        enabled: true
+        maxReplicas: 24
+        cpu:
+          averageUtilization: 70
+        memory:
+          averageUtilization: 70
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,HRS,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,PRIVATELAW,BEFTA_JURISDICTION_3,DISPOSER_MASTER,ST_CIC
