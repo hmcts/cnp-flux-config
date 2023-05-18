@@ -5,7 +5,19 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-e958d68-20230427123314 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
+      keyVaults:
+        am:
+          secrets:
+            - app-insights-connection-string
+            - am-org-role-mapping-service-s2s-secret
+            - role-assignment-service-LD-SDK-KEY
+            - orm-IDAM-CLIENT-ID
+            - orm-IDAM-CLIENT-SECRET
+            - orm-IDAM-ADMIN-SECRET
+            - caseworker-topic-primary-send-listen-shared-access-key
+            - org-role-mapping-service-POSTGRES-PASS
+            - judicial-topic-primary-send-listen-shared-access-key
+      image: hmctspublic.azurecr.io/am/org-role-mapping-service:pr-1429-66e9c54-20230515141857 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: DEBUG
