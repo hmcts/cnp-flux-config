@@ -48,9 +48,12 @@ jobs:
           FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
           curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
       - name: Install kubeconform
+        env:
+          # renovate: datasource=github-releases depName=yannh/kubeconform
+          KUBECONFORM_VERSION: v0.6.0
         run: |
           set -ex
-          curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz | tar xz
+          curl -sL https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-linux-amd64.tar.gz | tar xz
           cp kubeconform /usr/local/bin/
           chmod +x /usr/local/bin/kubeconform
       - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
