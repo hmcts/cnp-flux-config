@@ -47,7 +47,7 @@ jobs:
         uses: nick-fields/retry@v2
         with:
           timeout_minutes: 2
-          max_attempts: 3
+          max_attempts: 5
           shell: bash
           command: |
             FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
