@@ -10,7 +10,9 @@ spec:
     job:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-24-2f16a27-20230518113401 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
-      schedule: "10 * * * *"
+      schedule: "30 12 30 2 *"
+      environment:
+        ENABLED: false
   chart:
     spec:
       chart: ./stable/prl-ccd-case-migration
