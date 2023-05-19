@@ -5,9 +5,6 @@ on:
   pull_request:
     branches:
       - master
-  push:
-    branches:
-      - master
 jobs:
   static_tests:
     runs-on: ubuntu-latest
@@ -44,13 +41,21 @@ jobs:
       - name: Install yq
         run: ./tests/install-yq.sh
       - name: Install Flux CLI
-        run: |
-          FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
-          curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 2
+          max_attempts: 5
+          shell: bash
+          command: |
+            FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
+            curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
       - name: Install kubeconform
+        env:
+          # renovate: datasource=github-releases depName=yannh/kubeconform
+          KUBECONFORM_VERSION: v0.6.1
         run: |
           set -ex
-          curl -sL https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz | tar xz
+          curl -sL https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-linux-amd64.tar.gz | tar xz
           cp kubeconform /usr/local/bin/
           chmod +x /usr/local/bin/kubeconform
       - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
