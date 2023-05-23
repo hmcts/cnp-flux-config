@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prl-ccd-case-migration
+spec:
+  releaseName: prl-ccd-case-migration
+  values:
+    global:
+      jobKind: CronJob
+    job:
+      useInterpodAntiAffinity: true
+      schedule: "*/20 8-19 * * 1-5"
+  chart:
+    spec:
+      chart: ./stable/prl-ccd-case-migration
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
