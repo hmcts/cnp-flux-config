@@ -6,6 +6,15 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/submit-service:pr-689-0c33355-20230515152004
+      image: hmctspublic.azurecr.io/probate/submit-service:pr-689-2ee1203-20230601101400
       environment:
         VAR_FV2: Demo-1
+      keyVaults:
+        probate:
+          secrets:
+            - name: s2s-probate-backend
+              alias: S2S_AUTH_TOTP_SECRET
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string

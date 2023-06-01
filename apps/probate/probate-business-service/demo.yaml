@@ -6,5 +6,21 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/probate/business-service:pr-734-10098f1-20230601101137
       environment:
         VAR_FV2: Demo-1
+      keyVaults:
+        probate:
+          secrets:
+            - name: probate-notify-invite-apikey
+              alias: services.notify.apiKey
+            - name: business-services-notify-invitedata-templateId
+              alias: services.notify.invitedata.templateId
+            - name: business-services-notify-pin-templateId
+              alias: services.notify.pin.templateId
+            - name: s2s-probate-backend
+              alias: services.auth.provider.totp_secret
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
