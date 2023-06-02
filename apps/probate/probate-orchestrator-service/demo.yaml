@@ -6,7 +6,28 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:pr-773-edc367e-20230515152544 #{"$imagepolicy": "flux-system:demo-probate-orchestrator-service"}
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:pr-773-42277a2-20230601101322 #{"$imagepolicy": "flux-system:demo-probate-orchestrator-service"}
       ingressHost: probate-orchestrator-service-demo.service.core-compute-demo.internal
       environment:
         VAR_FV2: demo-trig2
+      keyVaults:
+        probate:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: s2s-probate-backend
+              alias: S2S_AUTH_TOTP_SECRET
+            - name: ccidam-idam-api-secrets-probate
+              alias: AUTH2_CLIENT_SECRET
+            - name: idamRedirectUrl
+              alias: IDAM_API_REDIRECT_URL
+            - name: payCaseWorkerPass
+              alias: PAYMENT_CASEWORKER_PASSWORD
+            - name: payCaseWorkerUser
+              alias: PAYMENT_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerUser
+              alias: SCHEDULER_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerPass
+              alias: SCHEDULER_CASEWORKER_PASSWORD

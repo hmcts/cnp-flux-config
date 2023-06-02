@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: helm-chart-base-versions
+  namespace: monitoring
+  labels:
+    app: helm-chart-base-versions
+spec:
+  schedule: "0 10 * * *"
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 3
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: helm-chart-base-versions-sa
+          containers:
+            - name: helm-chart-base-versions
+              image: hmctspublic.azurecr.io/helm-base-versions:prod-0dac922-20230602164015 #{"$imagepolicy": "flux-system:helm-base-versions"}
+              imagePullPolicy: Always
+              env:
+                - name: CLUSTER_NAME
+                  value: "cft-${CLUSTER_FULL_NAME}-aks"
+                - name: COSMOS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: helm-base-versions
+                      key: cosmos-key
+                - name: SLACK_WEBHOOK
+                  valueFrom:
+                    secretKeyRef:
+                      name: helm-base-versions
+                      key: slack-webhook
+                - name: ARTIFACT_URL
+                  value: "http://source-controller.flux-system.svc.cluster.local."
+                - name: API_SERVER_URL
+                  value: "https://kubernetes.default.svc.cluster.local"
