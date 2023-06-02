@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-2756-2d511b0-20230601164224 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-1ae087e-20230602102837 #{"$imagepolicy": "flux-system:civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -39,7 +39,3 @@ spec:
         SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-demo.service.core-compute-demo.internal/service-request-update-claim-issued
         WA_TOGGLE: "WA 4"
         POLLING_EVENT_EMITTER_ENABLED: false
-        HMC_HEARINGS_TOPIC_NAMESPACE: 'hmc-servicebus-{{ .Values.global.environment }}'
-        HMC_HEARINGS_TOPIC_NAME: 'hmc-to-cft-{{ .Values.global.environment }}'
-        HMC_HEARINGS_TOPIC_SUBSCRIPTION_NAME: 'hmc-to-civil-subscription-{{ .Values.global.environment }}'
-        HMC_HEARINGS_TOPIC_POLICY_NAME: SendAndListenSharedAccessKey
