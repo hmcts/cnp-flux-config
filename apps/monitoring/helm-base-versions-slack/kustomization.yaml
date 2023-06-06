@@ -5,11 +5,9 @@ resources:
   - ../helm-base-versions/helm-base-versions.yaml
 patches:
   - patch: |-
-      - op: add
-        path: "/spec/jobTemplate/spec/template/spec/containers/0/env/-"
-        value:
-          name: ENABLE_SLACK
-          value: "true"
+      - op: replace
+        path: "/spec/schedule"
+        value: "0 10 * * 1-5"
     target:
       kind: CronJob
       namespace: monitoring
