@@ -113,43 +113,58 @@
     "style": "dark",
     "tags": [],
     "templating": {
-      "list": [
-        {
-          "allValue": null,
-          "current": {},
-          "datasource": "-- Grafana --",
-          "hide": 0,
-          "includeAll": false,
-          "label": null,
-          "multi": false,
-          "name": "datasource",
-          "options": [
+        "list": [
             {
-              "selected": true,
-              "text": "${DS_PROMETHEUS}",
-              "value": "${DS_PROMETHEUS}"
+            "current": {
+                "selected": false,
+                "text": "Prometheus",
+                "value": "Prometheus"
+            },
+            "description": null,
+            "error": null,
+            "hide": 2,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "DS_PROMETHEUS",
+            "options": [],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "type": "datasource"
             },
             {
-              "selected": false,
-              "text": "-- Graphite --",
-              "value": "Graphite"
+            "allValue": null,
+            "current": {
+                "selected": false,
+                "text": "flux-system",
+                "value": "flux-system"
             },
-            {
-              "selected": false,
-              "text": "-- InfluxDB --",
-              "value": "InfluxDB"
+            "datasource": "${DS_PROMETHEUS}",
+            "definition": "workqueue_work_duration_seconds_count",
+            "description": null,
+            "error": null,
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "namespace",
+            "options": [],
+            "query": {
+                "query": "workqueue_work_duration_seconds_count",
+                "refId": "Prometheus-namespace-Variable-Query"
+            },
+            "refresh": 2,
+            "regex": "/.*namespace=\"([^\"]*).*/",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
             }
-          ],
-          "query": "Prometheus",
-          "refresh": 1,
-          "regex": "",
-          "sort": 1,
-          "tagValuesQuery": "",
-          "tags": [],
-          "tagsQuery": "",
-          "type": "datasource"
-        }
-      ]
+        ]
     },
     "time": {
       "from": "now-6h",
