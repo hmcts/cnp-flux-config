@@ -1,0 +1,123 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Prometheus --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": null,
+    "iteration": 1613348824853,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": false,
+        "columns": [],
+        "datasource": "Prometheus",
+        "description": "PodDisruptionBudgets",
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "panels": [],
+        "title": "PodDisruptionBudgets",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "columns": [],
+        "datasource": "Prometheus",
+        "description": "FailedPDB",
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 9
+        },
+        "id": 4,
+        "options": {
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "targets": [
+          {
+            "expr": "kube_pod_disruption_budget_status_disruptions_healthy == 0",
+            "format": "time_series",
+            "intervalFactor": 2,
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "title": "FailedPDB",
+        "type": "graph"
+      },
+      {
+        "collapsed": false,
+        "columns": [],
+        "datasource": "Prometheus",
+        "description": "Deployments",
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 17
+        },
+        "id": 3,
+        "panels": [],
+        "title": "Deployments",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "columns": [],
+        "datasource": "Prometheus",
+        "description": "FailingDeployment",
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 26
+        },
+        "id": 5,
+        "options": {
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "targets": [
+          {
+            "expr": "kube_deployment_status_replicas_unavailable > 0",
+            "format": "time_series",
+            "intervalFactor": 2,
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "title": "FailingDeployment",
+        "type": "graph"
+      }
+    ],
+    "refresh": "5s",
+    "schemaVersion": 25,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "
+  
