@@ -16,7 +16,6 @@ Inside the labs directory, run the [`labs/create-lab-flux-config.sh`](create-lab
 ```shell
 ./create-lab-flux-config.sh yourGitHubUsername java
 ```
-
 </details>
 
 <details open>
