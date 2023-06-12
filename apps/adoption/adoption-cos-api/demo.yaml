@@ -7,7 +7,7 @@ spec:
   interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/adoption/cos-api:pr-677-13f6ab4-20230516092955 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
+      image: hmctspublic.azurecr.io/adoption/cos-api:prod-af83453-20230525171644 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
       environment:
         APP_INSIGHTS_KEY: '6c5278dd-ee76-4e7b-92f9-57b27ead382e'
         LA_PORTAL_BASEURL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/la-portal/kba-case-ref
@@ -33,6 +33,8 @@ spec:
               alias: SEND_GRID_API_KEY
             - name: sendgrid-notify-from-email
               alias: SEND_GRID_NOTIFY_FROM_EMAIL
+            - name: app-insight-connection-key
+              alias: app-insight-connection-key
       memoryRequests: 1024Mi
       cpuRequests: "500m"
       memoryLimits: 1527Mi

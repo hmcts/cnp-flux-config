@@ -5,11 +5,8 @@ on:
   pull_request:
     branches:
       - master
-  push:
-    branches:
-      - master
 jobs:
-  build:
+  static_tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,11 +18,45 @@ jobs:
         run: ./tests/install-yq.sh
       - name: Verify CODEOWNERs
         run: ./tests/code-owner-check.sh
-      - name: Static File checks
-        run: ./tests/static-file-checks.sh
-      - name: Kustomize Testsv2
-        run: ./tests/test-kustomize-v2.sh
+      - name: Image Policy Tests
+        run: ./tests/image-policy-exists.sh
       - name: Lint Tests
         run: ./tests/lint-yaml.sh
       - name: Fluxv2 Image Automation
         run: ./tests/flux-v2-image-automation.sh
+  schema:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [sbox, sbox-intsvc, preview, ptl-intsvc, ithc, perftest, demo, aat, prod]
+        cluster: ["00", "01"]
+        exclude:
+          - environment: sbox-intsvc
+            cluster: "01"
+          - environment: ptl-intsvc
+            cluster: "01"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install yq
+        run: ./tests/install-yq.sh
+      - name: Install Flux CLI
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 2
+          max_attempts: 5
+          shell: bash
+          command: |
+            FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
+            curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
+      - name: Install kubeconform
+        env:
+          # renovate: datasource=github-releases depName=yannh/kubeconform
+          KUBECONFORM_VERSION: v0.6.1
+        run: |
+          set -ex
+          curl -sL https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-linux-amd64.tar.gz | tar xz
+          cp kubeconform /usr/local/bin/
+          chmod +x /usr/local/bin/kubeconform
+      - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
+        run: ./tests/dry-run-kustomize.sh ${{ matrix.environment }} ${{ matrix.cluster }}

@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-2396-e2ad280-20230512115735 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:pr-2756-96e4e1f-20230612153046 #{"$imagepolicy": "flux-system:demo-civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -31,6 +31,8 @@ spec:
             - robotics-notification-multipartyrecipient
             - ordnance-survey-api-key
             - notification-caseworker-spec-receiver
+            - name: hmc-servicebus-shared-access-key-tf
+              alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -38,3 +40,5 @@ spec:
         SERVICE_REQUEST_UPDATE: http://civil-service-demo.service.core-compute-demo.internal/service-request-update
         SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-demo.service.core-compute-demo.internal/service-request-update-claim-issued
         WA_TOGGLE: "WA 4"
+        POLLING_EVENT_EMITTER_ENABLED: false
+        STITCHING_API_ENABLED: false

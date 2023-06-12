@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cui
+  namespace: flux-system
+spec:
+  path: ./apps/cui/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "cui"
+      TEAM_NOTIFICATION_CHANNEL: "cui-ra-master-builds"
+      TEAM_AAD_GROUP_ID: "7df9d173-631b-47a6-8737-0f15616d25f0"
