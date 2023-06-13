@@ -6,8 +6,26 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      schedule: "40 21 25 4 *"
+      schedule: "0 7 13 6 *"
       environment:
         ENABLED: true
-        MIGRATION_ID: DFPL-1124Rollback
+        MIGRATION_ID: DFPL-1124
         IDAM_API_URL: https://idam-api.platform.hmcts.net
+        USE_CASE_ID_MAPPING: false
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100
+      keyVaults:
+        fpl:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: system-update-user-username
+              alias: IDAM_USERNAME
+            - name: system-update-user-password
+              alias: IDAM_PASSWORD
+            - name: fpl-case-service-idam-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: fpl-case-service-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: migration-tool-case-id-list-mapping
+              alias: CASE_ID_LIST_MAPPING
