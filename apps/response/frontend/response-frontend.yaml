@@ -6,19 +6,18 @@ metadata:
 spec:
   releaseName: rpe-response-frontend
   values:
-    nodejs:
-      replicas: 2
-      image: hmctspublic.azurecr.io/rpe/response-frontend:prod-542859b-20230601141542 #{"$imagepolicy": "flux-system:response-frontend"}
-      aadIdentityName: response
-      ingressHost: response.platform.hmcts.net
-      keyVaults:
-        response:
-          secrets:
-            - slack-signing-secret
-            - slack-bot-token
-      environment:
-        RESPONSE_URL: 'http://rpe-response-api-nodejs'
-        NODE_ENV: production
+    replicas: 2
+    image: hmctspublic.azurecr.io/rpe/response-frontend:prod-542859b-20230601141542 #{"$imagepolicy": "flux-system:response-frontend"}
+    aadIdentityName: response
+    ingressHost: response.platform.hmcts.net
+    keyVaults:
+      response:
+        secrets:
+          - slack-signing-secret
+          - slack-bot-token
+    environment:
+      RESPONSE_URL: 'http://rpe-response-api-nodejs'
+      NODE_ENV: production
   chart:
     spec:
       chart: nodejs
