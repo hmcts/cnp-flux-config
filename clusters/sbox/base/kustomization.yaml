@@ -15,11 +15,11 @@ resources:
   - ../../../apps/neuvector/base/kustomize.yaml
   - ../../../apps/azureserviceoperator-system/base/kustomize.yaml
 
-patchesStrategicMerge:
-  - ../../../apps/cnp/sbox/base/kustomize.yaml
-
 patches:
   - path: ../../../apps/base/kustomize.yaml
     target:
       kind: Kustomization
       annotationSelector: hmcts.github.com/kustomize-defaults != disabled
+
+patchesStrategicMerge:
+  - ../../../apps/cnp/sbox/base/kustomize.yaml
