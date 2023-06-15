@@ -11,6 +11,9 @@ spec:
       image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-a32009d-20230608191041 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
       environment:
         DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 120
+        # AppInsights by default captures every sql query which adds up to 10s of GB daily.
+        # https://learn.microsoft.com/en-us/azure/azure-monitor/app/java-standalone-config
+        APPLICATIONINSIGHTS_INSTRUMENTATION_JDBC_ENABLED: false
   chart:
     spec:
       chart: ./stable/ccd-definition-store-api
