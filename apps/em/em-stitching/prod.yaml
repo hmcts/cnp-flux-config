@@ -9,9 +9,17 @@ spec:
       cpuRequests: "2000m"
       memoryLimits: "6144Mi"
       cpuLimits: "4000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4 # On each cluster
+        cpu:
+          averageUtilization: 70
+        memory:
+          averageUtilization: 70
       environment:
         DUMMY_VAR: DELETE_ME2
         DOCMOSIS_ENDPOINT: https://docmosis.platform.hmcts.net/rs/convert
         DOCMOSIS_RENDER_ENDPOINT: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
         OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
+        CALLBACK_MAX_ATTEMPTS: 2 # Reduced to 2 from 3 to resolve backlog.
