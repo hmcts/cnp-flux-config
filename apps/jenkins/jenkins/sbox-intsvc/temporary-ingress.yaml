@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  name: jenkinstest
+  namespace: jenkins
+spec:
+  rules:
+  - host: build.sandbox.platform.hmcts.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: jenkins
+            port:
+              number: 8080
+        pathType: ImplementationSpecific

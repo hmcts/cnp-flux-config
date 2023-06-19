@@ -1,12 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: xui-webapp-integration2
+  name: xui-ao-webapp-integration
 spec:
-  releaseName: xui-webapp-integration2
+  releaseName: xui-ao-webapp-integration
   chart:
     spec:
-      chart: ./stable/xui-webapp
+      chart: ./stable/xui-ao-webapp
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
@@ -16,4 +16,4 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-14bc100-20230616154921 #{"$imagepolicy": "flux-system:xui-webapp-integration2"}
+      image: hmctspublic.azurecr.io/xui/ao-webapp:prod-e6bfa6a-20230616154935 #{"$imagepolicy": "flux-system:xui-ao-webapp-integration"}

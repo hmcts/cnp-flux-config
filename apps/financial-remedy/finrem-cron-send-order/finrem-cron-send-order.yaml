@@ -6,15 +6,15 @@ spec:
   releaseName: finrem-cron-send-order
   values:
     job:
+      schedule: "0/10 * * * *"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/finrem/cos:prod-cabba13-20230616134956 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
         TASK_NAME: SendOrderTask
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-65fb28b-20230614154058 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: 0 * * * *
   chart:
     spec:
       chart: finrem-cron
-      version: 0.0.1
+      version: 0.0.4
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
