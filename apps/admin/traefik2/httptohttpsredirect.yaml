@@ -1,0 +1,11 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: httptohttpsredirect
+  namespace: admin
+spec:
+  redirectRegex:
+    permanent: true
+    regex: ^http://(.*)
+    replacement: https://$1

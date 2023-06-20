@@ -2,8 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../jenkins/sbox-intsvc/temporary-ingress.yaml
 
 patchesStrategicMerge:
   - ../../jenkins/sbox-intsvc/disk.yaml
   - ../../jenkins/sbox-intsvc/identity.yaml
   - ../../jenkins/sbox-intsvc/jenkins.yaml
+  - ../../jenkins/sbox-intsvc/jenkins-azure-vm-agent.yaml
+  - ../../jenkins/sbox-intsvc/jenkins-controller-version.yaml

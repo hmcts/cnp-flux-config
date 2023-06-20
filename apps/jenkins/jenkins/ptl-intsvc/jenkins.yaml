@@ -53,9 +53,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-00-aks
+                        value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-00-rg
+                        value: cft-preview-01-rg
                       - key: PTL_AKS_CLUSTER_NAME
                         value: cft-ptl-00-aks
                       - key: PTL_AKS_RESOURCE_GROUP
@@ -154,13 +154,13 @@ spec:
                     title: CDM Master Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_(\w_to_\w_Nightly).*\/(?!.*ccd-case-disposer|.*ccd-cache-warm-performance|.*ccd-cdm-performance|.*ccd-case-migration-starter)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
+                      ^HMCTS_(\w_to_\w_Nightly).*\/(?!.*ccd-case-disposer|.*ccd-cache-warm-performance|.*ccd-cdm-performance|.*ccd-case-migration-starter|.*hmc-judicial-payment-frontend|.*hmc-judicial-payment-service)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
                     name: CDM Nightly
                     recurse: true
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|.*ccd-api-gateway.*PR-353|.*ccd-case-migration-starter\/master)
+                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|jps.*\/master|.*ccd-case-migration-starter\/master)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
@@ -268,7 +268,7 @@ spec:
                     title: PCQ
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(lau-.+|.*ccd-case-disposer)\/master
+                      ^HMCTS.*\/(lau-.+|.*ccd-case-disposer|.*idam-user-disposer|.*disposer-shared-infrastructure)\/master
                     name: LAU
                     recurse: true
                     title: LAU
@@ -286,10 +286,16 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/civil-(?!damages).*\/master
+                      ^HMCTS.*\/civil-(?!damages|sdt).*\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/civil-sdt.*\/master
+                    name: Civil-SDT
+                    recurse: true
+                    title: Civil SDT Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/wa-.+\/master
@@ -298,7 +304,7 @@ spec:
                     title: WA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests)\/master
+                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests|idam-hmcts-access)\/master
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
@@ -322,19 +328,19 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests|prl-ccd-case-migration)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/finrem-.+\/master
+                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-performance-tests)\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests|et-ccd-definitions-[a-z]+)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests|et-hearings-api|et-ccd-definitions-[a-z]+)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
@@ -344,6 +350,18 @@ spec:
                     name: FIS
                     recurse: true
                     title: Family Integration
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(tax-tribunals-shared-infrastructure|tax-tribunals-datacapture)\/master
+                    name: TT
+                    recurse: true
+                    title: Tax Tribunals
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(help-with-fees-shared-infrastructure|hwf-staffapp|hwf-publicapp)\/master
+                    name: HWF
+                    recurse: true
+                    title: Help with Fees
           authentication: |
             jenkins:
               securityRealm:
@@ -512,98 +530,3 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
-          azure-vm-agent: |
-            jenkins:
-              clouds:
-                - azureVM:
-                    azureCredentialsId: "jenkins-managed-identity"
-                    cloudName: "cnp-azure"
-                    cloudTags:
-                      - name: "application"
-                        value: "core"
-                      - name: "builtFrom"
-                        value: "hmcts/cnp-flux-config"
-                      - name: "businessArea"
-                        value: "CFT"
-                      - name: "criticality"
-                        value: "High"
-                      - name: "environment"
-                        value: "production"
-                    deploymentTimeout: 1200
-                    existingResourceGroupName: "aks-infra-cftptl-intsvc-rg"
-                    maxVirtualMachinesLimit: 80
-                    resourceGroupReferenceType: "existing"
-                    vmTemplates:
-                      - agentLaunchMethod: "SSH"
-                        agentWorkspace: "/opt/jenkins"
-                        builtInImage: "Windows Server 2016"
-                        credentialsId: "vm_agent_creds"
-                        diskType: "managed"
-                        doNotUseMachineIfInitFails: true
-                        enableMSI: false
-                        enableUAMI: true
-                        ephemeralOSDisk: true
-                        executeInitScriptAsRoot: true
-                        existingStorageAccountName: "hmctsjenkinscftptl"
-                        imageReference:
-                          galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.39"
-                          galleryName: "hmcts"
-                          galleryResourceGroup: "hmcts-image-gallery-rg"
-                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
-                        imageTopLevelType: "advanced"
-                        initScript: |
-                          usermod -a -G docker jenkinsssh
-                          umount /mnt/resource
-                          mkdir -pv /opt/jenkins
-                          mount /dev/sdb1 /opt/jenkins
-                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
-                          set -e
-                          cp /opt/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
-                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
-                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
-                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
-                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
-                          jenkinsssh soft nofile 40960
-                          jenkinsssh hard nofile 40960
-                          jenkinsssh soft
-                          proc 32768
-                          jenkinsssh hard nproc 32768
-                          jenkinsssh soft core unlimited
-                          jenkinsssh hard core unlimited
-                          EOF
-                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
-                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
-                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
-                        installDocker: false
-                        installGit: false
-                        installMaven: false
-                        javaPath: "java"
-                        jvmOptions: "-XX:MaxRAMPercentage=30 -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
-                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
-                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
-                      \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
-                        labels: "ubuntu"
-                        location: "UK South"
-                        noOfParallelJobs: 1
-                        osDiskSize: 60
-                        osDiskStorageAccountType: "Standard_LRS"
-                        osType: "Linux"
-                        preInstallSsh: true
-                        retentionStrategy:
-                          azureVMCloudRetentionStrategy:
-                            idleTerminationMinutes: 60
-                        shutdownOnIdle: false
-                        storageAccountNameReferenceType: "existing"
-                        storageAccountType: "Standard_LRS"
-                        subnetName: "iaas"
-                        templateDesc: "Jenkins build agents for HMCTS"
-                        templateDisabled: false
-                        templateName: "cnp-jenkins-ubuntu"
-                        uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
-                        usageMode: "NORMAL"
-                        usePrivateIP: true
-                        virtualMachineSize: "Standard_D4ds_v5"
-                        virtualNetworkName: "cft-ptl-vnet"
-                        virtualNetworkResourceGroupName: "cft-ptl-network-rg"
-

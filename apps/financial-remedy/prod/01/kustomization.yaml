@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: financial-remedy
+resources:
+  - ../base
+  - ../../finrem-cron-send-order/finrem-cron-send-order.yaml
+patchesStrategicMerge:
+  - ../../finrem-cron-send-order/prod/01.yaml

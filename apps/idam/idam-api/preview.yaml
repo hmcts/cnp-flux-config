@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:pr-1180
+      image: hmctspublic.azurecr.io/idam/api:preview-2b23781-20230607142755 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -47,7 +47,7 @@ spec:
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
-        trigger_deploy: true
+        trigger_deploy: 19/06/2023-1400
         IDAM_CACHE_TTL: 15
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_IDAM_SPI_CLIENT_SERVICE_USERSEARCHSERVICE: DEBUG
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGDURATION: 15m
@@ -60,4 +60,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.10
+      version: 0.4.11

@@ -7,8 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-bb62d79-20230202111908
-      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/idam/api:preview-735b7eb-20230602092305
       ingressHost: idam-api.demo.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
@@ -45,10 +44,12 @@ spec:
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
+        FEATUREFLAGS_SKIPARCHIVEDELETIONOFORIGINALRECORD: true
+        IDAM_CACHE_TTL: 1
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.10
+      version: 0.4.11

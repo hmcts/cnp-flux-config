@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: civil-sdt
+  namespace: civil
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/civil/sdt:prod-449e922-20230616104508 #{"$imagepolicy": "flux-system:demo-civil-sdt"}
+      environment:
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: DEBUG

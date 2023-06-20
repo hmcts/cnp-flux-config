@@ -8,7 +8,7 @@ EXCLUSIONS_LIST=(
   apps/docmosis/docmosis/docmosis.yaml
   apps/docmosis/docmosis/aat.yaml
   apps/docmosis/docmosis/sbox.yaml
-  apps/flux-system/base/image-automation-components.yaml
+  apps/flux-system/ptl-intsvc/base/gotk-components.yaml
   apps/idam/idam-api/preview.yaml
   apps/idam/idam-api/sbox.yaml
   apps/idam/idam-web-admin/preview.yaml
@@ -21,6 +21,7 @@ EXCLUSIONS_LIST=(
   apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
   apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
   apps/probate/*
+  apps/sscs/sscs-tribunals-frontend/*
   .*demo.*.yaml
   apps/*/*/demo
   apps/*/demo
