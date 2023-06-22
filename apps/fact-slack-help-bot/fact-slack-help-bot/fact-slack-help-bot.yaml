@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fact-slack-help-bot
+  namespace: fact-slack-help-bot
+spec:
+  releaseName: fact-slack-help-bot
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/fact/slack-help-bot:prod-5195ab4-2 # {"$imagepolicy": "flux-system:fact-slack-help-bot"}
+    environment:
+      SLACK_REPORT_CHANNEL: fact-bsbp-bot-test
+      SLACK_REPORT_CHANNEL_ID: C053HQ8T266
+      JIRA_PROJECT: FACT
+      DUMMY_VAR: 1
+    aadIdentityName: fact-slack-help-bot
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - fact-slack-bot-token
+          - fact-slack-app-token
+          - jira-username
+          - jira-api-token
+  chart:
+    spec:
+      chart: nodejs
+      version: 2.4.8
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
