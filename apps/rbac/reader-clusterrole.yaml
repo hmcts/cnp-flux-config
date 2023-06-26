@@ -57,9 +57,14 @@ rules:
 - apiGroups: ['storage.azure.com']
   resources: ['storageaccounts', 'storageaccountsblobservices', 'storageaccountsblobservicescontainers']
   verbs: ['watch', 'list', 'get']
-- apiGroups: ['resources.azure.com', 'aadpodidentity']
-  resources: ["ResourceGroup", 'azureidentity']
+- apiGroups: ['resources.azure.com']
+  resources: ["ResourceGroup"]
   verbs: ['watch', 'list', 'get']
+- apiGroups: ['aadpodidentity']
+  resources: ['azureidentity']
+  verbs: ['watch', 'list', 'get']
+---
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
