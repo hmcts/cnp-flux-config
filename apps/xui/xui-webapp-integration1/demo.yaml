@@ -34,4 +34,16 @@ spec:
         SERVICES_WA_WORKFLOW_API_URL: http://wa-workflow-api-demo.service.core-compute-demo.internal
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
         SERVICES_ROLE_ASSIGNMENT_MAPPING_API: http://am-org-role-mapping-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/xui/webapp:pr-3079-5a63c24-20230623142016 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration1"}
+      image: hmctspublic.azurecr.io/xui/webapp:prod-bf2ece7-20230630165938 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration1"}
+      keyVaults:
+        rpx:
+          resourceGroup: rpx
+          secrets:
+            - mc-s2s-client-secret
+            - mc-idam-client-secret
+            - appinsights-instrumentationkey-mc
+            - name: webapp-redis6-connection-string
+              alias: webapp-redis-connection-string
+            - launch-darkly-client-id
+            - system-user-name
+            - system-user-password

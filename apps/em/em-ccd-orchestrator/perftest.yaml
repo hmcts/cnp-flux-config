@@ -2,3 +2,9 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/em/ccdorc:pr-1228-c2a849e-20230628154359 #{"$imagepolicy": "flux-system:perftest-em-ccd-orchestrator"}
+      environment:
+        DUMMY: 1

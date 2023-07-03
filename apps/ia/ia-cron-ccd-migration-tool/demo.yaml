@@ -6,8 +6,11 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-5ab0000-20230623120949 #{"$imagepolicy":"flux-system:ia-cron-ccd-migration-tool"}
-      schedule: "0/15 * * 6 *"
+      schedule: "0/15 * * 7 *"
+      cpuRequests: "1000m"
+      cpuLimits: "2500m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
         MIGRATION_ENABLED: "true"
