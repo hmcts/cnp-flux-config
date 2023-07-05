@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jenkins-webhook-relay
+spec:
+  chart:
+    spec:
+      chart: ./charts/jenkins-webhook-relay
+      interval: 1m
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: jenkins-webhook-relay
+        namespace: flux-system
+      version: '*'
+      valuesFiles:
+        - ./charts/jenkins-webhook-relay/values.yaml
+  interval: 5m
+  releaseName: jenkins-webhook-relay
+  values:
+    image: hmctspublic.azurecr.io/jenkins/jenkins-webhook-relay:prod-cba235fa-1688475879 #{"$imagepolicy": "flux-system:jenkins-webhook-relay"}
