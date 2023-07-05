@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: jenkins-webhook-relay
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: ssh://github.com/hmcts/jenkins-webhook-relay
+  ref:
+    branch: master
+  secretRef:
+    name: git-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/
