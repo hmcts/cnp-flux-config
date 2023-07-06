@@ -20,20 +20,17 @@ spec:
   interval: 5m
   releaseName: jenkins-webhook-relay
   values:
-    triggerAuth:
-      create: true
-      enabled: true
-      triggerPodIdentityProvider: "azure"
-    triggers:
-      - type: azure-servicebus
-        namespace: github-jenkins-cft-ptlsbox
-        queueName: "jenkins"
-        queueLength: "5"
-    secrets:
-      SERVICE_BUS_CONNECTION_STR:
-        secretRef: jenkins-webhook-relay
-        key: servicebus-connectionstring
-        disabled: false
-    environment:
-      CONNECTION_URL: "https://build.sandbox.platform.hmcts.net/github-webhook/"
-      SERVICE_BUS_QUEUE_NAME: "jenkins"
+    function:
+      triggers:
+        - type: azure-servicebus
+          namespace: github-jenkins-cft-ptlsbox
+          queueName: "jenkins"
+          queueLength: "5"
+      secrets:
+        SERVICE_BUS_CONNECTION_STR:
+          secretRef: jenkins-webhook-relay
+          key: servicebus-connectionstring
+          disabled: false
+      environment:
+        CONNECTION_URL: "https://build.sandbox.platform.hmcts.net/github-webhook/"
+        SERVICE_BUS_QUEUE_NAME: "jenkins"
