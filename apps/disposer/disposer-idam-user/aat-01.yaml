@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: disposer-idam-user
+spec:
+  values:
+    job:
+      schedule: "0/45 * * * *"
+      environment:
+        IDAM_S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+        IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"

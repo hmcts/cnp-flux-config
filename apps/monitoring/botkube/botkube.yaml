@@ -23,12 +23,21 @@ spec:
     settings:
       clusterName: cft-${CLUSTER_FULL_NAME}-aks
       upgradeNotifier: false
+    aliases:
+      kg:
+        command: kubectl get
+        displayName: "Kubectl get alias"
+      kgp:
+        command: kubectl get pods
+        displayName: "Kubectl get pods alias"
+      kgpooyaml:
+        command: kubectl get pods -o=yaml
+        displayName: "Kubectl get pods yaml alias"
+      kdpo:
+        command: 'kubectl describe pods'
+        displayName: "kubectl describe pods alias"
     executors:
       k8s-default-tools:
-        botkube/helm:
-          enabled: true
-          config:
-            defaultNamespace: "admin"
         botkube/kubectl:
           enabled: true
           config:
@@ -84,28 +93,32 @@ spec:
             resources:
               - type: apps/v1/daemonsets
                 event: # Overrides 'source'.kubernetes.event
-                  types: []
+                types:
+                  - update
                 updateSetting:
                   includeDiff: true
                   fields:
                     - spec.template.spec.containers[*].image
               - type: batch/v1/jobs
                 event: # Overrides 'source'.kubernetes.event
-                  types: []
+                types:
+                  - update
                 updateSetting:
                   includeDiff: true
                   fields:
                     - spec.template.spec.containers[*].image
               - type: apps/v1/deployments
                 event: # Overrides 'source'.kubernetes.event
-                  types: []
+                types:
+                  - update
                 updateSetting:
                   includeDiff: true
                   fields:
                     - spec.template.spec.containers[*].image
               - type: apps/v1/statefulsets
                 event: # Overrides 'source'.kubernetes.event
-                  types:[]
+                types:
+                  - update
                 updateSetting:
                   includeDiff: true
                   fields:
