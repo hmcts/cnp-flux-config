@@ -118,17 +118,24 @@ spec:
                       url: "https://yrk32651.live.dynatrace.com/"
           authentication: |
             jenkins:
-              securityRealm:
-                saml:
-                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
-                  idpMetadataConfiguration:
-                    period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/FederationMetadata/2007-06/FederationMetadata.xml?appid=001b73bc-0fae-46fa-bb7f-2296a655ba33
-                  maximumAuthenticationLifetime: 7862400
-                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  usernameCaseConversion: "none"
+              authorizationStrategy:
+                azureAdMatrix:
+                  permissions:
+                  - "Job/Discover:anonymous"
+                  - "Overall/Administer:DTS Platform Operations (e7ea2042-4ced-45dd-8ae3-e051c6551789)"
+                  - "Agent/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Job/Build:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Job/Cancel:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Job/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Job/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Job/Workspace:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Lockable Resources/Unlock:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Lockable Resources/View:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Overall/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Overall/SystemRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Run/Replay:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "Run/Update:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "View/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
           location: |
             unclassified:
               location:

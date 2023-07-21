@@ -101,23 +101,25 @@ spec:
           auth: |
             jenkins:
               authorizationStrategy:
-                azureAdMatrix:
+                globalMatrix:
                   permissions:
-                  - "Job/Discover:anonymous"
-                  - "Overall/Administer:DTS Platform Operations (e7ea2042-4ced-45dd-8ae3-e051c6551789)"
-                  - "Agent/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Job/Build:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Job/Cancel:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Job/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Job/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Job/Workspace:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Lockable Resources/Unlock:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Lockable Resources/View:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Overall/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Overall/SystemRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Run/Replay:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "Run/Update:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                  - "View/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
+                    - "GROUP:Overall/SystemRead:authenticated"
+                    - "GROUP:Overall/Read:authenticated"
+                    - "GROUP:View/Read:authenticated"
+                    - "GROUP:Run/Replay:authenticated"
+                    - "GROUP:Run/Update:authenticated"
+                    - "GROUP:Agent/ExtendedRead:authenticated"
+                    - "GROUP:Job/Cancel:authenticated"
+                    - "GROUP:Job/ExtendedRead:authenticated"
+                    - "GROUP:Job/Read:authenticated"
+                    - "GROUP:Job/Build:authenticated"
+                    - "USER:Job/Discover:anonymous"
+                    - "GROUP:Job/Workspace:authenticated"
+                    - "GROUP:Credentials/View:authenticated"
+                    - "GROUP:Lockable Resources/Unlock:authenticated"
+                    - "GROUP:Lockable Resources/Reserve:authenticated"
+                    - "GROUP:SCM/Tag:authenticated"
           global-library: |
             unclassified:
               globalLibraries:
