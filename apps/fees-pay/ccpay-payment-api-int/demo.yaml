@@ -9,7 +9,7 @@ spec:
       image: hmctspublic.azurecr.io/payment/api:pr-1469-2c2f8d7-20230727150532 #{"$imagepolicy": "flux-system:demo-int-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_NAME: postgresqldb2
         POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
@@ -71,8 +71,6 @@ spec:
               alias: POSTGRES_PASSWORD
             - name: core-case-data-api-url
               alias: core_case_data.api.url
-            - name: case-payment-orders-api-url
-              alias: case-payment-orders.api.url
             - name: app-insights-connection-string
               alias: app-insights-connection-string
             - name: AppInsightsInstrumentationKey
