@@ -25,6 +25,13 @@ spec:
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
+      probes:
+        startupProbe:
+          failureThreshold: 24
+        livenessProbe:
+          failureThreshold: 10
+        readinessProbe:
+          failureThreshold: 10
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
