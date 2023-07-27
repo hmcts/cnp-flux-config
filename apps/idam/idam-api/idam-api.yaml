@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-2374f0b-20230703170721
+      image: hmctspublic.azurecr.io/idam/api:prod-2cb4a90-20230727121010
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
@@ -52,6 +52,7 @@ spec:
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
+        IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
         SPRING_REDIS_TIMEOUT: 300
   chart:
     spec:
