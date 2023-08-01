@@ -96,16 +96,16 @@ spec:
                         value: "sandbox"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
-                    maxVirtualMachinesLimit: 10
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
                       - templateName: "cnp-jenkins-builders"
                         templateDesc: "Jenkins build agents for HMCTS"
+                        maxVirtualMachinesLimit: 10
                         usageMode: "NORMAL"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-builders-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
                         labels: "daily"
-                        noOfParallelJobs: 10
+                        maxVirtualMachinesLimit: 3
                         usageMode: "EXCLUSIVE"
                         <<: *vm_template_values_anchor
