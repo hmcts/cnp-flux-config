@@ -9,6 +9,75 @@ spec:
       JCasC:
         configScripts:
           azure-vm-agent: |
+            x-vmTemplate-values: &vm_template_values_anchor
+              launcher: "ssh"
+              agentWorkspace: "/opt/jenkins"
+              builtInImage: "Windows Server 2016"
+              credentialsId: "vm_agent_creds"
+              diskType: "managed"
+              doNotUseMachineIfInitFails: true
+              enableMSI: false
+              enableUAMI: true
+              ephemeralOSDisk: true
+              executeInitScriptAsRoot: true
+              existingStorageAccountName: "hmctsjenkinssbox"
+              imageReference:
+                galleryImageDefinition: "jenkins-ubuntu"
+                galleryImageVersion: "1.4.58"
+                galleryName: "hmcts"
+                galleryResourceGroup: "hmcts-image-gallery-rg"
+                gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+              imageTopLevelType: "advanced"
+              initScript: |
+                usermod -a -G docker jenkinsssh
+                umount /mnt/resource
+                mkdir -pv /opt/jenkins
+                mount /dev/sdb1 /opt/jenkins
+                chown -R jenkinsssh:jenkinsssh /opt/jenkins
+                set -e
+                cp /opt/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
+                chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
+                chmod 0600 /home/jenkinsssh/.ssh/id_rsa
+                mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
+                cat > /etc/security/limits.d/30-jenkins.conf<<EOF
+                jenkinsssh soft nofile 40960
+                jenkinsssh hard nofile 40960
+                jenkinsssh soft
+                proc 32768
+                jenkinsssh hard nproc 32768
+                jenkinsssh soft core unlimited
+                jenkinsssh hard core unlimited
+                EOF
+                ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
+                ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
+                chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
+              installDocker: false
+              installGit: false
+              installMaven: false
+              javaPath: java
+              jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
+            \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
+            \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
+            \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
+              location: "UK South"
+              noOfParallelJobs: 1
+              osDiskSize: 60
+              osDiskStorageAccountType: "Standard_LRS"
+              osType: "Linux"
+              retentionStrategy:
+                azureVMCloudRetentionStrategy:
+                  idleTerminationMinutes: 60
+              shutdownOnIdle: false
+              storageAccountNameReferenceType: "existing"
+              storageAccountType: "Standard_LRS"
+              subnetName: "iaas"
+              templateDisabled: false
+              uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
+              usePrivateIP: true
+              virtualMachineSize: "Standard_D4ds_v5"
+              virtualNetworkName: "cft-ptlsbox-vnet"
+              virtualNetworkResourceGroupName: "cft-ptlsbox-network-rg"
+
             jenkins:
               clouds:
                 - azureVM:
@@ -27,76 +96,17 @@ spec:
                         value: "sandbox"
                     deploymentTimeout: 1200
                     existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
-                    maxVirtualMachinesLimit: 10
+                    maxVirtualMachinesLimit: 0
                     resourceGroupReferenceType: "existing"
                     vmTemplates:
-                      - launcher: "ssh"
-                        agentWorkspace: "/opt/jenkins"
-                        builtInImage: "Windows Server 2016"
-                        credentialsId: "vm_agent_creds"
-                        diskType: "managed"
-                        doNotUseMachineIfInitFails: true
-                        enableMSI: false
-                        enableUAMI: true
-                        ephemeralOSDisk: true
-                        executeInitScriptAsRoot: true
-                        existingStorageAccountName: "hmctsjenkinssbox"
-                        imageReference:
-                          galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.55"
-                          galleryName: "hmcts"
-                          galleryResourceGroup: "hmcts-image-gallery-rg"
-                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
-                        imageTopLevelType: "advanced"
-                        initScript: |
-                          usermod -a -G docker jenkinsssh
-                          umount /mnt/resource
-                          mkdir -pv /opt/jenkins
-                          mount /dev/sdb1 /opt/jenkins
-                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
-                          set -e
-                          cp /opt/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
-                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
-                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
-                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
-                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
-                          jenkinsssh soft nofile 40960
-                          jenkinsssh hard nofile 40960
-                          jenkinsssh soft
-                          proc 32768
-                          jenkinsssh hard nproc 32768
-                          jenkinsssh soft core unlimited
-                          jenkinsssh hard core unlimited
-                          EOF
-                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
-                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
-                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
-                        installDocker: false
-                        installGit: false
-                        installMaven: false
-                        javaPath: java
-                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
-                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
-                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
-                      \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
-                        location: "UK South"
-                        noOfParallelJobs: 1
-                        osDiskSize: 60
-                        osDiskStorageAccountType: "Standard_LRS"
-                        osType: "Linux"
-                        retentionStrategy:
-                          azureVMCloudRetentionStrategy:
-                            idleTerminationMinutes: 60
-                        shutdownOnIdle: false
-                        storageAccountNameReferenceType: "existing"
-                        storageAccountType: "Standard_LRS"
-                        subnetName: "iaas"
+                      - templateName: "cnp-jenkins-builders"
                         templateDesc: "Jenkins build agents for HMCTS"
-                        templateDisabled: false
-                        templateName: "cnp-jenkins-builders"
-                        uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
+                        maxVirtualMachinesLimit: 10
                         usageMode: "NORMAL"
-                        usePrivateIP: true
-                        virtualMachineSize: "Standard_D4ds_v5"
-                        virtualNetworkName: "cft-ptlsbox-vnet"
-                        virtualNetworkResourceGroupName: "cft-ptlsbox-network-rg"
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-daily"
+                        templateDesc: "Jenkins build agents for HMCTS daily builds"
+                        labels: "daily"
+                        maxVirtualMachinesLimit: 3
+                        usageMode: "EXCLUSIVE"
+                        <<: *vm_template_values_anchor
