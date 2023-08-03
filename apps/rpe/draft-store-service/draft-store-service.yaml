@@ -6,10 +6,12 @@ spec:
   releaseName: draft-store-service
   values:
     java:
+      environment:
+        RESTART_ME: '2'
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/draft-store/service:prod-8795fc2-20230620091725 #{"$imagepolicy": "flux-system:draft-store-service"}
+      image: hmctspublic.azurecr.io/draft-store/service:prod-8c8fb38-20230731153932 #{"$imagepolicy": "flux-system:draft-store-service"}
       smoketestscron:
         image: hmctspublic.azurecr.io/draft-store/service-test:prod-b5ba872-20221206202846 #{"$imagepolicy": "flux-system:draft-store-service-service-test"}
       functionaltestscron:

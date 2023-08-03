@@ -1,0 +1,31 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jenkins-webhook-relay
+  namespace: jenkins
+spec:
+  chart:
+    spec:
+      chart: ./charts/jenkins-webhook-relay
+      interval: 1m
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: jenkins-webhook-relay
+        namespace: flux-system
+      version: '*'
+  interval: 5m
+  releaseName: jenkins-webhook-relay
+  values:
+    function:
+      triggers:
+        - type: azure-servicebus
+          serviceBusName: github-jenkins-cft-ptlsbox
+          queueName: "jenkins"
+          queueLength: "5"
+      secrets:
+        SERVICE_BUS_CONNECTION_STR:
+          secretRef: jenkins-webhook-relay
+          key: servicebus-connectionstring
+          disabled: false

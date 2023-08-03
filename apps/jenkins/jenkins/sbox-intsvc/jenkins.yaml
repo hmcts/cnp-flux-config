@@ -24,9 +24,9 @@ spec:
         -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=11
         -Dotel.instrumentation.jenkins.web.enabled=false
       ingress:
-        hostName: sandbox-build.platform.hmcts.net
+        hostName: sandbox-build.hmcts.net
       secondaryingress:
-        hostName: static-sandbox-build.platform.hmcts.net
+        hostName: static-sandbox-build.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -42,7 +42,7 @@ spec:
           resource-root: |
             unclassified:
               resourceRoot:
-                url: "https://static-sandbox-build.platform.hmcts.net/"
+                url: "https://static-sandbox-build.hmcts.net/"
           env-vars: |
             jenkins:
               globalNodeProperties:
@@ -119,21 +119,36 @@ spec:
           authentication: |
             jenkins:
               securityRealm:
-                saml:
-                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
-                  idpMetadataConfiguration:
-                    period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/FederationMetadata/2007-06/FederationMetadata.xml?appid=001b73bc-0fae-46fa-bb7f-2296a655ba33
-                  maximumAuthenticationLifetime: 7862400
-                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  usernameCaseConversion: "none"
+                azure:
+                  cacheDuration: 3600
+                  clientId: "7e2f8c93-7d53-4668-bd84-f134d67dee09"
+                  clientSecret: "$${jenkins-client-secret}"
+                  tenant: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+          auth: |
+            jenkins:
+              authorizationStrategy:
+                azureAdMatrix:
+                  permissions:
+                  - "USER:Job/Discover:anonymous"
+                  - "GROUP:Overall/Administer:DTS Platform Operations (e7ea2042-4ced-45dd-8ae3-e051c6551789)"
+                  - "GROUP:Agent/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Job/Build:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Job/Cancel:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Job/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Job/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Job/Workspace:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Lockable Resources/Unlock:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Lockable Resources/View:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Overall/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Overall/SystemRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Run/Replay:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:Run/Update:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                  - "GROUP:View/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
           location: |
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://sandbox-build.platform.hmcts.net'
+                url: 'https://sandbox-build.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:

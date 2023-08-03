@@ -5,38 +5,3 @@ metadata:
 spec:
   values:
     java:
-      testsConfig:
-        memoryLimits: "3072Mi"
-        serviceAccountName: tests-service-account
-      keyVaults:
-        draft-store:
-          excludeEnvironmentSuffix: false
-          secrets:
-            - name: s2s-secret-for-tests
-            - name: idam-password-for-tests
-            - name: idam-client-secret-for-tests
-            - name: service-POSTGRES-PASS-V14
-              alias: DRAFT_STORE_DB_PASSWORD
-      environment:
-        TEST_URL: http://draft-store-service-java
-        SLACK_CHANNEL: "platops-build-notices"
-        SLACK_NOTIFY_SUCCESS: "false"
-        USE_IDAM_TESTING_SUPPORT: "true"
-        S2S_URL_FOR_TESTS: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
-        IDAM_URL_FOR_TESTS: "https://idam-api.aat.platform.hmcts.net"
-        S2S_NAME_FOR_TESTS: "draft_store_tests"
-        IDAM_USER_EMAIL_FOR_TESTS: "reformplatformengineering+tests@gmail.com"
-        IDAM_CLIENT_ID_FOR_TESTS: "cmc_citizen"
-        IDAM_REDIRECT_URI_FOR_TESTS: "https://cmc-citizen-frontend-aat-staging.service.core-compute-aat.internal/receiver"
-        DRAFT_STORE_DB_HOST: rpe-draft-store-v14-aat.postgres.database.azure.com
-        DRAFT_STORE_DB_USER_NAME: pgadmin
-      smoketestscron:
-        enabled: false
-        schedule: "15 0/1 * * *"
-      functionaltestscron:
-        enabled: false
-        schedule: "25 0/6 * * *"
-      smoketests:
-        enabled: false
-      functionaltests:
-        enabled: false
