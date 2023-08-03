@@ -6,62 +6,10 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctspublic.azurecr.io/et/cos:pr-556-8f08284-20230704115157 #{"$imagepolicy": "flux-system:demo-et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:pr-1022-d129724-20230802195543 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
-        RD_PROFESSIONAL_API_URL: http://rd-professional-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-        AAC_URL: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
-        REFERRAL_TEMPLATE_ID: 9f3d0c67-d484-42e0-9ee1-91a44c4968d6
-        REJECTED_TEMPLATE_ID: 2a842474-feb4-4a2d-bd82-393656016180
-        ET1SERVING_TEMPLATE_ID: d09cd595-76b5-45d9-a63b-350f133a4cc5
-        ET3RESPONSE_NOTIFICATION_TRIBUNAL_TEMPLATE_ID: 426d2f2d-2beb-476c-97aa-6a7f7576caba
-        ET3NOTIFICATION_TEMPLATE_MYHMCTS_ID: 750ded38-eada-476d-85d1-72640fd4eb1f
-        ET3NOTIFICATION_TEMPLATE_CITIZEN_ID: c8f12b6e-5fb6-4fe0-ad99-da6ea4888769
-        ET1SERVING_RESPONDENT_TEMPLATE_ID: 204c4674-6d4b-4cee-8537-9ea1cda0e9f2
-        NOC_NOTIFICATION_TEMPLATE_RESPONDENT_ID: a3539d79-65c0-491c-b578-b58cf321f83e
-        NOC_NOTIFICATION_TEMPLATE_CLAIMANT_ID: 3d0c5784-0055-4863-9c03-7d37d9b2ad8d
-        NOC_NOTIFICATION_TEMPLATE_OLD_REP_ID: fe52b39f-852c-43ca-a42a-b9a27c43b130
-        NOC_NOTIFICATION_TEMPLATE_NEW_REP_ID: 8fe52f24-40b2-4986-8f86-4dd1af311cbd
-        NOC_NOTIFICATION_TEMPLATE_TRIBUNAL_ID: 1d5efcbd-1971-4ebe-bfe8-72ba36b5abac
-        TSE_RESPONDENT_RESPONSE_TEMPLATE_ID: dec79c11-2c02-481d-aed8-6f013667cdf5
-        TSE_RESPONDENT_TO_CLAIMANT_TEMPLATE_ID: 5d014e5a-9528-4d02-bd31-8eca98cfba19
-        TSE_RESPONDENT_TO_RESPONDENT_TEMPLATE_ID: c0b393f6-daf0-46fc-8995-d5e98149326f
-        TSE_RESPONDENT_TO_RESPONDENT_TYPE_C_TEMPLATE_ID: e60bc338-db48-4270-95b0-5e8f29e6ae0f
-        TSE_ADMIN_RECORD_A_DECISION_CLAIMANT_TEMPLATE_ID: 615827dc-d21b-46ae-8c66-91a635d82504
-        TSE_ADMIN_RECORD_A_DECISION_RESPONDENT_TEMPLATE_ID: ca1a1dd2-13c9-435d-b63e-0ca07abe937d
-        TSE_ADMIN_REPLY_CLAIMANT_TEMPLATE_ID: 52b14d5d-038e-48c7-8f9c-3f1193660608
-        TSE_ADMIN_REPLY_RESPONDENT_TEMPLATE_ID: 46872d50-cb92-4fee-a460-cc35bd836025
-        TSE_RESPONDENT_ACKNOWLEDGEMENT_NO_TEMPLATE_ID: d647a4c5-5859-42f6-96a6-30d57c0e98c2
-        TSE_RESPONDENT_ACKNOWLEDGEMENT_YES_TEMPLATE_ID: 232f1fbe-3a7f-44cd-926b-bfa192c25ac4
-        PSE_RESPONDENT_ACKNOWLEDGEMENT_YES_TEMPLATE_ID: aa114479-e72b-4893-9024-c25aee1be6fc
-        PSE_RESPONDENT_ACKNOWLEDGEMENT_NO_TEMPLATE_ID: 3a7ff23d-d49f-4c28-b00b-08ca3f0b38ee
-        PSE_RESPONDENT_NOTIFICATION_CLAIMANT_TEMPLATE_ID: bdf1a2b7-5bb4-45d0-9b71-9d6c024aafff
-        PSE_RESPONDENT_NOTIFICATION_ADMIN_TEMPLATE_ID: 296d3c6e-00d7-4f43-a8bd-260d52b171a7
-        EXUI_CASE_DETAILS_URL: "https://manage-case.ithc.platform.hmcts.net/cases/case-details/"
-        CITIZEN_CASE_DETAILS_URL: "https://et-sya.ithc.platform.hmcts.net/citizen-hub/"
-        SEND_NOTIFICATION_TEMPLATE_ID: 1b8299d7-5051-4b78-a870-726b6384d8a8
-        TSE_NEW_APPLICATION_ADMIN_TEMPLATE_ID: bd7addc3-d1ea-47cf-9249-208a7033d454
-        RESPOND_NOTIFICATION_NO_RESPONSE_TEMPLATE_ID: d2caad87-2bab-4bc0-b598-01f1a7341f9e
+        RD_PROFESSIONAL_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
+        AAC_URL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
+        EXUI_CASE_DETAILS_URL: "https://manage-case.demo.platform.hmcts.net/cases/case-details/"
+        CITIZEN_CASE_DETAILS_URL: "https://et-sya.demo.platform.hmcts.net/citizen-hub/"
         RESTART_MANUALLY: 0
-      keyVaults:
-        et-cos:
-          secrets:
-            - name: cos-POSTGRES-PASS
-              alias: ET_COS_DB_PASSWORD
-            - name: et-cos-s2s-secret
-              alias: ET_COS_S2S_SECRET
-            - name: cos-system-user
-              alias: ET_COS_SYSTEM_USER
-            - name: cos-system-user-password
-              alias: ET_COS_SYSTEM_USER_PASSWORD
-            - name: idam-client-secret
-              alias: IDAM_CLIENT_SECRET
-        et:
-          secrets:
-            - name: create-updates-queue-send-connection-string
-              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: tornado-access-key
-              alias: TORNADO_ACCESS_KEY
-            - name: gov-notify-api-key
-              alias: GOV_NOTIFY_API_KEY

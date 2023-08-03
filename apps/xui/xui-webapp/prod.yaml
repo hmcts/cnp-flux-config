@@ -5,16 +5,9 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 14
-      memoryLimits: "3Gi"
-      memoryRequests: "1.5Gi"
-      autoscaling:
-        enabled: true
-        maxReplicas: 24
-        cpu:
-          averageUtilization: 70
-        memory:
-          averageUtilization: 70
+      replicas: 24
+      memoryLimits: "4Gi"
+      memoryRequests: "3Gi"
       ingressHost: manage-case.platform.hmcts.net
       environment:
         HEALTH_CCD_COMPONENT_API: https://gateway.ccd.platform.hmcts.net/health
@@ -29,3 +22,4 @@ spec:
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,SSCS,IA,EMPLOYMENT,CMC,HRS,CIVIL,PRIVATELAW,ST_CIC
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
         WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW
+        FEATURE_COMPRESSION_ENABLED: false
