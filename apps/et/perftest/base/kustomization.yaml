@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - ../../../rbac/nonprod-role.yaml
+- ../../base
+- ../../../rbac/nonprod-role.yaml
 namespace: et
-patchesStrategicMerge:
-  - ../../identity/perftest.yaml
-  - ../../et-cos/perftest.yaml
-  - ../../et-msg-handler/perftest.yaml
-  - ../../et-sya/perftest.yaml
-  - ../../et-sya-api/perftest.yaml
-  - ../../et-hearings-api/perftest.yaml
+patches:
+- path: ../../identity/perftest.yaml
+- path: ../../et-cos/perftest.yaml
+- path: ../../et-msg-handler/perftest.yaml
+- path: ../../et-sya/perftest.yaml
+- path: ../../et-sya-api/perftest.yaml
+- path: ../../et-hearings-api/perftest.yaml

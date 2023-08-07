@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base   # This is apps/base instead of apps/am/base as preview doesn't install everything
-  - ../../identity/identity.yaml
-  - ../../../azureserviceoperator-system/resources/resource-group.yaml
-  - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
-  - ../sops-secrets
+- ../../../base
+- ../../identity/identity.yaml
+- ../../../azureserviceoperator-system/resources/resource-group.yaml
+- ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
+- ../sops-secrets
 namespace: am
-patchesStrategicMerge:
-  - ../../identity/aat.yaml
-  - ../aso/am-servicebus.yaml
+patches:
+- path: ../../identity/aat.yaml
+- path: ../aso/am-servicebus.yaml
