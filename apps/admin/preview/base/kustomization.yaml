@@ -1,20 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - ../../keda
-  - ../../traefik2
-  - ../../traefik2/preview/secret-provider-internal.yaml
-  - ../../external-dns-2/
-  - ../../external-dns-2/external-dns-private
-  - ../../aad-pod-id/mi
-  - ../../../rbac/edit-clusterrole.yaml
-  - ../../../rbac/reader-clusterrole.yaml
-  - ../../delete-hung-pods
-patchesStrategicMerge:
-  - ../../aat/base/keda-identity.yaml
-  - ../../traefik2/preview/secret-provider.yaml
-  - ../../traefik2/preview/tlsstore-patch.yaml
-  - ../../aad-pod-id/mi/preview/azure-identity-patch.yaml
-  - ../../traefik2/preview/internal-cert-release-patch.yaml
-  - ../../external-dns-2/preview/external-dns-private.yaml
+- ../../base
+- ../../keda
+- ../../traefik2
+- ../../traefik2/preview/secret-provider-internal.yaml
+- ../../external-dns-2/
+- ../../external-dns-2/external-dns-private
+- ../../aad-pod-id/mi
+- ../../../rbac/edit-clusterrole.yaml
+- ../../../rbac/reader-clusterrole.yaml
+- ../../delete-hung-pods
+patches:
+- path: ../../aat/base/keda-identity.yaml
+- path: ../../traefik2/preview/secret-provider.yaml
+- path: ../../traefik2/preview/tlsstore-patch.yaml
+- path: ../../aad-pod-id/mi/preview/azure-identity-patch.yaml
+- path: ../../traefik2/preview/internal-cert-release-patch.yaml
+- path: ../../external-dns-2/preview/external-dns-private.yaml

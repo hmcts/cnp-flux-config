@@ -1,11 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - ../../../rbac/nonprod-role.yaml
+- ../../base
+- ../../../rbac/nonprod-role.yaml
 namespace: camunda
-patchesStrategicMerge:
-  - ../../identity/perftest.yaml
-  - ../../camunda-optimize/perftest.yaml
-  - ../../camunda-api/perftest.yaml
-  - ../../camunda-ui/perftest.yaml
+patches:
+- path: ../../identity/perftest.yaml
+- path: ../../camunda-optimize/perftest.yaml
+- path: ../../camunda-api/perftest.yaml
+- path: ../../camunda-ui/perftest.yaml
