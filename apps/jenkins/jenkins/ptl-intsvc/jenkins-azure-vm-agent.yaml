@@ -64,9 +64,6 @@ spec:
               osDiskSize: 60
               osDiskStorageAccountType: "Standard_LRS"
               osType: "Linux"
-              retentionStrategy:
-                azureVMCloudRetentionStrategy:
-                  idleTerminationMinutes: 60
               shutdownOnIdle: false
               storageAccountNameReferenceType: "existing"
               storageAccountType: "Standard_LRS"
@@ -103,11 +100,17 @@ spec:
                         templateDesc: "Jenkins build agents for HMCTS"
                         labels: "ubuntu"
                         maxVirtualMachinesLimit: 80
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 60
                         usageMode: "NORMAL"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
                         labels: "daily"
                         maxVirtualMachinesLimit: 20
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
                         usageMode: "EXCLUSIVE"
                         <<: *vm_template_values_anchor
