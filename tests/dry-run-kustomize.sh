@@ -26,6 +26,7 @@ split_files() {
     cd "$file_dir"
     yq -s '.kind + "-" + .metadata.name' "$file_name"
     rm -rf "$file_name"
+    ls
     cd "$CURRENT_DIRECTORY"
 }
 
