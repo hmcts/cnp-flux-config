@@ -57,19 +57,20 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     ./kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
 
     mv "${TMP_DIR}"CustomResourceDefinition-* "$SCHEMAS_DIR"
-    ls $TMP_DIR
+    cat $TMP_DIR/.yml
     cd "$SCHEMAS_DIR"
     ls
     export FILENAME_FORMAT='{kind}-{group}-{version}'
 
     curl -sL  "$ASO_URL" > CustomResourceDefinition-azureserviceoperator.yaml
     curl -sL  "$CSI_URL" > CustomResourceDefinition-secretproviderclasses.yaml
-
+    ls
+    cat $TMP_DIR/.yml
     python3 /tmp/openapi2jsonschema.py * > /dev/null
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
     ls $TMP_DIR
-    rm -rf $TMP_DIR/.yml
+    cat $TMP_DIR/.yml
 
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
