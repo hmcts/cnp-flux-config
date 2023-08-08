@@ -57,6 +57,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     ./kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
 
     mv "${TMP_DIR}"CustomResourceDefinition-* "$SCHEMAS_DIR"
+    ls
     cd "$SCHEMAS_DIR"
     export FILENAME_FORMAT='{kind}-{group}-{version}'
 
@@ -67,6 +68,5 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
-    cat /tmp/sbox/00/.yml
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
