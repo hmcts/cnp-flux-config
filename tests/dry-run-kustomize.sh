@@ -53,9 +53,8 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     mkdir -p "$SCHEMAS_DIR"
 
     #hack to get traefik and prometheus CRDs as flux build kustomization is ignoring remote bases.
-    ./kustomize build --load_restrictor none apps/admin/traefik-crds > CustomResourceDefinition-treafik.yaml
-    cat CustomResourceDefinition-treafik.yaml
-    ./kustomize build --load_restrictor none apps/monitoring/kube-prometheus-stack-crds > CustomResourceDefinition-kube-prometheus-stack.yaml
+    ./kustomize build --load_restrictor none apps/admin/traefik-crds > ${TMP_DIR}CustomResourceDefinition-treafik.yaml
+    ./kustomize build --load_restrictor none apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
 
     mv "${TMP_DIR}"CustomResourceDefinition-* "$SCHEMAS_DIR"
     cd "$SCHEMAS_DIR"
