@@ -7,4 +7,4 @@ wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.
   tar xz && sudo mv ${BINARY} /usr/bin/yq
 
 curl -s "https://raw.githubusercontent.com/\
-kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && rm -rf kustomize && ./install_kustomize.sh 3.7.0
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh && chmod +x install_kustomize.sh && rm -rf kustomize && ./install_kustomize.sh

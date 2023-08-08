@@ -45,7 +45,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
 
     done
 
-    ./kustomize build --load_restrictor none "clusters/ptl-intsvc/base" | yq eval 'select(.metadata and .kind == "ImagePolicy")' -  > imagepolicies_list.yaml
+    ./kustomize build --load-restrictor LoadRestrictionsNone "clusters/ptl-intsvc/base" | yq eval 'select(.metadata and .kind == "ImagePolicy")' -  > imagepolicies_list.yaml
     [ $? -eq 0 ] || (echo "Kustomize build has failed" && exit 1)
 
     for IMAGE_POLICY in "${IMAGE_POLICIES[@]}"; do
