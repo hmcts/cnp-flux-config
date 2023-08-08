@@ -67,5 +67,6 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
+    cat /tmp/sbox/00/.yml
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
