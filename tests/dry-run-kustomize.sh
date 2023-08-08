@@ -41,6 +41,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
 
     split_files "$TMP_DIR" "${CLUSTER}.yaml"
+    cat $TMP_DIR/.yml
 
     for NAMESPACE_KUSTOMIZATION in $(find "$TMP_DIR" -type f -iname "Kustomization-*"); do
         NAMESPACE_KUSTOMIZATION_PATH=$(yq '.spec.path' "$NAMESPACE_KUSTOMIZATION")
@@ -48,6 +49,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
         flux build kustomization "$NAMESPACE_KUSTOMIZATION_NAME" --path "$NAMESPACE_KUSTOMIZATION_PATH" --kustomization-file "$NAMESPACE_KUSTOMIZATION" --dry-run > "$TMP_DIR/${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
         split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
     done
+    cat $TMP_DIR/.yml
 
     SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
     mkdir -p "$SCHEMAS_DIR"
