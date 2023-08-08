@@ -26,8 +26,6 @@ split_files() {
     cd "$file_dir"
     yq -s '.kind + "-" + .metadata.name' "$file_name"
     rm -rf "$file_name"
-    ls
-    cat $TMP_DIR/.yml
     cd "$CURRENT_DIRECTORY"
 }
 
@@ -40,9 +38,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
 
     cat $TMP_DIR/kustomize.yaml
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
-
     split_files "$TMP_DIR" "${CLUSTER}.yaml"
-    cat $TMP_DIR/.yml
 
     for NAMESPACE_KUSTOMIZATION in $(find "$TMP_DIR" -type f -iname "Kustomization-*"); do
         NAMESPACE_KUSTOMIZATION_PATH=$(yq '.spec.path' "$NAMESPACE_KUSTOMIZATION")
@@ -50,7 +46,6 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
         flux build kustomization "$NAMESPACE_KUSTOMIZATION_NAME" --path "$NAMESPACE_KUSTOMIZATION_PATH" --kustomization-file "$NAMESPACE_KUSTOMIZATION" --dry-run > "$TMP_DIR/${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
         split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
     done
-    cat $TMP_DIR/.yml
 
     SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
     mkdir -p "$SCHEMAS_DIR"
@@ -58,22 +53,19 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     #hack to get traefik and prometheus CRDs as flux build kustomization is ignoring remote bases.
     ./kustomize build --load-restrictor LoadRestrictionsNone apps/admin/traefik-crds > ${TMP_DIR}CustomResourceDefinition-treafik.yaml
     ./kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/dynatrace/dynatrace-crds > ${TMP_DIR}CustomResourceDefinition-dynatrace.yaml
 
     mv "${TMP_DIR}"CustomResourceDefinition-* "$SCHEMAS_DIR"
-    cat $TMP_DIR/.yml
     cd "$SCHEMAS_DIR"
-    ls
+
     export FILENAME_FORMAT='{kind}-{group}-{version}'
 
     curl -sL  "$ASO_URL" > CustomResourceDefinition-azureserviceoperator.yaml
     curl -sL  "$CSI_URL" > CustomResourceDefinition-secretproviderclasses.yaml
-    ls
-    cat $TMP_DIR/.yml
+
     python3 /tmp/openapi2jsonschema.py * > /dev/null
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
-    ls $TMP_DIR
-    cat $TMP_DIR/.yml
 
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
