@@ -39,7 +39,6 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     yq ". *= load(\"apps/flux-system/${ENVIRONMENT}/${CLUSTER}/kustomize.yaml\")" apps/flux-system/base/kustomize.yaml > "${TMP_DIR}/kustomize.yaml"
 
     cat $TMP_DIR/kustomize.yaml
-    cat $TMP_DIR/.yml
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
 
     split_files "$TMP_DIR" "${CLUSTER}.yaml"
