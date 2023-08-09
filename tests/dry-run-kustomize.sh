@@ -37,9 +37,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     yq ". *= load(\"apps/flux-system/${ENVIRONMENT}/${CLUSTER}/kustomize.yaml\")" apps/flux-system/base/kustomize.yaml > "${TMP_DIR}/kustomize.yaml"
 
     cat $TMP_DIR/kustomize.yaml
-
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
-
     split_files "$TMP_DIR" "${CLUSTER}.yaml"
 
     for NAMESPACE_KUSTOMIZATION in $(find "$TMP_DIR" -type f -iname "Kustomization-*"); do
@@ -51,8 +49,15 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
 
     SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
     mkdir -p "$SCHEMAS_DIR"
+
+    #hack to get traefik and prometheus CRDs as flux build kustomization is ignoring remote bases.
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/admin/traefik-crds > ${TMP_DIR}CustomResourceDefinition-treafik.yaml
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/dynatrace/dynatrace-crds > ${TMP_DIR}CustomResourceDefinition-dynatrace.yaml
+
     mv "${TMP_DIR}"CustomResourceDefinition-* "$SCHEMAS_DIR"
     cd "$SCHEMAS_DIR"
+
     export FILENAME_FORMAT='{kind}-{group}-{version}'
 
     curl -sL  "$ASO_URL" > CustomResourceDefinition-azureserviceoperator.yaml
