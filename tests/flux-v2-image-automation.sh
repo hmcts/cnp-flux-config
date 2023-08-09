@@ -2,7 +2,6 @@
 set -ex -o pipefail
 
 EXCLUSIONS_LIST=(
-  apps/sscs/sscs-case-loader/prod-00.yaml
   apps/docmosis/docmosis/docmosis.yaml
   apps/docmosis/docmosis/aat.yaml
   apps/docmosis/docmosis/sbox.yaml
