@@ -13,7 +13,22 @@ spec:
       useInterpodAntiAffinity: true
       ingressHost: civil-citizen-ui.demo.platform.hmcts.net
       image: hmctspublic.azurecr.io/civil/citizen-ui:prod-cf7362f-20230809093221 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
+      keyVaults:
+        civil-cui:
+          resourceGroup: civil-citizen-ui
+          secrets:
+            - appinsights-instrumentation-key
+            - draft-store-access-key
+            - citizen-ui-idam-secret
+            - name: ordnance-survey-api-key
+              alias: ORDNANCE_SURVEY_API_KEY
+            - cmc-s2s-secret
+            - citizen-draft-store-primary
+            - citizen-draft-store-secondary
+            - civil-citizen-ui-token-key
+
       environment:
+        ORDNANCE_SURVEY_API_KEY: ${ORDNANCE_SURVEY_API_KEY}
         GA_TRACKING_ID: UA-97111056-1
         FEATURE_TESTING_SUPPORT: true
         FEATURE_RETURN_ERROR_TO_USER: true
