@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: labs-darrenbayliss-dev
+  namespace: labs
+spec:
+  releaseName: labs-darrenbayliss-dev
+  chart:
+    spec:
+      chart: ./stable/labs-darrenbayliss-dev
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/darrenbayliss-dev:latest # {"$imagepolicy": "flux-system:labs-darrenbayliss-dev"}
+      disableTraefikTls: true
