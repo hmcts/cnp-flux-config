@@ -8,22 +8,6 @@ spec:
   values:
     nodejs:
       image: hmctspublic.azurecr.io/civil/citizen-ui:prod-cf7362f-20230809093221 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
-      keyVaults:
-        civil-cui:
-          resourceGroup: civil-citizen-ui
-          secrets:
-            - appinsights-instrumentation-key
-            - draft-store-access-key
-            - citizen-ui-idam-secret
-            - name: ordnance-survey-api-key
-              alias: ORDNANCE_SURVEY_API_KEY
-            - cmc-s2s-secret
-            - citizen-draft-store-primary
-            - citizen-draft-store-secondary
-            - civil-citizen-ui-token-key
-      environment:
-        ORDNANCE_SURVEY_API_KEY: ${ORDNANCE_SURVEY_API_KEY}
-
   chart:
     spec:
       chart: ./stable/civil-citizen-ui
