@@ -23,7 +23,7 @@ spec:
               existingStorageAccountName: "hmctsjenkinscftptl"
               imageReference:
                 galleryImageDefinition: "jenkins-ubuntu"
-                galleryImageVersion: "1.4.63"
+                galleryImageVersion: "1.4.65"
                 galleryName: "hmcts"
                 galleryResourceGroup: "hmcts-image-gallery-rg"
                 gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -64,9 +64,6 @@ spec:
               osDiskSize: 60
               osDiskStorageAccountType: "Standard_LRS"
               osType: "Linux"
-              retentionStrategy:
-                azureVMCloudRetentionStrategy:
-                  idleTerminationMinutes: 60
               shutdownOnIdle: false
               storageAccountNameReferenceType: "existing"
               storageAccountType: "Standard_LRS"
@@ -103,11 +100,17 @@ spec:
                         templateDesc: "Jenkins build agents for HMCTS"
                         labels: "ubuntu"
                         maxVirtualMachinesLimit: 80
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
                         usageMode: "NORMAL"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
                         labels: "daily"
                         maxVirtualMachinesLimit: 20
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
                         usageMode: "EXCLUSIVE"
                         <<: *vm_template_values_anchor

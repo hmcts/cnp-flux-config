@@ -1,19 +1,19 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base   # This is apps/base instead of apps/ia/base as preview doesn't install everything
-  - ../../identity/identity.yaml
-  - ../../../xui/identity/identity.yaml
-  - ../../../rpe/identity/identity.yaml
-  - ../../../ccd/identity/identity.yaml
-  - ../../../em/identity/identity.yaml
-  - ../../../am/identity/identity.yaml
-  - ../../ia-aip-frontend/ia-aip-frontend.yaml
+- ../../../base
+- ../../identity/identity.yaml
+- ../../../xui/identity/identity.yaml
+- ../../../rpe/identity/identity.yaml
+- ../../../ccd/identity/identity.yaml
+- ../../../em/identity/identity.yaml
+- ../../../am/identity/identity.yaml
+- ../../ia-aip-frontend/ia-aip-frontend.yaml
 namespace: ia
-patchesStrategicMerge:
-  - ../../identity/aat.yaml
-  - ../../../xui/identity/aat.yaml
-  - ../../../rpe/identity/aat.yaml
-  - ../../../ccd/identity/aat.yaml
-  - ../../../em/identity/aat.yaml
-  - ../../../am/identity/aat.yaml
+patches:
+- path: ../../identity/aat.yaml
+- path: ../../../xui/identity/aat.yaml
+- path: ../../../rpe/identity/aat.yaml
+- path: ../../../ccd/identity/aat.yaml
+- path: ../../../em/identity/aat.yaml
+- path: ../../../am/identity/aat.yaml

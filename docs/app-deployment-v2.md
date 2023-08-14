@@ -95,7 +95,7 @@ If you want to add a new app only to a one environment, see [Add application to 
 
 - If you want to override environment specific config, you need to create patch `<env>.yaml` in `/apps/<your-namespace>/<application-name>/` directory by specifying only the values you want to override.
    [Example prod patch](/apps/rpe/draft-store-service/prod.yaml)
-- Add this patch `- ../../<application-name>/<env>.yaml` to `patchesStrategicMerge` list in team specific overlay in corresponding environment `/apps/<your-namespace>/<env>/base/kustomization.yaml`.
+- Add this patch `-path: ../../<application-name>/<env>.yaml` to `patches` list in team specific overlay in corresponding environment `/apps/<your-namespace>/<env>/base/kustomization.yaml`.
 
 ### Deploy non prod image to an environment
 

@@ -2,11 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: probate
 resources:
-  - ../base
-  - ../../probate-cron-smee-and-ford-extract/probate-cron-smee-and-ford-extract.yaml
-patchesStrategicMerge:
-  - ../../probate-cron-smee-and-ford-extract/perftest/perftest.yaml
-  - ../../probate-cron-make-dormant-cases/perftest/00.yaml
-  - ../../probate-cron-reactivate-dormant-cases/perftest/00.yaml
-  - ../../probate-cron-ccd-data-migration-tool/perftest/00.yaml
-  - ../../probate-cron-hmrc-extract/perftest/00.yaml
+- ../base
+- ../../probate-cron-smee-and-ford-extract/probate-cron-smee-and-ford-extract.yaml
+patches:
+- path: ../../probate-cron-smee-and-ford-extract/perftest/perftest.yaml
+- path: ../../probate-cron-make-dormant-cases/perftest/00.yaml
+- path: ../../probate-cron-reactivate-dormant-cases/perftest/00.yaml
+- path: ../../probate-cron-ccd-data-migration-tool/perftest/00.yaml
+- path: ../../probate-cron-hmrc-extract/perftest/00.yaml
