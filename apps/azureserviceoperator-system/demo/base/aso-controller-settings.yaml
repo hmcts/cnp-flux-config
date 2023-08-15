@@ -1,28 +1,13 @@
+# Below values are not secrets, but added as a secret due to upstream chart, manifests expects it in secret.
+# They are not encrypted with sops as they are applied using kubectl in bootstrap
 apiVersion: v1
 data:
-  AZURE_CLIENT_ID: ENC[AES256_GCM,data:Brqqw7LIis5KKenl9sGTf8Yq9ECFG5pJoYuUr2j7wI7lMVYuFgJp8ya8mDM8OuI/,iv:+66dzVuo4V7QJPteiY7tOJZp4fAdG9JR/V2K5ciJ3eI=,tag:WBxjp6rvMv3XuRE+82Ckzw==,type:str]
-  AZURE_SUBSCRIPTION_ID: ENC[AES256_GCM,data:Birr338CiwuNVqIZKHhGNRC53lcp1wfO0WjgAPS/vL0I5fDdTzS3IeHuVzsA8f1x,iv:VUsMJidL+DhuVyTDbm6t8LCTZSytkwBUNpML2ybzgZ4=,tag:Lt52sr4iNeWTGLKT5O7YnA==,type:str]
-  AZURE_TENANT_ID: ENC[AES256_GCM,data:oFbX2cra6WFDcV+zi5Ug19XkwPKSr7Nl3CPMklJOOOtyZzKbHgann6svR1LiYrZO,iv:Af/KRVSHLVUope0sZXpQxbdDRk3dDY7aIuuVfrYild0=,tag:oCPTQ4PCsRSzIpBIG4a+7w==,type:str]
-  USE_WORKLOAD_IDENTITY_AUTH: ENC[AES256_GCM,data:woKvGT/64UQ=,iv:B8mgxpehB1QtwgpnX2uQy64kZTXMB9D2cbW+2AmAkHQ=,tag:oytF7mO7tk8fMqkxXVVCug==,type:str]
+  AZURE_CLIENT_ID: ZGJlODI5MGUtMjg3OC00MDNjLWJkYWItZDJkODEzMDQ3Yjk2
+  AZURE_SUBSCRIPTION_ID: MWM0ZjA3MDQtYTI5ZS00MDNkLWI3MTktYjkwYzM0ZWYxNGM5
+  AZURE_TENANT_ID: NTMxZmY5NmQtMGFlOS00NjJhLThkMmQtYmVjN2MwYjQyMDgy
+  USE_WORKLOAD_IDENTITY_AUTH: dHJ1ZQ==
 kind: Secret
 metadata:
-  creationTimestamp: null
   name: aso-controller-settings
   namespace: azureserviceoperator-system
 type: Opaque
-sops:
-  kms: []
-  gcp_kms: []
-  azure_kv:
-    - vault_url: https://dcdcftappsdemokv.vault.azure.net
-      name: sops-key
-      version: 7a5cc0c79b02466c86bc594c431e00f7
-      created_at: "2023-06-26T10:36:22Z"
-      enc: aVkseP0s4jSJkCiR_9ahtkVV3MKqXeKjlgkGhxsMpChvY2nUVnYwKaED5JTlIi2st5FQ9J3qsA5qbrqKmueCPtBUmxot07fU23oixYto7LsfWDqQXBW76Pre6txph-ThBieFyIZUtNEFH8V4dVpAZrKkoxCLFapRrq6ZOQOtigr8kSFQfNy-30AS4a3NdZ4xyo46GjIWfZ0AagWpu9GbeHhB8hd5XTnA1Bk6TxLI3Q7FaouTz_2aiGriKpwtB8eBu2Rd_4HoeKGAinPleN6SdV1D8dnEFxMaip5PkoVH0tFkR-3V8fEw1x8vKSUn56VUDrENULSMtFG0olc79x1Y0g
-  hc_vault: []
-  age: []
-  lastmodified: "2023-06-26T10:36:24Z"
-  mac: ENC[AES256_GCM,data:DZO+VY2fJnkLjkqkiX9j+8fFzNEioyeIPmzFptRS3dpNKWg/ENiACCAISFaVa8VQkcfcLrlGxwLqxUKauz2ia3Vn66NuoVPlqDObQZSHHH5o4fiJCZPe8S82j8CpuzULk0tSNtZ13ADAGXMw7c6Z3l7V20W1zphr528QjEcV01w=,iv:2zcibIB8GUHJyDkW8I+9zb3XI5ZYTB9HsWdDFj0wc3A=,tag:/M6tJJG/JoCYrUEbqBun9Q==,type:str]
-  pgp: []
-  encrypted_regex: ^(data|stringData)$
-  version: 3.7.3

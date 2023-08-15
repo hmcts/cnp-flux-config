@@ -1,28 +1,13 @@
+# Below values are not secrets, but added as a secret due to upstream chart, manifests expects it in secret.
+# They are not encrypted with sops as they are applied using kubectl in bootstrap
 apiVersion: v1
 data:
-    AZURE_CLIENT_ID: ENC[AES256_GCM,data:UNVgBIe3ti1b095FkLNinzz1Urfu/Wwk9xmzUAm4hcpKkNwTY+4kmfooY5PwK88h,iv:YiOd/BRZwJ4MPZnyEgVDU8BniC6UCaM9r06IwwxfULQ=,tag:r4jmYMpRpSyFNhU+WRyOZw==,type:str]
-    AZURE_SUBSCRIPTION_ID: ENC[AES256_GCM,data:WXpJL1V+ImCWhLQTBJuf4+JrifvHoih1kmlsT4TzaKV4vGE6DFtFMPdmmYsqj2Fv,iv:Ranv5YLYSpO96RTfsTFPKLWzvYzFKVd0DT78CrKlSyc=,tag:SFOuhXKgyL0bMympNz7ptg==,type:str]
-    AZURE_TENANT_ID: ENC[AES256_GCM,data:CO1CjforIAGLnE+ecdwUyRv4b0L/bKjjXm44tHrmZSmMWF0uUzij4g9JUIvs5GAb,iv:+M2CoMz6Mqm5vTJVa6PKHU7AU06AC86xrsXUJ5itBzM=,tag:OkFuo/MY1ks4bZkWM3jexw==,type:str]
-    USE_WORKLOAD_IDENTITY_AUTH: ENC[AES256_GCM,data:kBe0TGZnFZo=,iv:qx9UDNPj9zRd5hwIJW4b85R2c07ujU9VhLsKPIccNAQ=,tag:LmL2YdTrR1q+KP28CjNMgQ==,type:str]
+  AZURE_CLIENT_ID: MGY0NGE2ZjAtNGRhMS00MzNmLWEyOTgtNGZhNTAwNzJlYTJj
+  AZURE_SUBSCRIPTION_ID: N2E0ZTNiZDUtYWUzYS00ZDBjLWI0NDEtMjE4OGZlZTNmZjFj
+  AZURE_TENANT_ID: NTMxZmY5NmQtMGFlOS00NjJhLThkMmQtYmVjN2MwYjQyMDgy
+  USE_WORKLOAD_IDENTITY_AUTH: dHJ1ZQ==
 kind: Secret
 metadata:
-    creationTimestamp: null
-    name: aso-controller-settings
-    namespace: azureserviceoperator-system
+  name: aso-controller-settings
+  namespace: azureserviceoperator-system
 type: Opaque
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv:
-        - vault_url: https://dcdcftappsithckv.vault.azure.net
-          name: sops-key
-          version: 48292d8b68d74d0080f5484f065f171d
-          created_at: "2023-08-15T13:40:42Z"
-          enc: FC3wJWtgVWAamv1lEpgE4uLcAvI9m2WztFN88djRn6o3sJPnrelRs50fvjsUMNCIaTAfgyqtKTuk9cNH3DybAhYRnGJLW94XIvTHvkmgPYFs716tVKnRjnjCSTh9aeiHrAehm5EF7FjWA7fdF5p3PLuQEtj66L6D7_ejZRzPC2UcTskRYwwJIeLLauxKbp9gGGXARCYr7ydosUH1VYpnK0NPNG9UHo91Ji7x1tku7ajvf5fHUUAIcm0eBoZz8ERJMfCVOAyMoUbZXCIJbaHEBqz9eVlDwlTizQNLoOCMvkdH_7znwbC6zZfvGwxxahftfgVzRe3XtBV_A-XhlCA3IQ
-    hc_vault: []
-    age: []
-    lastmodified: "2023-08-15T13:40:46Z"
-    mac: ENC[AES256_GCM,data:snVabHiUFQzuEjbgKE8B0XxFTWQldsY3ce1AnXwddioa5Q0flYEuJWe22szS5ouTrcKatTlItOEzfqvduXh21wgt7jMK6Aqu+WMnYxiZZsIUpSUq8IpvwUMySnhnPv+5V9ZMsndCJ84L3tq8APzlWEwjO4Fo533QZI7tONeQm4M=,iv:u4shYCkdmkh1yl0ALaUh03EtZXtxGRZ/1e3FUfrvRQ8=,tag:CJNL/1NucNsSh9aBoyYc/g==,type:str]
-    pgp: []
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
