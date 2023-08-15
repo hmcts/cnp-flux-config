@@ -21,12 +21,6 @@ spec:
               ephemeralOSDisk: true
               executeInitScriptAsRoot: true
               existingStorageAccountName: "hmctsjenkinssbox"
-              imageReference:
-                galleryImageDefinition: "jenkins-ubuntu"
-                galleryImageVersion: "1.4.65"
-                galleryName: "hmcts"
-                galleryResourceGroup: "hmcts-image-gallery-rg"
-                gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
               imageTopLevelType: "advanced"
               initScript: |
                 usermod -a -G docker jenkinsssh
@@ -74,7 +68,6 @@ spec:
               templateDisabled: false
               uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
               usePrivateIP: true
-              virtualMachineSize: "Standard_D4ds_v5"
               virtualNetworkName: "cft-ptlsbox-vnet"
               virtualNetworkResourceGroupName: "cft-ptlsbox-network-rg"
 
@@ -104,10 +97,37 @@ spec:
                         labels: "ubuntu"
                         maxVirtualMachinesLimit: 10
                         usageMode: "NORMAL"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu"
+                          galleryImageVersion: "1.4.70"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-builders-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
                         labels: "daily"
                         maxVirtualMachinesLimit: 3
                         usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu"
+                          galleryImageVersion: "1.4.70"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-arm"
+                        templateDesc: "Jenkins build agents running on ARM64 CPUs"
+                        labels: "arm"
+                        maxVirtualMachinesLimit: 3
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4pds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-arm"
+                          galleryImageVersion: "1.4.70"
                         <<: *vm_template_values_anchor
