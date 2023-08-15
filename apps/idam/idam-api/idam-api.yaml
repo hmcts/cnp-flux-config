@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-74bce74-20230424142106
+      image: hmctspublic.azurecr.io/idam/api:prod-2cb4a90-20230727121010
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
@@ -17,17 +17,20 @@ spec:
         STRATEGIC_ADMIN_URL: https://idam-web-admin.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://hmcts-access.service.gov.uk
         STRATEGIC_API_URL: https://idam-api.platform.hmcts.net
-        IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam
-        IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-prod2.internal:8443
-        IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-prod2.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
-        IDAM_SPI_FORGEROCK_IDM_ROOT: https://forgerock-idm.service.core-compute-idam-prod2.internal:18443/openidm
-        IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-prod2.internal:9292
-        IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-prod2.internal:9292
+        IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-prod.internal:8443/openam
+        IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-prod.internal:8443
+        IDAM_SPI_FORGEROCK_AM_JWKSURIFOROAUTH2CLIENTS: http://forgerock-am.service.core-compute-idam-prod.internal:8080/openam/oauth2/hmcts/connect/jwk_uri
+        IDAM_SPI_FORGEROCK_IDM_ROOT: https://forgerock-idm.service.core-compute-idam-prod.internal:18443/openidm
+        IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-prod.internal:9292
+        IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-prod.internal:9292
         SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-prod2.internal,emailAddress=devops@amido.com
         SSL_TRUST_DNS_1: C=None,ST=None,L=None,OU=None,O=OpenDJ Self-Signed Certificate,CN=openidm-localhost
         SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-prod2.internal,emailAddress=devops@hmcts.net
+        SSL_TRUST_DNS_3: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-prod.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-prod2.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-prod2.internal
+        SSL_TRUST_HOSTNAMES_2: forgerock-idm.service.core-compute-idam-prod.internal
+        SSL_TRUST_HOSTNAMES_3: forgerock-am.service.core-compute-idam-prod.internal
         STRATEGIC_SSO_PROVIDERS_0_providerName: azure
         STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_0_uniqueIdClaim: oid
@@ -49,6 +52,8 @@ spec:
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
+        IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
+        SPRING_REDIS_TIMEOUT: 300
   chart:
     spec:
       chart: idam-api

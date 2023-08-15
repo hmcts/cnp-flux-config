@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-74bce74-20230424142106
+      image: hmctspublic.azurecr.io/idam/api:preview-bade59c-20230809175325 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.sandbox.platform.hmcts.net
       disableTraefikTls: true
       replicas: 4
@@ -39,6 +39,7 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        TRIGGER: true
   chart:
     spec:
       version: 0.4.11

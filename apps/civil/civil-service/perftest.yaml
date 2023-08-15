@@ -6,9 +6,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-6f37c22-20230601164713 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-f1af981-20230815135525 #{"$imagepolicy": "flux-system:civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         CMC_DB_USERNAME: 'cmc@cmc-db-v11-perftest'
         CMC_DB_HOST: cmc-db-v11-perftest.postgres.database.azure.com
         POLLING_EVENT_EMITTER_ENABLED: false
+        SERVICE_REQUEST_UPDATE: http://civil-service-perftest.service.core-compute-perftest.internal/service-request-update
+        SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-perftest.service.core-compute-perftest.internal/service-request-update-claim-issued

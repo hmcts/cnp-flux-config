@@ -6,31 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-2756-2d511b0-20230601164224 #{"$imagepolicy": "flux-system:demo-civil-service"}
-      keyVaults:
-        civil:
-          resourceGroup: civil
-          secrets:
-            - civil-idam-client-secret
-            - microservicekey-civil-service
-            - system-update-user-username
-            - system-update-user-password
-            - cross-access-user-username
-            - cross-access-user-password
-            - prd-admin-user-username
-            - prd-admin-user-password
-            - AppInsightsInstrumentationKey
-            - docmosis-api-key
-            - cmc-db-password-v11
-            - gov-notify-api-key
-            - sendgrid-api-key
-            - robotics-notification-sender
-            - robotics-notification-recipient
-            - robotics-notification-recipient-spec
-            - launch-darkly-sdk-key
-            - robotics-notification-multipartyrecipient
-            - ordnance-survey-api-key
-            - notification-caseworker-spec-receiver
+      image: hmctspublic.azurecr.io/civil/service:pr-3134-abd08e4-20230815135832 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -39,7 +15,5 @@ spec:
         SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-demo.service.core-compute-demo.internal/service-request-update-claim-issued
         WA_TOGGLE: "WA 4"
         POLLING_EVENT_EMITTER_ENABLED: false
-        HMC_HEARINGS_TOPIC_NAMESPACE: 'hmc-servicebus-{{ .Values.global.environment }}'
-        HMC_HEARINGS_TOPIC_NAME: 'hmc-to-cft-{{ .Values.global.environment }}'
-        HMC_HEARINGS_TOPIC_SUBSCRIPTION_NAME: 'hmc-to-civil-subscription-{{ .Values.global.environment }}'
-        HMC_HEARINGS_TOPIC_POLICY_NAME: SendAndListenSharedAccessKey
+        STITCHING_API_ENABLED: true
+        HMC_HEARINGS_SUBSCRIPTION_ENABLED: true

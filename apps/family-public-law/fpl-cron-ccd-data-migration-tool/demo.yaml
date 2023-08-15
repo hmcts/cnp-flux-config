@@ -6,14 +6,14 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-109-51b1768-20230516141446 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-112-0e610e4-20230620114937 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
-      schedule: "0 15 16 5 *"
+      schedule: "0 12 20 6 *"
       environment:
-        MIGRATION_ID: DFPL-log
+        MIGRATION_ID: DFPL-702
         ENABLED: false
         UPDATE: rollback
         IDAM_REDIRECT_URL: https://fpl-case-service-demo.service.core-compute-demo.internal/oauth2/callback
@@ -21,7 +21,7 @@ spec:
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         DEFAULT_THREAD_LIMIT: 25
-        DEFAULT_QUERY_SIZE: 500
+        DEFAULT_QUERY_SIZE: 100
       keyVaults:
         fpl:
           secrets:

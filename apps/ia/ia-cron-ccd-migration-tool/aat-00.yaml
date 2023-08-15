@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-cron-ccd-migration-tool
+spec:
+  releaseName: ia-cron-ccd-migration-tool
+  values:
+    job:
+      schedule: "0 */1 * 7 *"
+      cpuRequests: "1000m"
+      cpuLimits: "2500m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      environment:
+        TRIG: trig-2
+        MIGRATION_ENABLED: "true"
+        MIGRATE_LEGACY_CASE_FLAGS: "true"
+        MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
+        MIGRATE_CASE_FLAGS_INTERNAL: "false"

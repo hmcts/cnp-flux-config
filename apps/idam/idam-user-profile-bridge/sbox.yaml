@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: idam-user-profile-bridge
+  namespace: idam
+spec:
+  releaseName: idam-user-profile-bridge
+  values:
+    java:
+      ingressHost: idam-user-profile-bridge.sandbox.platform.hmcts.net
+      environment:
+        IDAM_API_URL: http://idam-api
+        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: http://idam-web-public/o/jwks

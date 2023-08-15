@@ -2,14 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: em
 resources:
-  - ../../base
-  - ../../em-icp/em-icp.yaml
-  - ../../em-showcase/em-showcase.yaml
-  - ../../../rbac/nonprod-role.yaml
-patchesStrategicMerge:
-  - ../../identity/aat.yaml
-  - ../../em-ccd-orchestrator/aat.yaml
-  - ../../em-anno/aat.yaml
-  - ../../em-npa/aat.yaml
-  - ../../em-hrs-api/aat.yaml
-  - ../../em-stitching/aat.yaml
+- ../../base
+- ../../em-icp/em-icp.yaml
+- ../../em-showcase/em-showcase.yaml
+- ../../../rbac/nonprod-role.yaml
+patches:
+- path: ../../identity/aat.yaml
+- path: ../../em-ccd-orchestrator/aat.yaml
+- path: ../../em-anno/aat.yaml
+- path: ../../em-npa/aat.yaml
+- path: ../../em-hrs-api/aat.yaml
+- path: ../../em-stitching/aat.yaml

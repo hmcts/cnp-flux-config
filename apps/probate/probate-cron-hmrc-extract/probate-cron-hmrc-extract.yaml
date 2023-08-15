@@ -8,13 +8,14 @@ spec:
     job:
       environment:
         TASK_NAME: HmrcExtractTask
+        VAR_FV2: trigger-1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-38c6dc9-20230531125617 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-11983e5-20230814163253 #{"$imagepolicy": "flux-system:probate-back-office"}
       schedule: 0 * * * *
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.21
+      version: 0.0.22
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

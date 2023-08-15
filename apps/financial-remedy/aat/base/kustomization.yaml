@@ -1,9 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - ../../../rbac/nonprod-role.yaml
+- ../../base
+- ../../../rbac/nonprod-role.yaml
+- ../../finrem-cron-send-order/finrem-cron-send-order.yaml
+- ../../finrem-cron-list-for-hearing/finrem-cron-list-for-hearing.yaml
 namespace: financial-remedy
-patchesStrategicMerge:
-  - ../../finrem-cos/aat.yaml
-  - ../../identity/aat.yaml
+patches:
+- path: ../../finrem-cos/aat.yaml
+- path: ../../identity/aat.yaml

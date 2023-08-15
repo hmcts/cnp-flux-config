@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: disposer
+  namespace: disposer
+spec:
+  type: 0
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: disposer-binding
+  namespace: disposer
+spec:
+  azureIdentity: disposer
+  selector: disposer

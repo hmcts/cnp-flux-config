@@ -6,22 +6,35 @@ spec:
   values:
     nodejs:
       ingressHost: manage-case-ac-int.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/xui/webapp:prod-059a063-20230601154506 #{"$imagepolicy": "flux-system:xui-webapp"}
       environment:
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
-        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,AUTOTEST1,TEST,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3,BEFTA_MASTER
+        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,ADOPTION,EMPLOYMENT,CIVIL,AUTOTEST1,CMC,HRS,BEFTA_JURISDICTION_1,PRIVATELAW,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3,ST_CIC,ST_PHL,ST_CS,ST_SEND,ST_MH,BEFTA_MASTER
         FEATURE_OIDC_ENABLED: true
         SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        DEBUG: xuiNode:*
         SERVICES_IDAM_OAUTH_CALLBACK_URL: oauth2/callback
         STUB: false
-        SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-ac-int-manage-case-assignment-demo.service.core-compute-demo.internal
+        SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
         SERVICES_PRD_API: http://rd-professional-api-demo.service.core-compute-demo.internal
         SERVICES_ICP_API: http://em-icp-demo.service.core-compute-demo.internal
-        DEBUG: xuiNode:*,-xuiNode:auth:s2s
-        SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-demo.service.core-compute-demo.internal
-        UV_THREADPOOL_SIZE: 96
-        SERVICES_CCD_COMPONENT_API: https://ac-int-gateway-ccd.demo.platform.hmcts.net
-        SERVICES_CCD_DATA_STORE_API: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal
-        HEALTH_CCD_COMPONENT_API: https://ac-int-gateway-ccd.demo.platform.hmcts.net/health
-        HEALTH_CCD_DATA_API: http://ccd-ac-int-data-store-api-demo.service.core-compute-demo.internal/health
+        SERVICES_EM_DOCASSEMBLY_API: http://dg-docassembly-demo.service.core-compute-demo.internal
+        SERVICES_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
+        SERVICES_CASE_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_COMPONENT_API_SSCS: http://sscs-hearings-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_COMPONENT_API_PRIVATELAW: http://fis-hmc-api-demo.service.core-compute-demo.internal
+        SERVICES_HMC_HEARINGS_COMPONENT_API: http://hmc-cft-hearing-service-demo.service.core-compute-demo.internal
+        SERVICES_PRD_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
+        SERVICES_PRD_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
+        SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-demo.service.core-compute-demo.internal
+        SERVICES_JUDICIAL_BOOKING_API_PATH: http://am-judicial-booking-service-demo.service.core-compute-demo.internal
+        SERVICES_WA_WORKFLOW_API_URL: http://wa-workflow-api-demo.service.core-compute-demo.internal
+        FEATURE_ACCESS_MANAGEMENT_ENABLED: true
+        SERVICES_ROLE_ASSIGNMENT_MAPPING_API: http://am-org-role-mapping-service-demo.service.core-compute-demo.internal
+        SERVICES_PAYMENT_RETURN_URL: https://paymentoutcome-web.demo.platform.hmcts.net
+        SERVICES_TRANSLATION_API_URL: http://ts-translation-service-demo.service.core-compute-demo.internal
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW
+        SERVICES_REFUNDS_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
+        SERVICES_NOTIFICATIONS_API_URL: http://ccpay-notifications-service-demo.service.core-compute-demo.internal
+        SERVICES_PAYMENTS_URL: http://payment-api-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/xui/webapp:prod-c4bf8b5-20230814125448 #{"$imagepolicy": "flux-system:xui-webapp-ac-integration"}

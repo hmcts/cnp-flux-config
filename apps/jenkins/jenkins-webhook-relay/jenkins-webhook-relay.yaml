@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jenkins-webhook-relay
+  namespace: jenkins
+spec:
+  chart:
+    spec:
+      chart: ./charts/jenkins-webhook-relay
+      interval: 1m
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: GitRepository
+        name: jenkins-webhook-relay
+        namespace: flux-system
+      version: '*'
+  interval: 5m
+  releaseName: jenkins-webhook-relay
+  values:
+    function:
+      image: hmctspublic.azurecr.io/jenkins/jenkins-webhook-relay:prod-246c7fb4-1689239823 #{"$imagepolicy": "flux-system:jenkins-webhook-relay"}
+      environment:
+        CONNECTION_URL: "http://jenkins.jenkins.svc.cluster.local:8080"
+        SERVICE_BUS_QUEUE_NAME: "jenkins"
+        MAX_MESSAGE_COUNT: "40"

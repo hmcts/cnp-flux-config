@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: disposer
+  namespace: flux-system
+spec:
+  path: ./apps/disposer/${ENVIRONMENT}/${CLUSTER}
+  postBuild:
+    substitute:
+      NAMESPACE: "disposer"
+      TEAM_NOTIFICATION_CHANNEL: "disposer-builds"
+      TEAM_AAD_GROUP_ID: "dc2e5b20-b5ad-41ff-ad63-bd293b189629"

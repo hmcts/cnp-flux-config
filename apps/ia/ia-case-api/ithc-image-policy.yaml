@@ -2,14 +2,6 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: ithc-ia-case-api
-  annotations:
-    hmcts.github.com/prod-automated: disabled
 spec:
-  filterTags:
-    pattern: '^pr-1273-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
-  policy:
-    alphabetical:
-      order: asc
   imageRepositoryRef:
     name: ia-case-api

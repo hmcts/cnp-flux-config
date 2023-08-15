@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: labs-rhodrif
+  namespace: labs
+spec:
+  releaseName: labs-rhodrif
+  chart:
+    spec:
+      chart: ./stable/labs-rhodrif
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/rhodrif:prod-3eb7985-20230622201824 # {"$imagepolicy": "flux-system:labs-rhodrif"}
+      disableTraefikTls: true

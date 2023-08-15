@@ -8,7 +8,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-de8a052-20230602070212 #{"$imagepolicy": "flux-system:camunda"}
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-3db1e28-20230728083434 #{"$imagepolicy": "flux-system:camunda"}
       ingressHost: camunda-bpm.{{ .Values.global.environment }}.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true
@@ -17,7 +17,7 @@ spec:
       keyVaults:
         camunda:
           secrets:
-            - name: bpm-v14-POSTGRES-PASS
+            - name: bpm-POSTGRES-PASS
               alias: spring.datasource.password
             - name: camunda-admin-password
               alias: CAMUNDA_ADMIN_PASSWORD

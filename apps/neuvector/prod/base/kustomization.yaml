@@ -1,9 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - fluentbit-log.yaml
-  - nv-storage-secret.yaml
-patchesStrategicMerge:
-  - ../../identity/prod.yaml
-  - ../../neuvector/prod/prod.yaml
+- ../../base
+- fluentbit-log.yaml
+- nv-storage-secret.yaml
+patches:
+- path: ../../identity/prod.yaml
+- path: ../../neuvector/prod/prod.yaml

@@ -8,14 +8,17 @@ spec:
     job:
       schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-38c6dc9-20230531125617 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-11983e5-20230814163253 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
         TASK_NAME: SmeeAndFordExtractTask
+        VAR_FV2: trigger-1
       keyVaults:
         probate:
           secrets:
             - name: AppInsightsInstrumentationKey
               alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: probatemandb-POSTGRES-PASS
               alias: spring.datasource.password
             - name: s2s-probate-backend
@@ -77,7 +80,7 @@ spec:
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.21
+      version: 0.0.22
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

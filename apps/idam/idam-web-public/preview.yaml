@@ -7,7 +7,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/web-public:preview-241ee1b-20230523135033 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
+      image: hmctspublic.azurecr.io/idam/web-public:preview-b5a314e-20230808134538 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
       ingressHost: idam-web-public.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -16,10 +16,11 @@ spec:
         FEATURES_STEP_UP_AUTHENTICATION: true
         FEATURES_GOOGLE_TAG_MANAGER: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/
+        trigger_deploy: 19/06/2023-1400
     global:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.2.25
+      version: 0.2.27

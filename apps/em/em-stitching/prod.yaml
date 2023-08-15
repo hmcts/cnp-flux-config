@@ -5,12 +5,19 @@ metadata:
 spec:
   values:
     java:
-      memoryRequests: "3072Mi"
-      cpuRequests: "1500m"
-      memoryLimits: "6144Mi"
-      cpuLimits: "3000m"
+      memoryRequests: "4Gi"
+      cpuRequests: "2000m"
+      memoryLimits: "8Gi"
+      cpuLimits: "4000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4 # On each cluster
+        cpu:
+          averageUtilization: 85
+        memory:
+          averageUtilization: 85
       environment:
-        DUMMY_VAR: DELETE_ME
+#        DOCUMENT_TASK_MILLISECONDS: 5000   Leave this to default of 2 seconds
         DOCMOSIS_ENDPOINT: https://docmosis.platform.hmcts.net/rs/convert
         DOCMOSIS_RENDER_ENDPOINT: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net

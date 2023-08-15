@@ -6,17 +6,18 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:preview-0c52cfd-20230425082550
+      image: hmctspublic.azurecr.io/idam/web-public:prod-197d58d-20230808150945
       ingressHost: idam-web-public.demo.platform.hmcts.net
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.demo.platform.hmcts.net
         FEATURES_GOOGLE_TAG_MANAGER: true
         STEP_UP_AUTHENTICATION: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/
+        trigger_deploy: 21/06/2023-1400
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.2.26
+      version: 0.2.27

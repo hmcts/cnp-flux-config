@@ -8,12 +8,13 @@ spec:
   values:
     nodejs:
       replicas: 2
-      image: hmctspublic.azurecr.io/rpe/response-api:dbu5a9
+      image: hmctspublic.azurecr.io/rpe/response-api:prod-2985ffb9-1692058513 #{"$imagepolicy": "flux-system:response-api"}
+      disableTraefikTls: false
   chart:
     spec:
-      chart: rpe-response-api
-      version: 1.0.4
+      chart: ./charts/rpe-response-api
+      interval: 5m
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
+        kind: GitRepository
+        name: incident-response-api
         namespace: flux-system

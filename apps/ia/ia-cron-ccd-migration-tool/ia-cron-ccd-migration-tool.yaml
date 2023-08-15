@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ia-cron-ccd-migration-tool
+spec:
+  releaseName: ia-cron-ccd-migration-tool
+  values:
+    global:
+      jobKind: CronJob
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-6c66da8-20230809185843 #{"$imagepolicy": "flux-system:ia-cron-ccd-migration-tool"}
+  chart:
+    spec:
+      chart: ./stable/ia-cron-ccd-migration-tool
+      version: 0.0.17
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system

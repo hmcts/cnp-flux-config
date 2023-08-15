@@ -6,12 +6,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:preview-0c52cfd-20230425082550
+      image: hmctspublic.azurecr.io/idam/web-public:prod-197d58d-20230808150945
       ingressHost: idam-web-public.ithc.platform.hmcts.net
       replicas: 1
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.ithc.platform.hmcts.net
         STEP_UP_AUTHENTICATION: true
+        trigger_deploy: 20/06/2023-1500
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/
     global:
       environment: ithc
@@ -19,4 +20,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.2.26
+      version: 0.2.27
