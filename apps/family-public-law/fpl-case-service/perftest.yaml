@@ -6,10 +6,14 @@ spec:
   values:
     java:
       ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-8cfaab1-20230726111939 #{"$imagepolicy": "flux-system:perftest-fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-0a334d4-20230816132340 #{"$imagepolicy": "flux-system:perftest-fpl-case-service"}
       environment:
         SCHEDULER_ENABLED: false
         GATEWAY_URL: https://gateway-ccd.perftest.platform.hmcts.net
         SPRING_SECURITY_ENABLED: true
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.perftest.platform.hmcts.net/o/jwks
         RELEASE: NOW
+        RD_JUDICIAL_API_URL: http://rd-judicial-api-perftest.service.core-compute-perftest.internal
+        RD_STAFF_API_URL: http://rd-caseworker-ref-api-perftest.service.core-compute-perftest.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-perftest.service.core-compute-perftest.internal
+        RD_STAFF_API_ENABLED: true
