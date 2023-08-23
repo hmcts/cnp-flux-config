@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delete-hung-pods
+  namespace: admin
+data:
+  delete-hung-pods.sh: >
+    kubectl get pods --all-namespaces | grep ContainerCreating
+    | while read stuck_pod
+        do
+            pod=$(echo $stuck_pod | awk '{print $2}')
+            namespace=$(echo $stuck_pod | awk '{print $1}')
+            podstatus=$(echo $stuck_pod | awk '{print $4}')
+            echo "Deleting $pod in $namespace as status is $podstatus"
+            kubectl delete pod $pod -n $namespace --wait=false
+        done

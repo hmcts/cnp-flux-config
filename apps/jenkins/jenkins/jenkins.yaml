@@ -25,6 +25,13 @@ spec:
       imagePullPolicy: "IfNotPresent"
       podLabels:
         aadpodidbinding: jenkins
+      probes:
+        startupProbe:
+          failureThreshold: 24
+        livenessProbe:
+          failureThreshold: 10
+        readinessProbe:
+          failureThreshold: 10
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -62,6 +69,7 @@ spec:
         -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/London
         -Djava.net.preferIPv4Stack=true
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
+        -Dorg.jenkins.plugins.lockableresources.DISABLE_SAVE=true
         -Dcom.cloudbees.hudson.plugins.folder.computed.FolderComputation.EVENT_LOG_MAX_SIZE=15000
         -Dcom.cloudbees.hudson.plugins.folder.computed.FolderComputation.BACKUP_LOG_COUNT=10
         -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=40
@@ -98,28 +106,34 @@ spec:
             unclassified:
               gitHubConfiguration:
                 apiRateLimitChecker: ThrottleOnOver
+          authentication: |
+            jenkins:
+              securityRealm:
+                azure:
+                  cacheDuration: 3600
+                  clientId: "${cft-jenkins-sp-client-id}"
+                  clientSecret: "${cft-jenkins-sp-secret}"
+                  tenant: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
           auth: |
             jenkins:
               authorizationStrategy:
-                globalMatrix:
+                azureAdMatrix:
                   permissions:
-                    - "GROUP:Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
-                    - "GROUP:Overall/SystemRead:authenticated"
-                    - "GROUP:Overall/Read:authenticated"
-                    - "GROUP:View/Read:authenticated"
-                    - "GROUP:Run/Replay:authenticated"
-                    - "GROUP:Run/Update:authenticated"
-                    - "GROUP:Agent/ExtendedRead:authenticated"
-                    - "GROUP:Job/Cancel:authenticated"
-                    - "GROUP:Job/ExtendedRead:authenticated"
-                    - "GROUP:Job/Read:authenticated"
-                    - "GROUP:Job/Build:authenticated"
                     - "USER:Job/Discover:anonymous"
-                    - "GROUP:Job/Workspace:authenticated"
-                    - "GROUP:Credentials/View:authenticated"
-                    - "GROUP:Lockable Resources/Unlock:authenticated"
-                    - "GROUP:Lockable Resources/Reserve:authenticated"
-                    - "GROUP:SCM/Tag:authenticated"
+                    - "GROUP:Overall/Administer:DTS Platform Operations (e7ea2042-4ced-45dd-8ae3-e051c6551789)"
+                    - "GROUP:Agent/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Job/Build:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Job/Cancel:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Job/ExtendedRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Job/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Job/Workspace:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Lockable Resources/Unlock:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Lockable Resources/View:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Overall/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Overall/SystemRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Run/Replay:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:Run/Update:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
+                    - "GROUP:View/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
           global-library: |
             unclassified:
               globalLibraries:
@@ -169,7 +183,7 @@ spec:
                     serverUrl: 'https://sonarcloud.io'
           timestamper: |
             unclassified:
-              timestamperConfig:
+              timestamper:
                 allPipelines: true
           theme: |
             unclassified:
@@ -299,7 +313,7 @@ spec:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
       sidecars:
         configAutoReload:
-          image: kiwigrid/k8s-sidecar:1.24.4
+          image: kiwigrid/k8s-sidecar:1.25.0
           # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
           # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
           # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
@@ -366,7 +380,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 4.3.0
+      version: 4.4.2
       sourceRef:
         kind: HelmRepository
         name: jenkins

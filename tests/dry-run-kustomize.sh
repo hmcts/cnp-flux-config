@@ -12,9 +12,10 @@ set -ex
 ENVIRONMENT=$1
 CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
-ASO_VERSION=$(yq eval '.spec.chart.spec.version' apps/azureserviceoperator-system/aso/aso.yaml)
+ASO_RESOURCE_URL=$(yq eval '.resources[0]' apps/azureserviceoperator-system/aso/kustomization.yaml)
+ASO_VERSION=$(echo "$ASO_RESOURCE_URL" | cut -d'/' -f8)
 kubeconform_config=("-strict" "-summary" "-n" "12" "-schema-location" "default" "-schema-location" "/tmp/schemas/$ENVIRONMENT/$CLUSTER/")
-ASO_URL="https://github.com/Azure/azure-service-operator/releases/download/"$ASO_VERSION"/azureserviceoperator_"$ASO_VERSION".yaml"
+ASO_URL="https://github.com/Azure/azure-service-operator/releases/download/"$ASO_VERSION"/azureserviceoperator_customresourcedefinitions_"$ASO_VERSION".yaml"
 CSI_URL="https://raw.githubusercontent.com/kubernetes-sigs/secrets-store-csi-driver/master/deploy/secrets-store.csi.x-k8s.io_secretproviderclasses.yaml"
 
 curl -sL https://raw.githubusercontent.com/yannh/kubeconform/master/scripts/openapi2jsonschema.py > /tmp/openapi2jsonschema.py
@@ -37,9 +38,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     yq ". *= load(\"apps/flux-system/${ENVIRONMENT}/${CLUSTER}/kustomize.yaml\")" apps/flux-system/base/kustomize.yaml > "${TMP_DIR}/kustomize.yaml"
 
     cat $TMP_DIR/kustomize.yaml
-
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
-
     split_files "$TMP_DIR" "${CLUSTER}.yaml"
 
     for NAMESPACE_KUSTOMIZATION in $(find "$TMP_DIR" -type f -iname "Kustomization-*"); do
@@ -51,8 +50,15 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
 
     SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
     mkdir -p "$SCHEMAS_DIR"
+
+    #hack to get traefik and prometheus CRDs as flux build kustomization is ignoring remote bases.
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/admin/traefik-crds > ${TMP_DIR}CustomResourceDefinition-treafik.yaml
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
+    ./kustomize build --load-restrictor LoadRestrictionsNone apps/dynatrace/dynatrace-crds > ${TMP_DIR}CustomResourceDefinition-dynatrace.yaml
+
     mv "${TMP_DIR}"CustomResourceDefinition-* "$SCHEMAS_DIR"
     cd "$SCHEMAS_DIR"
+
     export FILENAME_FORMAT='{kind}-{group}-{version}'
 
     curl -sL  "$ASO_URL" > CustomResourceDefinition-azureserviceoperator.yaml

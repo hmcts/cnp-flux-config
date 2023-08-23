@@ -48,18 +48,18 @@ spec:
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: REGISTRY_NAME
                         value: hmcts
+                      - key: PTL_AKS_CLUSTER_NAME
+                        value: cft-ptl-00-aks
+                      - key: PTL_AKS_RESOURCE_GROUP
+                        value: cft-ptl-00-rg
                       - key: AAT_AKS_CLUSTER_NAME
                         value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-01-aks
+                        value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-01-rg
-                      - key: PTL_AKS_CLUSTER_NAME
-                        value: cft-ptl-00-aks
-                      - key: PTL_AKS_RESOURCE_GROUP
-                        value: cft-ptl-00-rg
+                        value: cft-preview-00-rg
                       - key: AKS_PTL_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
@@ -70,26 +70,6 @@ spec:
                         value: dcdcftappsstgkv
                       - key: BUSINESS_AREA_TAG
                         value: CFT
-          auth: |
-            jenkins:
-              authorizationStrategy:
-                globalMatrix:
-                  permissions:
-                    - "GROUP:Overall/Administer:e7ea2042-4ced-45dd-8ae3-e051c6551789"
-                    - "GROUP:Overall/SystemRead:authenticated"
-                    - "GROUP:Overall/Read:authenticated"
-                    - "GROUP:View/Read:authenticated"
-                    - "GROUP:Agent/ExtendedRead:authenticated"
-                    - "GROUP:Job/Cancel:authenticated"
-                    - "GROUP:Job/Read:authenticated"
-                    - "GROUP:Job/Build:authenticated"
-                    - "USER:Job/Discover:anonymous"
-                    - "GROUP:Job/Workspace:authenticated"
-                    - "GROUP:Credentials/View:authenticated"
-                    - "GROUP:Lockable Resources/Reserve:authenticated"
-                    - "GROUP:Lockable Resources/Unlock:authenticated"
-                    - "GROUP:Lockable Resources/View:authenticated"
-                    - "GROUP:SCM/Tag:authenticated"
           otel: |
             unclassified:
               openTelemetry:
@@ -220,7 +200,7 @@ spec:
                     title: Special Tribunals Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-performance-tests|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
+                      ^HMCTS.*\/(am-shared-infrastructure|am-org-role-mapping-service|am-role-assignment-batch-service|am-role-assignment-service|am-judicial-booking-service|am-role-assignment-batch-service|am-role-assignment-refresh-batch)\/master
                     name: AM
                     recurse: true
                     title: AM
@@ -244,7 +224,7 @@ spec:
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-professional-performance-test|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
+                      ^HMCTS.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -304,7 +284,7 @@ spec:
                     title: WA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests|idam-hmcts-access)\/master
+                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests|idam-hmcts-access|idam-testing-support-api|idam-access-config|idam-shared-infrastructure)\/master
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
@@ -362,20 +342,6 @@ spec:
                     name: HWF
                     recurse: true
                     title: Help with Fees
-          authentication: |
-            jenkins:
-              securityRealm:
-                saml:
-                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                  displayNameAttributeName: "http://schemas.microsoft.com/identity/claims/displayname"
-                  emailAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
-                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
-                  idpMetadataConfiguration:
-                    period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/federationmetadata/2007-06/federationmetadata.xml?appid=f51ea833-3992-44a6-899e-16257b3e4fd1
-                  maximumAuthenticationLifetime: 15724800
-                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  usernameCaseConversion: "none"
           location: |
             unclassified:
               location:

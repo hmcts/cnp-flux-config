@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nmi
+spec:
+  template:
+    spec:
+      priorityClassName: system-node-critical
+      containers:
+      - name: nmi
+        env:
+        - name: FORCENAMESPACED
+          value: "true"
+      tolerations:
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
