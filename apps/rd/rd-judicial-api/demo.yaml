@@ -5,10 +5,20 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/rd/judicial-api:prod-f7d8320-20230704155616 #{"$imagepolicy": "flux-system:rd-judicial-api"}
+      image: hmctspublic.azurecr.io/rd/judicial-api:prod-6e4f42d-20230822151958 #{"$imagepolicy": "flux-system:rd-judicial-api"}
       environment:
         DELETE_ORG: true
         TEST_IDAM_ENABLED: true
         TEST_IDAM_URL: https://idam-api.demo.platform.hmcts.net
-        JRD_S2S_AUTHORISED_SERVICES: rd_judicial_api,am_org_role_mapping_service,iac,xui_webapp,civil_service,civil_general_applications,sscs,ccd_data,sscs_bulkscan,sptribs_case_api,fis_hmc_api,adoption_cos_api,prl_cos_api,jps_judicial_payment_frontend,jps_judicial_payment_service
-        JRD_SEARCH_SERVICE_CODE: bfa1,bba3,aaa6,aaa7,aba5,aba3,bba2,aba4
+        JRD_S2S_AUTHORISED_SERVICES: rd_judicial_api,am_org_role_mapping_service,iac,xui_webapp,civil_service,civil_general_applications,sscs,ccd_data,sscs_bulkscan,sptribs_case_api,fis_hmc_api,adoption_cos_api,prl_cos_api,jps_judicial_payment_frontend,jps_judicial_payment_service,et_cos,fpl_case_service
+        JRD_SEARCH_SERVICE_CODE: bfa1,bba3,aaa6,aaa7,aba5,aba3,bba2,aba4,bha1
+        #elinks property
+        ELINKS_URL: https://jo-staging.elinks.judiciary.uk/api/v5
+        LAST_UPDATED: 2015-01-01
+        SCHEDULER_ENABLED: true
+        CRON_EXPRESSION: "* 30 12 * * *"
+        PER_PAGE: 50
+        INCLUDE_PREVIOUS_APPOINTMENT: false
+        THREAD_PAUSE_TIME: 2000
+        THREAD_RETRIGGER_TIME: 1000
+        JRD_DATA_PER_MESSAGE: 75

@@ -26,6 +26,7 @@ spec:
             - idam-solicitor-password
             - filtered-court-ids
             - postcode-lookup-token
+            - app-insights-connection-string
       replicas: 2
       memoryRequests: "1536Mi"
       cpuRequests: "1000m"
@@ -35,7 +36,7 @@ spec:
       readinessTimeout: 30
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:pr-1086-f52c5b7-20230707134605 #{"$imagepolicy": "flux-system:perftest-prl-cos-api"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-fb1cd72-20230822153553 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
@@ -51,7 +52,7 @@ spec:
         PAY_CALLBACK_URL: http://prl-cos-perftest.service.core-compute-perftest.internal/service-request-update
         PRL_DGS_API_URL: http://prl-dgs-perftest.service.core-compute-perftest.internal
         FEE_REGISTER_API_URL: http://fees-register-api-perftest.service.core-compute-perftest.internal
-        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data
         FACT_API: http://fact-api-perftest.service.core-compute-perftest.internal
         LOCATION_REF_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
         BUNDLE_URL: http://em-ccdorc-perftest.service.core-compute-perftest.internal

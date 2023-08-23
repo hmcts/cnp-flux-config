@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: wa-slack-help-bot
+  namespace: slack-help-bot
+spec:
+  releaseName: wa-slack-help-bot
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/wa/slack-help-bot:prod-b327a8a-20230727161317 #{"$imagepolicy": "flux-system:wa-slack-help-bot"}
+    environment:
+      SLACK_REPORT_CHANNEL: tm-help
+      SLACK_REPORT_CHANNEL_ID: C05MD77K5J6
+      JIRA_PROJECT: RWA
+      JIRA_ISSUE_TYPE_ID: 3
+      JIRA_ISSUE_TYPE_NAME: "Task"
+      JIRA_START_TRANSITION_ID: 21
+      JIRA_DONE_TRANSITION_ID: 31
+      DUMMY_VAR: 1
+    aadIdentityName: wa-slack-help-bot
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - wa-slack-bot-token
+          - wa-slack-app-token
+          - jira-username
+          - jira-api-token
+  chart:
+    spec:
+      chart: nodejs
+      version: 2.4.18
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

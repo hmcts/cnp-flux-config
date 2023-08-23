@@ -1,13 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - ../../../rbac/nonprod-role.yaml
-  - ../../fis-bulk-scan-api/fis-bulk-scan-api.yaml
-  - ../../fis-ds-web/fis-ds-web.yaml
+- ../../base
+- ../../../rbac/nonprod-role.yaml
+- ../../fis-cos-api/fis-cos-api.yaml
+- ../../fis-ds-update-web/fis-ds-update-web.yaml
+- ../../fis-bulk-scan-api/fis-bulk-scan-api.yaml
+- ../../fis-ds-web/fis-ds-web.yaml
 namespace: fis
-patchesStrategicMerge:
-  - ../../identity/perftest.yaml
-  - ../../fis-hmc-api/perftest.yaml
-  - ../../fis-cos-api/perftest.yaml
-  - ../../fis-ds-update-web/perftest.yaml
+patches:
+- path: ../../identity/perftest.yaml
+- path: ../../fis-hmc-api/perftest.yaml
+- path: ../../fis-cos-api/perftest.yaml
+- path: ../../fis-ds-update-web/perftest.yaml

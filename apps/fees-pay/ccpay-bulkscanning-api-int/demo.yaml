@@ -6,9 +6,23 @@ spec:
   releaseName: ccpay-bulkscanning-api-int
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-a9cc5dd-20230630164038 #{"$imagepolicy": "flux-system:demo-int-ccpay-bulkscanning-api"}
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-4c91f43-20230804170531 #{"$imagepolicy": "flux-system:demo-int-ccpay-bulkscanning-api"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         POSTGRES_NAME: postgresqldb2
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+            - name: bulkscanning-api-POSTGRES-PASS
+              alias: POSTGRES_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: paybubble-s2s-secret
+              alias: OIDC_S2S_SECRET
+            - name: paybubble-idam-client-secret
+              alias: OIDC_CLIENT_SECRET

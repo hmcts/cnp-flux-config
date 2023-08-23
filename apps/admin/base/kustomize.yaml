@@ -1,4 +1,4 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: admin
@@ -9,9 +9,8 @@ spec:
     substitute:
       NAMESPACE: "admin"
       TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"
-      ENV_INJECTOR: "disabled"
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: traefik-crd

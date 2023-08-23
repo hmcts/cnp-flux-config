@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-2374f0b-20230703170721
+      image: hmctspublic.azurecr.io/idam/api:prod-0c843e1-20230809180829
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
@@ -58,11 +58,11 @@ spec:
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGDURATION: 4d
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 1d
-        IDAM_CACHE_TTL: 1
+        IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.11
+      version: 0.6.0

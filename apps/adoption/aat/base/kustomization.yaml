@@ -1,14 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
-  - ../../../rbac/nonprod-role.yaml
-  - ../../adoption-cron-draft-case-deletion-alert/adoption-cron-draft-case-deletion-alert.yaml
-  - ../../adoption-cron-multi-child-draft-application-alert/adoption-cron-multi-child-draft-application-alert.yaml
+- ../../base
+- ../../../rbac/nonprod-role.yaml
 namespace: adoption
-patchesStrategicMerge:
-  - ../../identity/aat.yaml
-  - ../../adoption-web/aat.yaml
-  - ../../adoption-cos-api/aat.yaml
-  - ../../adoption-cron-draft-case-deletion-alert/aat.yaml
-  - ../../adoption-cron-multi-child-draft-application-alert/aat.yaml
+patches:
+- path: ../../identity/aat.yaml
+- path: ../../adoption-web/aat.yaml
+- path: ../../adoption-cos-api/aat.yaml
+- path: ../../adoption-cron-draft-case-deletion-alert/aat.yaml
+- path: ../../adoption-cron-multi-child-draft-application-alert/aat.yaml
