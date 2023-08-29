@@ -103,7 +103,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.74"
+                          galleryImageVersion: "1.4.77"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
@@ -119,7 +119,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.74"
+                          galleryImageVersion: "1.4.77"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-builders-arm"
                         templateDesc: "Jenkins build agents running on ARM64 CPUs"
@@ -135,5 +135,21 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-arm"
-                          galleryImageVersion: "1.4.74"
+                          galleryImageVersion: "1.4.77"
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-arm-daily"
+                        templateDesc: "Jenkins build agents running on ARM64 CPUs"
+                        labels: "arm daily"
+                        maxVirtualMachinesLimit: 5
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4pds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-arm"
+                          galleryImageVersion: "1.4.70"
                         <<: *vm_template_values_anchor
