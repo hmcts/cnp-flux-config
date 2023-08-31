@@ -1,0 +1,10 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cnp
+  namespace: flux-system
+spec:
+  path: ./apps/cnp/sbox/base
+  postBuild:
+    substitute:
+      WORKLOAD_IDENTITY_ID: "5e187f42-6539-4d4c-912e-dd8af8c955cc"
