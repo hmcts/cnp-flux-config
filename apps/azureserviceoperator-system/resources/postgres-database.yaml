@@ -1,0 +1,12 @@
+apiVersion: dbforpostgresql.azure.com/v1api20210601
+kind: FlexibleServersDatabase
+metadata:
+  name: ${NAMESPACE}-db
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: ${NAMESPACE}-flexibleserver-postgres-${ENVIRONMENT}
+  charset: utf8
+  connectionLimit: 1000
