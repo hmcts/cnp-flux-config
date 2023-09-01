@@ -6,14 +6,15 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "0/15 0/1 31 2 *"
+      schedule: "10 */2 * 8 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "false"
+        MIGRATION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
-        MIGRATE_CASE_FLAGS_INTERNAL: "false"
+        MIGRATE_CASE_FLAGS_INTERNAL: "true"
+        MIGRATION_NUMBER_OF_CASES: 70000

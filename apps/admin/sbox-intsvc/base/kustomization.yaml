@@ -2,16 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-- ../../keda
 - ../../../rbac/reader-clusterrole.yaml
 - ../../traefik2
 - ../../aad-pod-id/mi
 - ../../traefik2/sbox-intsvc/secret-provider-hmcts-wildcard.yaml
 - ../../delete-hung-pods
 patches:
-- path: keda-identity.yaml
 - path: ../../traefik2/sbox-intsvc/secret-provider.yaml
 - path: ../../aad-pod-id/mi/sbox-intsvc/azure-identity-patch.yaml
-- path: ../../aad-pod-id/mi/ds-patch.yaml
 - path: ../../traefik2/sbox-intsvc/tlsstore-patch.yaml
 - path: ../../traefik2/sbox-intsvc/hmcts-wildcard-release-patch.yaml
