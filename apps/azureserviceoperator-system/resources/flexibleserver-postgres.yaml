@@ -1,0 +1,21 @@
+apiVersion: dbforpostgresql.azure.com/v1api20210601
+kind: FlexibleServer
+metadata:
+  name: ${NAMESPACE}-postgres-${ENVIRONMENT}-server
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  location: uksouth
+  owner:
+    name: ${NAMESPACE}-aso-${ENVIRONMENT}-rg
+  version: "11"
+  sku:
+    name: Standard_B1ms
+    tier: Burstable
+  administratorLogin: hmcts
+  administratorLoginPassword:
+    name: ${NAMESPACE}-secret
+    key: PASSWORD
+  storage:
+    storageSizeGB: 32
