@@ -1,7 +1,11 @@
+variables:
+  - name: DB-NAME
+    value: data-store
+
 apiVersion: dbforpostgresql.azure.com/v1api20210601
 kind: FlexibleServersDatabase
 metadata:
-  name: data-store
+  name: ${DB-NAME}
   namespace: ${NAMESPACE}
   annotations:
     serviceoperator.azure.com/reconcile-policy: detach-on-delete
