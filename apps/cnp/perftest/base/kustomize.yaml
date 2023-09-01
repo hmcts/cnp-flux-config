@@ -1,0 +1,10 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cnp
+  namespace: flux-system
+spec:
+  path: ./apps/cnp/perftest/base
+  postBuild:
+    substitute:
+      WORKLOAD_IDENTITY_ID: "28f771a2-3995-4191-832a-67cede1bb04d"
