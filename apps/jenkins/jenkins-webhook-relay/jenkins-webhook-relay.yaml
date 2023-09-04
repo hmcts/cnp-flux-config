@@ -18,6 +18,8 @@ spec:
   releaseName: jenkins-webhook-relay
   values:
     function:
+      triggerAuth:
+        triggerPodIdentityProvider: "azure-workload"
       image: hmctspublic.azurecr.io/jenkins/jenkins-webhook-relay:prod-246c7fb4-1689239823 #{"$imagepolicy": "flux-system:jenkins-webhook-relay"}
       environment:
         CONNECTION_URL: "http://jenkins.jenkins.svc.cluster.local:8080"
