@@ -1,7 +1,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sscs-hearings-api
+  name: demo-sscs-hearings-api
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     java:
@@ -10,7 +12,7 @@ spec:
         TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
         SSCS_LOG_LEVEL: DEBUG
         TRIBUNALS_EVENT_QUEUE_RETRY_TIMEOUT: 60
-        DUMMY_PROPERTY: false
+        DUMMY_PROPERTY: true
         HMC_HEARINGS_LISTENING_ENABLED: true
         ADJOURNMENT_ENABLED: true
         APPLICATIONINSIGHTS_INSTRUMENTATION_LOGGING_LEVEL: DEBUG
