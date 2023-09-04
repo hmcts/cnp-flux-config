@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-- ../../keda
 - ../../traefik2
 - ../../aad-pod-id/mi
 - ../../../rbac/reader-clusterrole.yaml
@@ -11,6 +10,5 @@ patches:
   target:
     kind: ClusterRoleBinding
     labelSelector: role-type=developer
-- path: keda-identity.yaml
 - path: ../../traefik2/prod/secret-provider.yaml
 - path: ../../aad-pod-id/mi/prod/azure-identity-patch.yaml
