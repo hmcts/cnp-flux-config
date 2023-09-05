@@ -9,6 +9,8 @@ spec:
       image: hmctspublic.azurecr.io/plum/recipe-backend:prod-6dbd5e4-20230905152532 # {"$imagepolicy": "flux-system:plum-recipe-backend"}
       startupPeriod: 120
       startupFailureThreshold: 3
+      useWorkloadIdentity: true
+      workloadClientID: ${WORKLOAD_IDENTITY_ID}
   chart:
     spec:
       chart: ./stable/plum-recipe-backend
