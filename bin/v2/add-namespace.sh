@@ -48,8 +48,6 @@ then
   PRODUCT=${NAMESPACE}
 fi
 
-echo "Product is: $PRODUCT"
-
 if [ ! -f "apps/$NAMESPACE/base/kustomize.yaml" ]
 then
     echo "Creating $NAMESPACE"
