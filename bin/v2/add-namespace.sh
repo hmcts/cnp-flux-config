@@ -37,7 +37,7 @@ fi
 YAML_OBJECT=$(curl https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/team-config.yml | yq .${PRODUCT})
 
 # Check yaml object is returned
-if [ ! -n "$YAML_OBJECT" ]; then
+if [ "$YAML_OBJECT" == null ]; then
   echo "Error: YAML_OBJECT is empty. Unable to retrieve data from the URL."
   exit 1
 fi
