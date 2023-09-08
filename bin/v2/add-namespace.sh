@@ -1,13 +1,40 @@
 #!/usr/bin/env bash
-set -ex
-
-NAMESPACE=$1
-SLACK_CHANNEL=$2
-TEAM_AAD_GROUP_ID=$3
-
+# set -ex
 function usage() {
-  echo 'usage: ./add-namespace.sh <namespace> <slack-channel> <team-ad-groupid>'
+  echo 'usage: ./add-namespace.sh --namespace <namespace> --slack-channel <slack-channel> --team-aad-group-id <team-ad-groupid>'
 }
+
+# Use flags to set vars
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        --namespace)
+        NAMESPACE="$2"
+        shift
+        shift
+        ;;
+        --slack-channel)
+        SLACK_CHANNEL="$2"
+        shift
+        shift 
+        ;;
+        --product)
+        PRODUCT="$2"
+        shift 
+        shift
+        ;;
+        --team-aad-groupid)
+        TEAM_AAD_GROUP_ID="$2"
+        shift 
+        shift
+        ;;
+        *)    # unknown option
+        echo "Unknown option: $1"
+        usage
+        exit 1
+        ;;
+    esac
+done
 
 if [ -z "${NAMESPACE}" ] || [ -z "${SLACK_CHANNEL}" ] || [ -z "${TEAM_AAD_GROUP_ID}" ]
 then
@@ -15,6 +42,13 @@ then
   exit 1
 fi
 
+# Product defaults to namespace if not set
+if [ -z "${PRODUCT}" ] 
+then
+  PRODUCT=${NAMESPACE}
+fi
+
+echo "Product is: $PRODUCT"
 
 if [ ! -f "apps/$NAMESPACE/base/kustomize.yaml" ]
 then
@@ -44,6 +78,7 @@ spec:
   postBuild:
     substitute:
       NAMESPACE: "$NAMESPACE"
+      WI_NAME: "$PRODUCT"
       TEAM_NOTIFICATION_CHANNEL: "${SLACK_CHANNEL}"
       TEAM_AAD_GROUP_ID: "${TEAM_AAD_GROUP_ID}"
 EOF
