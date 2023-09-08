@@ -1,23 +1,14 @@
 #!/usr/bin/env bash
 # set -ex
 function usage() {
-  echo 'usage: ./add-namespace.sh --namespace <namespace> --slack-channel <slack-channel> --team-aad-group-id <team-ad-groupid>'
+  echo "Please ensure you have added your team's config to https://github.com/hmcts/cnp-jenkins-config/blob/master/team-config.yml"
+  echo 'usage: ./add-namespace.sh --product <product> --team-aad-group-id <team-aad-groupid>'
 }
 
 # Use flags to set vars
 while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
-        --namespace)
-        NAMESPACE="$2"
-        shift
-        shift
-        ;;
-        --slack-channel)
-        SLACK_CHANNEL="$2"
-        shift
-        shift 
-        ;;
         --product)
         PRODUCT="$2"
         shift 
@@ -36,16 +27,29 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ -z "${NAMESPACE}" ] || [ -z "${SLACK_CHANNEL}" ] || [ -z "${TEAM_AAD_GROUP_ID}" ]
+if [ -z "${PRODUCT}" ] 
 then
   usage
   exit 1
 fi
 
-# Product defaults to namespace if not set
-if [ -z "${PRODUCT}" ] 
+# Fetch team entry based on product name
+YAML_OBJECT=$(curl https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/team-config.yml | yq .${PRODUCT})
+
+# Check yaml object is returned
+if [ -z "$YAML_OBJECT" ]; then
+  echo "Error: YAML_OBJECT is empty. Unable to retrieve data from the URL."
+  exit 1
+fi
+
+NAMESPACE=$(echo "$YAML_OBJECT" | yq .namespace)
+SLACK_CHANNEL=$(echo "$YAML_OBJECT" | yq .slack.contact_channel)
+
+# Check these have been set
+if [ -z "${NAMESPACE}" ] || [ -z "${SLACK_CHANNEL}" ] || [ -z "${TEAM_AAD_GROUP_ID}" ]
 then
-  PRODUCT=${NAMESPACE}
+  usage
+  exit 1
 fi
 
 if [ ! -f "apps/$NAMESPACE/base/kustomize.yaml" ]
