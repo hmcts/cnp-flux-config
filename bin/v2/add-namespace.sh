@@ -14,7 +14,7 @@ while [[ $# -gt 0 ]]; do
         shift 
         shift
         ;;
-        --team-aad-groupid)
+        --team-aad-group-id)
         TEAM_AAD_GROUP_ID="$2"
         shift 
         shift
