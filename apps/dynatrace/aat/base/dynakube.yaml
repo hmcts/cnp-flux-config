@@ -4,14 +4,14 @@ metadata:
   name: dynakube
   namespace: dynatrace
 spec:
-  apiUrl: 'https://yrk32651.live.dynatrace.com/api'
+  apiUrl: https://yrk32651.live.dynatrace.com/api
   oneAgent:
     cloudNativeFullStack:
       args:
-        - '--set-host-group=AAT_CFT'
+        - --set-host-group=AAT_CFT
   namespaceSelector:
     matchExpressions:
-      - key: helm.toolkit.fluxcd.io/namespace
+      - key: kubernetes.io/metadata.name
         operator: NotIn
         values:
           - neuvector
