@@ -1,0 +1,18 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: tax-tribunals
+  namespace: tax-tribunals
+spec:
+  type: 0
+
+---
+
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: tax-tribunals-binding
+  namespace: tax-tribunals
+spec:
+  azureIdentity: tax-tribunals
+  selector: tax-tribunals
