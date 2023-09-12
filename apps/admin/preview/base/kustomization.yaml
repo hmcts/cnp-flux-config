@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-- ../../keda
 - ../../traefik2
 - ../../traefik2/preview/secret-provider-internal.yaml
 - ../../external-dns-2/
@@ -12,7 +11,6 @@ resources:
 - ../../../rbac/reader-clusterrole.yaml
 - ../../delete-hung-pods
 patches:
-- path: ../../aat/base/keda-identity.yaml
 - path: ../../traefik2/preview/secret-provider.yaml
 - path: ../../traefik2/preview/tlsstore-patch.yaml
 - path: ../../aad-pod-id/mi/preview/azure-identity-patch.yaml

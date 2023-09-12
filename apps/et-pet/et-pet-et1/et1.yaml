@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et1
+spec:
+  releaseName: et1
+  values:
+    base:
+      environment:
+        RESTART_ME: '2'
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/et-pet/et1:prod-bc5abf4-20230912110630 #{"$imagepolicy": "flux-system:et-pet-et1"}
+  chart:
+    spec:
+      chart: ./stable/et-pet-et1
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
