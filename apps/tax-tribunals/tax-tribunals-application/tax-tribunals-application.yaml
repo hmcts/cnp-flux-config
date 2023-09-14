@@ -17,6 +17,10 @@ spec:
     base:
       image: hmctspublic.azurecr.io/tax-tribunals/application:prod-cc901d7-20230914212402 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       disableTraefikTls: true
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
       workloadClientID: ${WORKLOAD_IDENTITY_ID}
     sidekiq:
       image: hmctspublic.azurecr.io/tax-tribunals/application:prod-cc901d7-20230914212402 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
