@@ -1,19 +1,19 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: civil-service
-  namespace: civil
+  name: help-with-fees-staffapp
 spec:
-  releaseName: civil-service
+  releaseName: help-with-fees-staffapp
   values:
-    java:
+    base:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/civil/service:prod-a2c92f9-20230914144215 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/help-with-fees/staffapp:prod-d8154d4-20230913171157 #{"$imagepolicy": "flux-system:help-with-fees-staffapp"}
       environment:
+        DUMMY_VAR: 1
   chart:
     spec:
-      chart: ./stable/civil-service
+      chart: ./stable/help-with-fees-staffapp
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
