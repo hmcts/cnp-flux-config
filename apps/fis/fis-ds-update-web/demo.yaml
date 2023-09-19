@@ -6,4 +6,13 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/fis/ds-update-web:prod-cca850d-20230906151125 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fis/ds-update-web:pr-142-9da7624-20230918160201 #{"$imagepolicy": "flux-system:demo-fis-ds-update-web"}
+      environment:
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
+        REFORM_TEAM: fis
+        REFORM_SERVICE_NAME: fis-ds-update-web
+        RPE_API: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        FIS_COS_API: http://fis-cos-api-demo.service.core-compute-demo.internal
+        REDIS_HOST: fis-ds-web-session-storage-demo.redis.cache.windows.net
