@@ -6,7 +6,36 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/cos:pr-1793-f8ad592-20230912155117 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      image: hmctspublic.azurecr.io/div/cos:pr-1793-2279802-20230913135625 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      keyVaults:
+        div:
+          secrets:
+            - name: ccd-submission-s2s-auth-secret
+              alias: AUTH_PROVIDER_CCDSUBMISSION_CLIENT_KEY
+            - name: div-doc-s2s-auth-secret
+              alias: AUTH_PROVIDER_DOCUMENTGENERATOR_CLIENT_KEY
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-xui-secret
+              alias: IDAM_XUI_CLIENT_SECRET
+            - name: frontend-secret
+              alias: SERVICE_AUTH_SECRET
+            - name: idam-citizen-username
+              alias: IDAM_CITIZEN_USERNAME
+            - name: idam-citizen-password
+              alias: IDAM_CITIZEN_PASSWORD
+            - name: idam-caseworker-username
+              alias: IDAM_CASEWORKER_USERNAME
+            - name: idam-caseworker-password
+              alias: IDAM_CASEWORKER_PASSWORD
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: cos-postgresql-password
+              alias: DIV_SCHEDULER_DB_PASSWORD
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: spring-mail-password
+              alias: spring.mail.password
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: true
@@ -43,4 +72,4 @@ spec:
         IDAM_API_XUI_REDIRECT_URL: "https://manage-case.demo.platform.hmcts.net/oauth2/callback"
         SCHEDULER_NFD_NOTIFIER_ENABLED: false
         SCHEDULER_NFD_NOTIFIER_CRON: "0 0 9 3 6 ? 2024"
-        TRIGGER_DEPLOY: 14
+        TRIGGER_DEPLOY: 16
