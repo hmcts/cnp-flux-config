@@ -12,6 +12,16 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/et-pet/api:prod-7cd98a1-20230921084708 #{"$imagepolicy": "flux-system:et-pet-api"}
+      memoryLimits: "1024Mi"
+      memoryRequests: "512Mi"
+      cpuLimits: "500m"
+      cpuRequests: "250m"
+    sidekiq:
+      image: hmctspublic.azurecr.io/et-pet/api:prod-7cd98a1-20230921084708 #{"$imagepolicy": "flux-system:et-pet-api"}
+      memoryLimits: "1024Mi"
+      memoryRequests: "512Mi"
+      cpuLimits: "500m"
+      cpuRequests: "250m"
   chart:
     spec:
       chart: ./stable/et-pet-api
