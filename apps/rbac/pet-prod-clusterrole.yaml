@@ -1,0 +1,51 @@
+# To allow the PET developers console access to legacy apps in prod (ET, TT and HwF)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pet-prod-role
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pet-prod-role-binding-et
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: '80018f70-1fa9-4fb6-88b5-ee2b0e2a6b76'  # dcd_group_pet_v2
+  namespace: et-pet
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pet-prod-role-binding-tt
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: '80018f70-1fa9-4fb6-88b5-ee2b0e2a6b76'  # dcd_group_pet_v2
+  namespace: tax-tribunals
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pet-prod-role-binding-hwf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: '80018f70-1fa9-4fb6-88b5-ee2b0e2a6b76'  # dcd_group_pet_v2
+  namespace: help-with-fees
