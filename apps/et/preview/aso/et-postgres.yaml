@@ -6,10 +6,16 @@ metadata:
   annotations:
     serviceoperator.azure.com/reconcile-policy: detach-on-delete
 spec:
+  tags:
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
+    autoShutdown: "true"
+    application: employment-tribunals
   owner:
     name: ${NAMESPACE}-aso-${ENVIRONMENT}-rg  #created ahead and added to flux
   location: uksouth
-  version: "11"
+  version: "15"
   sku:
     name: Standard_B1ms
     tier: Burstable
