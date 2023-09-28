@@ -76,8 +76,8 @@ cat <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ${NAMESPACE}
-  namespace: ${NAMESPACE}
+  name: \${NAMESPACE}
+  namespace: \${NAMESPACE}
   annotations:
     azure.workload.identity/client-id: "$CLIENT_ID"
 EOF
