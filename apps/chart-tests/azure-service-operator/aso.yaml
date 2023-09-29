@@ -51,7 +51,7 @@ spec:
   location: uksouth
   owner:
     name: chart-tests-aso-rg
-  version: "11"
+  version: "14"
   sku:
     name: Standard_B1ms
     tier: Burstable
@@ -61,3 +61,17 @@ spec:
     key: PASSWORD
   storage:
     storageSizeGB: 32
+---
+apiVersion: dbforpostgresql.azure.com/v1api20210601
+kind: FlexibleServersConfiguration
+metadata:
+  name: extensions
+  namespace: chart-tests
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: chart-tests-aso-rg
+  azureName: azure.extensions
+  source: user-override
+  value: "btree_gin"
