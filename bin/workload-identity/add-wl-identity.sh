@@ -48,10 +48,18 @@ then
 fi
 
 if [[ $(yq eval '.resources[] | ( . == "../../base/workload-identity")' apps/${NAMESPACE}/base/kustomization.yaml) =~ "true" ]]; then
-  echo "Reference to ../../base/workload-identity already exists ignoring.."
+  echo "Reference to ../../base/workload-identity already exists in base, ignoring.."
 else
   yq eval -i '.resources += "../../base/workload-identity"' apps/${NAMESPACE}/base/kustomization.yaml
 fi
+
+if [[ $(yq eval '.resources[] | ( . == "../../../base/workload-identity")' apps/${NAMESPACE}/preview/base/kustomization.yaml) =~ "true" ]]; then
+  echo "Reference to ../../base/workload-identity already exists in preview, ignoring.."
+else
+  yq eval -i '.resources += "../../../base/workload-identity"' apps/${NAMESPACE}/preview/base/kustomization.yaml
+fi
+
+WL_IDENTITY_NAME=${WL_IDENTITY_NAME} yq '.spec.postBuild.substitute.WI_NAME = env(WL_IDENTITY_NAME)' -i apps/${NAMESPACE}/base/kustomize.yaml
 
 mkdir -p apps/${NAMESPACE}/serviceaccount
 for ENVIRONMENT in "sbox" "preview" "demo" "ithc" "perftest" "aat" "prod"
