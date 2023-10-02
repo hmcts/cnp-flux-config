@@ -25,11 +25,11 @@ All the applications owned by a team are deployed to a single namespace (usually
     ./bin/v2/add-namespace-to-env.sh <your namespace> <environment>
    ```
 
-## WorkLoad Identity
+## Workload Identity
 
 - We use Managed Identity to access keyvaults secrets in application. This should be created after namespace is created above.
 - Namespace creation steps above creates a service account with the same name as namespace.
-- We need to add the managed identity client id as an annotation to service account to use work load identity.
+- We need to add the managed identity client id as an annotation to service account to use Workload Identity.
 
 ### Add WorkLoad identity
 
@@ -43,7 +43,7 @@ All the applications owned by a team are deployed to a single namespace (usually
     ./bin/workload-identity/add-wl-identity.sh --namespace ccd
     ./bin/workload-identity/add-wl-identity.sh --namespace rpe --mi-name rpe-shared
    ```
-- In cases where u need to access other application key vaults (like in preview), your [Managed Identity should added to respective vault](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) in specific environment.
+- In cases where you need to access other application key vaults (like in preview), your [Managed Identity should be added to the respective vault](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) in specific environment.
 
 ## Application
 
