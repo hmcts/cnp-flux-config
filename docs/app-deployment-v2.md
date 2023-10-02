@@ -38,7 +38,7 @@ All the applications owned by a team are deployed to a single namespace (usually
 - Run [add-wl-identity.sh](/bin/workload-identity/add-wl-identity.shh) with your namespace, MI name.
 
  ```bash
-    ./bin/v2/add-identity-to-env.sh <your namespace> --mi-name <mi name>
+    ./bin/workload-identity/add-wl-identity.sh --namespace <your namespace> --mi-name <mi name>
     #examples
     ./bin/workload-identity/add-wl-identity.sh --namespace ccd
     ./bin/workload-identity/add-wl-identity.sh --namespace rpe --mi-name rpe-shared
