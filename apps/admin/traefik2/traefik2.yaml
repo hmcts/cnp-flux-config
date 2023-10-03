@@ -41,8 +41,6 @@ spec:
       enabled: true
       isDefaultClass: false
     deployment:
-      podLabels:
-        aadpodidbinding: traefik
       additionalVolumes:
         - name: traefik-default-cert
           csi:
@@ -72,6 +70,9 @@ spec:
       enabled: true
       minReplicas: 2
       maxReplicas: 4
+    podDisruptionBudget:
+      enabled: true
+      maxUnavailable: "50%"
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
