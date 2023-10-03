@@ -1,15 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../base
-- ../sealed-secrets
-- ../../identity/identity.yaml
-- ../../../am/identity/identity.yaml
-- ../../../azureserviceoperator-system/resources/resource-group.yaml
-- ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
-- ../sops-secrets
+  - ../../../base
+  - ../sealed-secrets
+  - ../../identity/identity.yaml
+  - ../../../am/identity/identity.yaml
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
+  - ../sops-secrets
+  - ../../../base/workload-identity
 namespace: ccd
 patches:
-- path: ../../identity/aat.yaml
-- path: ../../../am/identity/aat.yaml
-- path: ../aso/ccd-servicebus.yaml
+  - path: ../../identity/aat.yaml
+  - path: ../../../am/identity/aat.yaml
+  - path: ../aso/ccd-servicebus.yaml
+  - path: ../../serviceaccount/aat.yaml
