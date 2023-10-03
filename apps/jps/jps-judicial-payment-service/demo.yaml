@@ -5,3 +5,69 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/jps/judicial-payment-service:prod-666b1be-20230929111756 #{"$imagepolicy": "flux-system:jps-judicial-payment-service"}
+      ingressHost: jps-judicial-payment-service-demo.service.core-compute-demo.internal
+      keyVaults:
+        jps:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: judicial-payment-service-POSTGRES-USER
+              alias: JUDICIAL_PAYMENT_SERVICE_DB_USERNAME
+            - name: judicial-payment-service-POSTGRES-PASS
+              alias: JUDICIAL_PAYMENT_SERVICE_DB_PASSWORD
+            - name: judicial-payment-service-POSTGRES-HOST
+              alias: JUDICIAL_PAYMENT_SERVICE_DB_HOST
+            - name: judicial-payment-service-POSTGRES-PORT
+              alias: JUDICIAL_PAYMENT_SERVICE_DB_PORT
+            - name: judicial-payment-service-POSTGRES-DATABASE
+              alias: JUDICIAL_PAYMENT_SERVICE_DB_NAME
+            - name: idam-jps-system-username
+              alias: IDAM_JPS_SYSTEM_USERNAME
+            - name: idam-jps-system-password
+              alias: IDAM_JPS_SYSTEM_PASSWORD
+            - name: idam-jps-judicial-payment-service-client-secret
+              alias: JPS_JUDICIAL_PAYMENT_SERVICE_IDAM_CLIENT_SECRET
+            - name: jps-judicial-payment-service-s2s-secret
+              alias: IDAM_KEY_JPS_JUDICIAL_PAYMENT_SERVICE
+            - name: idam-jps-recorder-username
+              alias: JPS_RECORDER_USERNAME
+            - name: idam-jps-recorder-password
+              alias: JPS_RECORDER_PASSWORD
+            - name: idam-jps-submitter-username
+              alias: JPS_SUBMITTER_USERNAME
+            - name: idam-jps-submitter-password
+              alias: JPS_SUBMITTER_PASSWORD
+            - name: idam-jps-publisher-username
+              alias: JPS_PUBLISHER_USERNAME
+            - name: idam-jps-publisher-password
+              alias: JPS_PUBLISHER_PASSWORD
+            - name: idam-jps-admin-username
+              alias: JPS_ADMIN_USERNAME
+            - name: idam-jps-admin-password
+              alias: JPS_ADMIN_PASSWORD
+            - name: idam-jps-invalid-username
+              alias: JPS_INVALID_USERNAME
+            - name: idam-jps-invalid-password
+              alias: JPS_INVALID_PASSWORD
+            - name: idam-jps-joh-admin-username
+              alias: JPS_JOH_ADMIN_USERNAME
+            - name: idam-jps-joh-admin-password
+              alias: JPS_JOH_ADMIN_PASSWORD
+      environment:
+        JUDICIAL_PAYMENT_SERVICE_DB_OPTIONS: "?stringtype=unspecified&gssEncMode=disable"
+        RUN_DB_MIGRATION_ON_STARTUP: false
+        IDAM_OIDC_URL: https://idam-web-public.demo.platform.hmcts.net
+        OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        JPS_PAYMENT_SERVUCE_S2S_AUTHORISED_SERVICES: jps_judicial_payment_frontend
+        HTTP_CLIENT_CONNECTION_TIMEOUT: '10000'
+        HTTP_CLIENT_READ_TIMEOUT: '60000'
+        HTTP_CLIENT_MAX_TOTAL: '200'
+        HTTP_CLIENT_SECONDS_IDLE_CONNECTION: '120'
+        HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: '20'
+        HTTP_CLIENT_VALIDATE_AFTER_INACTIVITY: '2000'
+        LOCATION_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
+        JUDICIAL_USERS_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
+        CASEWORKER_API_URL: http://rd-caseworker-ref-api-demo.service.core-compute-demo.internal
