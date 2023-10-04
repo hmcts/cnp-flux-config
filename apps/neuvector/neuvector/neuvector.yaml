@@ -11,17 +11,6 @@ spec:
     config:
       autoScan: true
     rules:
-      admission:
-        enable: true
-        mode: "protect" # one of: monitor, protect
-        rules:
-          - '{"config":{"id":1000,"category":"Kubernetes","comment":"Allow system namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"neuvector,kube-system,knode-system"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
-          - '{"config":{"id":1001,"category":"Kubernetes","comment":"Allow admin namespaces","criteria":[{"name":"namespace","op":"containsAny","value":"admin,kubecost,kured,monitoring,dynatrace,flux-system,azureserviceoperator-system,cert-manager,keda"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
-          - '{"config":{"id":1002,"category":"Kubernetes","comment":"Allow HMCTS registries","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/"}],"disable":false,"rule_type": "exception","cfg_type":"user_created"}}'
-          - '{"config":{"id":1003,"category":"Kubernetes","comment":"Default deny","criteria":[{"name":"imageRegistry","op":"containsAny","value":"https://localhost/,https://*.*/"}],"disable":false,"rule_type": "deny","cfg_type":"user_created"}}'
-        defaultAction: "allow"
-        admClientmMde: "service"
-        service: "neuvector"
       response:
         policies:
           - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
@@ -31,33 +20,6 @@ spec:
           - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
           - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
-      network: # IDs must match array index + 1
-        - create: '{"insert":{"after":0,"rules":[{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":1,"comment":"","from":"AllPods","to":"AzurePostgreSQL","ports":"tcp/5432","action":"allow","applications":["PostgreSQL","SSL","HTTP"],"disable":false}}'
-        - create: '{"insert":{"after":1,"rules":[{"id":2,"comment":"","from":"AllPods","to":"ApplicationInsights","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":2,"comment":"","from":"AllPods","to":"ApplicationInsights","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
-        - create: '{"insert":{"after":2,"rules":[{"id":3,"comment":"","from":"AllPods","to":"GovUkNotify","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":3,"comment":"","from":"AllPods","to":"GovUkNotify","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
-        - create: '{"insert":{"after":3,"rules":[{"id":4,"comment":"","from":"AllPods","to":"GovUkPay","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":4,"comment":"","from":"AllPods","to":"GovUkPay","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
-        - create: '{"insert":{"after":4,"rules":[{"id":5,"comment":"","from":"AllPods","to":"GovUkBankHolidays","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":5,"comment":"","from":"AllPods","to":"GovUkBankHolidays","ports":"tcp/443","action":"allow","applications":["SSL","HTTP"],"disable":false}}'
-        - create: '{"insert":{"after":5,"rules":[{"id":6,"comment":"","from":"AllPods","to":"ServiceBus","ports":"tcp/5671","action":"allow","applications":["SSL"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":6,"comment":"","from":"AllPods","to":"ServiceBus","ports":"tcp/5671","action":"allow","applications":["SSL"],"disable":false}}'
-        - create: '{"insert":{"after":6,"rules":[{"id":7,"comment":"","from":"AllPods","to":"Mta","ports":"tcp/25","action":"allow","applications":[],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":7,"comment":"","from":"AllPods","to":"Mta","ports":"tcp/25","action":"allow","applications":[],"disable":false}}'
-        - create: '{"insert":{"after":7,"rules":[{"id":8,"comment":"","from":"AllPods","to":"Idam","ports":"tcp/443","action":"allow","applications":["SSL"],"disable":false,"learned": false}]}}'
-          update: '{"config":{"id":8,"comment":"","from":"AllPods","to":"Idam","ports":"tcp/443","action":"allow","applications":["SSL"],"disable":false}}'
-    groups:
-      - '{"config":{"name":"AzurePostgreSQL","criteria":[{"key": "address", "value": "*.postgres.database.azure.com", "op": "="}]}}'
-      - '{"config":{"name":"ApplicationInsights","criteria":[{"key": "address", "value": "dc.services.visualstudio.com", "op": "="}, {"key": "address", "value": "rt.services.visualstudio.com", "op": "="}, {"key": "address", "value": "dc.applicationinsights.microsoft.com", "op": "="}, {"key": "address", "value": "euw.rt.prod.applicationinsights.trafficmanager.net", "op": "="}]}}'
-      - '{"config":{"name":"GovUkNotify","criteria":[{"key": "address", "value": "api.notifications.service.gov.uk", "op": "="}]}}'
-      - '{"config":{"name":"GovUkPay","criteria":[{"key": "address", "value": "publicapi.payments.service.gov.uk", "op": "="}]}}'
-      - '{"config":{"name":"GovUkBankHolidays","criteria":[{"key": "address", "value": "www.gov.uk", "op": "="}]}}'
-      - '{"config":{"name":"AllPods","criteria":[{"key": "namespace", "value": "*", "op": "="}]}}'
-      - '{"config":{"name":"ServiceBus","criteria":[{"key": "address", "value": "*.servicebus.windows.net", "op": "="}]}}'
-      - '{"config":{"name":"Mta","criteria":[{"key": "address", "value": "mta.reform.hmcts.net", "op": "="}]}}'
-      - '{"config":{"name":"Idam","criteria":[{"key": "address", "value": "idam-api.platform.hmcts.net", "op": "="}]}}'
     neuvector:
       containerd:
         enabled: true
@@ -101,7 +63,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.4.2
+      version: 1.5.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
