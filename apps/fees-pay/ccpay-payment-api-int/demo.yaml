@@ -6,10 +6,10 @@ spec:
   releaseName: ccpay-payment-api-int
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:pr-1478-4c28627-20230925120139 #{"$imagepolicy": "flux-system:demo-int-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:pr-1510-489fbbd-20231004111300 #{"$imagepolicy": "flux-system:demo-int-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
         POSTGRES_NAME: postgresqldb2
         POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
@@ -121,6 +121,8 @@ spec:
               alias: pci-pal.antenna.probate.flow.id
             - name: pci-pal-antenna-divorce-flow-id
               alias: pci-pal.antenna.divorce.flow.id
+            - name: pci-pal-antenna-prl-flow-id
+              alias: pci-pal.antenna.prl.flow.id
             - name: pci-pal-antenna-financial-remedy-flow-id
               alias: pci-pal.antenna.financial.remedy.flow.id
             - name: spring-mail-password

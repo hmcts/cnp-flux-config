@@ -1,26 +1,28 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../base
-- ../../identity/identity.yaml
-- ../../../xui/identity/identity.yaml
-- ../../../am/identity/identity.yaml
-- ../../../aac/identity/identity.yaml
-- ../../../ccd/identity/identity.yaml
-- ../../nfdiv-cron-eligible-for-switch-to-sole/nfdiv-cron-eligible-for-switch-to-sole.yaml
-- ../../nfdiv-cron-js-disputed-answer-overdue/nfdiv-cron-js-disputed-answer-overdue.yaml
-- ../../nfdiv-cron-partner-not-applied-for-final-order/nfdiv-cron-partner-not-applied-for-final-order.yaml
-- ../../nfdiv-cron-remind-awaiting-joint-final-order/nfdiv-cron-remind-awaiting-joint-final-order.yaml
-- ../../nfdiv-cron-applicant-can-sts-after-intention-fo/nfdiv-cron-applicant-can-sts-after-intention-fo.yaml
-- ../../nfdiv-cron-resend-co-pronounced-cover-letters/nfdiv-cron-resend-co-pronounced-cover-letters.yaml
-- ../../nfdiv-cron-alert-application-not-reviewed/nfdiv-cron-alert-application-not-reviewed.yaml
-- ../../nfdiv-cron-migrate-bulk-cases/nfdiv-cron-migrate-bulk-cases.yaml
-- ../../nfdiv-cron-migrate-cases/nfdiv-cron-migrate-cases.yaml
-- ../../nfdiv-cron-bulk-list-create/nfdiv-cron-bulk-list-create.yaml
+  - ../../../base
+  - ../../identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
+  - ../../../am/identity/identity.yaml
+  - ../../../aac/identity/identity.yaml
+  - ../../../ccd/identity/identity.yaml
+  - ../../nfdiv-cron-eligible-for-switch-to-sole/nfdiv-cron-eligible-for-switch-to-sole.yaml
+  - ../../nfdiv-cron-js-disputed-answer-overdue/nfdiv-cron-js-disputed-answer-overdue.yaml
+  - ../../nfdiv-cron-partner-not-applied-for-final-order/nfdiv-cron-partner-not-applied-for-final-order.yaml
+  - ../../nfdiv-cron-remind-awaiting-joint-final-order/nfdiv-cron-remind-awaiting-joint-final-order.yaml
+  - ../../nfdiv-cron-applicant-can-sts-after-intention-fo/nfdiv-cron-applicant-can-sts-after-intention-fo.yaml
+  - ../../nfdiv-cron-resend-co-pronounced-cover-letters/nfdiv-cron-resend-co-pronounced-cover-letters.yaml
+  - ../../nfdiv-cron-alert-application-not-reviewed/nfdiv-cron-alert-application-not-reviewed.yaml
+  - ../../nfdiv-cron-migrate-bulk-cases/nfdiv-cron-migrate-bulk-cases.yaml
+  - ../../nfdiv-cron-migrate-cases/nfdiv-cron-migrate-cases.yaml
+  - ../../nfdiv-cron-bulk-list-create/nfdiv-cron-bulk-list-create.yaml
+  - ../../../base/workload-identity
 namespace: nfdiv
 patches:
-- path: ../../identity/aat.yaml
-- path: ../../../xui/identity/aat.yaml
-- path: ../../../am/identity/aat.yaml
-- path: ../../../aac/identity/aat.yaml
-- path: ../../../ccd/identity/aat.yaml
+  - path: ../../identity/aat.yaml
+  - path: ../../../xui/identity/aat.yaml
+  - path: ../../../am/identity/aat.yaml
+  - path: ../../../aac/identity/aat.yaml
+  - path: ../../../ccd/identity/aat.yaml
+  - path: ../../serviceaccount/aat.yaml
