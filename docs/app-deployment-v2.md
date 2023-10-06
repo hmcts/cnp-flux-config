@@ -49,7 +49,7 @@ All the applications owned by a team are deployed to a single namespace (usually
 
 - If you are deploying other team's apps into your namespace like in preview with CCD chart, you need to add access to your MI to the vault in the specific environment.
 - In Terraform, add your Managed Identity short name to relevant team's Vault.
-- In [this](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) example, plum (Managed Identity short name of CNP) namespace is added to aat.tfvars for ccd vault.
+- In this [pull request](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) example, plum (Managed Identity short name of CNP) namespace is added to aat.tfvars for ccd vault.
 
 ## Application
 
