@@ -79,7 +79,12 @@ do
   fi
 
   if [ -d "apps/${NAMESPACE}/${ENVIRONMENT}" ]; then
-    SA_PATH="path: ../../serviceaccount/${MI_ENV_SHORT_NAME}.yaml" yq eval -i '.patches += [env(SA_PATH)]' apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml
+    SA_PATH="path: ../../serviceaccount/${MI_ENV_SHORT_NAME}.yaml"
+    if ! grep -q "${SA_PATH}" "apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml"; then
+      SA_PATH="${SA_PATH}" yq eval -i '.patches += [env(SA_PATH)]' "apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml"
+    else
+      echo "Reference to $SA_PATH already exists in apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml, ignoring.."
+    fi
     CLIENT_ID=$(az identity show --name ${WL_IDENTITY_NAME}-${MI_ENV_NAME}-mi --resource-group managed-identities-${MI_ENV_NAME}-rg --subscription ${SUBMAP[${MI_ENV_NAME}]} --query clientId -o tsv)
 (
 cat <<EOF
