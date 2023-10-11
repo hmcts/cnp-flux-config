@@ -13,14 +13,14 @@ All the applications owned by a team are deployed to a single namespace (usually
 
 ### Create a namespace manifest
 
-- Run [add-namespace.sh](/bin/v2/add-namespace.sh) with your namespace and team build notices slack channel.
+- Run [add-namespace.sh](../bin/v2/add-namespace.sh) with your namespace and team build notices slack channel.
    ```bash
     ./bin/v2/add-namespace.sh <your namespace> <team slack channel> <team AD Group ID>
    ```
    
 ### Add namespace kustomization to an environment
 
-- Run [add-namespace-to-env.sh](/bin/v2/add-namespace-to-env.sh) with namespace, environment.
+- Run [add-namespace-to-env.sh](../bin/v2/add-namespace-to-env.sh) with namespace, environment.
    ```bash
     ./bin/v2/add-namespace-to-env.sh <your namespace> <environment>
    ```
@@ -35,7 +35,7 @@ All the applications owned by a team are deployed to a single namespace (usually
 
 - Please note Preview applications use AAT key vaults and thus AAT managed identities, you can reuse identity created for AAT by adding it to preview kustomization.
 
-- Run [add-wl-identity.sh](/bin/workload-identity/add-wl-identity.shh) with your namespace, MI name.
+- Run [add-wl-identity.sh](../bin/workload-identity/add-wl-identity.sh) with your namespace, MI name.
 
  ```bash
     ./bin/workload-identity/add-wl-identity.sh --namespace <your namespace> --mi-name <mi name>
@@ -59,7 +59,7 @@ All application deployments are managed with `HelmRelease`.
 
 - Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
 - Add a `HelmRelease` manifest in `apps/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/apps/rpe/draft-store-service/draft-store-service.yaml)
-- Run [add-image-policies.sh](/bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
+- Run [add-image-policies.sh](../bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
 
  ```bash
     ./bin/v2/add-image-policies.sh <your namespace> <product> <component> <registry>
