@@ -5,8 +5,34 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        rd:
+          secrets:
+            - name: caseworker-ref-api-POSTGRES-DATABASE-V15
+              alias: POSTGRES_DATABASE_V15
+            - name: caseworker-ref-api-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST_V15
+            - name: caseworker-ref-api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT_V15
+            - name: caseworker-ref-api-POSTGRES-USER-V15
+              alias: POSTGRES_USER_V15
+            - name: caseworker-ref-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASS_V15
+            - name: caseworker-ref-api-s2s-secret
+              alias: CASEWORKER_REF_API_S2S_SECRET
+            - name: LD-SDK-KEY
+              alias: LD_SDK_KEY
+            - name: caseworker-topic-primary-connection-string
+              alias: caseworker-topic-primary-connection-string
+            - name: caseworker-topic-primary-send-listen-shared-access-key
+              alias: CASEWORKER_TOPIC_PRIMARY_SEND_LISTEN_SHARED_ACCESS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+
       environment:
         DELETE_CWR: true
         CRD_S2S_AUTHORISED_SERVICES: rd_caseworker_ref_api,am_org_role_mapping_service,iac,xui_webapp,ccd_data,sscs,sscs_bulkscan,prl_cos_api,jps_judicial_payment_frontend,jps_judicial_payment_service,fpl_case_service,idam-user-profile-bridge
         STAFF_DATA_FILE_VERSION: v1.15
         EMAIL_DOMAIN_LIST: justice.gov.uk,dwp.gov.uk,hmrc.gov.uk,hmcts.net,dfcni.gov.uk,gov.wales,cica.gov.uk # refresh demo pods- delete after test
+        POSTGRES_HOST: rd-caseworker-ref-api-postgres-db-v15-demo.postgres.database.azure.com
+        POSTGRES_USERNAME: pgadmin
