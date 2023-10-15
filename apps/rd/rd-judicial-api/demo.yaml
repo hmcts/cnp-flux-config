@@ -6,6 +6,37 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/rd/judicial-api:prod-3078533-20231013122542 #{"$imagepolicy": "flux-system:rd-judicial-api"}
+      keyVaults:
+        rd:
+          secrets:
+            - name: judicial-api-POSTGRES-DATABASE-V15
+              alias: POSTGRES_DATABASE_V15
+            - name: judicial-api-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST_V15
+            - name: judicial-api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT_V15
+            - name: judicial-api-POSTGRES-USER-V15
+              alias: POSTGRES_USER_V15
+            - name: judicial-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASS_V15
+            - name: judicial-api-elinks-api-key
+              alias: judicial_api_elinks_api_key
+            - name: judicial-api-s2s-secret
+              alias: JUDICIAL_API_S2S_SECRET
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: LD-SDK-KEY
+              alias: LD_SDK_KEY
+            - name: OAUTH2-CLIENT-SECRET
+              alias: OAUTH2_CLIENT_SECRET
+            - name: OAUTH2-AUTH
+              alias: OAUTH2_AUTH
+            - name: OAUTH2-CLIENT-AUTH
+              alias: OAUTH2_CLIENT_AUTH
+            - name: rd-sendgrid-api-key
+              alias: RD_SENDGRID_API_KEY
+            - name: judicial-topic-primary-send-listen-shared-access-key
+              alias: JUDICIAL_TOPIC_PRIMARY_SEND_LISTEN_SHARED_ACCESS_KEY
       environment:
         DELETE_ORG: true
         TEST_IDAM_ENABLED: true
@@ -22,3 +53,7 @@ spec:
         THREAD_PAUSE_TIME: 2000
         THREAD_RETRIGGER_TIME: 1000
         JRD_DATA_PER_MESSAGE: 75
+        POSTGRES_HOST: rd-judicial-api-postgres-db-v15-demo.postgres.database.azure.com
+        POSTGRES_USERNAME: pgadmin
+        POSTGRES_DB_NAME: dbjuddata
+        POSTGRES_PORT: 5432
