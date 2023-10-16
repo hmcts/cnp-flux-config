@@ -10,6 +10,7 @@ spec:
   values:
     serviceAccount:
       create: false
+      name: jenkins
     controller:
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
@@ -23,8 +24,6 @@ spec:
       podSecurityContextOverride:
         runAsUser: 0
       imagePullPolicy: "IfNotPresent"
-      podLabels:
-        aadpodidbinding: jenkins
       probes:
         startupProbe:
           failureThreshold: 24
