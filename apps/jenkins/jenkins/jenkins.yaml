@@ -10,7 +10,10 @@ spec:
   values:
     serviceAccount:
       create: false
+      name: jenkins
     controller:
+      podLabels:
+        azure.workload.identity/use: "true"
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       # image version is managed in jenkins-controller-version.yaml
