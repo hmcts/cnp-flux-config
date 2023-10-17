@@ -7,7 +7,8 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:prod-d22798e-20230818171951 #{"$imagepolicy": "flux-system:demo-int-ccpay-paymentoutcome-web"}
+      image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:prod-f14f05a-20231016132342 #{"$imagepolicy": "flux-system:demo-int-ccpay-paymentoutcome-web"}
       imagePullPolicy: Always
       environment:
-        DUMMY_VARIABLE: true
+        DUMMY_VARIABLE: false
+        PAYHUB_URL: http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

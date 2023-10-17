@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cs-slack-help-bot
+  namespace: slack-help-bot
+spec:
+  releaseName: cs-slack-help-bot
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/cs/slack-help-bot:prod-ff4d3f5-20231016112422 #{"$imagepolicy": "flux-system:cs-slack-help-bot"}
+    environment:
+      SLACK_INTERNAL_CHANNEL: C05SDLWSMGF
+      SLACK_INTERNAL_CHANNEL_XUI: C04NDRC8JB1
+      SLACK_INTERNAL_CHANNEL_CCD: G016EBTRKNV
+      DUMMY_VAR: 0
+    aadIdentityName: cs-slack-help-bot
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - cs-slack-bot-token
+          - cs-slack-app-token
+  chart:
+    spec:
+      chart: nodejs
+      version: 3.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

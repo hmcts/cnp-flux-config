@@ -1,13 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../../rbac/nonprod-role.yaml
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../et-hearings-api/et-hearings-api.yaml
+  - ../../et-ccd-case-migration/et-ccd-case-migration.yaml
 namespace: et
 patches:
-- path: ../../identity/demo.yaml
-- path: ../../et-cos/demo.yaml
-- path: ../../et-msg-handler/demo.yaml
-- path: ../../et-sya/demo.yaml
-- path: ../../et-sya-api/demo.yaml
-- path: ../../et-hearings-api/demo.yaml
+  - path: ../../identity/demo.yaml
+  - path: ../../et-cos/demo.yaml
+  - path: ../../et-msg-handler/demo.yaml
+  - path: ../../et-sya/demo.yaml
+  - path: ../../et-sya-api/demo.yaml
+  - path: ../../serviceaccount/demo.yaml

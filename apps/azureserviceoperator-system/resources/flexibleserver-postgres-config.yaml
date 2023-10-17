@@ -1,0 +1,13 @@
+apiVersion: dbforpostgresql.azure.com/v1api20210601
+kind: FlexibleServersConfiguration
+metadata:
+  name: maxconnections
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: ${NAMESPACE}-${ENVIRONMENT}
+  azureName: max_connections
+  source: user-override
+  value: "5000"

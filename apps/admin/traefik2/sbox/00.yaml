@@ -19,6 +19,8 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: traefik-internal-cert
+      podLabels:
+        useWorkloadIdentity: "true"
     additionalVolumeMounts:
       - name: traefik-internal-cert
         mountPath: "/mnt/certs"
@@ -29,3 +31,5 @@ spec:
     service:
       spec:
         loadBalancerIP: "10.2.9.250"
+    serviceAccount:
+      name: admin

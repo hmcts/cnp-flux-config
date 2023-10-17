@@ -6,7 +6,36 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/cos:pr-1793-d435914-20230822100915 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      image: hmctspublic.azurecr.io/div/cos:prod-74316f5-20231016134530 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      keyVaults:
+        div:
+          secrets:
+            - name: ccd-submission-s2s-auth-secret
+              alias: AUTH_PROVIDER_CCDSUBMISSION_CLIENT_KEY
+            - name: div-doc-s2s-auth-secret
+              alias: AUTH_PROVIDER_DOCUMENTGENERATOR_CLIENT_KEY
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-xui-secret
+              alias: IDAM_XUI_CLIENT_SECRET
+            - name: frontend-secret
+              alias: SERVICE_AUTH_SECRET
+            - name: idam-citizen-username
+              alias: IDAM_CITIZEN_USERNAME
+            - name: idam-citizen-password
+              alias: IDAM_CITIZEN_PASSWORD
+            - name: idam-caseworker-username
+              alias: IDAM_CASEWORKER_USERNAME
+            - name: idam-caseworker-password
+              alias: IDAM_CASEWORKER_PASSWORD
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: cos-POSTGRES-PASS-V14
+              alias: DIV_SCHEDULER_DB_PASSWORD
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: spring-mail-password
+              alias: spring.mail.password
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: true
@@ -21,6 +50,7 @@ spec:
         FEATURE_BAILIFF_JOURNEY: true
         FEATURE_USE_USER_TOKEN: true
         PBA_USING_CASE_TYPE: false
+        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-java.divorce"
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: false
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_ENABLED: true
@@ -28,9 +58,10 @@ spec:
         DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
-        DIV_SCHEDULER_DB_HOST: div-cos-v14-flexible-demo.postgres.database.azure.com
-        DIV_SCHEDULER_DB_NAME: div_scheduler
-        DIV_SCHEDULER_DB_USER_NAME: pgadmin
+        DIV_SCHEDULER_DB_HOST: "div-cos-v14-flexible-demo.postgres.database.azure.com"
+        DIV_SCHEDULER_DB_PORT: "5432"
+        DIV_SCHEDULER_DB_NAME: "div_scheduler"
+        DIV_SCHEDULER_DB_USER_NAME: "pgadmin"
         SCHEDULER_ENABLED: true
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
         #AOS Overdue job parameters
@@ -39,4 +70,4 @@ spec:
         IDAM_API_XUI_REDIRECT_URL: "https://manage-case.demo.platform.hmcts.net/oauth2/callback"
         SCHEDULER_NFD_NOTIFIER_ENABLED: false
         SCHEDULER_NFD_NOTIFIER_CRON: "0 0 9 3 6 ? 2024"
-        TRIGGER_DEPLOY: 10
+        TRIGGER_DEPLOY: 21

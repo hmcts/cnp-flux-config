@@ -1,0 +1,31 @@
+apiVersion: dbforpostgresql.azure.com/v1api20210601
+kind: FlexibleServer
+metadata:
+  name: ${NAMESPACE}-${ENVIRONMENT}
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  tags:
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
+    autoShutdown: "true"
+    application: "${APPLICATION_TAG:-not-set-yet}"
+  location: uksouth
+  owner:
+    name: ${NAMESPACE}-aso-${ENVIRONMENT}-rg
+  sku:
+    name: Standard_B1ms
+    tier: Burstable
+  administratorLogin: hmcts
+  administratorLoginPassword:
+    name: postgres
+    key: PASSWORD
+  storage:
+    storageSizeGB: 32
+  network:
+    delegatedSubnetResourceReference:
+      armId: /subscriptions/8b6ea922-0862-443e-af15-6056e1c9b9a4/resourceGroups/cft-preview-network-rg/providers/Microsoft.Network/virtualNetworks/cft-preview-vnet/subnets/postgresql
+    privateDnsZoneArmResourceReference:
+      armId: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.postgres.database.azure.com

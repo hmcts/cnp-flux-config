@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et3
+spec:
+  values:
+    base:
+      environment:
+        SENDING_HOST: "https://employmenttribunals.service.gov.uk/"
+      ingressHost: "tribunal-response.employmenttribunals.service.gov.uk"
+    sidekiq:
+      environment:
+        SENDING_HOST: "https://employmenttribunals.service.gov.uk/"

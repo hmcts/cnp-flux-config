@@ -5,6 +5,19 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/fis/cos-api:prod-7408d1c-20230602123139 #{"$imagepolicy": "flux-system:demo-fis-cos-api"}
+      image: hmctspublic.azurecr.io/fis/cos-api:pr-200-0a885e0-20230929184801 #{"$imagepolicy": "flux-system:demo-fis-cos-api"}
+      useInterpodAntiAffinity: true
+      keyVaults:
+        fis-kv:
+          secrets:
+            - redis-access-key
+            - redis-access-key-v6
+            - AppInsightsInstrumentationKey
       environment:
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        IDAM_API_BASEURL: https://idam-api.demo.platform.hmcts.net
+        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
+        SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         DUMMY_VAR_TO_REDEPLOY: 2

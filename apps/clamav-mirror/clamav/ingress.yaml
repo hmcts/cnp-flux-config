@@ -1,0 +1,23 @@
+---
+#
+# Ingress
+#
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clamav-mirror
+  namespace: clamav-mirror
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  rules:
+    - host: clamav-mirror.platform.hmcts.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: clamav-mirror
+                port:
+                  number: 80

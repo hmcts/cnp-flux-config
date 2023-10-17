@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et-ccd-case-migration
+spec:
+  releaseName: et-ccd-case-migration
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/et/migration:prod-d80041c-20231016100623 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
+      environment:
+        MIGRATION_CASETYPE: ET_EnglandWales
+        MIGRATION_QUERY_SIZE: 100
+        MIGRATION_CASE_LIMIT: 100
+        ROOT_LOGGING_LEVEL: debug
+      keyVaults:
+        et-cos:
+          secrets:
+            - name: et-cos-s2s-secret
+              alias: ET_COS_S2S_SECRET_KEY
+            - name: idam-client-secret
+              alias: IDAM_OAUTH2_ET_COS_CLIENT_SECRET
+            - name: cos-system-user
+              alias: ET_SYSTEM_USER
+            - name: cos-system-user-password
+              alias: ET_SYSTEM_USER_PASSWORD
+        et:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+  chart:
+    spec:
+      chart: ./stable/et-migration
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

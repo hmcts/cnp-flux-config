@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/exec-prod-role.yaml
+namespace: et-pet
+patches:
+  - path: ../../identity/prod.yaml
+  - path: ../../et-pet-et1/prod.yaml
+  - path: ../../et-pet-et3/prod.yaml
+  - path: ../../et-pet-admin/prod.yaml
+  - path: ../../et-pet-ccd-export/prod.yaml
+  - path: ../../serviceaccount/prod.yaml

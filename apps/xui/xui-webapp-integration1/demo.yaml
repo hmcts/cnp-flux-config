@@ -11,6 +11,7 @@ spec:
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL,AUTOTEST1,CMC,HRS,BEFTA_JURISDICTION_1,PRIVATELAW,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3
+        HEARINGS_JURISDICTIONS: SSCS,PRIVATELAW,CIVIL,IA,EMPLOYMENT,ST_CIC
         FEATURE_OIDC_ENABLED: true
         SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
         DEBUG: xuiNode:*
@@ -24,8 +25,14 @@ spec:
         SERVICES_PAYMENT_RETURN_URL: https://paymentoutcome-web.demo.platform.hmcts.net
         SERVICES_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         SERVICES_CASE_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_COMPONENT_API_ST_CIC: http://sptribs-case-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_CASETYPES_ST_CIC: CriminalInjuriesCompensation
         SERVICES_HEARINGS_COMPONENT_API_SSCS: http://sscs-hearings-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_CASETYPES_SSCS: Benefit
         SERVICES_HEARINGS_COMPONENT_API_PRIVATELAW: http://fis-hmc-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_CASETYPES_PRIVATELAW: PRLAPPS
+        SERVICES_HEARINGS_COMPONENT_API_IAC: http://ia-hearings-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_CASETYPES_IAC: Asylum
         SERVICES_HMC_HEARINGS_COMPONENT_API: http://hmc-cft-hearing-service-demo.service.core-compute-demo.internal
         SERVICES_PRD_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         SERVICES_PRD_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
@@ -34,8 +41,7 @@ spec:
         SERVICES_WA_WORKFLOW_API_URL: http://wa-workflow-api-demo.service.core-compute-demo.internal
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
         SERVICES_ROLE_ASSIGNMENT_MAPPING_API: http://am-org-role-mapping-service-demo.service.core-compute-demo.internal
-        PREVIEW_DEPLOYMENT_ID: exui-preview-deployment-3230
-      image: hmctspublic.azurecr.io/xui/webapp:pr-3239-8393293-20230824191901 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration1"}
+        PREVIEW_DEPLOYMENT_ID: exui-preview-deployment-3303
       keyVaults:
         rpx:
           resourceGroup: rpx
@@ -48,3 +54,4 @@ spec:
             - launch-darkly-client-id
             - system-user-name
             - system-user-password
+      image: hmctspublic.azurecr.io/xui/webapp:pr-3303-9e9dc9f-20231013142331 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration1"}

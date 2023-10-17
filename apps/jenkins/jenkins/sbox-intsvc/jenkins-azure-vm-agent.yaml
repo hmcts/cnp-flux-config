@@ -24,6 +24,7 @@ spec:
               imageTopLevelType: "advanced"
               initScript: |
                 usermod -a -G docker jenkinsssh
+                usermod -a -G rvm jenkinsssh
                 umount /mnt/resource
                 mkdir -pv /opt/jenkins
                 mount /dev/sdb1 /opt/jenkins
@@ -75,7 +76,7 @@ spec:
               clouds:
                 - azureVM:
                     azureCredentialsId: "jenkins-managed-identity"
-                    cloudName: "cnp-azure"
+                    name: "cnp-azure"
                     cloudTags:
                       - name: "application"
                         value: "core"
@@ -100,7 +101,7 @@ spec:
                         virtualMachineSize: "Standard_D4ds_v5"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.77"
+                          galleryImageVersion: "1.4.92"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -113,7 +114,7 @@ spec:
                         virtualMachineSize: "Standard_D4ds_v5"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.77"
+                          galleryImageVersion: "1.4.92"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -129,11 +130,11 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-arm"
-                          galleryImageVersion: "1.4.77"
+                          galleryImageVersion: "1.4.92"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-builders-arm-daily"
                         templateDesc: "Jenkins build agents for daily builds running on ARM64 CPUs"
-                        labels: "arm daily"
+                        labels: "arm arm-daily"
                         maxVirtualMachinesLimit: 3
                         retentionStrategy:
                           azureVMCloudRetentionStrategy:
@@ -145,5 +146,5 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-arm"
-                          galleryImageVersion: "1.4.77"
+                          galleryImageVersion: "1.4.92"
                         <<: *vm_template_values_anchor

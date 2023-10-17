@@ -6,9 +6,6 @@ resources:
   - ../../../apps/kube-system/base/kustomize.yaml
   - ../../../apps/kured/base/kustomize.yaml
   - ../../../apps/monitoring/base/kustomize.yaml
-  - ../../../apps/osba/base/kustomize.yaml
-  - ../../../apps/catalog/base/kustomize.yaml
-  - ../../../apps/etcd/base/kustomize.yaml
   - ../../../apps/fis/base/kustomize.yaml
   - ../../../apps/financial-remedy/base/kustomize.yaml
   - ../../../apps/idam/base/kustomize.yaml
@@ -50,12 +47,16 @@ resources:
   - ../../../apps/rpts/base/kustomize.yaml
   - ../../../apps/sscs/base/kustomize.yaml
   - ../../../apps/ts/base/kustomize.yaml
-  # Removed for demo upgrade 27/07 - secret not found in vault
-  # - ../../../apps/jps/base/kustomize.yaml
+  - ../../../apps/jps/base/kustomize.yaml
   - ../../../apps/tax-tribunals/base/kustomize.yaml
   - ../../../apps/cui/base/kustomize.yaml
+  - ../../../apps/keda/base/kustomize.yaml
+  - ../../../apps/et-pet/base/kustomize.yaml
+  - ../../../apps/help-with-fees/base/kustomize.yaml
+  - ../../../apps/disposer/base/kustomize.yaml
 patches:
   - path: ../../../apps/base/kustomize.yaml
     target:
       kind: Kustomization
       annotationSelector: hmcts.github.com/kustomize-defaults != disabled
+  - path: ../../../apps/tax-tribunals/demo/base/kustomize.yaml

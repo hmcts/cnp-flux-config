@@ -1,10 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../base
-- ../../../base/resourcequota-pvc.yaml
-- ../../identity/identity.yaml
-- ../../plum-batch/plum-batch.yaml
+  - ../../../base
+  - ../../../base/workload-identity
+  - ../../../base/resourcequota-pvc.yaml
+  - ../../identity/identity.yaml
+  - ../../plum-batch/plum-batch.yaml
 namespace: cnp
 patches:
-- path: ../../identity/aat.yaml
+  - path: ../../identity/aat.yaml
+  - path: ../../serviceaccount/aat.yaml

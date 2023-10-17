@@ -7,7 +7,9 @@ spec:
   releaseName: civil-citizen-ui
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-2dc21fd-20230823101406 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-54ad2ac-20231016151937 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
   chart:
     spec:
       chart: ./stable/civil-citizen-ui

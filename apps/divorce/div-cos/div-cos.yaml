@@ -9,7 +9,36 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cos:prod-b5920fa-20230720155832 #{"$imagepolicy": "flux-system:div-cos"}
+      image: hmctspublic.azurecr.io/div/cos:prod-74316f5-20231016134530 #{"$imagepolicy": "flux-system:div-cos"}
+      keyVaults:
+        div:
+          secrets:
+            - name: ccd-submission-s2s-auth-secret
+              alias: AUTH_PROVIDER_CCDSUBMISSION_CLIENT_KEY
+            - name: div-doc-s2s-auth-secret
+              alias: AUTH_PROVIDER_DOCUMENTGENERATOR_CLIENT_KEY
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-xui-secret
+              alias: IDAM_XUI_CLIENT_SECRET
+            - name: frontend-secret
+              alias: SERVICE_AUTH_SECRET
+            - name: idam-citizen-username
+              alias: IDAM_CITIZEN_USERNAME
+            - name: idam-citizen-password
+              alias: IDAM_CITIZEN_PASSWORD
+            - name: idam-caseworker-username
+              alias: IDAM_CASEWORKER_USERNAME
+            - name: idam-caseworker-password
+              alias: IDAM_CASEWORKER_PASSWORD
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: cos-POSTGRES-PASS-V14
+              alias: DIV_SCHEDULER_DB_PASSWORD
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: spring-mail-password
+              alias: spring.mail.password
       environment:
         CTSC_OPENING_HOURS: 8am to 6pm, Monday to Friday
         IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
@@ -29,10 +58,11 @@ spec:
         DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
+        DIV_SCHEDULER_DB_USER_NAME: "pgadmin"
         SCHEDULER_ENABLED: true
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
         SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true
-        FV2-base: trigger2
+        FV2-base: trigger3
   chart:
     spec:
       chart: ./stable/div-cos

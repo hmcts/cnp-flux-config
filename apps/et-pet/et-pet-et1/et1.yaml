@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: et1
+spec:
+  releaseName: et1
+  values:
+    base:
+      environment:
+        RESTART_ME: '2'
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/et-pet/et1:prod-fb20613-20231016110959 #{"$imagepolicy": "flux-system:et-pet-et1"}
+      memoryLimits: "1024Mi"
+      memoryRequests: "512Mi"
+      cpuLimits: "500m"
+      cpuRequests: "250m"
+    sidekiq:
+      image: hmctspublic.azurecr.io/et-pet/et1:prod-fb20613-20231016110959 #{"$imagepolicy": "flux-system:et-pet-et1"}
+      memoryLimits: "1024Mi"
+      memoryRequests: "512Mi"
+      cpuLimits: "500m"
+      cpuRequests: "250m"
+  chart:
+    spec:
+      chart: ./stable/et-pet-et1
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

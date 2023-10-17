@@ -1,12 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- fluentbit-log.yaml
-- nv-storage-secret.yaml
-- nv-storage-secret-hack.yaml
+  - ../../base
+  - fluentbit-log.yaml
+  - nv-storage-secret.yaml
+  - nv-storage-secret-hack.yaml
 patches:
-- path: ../../identity/ithc.yaml
-- path: ../../neuvector/ithc/ithc.yaml
-- path: ../../neuvector/neuvector-patch.yaml
-- path: ../../fluentbit-log/fluentbit-log-patch.yaml
+  - path: ../../identity/ithc.yaml
+  - path: ../../neuvector/ithc/ithc.yaml
+  - path: ../../serviceaccount/ithc.yaml

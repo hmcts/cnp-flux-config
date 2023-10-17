@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: clamav-mirror
+  namespace: clamav-mirror
+spec:
+  releaseName: clamav-mirror
+  chart:
+    spec:
+      chart: base
+      version: 1.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
+  values:
+    image: hmctspublic.azurecr.io/clamav-mirror:prod-00caf5e6-1695210396 #{"$imagepolicy": "flux-system:clamav-mirror"}
+    replicas: 1
+    useInterpodAntiAffinity: true
+---
+####
+# Service
+####
+apiVersion: v1
+kind: Service
+metadata:
+  name: clamav-mirror
+  namespace: clamav-mirror
+  annotations:
+    traefik.ingress.kubernetes.io/affinity: "true"
+  labels:
+    app: clamav-mirror
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  clusterIP: None
+  selector:
+    app.kubernetes.io/instance: clamav-mirror

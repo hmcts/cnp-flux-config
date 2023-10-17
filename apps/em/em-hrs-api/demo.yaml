@@ -5,4 +5,52 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/hrs-api:prod-ad51ad3-20230829080700 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
+      keyVaults:
+        em-hrs-api:
+          secrets:
+            - name: hrs-api-POSTGRES-PASS-V15
+              alias: SPRING_DATASOURCE_PASSWORD
+            - name: microservicekey-em-hrs-api
+              alias: S2S_KEY
+            - name: storage-account-primary-connection-string
+              alias: STORAGEACCOUNT_PRIMARY_CONNECTION_STRING
+            - name: cvp-storage-connection-string
+              alias: CVP_STORAGE_CONNECTION_STRING
+            - name: cvp-storage-container-name
+              alias: CVP_STORAGE_CONTAINER_NAME
+            - name: vh-storage-connection-string
+              alias: VH_STORAGE_CONNECTION_STRING
+            - name: vh-storage-container-name
+              alias: VH_STORAGE_CONTAINER_NAME
+            - name: hrs-storage-container-name
+              alias: HRS_CVP_DEST_CONTAINER_NAME
+            - name: idam-system-user-name
+              alias: HRS_SYSTEM_USER
+            - name: idam-system-user-password
+              alias: HRS_SYSTEM_USER_PASSWORD
+            - name: notification-api-key
+              alias: NOTIFICATION_API_KEY
+            - name: hrs-reports-email-username
+              alias: SMTP_USERNAME
+            - name: hrs-reports-email-password
+              alias: SMTP_PASSWORD
+            - name: summary-report-recipients
+              alias: SUMMARY_REPORT_RECIPIENTS
+            - name: report-api-key
+              alias: REPORT_API_KEY
+        rpa:
+          secrets:
+            - name: show-oauth2-token
+              alias: IDAM_CLIENT_OAUTH_SECRET
+            - name: oauth2-client-id
+              alias: OAUTH_CLIENT_ID
+            - name: EmAppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: em-app-insights-connection-string
+              alias: app-insights-connection-string
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-43cb1fd-20231017072440 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
+      environment:
+        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_EM_HRS: DEBUG
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
+        SPRING_DATASOURCE_URL: jdbc:postgresql://em-hrs-api-postgres-db-v15-demo.postgres.database.azure.com:5432/emhrs?ssl=disable
+        SPRING_DATASOURCE_USERNAME: pgadmin

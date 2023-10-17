@@ -5,6 +5,23 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/stitching:pr-1698-321d5bd-20230829100413 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      #      keyVaults:
+      #        em-stitching:
+      #          resourceGroup: em-stitching
+      #          secrets:
+      #            - name: AppInsightsInstrumentationKey
+      #              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+      #            - name: docmosis-access-key
+      #              alias: DOCMOSIS_ACCESS_KEY
+      #            - name: microservicekey-em-stitching-api
+      #              alias: S2S_KEY
+      #            - name: stitching-POSTGRES-PASS-V15
+      #              alias: SPRING_DATASOURCE_PASSWORD
+      #            - name: app-insights-connection-string
+      #              alias: app-insights-connection-string
+      image: hmctspublic.azurecr.io/em/stitching:prod-6c672b2-20231016100605 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      #      replicas: 0
       environment:
-        TEST_VAR: value2
+        TEST_VAR: refresh
+#        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-demo.postgres.database.azure.com
+#        SPRING_DATASOURCE_USERNAME: pgadmin
