@@ -1,17 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../base
-- ../../identity/identity.yaml
-- ../../../xui/identity/identity.yaml
-- ../../../ccd/identity/identity.yaml
-- ../../../am/identity/identity.yaml
-- ../../../aac/identity/identity.yaml
+  - ../../../base
+  - ../../identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
+  - ../../../ccd/identity/identity.yaml
+  - ../../../am/identity/identity.yaml
+  - ../../../aac/identity/identity.yaml
+  - ../../../base/workload-identity
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
+  - ../sops-secrets
 #  - resource-limits.yaml
 namespace: financial-remedy
 patches:
-- path: ../../identity/aat.yaml
-- path: ../../../xui/identity/aat.yaml
-- path: ../../../ccd/identity/aat.yaml
-- path: ../../../am/identity/aat.yaml
-- path: ../../../aac/identity/aat.yaml
+  - path: ../../identity/aat.yaml
+  - path: ../../../xui/identity/aat.yaml
+  - path: ../../../ccd/identity/aat.yaml
+  - path: ../../../am/identity/aat.yaml
+  - path: ../../../aac/identity/aat.yaml
+  - path: ../../serviceaccount/aat.yaml
+  - path: ../aso/financial-remedy-postgres.yaml

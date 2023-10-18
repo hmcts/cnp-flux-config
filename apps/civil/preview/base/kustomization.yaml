@@ -1,29 +1,31 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../base
-- ../../identity/identity.yaml
-- ../../../xui/identity/identity.yaml
-- ../../../hmc/identity/identity.yaml
-- ../../../am/identity/identity.yaml
-- ../../../money-claims/identity/identity.yaml
-- ../../../ccd/identity/identity.yaml
-- ../../../aac/identity/identity.yaml
-- ../../../wa/identity/identity.yaml
-- ../../../em/identity/identity.yaml
-- ../../../azureserviceoperator-system/resources/resource-group.yaml
-- ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
-- resource-limits.yaml
-- ../sops-secrets
+  - ../../../base
+  - ../../identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
+  - ../../../hmc/identity/identity.yaml
+  - ../../../am/identity/identity.yaml
+  - ../../../money-claims/identity/identity.yaml
+  - ../../../ccd/identity/identity.yaml
+  - ../../../aac/identity/identity.yaml
+  - ../../../wa/identity/identity.yaml
+  - ../../../em/identity/identity.yaml
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
+  - resource-limits.yaml
+  - ../sops-secrets
+  - ../../../base/workload-identity
 namespace: civil
 patches:
-- path: ../../identity/aat.yaml
-- path: ../../../xui/identity/aat.yaml
-- path: ../../../hmc/identity/aat.yaml
-- path: ../../../am/identity/aat.yaml
-- path: ../../../money-claims/identity/aat.yaml
-- path: ../../../ccd/identity/aat.yaml
-- path: ../../../aac/identity/aat.yaml
-- path: ../../../wa/identity/aat.yaml
-- path: ../../../em/identity/aat.yaml
-- path: ../aso/civil-servicebus.yaml
+  - path: ../../identity/aat.yaml
+  - path: ../../../xui/identity/aat.yaml
+  - path: ../../../hmc/identity/aat.yaml
+  - path: ../../../am/identity/aat.yaml
+  - path: ../../../money-claims/identity/aat.yaml
+  - path: ../../../ccd/identity/aat.yaml
+  - path: ../../../aac/identity/aat.yaml
+  - path: ../../../wa/identity/aat.yaml
+  - path: ../../../em/identity/aat.yaml
+  - path: ../aso/civil-servicebus.yaml
+  - path: ../../serviceaccount/aat.yaml

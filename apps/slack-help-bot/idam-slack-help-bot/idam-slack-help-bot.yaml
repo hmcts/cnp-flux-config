@@ -7,13 +7,12 @@ spec:
   releaseName: idam-slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/idam/slack-help-bot:prod-a79c4af-114 # {"$imagepolicy": "flux-system:idam-slack-help-bot"}
+    image: hmctspublic.azurecr.io/idam/slack-help-bot:prod-4904c16-177 # {"$imagepolicy": "flux-system:idam-slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL: idam-support-cft
       SLACK_REPORT_CHANNEL_ID: C034NQNPPRQ
       JIRA_PROJECT: SIDM
       DUMMY_VAR: 1
-    aadIdentityName: idam-slack-help-bot
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -25,7 +24,7 @@ spec:
   chart:
     spec:
       chart: nodejs
-      version: 2.5.0
+      version: 3.0.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
