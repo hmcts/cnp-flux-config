@@ -14,4 +14,34 @@ spec:
       ingressHost: lau-idam-backend-demo.service.core-compute-demo.internal
       aadIdentityName: lau
       environment:
-        TRIGGER_DEPLOY: trigger5
+        LAU_IDAM_DB_HOST: lau-idam-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://lau-idam-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com:5432/lau_idam?sslmode=require
+        FLYWAY_USER: lauadmin
+      keyVaults:
+        lau:
+          resourceGroup: lau
+          secrets:
+            - name: idam-backend-POSTGRES-USER
+              alias: LAU_IDAM_DB_ADMIN_USERNAME
+            - name: idam-backend-POSTGRES-PASS
+              alias: LAU_IDAM_DB_ADMIN_PASSWORD
+            - name: idam-backend-app-db-user
+              alias: LAU_IDAM_DB_USERNAME
+            - name: idam-backend-app-db-password
+              alias: LAU_IDAM_DB_PASSWORD
+            - name: idam-flyway-password
+              alias: flyway.password
+            - name: backend-encryption-key
+              alias: LAU_IDAM_ENCRYPTION_KEY
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-backend-POSTGRES-HOST-FLEXIBLE
+              alias: LAU_IDAM_DB_FLEXIBLE_HOST
+            - name: idam-backend-POSTGRES-PORT-FLEXIBLE
+              alias: LAU_IDAM_DB_FLEXIBLE_PORT
+            - name: idam-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_IDAM_DB_FLEXIBLE_ADMIN_USERNAME
+            - name: idam-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_IDAM_DB_FLEXIBLE_ADMIN_PASSWORD
