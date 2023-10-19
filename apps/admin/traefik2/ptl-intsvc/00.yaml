@@ -8,9 +8,10 @@ spec:
     service:
       spec:
         loadBalancerIP: "10.10.73.250"
-    deployment:
-      podLabels:
-        aadpodidbinding: traefik
     additionalArguments:
       - "--entryPoints.web.forwardedHeaders.insecure=true"
       - "--entryPoints.websecure.forwardedHeaders.insecure=true"
+    podLabels:
+      useWorkloadIdentity: "true"
+    serviceAccount:
+      name: admin
