@@ -10,14 +10,24 @@ spec:
       environment:
         PURGE_SCHEDULE_CRON: 0 15 0 * * 1,2,3
         LOGGING_LEVEL_UK_GOV_MOJ_SDT: DEBUG
-        SDT_DB_HOST: civil-sdt-demo.postgres.database.azure.com
-        SDT_DB_USERNAME: pgadmin
       keyVaults:
         civil-sdt:
           secrets:
+            - name: civil-sdt-service-s2s-secret
+              alias: CIVIL_SDT_S2S_KEY
+            - name: civil-sdt-system-user-username
+              alias: IDAM_SDT_USERNAME
+            - name: civil-sdt-system-user-password
+              alias: IDAM_SDT_PASSWORD
+            - name: civil-sdt-idam-client-secret
+              alias: IDAM_SDT_CLIENT_SECRET
+            - name: civil-sdt-appinsights-connection-string
+              alias: APPINSIGHTS_CONNECTION_STRING
             - name: civil-sdt-POSTGRES-USER-V15
               alias: SDT_DB_USERNAME
             - name: civil-sdt-POSTGRES-PASS-V15
               alias: SDT_DB_PASSWORD
             - name: civil-sdt-POSTGRES-HOST-V15
               alias: SDT_DB_HOST
+            - name: civil-sdt-servicebus-connection-string
+              alias: CIVIL_SDT_SERVICEBUS_CONNECTION_STRING

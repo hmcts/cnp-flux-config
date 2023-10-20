@@ -9,14 +9,24 @@ spec:
       image: hmctspublic.azurecr.io/civil/sdt:prod-1da7bf6-20231020143222 #{"$imagepolicy": "flux-system:perftest-civil-sdt"}
       environment:
         PURGE_SCHEDULE_CRON: 0 15 0 * * 4,5,6,7
-        SDT_DB_HOST: civil-sdt-perftest.postgres.database.azure.com
-        SDT_DB_USERNAME: pgadmin
       keyVaults:
         civil-sdt:
           secrets:
+            - name: civil-sdt-service-s2s-secret
+              alias: CIVIL_SDT_S2S_KEY
+            - name: civil-sdt-system-user-username
+              alias: IDAM_SDT_USERNAME
+            - name: civil-sdt-system-user-password
+              alias: IDAM_SDT_PASSWORD
+            - name: civil-sdt-idam-client-secret
+              alias: IDAM_SDT_CLIENT_SECRET
+            - name: civil-sdt-appinsights-connection-string
+              alias: APPINSIGHTS_CONNECTION_STRING
             - name: civil-sdt-POSTGRES-USER-V15
               alias: SDT_DB_USERNAME
             - name: civil-sdt-POSTGRES-PASS-V15
               alias: SDT_DB_PASSWORD
             - name: civil-sdt-POSTGRES-HOST-V15
               alias: SDT_DB_HOST
+            - name: civil-sdt-servicebus-connection-string
+              alias: CIVIL_SDT_SERVICEBUS_CONNECTION_STRING
