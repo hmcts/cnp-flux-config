@@ -1,7 +1,39 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: lau-idam-backend-int
+  name: lau-idam-backend
 spec:
   values:
     java:
+      memoryRequests: "1024Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
+      applicationPort: 4550
+      image: 'hmctspublic.azurecr.io/lau/idam-backend:latest'
+      ingressHost: lau-idam-backend-demo.service.core-compute-demo.internal
+      aadIdentityName: lau
+      environment:
+        LAU_IDAM_DB_HOST: lau-idam-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://lau-idam-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com:5432/lau_idam?sslmode=require
+        FLYWAY_USER: lauadmin
+      keyVaults:
+        lau:
+          resourceGroup: lau
+          secrets:
+            - name: idam-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_IDAM_DB_ADMIN_USERNAME
+            - name: idam-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_IDAM_DB_ADMIN_PASSWORD
+            - name: idam-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_IDAM_DB_USERNAME
+            - name: idam-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_IDAM_DB_PASSWORD
+            - name: idam-backend-POSTGRES-PASS-FLEXIBLE
+              alias: flyway.password
+            - name: backend-encryption-key
+              alias: LAU_IDAM_ENCRYPTION_KEY
+            - name: idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
