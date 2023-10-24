@@ -9,5 +9,22 @@ spec:
       autoscaling:
         enabled: false
       image: hmctspublic.azurecr.io/ts/translation-service:prod-5eb8067-20231024101906 #{"$imagepolicy": "flux-system:demo-ts-translation-service"}
+      keyVaults:
+        ts:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: translation-service-POSTGRES-USER-V15
+              alias: TS_TRANSLATION_SERVICE_DB_USERNAME
+            - name: translation-service-POSTGRES-PASS-V15
+              alias: TS_TRANSLATION_SERVICE_DB_PASSWORD
+            - name: translation-service-POSTGRES-HOST-V15
+              alias: TS_TRANSLATION_SERVICE_DB_HOST
+            - name: translation-service-POSTGRES-PORT
+              alias: TS_TRANSLATION_SERVICE_DB_PORT
+            - name: translation-service-POSTGRES-DATABASE
+              alias: TS_TRANSLATION_SERVICE_DB_NAME
+            - name: ts-translation-service-s2s-secret
+              alias: IDAM_KEY_TS_TRANSLATION_SERVICE
       environment:
         DUMMY_RESTART_VAR: 1
