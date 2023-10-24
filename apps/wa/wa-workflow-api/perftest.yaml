@@ -8,3 +8,12 @@ spec:
       image: hmctspublic.azurecr.io/wa/workflow-api:prod-8323353-20231019171529 #{"$imagepolicy": "flux-system:wa-workflow-api"}
       environment:
         REFRESH_FLAG: ""
+        POSTGRES_HOST: am-judicial-booking-service-postgres-db-v15-demo.postgres.database.azure.com
+      keyVaults:
+        wa:
+          secrets:
+            - name: workflow-api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: workflow-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+
