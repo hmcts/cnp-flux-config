@@ -5,3 +5,21 @@ metadata:
 spec:
   values:
     java:
+      environment:
+        LAU_CASE_DB_HOST: lau-case-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://lau-case-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com:5432/lau_case?sslmode=require
+        FLYWAY_USER: lauadmin
+      keyVaults:
+        lau:
+          resourceGroup: lau
+          secrets:
+            - name: case-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_CASE_DB_ADMIN_USERNAME
+            - name: case-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_CASE_DB_ADMIN_PASSWORD
+            - name: case-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_CASE_DB_USERNAME
+            - name: case-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_CASE_DB_PASSWORD
+            - name: case-backend-POSTGRES-PASS-FLEXIBLE
+              alias: flyway.password
