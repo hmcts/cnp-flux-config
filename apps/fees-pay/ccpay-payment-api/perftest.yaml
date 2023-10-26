@@ -10,6 +10,8 @@ spec:
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
+        POSTGRES_HOST: payment-postgres-db-v15-{{ .Values.global.environment }}.postgres.database.azure.com
+        POSTGRES_USERNAME: payment
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         PBA_CONFIG1_SERVICE_NAMES: dummy
@@ -61,10 +63,6 @@ spec:
               alias: liberata.oauth2.password
             - name: api-POSTGRES-PASS-V15
               alias: POSTGRES_PASSWORD
-            - name: api-POSTGRES-HOST-V15
-              alias: POSTGRES_HOST
-            - name: api-POSTGRES-USER-V15
-              alias: POSTGRES_USERNAME
             - name: core-case-data-api-url
               alias: core_case_data.api.url
             - name: app-insights-connection-string
