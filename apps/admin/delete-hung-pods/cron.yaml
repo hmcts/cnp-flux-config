@@ -1,33 +1,49 @@
 ---
-apiVersion: batch/v1
-kind: CronJob
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
   name: restart-pods
   namespace: admin
 spec:
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 2
-  concurrencyPolicy: Forbid
-  schedule: "*/15 * * * *"
-  jobTemplate:
+  releaseName: restart-pods
+  chart:
     spec:
-      backoffLimit: 2
-      activeDeadlineSeconds: 600
-      template:
-        spec:
-          restartPolicy: Never
-          containers:
-            - name: kubectl
-              image: hmctspublic.azurecr.io/imported/bitnami/kubectl
-              command:
-                - /bin/sh
-                - -c
-                - /mnt/delete-hung-pods.sh
-              volumeMounts:
-                - mountPath: /mnt
-                  name: hung-pod-script
-          volumes:
-            - name: hung-pod-script
-              configMap:
-                name: delete-hung-pods
-                defaultMode: 0777
+      chart: job
+      sourceRef:
+        kind: GitRepository
+        name: chart-job
+        namespace: flux-system
+      interval: 1m
+  interval: 5m
+  values:
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    successfulJobsHistoryLimit: 1
+    failedJobsHistoryLimit: 2
+    concurrencyPolicy: Forbid
+    schedule: "*/15 * * * *"
+    backoffLimit: 2
+    activeDeadlineSeconds: 600
+    restartPolicy: Never
+    name: kubectl
+    kind: CronJob
+    image: hmctspublic.azurecr.io/imported/bitnami/kubectl
+    command:
+      - /bin/sh
+      - -c
+      - /mnt/delete-hung-pods.sh
+    volumeMounts:
+      - mountPath: /mnt
+        name: hung-pod-script
+    volumes:
+      - name: hung-pod-script
+        configMap:
+          name: delete-hung-pods
+          defaultMode: 0777
+    nodeSelector:
+      agentpool: cronjob
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs
