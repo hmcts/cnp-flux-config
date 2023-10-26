@@ -6,6 +6,23 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-abfc743-20231025163502 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
+      keyVaults:
+        am:
+          secrets:
+            - app-insights-connection-string
+            - am-org-role-mapping-service-s2s-secret
+            - role-assignment-service-LD-SDK-KEY
+            - orm-IDAM-CLIENT-ID
+            - orm-IDAM-CLIENT-SECRET
+            - orm-IDAM-ADMIN-SECRET
+            - caseworker-topic-primary-send-listen-shared-access-key
+            - name: org-role-mapping-service-POSTGRES-PASS-V15
+              alias: ORG_ROLE_MAPPING_DB_PASSWORD
+            - name: org-role-mapping-service-POSTGRES-USER-V15
+              alias: ORG_ROLE_MAPPING_DB_USERNAME
+            - name: org-role-mapping-service-POSTGRES-HOST-V15
+              alias: ORG_ROLE_MAPPING_DB_HOST
+            - judicial-topic-primary-send-listen-shared-access-key
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: DEBUG
