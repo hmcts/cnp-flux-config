@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pcq-backend
+spec:
+  values:
+    java:
+      memoryRequests: "1024Mi"
+      cpuRequests: "500m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "1500m"
+      environment:
+        PCQ_DB_NAME: pcq
+        PCQ_DB_HOST: pcq-backend-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://pcq-backend-{{ .Values.global.environment }}.postgres.database.azure.com:5432/pcq?sslmode=require
+        FLYWAY_USER: pcquser@pcq-backend-{{ .Values.global.environment }}
+      keyVaults:
+        pcq:
+          resourceGroup: pcq
+          secrets:
+            - name: backend-POSTGRES-USER
+              alias: PCQ_DB_USERNAME
+            - name: backend-POSTGRES-PASS
+              alias: PCQ_DB_PASSWORD
+            - name: jwt-secret
+              alias: JWT_SECRET
+            - name: backend-encryption-key
+              alias: DB_ENCRYPTION_KEY
+            - name: flyway-password
+              alias: flyway.password
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: pcq-storage-account-primary-connection-string
+              alias: STORAGE_ACCOUNT_CONNECTION_STRING
+            - name: s2s-secret-pcq-consolidation-service
+              alias: S2S_CS_SECRET
