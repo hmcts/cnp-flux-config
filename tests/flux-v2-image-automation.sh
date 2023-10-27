@@ -24,6 +24,7 @@ EXCLUSIONS_LIST=(
   apps/*/demo
   .*perftest.*.yaml
   .*ithc.*.yaml
+  apps/ccd/ccd-data-store-api/ccd-data-store-api.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
