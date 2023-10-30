@@ -5,9 +5,20 @@ metadata:
 spec:
   values:
     java:
-      autoscaling:
-        enabled: false
-      replicas: 0
       image: hmctspublic.azurecr.io/wa/workflow-api:prod-504ac08-20231024120930 #{"$imagepolicy": "flux-system:wa-workflow-api"}
       environment:
         REFRESH_FLAG: ""
+        POSTGRES_HOST: wa-workflow-api-postgres-db-flex-ithc.postgres.database.azure.com
+      keyVaults:
+        wa:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: s2s-secret-workflow-api
+              alias: S2S_SECRET_WORKFLOW_API
+            - name: workflow-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+            - name: workflow-api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: ld-secret
+              alias: LAUNCH_DARKLY_SDK_KEY
