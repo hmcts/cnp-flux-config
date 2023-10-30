@@ -7,13 +7,12 @@ spec:
   releaseName: em-slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/em/slack-help-bot:prod-ecbbd06-20230925182505 # {"$imagepolicy": "flux-system:em-slack-help-bot"}
+    image: hmctspublic.azurecr.io/em/slack-help-bot:prod-32a2910-20231024083427 # {"$imagepolicy": "flux-system:em-slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL: em_support
       SLACK_REPORT_CHANNEL_ID: C04FDP7BAM9
       JIRA_PROJECT: EM
       DUMMY_VAR: 1
-    aadIdentityName: em-slack-help-bot
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -25,7 +24,7 @@ spec:
   chart:
     spec:
       chart: nodejs
-      version: 2.5.0
+      version: 3.0.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

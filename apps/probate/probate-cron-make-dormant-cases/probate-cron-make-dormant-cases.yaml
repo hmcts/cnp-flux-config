@@ -8,14 +8,14 @@ spec:
     job:
       environment:
         TASK_NAME: MakeDormantCasesTask
-        VAR_FV2: trigger-1
+        VAR_FV2: trigger-2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-a2f8766-20230928101711 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-de91d59-20231030095902 #{"$imagepolicy": "flux-system:probate-back-office"}
       schedule: 0 * * * *
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.22
+      version: 0.0.24
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
