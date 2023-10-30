@@ -53,10 +53,12 @@ else
   yq eval -i '.resources += "../../base/workload-identity"' apps/${NAMESPACE}/base/kustomization.yaml
 fi
 
-if [[ $(yq eval '.resources[] | ( . == "../../../base/workload-identity")' apps/${NAMESPACE}/preview/base/kustomization.yaml) =~ "true" ]]; then
-  echo "Reference to ../../base/workload-identity already exists in preview, ignoring.."
-else
-  yq eval -i '.resources += "../../../base/workload-identity"' apps/${NAMESPACE}/preview/base/kustomization.yaml
+if [ -d "apps/${NAMESPACE}/preview" ]; then
+  if [[ $(yq eval '.resources[] | ( . == "../../../base/workload-identity")' apps/${NAMESPACE}/preview/base/kustomization.yaml) =~ "true" ]]; then
+    echo "Reference to ../../base/workload-identity already exists in preview, ignoring.."
+  else
+    yq eval -i '.resources += "../../../base/workload-identity"' apps/${NAMESPACE}/preview/base/kustomization.yaml
+  fi
 fi
 
 WL_IDENTITY_NAME=${WL_IDENTITY_NAME} yq '.spec.postBuild.substitute.WI_NAME = env(WL_IDENTITY_NAME)' -i apps/${NAMESPACE}/base/kustomize.yaml
@@ -77,7 +79,12 @@ do
   fi
 
   if [ -d "apps/${NAMESPACE}/${ENVIRONMENT}" ]; then
-    SA_PATH="path: ../../serviceaccount/${MI_ENV_SHORT_NAME}.yaml" yq eval -i '.patches += [env(SA_PATH)]' apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml
+    SA_PATH="path: ../../serviceaccount/${MI_ENV_SHORT_NAME}.yaml"
+    if ! grep -q "${SA_PATH}" "apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml"; then
+      SA_PATH="${SA_PATH}" yq eval -i '.patches += [env(SA_PATH)]' "apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml"
+    else
+      echo "Reference to $SA_PATH already exists in apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml, ignoring.."
+    fi
     CLIENT_ID=$(az identity show --name ${WL_IDENTITY_NAME}-${MI_ENV_NAME}-mi --resource-group managed-identities-${MI_ENV_NAME}-rg --subscription ${SUBMAP[${MI_ENV_NAME}]} --query clientId -o tsv)
 (
 cat <<EOF

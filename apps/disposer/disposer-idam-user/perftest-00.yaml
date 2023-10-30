@@ -5,14 +5,13 @@ metadata:
 spec:
   values:
     job:
-      schedule: "0/15 * * * *"
+      schedule: "0 0/2  1-31/2 * *"
       memoryRequests: "1024Mi"
       cpuRequests: "1000m"
       memoryLimits: "2048Mi"
       cpuLimits: "2000m"
       environment:
-        IDAM_S2S_URL: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
-        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
         DISPOSER_IDAM_USER_ENABLED: false
+        DISPOSER_IDAM_USER_SIMULATION_MODE: true
         DISPOSER_IDAM_USER_BATCH_SIZE: 100
-        DISPOSER_IDAM_USER_REQUESTS_LIMIT: 1000
+        DISPOSER_IDAM_USER_REQUESTS_LIMIT: 10000

@@ -13,42 +13,43 @@ All the applications owned by a team are deployed to a single namespace (usually
 
 ### Create a namespace manifest
 
-- Run [add-namespace.sh](/bin/v2/add-namespace.sh) with your namespace and team build notices slack channel.
+- Run [add-namespace.sh](../bin/v2/add-namespace.sh) with your namespace and team build notices slack channel.
    ```bash
     ./bin/v2/add-namespace.sh <your namespace> <team slack channel> <team AD Group ID>
    ```
    
 ### Add namespace kustomization to an environment
 
-- Run [add-namespace-to-env.sh](/bin/v2/add-namespace-to-env.sh) with namespace, environment.
+- Run [add-namespace-to-env.sh](../bin/v2/add-namespace-to-env.sh) with namespace, environment.
    ```bash
     ./bin/v2/add-namespace-to-env.sh <your namespace> <environment>
    ```
 
-## Managed Identity
+## Workload Identity
 
-We use Managed Identity to access keyvaults secrets in application. This should be created after namespace is created above.
+- We use Managed Identity to access keyvaults secrets in application. This should be created after namespace is created above.
+- Namespace creation steps above creates a service account with the same name as namespace.
+- We need to add the managed identity client id as an annotation to service account to use Workload Identity.
 
-### Create a managed identity base
-
-- Run [add-identity-base.sh](/bin/v2/add-identity-base.sh) with your namespace, Team short name
-
- ```bash
-    ./bin/v2/add-identity-base.sh <your namespace> <team short name>
-    #example
-    ./bin/v2/add-identity-base.sh divorce div
-   ```
-### Add managed identity to an environment
+### Add WorkLoad identity
 
 - Please note Preview applications use AAT key vaults and thus AAT managed identities, you can reuse identity created for AAT by adding it to preview kustomization.
 
-- Run [add-identity-to-env.sh](/bin/v2/add-identity-to-env.sh) with your namespace, Team short name, MI name, environment
+- Run [add-wl-identity.sh](../bin/workload-identity/add-wl-identity.sh) with your namespace, MI name.
 
  ```bash
-    ./bin/v2/add-identity-to-env.sh <your namespace> <team short name> <mi name> <environment>
-    #example
-    ./bin/v2/add-identity-to-env.sh divorce div div aat
+    ./bin/workload-identity/add-wl-identity.sh --namespace <your namespace> --mi-name <mi name>
+    #examples
+    ./bin/workload-identity/add-wl-identity.sh --namespace ccd
+    ./bin/workload-identity/add-wl-identity.sh --namespace rpe --mi-name rpe-shared
    ```
+- In cases where you need to access other application key vaults (like in preview), your [Managed Identity should be added to the respective vault](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) in specific environment.
+
+### Accessing other app vaults for secrets in preview
+
+- If you are deploying other team's apps into your namespace like in preview with CCD chart, you need to add access to your MI to the vault in the specific environment.
+- In Terraform, add your Managed Identity short name to relevant team's Vault.
+- In this [pull request](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) example, plum (Managed Identity short name of CNP) namespace is added to aat.tfvars for ccd vault.
 
 ## Application
 
@@ -58,7 +59,7 @@ All application deployments are managed with `HelmRelease`.
 
 - Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
 - Add a `HelmRelease` manifest in `apps/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/apps/rpe/draft-store-service/draft-store-service.yaml)
-- Run [add-image-policies.sh](/bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
+- Run [add-image-policies.sh](../bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
 
  ```bash
     ./bin/v2/add-image-policies.sh <your namespace> <product> <component> <registry>
