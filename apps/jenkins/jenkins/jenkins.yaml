@@ -10,7 +10,10 @@ spec:
   values:
     serviceAccount:
       create: false
+      name: jenkins
     controller:
+      podLabels:
+        azure.workload.identity/use: "true"
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
       # image version is managed in jenkins-controller-version.yaml
@@ -23,8 +26,6 @@ spec:
       podSecurityContextOverride:
         runAsUser: 0
       imagePullPolicy: "IfNotPresent"
-      podLabels:
-        aadpodidbinding: jenkins
       probes:
         startupProbe:
           failureThreshold: 24
@@ -111,8 +112,8 @@ spec:
               securityRealm:
                 azure:
                   cacheDuration: 3600
-                  clientId: "${cft-jenkins-sp-client-id}"
-                  clientSecret: "${cft-jenkins-sp-secret}"
+                  clientId: "${jenkins-app-proxy-app-id}"
+                  clientSecret: "${jenkins-client-secret}"
                   tenant: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
           auth: |
             jenkins:

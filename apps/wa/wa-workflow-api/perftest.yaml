@@ -5,6 +5,21 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/workflow-api:prod-27ee87f-20231002142804 #{"$imagepolicy": "flux-system:wa-workflow-api"}
+      image: hmctspublic.azurecr.io/wa/workflow-api:prod-504ac08-20231024120930 #{"$imagepolicy": "flux-system:wa-workflow-api"}
+      # For Flexible server migration
       environment:
-        REFRESH_FLAG: ""
+        REFRESH_FLAG: "1"
+        POSTGRES_HOST: wa-workflow-api-postgres-db-flex-perftest.postgres.database.azure.com
+      keyVaults:
+        wa:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: s2s-secret-workflow-api
+              alias: S2S_SECRET_WORKFLOW_API
+            - name: workflow-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+            - name: workflow-api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: ld-secret
+              alias: LAUNCH_DARKLY_SDK_KEY
