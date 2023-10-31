@@ -1,24 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ccpay-callback-function.yaml
-- ../../fees-register-api/fees-register-api.yaml
-- ../../dead-letter-queue-process/dead-letter-queue-process.yaml
-- ../../unprocessed-payment-update/unprocessed-payment-update.yaml
-- ../../ccpay-notifications-service/ccpay-notifications-service.yaml
+  - ../../base
+  - ccpay-callback-function.yaml
+  - ../../fees-register-api/fees-register-api.yaml
+  - ../../dead-letter-queue-process/dead-letter-queue-process.yaml
+  - ../../unprocessed-payment-update/unprocessed-payment-update.yaml
+  - ../../ccpay-notifications-service/ccpay-notifications-service.yaml
 namespace: fees-pay
 patches:
-- path: ../../identity/prod.yaml
-- path: ../../fees-register-api/prod.yaml
-- path: ../../ccpay-paymentoutcome-web/prod.yaml
-- path: ../../ccpay-bubble-frontend/prod.yaml
-- path: ../../ccpay-cpo-update-service/prod.yaml
-- path: ../../ccpay-payment-api/prod.yaml
-- path: ../../ccpay-callback-function/prod.yaml
-- path: ../../ccpay-refunds-api/prod.yaml
-- path: ../../dead-letter-queue-process/prod.yaml
-- path: ../../fees-register-frontend/prod.yaml
-- path: ../../ccpay-bulkscanning-api/prod.yaml
-- path: ../../unprocessed-payment-update/prod.yaml
-- path: ../../ccpay-notifications-service/prod.yaml
+  - path: ../../identity/prod.yaml
+  - path: ../../fees-register-api/prod.yaml
+  - path: ../../ccpay-paymentoutcome-web/prod.yaml
+  - path: ../../ccpay-bubble-frontend/prod.yaml
+  - path: ../../ccpay-cpo-update-service/prod.yaml
+  - path: ../../ccpay-payment-api/prod.yaml
+  - path: ../../ccpay-callback-function/prod.yaml
+  - path: ../../ccpay-refunds-api/prod.yaml
+  - path: ../../dead-letter-queue-process/prod.yaml
+  - path: ../../fees-register-frontend/prod.yaml
+  - path: ../../ccpay-bulkscanning-api/prod.yaml
+  - path: ../../unprocessed-payment-update/prod.yaml
+  - path: ../../ccpay-notifications-service/prod.yaml
+  - path: ../../serviceaccount/prod.yaml

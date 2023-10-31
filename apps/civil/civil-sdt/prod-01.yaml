@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: civil-sdt
+  namespace: civil
+spec:
+  values:
+    java:
+      environment:
+        PURGE_SCHEDULE_CRON: 0 15 0 * * 1,2,3
+        IDAM_API_URL: https://idam-api.platform.hmcts.net

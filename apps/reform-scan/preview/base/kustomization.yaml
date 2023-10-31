@@ -1,12 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../base
-- ../../identity/identity.yaml
-- ../../../azureserviceoperator-system/resources/resource-group.yaml
-- ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
-- ../sops-secrets
+  - ../../../base
+  - ../../identity/identity.yaml
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
+  - ../sops-secrets
+  - ../../../base/workload-identity
 namespace: reform-scan
 patches:
-- path: ../../identity/aat.yaml
-- path: ../aso/reform-scan-servicebus.yaml
+  - path: ../../identity/aat.yaml
+  - path: ../aso/reform-scan-servicebus.yaml
+  - path: ../../serviceaccount/aat.yaml
