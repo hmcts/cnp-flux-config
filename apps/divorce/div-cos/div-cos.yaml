@@ -9,7 +9,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cos:prod-ac88a6c-20230927085646 #{"$imagepolicy": "flux-system:div-cos"}
+      image: hmctspublic.azurecr.io/div/cos:prod-98abfc3-20231018140949 #{"$imagepolicy": "flux-system:div-cos"}
       keyVaults:
         div:
           secrets:
@@ -33,7 +33,7 @@ spec:
               alias: IDAM_CASEWORKER_PASSWORD
             - name: uk-gov-notify-api-key
               alias: UK_GOV_NOTIFY_API_KEY
-            - name: cos-postgresql-password
+            - name: cos-POSTGRES-PASS-V14
               alias: DIV_SCHEDULER_DB_PASSWORD
             - name: AppInsightsInstrumentationKey
               alias: azure.application-insights.instrumentation-key
@@ -58,10 +58,11 @@ spec:
         DATAEXTRACTION_STATUS_DA_EMAILTO: da_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_DN_EMAILTO: dn_data_extraction@sharklasers.com
         DATAEXTRACTION_STATUS_AOS_EMAILTO: aos_data_extraction@sharklasers.com
+        DIV_SCHEDULER_DB_USER_NAME: "pgadmin"
         SCHEDULER_ENABLED: true
         SCHEDULER_SEND_UPDATED_CASES_TO_ROBOTICS_CRON: "0 0 4 ? * * *"
         SCHEDULER_MAKE_ELIGIBLE_CASES_AOS_OVERDUE_ENABLED: true
-        FV2-base: trigger2
+        FV2-base: trigger3
   chart:
     spec:
       chart: ./stable/div-cos

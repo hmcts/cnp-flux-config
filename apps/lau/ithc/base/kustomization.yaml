@@ -1,8 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../../rbac/nonprod-role.yaml
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
 namespace: lau
 patches:
-- path: ../../identity/ithc.yaml
+  - path: ../../identity/ithc.yaml
+  - path: ../../lau-idam-backend/ithc.yaml
+  - path: ../../lau-case-backend/ithc.yaml
+  - path: ../../serviceaccount/ithc.yaml
