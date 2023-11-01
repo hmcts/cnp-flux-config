@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: repl-docmosis-service
+  namespace: ethos
+spec:
+  releaseName: repl-docmosis-service
+  values:
+    java:
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:pr-2086-76da33e-20231101093641 #{"$imagepolicy": "flux-system:perftest-repl-docmosis-service"}
+      environment:
+        BUNDLE_URL: http://em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
