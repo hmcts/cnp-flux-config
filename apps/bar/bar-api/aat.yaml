@@ -6,6 +6,15 @@ spec:
   releaseName: bar-api
   values:
     java:
-      replicas: 0
       environment:
         DUMMY_RESTART_VAR: true
+      keyVaults:
+        "bar":
+          resourceGroup: bar
+          secrets:
+            - name: api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+            - name: api-POSTGRES-HOST-V15
+            - alias: POSTGRES_HOST
+            - name: api-POSTGRES-USER-V15
+            - alias: POSTGRES_USERNAME
