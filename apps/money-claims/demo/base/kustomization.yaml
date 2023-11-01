@@ -2,20 +2,21 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: money-claims
 resources:
-- ../../base
-- ../../../rbac/nonprod-role.yaml
-- ../../cmc-mailhog/cmc-mailhog.yaml
-- ../../cmc-pay/cmc-pay.yaml
-- ../../cmc-pdf-service/cmc-pdf-service.yaml
-- ../../../rpe/identity/identity.yaml
-- ../../../dg/identity/identity.yaml
-- ../../../xui/identity/identity.yaml
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../cmc-mailhog/cmc-mailhog.yaml
+  - ../../cmc-pay/cmc-pay.yaml
+  - ../../cmc-pdf-service/cmc-pdf-service.yaml
+  - ../../../rpe/identity/identity.yaml
+  - ../../../dg/identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
 patches:
-- path: ../../identity/demo.yaml
-- path: ../../cmc-citizen-frontend/demo.yaml
-- path: ../../cmc-claim-store/demo.yaml
-- path: ../../cmc-pay/demo.yaml
-- path: ../../cmc-pdf-service/demo.yaml
-- path: ../../../rpe/identity/demo.yaml
-- path: ../../../dg/identity/demo.yaml
-- path: ../../../xui/identity/demo.yaml
+  - path: ../../identity/demo.yaml
+  - path: ../../cmc-citizen-frontend/demo.yaml
+  - path: ../../cmc-claim-store/demo.yaml
+  - path: ../../cmc-pay/demo.yaml
+  - path: ../../cmc-pdf-service/demo.yaml
+  - path: ../../../rpe/identity/demo.yaml
+  - path: ../../../dg/identity/demo.yaml
+  - path: ../../../xui/identity/demo.yaml
+  - path: ../../serviceaccount/demo.yaml
