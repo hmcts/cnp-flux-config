@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: labs-peterpilgrim
+  namespace: labs
+spec:
+  releaseName: labs-peterpilgrim
+  chart:
+    spec:
+      chart: ./stable/labs-peterpilgrim
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/peterpilgrim:latest # {"$imagepolicy": "flux-system:labs-peterpilgrim"}
+      disableTraefikTls: true
