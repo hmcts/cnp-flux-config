@@ -6,8 +6,18 @@ spec:
   releaseName: message-publisher
   values:
     java:
-      image: hmctspublic.azurecr.io/ccd/message-publisher:prod-02da052-20230904220348 #{"$imagepolicy": "flux-system:demo-message-publisher"}
+      image: hmctspublic.azurecr.io/ccd/message-publisher:prod-0cea205-20231025080751 #{"$imagepolicy": "flux-system:demo-message-publisher"}
+      keyVaults:
+        ccd:
+          secrets:
+            - name: ccd-servicebus-connection-string
+              alias: SERVICE_BUS_CONNECTION_STRING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: data-store-api-POSTGRES-PASS-V15
+              alias: DATA_STORE_DB_PASSWORD
+            - name: data-store-api-POSTGRES-USER-V15
+              alias: DATA_STORE_DB_USERNAME
       environment:
-        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-demo.postgres.database.azure.com
-        DATA_STORE_DB_USERNAME: ccd@ccd-data-store-api-postgres-db-v11-demo
+        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v15-demo.postgres.database.azure.com
         DUMMY_VAR: 1

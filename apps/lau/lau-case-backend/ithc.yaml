@@ -1,13 +1,26 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: lau-idam-backend
+  name: lau-case-backend
 spec:
-  releaseName: lau-idam-backend
   values:
     java:
-      replicas: 2
-      memoryRequests: "1024Mi"
-      cpuRequests: "1000m"
-      memoryLimits: "2048Mi"
-      cpuLimits: "2000m"
+      environment:
+        DUMMY_RESTART_VAR: 1
+        LAU_DB_HOST: lau-case-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com
+        FLYWAY_URL: jdbc:postgresql://lau-case-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com:5432/lau_case?sslmode=require
+        FLYWAY_USER: lauadmin
+      keyVaults:
+        lau:
+          resourceGroup: lau
+          secrets:
+            - name: case-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_DB_ADMIN_USERNAME
+            - name: case-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_DB_ADMIN_PASSWORD
+            - name: case-backend-POSTGRES-USER-FLEXIBLE
+              alias: LAU_DB_USERNAME
+            - name: case-backend-POSTGRES-PASS-FLEXIBLE
+              alias: LAU_DB_PASSWORD
+            - name: case-backend-POSTGRES-PASS-FLEXIBLE
+              alias: flyway.password
