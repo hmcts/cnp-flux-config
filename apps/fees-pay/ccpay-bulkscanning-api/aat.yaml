@@ -6,6 +6,17 @@ spec:
   releaseName: ccpay-bulkscanning-api
   values:
     java:
-      replicas: 0
       environment:
         DUMMY_RESTART_VAR: false
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+            - name: bulkscanning-api-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST
+            - name: bulkscanning-api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT
+            - name: bulkscanning-api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: bulkscanning-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
