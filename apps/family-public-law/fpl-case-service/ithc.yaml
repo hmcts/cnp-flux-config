@@ -5,10 +5,69 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-e5ca9d7-20231102110440 #{"$imagepolicy": "flux-system:fpl-case-service"}
+      # image: hmctspublic.azurecr.io/fpl/case-service:prod-e5ca9d7-20231102110440 #{"$imagepolicy": "flux-system:fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-4815-to-follow #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
       ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
-        RELEASE: AGAIN
+        RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
         TESTING_SUPPORT_ENABLED: true
+        # To revert ithc config to use prod image and values, change the image above and
+        # remove the variables below
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
+        RD_JUDICIAL_API_URL: http://rd-judicial-api-ithc.service.core-compute-ithc.internal
+        RD_STAFF_API_URL: http://rd-caseworker-ref-api-ithc.service.core-compute-ithc.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-ithc.service.core-compute-ithc.internal
+        RD_STAFF_API_ENABLED: true
+        RD_JUDICIAL_API_ENABLED: false
+        C2_WITH_NOTICE: GAOnNotice
+        ESO_EXTENSION: EduSupervisionChange
+        WARRANT_TO_ASSIST_PERSON_KEYWORD: WarrantEPO
+        CHILD_ASSESSMENT_KEYWORD: ChildAssess
+        CONTACT_WITH_CHILD_IN_CARE_KEYWORD: ContactChild
+        CHANGE_SURNAME_KEYWORD: CareChildChange
+        SPECIAL_GUARDIANSHIP_KEYWORD: SpecialGuardian
+        APPOINTMENT_OF_GUARDIAN_KEYWORD: Guardians
+        PARENTAL_RESPONSIBILITY_FATHER_KEYWORD: ParentalResponsibChg
+        PARENTAL_RESPONSIBILITY_FEMALE_KEYWORD: ParentalResponsibility
+        DECLARATION_OF_PARENTAGE: Private
+        keyVaults:
+          fpl:
+            secrets:
+              - notify-api-key
+              - docmosis-api-key
+              - send-grid-api-key
+              - fpl-case-service-s2s-secret
+              - fpl-case-service-idam-client-secret
+              - local-authority-email-to-code-mapping
+              - local-authority-code-to-name-mapping
+              - local-authority-user-mapping
+              - local-authority-code-to-hmcts-court-mapping
+              - local-authority-code-to-cafcass-mapping
+              - local-authority-code-to-org-id-mapping
+              - local-authority-code-to-shared-inbox-mapping
+              - eps-to-local-authorities-mapping
+              - mla-to-local-authorities-mapping
+              - local-authority-fallback-inbox
+              - system-update-user-username
+              - system-update-user-password
+              - robotics-notification-sender
+              - robotics-notification-recipient
+              - translation-notification-sender
+              - translation-notification-recipient
+              - cafcass-notification-sender
+              - cafcass-notification-recipient-order
+              - cafcass-notification-recipient-courtbundle
+              - cafcass-notification-recipient-large-file
+              - cafcass-notification-recipient-new-application
+              - cafcass-notification-recipient-new-document
+              - cafcass-notification-recipient-additional-document
+              - cafcass-notification-recipient-notice-of-hearing
+              - ld-sdk-key
+              - ctsc-inbox
+              - ctsc-team-lead-inbox
+              - AppInsightsInstrumentationKey
+              - scheduler-db-password
+              - rcj-family-high-court-inbox
+              - court-to-court-admin-mapping
