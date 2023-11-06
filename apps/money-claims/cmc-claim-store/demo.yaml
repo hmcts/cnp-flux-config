@@ -6,11 +6,14 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-535f3a5-20231016095430 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2793-9b7cc02-20231103145132 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc
           secrets:
+            - cmc-db-password-v15
+            - cmc-db-username-v15
+            - cmc-db-host-v15
             - AppInsightsInstrumentationKey
             - cmc-db-password-v11
             - citizen-oauth-client-secret
@@ -50,6 +53,8 @@ spec:
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
         DOC_ASSEMBLY_URL: http://dg-docassembly-demo.service.core-compute-demo.internal
+        FRONTEND_BASE_URL: https://moneyclaims1.demo.platform.hmcts.net
+        RESPOND_TO_CLAIM_URL: https://moneyclaims1.demo.platform.hmcts.net/first-contact/start
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
         STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: Win10UAT_006@test.justice.gov.uk
@@ -60,7 +65,5 @@ spec:
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         REFRESH_PODS: true
-        CMC_DB_USERNAME: cmc@cmc-db-v11-demo
-        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         FEATURE_TOGGLES_BREATHING_SPACE: true
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true
