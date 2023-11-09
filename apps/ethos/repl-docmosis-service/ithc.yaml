@@ -9,6 +9,9 @@ spec:
     java:
       image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-fe0ce08-20231109104237 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
       # TO BE REMOVED ONCE BASE CHART IS v15
+      environment:
+        ETHOS_REPL_DB_USER_NAME: pgadmin
+        ETHOS_REPL_DB_HOST: ethos-postgres-v15-{{ .Values.global.environment }}.postgres.database.azure.com
       keyVaults:
         ethos-shared:
           resourceGroup: ethos
