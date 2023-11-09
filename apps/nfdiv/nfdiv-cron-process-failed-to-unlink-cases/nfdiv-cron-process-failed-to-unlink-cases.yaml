@@ -6,12 +6,12 @@ spec:
   releaseName: nfdiv-cron-process-failed-to-unlink-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-39d7d58-20231102121657 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-262dc6b-20231109112321 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: APP_INSIGHTS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: uk-gov-notify-api-key
               alias: UK_GOV_NOTIFY_API_KEY
             - name: s2s-case-api-secret
@@ -23,12 +23,12 @@ spec:
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
       environment:
-        TASK_NAME: SystemProcessFailedScheduledCasesTask
+        TASK_NAME: SystemProcessFailedToUnlinkBulkCaseTask
       schedule: 0/10 * * * *
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.15
+      version: 0.0.18
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
