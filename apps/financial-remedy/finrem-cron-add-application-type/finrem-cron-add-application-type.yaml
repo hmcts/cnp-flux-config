@@ -1,16 +1,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: finrem-cron-send-order
+  name: finrem-cron-add-application-type
 spec:
-  releaseName: finrem-cron-send-order
+  releaseName: finrem-cron-add-application-type
   values:
     job:
       schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/finrem/cos:prod-d936df2-20231109104452 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
-        TASK_NAME: SendOrderTask
+        TASK_NAME: AddApplicationTypeTask
   chart:
     spec:
       chart: finrem-cron
