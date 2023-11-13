@@ -6,12 +6,12 @@ spec:
   releaseName: nfdiv-cron-process-cases-to-be-removed
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-39d7d58-20231102121657 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-9da80f0-20231110154416 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: APP_INSIGHTS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: uk-gov-notify-api-key
               alias: UK_GOV_NOTIFY_API_KEY
             - name: s2s-case-api-secret
@@ -28,7 +28,7 @@ spec:
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.15
+      version: 0.0.18
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
