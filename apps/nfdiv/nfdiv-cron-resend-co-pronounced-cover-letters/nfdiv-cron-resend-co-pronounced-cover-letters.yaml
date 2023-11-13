@@ -9,12 +9,12 @@ spec:
       environment:
         TASK_NAME: SystemResendCOPronouncedCoverLettersTask
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-f1f2557-20231106140144 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-0b4844f-20231113101527 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
     keyVaults:
       nfdiv:
         secrets:
-          - name: AppInsightsInstrumentationKey
-            alias: APP_INSIGHTS_KEY
+          - name: app-insights-connection-string
+            alias: app-insights-connection-string
           - name: uk-gov-notify-api-key
             alias: UK_GOV_NOTIFY_API_KEY
           - name: s2s-case-api-secret
@@ -29,7 +29,7 @@ spec:
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.15
+      version: 0.0.18
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
