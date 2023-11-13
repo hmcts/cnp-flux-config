@@ -6,7 +6,26 @@ spec:
   releaseName: rd-user-profile-api
   values:
     java:
-      replicas: 0
+      replicas: 2
+      keyVaults:
+        rd:
+          secrets:
+            - name: user-profile-api-s2s-secret
+              alias: USER_PROFILE_API_S2S_SECRET
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: LD-SDK-KEY
+              alias: LD_SDK_KEY
+            - name: user-profile-api-POSTGRES-DATABASE-V15
+              alias: POSTGRES_DB_NAME
+            - name: user-profile-api-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST
+            - name: user-profile-api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT
+            - name: user-profile-api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: user-profile-api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
       memoryLimits: "6144Mi"
       memoryRequests: "3072Mi"
       cpuLimits: "4000m"
