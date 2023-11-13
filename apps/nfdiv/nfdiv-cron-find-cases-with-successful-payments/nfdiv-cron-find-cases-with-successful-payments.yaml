@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-find-cases-with-successful-payments
+spec:
+  releaseName: nfdiv-cron-find-cases-with-successful-payments
+  values:
+    job:
+      suspend: false
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-38adb51-20231109140919 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      environment:
+        TASK_NAME: SystemFindCasesWithSuccessfulPaymentsTask
+        VAR_TA: trigger-1
+      schedule: 0/5 * * * *
+  chart:
+    spec:
+      chart: nfdiv-cron
+      version: 0.0.18
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
