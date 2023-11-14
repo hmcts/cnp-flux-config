@@ -7,15 +7,15 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-087af17-20231113170046 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-ddf5b64-20231114094251 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       environment:
         TASK_NAME: SystemFindCasesWithSuccessfulPaymentsTask
         VAR_TA: trigger-1
-      schedule: 0/5 * * * *
+      schedule: 0 12 * * *
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.18
+      version: 0.0.19
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
