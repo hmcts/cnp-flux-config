@@ -6,6 +6,24 @@ spec:
   releaseName: fees-register-api
   values:
     java:
-      image: hmctspublic.azurecr.io/fees-register/api:prod-180ce0b-20231103165019 #{"$imagepolicy": "flux-system:ithc-fees-register-api"}
+      replicas: 0
+      image: hmctspublic.azurecr.io/fees-register/api:prod-97a1c4a-20231110141629 #{"$imagepolicy": "flux-system:ithc-fees-register-api"}
       environment:
         DUMMY_RESTART_VAR: false
+      keyVaults:
+        fees-register:
+          secrets:
+            - name: api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+            - name: api-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST
+            - name: api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT
+            - name: api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+        ccpay:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
