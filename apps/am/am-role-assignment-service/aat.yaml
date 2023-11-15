@@ -13,20 +13,23 @@ spec:
       keyVaults:
         am:
           secrets:
-            - am-role-assignment-service-s2s-secret
+            - name: am-role-assignment-service-s2s-secret
+              alias: AM_ROLE_ASSIGNMENT_SERVICE_SECRET
             - name: role-assignment-service-POSTGRES-PASS-V15
               alias: ROLE_ASSIGNMENT_DB_PASSWORD
-            - name: role-assignment-service-POSTGRES-USER-V15
-              alias: ROLE_ASSIGNMENT_DB_USERNAME
-            - name: role-assignment-service-POSTGRES-HOST-V15
-              alias: ROLE_ASSIGNMENT_DB_HOST
-            - app-insights-connection-string
-            - role-assignment-service-IDAM-CLIENT-SECRET
-            - role-assignment-service-IDAM-ADMIN-SECRET
-            - role-assignment-service-LD-SDK-KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: role-assignment-service-IDAM-CLIENT-SECRET
+              alias: ROLE_ASSIGNMENT_IDAM_CLIENT_SECRET
+            - name: role-assignment-service-IDAM-ADMIN-SECRET
+              alias: ROLE_ASSIGNMENT_IDAM_ADMIN_PASSWORD
+            - name: role-assignment-service-LD-SDK-KEY
+              alias: LD_SDK_KEY
       environment:
         AM_INFO: false
         APPLICATION_LOGGING_LEVEL: INFO
         BYPASS_ORG_DROOL_RULE: true
         ROLE_ASSIGNMENT_S2S_AUTHORISED_SERVICES: am_role_assignment_service,am_org_role_mapping_service,am_role_assignment_refresh_batch,wa_task_management_api,wa_task_configuration_api,xui_webapp,aac_manage_case_assignment,ccd_data,wa_task_monitor,wa_case_event_handler,iac,ccd_case_disposer,hmc_cft_hearing_service,rd_caseworker_ref_api,sscs,fis_hmc_api,fpl_case_service,et_cos,disposer-idam-user,civil_service
         MAX_POOL_SIZE: 20
+        ROLE_ASSIGNMENT_DB_HOST: am-role-assignment-service-postgres-db-v15-aat.postgres.database.azure.com
+        ROLE_ASSIGNMENT_DB_USERNAME: pgadmin
