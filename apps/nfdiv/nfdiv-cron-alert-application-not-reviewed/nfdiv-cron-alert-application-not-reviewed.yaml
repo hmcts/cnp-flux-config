@@ -9,12 +9,12 @@ spec:
       environment:
         TASK_NAME: SystemAlertApplicationNotReviewedTask
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-7885b7a-20231027103445 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-d20f0df-20231115094257 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
     keyVaults:
       nfdiv:
         secrets:
-          - name: AppInsightsInstrumentationKey
-            alias: APP_INSIGHTS_KEY
+          - name: app-insights-connection-string
+            alias: app-insights-connection-string
           - name: uk-gov-notify-api-key
             alias: UK_GOV_NOTIFY_API_KEY
           - name: s2s-case-api-secret
@@ -29,7 +29,7 @@ spec:
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.15
+      version: 0.0.19
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
