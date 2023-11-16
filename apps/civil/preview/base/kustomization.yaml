@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../base
+  - ../../../base/workload-identity
   - ../../identity/identity.yaml
   - ../../../xui/identity/identity.yaml
   - ../../../hmc/identity/identity.yaml
@@ -18,7 +19,6 @@ resources:
   - ../aso/civil-postgres-config.yaml
   - resource-limits.yaml
   - ../sops-secrets
-  - ../../../base/workload-identity
 namespace: civil
 patches:
   - path: ../../identity/aat.yaml
@@ -33,3 +33,5 @@ patches:
   - path: ../aso/civil-servicebus.yaml
   - path: ../../serviceaccount/aat.yaml
   - path: ../aso/civil-postgres.yaml
+sortOptions:
+  order: fifo
