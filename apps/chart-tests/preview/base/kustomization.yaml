@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../base
+  - ../../../base/workload-identity
   - ../sealed-secrets
   - ../../../bsp/identity/identity.yaml
   - ../../../money-claims/identity/identity.yaml
@@ -11,7 +12,6 @@ resources:
   - ../../azure-service-operator/chart-tests-postgres-config.yaml
   - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
   - ../sops-secrets
-  - ../../../base/workload-identity
 namespace: chart-tests
 patches:
   - path: ../../../bsp/identity/aat.yaml
@@ -19,3 +19,5 @@ patches:
   - path: ../../../ccd/identity/aat.yaml
   - path: ../../../wa/identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
+sortOptions:
+  order: fifo
