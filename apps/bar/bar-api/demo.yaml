@@ -6,9 +6,22 @@ spec:
   releaseName: bar-api
   values:
     java:
-      replicas: 0
       image: hmctspublic.azurecr.io/bar/api:prod-8fc5f12-20231103144315 #{"$imagepolicy": "flux-system:bar-api"}
       environment:
         DUMMY_RESTART_VAR: false
-        POSTGRES_HOST: bar-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
-        POSTGRES_USERNAME: bar@bar-postgres-db-v11-{{ .Values.global.environment }}
+      keyVaults:
+        "bar":
+          resourceGroup: bar
+          secrets:
+            - name: api-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+            - name: api-POSTGRES-HOST-V15
+            - alias: POSTGRES_HOST
+            - name: api-POSTGRES-USER-V15
+            - alias: POSTGRES_USERNAME
+            - name: bar-S2S-SECRET
+              alias: S2S_SECRET
+            - name: api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key

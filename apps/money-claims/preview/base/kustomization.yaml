@@ -5,15 +5,17 @@ namespace: money-claims
 #  - resource-limits.yaml
 resources:
   - ../../../base
+  - ../../../base/workload-identity
   - ../sealed-secrets
   - ../../identity/identity.yaml
   - ../../../ccd/identity/identity.yaml
   - ../../../xui/identity/identity.yaml
   - ../../../am/identity/identity.yaml
-  - ../../../base/workload-identity
 patches:
   - path: ../../identity/aat.yaml
   - path: ../../../ccd/identity/aat.yaml
   - path: ../../../xui/identity/aat.yaml
   - path: ../../../am/identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
+sortOptions:
+  order: fifo

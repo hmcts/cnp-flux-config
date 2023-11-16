@@ -6,7 +6,6 @@ spec:
   releaseName: ccpay-bulkscanning-api-int
   values:
     java:
-      replicas: 0
       image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-6826ec2-20231103142410 #{"$imagepolicy": "flux-system:demo-int-ccpay-bulkscanning-api"}
       imagePullPolicy: Always
       environment:
@@ -17,7 +16,13 @@ spec:
         "ccpay":
           resourceGroup: ccpay
           secrets:
-            - name: bulkscanning-api-POSTGRES-PASS
+            - name: bulkscanning-api-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST
+            - name: bulkscanning-api-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT
+            - name: bulkscanning-api-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: bulkscanning-api-POSTGRES-PASS-V15
               alias: POSTGRES_PASSWORD
             - name: app-insights-connection-string
               alias: app-insights-connection-string
