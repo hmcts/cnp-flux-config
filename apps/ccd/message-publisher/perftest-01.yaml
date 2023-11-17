@@ -5,31 +5,17 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        ccd:
+          secrets:
+            - name: ccd-servicebus-connection-string
+              alias: SERVICE_BUS_CONNECTION_STRING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: data-store-api-POSTGRES-PASS-V15
+              alias: DATA_STORE_DB_PASSWORD
+            - name: data-store-api-POSTGRES-USER-V15
+              alias: DATA_STORE_DB_USERNAME
       environment:
-        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v15-perftest.postgres.database.azure.com
+        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v15-ithc.postgres.database.azure.com
         CCD_CASE_EVENTS_ENABLED: false
-    keyVaults:
-      ccd:
-        secrets:
-          - name: data-store-api-POSTGRES-USER-V15
-            alias: DATA_STORE_DB_USERNAME
-          - name: data-store-api-POSTGRES-PASS-V15
-            alias: DATA_STORE_DB_PASSWORD
-          - name: data-store-api-draft-key
-            alias: CCD_DRAFT_ENCRYPTION_KEY
-          - name: ccd-data-s2s-secret
-            alias: DATA_STORE_IDAM_KEY
-          - name: ccd-ELASTIC-SEARCH-URL
-            alias: ELASTIC_SEARCH_HOSTS
-          - name: ccd-ELASTIC-SEARCH-DATA-NODES-URL
-            alias: ELASTIC_SEARCH_DATA_NODES_HOSTS
-          - name: ccd-ELASTIC-SEARCH-PASSWORD
-            alias: ELASTIC_SEARCH_PASSWORD
-          - name: app-insights-connection-string
-            alias: app-insights-connection-string
-          - name: idam-data-store-client-secret
-            alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
-          - name: idam-data-store-system-user-username
-            alias: IDAM_DATA_STORE_SYSTEM_USER_USERNAME
-          - name: idam-data-store-system-user-password
-            alias: IDAM_DATA_STORE_SYSTEM_USER_PASSWORD
