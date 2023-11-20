@@ -8,7 +8,7 @@ spec:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
       image: hmctspublic.azurecr.io/fpl/case-service:pr-4889-70543bb-20231116124629 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
       environment:
-        RELEASE: AGAIN
+        RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
@@ -29,8 +29,8 @@ spec:
         PARENTAL_RESPONSIBILITY_FATHER_KEYWORD: ParentalResponsibChg
         PARENTAL_RESPONSIBILITY_FEMALE_KEYWORD: ParentalResponsibility
         DECLARATION_OF_PARENTAGE: Private
-        SCHEDULER_DB_USER: fpl_scheduler@fpl-case-service-{{ .Values.global.environment }}
-        SCHEDULER_DB_HOST: fpl-case-service-{{ .Values.global.environment }}.postgres.database.azure.com
+        SCHEDULER_DB_USER: fpl_scheduler_user
+        SCHEDULER_DB_HOST: fpl-case-service-postgresql-v15-flexible-server-{{ .Values.global.environment }}.postgres.database.azure.com
         SCHEDULER_DB_PORT: 5432
         SCHEDULER_ENABLED: true
       keyVaults:
@@ -69,7 +69,6 @@ spec:
             - ctsc-inbox
             - ctsc-team-lead-inbox
             - AppInsightsInstrumentationKey
-            - scheduler-db-password
             - scheduler-db-password-v15
             - rcj-family-high-court-inbox
             - court-to-court-admin-mapping
