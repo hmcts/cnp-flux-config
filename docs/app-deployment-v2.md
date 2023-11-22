@@ -170,4 +170,7 @@ If you want to find the effective yaml that will get applied to an environment f
   
   #version 4.x
   kustomize build --load_restrictor none apps/<namespace>/<env>/base
+
+  #version 5.x
+  kustomize build --load-restrictor LoadRestrictionsNone apps/<namespace>/<env>/base
   ```
