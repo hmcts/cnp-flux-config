@@ -6,7 +6,18 @@ spec:
   releaseName: message-publisher
   values:
     java:
+      keyVaults:
+        ccd:
+          secrets:
+            - name: ccd-servicebus-connection-string
+              alias: SERVICE_BUS_CONNECTION_STRING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: data-store-api-POSTGRES-PASS-V15
+              alias: DATA_STORE_DB_PASSWORD
+            - name: data-store-api-POSTGRES-USER-V15
+              alias: DATA_STORE_DB_USERNAME
       memoryRequests: '512Mi'
       memoryLimits: '2Gi'
       environment:
-        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v11-aat.postgres.database.azure.com
+        DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v15-aat.postgres.database.azure.com
