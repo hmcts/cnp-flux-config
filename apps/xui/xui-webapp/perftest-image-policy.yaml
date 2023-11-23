@@ -3,5 +3,10 @@ kind: ImagePolicy
 metadata:
   name: perftest-xui-webapp
 spec:
-  imageRepositoryRef:
-    name: xui-webapp
+  spec:
+  filterTags:
+    pattern: '^pr-3201-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
