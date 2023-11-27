@@ -25,9 +25,14 @@ spec:
       cpuRequests: "1500m"
       memoryLimits: "6144Mi"
       cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-7bbc189-20231122072214 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      image: hmctspublic.azurecr.io/em/stitching:prod-ccec433-20231127091105 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh
-#        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-perftest.postgres.database.azure.com
-#        SPRING_DATASOURCE_USERNAME: pgadmin
+        #        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-perftest.postgres.database.azure.com
+        #        SPRING_DATASOURCE_USERNAME: pgadmin
+        ENTITY_VALUE_COPY_CRONJOB_SCHEDULE: 0 0/5 * * * *
+        ENTITY_VALUE_COPY_PAGE_SIZE: 2000
+        ENTITY_VALUE_COPY_CHUNK_SIZE: 500
+        ENTITY_VALUE_MAX_ITEM_COUNT: 2000
+        ENTITY_VALUE_COPY_ENABLED: true
