@@ -8,7 +8,16 @@ spec:
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
       tolerations:
-        - key: "kubernetes.azure.com/scalesetpriority"
-          operator: "Equal"
-          value: "spot"
-          effect: "NoSchedule"
+        - key: kubernetes.azure.com/scalesetpriority
+          effect: NoSchedule
+          operator: Equal
+          value: spot
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.azure.com/scalesetpriority
+                    operator: In
+                    values:
+                      - spot
