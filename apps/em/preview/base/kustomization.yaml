@@ -2,12 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../base
+  - ../../../base/workload-identity
   - ../../identity/identity.yaml
   - ../../../xui/identity/identity.yaml
   - ../../../ccd/identity/identity.yaml
   - ../../../ia/identity/identity.yaml
   - ../../../azureserviceoperator-system/resources/resource-group.yaml
-  - ../../../base/workload-identity
 namespace: em
 patches:
   - path: ../../identity/aat.yaml
@@ -15,3 +15,5 @@ patches:
   - path: ../../../ccd/identity/aat.yaml
   - path: ../../../ia/identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
+sortOptions:
+  order: fifo
