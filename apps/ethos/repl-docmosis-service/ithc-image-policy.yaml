@@ -1,15 +1,15 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
-  name: ithc-et-msg-handler
+  name: ithc-repl-docmosis-service
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
+  imageRepositoryRef:
+    name: repl-docmosis-service
   filterTags:
-    pattern: '^pr-305-[a-f0-9]+-(?P<ts>[0-9]+)'
+    pattern: '^pr-2160-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
       order: asc
-  imageRepositoryRef:
-    name: et-msg-handler
