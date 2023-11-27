@@ -14,3 +14,12 @@ spec:
           effect: NoSchedule
           operator: Equal
           value: spot
+      affinity:
+        nodeAffinity:
+          perferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "kubernetes.azure.com/scalesetpriority"
+                operator: In
+                values:
+                - "spot":
