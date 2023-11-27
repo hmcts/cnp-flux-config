@@ -6,7 +6,35 @@ spec:
   values:
     nodejs:
       ingressHost: immigration-appeal.ithc.platform.hmcts.net
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-6887890-20230413143451 #{"$imagepolicy": "flux-system:ithc-ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-14d259c-20230831164512 #{"$imagepolicy": "flux-system:ithc-ia-aip-frontend"}
       environment:
+        NODE_ENV: development
         IDAM_WEB_URL: "https://idam-web-public.ithc.platform.hmcts.net"
         IDAM_API_URL: "https://idam-api.ithc.platform.hmcts.net"
+        ASK_FOR_MORE_TIME_ENABLED: true
+        RESTART_ME: "Update due to vault change"
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - idam-secret
+            - addressLookupToken
+            - s2s-secret
+            - ia-redis-access-key
+            - ia-redis-connection-string
+            - launch-darkly-sdk-key
+            - AppInsightsInstrumentationKey
+            - hearing-centre-bradford-email
+            - hearing-centre-manchester-email
+            - hearing-centre-newport-email
+            - hearing-centre-taylor-house-email
+            - hearing-centre-north-shields-email
+            - hearing-centre-birmingham-email
+            - hearing-centre-hatton-cross-email
+            - hearing-centre-glasgow-email
+            - pcq-token-key
+            - system-username
+            - system-password
+            - docmosis-access-key
+            - customer-services-telephone
+            - customer-services-email

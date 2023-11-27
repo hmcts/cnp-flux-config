@@ -6,7 +6,7 @@ spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-4861-6483d70-20231106122200 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-4899-aa65caa-20231127153259 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
       environment:
         RELEASE: AGAIN
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
@@ -30,8 +30,9 @@ spec:
         PARENTAL_RESPONSIBILITY_FEMALE_KEYWORD: ParentalResponsibility
         DECLARATION_OF_PARENTAGE: Private
         SCHEDULER_DB_USER: fpl_scheduler_user
-        SCHEDULER_DB_HOST: fpl-case-service-postgresql-v15-flexible-server-demo.postgres.database.azure.com
+        SCHEDULER_DB_HOST: fpl-case-service-postgresql-v15-flexible-server-{{ .Values.global.environment }}.postgres.database.azure.com
         SCHEDULER_DB_PORT: 5432
+        SCHEDULER_ENABLED: true
       keyVaults:
         fpl:
           secrets:
