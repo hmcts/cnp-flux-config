@@ -7,6 +7,11 @@ spec:
   releaseName: sscs-tya-notif
   values:
     java:
+      keyVaults:
+        sscs:
+          secrets:
+            - name: tya-notif-POSTGRES-PASS-FLEX-V15
+              alias: JOB_SCHEDULER_DB_PASSWORD
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2435-22e1439-20231128111756 #{"$imagepolicy": "flux-system:perftest-sscs-tya-notif"}
