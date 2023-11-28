@@ -12,17 +12,18 @@ spec:
           effect: NoSchedule
           operator: Equal
           value: spot
+      replicas: 4
       useInterpodAntiAffinity: false
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: "agentpool"
+                  - key: agentpool
                     operator: In
                     values:
-                      - "spotinstance"
-                      - "linux"
+                      - spotinstance
+                      - linux
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 50
               preference:
