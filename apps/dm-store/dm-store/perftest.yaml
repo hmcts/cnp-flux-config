@@ -5,24 +5,12 @@ metadata:
 spec:
   values:
     java:
-      keyVaults:
-        dm:
-          resourceGroup: dm-shared
-          secrets:
-            - name: RpaAppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: dm-store-storage-account-primary-connection-string
-              alias: azure.storage.connection-string
-            - name: store-POSTGRES-PASS-V15
-              alias: spring.datasource.password
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
       replicas: 7
       memoryRequests: "3Gi"
       cpuRequests: "1000m"
       memoryLimits: "6Gi"
       cpuLimits: "2000m"
-      image: hmctspublic.azurecr.io/dm/store:prod-4d7bbb2-20231123005648 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-3af7b71-20231129084248 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
         SPRING_DATASOURCE_HOST: dm-store-postgres-db-v15-perftest.postgres.database.azure.com
         SPRING_DATASOURCE_USERNAME: pgadmin
