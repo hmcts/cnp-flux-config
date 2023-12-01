@@ -8,35 +8,41 @@ spec:
     nodejs:
       image: hmctspublic.azurecr.io/plum/frontend:pr-596-7654f6b-20231201093259 # {"$imagepolicy": "flux-system:sbox-plum-frontend"}
       ingressHost: plum.sandbox.platform.hmcts.net
-      replicas: 2
+      replicas: 4
       tolerations:
         - key: kubernetes.azure.com/scalesetpriority
           effect: NoSchedule
           operator: Equal
           value: spot
+      global:
+        topologySpreadConstraints:
+          enabled: true
+      topologySpreadConstraints:
+        maxSkew: 1
+        topologyKey: costModel
       useInterpodAntiAffinity: false
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: agentpool
+                  - key: costModel
                     operator: In
                     values:
-                      - spotinstance
-                      - linux
+                      - spot
+                      - ondemand
           preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 50
               preference:
                 matchExpressions:
-                  - key: agentpool
+                  - key: costModel
                     operator: In
                     values:
-                      - spotinstance
+                      - spot
             - weight: 1
               preference:
                 matchExpressions:
-                  - key: agentpool
+                  - key: costModel
                     operator: In
                     values:
-                      - linux
+                      - ondemand
