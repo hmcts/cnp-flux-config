@@ -3,7 +3,7 @@ set -ex
 
 NAMESPACE="$1"
 ENVIRONMENT="$2"
-SUBSCRIPTION=${3:-DCD-CFTAPPS-DEV}
+SUBSCRIPTION=${3:-DCD-CNP-DEV}
 SOPS_KEY=${4:-https://dcdcftappsdevkv.vault.azure.net/keys/sops-key/aedb9ea38954430ca1d0a46ed589c049}
 
 SERVICE_BUS_NAMESPACE="${NAMESPACE}-sb-${ENVIRONMENT}"
