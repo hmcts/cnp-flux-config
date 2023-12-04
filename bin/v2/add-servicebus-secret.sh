@@ -2,7 +2,7 @@
 set -ex
 
 NAMESPACE="$1"
-ENVIRONMENT="$2"
+ENVIRONMENT="${2:-preview}"
 SUBSCRIPTION=${3:-DCD-CNP-DEV}
 SOPS_KEY=${4:-https://dcdcftappsdevkv.vault.azure.net/keys/sops-key/aedb9ea38954430ca1d0a46ed589c049}
 
