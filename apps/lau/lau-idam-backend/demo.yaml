@@ -10,13 +10,9 @@ spec:
       memoryLimits: "2048Mi"
       cpuLimits: "1500m"
       applicationPort: 4550
-      image: 'hmctspublic.azurecr.io/lau/idam-backend:latest'
+      image: 'hmctspublic.azurecr.io/lau/idam-backend:pr-592-5db7ea2-20231207095550' #{"$imagepolicy": "flux-system:demo-lau-idam-backend"}
       ingressHost: lau-idam-backend-demo.service.core-compute-demo.internal
       aadIdentityName: lau
-      environment:
-        LAU_IDAM_DB_HOST: lau-idam-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com
-        FLYWAY_URL: jdbc:postgresql://lau-idam-backend-flexible-{{ .Values.global.environment }}.postgres.database.azure.com:5432/lau_idam?sslmode=require
-        FLYWAY_USER: lauadmin
       keyVaults:
         lau:
           resourceGroup: lau
