@@ -29,6 +29,10 @@ spec:
       limits:
         cpu: 1000m
         memory: 1Gi
+    image:
+      registry: hmctspublic.azurecr.io
+      # Image Tag defaults to AppVersion
+      repository: imported/traefik
     providers:
       kubernetesIngress:
         publishedService:
@@ -37,8 +41,6 @@ spec:
       enabled: true
       isDefaultClass: false
     deployment:
-      podLabels:
-        aadpodidbinding: traefik
       additionalVolumes:
         - name: traefik-default-cert
           csi:
@@ -68,6 +70,9 @@ spec:
       enabled: true
       minReplicas: 2
       maxReplicas: 4
+    podDisruptionBudget:
+      enabled: true
+      maxUnavailable: "50%"
     affinity:
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

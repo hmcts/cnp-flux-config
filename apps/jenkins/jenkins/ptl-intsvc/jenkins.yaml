@@ -7,9 +7,9 @@ spec:
   values:
     controller:
       ingress:
-        hostName: build.platform.hmcts.net
+        hostName: build.hmcts.net
       secondaryingress:
-        hostName: static-build.platform.hmcts.net
+        hostName: static-build.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
@@ -32,7 +32,7 @@ spec:
           resource-root: |
             unclassified:
               resourceRoot:
-                url: "https://static-build.platform.hmcts.net/"
+                url: "https://static-build.hmcts.net/"
           env-vars: |
             jenkins:
               globalNodeProperties:
@@ -57,9 +57,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-00-aks
+                        value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-00-rg
+                        value: cft-preview-01-rg
                       - key: AKS_PTL_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
@@ -266,10 +266,16 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/civil-(?!damages|sdt).*\/master
+                      ^HMCTS.*\/civil-(?!damages|rtl|sdt).*\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/civil-rtl.*\/master
+                    name: Civil-RTL
+                    recurse: true
+                    title: Civil RTL Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/civil-sdt.*\/master
@@ -284,7 +290,7 @@ spec:
                     title: WA
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests|idam-hmcts-access|idam-testing-support-api|idam-access-config|idam-shared-infrastructure)\/master
+                      ^HMCTS.*\/(idam-api|idam-web-public|idam-user-dashboard|idam-performance-tests|idam-hmcts-access|idam-testing-support-api|idam-access-config|idam-shared-infrastructure|idam-user-profile-bridge)\/master
                     name: IDAM
                     recurse: true
                     title: IDAM Dashboard
@@ -342,11 +348,17 @@ spec:
                     name: HWF
                     recurse: true
                     title: Help with Fees
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(et-pet-shared-infrastructure|et-pet-et1|et-pet-et3|et-pet-api|et-pet-admin|et-pet-ccd-export)\/master
+                    name: ETPET
+                    recurse: true
+                    title: ET PET
           location: |
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://build.platform.hmcts.net'
+                url: 'https://build.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:

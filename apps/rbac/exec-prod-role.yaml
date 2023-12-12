@@ -1,0 +1,24 @@
+# To allow the PET developers console access to legacy apps in prod (ET, TT and HwF)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: exec-prod-role
+  namespace: ${NAMESPACE}
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: exec-prod-role-binding
+  namespace: ${NAMESPACE}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: exec-prod-role
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "${TEAM_AAD_GROUP_ID}"

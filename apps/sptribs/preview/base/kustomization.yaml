@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../base
+  - ../../../base/workload-identity
   - ../../identity/identity.yaml
   - ../../../ccd/identity/identity.yaml
   - ../../../am/identity/identity.yaml
@@ -10,8 +11,12 @@ resources:
   - ../../../aac/identity/identity.yaml
   - ../../../wa/identity/identity.yaml
   - ../../../rd/identity/identity.yaml
+  - ../../../hmc/identity/identity.yaml
   - ../../../azureserviceoperator-system/resources/resource-group.yaml
   - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
+  - ../aso/sptribs-postgres-config.yaml
   - ../sops-secrets
 namespace: sptribs
 patches:
@@ -23,4 +28,9 @@ patches:
   - path: ../../../wa/identity/aat.yaml
   - path: ../../../rd/identity/aat.yaml
   - path: ../../../aac/identity/aat.yaml
+  - path: ../../../hmc/identity/aat.yaml
   - path: ../aso/sptribs-servicebus.yaml
+  - path: ../aso/sptribs-postgres.yaml
+  - path: ../../serviceaccount/aat.yaml
+sortOptions:
+  order: fifo

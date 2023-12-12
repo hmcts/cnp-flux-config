@@ -1,17 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
-- ../../probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
-- ../../probate-cron-ccd-data-migration-tool/probate-cron-ccd-data-migration-tool.yaml
-- ../../probate-cron-hmrc-extract/probate-cron-hmrc-extract.yaml
+  - ../../base
+  - ../../probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
+  - ../../probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
+  - ../../probate-cron-ccd-data-migration-tool/probate-cron-ccd-data-migration-tool.yaml
+  - ../../probate-cron-hmrc-extract/probate-cron-hmrc-extract.yaml
 namespace: probate
 patches:
-- path: ../../identity/prod.yaml
-- path: ../../probate-caveats-fe/prod.yaml
-- path: ../../probate-business-service/prod.yaml
-- path: ../../probate-orchestrator-service/prod.yaml
-- path: ../../probate-submit-service/prod.yaml
-- path: ../../probate-back-office/prod.yaml
-- path: ../../probate-frontend/prod.yaml
+  - path: ../../identity/prod.yaml
+  - path: ../../probate-caveats-fe/prod.yaml
+  - path: ../../probate-business-service/prod.yaml
+  - path: ../../probate-orchestrator-service/prod.yaml
+  - path: ../../probate-submit-service/prod.yaml
+  - path: ../../probate-back-office/prod.yaml
+  - path: ../../probate-frontend/prod.yaml
+  - path: ../../serviceaccount/prod.yaml

@@ -1,17 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
-- ../../probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
-- ../../probate-cron-ccd-data-migration-tool/probate-cron-ccd-data-migration-tool.yaml
-- ../../probate-cron-hmrc-extract/probate-cron-hmrc-extract.yaml
-- ../../../rbac/nonprod-role.yaml
+  - ../../base
+  - ../../probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
+  - ../../probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
+  - ../../probate-cron-ccd-data-migration-tool/probate-cron-ccd-data-migration-tool.yaml
+  - ../../probate-cron-hmrc-extract/probate-cron-hmrc-extract.yaml
+  - ../../../rbac/nonprod-role.yaml
 namespace: probate
 patches:
-- path: ../../probate-frontend/perftest.yaml
-- path: ../../probate-back-office/perftest.yaml
-- path: ../../probate-orchestrator-service/perftest.yaml
-- path: ../../probate-submit-service/perftest.yaml
-- path: ../../probate-caveats-fe/perftest.yaml
-- path: ../../identity/perftest.yaml
+  - path: ../../probate-frontend/perftest.yaml
+  - path: ../../probate-back-office/perftest.yaml
+  - path: ../../probate-orchestrator-service/perftest.yaml
+  - path: ../../probate-submit-service/perftest.yaml
+  - path: ../../probate-caveats-fe/perftest.yaml
+  - path: ../../identity/perftest.yaml
+  - path: ../../serviceaccount/perftest.yaml
