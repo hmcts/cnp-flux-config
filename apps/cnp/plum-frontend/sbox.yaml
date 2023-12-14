@@ -4,52 +4,6 @@ kind: HelmRelease
 metadata:
   name: plum-frontend
 spec:
-  chart:
-    spec:
-      chart: ./charts/plum-frontend
-      sourceRef:
-        kind: GitRepository
-        name: plum-frontend
-        namespace: flux-system
-      interval: 1m
   values:
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
-      replicas: 5
-      tolerations:
-        - key: kubernetes.azure.com/scalesetpriority
-          effect: NoSchedule
-          operator: Equal
-          value: spot
-      global:
-        topologySpreadConstraints:
-          enabled: true
-      topologySpreadConstraints:
-        maxSkew: 1
-        topologyKey: costModel
-      useInterpodAntiAffinity: false
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: costModel
-                    operator: In
-                    values:
-                      - spot
-                      - ondemand
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 50
-              preference:
-                matchExpressions:
-                  - key: costModel
-                    operator: In
-                    values:
-                      - spot
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: costModel
-                    operator: In
-                    values:
-                      - ondemand

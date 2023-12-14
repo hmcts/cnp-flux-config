@@ -25,10 +25,12 @@ spec:
       cpuRequests: "1500m"
       memoryLimits: "6144Mi"
       cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-38774f0-20231207111859 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      image: hmctspublic.azurecr.io/em/stitching:prod-4c64e58-20231214101143 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh
         #        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-perftest.postgres.database.azure.com
         #        SPRING_DATASOURCE_USERNAME: pgadmin
-#        Entity value Copying is completed.
+        HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 180
+        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 * * * *
