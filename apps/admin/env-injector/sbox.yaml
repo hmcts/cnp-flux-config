@@ -4,7 +4,17 @@ metadata:
   name: env-injector-webhook
   namespace: admin
 spec:
+  chart:
+    spec:
+      chart: ./env-injector-webhook
+      sourceRef:
+        kind: GitRepository
+        name: env-injector-webhook
+        namespace: flux-system
+      interval: 1m
   values:
+    image: hmctspublic.azurecr.io/hmcts/k8s-env-injector:pr-37
+    removePodAntiAffinity: true
     requiredNodeAffinityTerms:
       - matchExpressions:
           - key: kubernetes.azure.com/mode
