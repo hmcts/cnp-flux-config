@@ -5,6 +5,7 @@ metadata:
   namespace: admin
 spec:
   values:
+    removePodAntiAffinity: true
     requiredNodeAffinityTerms:
       - matchExpressions:
           - key: kubernetes.azure.com/mode
@@ -32,6 +33,16 @@ spec:
     topologyConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.azure.com/agentpool
+        whenUnsatisfiable: DoNotSchedule
+        nodeAffinityPolicy: Honor
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/managed-by: Helm
+        matchLabelKeys:
+          - pod-template-hash
+      - maxSkew: 2
+        topologyKey: kubernetes.io/hostname
         whenUnsatisfiable: DoNotSchedule
         nodeAffinityPolicy: Honor
         nodeTaintsPolicy: Honor
