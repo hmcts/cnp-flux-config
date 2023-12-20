@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: chart-function-volume-test
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: ssh://github.com/hmcts/chart-function
+  ref:
+    branch: dxw-optional-volume-logic-chart-library
+  secretRef:
+    name: git-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/job/
