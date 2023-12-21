@@ -7,6 +7,8 @@ spec:
     java:
       image: hmctspublic.azurecr.io/wa/case-event-handler:prod-4c434bf-20231213144559 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
       environment:
+        replicas: 2
+        REFRESH_FLAG: "1"
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
         TEMP_RESTART: true
