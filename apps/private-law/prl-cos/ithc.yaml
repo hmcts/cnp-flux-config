@@ -26,6 +26,9 @@ spec:
             - filtered-court-ids
             - da-filtered-court-ids
             - postcode-lookup-token
+            - prl-rd-api-system-username
+            - prl-rd-api-system-user-password
+            - welsh-court-mapping
             - app-insights-connection-string
       replicas: 2
       memoryRequests: "768Mi"
@@ -36,14 +39,35 @@ spec:
       readinessTimeout: 45
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:pr-1802-14a9fe3-20231114100834 #{"$imagepolicy": "flux-system:ithc-prl-cos-api"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-1937-894fd4e-20240102125259 #{"$imagepolicy": "flux-system:ithc-prl-cos-api"}
       environment:
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
-        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-ithc.service.core-compute-ithc.internal/oauth2/callback
+        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
+        XUI_URL: https://manage-case.ithc.platform.hmcts.net/cases/case-details
+        PAY_URL: http://payment-api-ithc.service.core-compute-ithc.internal
+        PAY_CALLBACK_URL: http://prl-cos-ithc.service.core-compute-ithc.internal/service-request-update
+        PRL_DGS_API_URL: http://prl-dgs-ithc.service.core-compute-ithc.internal
+        FEE_REGISTER_API_URL: http://fees-register-api-ithc.service.core-compute-ithc.internal
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,payment_app,ccd_data
         FACT_API: http://fact-api-ithc.service.core-compute-ithc.internal
         LOCATION_REF_API: http://rd-location-ref-api-ithc.service.core-compute-ithc.internal
-        BUNDLE_URL: http://em-ccdorc-ithc.service.core-compute-ithc.internal
+        RD_PROFESSIONAL_API: http://rd-professional-api-ithc.service.core-compute-ithc.internal
+        ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
+        CITIZEN_URL: https://privatelaw.ithc.platform.hmcts.net
+        BUNDLE_URL: http://em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-ithc.service.core-compute-ithc.internal
+        REFDATA_API_URL: http://rd-commondata-api-ithc.service.core-compute-ithc.internal
+        JUDICIAL_USERS_API: http://rd-judicial-api-ithc.service.core-compute-ithc.internal
+        STAFF_DETAILS_API: http://rd-caseworker-ref-api-ithc.service.core-compute-ithc.internal
+        COMMON_DATA_API: http://rd-commondata-api-ithc.service.core-compute-ithc.internal
         SEND_LETTER_URL: http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal
     global:
       environment: ithc

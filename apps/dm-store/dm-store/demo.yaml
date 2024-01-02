@@ -5,22 +5,7 @@ metadata:
 spec:
   values:
     java:
-      keyVaults:
-        dm:
-          resourceGroup: dm-shared
-          secrets:
-            - name: RpaAppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: dm-store-storage-account-primary-connection-string
-              alias: azure.storage.connection-string
-            - name: store-POSTGRES-PASS-V15
-              alias: spring.datasource.password
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
+      image: hmctspublic.azurecr.io/dm/store:prod-f042c72-20240102090225 #{"$imagepolicy": "flux-system:demo-dm-store"}
       environment:
-        SPRING_DATASOURCE_HOST: dm-store-postgres-db-v15-demo.postgres.database.azure.com
-        SPRING_DATASOURCE_USERNAME: pgadmin
         ENABLE_TTL: false
         TEST_VAR: refresh_true
-        ENABLE_ORPHAN_DOCUMENT_DELETION: true
-        ORPHAN_FILE_DELETION_CRONJOB_SCHEDULE: "0 */15 * * * *"

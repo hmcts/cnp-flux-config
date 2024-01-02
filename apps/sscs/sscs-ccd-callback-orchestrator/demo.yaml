@@ -9,29 +9,10 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:pr-1074-d9911e4-20231101150949 #{"$imagepolicy": "flux-system:demo-sscs-ccd-callback-orchestrator"}
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-86753e9-20231218153638 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
       environment:
         TEST_PROPERTY: true
         DUMMY_PROPERTY: true
-      keyVaults:
-        sscs:
-          secrets:
-            - name: idam-api
-              alias: IDAM_URL
-            - name: idam-sscs-systemupdate-user
-              alias: IDAM_SSCS_SYSTEMUPDATE_USER
-            - name: idam-sscs-systemupdate-password
-              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
-            - name: idam-sscs-oauth2-client-secret
-              alias: IDAM_OAUTH2_CLIENT_SECRET
-            - name: sscs-s2s-secret
-              alias: IDAM_S2S_AUTH_TOTP_SECRET
-            - name: s2s-micro
-              alias: IDAM_S2S_AUTH_MICROSERVICE
-            - name: app-insights-connection-string
-              alias: app_insights_connection_string
-            - name: evidence-share-topic-shared-access-key
-              alias: AMQP_PASSWORD
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
