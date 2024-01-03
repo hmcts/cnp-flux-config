@@ -19,12 +19,14 @@ spec:
       #              alias: SPRING_DATASOURCE_PASSWORD
       #            - name: app-insights-connection-string
       #              alias: app-insights-connection-string
-      image: hmctspublic.azurecr.io/em/stitching:prod-0a9a183-20240102095124 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      image: hmctspublic.azurecr.io/em/stitching:prod-9f54a45-20240103105202 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       #      replicas: 0
       environment:
         TEST_VAR: refresh
         HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 30
         HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
         HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 * * * *
+        CALLBACK_MAX_ATTEMPTS: 5
+        DOCUMENT_TASK_MILLISECONDS: 5000
 #        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-demo.postgres.database.azure.com
 #        SPRING_DATASOURCE_USERNAME: pgadmin

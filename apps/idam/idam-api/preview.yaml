@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-2988ec9-20231228092808 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-4abc141-20240103112329 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -54,6 +54,8 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGSCHEDULECRON: "0 */3 * * * *"
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 30m
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALSCHEDULECRON: "0 */5 * * * *"
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
     global:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
