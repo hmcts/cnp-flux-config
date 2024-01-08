@@ -5,26 +5,27 @@ metadata:
 spec:
   values:
     java:
-      #      keyVaults:
-      #        em-stitching:
-      #          resourceGroup: em-stitching
-      #          secrets:
-      #            - name: AppInsightsInstrumentationKey
-      #              alias: APPINSIGHTS_INSTRUMENTATIONKEY
-      #            - name: docmosis-access-key
-      #              alias: DOCMOSIS_ACCESS_KEY
-      #            - name: microservicekey-em-stitching-api
-      #              alias: S2S_KEY
-      #            - name: stitching-POSTGRES-PASS-V15
-      #              alias: SPRING_DATASOURCE_PASSWORD
-      #            - name: app-insights-connection-string
-      #              alias: app-insights-connection-string
-      image: hmctspublic.azurecr.io/em/stitching:prod-0a9a183-20240102095124 #{"$imagepolicy": "flux-system:demo-em-stitching"}
-      #      replicas: 0
+      keyVaults:
+        em-stitching:
+          resourceGroup: em-stitching
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
+            - name: docmosis-access-key
+              alias: DOCMOSIS_ACCESS_KEY
+            - name: microservicekey-em-stitching-api
+              alias: S2S_KEY
+            - name: stitching-POSTGRES-PASS-V15
+              alias: SPRING_DATASOURCE_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+      image: hmctspublic.azurecr.io/em/stitching:prod-157d3c6-20240105140419 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       environment:
         TEST_VAR: refresh
         HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 30
         HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
         HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 * * * *
-#        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-demo.postgres.database.azure.com
-#        SPRING_DATASOURCE_USERNAME: pgadmin
+        CALLBACK_MAX_ATTEMPTS: 5
+        DOCUMENT_TASK_MILLISECONDS: 5000
+        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-demo.postgres.database.azure.com
+        SPRING_DATASOURCE_USERNAME: pgadmin
