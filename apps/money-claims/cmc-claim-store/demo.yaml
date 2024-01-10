@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2803-da66744-20231127141502 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2820-518b0c4-20240109090738 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc
@@ -15,8 +15,12 @@ spec:
               alias: CLAIM_STORE_DB_PASSWORD
             - name: AppInsightsInstrumentationKey
               alias: azure.application-insights.instrumentation-key
-            - name: cmc-db-password-v11
+            - name: cmc-db-password-v15
               alias: CMC_DB_PASSWORD
+            - name: cmc-db-username-v15
+              alias: CMC_DB_USERNAME
+            - name: cmc-db-host-v15
+              alias: CMC_DB_HOST
             - name: citizen-oauth-client-secret
               alias: oauth2.client.secret
             - name: claim-store-s2s-secret
@@ -88,7 +92,5 @@ spec:
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         REFRESH_PODS: true
-        CMC_DB_USERNAME: cmc@cmc-db-v11-demo
-        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         FEATURE_TOGGLES_BREATHING_SPACE: true
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true

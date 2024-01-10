@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-3676-4b9013f-20231204183650 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-3d1c5c3-20240109115710 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -19,8 +19,6 @@ spec:
         HMC_HEARINGS_SUBSCRIPTION_ENABLED: true
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
         CUI_URL_RESPOND_TO_CLAIM: https://moneyclaims.demo.platform.hmcts.net/first-contact/start
-        CMC_DB_USERNAME: 'cmc@cmc-db-v11-demo'
-        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         OCMC_CLIENT_URL: https://moneyclaims1.demo.platform.hmcts.net
       keyVaults:
         civil:
@@ -43,11 +41,17 @@ spec:
             - name: prd-admin-user-password
               alias: CIVIL_PRD_ADMIN_PASSWORD
             - name: appinsights-connection-string
+              alias: appinsights-connection-string
+            - name: AppInsightsInstrumentationKey
               alias: azure.application-insights.instrumentation-key
             - name: docmosis-api-key
               alias: docmosis.tornado.key
-            - name: cmc-db-password-v11
+            - name: cmc-db-password-v15
               alias: CMC_DB_PASSWORD
+            - name: cmc-db-username-v15
+              alias: CMC_DB_USERNAME
+            - name: cmc-db-host-v15
+              alias: CMC_DB_HOST
             - name: gov-notify-api-key
               alias: GOV_NOTIFY_API_KEY
             - name: sendgrid-api-key
