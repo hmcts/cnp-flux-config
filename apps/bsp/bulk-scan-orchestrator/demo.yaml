@@ -5,6 +5,7 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-2597-f53881d-20240110162321
       environment:
         TRANSFORMATION_URL_SSCS: "http://sscs-bulk-scan-demo.service.core-compute-demo.internal/transform-scanned-data"
         AUTO_CASE_CREATION_ENABLED_SSCS: "false"
@@ -19,16 +20,3 @@ spec:
         CDAM_ENABLED: "true"
         SUPPLEMENTARY_DATA_ENABLED_SSCS: "true"
         REFRESH_PODS: "true"
-      keyVaults:
-        "bulk-scan":
-          secrets:
-            - name: orchestrator-FLEXIBLE-POSTGRES-PASS
-              alias: DB_PASSWORD
-            - name: orchestrator-FLEXIBLE-POSTGRES-USER
-              alias: DB_USER
-            - name: orchestrator-FLEXIBLE-POSTGRES-HOST
-              alias: DB_HOST
-            - name: orchestrator-FLEXIBLE-POSTGRES-PORT
-              alias: DB_PORT
-            - name: orchestrator-FLEXIBLE-POSTGRES-DATABASE
-              alias: DB_NAME
