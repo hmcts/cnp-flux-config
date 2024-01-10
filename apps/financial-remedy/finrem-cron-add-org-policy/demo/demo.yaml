@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: finrem-cron-add-application-type
+  name: finrem-cron-add-org-policy
 spec:
-  releaseName: finrem-cron-add-application-type
+  releaseName: finrem-cron-add-org-policy
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-25e136f-20240103101703 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 16 1-31/2 * *"
+      image: hmctspublic.azurecr.io/finrem/cos:prod-ca25f5d-20240110095637 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "30 02 * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -21,6 +21,7 @@ spec:
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         SECURE_DOC_ENABLED: false
         CRON_APPLICATION_TYPE_ADD_ENABLED: false
+        CRON_ADD_ORG_POLICY_ENABLED: false
         TRIG: trig-6
     global:
       jobKind: CronJob
