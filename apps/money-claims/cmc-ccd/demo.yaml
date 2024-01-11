@@ -37,7 +37,7 @@ spec:
             disabled: false
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-0315351-20240109113530 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
+        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-103f41b-20240110143305 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
@@ -56,7 +56,7 @@ spec:
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-6c27865-20231213141250 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-45a8e67-20240111094917 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
