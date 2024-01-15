@@ -13,6 +13,20 @@ spec:
       useInterpodAntiAffinity: true
       ingressHost: moneyclaims.demo.platform.hmcts.net
       image: hmctspublic.azurecr.io/civil/citizen-ui:prod-44de745-20240115102849 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
+      keyVaults:
+        civil-cui:
+          resourceGroup: civil-citizen-ui
+          secrets:
+            - appinsights-instrumentation-key
+            - draft-store-access-key
+            - citizen-ui-idam-secret
+            - ordnance-survey-api-key
+            - cmc-s2s-secret
+            - citizen-draft-store-primary
+            - citizen-draft-store-secondary
+            - civil-citizen-ui-token-key
+            - name: launch-darkly-sdk-key-non-prod
+              alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         GA_TRACKING_ID: UA-97111056-1
         FEATURE_TESTING_SUPPORT: true
