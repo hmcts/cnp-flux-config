@@ -1,9 +1,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: finrem-cron-add-application-type
+  name: finrem-cron-general-application-remove
 spec:
-  releaseName: finrem-cron-add-application-type
+  releaseName: finrem-cron-general-application-remove
   values:
     job:
       image: hmctspublic.azurecr.io/finrem/cos:prod-32e4dd0-20240116081013 #{"$imagepolicy": "flux-system:finrem-cos"}
@@ -20,7 +20,7 @@ spec:
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         SECURE_DOC_ENABLED: false
-        CRON_APPLICATION_TYPE_ADD_ENABLED: false
+        CRON_GENERAL_APPLICATION_REMOVE_ENABLED: false
         TRIG: trig-6
     global:
       jobKind: CronJob
