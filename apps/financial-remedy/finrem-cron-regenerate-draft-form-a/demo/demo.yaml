@@ -1,15 +1,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: finrem-cron-list-for-hearing
+  name: finrem-cron-regenerate-draft-form-a
 spec:
-  releaseName: finrem-cron-list-for-hearing
+  releaseName: finrem-cron-regenerate-draft-form-a
   values:
     job:
       image: hmctspublic.azurecr.io/finrem/cos:prod-e24f090-20240116204117 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 16 2-30/2 * *"
+      schedule: "30 16 * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
+        FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
         FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
@@ -19,6 +20,8 @@ spec:
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         SECURE_DOC_ENABLED: false
+        CRON_APPLICATION_TYPE_ADD_ENABLED: false
+        CRON_REGENERATE_FORM_A_ENABLED: false
         TRIG: trig-6
     global:
       jobKind: CronJob

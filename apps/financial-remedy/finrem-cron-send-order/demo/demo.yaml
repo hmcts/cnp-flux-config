@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: finrem-cron-list-for-hearing
+  name: finrem-cron-send-order
 spec:
-  releaseName: finrem-cron-list-for-hearing
+  releaseName: finrem-cron-send-order
   values:
     job:
       image: hmctspublic.azurecr.io/finrem/cos:prod-e24f090-20240116204117 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 16 2-30/2 * *"
+      schedule: "30 16 * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_SOLICITOR_NOC: true
