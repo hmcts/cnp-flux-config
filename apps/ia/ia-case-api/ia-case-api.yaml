@@ -8,12 +8,13 @@ spec:
     java:
       disableTraefikTls: true
       replicas: 2
+      memoryRequests: "1.5Gi"
       autoscaling:
         enabled: true
         maxReplicas: 5
         targetCPUUtilizationPercentage: 80
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-api:prod-cc38b6e-20231207130809 #{"$imagepolicy": "flux-system:ia-case-api"}
+      image: hmctspublic.azurecr.io/ia/case-api:prod-8015d04-20240116114958 #{"$imagepolicy": "flux-system:ia-case-api"}
       environment:
         IS_SAVE_AND_CONTINUE_ENABLED: "false"
         IA_FEEPAYMENT_ENABLED: "true"

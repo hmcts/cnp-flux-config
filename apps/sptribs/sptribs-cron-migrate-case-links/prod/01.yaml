@@ -6,8 +6,10 @@ spec:
   releaseName: sptribs-cron-migrate-case-links
   values:
     job:
-      suspend: true
-      schedule: "15,45 * * * 2025"
+      suspend: false
+      schedule: "15,45 * * * *"
+      environment:
+        IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
     global:
       jobKind: CronJob
       enableKeyVaults: true
