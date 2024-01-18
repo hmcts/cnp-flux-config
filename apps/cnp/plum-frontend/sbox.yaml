@@ -7,34 +7,3 @@ spec:
   values:
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
-      tolerations:
-        - key: kubernetes.azure.com/scalesetpriority
-          effect: NoSchedule
-          operator: Equal
-          value: spot
-      useInterpodAntiAffinity: false
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: agentpool
-                    operator: In
-                    values:
-                      - spotinstance
-                      - linux
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 50
-              preference:
-                matchExpressions:
-                  - key: agentpool
-                    operator: In
-                    values:
-                      - spotinstance
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: agentpool
-                    operator: In
-                    values:
-                      - linux

@@ -5,13 +5,12 @@ metadata:
 spec:
   releaseName: ia-cron-unnotified-hearings-processor
   values:
-    global:
-      jobKind: CronJob
     job:
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-65124a5-20230918101109 #{"$imagepolicy": "flux-system:ia-cron-unnotified-hearings-processor"}
       environment:
         TASK_NAME: UnNotifiedHearingsProcessor
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/hearings-api:prod-436431a-20240118161106 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      schedule: 0 * * * *
     keyVaults:
       ia:
         resourceGroup: ia
@@ -46,9 +45,9 @@ spec:
             alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
   chart:
     spec:
-      chart: ./stable/ia-cron-unnotified-hearings-processor
-      version: 0.0.17
+      chart: ia-cron-config
+      version: 0.0.1
       sourceRef:
-        kind: GitRepository
-        name: hmcts-charts
+        kind: HelmRepository
+        name: hmctspublic
         namespace: flux-system

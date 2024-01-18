@@ -24,6 +24,7 @@ EXCLUSIONS_LIST=(
   apps/*/demo
   .*perftest.*.yaml
   .*ithc.*.yaml
+  .*sbox.*.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
