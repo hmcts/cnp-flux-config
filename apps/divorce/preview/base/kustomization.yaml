@@ -3,8 +3,16 @@ kind: Kustomization
 resources:
   - ../../../base
   - ../../../base/workload-identity
+  - ../../identity/identity.yaml
+  - ../../../ccd/identity/identity.yaml
+  - ../../../xui/identity/identity.yaml
+  - ../../../am/identity/identity.yaml
 namespace: divorce
 patches:
+  - path: ../../identity/aat.yaml
+  - path: ../../../ccd/identity/aat.yaml
+  - path: ../../../xui/identity/aat.yaml
+  - path: ../../../am/identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
 sortOptions:
   order: fifo
