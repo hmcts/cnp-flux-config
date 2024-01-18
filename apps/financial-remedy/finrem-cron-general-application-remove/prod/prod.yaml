@@ -1,14 +1,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: finrem-cron-send-order
+  name: finrem-cron-general-application-remove
 spec:
-  releaseName: finrem-cron-send-order
+  releaseName: finrem-cron-general-application-remove
   values:
     job:
-      schedule: "10 7 2-30/2 * *"
+      schedule: "10 02 * * *"
       environment:
-        CRON_SEND_ORDER_ENABLED: false
+        CRON_LIST_FOR_HEARING_ENABLED: false
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
         CTSC_EMAIL: contactFinancialRemedy@justice.gov.uk
@@ -18,9 +18,11 @@ spec:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
         SECURE_DOC_ENABLED: false
         FEATURE_PBA_CASE_TYPE: false
+        FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
         FEATURE_SEND_TO_FRC: true
+        CRON_GENERAL_APPLICATION_REMOVE_ENABLED: false
     global:
       jobKind: CronJob
       enableKeyVaults: true
