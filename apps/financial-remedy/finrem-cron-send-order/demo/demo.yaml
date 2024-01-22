@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: finrem-cron-send-order
@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-send-order
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-51abeda-20240118073241 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-cd0a6de-20240122115906 #{"$imagepolicy": "flux-system:finrem-cos"}
       schedule: "30 16 * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true

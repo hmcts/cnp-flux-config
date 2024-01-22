@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: probate-cron-hmrc-extract
@@ -10,7 +10,7 @@ spec:
         TASK_NAME: HmrcExtractTask
         VAR_FV2: trigger-2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-342eecf-20240117212146 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-1ed8b01-20240119100249 #{"$imagepolicy": "flux-system:probate-back-office"}
       schedule: 0 * * * *
   chart:
     spec:
