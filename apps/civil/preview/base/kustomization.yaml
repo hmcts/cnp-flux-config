@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../../../base
   - ../../../base/workload-identity
+  - ../../../am/identity/identity.yaml
   - ../../../azureserviceoperator-system/resources/resource-group.yaml
   - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
   - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
@@ -13,6 +14,7 @@ resources:
 namespace: civil
 patches:
   - path: ../aso/civil-servicebus.yaml
+  - path: ../../../am/identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
   - path: ../aso/civil-postgres.yaml
 sortOptions:
