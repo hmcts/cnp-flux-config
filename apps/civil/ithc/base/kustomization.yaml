@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: civil
 resources:
   - ../../base
+  - ../../../am/identity/identity.yaml
   - ../../../rbac/nonprod-role.yaml
   - ../../civil-citizen-ui/civil-citizen-ui.yaml
   - ../../civil-sdt-gateway/civil-sdt-gateway.yaml
@@ -10,6 +11,7 @@ resources:
   - ../../civil-sdt/civil-sdt.yaml
   - ../../civil-orchestrator-service/civil-orchestrator-service.yaml
 patches:
+  - path: ../../../am/identity/aat.yaml
   - path: ../../civil-service/ithc.yaml
   - path: ../../civil-general-applications/ithc.yaml
   - path: ../../serviceaccount/ithc.yaml

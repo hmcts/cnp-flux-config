@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: tax-tribunals-application
@@ -18,6 +18,8 @@ spec:
       image: hmctspublic.azurecr.io/tax-tribunals/application:prod-1945e9c-20240105092230 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       disableTraefikTls: true
       replicas: 2
+      memoryRequests: 512Mi
+      memoryLimits: 2048Mi
       autoscaling:
         enabled: true
         maxReplicas: 4
