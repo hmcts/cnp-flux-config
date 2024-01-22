@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: tax-tribunals-application
@@ -8,8 +8,4 @@ spec:
     base:
       environment:
         RESTART_ME: '1'
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-12257e6-20240104100455
-    sidekiq:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-12257e6-20240104100455
-    job:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-12257e6-20240104100455
+      memoryLimits: 3072Mi
