@@ -3,11 +3,13 @@ kind: Kustomization
 resources:
   - ../../../base
   - ../../../base/workload-identity
+  - ../../identity/identity.yaml
   - ../../../azureserviceoperator-system/resources/resource-group.yaml
   - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
   - ../sops-secrets
 namespace: am
 patches:
+  - path: ../../identity/aat.yaml
   - path: ../aso/am-servicebus.yaml
   - path: ../../serviceaccount/aat.yaml
 sortOptions:
