@@ -1,15 +1,16 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-callback-function
 spec:
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-a19e6d6-20240115095109 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
+      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-150-cbe110e-20240122114313 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
       aadIdentityName: ccpay
       environment:
         S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         MICROSERVICE_PAYMENT_APP: "payment_app"
+        SERVICE_LOGGING_ENABLED: true
         DUMMY_RESTART_VAR: false
       keyVaults:
         "ccpay":
