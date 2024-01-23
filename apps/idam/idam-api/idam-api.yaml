@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-089083a-20231101120419
+      image: hmctspublic.azurecr.io/idam/api:prod-6625886-20231207104800
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
@@ -59,7 +59,7 @@ spec:
   chart:
     spec:
       chart: idam-api
-      version: 0.7.0
+      version: 0.7.1
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prl-cos
@@ -16,7 +16,7 @@ spec:
       readinessTimeout: 30
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-c0ead89-20231123164808 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-29db967-20240122124623 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -24,6 +24,7 @@ spec:
         XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
         CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
         SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
+        SNED_GRID_OTHER_ORGANISATION_ORDER: d-42ae211ce60c4305a8916322d85c5d29
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

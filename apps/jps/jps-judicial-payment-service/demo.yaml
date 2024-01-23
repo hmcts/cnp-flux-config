@@ -1,59 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jps-judicial-payment-service
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/jps/judicial-payment-service:prod-c2c7db3-20231031145037 #{"$imagepolicy": "flux-system:jps-judicial-payment-service"}
+      image: hmctspublic.azurecr.io/jps/judicial-payment-service:prod-10af91d-20240117091107 #{"$imagepolicy": "flux-system:jps-judicial-payment-service"}
       ingressHost: jps-judicial-payment-service-demo.service.core-compute-demo.internal
-      keyVaults:
-        jps:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: judicial-payment-service-POSTGRES-USER-V15
-              alias: JUDICIAL_PAYMENT_SERVICE_DB_USERNAME
-            - name: judicial-payment-service-POSTGRES-PASS-V15
-              alias: JUDICIAL_PAYMENT_SERVICE_DB_PASSWORD
-            - name: judicial-payment-service-POSTGRES-HOST-V15
-              alias: JUDICIAL_PAYMENT_SERVICE_DB_HOST
-            - name: judicial-payment-service-POSTGRES-PORT
-              alias: JUDICIAL_PAYMENT_SERVICE_DB_PORT
-            - name: judicial-payment-service-POSTGRES-DATABASE
-              alias: JUDICIAL_PAYMENT_SERVICE_DB_NAME
-            - name: idam-jps-system-username
-              alias: IDAM_JPS_SYSTEM_USERNAME
-            - name: idam-jps-system-password
-              alias: IDAM_JPS_SYSTEM_PASSWORD
-            - name: idam-jps-judicial-payment-service-client-secret
-              alias: JPS_JUDICIAL_PAYMENT_SERVICE_IDAM_CLIENT_SECRET
-            - name: jps-judicial-payment-service-s2s-secret
-              alias: IDAM_KEY_JPS_JUDICIAL_PAYMENT_SERVICE
-            - name: idam-jps-recorder-username
-              alias: JPS_RECORDER_USERNAME
-            - name: idam-jps-recorder-password
-              alias: JPS_RECORDER_PASSWORD
-            - name: idam-jps-submitter-username
-              alias: JPS_SUBMITTER_USERNAME
-            - name: idam-jps-submitter-password
-              alias: JPS_SUBMITTER_PASSWORD
-            - name: idam-jps-publisher-username
-              alias: JPS_PUBLISHER_USERNAME
-            - name: idam-jps-publisher-password
-              alias: JPS_PUBLISHER_PASSWORD
-            - name: idam-jps-admin-username
-              alias: JPS_ADMIN_USERNAME
-            - name: idam-jps-admin-password
-              alias: JPS_ADMIN_PASSWORD
-            - name: idam-jps-invalid-username
-              alias: JPS_INVALID_USERNAME
-            - name: idam-jps-invalid-password
-              alias: JPS_INVALID_PASSWORD
-            - name: idam-jps-joh-admin-username
-              alias: JPS_JOH_ADMIN_USERNAME
-            - name: idam-jps-joh-admin-password
-              alias: JPS_JOH_ADMIN_PASSWORD
       environment:
         JUDICIAL_PAYMENT_SERVICE_DB_OPTIONS: "?stringtype=unspecified&gssEncMode=disable"
         RUN_DB_MIGRATION_ON_STARTUP: false
@@ -71,3 +24,4 @@ spec:
         LOCATION_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         JUDICIAL_USERS_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
         CASEWORKER_API_URL: http://rd-caseworker-ref-api-demo.service.core-compute-demo.internal
+        DUMMY_RESTART_VAR: true1

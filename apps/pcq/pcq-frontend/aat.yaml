@@ -1,8 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: pcq-frontend
 spec:
   values:
     nodejs:
+      memoryRequests: "4096Mi"
+      cpuRequests: "3500m"
+      memoryLimits: "8Gi"
+      cpuLimits: "6500m"
       ingressHost: pcq.aat.platform.hmcts.net

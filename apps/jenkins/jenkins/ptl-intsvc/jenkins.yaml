@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -266,10 +266,16 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/civil-(?!damages|sdt).*\/master
+                      ^HMCTS.*\/civil-(?!damages|rtl|sdt).*\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/civil-rtl.*\/master
+                    name: Civil-RTL
+                    recurse: true
+                    title: Civil RTL Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/civil-sdt.*\/master

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,39 +6,9 @@ metadata:
 spec:
   values:
     java:
-      keyVaults:
-        civil:
-          resourceGroup: civil
-          secrets:
-            - civil-idam-client-secret
-            - microservicekey-civil-service
-            - system-update-user-username
-            - system-update-user-password
-            - cross-access-user-username
-            - cross-access-user-password
-            - prd-admin-user-username
-            - prd-admin-user-password
-            - appinsights-connection-string
-            - AppInsightsInstrumentationKey
-            - docmosis-api-key
-            - cmc-db-password-v11
-            - gov-notify-api-key
-            - sendgrid-api-key
-            - robotics-notification-sender
-            - robotics-notification-recipient
-            - robotics-notification-recipient-spec
-            - robotics-notification-recipient-lipj
-            - name: launch-darkly-sdk-key
-            - robotics-notification-multipartyrecipient
-            - ordnance-survey-api-key
-            - notification-caseworker-spec-receiver
-            - default-password
-            - judge-default-password
-            - iac-default-password
-            - mediation-notification-sender
-            - mediation-notification-recipient
       environment:
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
         POLLING_EVENT_EMITTER_ENABLED: false
+        OCMC_CLIENT_URL: https://moneyclaims.aat.platform.hmcts.net
