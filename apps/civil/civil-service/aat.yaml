@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,6 +6,7 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/civil/service:pr-3923
       environment:
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         TESTING_SUPPORT_ENABLED: true

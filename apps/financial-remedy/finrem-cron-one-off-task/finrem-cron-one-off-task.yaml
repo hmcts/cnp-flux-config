@@ -1,16 +1,16 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: finrem-cron-regenerate-draft-form-a
+  name: finrem-cron-one-off-task
 spec:
-  releaseName: finrem-cron-regenerate-draft-form-a
+  releaseName: finrem-cron-one-off-task
   values:
     job:
       schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-851c1fd-20240119132730 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-d3945d2-20240123073844 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
-        TASK_NAME: RegenerateDraftOnlineFormATask
+        TASK_NAME: CfvMigrationTask
   chart:
     spec:
       chart: finrem-cron
