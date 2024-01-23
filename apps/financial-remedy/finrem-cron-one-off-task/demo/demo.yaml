@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: finrem-cron-regenerate-draft-form-a
+  name: finrem-cron-one-off-task
 spec:
-  releaseName: finrem-cron-regenerate-draft-form-a
+  releaseName: finrem-cron-one-off-task
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-d3945d2-20240123073844 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 16 * * *"
+      image: hmctspublic.azurecr.io/finrem/cos:prod-cd0a6de-20240122115906 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "30 * * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -21,7 +21,7 @@ spec:
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         SECURE_DOC_ENABLED: false
         CRON_APPLICATION_TYPE_ADD_ENABLED: false
-        CRON_REGENERATE_FORM_A_ENABLED: false
+        CRON_CFV_CATEGORISATION_TASK_ENABLED: true
         TRIG: trig-6
     global:
       jobKind: CronJob
