@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: external-dns
@@ -8,13 +8,14 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 6.26.4
+      version: 6.28.4
       sourceRef:
         kind: HelmRepository
         name: external-dns
         namespace: admin
   interval: 1m
   values:
+    annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"
     image:
       registry: hmctspublic.azurecr.io
       repository: imported/bitnami/external-dns

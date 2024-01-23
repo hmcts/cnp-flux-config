@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: external-dns
@@ -7,3 +7,4 @@ spec:
   releaseName: external-dns-private
   values:
     provider: azure-private-dns
+    annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"

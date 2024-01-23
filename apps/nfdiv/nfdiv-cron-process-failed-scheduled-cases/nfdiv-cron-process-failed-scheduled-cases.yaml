@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-process-failed-scheduled-cases
@@ -6,12 +6,12 @@ spec:
   releaseName: nfdiv-cron-process-failed-scheduled-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-ee06441-20231107101040 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-a1e2d5d-20240123100110 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: APP_INSIGHTS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: uk-gov-notify-api-key
               alias: UK_GOV_NOTIFY_API_KEY
             - name: s2s-case-api-secret
@@ -28,7 +28,7 @@ spec:
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.15
+      version: 0.0.20
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

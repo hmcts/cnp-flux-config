@@ -1,11 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: em-stitching
 spec:
   values:
     java:
-      #      replicas: 0
       keyVaults:
         em-stitching:
           resourceGroup: em-stitching
@@ -24,9 +23,12 @@ spec:
       cpuRequests: "1500m"
       memoryLimits: "6144Mi"
       cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-7799804-20231107084023 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      image: hmctspublic.azurecr.io/em/stitching:prod-502812e-20240123154454 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh
         SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-perftest.postgres.database.azure.com
         SPRING_DATASOURCE_USERNAME: pgadmin
+        HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 180
+        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 * * * *

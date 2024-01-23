@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccd-next-hearing-date-updater
@@ -7,6 +7,7 @@ spec:
     job:
       schedule: "01 02 2-30/2 * *"
       environment:
+        CASE_TYPES: CIVIL
     global:
       jobKind: CronJob
       enableKeyVaults: true

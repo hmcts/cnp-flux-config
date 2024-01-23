@@ -1,11 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-refunds-api-int
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-b96ed68-20231106125744 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
+      replicas: 1
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-ca460dd-20240115151735 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
       environment:
         DUMMY_VARIABLE: true
         POSTGRES_NAME: postgresqldb2

@@ -1,8 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: camunda-optimize
 spec:
   values:
     environment:
-      OPTIMIZE_ELASTICSEARCH_HOST: 10.112.53.253
+      OPTIMIZE_ELASTICSEARCH_HOST: https://platops-elastic-poc.kb.uksouth.azure.elastic-cloud.com
+      OPTIMIZE_ELASTICSEARCH_HTTP_PORT: 9243
+    replicas: 1
+  valuesFrom:
+  - name: "elastic-values"
+    kind: Secret

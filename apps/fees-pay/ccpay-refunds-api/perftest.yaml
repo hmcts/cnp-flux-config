@@ -1,14 +1,14 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-refunds-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-b96ed68-20231106125744 #{"$imagepolicy": "flux-system:perftest-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-ca460dd-20240115151735 #{"$imagepolicy": "flux-system:perftest-ccpay-refunds-api"}
       environment:
         S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,ccd_gw
         PAYMENT_API_URL: "http://payment-api-perftest.service.core-compute-perftest.internal"
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
         REFUND_STATUS_UPDATE_PATH: "/refunds-api/refund"
-        DUMMY_VARIABLE: true
+        DUMMY_VARIABLE: false

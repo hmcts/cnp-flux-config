@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
@@ -28,3 +28,29 @@ spec:
                 title: 'AAT-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "null"
+    grafana:
+      enabled: true
+      ingress:
+        hosts:
+          - grafana.aat.platform.hmcts.net
+      additionalDataSources:
+        - name: opencost-prometheus
+          type: prometheus
+          url: http://prometheus-server.prometheus.svc
+          access: proxy
+        - name: prometheus-00
+          type: prometheus
+          url: http://prometheus-00.aat.platform.hmcts.net
+          access: proxy
+        - name: prometheus-01
+          type: prometheus
+          url: http://prometheus-01.aat.platform.hmcts.net
+          access: proxy
+        - name: alertmanager-00
+          type: camptocamp-prometheus-alertmanager-datasource
+          url: http://alertmanager-00.aat.platform.hmcts.net
+          access: proxy
+        - name: alertmanager-01
+          type: camptocamp-prometheus-alertmanager-datasource
+          url: http://alertmanager-01.aat.platform.hmcts.net
+          access: proxy

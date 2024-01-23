@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: fpl-case-service
@@ -6,7 +6,7 @@ spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-4861-83c017e-20231106135147 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-5084-138b4fe-20240123094602 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
       environment:
         RELEASE: AGAIN
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
@@ -30,8 +30,9 @@ spec:
         PARENTAL_RESPONSIBILITY_FEMALE_KEYWORD: ParentalResponsibility
         DECLARATION_OF_PARENTAGE: Private
         SCHEDULER_DB_USER: fpl_scheduler_user
-        SCHEDULER_DB_HOST: fpl-case-service-postgresql-v15-flexible-server-demo.postgres.database.azure.com
+        SCHEDULER_DB_HOST: fpl-case-service-postgresql-v15-flexible-server-{{ .Values.global.environment }}.postgres.database.azure.com
         SCHEDULER_DB_PORT: 5432
+        SCHEDULER_ENABLED: true
       keyVaults:
         fpl:
           secrets:
