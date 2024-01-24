@@ -6,9 +6,12 @@ spec:
   releaseName: probate-cron-hmrc-extract
   values:
     job:
-      schedule: "0 2 2-30/2 * *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2454-8c730a0-20240123193635 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0 2 * * *"
+      environment:
+        TRIG: trig-1
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      environment: perftest
+      environment: demo
