@@ -8,6 +8,10 @@ spec:
       OPTIMIZE_ELASTICSEARCH_HOST: https://platops-elastic-poc.kb.uksouth.azure.elastic-cloud.com
       OPTIMIZE_ELASTICSEARCH_HTTP_PORT: 9243
     replicas: 1
-  valuesFrom:
-  - name: "elastic-values"
-    kind: Secret
+    secrets:
+      CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_USERNAME:
+        secretRef: elastic-values
+        key: CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_USERNAME
+      CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_PASSWORD:
+        secretRef: elastic-values
+        key: CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_PASSWORD
