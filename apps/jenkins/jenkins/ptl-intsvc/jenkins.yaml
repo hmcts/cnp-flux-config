@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -354,6 +354,12 @@ spec:
                     name: ETPET
                     recurse: true
                     title: ET PET
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(cui-.+)\/master
+                    name: CUI-RA
+                    recurse: true
+                    title: CUI-RA
           location: |
             unclassified:
               location:

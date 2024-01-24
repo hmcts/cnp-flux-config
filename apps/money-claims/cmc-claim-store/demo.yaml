@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -6,63 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2820-518b0c4-20240109090738 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
-      keyVaults:
-        cmc:
-          resourceGroup: cmc
-          secrets:
-            - name: claim-store-db-password
-              alias: CLAIM_STORE_DB_PASSWORD
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: cmc-db-password-v15
-              alias: CMC_DB_PASSWORD
-            - name: cmc-db-username-v15
-              alias: CMC_DB_USERNAME
-            - name: cmc-db-host-v15
-              alias: CMC_DB_HOST
-            - name: citizen-oauth-client-secret
-              alias: oauth2.client.secret
-            - name: claim-store-s2s-secret
-              alias: idam.s2s-auth.totp_secret
-            - name: anonymous-caseworker-username
-              alias: idam.caseworker.anonymous.username
-            - name: anonymous-caseworker-password
-              alias: idam.caseworker.anonymous.password
-            - name: system-update-username
-              alias: idam.caseworker.system.username
-            - name: system-update-password
-              alias: idam.caseworker.system.password
-            - name: notify-api-key
-              alias: GOV_NOTIFY_API_KEY
-            - name: milo-recipient
-              alias: MILO_CSV_RECIPIENT
-            - name: staff-email
-              alias: staff-notifications.recipient
-            - name: live-support-email
-              alias: live-support.recipient
-            - name: rpa-email-sealed-claim
-              alias: rpa.notifications.sealedClaimRecipient
-            - name: rpa-email-breathing-space
-              alias: rpa.notifications.breathingSpaceRecipient
-            - name: rpa-email-legal-sealed-claim
-              alias: rpa.notifications.legalSealedClaimRecipient
-            - name: rpa-email-more-time-requested
-              alias: rpa.notifications.moreTimeRequestedRecipient
-            - name: rpa-email-response
-              alias: rpa.notifications.responseRecipient
-            - name: rpa-email-ccj
-              alias: rpa.notifications.countyCourtJudgementRecipient
-            - name: rpa-email-paid-in-full
-              alias: rpa.notifications.paidInFullRecipient
-            - name: launchDarkly-sdk-key
-              alias: LAUNCH_DARKLY_SDK_KEY
-            - name: sendgrid-api-key
-              alias: SENDGRID_API_KEY
-            - name: staff-email-legal-rep
-              alias: staff-notifications.legalRecipient
-            - name: appinsights-connection-string
-              alias: appinsights-connection-string
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-b47b79b-20240116222202 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
