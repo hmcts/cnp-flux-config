@@ -6,13 +6,12 @@ spec:
   releaseName: probate-cron-reactivate-dormant-cases
   values:
     job:
+      image: hmctspublic.azurecr.io/probate/back-office:prod-1ed8b01-20240119100249 #{"$imagepolicy": "flux-system:probate-back-office"}
+      schedule: "10,30,50 * * * *"
       environment:
-        CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
-        IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
-        PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
-      schedule: "20 3 1-31/2 * *"
+        VAR: trigger1
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      environment: prod
+      environment: demo
