@@ -7,7 +7,6 @@ spec:
     environment:
       OPTIMIZE_ELASTICSEARCH_HOST: platops-elastic-poc.kb.uksouth.azure.elastic-cloud.com
       OPTIMIZE_ELASTICSEARCH_HTTP_PORT: 9243
-      es.security.ssl.enabled: true
     replicas: 1
     secrets:
       CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_USERNAME:
@@ -16,3 +15,7 @@ spec:
       CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_PASSWORD:
         secretRef: elastic-values
         key: CAMUNDA_OPTIMIZE_ELASTICSEARCH_SECURITY_PASSWORD
+    es:
+      security:
+        ssl:
+          enabled: true
