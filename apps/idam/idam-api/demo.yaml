@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-6625886-20231207104800
+      image: hmctspublic.azurecr.io/idam/api:prod-2e6414d-20240124102651
       ingressHost: idam-api.demo.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
@@ -46,6 +46,8 @@ spec:
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_SKIPARCHIVEDELETIONOFORIGINALRECORD: true
         IDAM_CACHE_TTL: 1
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         trigger_deploy: 21/06/2023-1400
     global:
       environment: demo
@@ -53,4 +55,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.0
+      version: 0.7.1
