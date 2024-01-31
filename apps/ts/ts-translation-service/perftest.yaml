@@ -3,6 +3,9 @@ kind: HelmRelease
 metadata:
   name: ts-translation-service
 spec:
+  filterTags:
+    pattern: '^pr-270-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
   releaseName: ts-translation-service
   values:
     java:
