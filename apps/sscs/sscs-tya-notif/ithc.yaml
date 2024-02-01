@@ -30,7 +30,7 @@ spec:
               alias: JOB_SCHEDULER_DB_PASSWORD
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2439-341135e-20240123160412 #{"$imagepolicy": "flux-system:ithc-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-e5e4b3f-20240129224329 #{"$imagepolicy": "flux-system:ithc-sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: pgadmin
         JOB_SCHEDULER_DB_NAME: notification
@@ -44,6 +44,11 @@ spec:
         HOURS_START_TIME: 6
         HOURS_END_TIME: 23
         DUMMY: true
+        ONLINE_HEARING_LINK: https://sscs-cor.ithc.platform.hmcts.net/
+        MYA_EVIDENCE_LINK: https://sscs-cor.ithc.platform.hmcts.net/support-evidence
+        MYA_EXPENSES_LINK: https://sscs-cor.ithc.platform.hmcts.net/support-hearing-expenses
+        MYA_HEARING_LINK: https://sscs-cor.ithc.platform.hmcts.net/support-hearing
+        MYA_LINK: https://sscs-cor.ithc.platform.hmcts.net/sign-in?tya=appeal_id
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

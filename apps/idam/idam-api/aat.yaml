@@ -7,9 +7,10 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-6625886-20231207104800
+      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
+        SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 10000
         TESTING_SUPPORT_ENABLED: true
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
@@ -41,7 +42,7 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_providerName: moj
         STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
-        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: true
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
         LOG_AND_AUDIT_IDAM_ENABLED: true
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: true
@@ -59,10 +60,11 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGDURATION: 4d
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 1d
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: testjusticeuk\.onmicrosoft\.com
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.0
+      version: 0.7.1
