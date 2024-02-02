@@ -10,7 +10,7 @@ spec:
       image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
-        SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 10000
+        SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
         TESTING_SUPPORT_ENABLED: true
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
@@ -60,7 +60,8 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGDURATION: 4d
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 1d
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
-        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: testjusticeuk\.onmicrosoft\.com
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: testjusticeuk\\.onmicrosoft\.com
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
