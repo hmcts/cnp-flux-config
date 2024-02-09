@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: sptribs-dss-update-case-web
+  namespace: sptribs
+spec:
+  values:
+    nodejs:
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      image: hmctspublic.azurecr.io/sptribs/dss-update-case-web:prod-7e2fdd4-20240209110905 #{"$imagepolicy": "flux-system:perftest-sptribs-dss-update-case-web"}
+    global:
+      environment: perftest
+      enableKeyVaults: true
+  chart:
+    spec:
+      chart: ./stable/sptribs-dss-update-case-web
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
