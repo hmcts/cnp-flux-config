@@ -1,24 +1,23 @@
 ---
-apiVersion: "descheduler/v1alpha2"
-kind: "DeschedulerPolicy"
-strategies:
-  "RemoveDuplicates":
-    enabled: false
-  "LowNodeUtilization":
-    enabled: true
-    params:
-      nodeResourceUtilizationThresholds:
-        thresholds:
-          "cpu": 20
-          "memory": 20
-          "pods": 20
-        targetThresholds:
-          "cpu": 50
-          "memory": 50
-          "pods": 50
-        numberOfNodes: 3
-  "RemovePodsViolatingNodeAffinity":
-    enabled: true
-    args:
-      nodeAffinityType:
-        - "requiredDuringSchedulingIgnoredDuringExecution"
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: descheduler-policy-configmap
+  namespace: kube-system
+data:
+  policy.yaml: |
+    apiVersion: "descheduler/v1alpha2"
+    kind: "DeschedulerPolicy"
+    profiles:
+      - name: test
+        pluginConfig:
+          - name: "RemovePodsViolatingNodeAffinity"
+            args:
+              nodeAffinityType:
+                - "requiredDuringSchedulingIgnoredDuringExecution"
+        plugins:
+          deschedule:
+            enabled:
+              - "RemovePodsViolatingNodeAffinity"
+
+
