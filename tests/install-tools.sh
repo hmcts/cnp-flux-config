@@ -11,6 +11,7 @@ if [ -n "$GITHUB_TOKEN" ]; then
     echo "Authentication successful."
 else
     RATE_LIMIT=$(curl -s https://api.github.com/rate_limit)
+    echo "No GitHub token provided. Proceeding without authentication."
 fi
 
 # get remaining rate limit
