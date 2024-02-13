@@ -4,29 +4,21 @@ set -e
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
 
-# check GitHub rate limit
-if [ -n "$GITHUB_TOKEN" ]; then
-    RATE_LIMIT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/rate_limit)
-    echo "Authentication successful."
+# Download yq using the provided GitHub token
+wget_output=$(wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O -)
+# Check if the download was successful
+if [ $? -eq 0 ]; then
+    echo "Authentication successful. Downloaded yq."
 else
-    RATE_LIMIT=$(curl -s https://api.github.com/rate_limit)
-    echo "No GitHub token provided. Proceeding without authentication."
+    echo "Error: Authentication failed or download unsuccessful."
+    exit 1
 fi
 
-# get remaining rate limit
-REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
-
-# check if remaining requests are enough
-if [ "$REMAINING" -lt 2 ]; then
-    echo "Rate limit exceeded. Waiting for a minute..."
-    sleep 60
-fi
-
-# download and install yq
-wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | tar xz
+# Extract yq binary
+echo "$wget_output" | tar xz
 sudo mv ${BINARY} /usr/bin/yq
 
-# install kustomize
+# Install kustomize
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
 chmod +x install_kustomize.sh
 rm -rf kustomize
