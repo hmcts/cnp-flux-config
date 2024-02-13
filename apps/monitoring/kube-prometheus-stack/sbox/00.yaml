@@ -4,6 +4,15 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      # Update kube-prometheus-stack-crds/kustomization.yaml when updating this
+      version: 56.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus
+        namespace: monitoring
   values:
     prometheus:
       ingress:
