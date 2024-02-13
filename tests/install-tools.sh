@@ -16,9 +16,8 @@ else
 fi
 
 # Extract yq binary
-tar xzf yq.tar.gz
-sudo mv ${BINARY} /usr/bin/yq
-rm yq.tar.gz
+
+tar xz && sudo mv ${BINARY} /usr/bin/yq
 
 # Install kustomize
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
