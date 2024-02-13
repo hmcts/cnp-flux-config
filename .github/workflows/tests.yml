@@ -14,10 +14,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt-get install -y yamllint
-      - name: Use GitHub Token
-        run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/user
       - name: Install tools
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
         run: ./tests/install-tools.sh
       - name: Verify CODEOWNERs
         run: ./tests/code-owner-check.sh
