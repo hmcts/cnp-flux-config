@@ -3,7 +3,6 @@ set -e
 
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
-GITHUB_TOKEN=$GITHUB_TOKEN
 
 # get GitHub rate limit
 if [ -n "$GITHUB_TOKEN" ]; then
