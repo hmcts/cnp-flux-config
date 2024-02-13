@@ -24,7 +24,7 @@ if [ -n "$REMAINING" ] && [ "$REMAINING" -lt 2 ]; then
 fi
 
 # Download and install yq
-wget -q --header="Authorization: token $AUTH_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | tar xz
+wget --header="Authorization: token $AUTH_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | tar xz
 sudo mv ${BINARY} /usr/bin/yq
 
 # Install kustomize
