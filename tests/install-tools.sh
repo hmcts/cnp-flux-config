@@ -5,8 +5,7 @@ VERSION=v4.30.8
 BINARY=yq_linux_amd64
 
 # Download yq using the provided GitHub token
-wget_output=$(wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O -)
-echo "Downloaded file: $wget_output"
+wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - > yq.tar.gz
 
 # Check if the download was successful
 if [ $? -eq 0 ]; then
@@ -17,8 +16,9 @@ else
 fi
 
 # Extract yq binary
-echo "$wget_output" | tar xz
+tar xzf yq.tar.gz
 sudo mv ${BINARY} /usr/bin/yq
+rm yq.tar.gz
 
 # Install kustomize
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
