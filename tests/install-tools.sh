@@ -4,7 +4,7 @@ set -e
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
 
-wget -v --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | \
+wget -v --header="Authorization: token $AUTH_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | \
   tar xz && sudo mv ${BINARY} /usr/bin/yq
 
 curl -s "https://raw.githubusercontent.com/\
