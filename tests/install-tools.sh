@@ -18,7 +18,9 @@ fi
 REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
 
 # check if remaining requests are enough
-if [ -n "$REMAINING" ] && [ -n "$REMAINING" ] && [ "$REMAINING" -lt 2 ]; then
+if ! [[ "$REMAINING" =~ ^[0-9]+$ ]]; then
+    echo "Unable to determine remaining rate limit. Proceeding as if rate limit is sufficient."
+elif [ "$REMAINING" -lt 2 ]; then
     echo "Rate limit exceeded. Waiting for a minute..."
     sleep 60
 fi
