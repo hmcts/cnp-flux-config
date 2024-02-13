@@ -41,6 +41,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Tools
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTH_TOKEN }}
         run: ./tests/install-tools.sh
       - name: Install Flux CLI
         uses: nick-fields/retry@v2
