@@ -4,6 +4,7 @@ set -e
 VERSION="v4.30.8"
 BINARY="yq_linux_amd64"
 
+
 # get GitHub rate limit
 if [ -n "$GITHUB_TOKEN" ]; then
     RATE_LIMIT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/rate_limit)
@@ -17,7 +18,7 @@ fi
 REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
 
 # check if remaining requests are enough
-if [ -n "$REMAINING" ] && [ "$REMAINING" -lt 2 ]; then
+if [ -n "$REMAINING" ] && [ -n "$REMAINING" ] && [ "$REMAINING" -lt 2 ]; then
     echo "Rate limit exceeded. Waiting for a minute..."
     sleep 60
 fi
