@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-VERSION=v4.30.8
-BINARY=yq_linux_amd64
+VERSION="v4.30.8"
+BINARY="yq_linux_amd64"
 
 # get GitHub rate limit
 if [ -n "$GITHUB_TOKEN" ]; then
