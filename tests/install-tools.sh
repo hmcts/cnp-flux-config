@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
 
 # Download yq using the provided GitHub token
-wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - \
+wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | \
   tar xz && sudo mv ${BINARY} /usr/bin/yq
 # Check if the download was successful
 if [ $? -eq 0 ]; then
