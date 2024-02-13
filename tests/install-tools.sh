@@ -8,6 +8,7 @@ GITHUB_TOKEN=$GITHUB_TOKEN
 # get GitHub rate limit
 if [ -n "$GITHUB_TOKEN" ]; then
     RATE_LIMIT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/rate_limit)
+    echo "Authentication successful."
 else
     RATE_LIMIT=$(curl -s https://api.github.com/rate_limit)
 fi
