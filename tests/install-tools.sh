@@ -17,7 +17,9 @@ else
 fi
 
 # Extract yq binary
+echo "Extracting yq binary..."
 echo "$wget_output" | tar tz
+echo "$wget_output" | tar xz
 
 # Check if the downloaded file contains the expected binary
 if echo "$wget_output" | tar tz | grep -q "$BINARY"; then
@@ -28,4 +30,14 @@ else
 fi
 
 # Move yq binary to /usr/bin
+echo "Moving yq binary to /usr/bin..."
 echo "$wget_output" | tar xz && sudo mv ${BINARY} /usr/bin/yq
+
+# Install kustomize
+echo "Installing kustomize..."
+curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
+chmod +x install_kustomize.sh
+rm -rf kustomize
+./install_kustomize.sh
+
+echo "yq and kustomize installation completed successfully."
