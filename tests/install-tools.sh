@@ -4,6 +4,9 @@ set -e
 VERSION="v4.30.8"
 BINARY="yq_linux_amd64"
 
+# debug
+echo "Version: $VERSION"
+
 # get GitHub rate limit
 if [ -n "$GITHUB_TOKEN" ]; then
     RATE_LIMIT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/rate_limit)
