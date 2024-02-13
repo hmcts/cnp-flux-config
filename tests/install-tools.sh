@@ -4,8 +4,7 @@ set -e
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
 
-
-# get GitHub rate limit
+# check GitHub rate limit
 if [ -n "$GITHUB_TOKEN" ]; then
     RATE_LIMIT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/rate_limit)
     echo "Authentication successful."
@@ -18,14 +17,12 @@ fi
 REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
 
 # check if remaining requests are enough
-if ! [[ "$REMAINING" =~ ^[0-9]+$ ]]; then
-    echo "Unable to determine remaining rate limit. Proceeding as if rate limit is sufficient."
-elif [ "$REMAINING" -lt 2 ]; then
+if [ "$REMAINING" -lt 2 ]; then
     echo "Rate limit exceeded. Waiting for a minute..."
     sleep 60
 fi
 
-# install yq
+# download and install yq
 wget -q --header="Authorization: token $GITHUB_TOKEN" "https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz" -O - | tar xz
 sudo mv ${BINARY} /usr/bin/yq
 
