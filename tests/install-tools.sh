@@ -13,6 +13,7 @@ fi
 
 # Extract remaining rate limit
 REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
+echo "Remaining rate limit: $REMAINING"  # Debug output
 
 # Check if remaining requests are enough
 if [ -n "$REMAINING" ] && [ "$REMAINING" -lt 2 ]; then
