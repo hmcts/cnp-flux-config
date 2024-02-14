@@ -30,7 +30,7 @@ check_rate_limit() {
     fi
 
     # Extract remaining rate limit
-    REMAINING=$(echo "$RATE_LIMIT" | jq -r '.resources.code_scanning_upload.remaining')
+    REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
     echo "Remaining rate limit: $REMAINING"  # Debug output
 
     # Check if remaining requests are enough
@@ -48,10 +48,4 @@ for ((i=0; i<=MAX_RETRIES; i++)); do
     sleep $WAIT_TIME
 done
 
-# Retry downloading kustomize if rate limit is still exceeded
-for ((i=0; i<=MAX_RETRIES; i++)); do
-    check_rate_limit
-    install_kustomize && break
-    echo "kustomize download failed. Retrying in $WAIT_TIME seconds..."
-    sleep $WAIT_TIME
-done
+install_kustomize
