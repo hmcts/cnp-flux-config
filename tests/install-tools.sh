@@ -34,7 +34,7 @@ check_rate_limit() {
     echo "Remaining rate limit: $REMAINING"  # Debug output
 
     # Check if remaining requests are enough
-    if [$((REMAINING)) -lt 2 ]; then
+    if [[ $((REMAINING)) -lt 2 ]]; then
         echo "Rate limit exceeded. Waiting for $WAIT_TIME seconds..."
         sleep $WAIT_TIME
     fi
