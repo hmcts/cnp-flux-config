@@ -3,8 +3,7 @@ set -e
 
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
-MAX_RETRIES=1
-WAIT_TIME=30  
+MAX_RETRIES=1 
 
 # Function to download and install yq
 install_yq() {
@@ -21,22 +20,25 @@ install_kustomize() {
     ./install_kustomize.sh
 }
 
-# Function to check GitHub rate limit
 check_rate_limit() {
+    # Check GitHub rate limit
     if [ -n "$AUTH_TOKEN" ]; then
         RATE_LIMIT=$(curl -s -H "Authorization: token $AUTH_TOKEN" https://api.github.com/rate_limit)
     else
         RATE_LIMIT=$(curl -s https://api.github.com/rate_limit)
     fi
 
+    echo "GitHub rate limit response: $RATE_LIMIT"  # Debug output
+
     # Extract remaining rate limit
     REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
     echo "Remaining rate limit: $REMAINING"  # Debug output
 
     # Check if remaining requests are enough
-    if [[ $((REMAINING)) -lt 2 ]]; then
-        echo "Rate limit exceeded. Waiting for $WAIT_TIME seconds..."
+    if [ $((REMAINING)) -lt 2 ]; then
+        echo "Rate limit exceeded. Waiting for a minute..."
         sleep $WAIT_TIME
+        echo "Resuming execution after waiting."
     fi
 }
 
