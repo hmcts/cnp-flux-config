@@ -4,7 +4,7 @@ set -e
 VERSION=v4.30.8
 BINARY=yq_linux_amd64
 MAX_RETRIES=1
-WAIT_TIME=20
+WAIT_TIME=30
 
 # Function to download and install yq
 install_yq() {
