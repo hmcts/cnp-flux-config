@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sptribs-cron-migrate-case-flags
@@ -6,8 +6,10 @@ spec:
   releaseName: sptribs-cron-migrate-case-flags
   values:
     job:
-      suspend: true
+      suspend: false
       schedule: "0,30 * * * *"
+      environment:
+        IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
     global:
       jobKind: CronJob
       enableKeyVaults: true

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -146,7 +146,7 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions|sscs-hearings-api)\/master
+                      ^HMCTS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions|sscs-hearings-api|sscs-e2etests)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -354,6 +354,12 @@ spec:
                     name: ETPET
                     recurse: true
                     title: ET PET
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(cui-.+)\/master
+                    name: CUI-RA
+                    recurse: true
+                    title: CUI-RA
           location: |
             unclassified:
               location:
