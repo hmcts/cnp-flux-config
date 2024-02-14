@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ts-translation-service
@@ -8,3 +8,21 @@ spec:
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
+        DUMMY_VAR_TO_RESTART: 1
+      keyVaults:
+        ts:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: translation-service-POSTGRES-USER-V15
+              alias: TS_TRANSLATION_SERVICE_DB_USERNAME
+            - name: translation-service-POSTGRES-PASS-V15
+              alias: TS_TRANSLATION_SERVICE_DB_PASSWORD
+            - name: translation-service-POSTGRES-HOST-V15
+              alias: TS_TRANSLATION_SERVICE_DB_HOST
+            - name: translation-service-POSTGRES-PORT
+              alias: TS_TRANSLATION_SERVICE_DB_PORT
+            - name: translation-service-POSTGRES-DATABASE
+              alias: TS_TRANSLATION_SERVICE_DB_NAME
+            - name: ts-translation-service-s2s-secret
+              alias: IDAM_KEY_TS_TRANSLATION_SERVICE
