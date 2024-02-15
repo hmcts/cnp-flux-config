@@ -16,7 +16,7 @@ install_yq() {
 # Function to download and install kustomize
 install_kustomize() {
     echo "Downloading kustomize..."
-    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
+    curl -s -H "Authorization: token $AUTH_TOKEN" "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
     chmod +x install_kustomize.sh
     ./install_kustomize.sh
 }
@@ -28,8 +28,6 @@ check_rate_limit() {
     else
         RATE_LIMIT=$(curl -s https://api.github.com/rate_limit)
     fi
-
-    echo "GitHub rate limit response: $RATE_LIMIT"  # Debug output
 
     # Extract remaining rate limit
     REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
@@ -51,4 +49,10 @@ for ((i=0; i<=MAX_RETRIES; i++)); do
     sleep $WAIT_TIME
 done
 
-install_kustomize
+# Retry downloading kustomize if rate limit is still exceeded
+for ((i=0; i<=MAX_RETRIES; i++)); do
+    check_rate_limit
+    install_kustomize && break
+    echo "kustomize download failed. Retrying in $WAIT_TIME seconds..."
+    sleep $WAIT_TIME
+done
