@@ -29,8 +29,6 @@ check_rate_limit() {
         RATE_LIMIT=$(curl -s https://api.github.com/rate_limit)
     fi
 
-    echo "GitHub rate limit response: $RATE_LIMIT"  # Debug output
-
     # Extract remaining rate limit
     REMAINING=$(echo "$RATE_LIMIT" | jq -r '.rate.remaining')
     echo "Remaining rate limit: $REMAINING"  # Debug output
