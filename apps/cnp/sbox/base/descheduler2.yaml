@@ -19,7 +19,6 @@ spec:
     kind: CronJob
     image:
       repository: registry.k8s.io/descheduler/descheduler
-      tag: ""
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -35,8 +34,6 @@ spec:
       runAsNonRoot: true
       runAsUser: 1000
     podSecurityContext: {}
-    nameOverride: ""
-    fullnameOverride: ""
     commonLabels: {}
     cronJobApiVersion: "batch/v1"
     schedule: "*/2 * * * *"
@@ -74,7 +71,6 @@ spec:
       periodSeconds: 10
     service:
       enabled: false
-      ipFamilyPolicy: ""
     serviceMonitor:
       enabled: false
       insecureSkipVerify: true
