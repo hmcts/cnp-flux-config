@@ -20,28 +20,6 @@ spec:
     image:
       repository: registry.k8s.io/descheduler/descheduler
       pullPolicy: IfNotPresent
-    resources:
-      requests:
-        cpu: 500m
-        memory: 256Mi
-    securityContext:
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-      privileged: false
-      readOnlyRootFilesystem: true
-      runAsNonRoot: true
-      runAsUser: 1000
-    cronJobApiVersion: "batch/v1"
-    schedule: "*/3 * * * *"
-    suspend: false
-    deschedulingInterval: 5m
-    replicas: 1
-    command:
-      - "/bin/descheduler"
-    cmdOptions:
-      v: 3
     deschedulerPolicyAPIVersion: "descheduler/v1alpha2"
     deschedulerPolicy:
       strategies:
@@ -53,21 +31,3 @@ spec:
               balance:
                 enabled:
                   - "RemovePodsViolatingTopologySpreadConstraint"
-    priorityClassName: system-cluster-critical
-    rbac:
-      create: true
-    serviceAccount:
-      create: true
-    livenessProbe:
-      failureThreshold: 3
-      httpGet:
-        path: /healthz
-        port: 10258
-        scheme: HTTPS
-      initialDelaySeconds: 3
-      periodSeconds: 10
-    service:
-      enabled: false
-    serviceMonitor:
-      enabled: false
-      insecureSkipVerify: true
