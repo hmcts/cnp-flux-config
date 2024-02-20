@@ -21,7 +21,6 @@ spec:
       repository: registry.k8s.io/descheduler/descheduler
       tag: ""
       pullPolicy: IfNotPresent
-    imagePullSecrets: []
     resources:
       requests:
         cpu: 500m
@@ -61,24 +60,10 @@ spec:
                 enabled:
                   - "RemovePodsViolatingTopologySpreadConstraint"
     priorityClassName: system-cluster-critical
-    nodeSelector: {}
-    affinity: {}
-    topologySpreadConstraints: []
-    tolerations: []
     rbac:
       create: true
     serviceAccount:
       create: true
-      # Specifies whether a ServiceAccount should be created
-      # The name of the ServiceAccount to use.
-      # If not set and create is true, a name is generated using the fullname template
-      # name: <your-service-account-name> # Uncomment and replace <your-service-account-name> with your service account name if needed
-      # Specifies custom annotations for the serviceAccount
-      name:
-    annotations: {}
-    podAnnotations: {}
-    podLabels: {}
-    dnsConfig: {}
     livenessProbe:
       failureThreshold: 3
       httpGet:
@@ -90,12 +75,7 @@ spec:
     service:
       enabled: false
       ipFamilyPolicy: ""
-      ipFamilies: []
     serviceMonitor:
       enabled: false
-      additionalLabels: {}
-      interval: ""
       insecureSkipVerify: true
       serverName: null
-      metricRelabelings: []
-      relabelings: []
