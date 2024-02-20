@@ -7,6 +7,14 @@ spec:
   values:
     java:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '512Mi'
+#      possibly reduce CPU as well as upper bounds on mem and cpu
+#      cpuRequests: '250m'
+      memoryLimits: '1024Mi'
+#      cpuLimits: '1500m'
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/rd/location-ref-api:prod-8a110d4-20240201092131 #{"$imagepolicy": "flux-system:rd-location-ref-api"}
   chart:
