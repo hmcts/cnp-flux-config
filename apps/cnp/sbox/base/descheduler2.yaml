@@ -1,0 +1,101 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: descheduler
+  namespace: cnp
+spec:
+  timeout: 20m
+  releaseName: descheduler
+  chart:
+    spec:
+      chart: descheduler
+      version: 0.18.0
+      sourceRef:
+        kind: HelmRepository
+        name: descheduler
+        namespace: cnp
+  interval: 1m
+  values:
+    kind: CronJob
+    image:
+      repository: registry.k8s.io/descheduler/descheduler
+      tag: ""
+      pullPolicy: IfNotPresent
+    imagePullSecrets: []
+    resources:
+      requests:
+        cpu: 500m
+        memory: 256Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
+    podSecurityContext: {}
+    nameOverride: ""
+    fullnameOverride: ""
+    commonLabels: {}
+    cronJobApiVersion: "batch/v1"
+    schedule: "*/2 * * * *"
+    suspend: false
+    deschedulingInterval: 3m
+    replicas: 1
+    leaderElection: {}
+    command:
+      - "/bin/descheduler"
+    cmdOptions:
+      v: 3
+    deschedulerPolicyAPIVersion: "descheduler/v1alpha2"
+    deschedulerPolicy:
+      strategies:
+        profiles:
+          - name: ProfileName
+            pluginConfig:
+            - name: "RemovePodsViolatingTopologySpreadConstraint"
+            plugins:
+              balance:
+                enabled:
+                  - "RemovePodsViolatingTopologySpreadConstraint"
+    priorityClassName: system-cluster-critical
+    nodeSelector: {}
+    affinity: {}
+    topologySpreadConstraints: []
+    tolerations: []
+    rbac:
+      create: true
+    serviceAccount:
+      create: true
+      # Specifies whether a ServiceAccount should be created
+      # The name of the ServiceAccount to use.
+      # If not set and create is true, a name is generated using the fullname template
+      # name: <your-service-account-name> # Uncomment and replace <your-service-account-name> with your service account name if needed
+      # Specifies custom annotations for the serviceAccount
+      name:
+    annotations: {}
+    podAnnotations: {}
+    podLabels: {}
+    dnsConfig: {}
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /healthz
+        port: 10258
+        scheme: HTTPS
+      initialDelaySeconds: 3
+      periodSeconds: 10
+    service:
+      enabled: false
+      ipFamilyPolicy: ""
+      ipFamilies: []
+    serviceMonitor:
+      enabled: false
+      additionalLabels: {}
+      interval: ""
+      insecureSkipVerify: true
+      serverName: null
+      metricRelabelings: []
+      relabelings: []
