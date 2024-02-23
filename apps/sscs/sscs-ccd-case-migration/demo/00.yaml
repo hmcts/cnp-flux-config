@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: sscs-ccd-case-migration
+  namespace: sscs
+spec:
+  releaseName: sscs-ccd-case-migration
+  values:
+    job:
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-13 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "0 10 23 2 *"
+      environment:
+        MIGRATION_WA_ENABLED: false
