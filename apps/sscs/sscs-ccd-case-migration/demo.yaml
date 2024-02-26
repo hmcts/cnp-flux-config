@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: sscs-ccd-case-migration
+  namespace: sscs
+spec:
+  releaseName: sscs-ccd-case-migration
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      aadIdentityName: sscs
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-13-dea6d01-20240222120403 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "0 10 23 2 *"
+      environment:
+        MIGRATION_WA_ENABLED: true
+        MIGRATION_QUERY_SIZE: 1000
+        MIGRATION_CASE_LIMIT: 100
