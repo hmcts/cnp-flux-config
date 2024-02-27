@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: chart-neuvector
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: ssh://https://github.com/hmcts/chart-neuvector
+  ref:
+    branch: marty/neuvector-patching
+  secretRef:
+    name: git-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/
