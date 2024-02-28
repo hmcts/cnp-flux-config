@@ -10,6 +10,14 @@ spec:
           secrets:
             - name: processor-POSTGRES-PASS
               alias: BULK_SCANNING_DB_PASSWORD
+            - name: processor-POSTGRES-USER
+              alias: BULK_SCANNING_DB_USER_NAME
+            - name: processor-POSTGRES-DATABASE
+              alias: BULK_SCANNING_DB_NAME
+            - name: processor-POSTGRES-HOST
+              alias: BULK_SCANNING_DB_HOST
+            - name: processor-POSTGRES-PORT
+              alias: BULK_SCANNING_DB_PORT
             - name: s2s-secret
               alias: S2S_SECRET
             - name: flyway-password
@@ -80,6 +88,9 @@ spec:
         DELETE_COMPLETE_FILES_CRON: "0 0/10 * * * *"
         STORAGE_BLOB_LEASE_TIMEOUT: 60
         UPLOAD_MAX_TRIES: 30
+        # Remove after Migration
+        FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-postgres-db-v11-prod.postgres.database.azure.com:5432/bulk_scan?sslmode=require
+        FLYWAY_USER: bulk_scanner@bulk-scan-processor-postgres-db-v11-prod
       testsConfig:
         memoryLimits: "4096Mi"
         serviceAccountName: tests-service-account
