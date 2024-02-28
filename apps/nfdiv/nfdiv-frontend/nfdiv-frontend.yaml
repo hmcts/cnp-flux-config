@@ -7,6 +7,13 @@ spec:
   values:
     nodejs:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 8
+      memoryRequests: '512Mi'
+      cpuRequests: '200m'
+      memoryLimits: '512Mi'
+      cpuLimits: '1000m'
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/nfdiv/frontend:prod-0744324-20240228072404 #{"$imagepolicy": "flux-system:nfdiv-frontend"}
       environment:
