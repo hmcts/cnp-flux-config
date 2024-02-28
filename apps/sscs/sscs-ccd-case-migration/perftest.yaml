@@ -10,6 +10,10 @@ spec:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
       image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-13-d9b10c3-20240227103609 #{"$imagepolicy": "flux-system:perftest-sscs-ccd-case-migration"}
+      cpuRequests: "1000m"
+      cpuLimits: "2500m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
       schedule: "0 10 28 2 *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
