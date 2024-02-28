@@ -5,6 +5,14 @@ metadata:
   name: neuvector
   namespace: neuvector
 spec:
+  chart:
+    spec:
+      chart: ./neuvector-azure-keyvault
+      sourceRef:
+        kind: GitRepository
+        name: chart-neuvector
+        namespace: flux-system
+      interval: 5m
   values:
     keyvault:
       name: cftapps
