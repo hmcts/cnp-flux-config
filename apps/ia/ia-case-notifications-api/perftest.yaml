@@ -6,6 +6,10 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/ia/case-notifications-api:pr-907-eb18c15-20240221091908 #{"$imagepolicy": "flux-system:perftest-ia-case-notifications-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 80
       keyVaults:
         ia:
           resourceGroup: ia
