@@ -30,7 +30,7 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-fe7eeda-20240207155701 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctspublic.azurecr.io/ccd/admin-web:prod-74be74a-20240226152806 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
@@ -44,7 +44,7 @@ spec:
             disabled: false
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-23bd962-20240222190941 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-5806009-20240228114400 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -56,7 +56,7 @@ spec:
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-59857b8-20240226141745 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-bf4c406-20240227143929 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
@@ -66,7 +66,7 @@ spec:
         image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-56541db-20240222190404 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctspublic.azurecr.io/dm/store:prod-884579d-20240223162631 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctspublic.azurecr.io/dm/store:prod-4d69feb-20240226191053 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctspublic.azurecr.io/ccd/user-profile-importer:db3j14
       users:
