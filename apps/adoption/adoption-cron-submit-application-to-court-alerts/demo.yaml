@@ -6,11 +6,11 @@ spec:
   releaseName: adoption-cron-submit-application-to-court-alerts
   values:
     job:
-      image: hmctspublic.azurecr.io/adoption/cos-api:pr-917-217f8d1-20240305074952 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
+      image: hmctspublic.azurecr.io/adoption/cos-api:pr-917-217f8d1-20240305074952 #{"$imagepolicy": "flux-system:demo-adoption-cron-submit-application-to-court-alerts"}
       environment:
         TASK_NAME: AlertToSubmitApplicationToCourtTask
         VAR: trigger1
-      schedule: '* * * * *'
+      schedule: 0/1 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
