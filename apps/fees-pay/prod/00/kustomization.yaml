@@ -1,18 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../base
-  - ../../card-payment-job/card-payment-job.yaml
-  - ../../bar-payment-job/bar-payment-job.yaml
-  - ../../finrem-payment-job/finrem-payment-job.yaml
-  - ../../pba-payment-job/pba-payment-job.yaml
-  - ../../status-payment-job/status-payment-job.yaml
-  - ../../refund-notifications-job/refund-notifications-job.yaml
+- ../base
+- ../../card-payment-job/card-payment-job.yaml
+- ../../bar-payment-job/bar-payment-job.yaml
+- ../../finrem-payment-job/finrem-payment-job.yaml
+- ../../pba-payment-job/pba-payment-job.yaml
+- ../../status-payment-job/status-payment-job.yaml
+- ../../refund-notifications-job/refund-notifications-job.yaml
 namespace: fees-pay
-patchesStrategicMerge:
-  - ../../card-payment-job/prod-00.yaml
-  - ../../bar-payment-job/prod-00.yaml
-  - ../../finrem-payment-job/prod-00.yaml
-  - ../../pba-payment-job/prod-00.yaml
-  - ../../status-payment-job/prod-00.yaml
-  - ../../refund-notifications-job/prod.yaml
+patches:
+- path: ../../card-payment-job/prod-00.yaml
+- path: ../../bar-payment-job/prod-00.yaml
+- path: ../../finrem-payment-job/prod-00.yaml
+- path: ../../pba-payment-job/prod-00.yaml
+- path: ../../status-payment-job/prod-00.yaml
+- path: ../../refund-notifications-job/prod.yaml

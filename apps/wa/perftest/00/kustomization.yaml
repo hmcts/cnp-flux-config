@@ -2,9 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: wa
 resources:
-  - ../base
-patchesStrategicMerge:
-  - ../../wa-task-batch-reconfiguration/perftest/00.yaml
-  - ../../wa-task-batch-termination/perftest-00.yaml
-  - ../../wa-task-batch-initiation/perftest-00.yaml
-  - ../../wa-task-batch-update-search-index/perftest-00.yaml
+- ../base
+patches:
+- path: ../../wa-task-batch-reconfiguration/perftest/00.yaml
+- path: ../../wa-task-batch-termination/perftest-00.yaml
+- path: ../../wa-task-batch-initiation/perftest-00.yaml
+- path: ../../wa-task-batch-update-search-index/perftest-00.yaml
+- path: ../../wa-task-batch-replication-check/perftest-00.yaml

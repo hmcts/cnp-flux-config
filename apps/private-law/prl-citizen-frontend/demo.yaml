@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prl-citizen-frontend
@@ -6,14 +6,11 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-874-7ad4594-20230509232552 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-b55a08b-20240305110018 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
-      memoryLimits: "2048Mi"
-      memoryRequests: "512Mi"
-      replicas: 2
       readinessDelay: 45
-      readinessTimeout: 10
+      readinessTimeout: 15
       readinessPeriod: 15
       keyVaults:
         prl:
@@ -32,6 +29,7 @@ spec:
             - citizen-upload-docs-email
             - redis-access-key
       environment:
+        NODE_ENV: demo
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
         REFORM_SERVICE_NAME: prl-citizen-frontend

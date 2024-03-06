@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: traefik2
@@ -9,5 +9,10 @@ spec:
       spec:
         loadBalancerIP: "10.90.95.250"
     autoscaling:
-      minReplicas: 4
-      maxReplicas: 6
+      minReplicas: 8
+      maxReplicas: 16
+    deployment:
+      podLabels:
+        useWorkloadIdentity: "true"
+    serviceAccount:
+      name: admin

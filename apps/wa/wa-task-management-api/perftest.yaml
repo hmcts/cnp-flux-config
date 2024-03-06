@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: wa-task-management-api
@@ -6,17 +6,17 @@ spec:
   values:
     java:
       replicas: 4
-      image: hmctspublic.azurecr.io/wa/task-management-api:prod-4f9859a-20230505131823 #{"$imagepolicy": "flux-system:perftest-wa-task-management-api"}
+      autoscaling:
+        enabled: false
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-f58477e-20240228120326 #{"$imagepolicy": "flux-system:perftest-wa-task-management-api"}
       memoryLimits: "4096Mi"
       memoryRequests: "2048Mi"
       cpuLimits: "4000m"
       cpuRequests: "2000m"
       environment:
-        LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        LOGGING_LEVEL_UK_GOV_HMCTS: INFO
         REFRESH_FLAG: "2"
-        ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw
-        ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps
+        ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw,publiclaw,sscs,divorce,employment
+        ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps,care_supervision_epo,benefit,financialremedycontested,financialremedymvp2,finrem_exceptionrecord,privatelaw_exceptionrecord,et_englandwales,et_scotland
         RESTART: true
         SPRING_PROFILES_ACTIVE: "replica"
-        POSTGRES_USERNAME: "pgreplication"
-        REPLICATION_USERNAME: "pgreplication"

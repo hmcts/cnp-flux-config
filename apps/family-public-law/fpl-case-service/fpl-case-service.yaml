@@ -1,8 +1,7 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   labels:
-    hmcts.github.com/envInjector: enabled
     slackChannel: fpla-tech
   name: fpl-case-service
 spec:
@@ -14,7 +13,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-fda47df-20230510110059 #{"$imagepolicy": "flux-system:fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-5aa965d-20240305151432 #{"$imagepolicy": "flux-system:fpl-case-service"}
   chart:
     spec:
       chart: ./stable/fpl-case-service

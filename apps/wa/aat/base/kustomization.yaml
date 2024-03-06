@@ -13,12 +13,15 @@ resources:
   - ../../wa-task-batch-maintenance-camunda-task-clean-up/wa-task-batch-maintenance-camunda-task-clean-up.yaml
   - ../../wa-task-batch-ad-hoc-pending-termination/wa-task-batch-ad-hoc-pending-termination.yaml
   - ../../wa-task-batch-update-search-index/wa-task-batch-update-search-index.yaml
+  - ../../wa-task-batch-replication-check/wa-task-batch-replication-check.yaml
   - ../../wa-messages-find-problem-messages/wa-messages-find-problem-messages.yaml
   - ../../wa-messages-set-processed-state-messages/wa-messages-set-processed-state-messages.yaml
   - ../../wa-case-event-handler-clean-up-messages/wa-case-event-handler-clean-up-messages.yaml
   - ../../../rbac/nonprod-role.yaml
-patchesStrategicMerge:
-  - ../../identity/aat.yaml
-  - ../../wa-case-event-handler/aat.yaml
-  - ../../wa-task-monitor/aat.yaml
-  - ../../wa-task-management-api/aat.yaml
+patches:
+  - path: ../../identity/aat.yaml
+  - path: ../../wa-case-event-handler/aat.yaml
+  - path: ../../wa-task-monitor/aat.yaml
+  - path: ../../wa-task-management-api/aat.yaml
+  - path: ../../wa-workflow-api/aat.yaml
+  - path: ../../serviceaccount/aat.yaml

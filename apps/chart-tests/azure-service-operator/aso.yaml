@@ -39,3 +39,25 @@ spec:
   sku:
     name: Standard
   zoneRedundant: false
+---
+apiVersion: dbforpostgresql.azure.com/v1api20210601
+kind: FlexibleServer
+metadata:
+  name: ${NAMESPACE}-flexibleserver-postgres-${ENVIRONMENT}
+  namespace: chart-tests
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  location: uksouth
+  owner:
+    name: chart-tests-aso-rg
+  version: "14"
+  sku:
+    name: Standard_B1ms
+    tier: Burstable
+  administratorLogin: hmcts
+  administratorLoginPassword:
+    name: chart-test-postgres-password
+    key: PASSWORD
+  storage:
+    storageSizeGB: 32

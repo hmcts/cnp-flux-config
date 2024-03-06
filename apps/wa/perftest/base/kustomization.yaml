@@ -7,9 +7,12 @@ resources:
   - ../../wa-task-batch-termination/wa-task-batch-termination.yaml
   - ../../wa-task-batch-initiation/wa-task-batch-initiation.yaml
   - ../../wa-task-batch-update-search-index/wa-task-batch-update-search-index.yaml
+  - ../../wa-task-batch-replication-check/wa-task-batch-replication-check.yaml
   - ../../../rbac/nonprod-role.yaml
-patchesStrategicMerge:
-  - ../../identity/perftest.yaml
-  - ../../wa-case-event-handler/perftest.yaml
-  - ../../wa-task-monitor/perftest.yaml
-  - ../../wa-task-management-api/perftest.yaml
+patches:
+  - path: ../../identity/perftest.yaml
+  - path: ../../wa-case-event-handler/perftest.yaml
+  - path: ../../wa-task-monitor/perftest.yaml
+  - path: ../../wa-task-management-api/perftest.yaml
+  - path: ../../wa-workflow-api/perftest.yaml
+  - path: ../../serviceaccount/perftest.yaml

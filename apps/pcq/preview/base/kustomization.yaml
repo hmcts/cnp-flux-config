@@ -1,8 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base   # This is apps/base instead of apps/pcq/base as preview doesn't install everything
+  - ../../../base
+  - ../../../base/workload-identity
   - ../../identity/identity.yaml
 namespace: pcq
-patchesStrategicMerge:
-  - ../../identity/aat.yaml
+patches:
+  - path: ../../serviceaccount/aat.yaml
+  - path: ../../identity/aat.yaml
+sortOptions:
+  order: fifo

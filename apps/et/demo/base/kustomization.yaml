@@ -3,12 +3,14 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
-  - ../../et-wa-task-configuration/et-wa-task-configuration.yaml
-  - ../../et-wa-post-deployment-ft-tests/et-wa-post-deployment-ft-tests.yaml
+  - ../../et-hearings-api/et-hearings-api.yaml
+  - ../../et-ccd-case-migration/et-ccd-case-migration.yaml
 namespace: et
-patchesStrategicMerge:
-  - ../../identity/demo.yaml
-  - ../../et-cos/demo.yaml
-  - ../../et-msg-handler/demo.yaml
-  - ../../et-sya/demo.yaml
-  - ../../et-sya-api/demo.yaml
+patches:
+  - path: ../../identity/demo.yaml
+  - path: ../../et-cos/demo.yaml
+  - path: ../../et-msg-handler/demo.yaml
+  - path: ../../et-sya/demo.yaml
+  - path: ../../et-sya-api/demo.yaml
+  - path: ../../serviceaccount/demo.yaml
+  - path: ../../../base/namespace-injector-label.yaml

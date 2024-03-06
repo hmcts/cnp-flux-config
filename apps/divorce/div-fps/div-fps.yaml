@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: div-fps
@@ -8,7 +8,7 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "512Mi"
+      memoryRequests: "1.5Gi"
       cpuRequests: "250m"
       memoryLimits: "2048Mi"
       cpuLimits: "1500m"
@@ -16,7 +16,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/fps:prod-0df9f9d-20230206113707 #{"$imagepolicy": "flux-system:div-fps"}
+      image: hmctspublic.azurecr.io/div/fps:prod-4d1caf1-20231003121720 #{"$imagepolicy": "flux-system:div-fps"}
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: 5000
         GENERAL_APPLICATION_WITHOUT_NOTICE_FEE_KEYWORD: "GeneralAppWithoutNotice"

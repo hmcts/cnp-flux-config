@@ -1,12 +1,13 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: ia
   namespace: flux-system
 spec:
-  path: ./apps/ia/${ENVIRONMENT}/base
+  path: ./apps/ia/${ENVIRONMENT}/${CLUSTER}
   postBuild:
     substitute:
       NAMESPACE: "ia"
       TEAM_NOTIFICATION_CHANNEL: "ia-tech"
       TEAM_AAD_GROUP_ID: b16db4e7-5cd6-409a-9f10-632089d91ff5
+      WI_NAME: ia

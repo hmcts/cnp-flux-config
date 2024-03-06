@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
+  - ../../../rbac/create-job-role.yaml
   - ../../rd-caseworker-ref-api-integration/rd-caseworker-ref-api-integration.yaml
   - ../../rd-user-profile-api-integration/rd-user-profile-api-integration.yaml
   - ../../rd-professional-api-integration/rd-professional-api-integration.yaml
@@ -18,18 +19,20 @@ resources:
   - ../../rd-location-ref-api/rd-location-ref-api.yaml
   - ../../rd-location-ref-data-load/rd-location-ref-data-load.yaml
 namespace: rd
-patchesStrategicMerge:
-  - ../../identity/demo.yaml
-  - ../../rd-caseworker-ref-api/demo.yaml
-  - ../../rd-caseworker-ref-api-integration/demo.yaml
-  - ../../rd-user-profile-api-integration/demo.yaml
-  - ../../rd-professional-api-integration/demo.yaml
-  - ../../rd-location-ref-api-integration/demo.yaml
-  - ../../rd-profile-sync/demo.yaml
-  - ../../rd-commondata-api/demo.yaml
-  - ../../rd-judicial-api-integration/demo.yaml
-  - ../../rd-profile-sync-integration/demo.yaml
-  - ../../rd-professional-api/demo.yaml
-  - ../../rd-user-profile-api/demo.yaml
-  - ../../rd-location-ref-api/demo.yaml
-  - ../../rd-judicial-api/demo.yaml
+patches:
+  - path: ../../identity/demo.yaml
+  - path: ../../rd-caseworker-ref-api/demo.yaml
+  - path: ../../rd-caseworker-ref-api-integration/demo.yaml
+  - path: ../../rd-user-profile-api-integration/demo.yaml
+  - path: ../../rd-professional-api-integration/demo.yaml
+  - path: ../../rd-location-ref-api-integration/demo.yaml
+  - path: ../../rd-profile-sync/demo.yaml
+  - path: ../../rd-commondata-api/demo.yaml
+  - path: ../../rd-judicial-api-integration/demo.yaml
+  - path: ../../rd-profile-sync-integration/demo.yaml
+  - path: ../../rd-professional-api/demo.yaml
+  - path: ../../rd-user-profile-api/demo.yaml
+  - path: ../../rd-location-ref-api/demo.yaml
+  - path: ../../rd-judicial-api/demo.yaml
+  - path: ../../serviceaccount/demo.yaml
+  - path: ../../../base/namespace-injector-label.yaml

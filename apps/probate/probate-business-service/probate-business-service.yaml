@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: probate-business-service
@@ -8,8 +8,9 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1.5Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-9c59ee4-20230503095946 #{"$imagepolicy": "flux-system:probate-business-service"}
+      image: hmctspublic.azurecr.io/probate/business-service:prod-44280d6-20240229090531 #{"$imagepolicy": "flux-system:probate-business-service"}
       environment:
         VAR_FV2: trig-base-2
   chart:

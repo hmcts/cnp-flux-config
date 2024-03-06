@@ -1,4 +1,4 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: sample-kustomize
@@ -14,7 +14,7 @@ spec:
     namespace: flux-system
   patches:
     - patch: |-
-        apiVersion: helm.toolkit.fluxcd.io/v2beta1
+        apiVersion: helm.toolkit.fluxcd.io/v2beta2
         kind: HelmRelease
         metadata:
           name: test-helmrelease
@@ -32,6 +32,16 @@ spec:
               environment: ${KEYVAULT_ENVIRONMENT:-prod}
               tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
               enableKeyVaults: true
+              activeCronCluster: ${ACTIVE_CRON_CLUSTER}
+            java:
+              environment:
+                CLUSTER_NAME: "cft-${ENVIRONMENT}-${CLUSTER}-aks"
+            nodejs:
+              environment:
+                CLUSTER_NAME: "cft-${ENVIRONMENT}-${CLUSTER}-aks"
+            job:
+              environment:
+                CLUSTER_NAME: "cft-${ENVIRONMENT}-${CLUSTER}-aks"
       target:
         kind: HelmRelease
   postBuild:
@@ -42,4 +52,5 @@ spec:
       CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
       ISSUER_URL: "${ISSUER_URL:-not-set-yet}"
       WI_ENVIRONMENT: "${WI_ENVIRONMENT}"
+      WI_CLUSTER: "${ENVIRONMENT}-${CLUSTER}"
       KEYVAULT_ENVIRONMENT: "${KEYVAULT_ENVIRONMENT}"

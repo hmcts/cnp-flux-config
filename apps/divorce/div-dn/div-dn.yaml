@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: div-dn
@@ -9,9 +9,9 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/dn:prod-2396611-20230420102854 #{"$imagepolicy": "flux-system:div-dn"}
+      image: hmctspublic.azurecr.io/div/dn:prod-feed1b1-20230626141706 #{"$imagepolicy": "flux-system:div-dn"}
       environment:
-        VAR_BASE_FV2: base02
+        VAR_BASE_FV2: base03
   chart:
     spec:
       chart: ./stable/div-dn

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sscs-ccd-callback-orchestrator
@@ -9,9 +9,9 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-200cf47-20230502144952 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
+      image: hmctspublic.azurecr.io/sscs/ccd-callback-orchestrator:prod-337e783-20240301104723 #{"$imagepolicy": "flux-system:sscs-ccd-callback-orchestrator"}
       environment:
-        DUMMY_PROPERTY: "true"
+        DUMMY_PROPERTY: "false"
         TEST_PROPERTY: "true"
     global:
       environment: ithc

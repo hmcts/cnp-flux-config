@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: civil-citizen-ui
@@ -11,10 +11,27 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      ingressHost: civil-citizen-ui.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-ca71d63-20230509162036 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
+      ingressHost: moneyclaims.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-330e467-20240305130618 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
+      keyVaults:
+        civil-cui:
+          resourceGroup: civil-citizen-ui
+          secrets:
+            - appinsights-instrumentation-key
+            - draft-store-access-key
+            - citizen-ui-idam-secret
+            - ordnance-survey-api-key
+            - cmc-s2s-secret
+            - citizen-draft-store-primary
+            - citizen-draft-store-secondary
+            - civil-citizen-ui-token-key
+            - name: launch-darkly-sdk-key-non-prod
+              alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         GA_TRACKING_ID: UA-97111056-1
         FEATURE_TESTING_SUPPORT: true
         FEATURE_RETURN_ERROR_TO_USER: true
         PCQ_URL: https://pcq.demo.platform.hmcts.net
+        OCMC_URL: https://moneyclaims1.demo.platform.hmcts.net
+        IDAM_SIGN_OUT_REDIRECT_URL: https://moneyclaims.demo.platform.hmcts.net/dashboard
+        OAUTH_CLIENT_REDIRECT: https://moneyclaims.demo.platform.hmcts.net/oauth2/callback

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -6,40 +6,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-070f59b-20230505170604 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
-      keyVaults:
-        cmc:
-          resourceGroup: cmc
-          secrets:
-            - AppInsightsInstrumentationKey
-            - cmc-db-password-v11
-            - citizen-oauth-client-secret
-            - claim-store-s2s-secret
-            - anonymous-caseworker-username
-            - anonymous-caseworker-password
-            - system-update-username
-            - system-update-password
-            - notify-api-key
-            - milo-recipient
-            - staff-email
-            - live-support-email
-            - rpa-email-sealed-claim
-            - rpa-email-breathing-space
-            - rpa-email-legal-sealed-claim
-            - rpa-email-more-time-requested
-            - rpa-email-response
-            - rpa-email-ccj
-            - rpa-email-paid-in-full
-            - launchDarkly-sdk-key
-            - sendgrid-api-key
-            - staff-email-legal-rep
+      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2838-fef3247-20240304105702 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: false
         FEATURE_TOGGLES_CTSC_ENABLED: true
         FEATURE_TOGGLES_REMINDER_EMAILS: true
-        FEES_API_KEYWORDS_ENABLE: false
         MILO_CSV_SCHEDULE: "0 0 8 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 15 ? * MON-FRI *"
         SCHEDULE_STATE_TRANSITION_WAITING_TRANSFER: ""
@@ -51,6 +24,8 @@ spec:
         IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
         DOC_ASSEMBLY_URL: http://dg-docassembly-demo.service.core-compute-demo.internal
+        FRONTEND_BASE_URL: https://moneyclaims1.demo.platform.hmcts.net
+        RESPOND_TO_CLAIM_URL: https://moneyclaims1.demo.platform.hmcts.net/first-contact/start
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
         STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: Win10UAT_006@test.justice.gov.uk
@@ -61,7 +36,5 @@ spec:
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         REFRESH_PODS: true
-        CMC_DB_USERNAME: cmc@cmc-db-v11-demo
-        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         FEATURE_TOGGLES_BREATHING_SPACE: true
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true

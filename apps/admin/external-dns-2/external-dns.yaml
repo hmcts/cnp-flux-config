@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: external-dns
@@ -8,20 +8,28 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 6.14.4
+      version: 6.34.2
       sourceRef:
         kind: HelmRepository
         name: external-dns
         namespace: admin
   interval: 1m
   values:
+    annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"
+    image:
+      registry: hmctspublic.azurecr.io
+      repository: imported/bitnami/external-dns
+      tag: 0.13.6-debian-11-r28
     policy: sync
+    serviceAccount:
+      create: false
+      name: admin
     podLabels:
-      aadpodidbinding: external-dns
+      azure.workload.identity/use: "true"
     sources:
       - ingress
     azure:
       resourceGroup: core-infra-intsvc-rg
       tenantId: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
       subscriptionId: 1baf5470-1c3e-40d3-a6f7-74bfbce4b348
-      useManagedIdentityExtension: true
+      useWorkloadIdentityExtension: true

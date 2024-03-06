@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-migrate-cases
@@ -6,12 +6,12 @@ spec:
   releaseName: nfdiv-cron-migrate-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-b0f42e8-20230505140341 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-fb630e7-20240306083028 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: APP_INSIGHTS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: uk-gov-notify-api-key
               alias: UK_GOV_NOTIFY_API_KEY
             - name: s2s-case-api-secret
@@ -22,25 +22,13 @@ spec:
               alias: IDAM_SYSTEM_UPDATE_USERNAME
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
-            - name: aos-is-drafted-references
-              alias: AOS_IS_DRAFTED_REFERENCES
-            - name: aos-is-drafted-references-2
-              alias: AOS_IS_DRAFTED_REFERENCES_2
-            - name: aos-is-drafted-references-3
-              alias: AOS_IS_DRAFTED_REFERENCES_3
-            - name: aos-is-drafted-references-4
-              alias: AOS_IS_DRAFTED_REFERENCES_4
-            - name: aos-is-drafted-references-5
-              alias: AOS_IS_DRAFTED_REFERENCES_5
-            - name: case-court-hearing-references
-              alias: CASE_COURT_HEARING_REFERENCES
       environment:
         TASK_NAME: SystemMigrateCasesTask
       schedule: 0/10 * * * *
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.14
+      version: 0.0.20
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

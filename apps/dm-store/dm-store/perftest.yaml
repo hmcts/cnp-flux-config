@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: dm-store
@@ -10,9 +10,12 @@ spec:
       cpuRequests: "1000m"
       memoryLimits: "6Gi"
       cpuLimits: "2000m"
-      image: hmctspublic.azurecr.io/dm/store:prod-4a1017e-20230509065256 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-e946b9f-20240305093829 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
+        SPRING_DATASOURCE_HOST: dm-store-postgres-db-v15-perftest.postgres.database.azure.com
+        SPRING_DATASOURCE_USERNAME: pgadmin
+        HIKARI_MAX_POOL_SIZE: 45
         ENABLE_TTL: false
         DOCUMENT_DELETE_TASK_CRON: 0 0/5 0-6,21-23 * * *
-        REFRESH_FLAG: VAR3
+        TEST_VAR: refresh
 #        MAX_MEDIA_FILE_SIZE: 4096

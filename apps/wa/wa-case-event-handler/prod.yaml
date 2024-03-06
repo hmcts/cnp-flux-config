@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: wa-case-event-handler
@@ -17,7 +17,30 @@ spec:
         CLEAN_UP_STARTED_DAYS_BEFORE: 90
         CLEAN_UP_STATE_FOR_PROD: PROCESSED
         CLEAN_UP_STATE_FOR_NON_PROD: PROCESSED
-        RESTART: true
-        PROBLEM_MESSAGE_RESET_ID_LIST: ID:d9693f62-f2fd-4f33-a9f9-f3b6a8835445:109:1:1-419
+        RESTART: false
+        PROBLEM_MESSAGE_RESET_ID_LIST: ID:7256d27e-23b0-47be-b845-224b8e9d0d9f:654:1:1-6138, ID:7f3d1555-6904-47ef-9a10-04a747ac6fa9:537:1:1-6637
         PROBLEM_MESSAGE_RESET_NULL_EVENT_TIMESTAMP_ID_LIST:
-        PROBLEM_MESSAGE_SET_STATE_TO_PROCESSED_ID_LIST: ID:abf8cfd3-f1e8-45c3-98e6-321ba74013aa:12:1:1-181,ID:f20d70a4-1267-4432-9b1f-4f1570b61b2c:360:1:1-1323
+        PROBLEM_MESSAGE_SET_STATE_TO_PROCESSED_ID_LIST:
+      keyVaults:
+        wa:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: s2s-secret-case-event-handler
+              alias: S2S_SECRET_CASE_EVENT_HANDLER
+            - name: ccd-shared-servicebus-connection-string
+              alias: AZURE_SERVICE_BUS_CONNECTION_STRING
+            - name: ld-secret
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: wa-case-event-handler-POSTGRES-USER-V15
+              alias: POSTGRES_USERNAME
+            - name: wa-case-event-handler-POSTGRES-PASS-V15
+              alias: POSTGRES_PASSWORD
+            - name: wa-case-event-handler-POSTGRES-HOST-V15
+              alias: POSTGRES_HOST
+            - name: wa-case-event-handler-POSTGRES-PORT-V15
+              alias: POSTGRES_PORT
+            - name: wa-case-event-handler-POSTGRES-DATABASE-V15
+              alias: POSTGRES_NAME
+            - name: wa-idam-client-secret
+              alias: WA_IDAM_CLIENT_SECRET

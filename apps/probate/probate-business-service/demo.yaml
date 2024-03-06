@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: probate-business-service
@@ -6,5 +6,21 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/probate/business-service:prod-44280d6-20240229090531 #{"$imagepolicy": "flux-system:demo-probate-business-service"}
       environment:
         VAR_FV2: Demo-1
+      keyVaults:
+        probate:
+          secrets:
+            - name: probate-notify-invite-apikey
+              alias: services.notify.apiKey
+            - name: business-services-notify-invitedata-templateId
+              alias: services.notify.invitedata.templateId
+            - name: business-services-notify-pin-templateId
+              alias: services.notify.pin.templateId
+            - name: s2s-probate-backend
+              alias: services.auth.provider.totp_secret
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string

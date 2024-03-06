@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: et-sya-api
@@ -7,7 +7,6 @@ spec:
   releaseName: et-sya-api
   values:
     java:
-      image: hmctspublic.azurecr.io/et/sya-api:pr-358-b3c1983-20230504152405 #{"$imagepolicy": "flux-system:perftest-et-sya-api"}
+      image: hmctspublic.azurecr.io/et/sya-api:prod-1c590a6-20240305140228 #{"$imagepolicy": "flux-system:et-sya-api"}
       environment:
-        ET1_SERVICE_OWNER_NOTIFICATION_EMAIL: test@test.com
-        ET1_ECM_DTS_CORE_TEAM_SLACK_NOTIFICATION_EMAIL: test@test.com
+        ACAS_BASE_URL: https://api-dev-acas-01.azure-api.net/ECCLUAT

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: fees-register-api
@@ -6,6 +6,8 @@ spec:
   releaseName: fees-register-api
   values:
     java:
-      image: hmctspublic.azurecr.io/fees-register/api:prod-a515778-20230425152640 #{"$imagepolicy": "flux-system:fees-register-api"}
+      replicas: 2
+      image: hmctspublic.azurecr.io/fees-register/api:prod-b17870c-20240226111139 #{"$imagepolicy": "flux-system:fees-register-api"}
       environment:
+        DUMMY_RESTART_VAR: false
         IDAM_CLIENT_BASE_URL: https://idam-api.platform.hmcts.net

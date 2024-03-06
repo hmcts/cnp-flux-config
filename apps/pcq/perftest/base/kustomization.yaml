@@ -3,6 +3,14 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
+  - ../../pcq-loader/pcq-loader.yaml
+  - ../../pcq-consolidation-service/pcq-consolidation-service.yaml
+  - ../../identity/identity.yaml
 namespace: pcq
-patchesStrategicMerge:
-  - ../../identity/perftest.yaml
+patches:
+  - path: ../../serviceaccount/perftest.yaml
+  - path: ../../pcq-backend/perftest.yaml
+  - path: ../../pcq-frontend/perftest.yaml
+  - path: ../../identity/perftest.yaml
+  - path: ../../pcq-loader/perftest.yaml
+  - path: ../../pcq-consolidation-service/perftest.yaml

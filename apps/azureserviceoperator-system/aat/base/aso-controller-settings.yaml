@@ -1,0 +1,13 @@
+# Below values are not secrets, but added as a secret due to upstream chart, manifests expects it in secret.
+# They are not encrypted with sops as they are applied using kubectl in bootstrap
+apiVersion: v1
+data:
+  AZURE_CLIENT_ID: ODU3YTVkNTctMDBkNy00NGM3LWIwNjEtN2YxMzA2NjczMjA3
+  AZURE_SUBSCRIPTION_ID: MWM0ZjA3MDQtYTI5ZS00MDNkLWI3MTktYjkwYzM0ZWYxNGM5
+  AZURE_TENANT_ID: NTMxZmY5NmQtMGFlOS00NjJhLThkMmQtYmVjN2MwYjQyMDgy
+  USE_WORKLOAD_IDENTITY_AUTH: dHJ1ZQ==
+kind: Secret
+metadata:
+  name: aso-controller-settings
+  namespace: azureserviceoperator-system
+type: Opaque

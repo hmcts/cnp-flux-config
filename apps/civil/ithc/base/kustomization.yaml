@@ -3,15 +3,15 @@ kind: Kustomization
 namespace: civil
 resources:
   - ../../base
-  - ../../../xui/identity/identity.yaml
   - ../../../am/identity/identity.yaml
-  - ../../../money-claims/identity/identity.yaml
   - ../../../rbac/nonprod-role.yaml
   - ../../civil-citizen-ui/civil-citizen-ui.yaml
-patchesStrategicMerge:
-  - ../../identity/ithc.yaml
-  - ../../../xui/identity/aat.yaml
-  - ../../../am/identity/aat.yaml
-  - ../../../money-claims/identity/aat.yaml
-  - ../../civil-service/ithc.yaml
-  - ../../civil-general-applications/ithc.yaml
+  - ../../civil-sdt-gateway/civil-sdt-gateway.yaml
+  - ../../civil-sdt-commissioning/civil-sdt-commissioning.yaml
+  - ../../civil-sdt/civil-sdt.yaml
+  - ../../civil-orchestrator-service/civil-orchestrator-service.yaml
+patches:
+  - path: ../../../am/identity/aat.yaml
+  - path: ../../civil-service/ithc.yaml
+  - path: ../../civil-general-applications/ithc.yaml
+  - path: ../../serviceaccount/ithc.yaml

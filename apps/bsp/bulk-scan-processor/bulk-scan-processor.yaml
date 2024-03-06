@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
@@ -11,9 +11,10 @@ spec:
       cpuRequests: "500m"
       cpuLimits: "2500m"
       memoryLimits: "4096Mi"
-      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-0f5ba33-20230505140336 #{"$imagepolicy": "flux-system:bulk-scan-processor"}
+      image: hmctspublic.azurecr.io/bulk-scan/processor:prod-4cd7761-20240305133921 #{"$imagepolicy": "flux-system:bulk-scan-processor"}
       environment:
         STORAGE_BLOB_SELECTED_CONTAINER: ALL
+        PRIVATELAW_ENABLED: true
       smoketests:
         image: hmctspublic.azurecr.io/bulk-scan/processor-test:prod-0991d8f-20221213122419 #{"$imagepolicy": "flux-system:bulk-scan-processor-processor-test"}
       functionaltests:

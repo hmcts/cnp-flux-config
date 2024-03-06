@@ -5,10 +5,9 @@ resources:
   - ../../../rbac/nonprod-role.yaml
   - pdf-service-ingress.yaml
 namespace: rpe
-patchesStrategicMerge:
-  - ../../identity/demo.yaml
-  - ../../identity/send-letter-identity-demo.yaml
-  - ../../draft-store-service/demo.yaml
-  - ../../rpe-service-auth-provider/demo.yaml
-  - ../../pdf-service/demo.yaml
-  - ../../rpe-send-letter-service/demo.yaml
+patches:
+  - path: ../../draft-store-service/demo.yaml
+  - path: ../../rpe-service-auth-provider/demo.yaml
+  - path: ../../pdf-service/demo.yaml
+  - path: ../../serviceaccount/demo.yaml
+  - path: ../../../base/namespace-injector-label.yaml

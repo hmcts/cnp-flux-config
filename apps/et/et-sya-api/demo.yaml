@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: et-sya-api
@@ -7,9 +7,6 @@ spec:
   releaseName: et-sya-api
   values:
     java:
-      image: hmctspublic.azurecr.io/et/sya-api:pr-264-c4e944b-20230511091123 #{"$imagepolicy": "flux-system:demo-et-sya-api"}
+      image: hmctspublic.azurecr.io/et/sya-api:pr-413-8bee930-20240305142631 #{"$imagepolicy": "flux-system:demo-et-sya-api"}
       environment:
-        # Delete the following after ET R1.1.2 goes in.
-        SUBMIT_CASE_EMAIL_TEMPLATE_ID: a4045b26-3914-4c13-a06e-6fb64a99ee2f
-        CY_SUBMIT_CASE_EMAIL_TEMPLATE_ID: 17ff79da-3bbf-4c82-ab44-48038c792d23
-        SUBMIT_CASE_DOC_UPLOAD_ERROR_EMAIL_TEMPLATE_ID: 10a82e6a-5020-4756-9512-eb391b8c46e3
+        EXUI_CASE_DETAILS_URL: "https://manage-case.demo.platform.hmcts.net/cases/case-details/"

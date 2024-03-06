@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+namespace: help-with-fees
+patches:
+  - path: ../../identity/aat.yaml
+  - path: ../../help-with-fees-publicapp/aat.yaml
+  - path: ../../help-with-fees-staffapp/aat.yaml
+  - path: ../../help-with-fees-benefit-checker-api/aat.yaml
+  - path: ../../serviceaccount/aat.yaml

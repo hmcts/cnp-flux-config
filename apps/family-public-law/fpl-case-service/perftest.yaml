@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: fpl-case-service
@@ -6,10 +6,17 @@ spec:
   values:
     java:
       ingressHost: fpl-case-service-perftest.service.core-compute-perftest.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-4271-8328fb3-20230327105118 #{"$imagepolicy": "flux-system:perftest-fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-5178-59ca724-20240305131739 #{"$imagepolicy": "flux-system:perftest-fpl-case-service"}
       environment:
         SCHEDULER_ENABLED: false
         GATEWAY_URL: https://gateway-ccd.perftest.platform.hmcts.net
         SPRING_SECURITY_ENABLED: true
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-api.perftest.platform.hmcts.net/o/jwks
         RELEASE: NOW
+        RD_JUDICIAL_API_URL: http://rd-judicial-api-perftest.service.core-compute-perftest.internal
+        RD_STAFF_API_URL: http://rd-caseworker-ref-api-perftest.service.core-compute-perftest.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-perftest.service.core-compute-perftest.internal
+        RD_STAFF_API_ENABLED: true
+        RD_JUDICIAL_API_ENABLED: true
+        CREATE_SYSTEM_USER_ROLE: true
+        CACHE_SYSTEM_USER_TOKEN: true

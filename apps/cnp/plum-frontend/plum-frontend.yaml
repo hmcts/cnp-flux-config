@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plum-frontend
@@ -14,8 +14,8 @@ spec:
       interval: 1m
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/plum/frontend:prod-a68e070-20230511093700 # {"$imagepolicy": "flux-system:plum-frontend"}
-      startupPeriod: 120
-      startupFailureThreshold: 3
+      image: hmctspublic.azurecr.io/plum/frontend:prod-3af751b-20240301072859 # {"$imagepolicy": "flux-system:plum-frontend"}
       environment:
         RECIPE_BACKEND_URL: http://plum-recipe-backend-java
+      useWorkloadIdentity: true
+      workloadClientID: ${WORKLOAD_IDENTITY_ID}

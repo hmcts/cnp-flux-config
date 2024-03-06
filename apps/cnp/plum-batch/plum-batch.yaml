@@ -1,20 +1,29 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plum-batch
+  namespace: cnp
 spec:
   releaseName: plum-batch
+  interval: 5m
   values:
-    job:
-      image: hmctspublic.azurecr.io/hmcts/plum-batch:latest
-      schedule: "*/1 * * * *"
     global:
-      jobKind: CronJob
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    image: hmctspublic.azurecr.io/hmcts/plum-batch:latest
+    schedule: "*/1 * * * *"
+    kind: CronJob
+    nodeSelector:
+      agentpool: cronjob
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs
   chart:
     spec:
-      chart: ./stable/plum-batch
+      chart: job
       sourceRef:
         kind: GitRepository
-        name: hmcts-charts
+        name: chart-job
         namespace: flux-system
       interval: 1m

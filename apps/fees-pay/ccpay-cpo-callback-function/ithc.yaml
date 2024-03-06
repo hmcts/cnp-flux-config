@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-cpo-callback-function
@@ -10,6 +10,7 @@ spec:
       environment:
         S2S_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
         MICROSERVICE_PAYMENT_APP: "ccpay_cpo_function_node"
+        DUMMY_RESTART_VAR: false
       keyVaults:
         "ccpay":
           secrets:

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -7,7 +7,7 @@ spec:
   values:
     checkDeprecation: false
     controller:
-      tag: 2.403-400
+      # image version is managed in jenkins-controller-version.yaml
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
@@ -24,9 +24,9 @@ spec:
         -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=11
         -Dotel.instrumentation.jenkins.web.enabled=false
       ingress:
-        hostName: sandbox-build.platform.hmcts.net
+        hostName: sandbox-build.hmcts.net
       secondaryingress:
-        hostName: static-sandbox-build.platform.hmcts.net
+        hostName: static-sandbox-build.hmcts.net
       containerEnv:
         - name: ENVIRONMENT
           value: "sandbox"
@@ -42,7 +42,7 @@ spec:
           resource-root: |
             unclassified:
               resourceRoot:
-                url: "https://static-sandbox-build.platform.hmcts.net/"
+                url: "https://static-sandbox-build.hmcts.net/"
           env-vars: |
             jenkins:
               globalNodeProperties:
@@ -67,9 +67,9 @@ spec:
                       - key: GRADLE_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: SANDBOX_AKS_CLUSTER_NAME
-                        value: cft-sbox-01-aks
+                        value: cft-sbox-00-aks
                       - key: SANDBOX_AKS_RESOURCE_GROUP
-                        value: cft-sbox-01-rg
+                        value: cft-sbox-00-rg
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
                         value: DCD-CFTAPPS-SBOX
                       - key: AKS_PREVIEW_SUBSCRIPTION_ID
@@ -116,24 +116,11 @@ spec:
                 observabilityBackends:
                   - dynatrace:
                       url: "https://yrk32651.live.dynatrace.com/"
-          authentication: |
-            jenkins:
-              securityRealm:
-                saml:
-                  binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                  displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  groupsAttributeName: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
-                  idpMetadataConfiguration:
-                    period: 15
-                    url: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/FederationMetadata/2007-06/FederationMetadata.xml?appid=001b73bc-0fae-46fa-bb7f-2296a655ba33
-                  maximumAuthenticationLifetime: 7862400
-                  usernameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-                  usernameCaseConversion: "none"
           location: |
             unclassified:
               location:
                 adminAddress: jenkins-reform@hmcts.net
-                url: 'https://sandbox-build.platform.hmcts.net'
+                url: 'https://sandbox-build.hmcts.net'
           azure-key-vault: |
             unclassified:
               azureKeyVault:
@@ -283,95 +270,3 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
-          azure-vm-agent: |
-            jenkins:
-              clouds:
-                - azureVM:
-                    azureCredentialsId: "jenkins-managed-identity"
-                    cloudName: "cnp-azure"
-                    cloudTags:
-                      - name: "application"
-                        value: "core"
-                      - name: "builtFrom"
-                        value: "hmcts/cnp-flux-config"
-                      - name: "businessArea"
-                        value: "CFT"
-                      - name: "criticality"
-                        value: "High"
-                      - name: "environment"
-                        value: "sandbox"
-                    deploymentTimeout: 1200
-                    existingResourceGroupName: "aks-infra-cftsbox-intsvc-rg"
-                    maxVirtualMachinesLimit: 10
-                    resourceGroupReferenceType: "existing"
-                    vmTemplates:
-                      - launcher: "ssh"
-                        agentWorkspace: "/opt/jenkins"
-                        builtInImage: "Windows Server 2016"
-                        credentialsId: "vm_agent_creds"
-                        diskType: "managed"
-                        doNotUseMachineIfInitFails: true
-                        enableMSI: false
-                        enableUAMI: true
-                        ephemeralOSDisk: true
-                        executeInitScriptAsRoot: true
-                        existingStorageAccountName: "hmctsjenkinssbox"
-                        imageReference:
-                          galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.39"
-                          galleryName: "hmcts"
-                          galleryResourceGroup: "hmcts-image-gallery-rg"
-                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
-                        imageTopLevelType: "advanced"
-                        initScript: |
-                          usermod -a -G docker jenkinsssh
-                          umount /mnt/resource
-                          mkdir -pv /opt/jenkins
-                          mount /dev/sdb1 /opt/jenkins
-                          chown -R jenkinsssh:jenkinsssh /opt/jenkins
-                          set -e
-                          cp /opt/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
-                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
-                          chmod 0600 /home/jenkinsssh/.ssh/id_rsa
-                          mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
-                          cat > /etc/security/limits.d/30-jenkins.conf<<EOF
-                          jenkinsssh soft nofile 40960
-                          jenkinsssh hard nofile 40960
-                          jenkinsssh soft
-                          proc 32768
-                          jenkinsssh hard nproc 32768
-                          jenkinsssh soft core unlimited
-                          jenkinsssh hard core unlimited
-                          EOF
-                          ssh-keyscan github.com github.com >> /home/jenkinsssh/.ssh/known_hosts
-                          ssh-keygen -F github.com -f /home/jenkinsssh/.ssh/known_hosts # verifies key is correctly installed
-                          chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/known_hosts
-                        installDocker: false
-                        installGit: false
-                        installMaven: false
-                        javaPath: java
-                        jvmOptions: "-Xms4G -Xmx4G -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
-                      \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
-                      \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
-                      \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
-                        location: "UK South"
-                        noOfParallelJobs: 1
-                        osDiskSize: 60
-                        osDiskStorageAccountType: "Standard_LRS"
-                        osType: "Linux"
-                        retentionStrategy:
-                          azureVMCloudRetentionStrategy:
-                            idleTerminationMinutes: 60
-                        shutdownOnIdle: false
-                        storageAccountNameReferenceType: "existing"
-                        storageAccountType: "Standard_LRS"
-                        subnetName: "iaas"
-                        templateDesc: "Jenkins build agents for HMCTS"
-                        templateDisabled: false
-                        templateName: "cnp-jenkins-builders"
-                        uamiID: /subscriptions/1497c3d7-ab6d-4bb7-8a10-b51d03189ee3/resourceGroups/managed-identities-cftsbox-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftsbox-intsvc-mi
-                        usageMode: "NORMAL"
-                        usePrivateIP: true
-                        virtualMachineSize: "Standard_D4ds_v5"
-                        virtualNetworkName: "cft-ptlsbox-vnet"
-                        virtualNetworkResourceGroupName: "cft-ptlsbox-network-rg"

@@ -3,12 +3,11 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
-  - ../../adoption-cron-draft-case-deletion-alert/adoption-cron-draft-case-deletion-alert.yaml
-  - ../../adoption-cron-multi-child-draft-application-alert/adoption-cron-multi-child-draft-application-alert.yaml
 namespace: adoption
-patchesStrategicMerge:
-  - ../../identity/demo.yaml
-  - ../../adoption-web/demo.yaml
-  - ../../adoption-cos-api/demo.yaml
-  - ../../adoption-cron-draft-case-deletion-alert/demo.yaml
-  - ../../adoption-cron-multi-child-draft-application-alert/demo.yaml
+patches:
+  - path: ../../adoption-web/demo.yaml
+  - path: ../../adoption-cos-api/demo.yaml
+  - path: ../../adoption-cron-draft-case-deletion-alert/demo.yaml
+  - path: ../../adoption-cron-multi-child-draft-application-alert/demo.yaml
+  - path: ../../serviceaccount/demo.yaml
+  - path: ../../../base/namespace-injector-label.yaml

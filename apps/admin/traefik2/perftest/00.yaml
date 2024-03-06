@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: traefik2
@@ -8,3 +8,15 @@ spec:
     service:
       spec:
         loadBalancerIP: "10.48.79.250"
+    deployment:
+      podLabels:
+        useWorkloadIdentity: "true"
+    serviceAccount:
+      name: admin
+    additionalArguments:
+      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=90"
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=90"
+      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=90"
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=90"
+      - "--entryPoints.web.forwardedHeaders.insecure=true"
+      - "--entryPoints.websecure.forwardedHeaders.insecure=true"

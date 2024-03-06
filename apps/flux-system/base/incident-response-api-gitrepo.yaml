@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: incident-response-api
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: ssh://github.com/hmcts/incident-response-api
+  ref:
+    branch: master
+  secretRef:
+    name: git-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/

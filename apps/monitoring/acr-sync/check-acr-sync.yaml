@@ -18,7 +18,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: check-acr-sync
-              image: hmctspublic.azurecr.io/check-acr-sync:dbjpdt
+              image: hmctspublic.azurecr.io/check-acr-sync:db14885
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
@@ -43,6 +43,8 @@ spec:
                   value: "${TEAM_NOTIFICATION_CHANNEL}"
                 - name: AKS_CLUSTER
                   value: "${ENVIRONMENT}"
+                - name: CLUSTER_NAME
+                  value: "cft-${CLUSTER_FULL_NAME}-aks"
               envFrom:
                 - secretRef:
                     name: acr-sync

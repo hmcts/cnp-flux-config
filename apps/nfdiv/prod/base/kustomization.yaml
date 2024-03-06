@@ -14,7 +14,10 @@ resources:
   - ../../nfdiv-cron-migrate-cases/nfdiv-cron-migrate-cases.yaml
   - ../../nfdiv-frontend/apply-divorce-ingress.yaml
 namespace: nfdiv
-patchesStrategicMerge:
-  - ../../identity/prod.yaml
-  - ../../nfdiv-frontend/prod.yaml
-  - ../../nfdiv-case-api/prod.yaml
+patches:
+  - path: ../../identity/prod.yaml
+  - path: ../../nfdiv-frontend/prod.yaml
+  - path: ../../nfdiv-case-api/prod.yaml
+  - path: ../../serviceaccount/prod.yaml
+  - path: ../../nfdiv-cron-alert-application-not-reviewed/prod/prod.yaml
+  - path: ../../nfdiv-cron-applicant-can-sts-after-intention-fo/prod/prod.yaml
