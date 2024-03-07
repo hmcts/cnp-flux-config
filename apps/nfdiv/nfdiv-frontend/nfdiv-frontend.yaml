@@ -7,8 +7,15 @@ spec:
   values:
     nodejs:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 8
+      memoryRequests: '512Mi'
+      cpuRequests: '200m'
+      memoryLimits: '512Mi'
+      cpuLimits: '1000m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/frontend:prod-4476f62-20240229110652 #{"$imagepolicy": "flux-system:nfdiv-frontend"}
+      image: hmctspublic.azurecr.io/nfdiv/frontend:prod-683bca9-20240307071758 #{"$imagepolicy": "flux-system:nfdiv-frontend"}
       environment:
         VAR_TA: trigger24
   chart:
