@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sptribs-frontend
@@ -9,7 +9,9 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sptribs/frontend:prod-011b7c1-20231208130949 #{"$imagepolicy": "flux-system:sptribs-frontend"}
+      image: hmctspublic.azurecr.io/sptribs/frontend:prod-159b81e-20240307115221 #{"$imagepolicy": "flux-system:sptribs-frontend"}
+      environment:
+        DUMMY_ENV_VAR: false
   chart:
     spec:
       chart: ./stable/sptribs-frontend

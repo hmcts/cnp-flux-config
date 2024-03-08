@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: em-stitching
@@ -11,12 +11,3 @@ spec:
       cpuLimits: "3000m"
       environment:
         TEST_VAR: refresh
-        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 15 22 12 * * # Stopped for now. Some future date.
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 400
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 90
-        ENTITY_VALUE_COPY_CRONJOB_SCHEDULE: 0 0/5 * * * *
-        ENTITY_VALUE_COPY_PAGE_SIZE: 2000
-        ENTITY_VALUE_COPY_CHUNK_SIZE: 500
-        ENTITY_VALUE_MAX_ITEM_COUNT: 2000
-        ENTITY_VALUE_COPY_ENABLED: true
-        ENTITY_VALUE_START_DATE: 2022-01-08

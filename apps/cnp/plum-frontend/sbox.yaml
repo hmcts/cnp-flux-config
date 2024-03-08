@@ -1,21 +1,11 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plum-frontend
 spec:
-  chart:
-    spec:
-      chart: ./charts/plum-frontend
-      sourceRef:
-        kind: GitRepository
-        name: plum-frontend
-        namespace: flux-system
-      interval: 1m
   values:
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
-      replicas: 3
-      useInterpodAntiAffinity: false
       spotInstances:
         enabled: true
+      replicas: 2
