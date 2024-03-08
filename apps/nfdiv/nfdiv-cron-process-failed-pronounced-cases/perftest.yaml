@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: probate-cron-hmrc-extract
+  name: nfdiv-cron-process-failed-pronounced-cases
 spec:
-  releaseName: probate-cron-hmrc-extract
+  releaseName: nfdiv-cron-process-failed-pronounced-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-7199261-20240307104305 #{"$imagepolicy": "flux-system:probate-back-office"}
-      schedule: "0 2 * * *"
+      disableActiveClusterCheck: false
+      suspend: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
