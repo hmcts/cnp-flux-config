@@ -9,8 +9,8 @@ spec:
     job:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-13-e6a07ee-20240304150404 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "0 10 23 2 *"
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-26-66bc132-20240306165256 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "00 13 11 3 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -23,12 +23,16 @@ spec:
               alias: IDAM_PASS
             - name: sscs-s2s-secret
               alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
-        MIGRATION_WA_ENABLED: true
-        MIGRATION_QUERY_SIZE: 1000
+        MIGRATION_WA_ENABLED: false
+        MIGRATION_DWP_ENABLED: true
+        MIGRATION_QUERY_SIZE: 10
         MIGRATION_CASE_LIMIT: 100
+        DUMMY: true
     global:
       environment: demo
       enableKeyVaults: true
