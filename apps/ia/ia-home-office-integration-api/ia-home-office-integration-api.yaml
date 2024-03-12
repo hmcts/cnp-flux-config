@@ -9,7 +9,11 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-3a8b9dd-20240205102243 #{"$imagepolicy": "flux-system:ia-home-office-integration-api"}
+      image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-09e19ef-20240308101456 #{"$imagepolicy": "flux-system:ia-home-office-integration-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 80
   chart:
     spec:
       chart: ./stable/ia-home-office-integration-api
