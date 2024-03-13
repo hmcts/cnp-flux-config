@@ -1,7 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: hmc-hmi-inbound-adapter
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/hmc/hmi-inbound-adapter:pr-176-ba947b5-20240311102208 #{"$imagepolicy": "flux-system:demo-hmc-inbound-adapter"}
+      environment:
+        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CONFIG: DEBUG
+        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_SERVICE: DEBUG

@@ -1,10 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: case-payment-orders-api
 spec:
   values:
     java:
+      autoscaling:
+        enabled: false
+      image: hmctspublic.azurecr.io/cpo/case-payment-orders-api:prod-429177e-20240201150844 #{"$imagepolicy": "flux-system:perftest-case-payment-orders-api"}
       keyVaults:
         cpo:
           secrets:

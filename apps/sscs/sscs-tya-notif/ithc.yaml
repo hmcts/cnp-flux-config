@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -7,30 +7,9 @@ spec:
   releaseName: sscs-tya-notif
   values:
     java:
-      keyVaults:
-        sscs:
-          secrets:
-            - idam-api
-            - idam-oauth-user
-            - idam-redirect
-            - idam-sscs-systemupdate-user
-            - idam-sscs-systemupdate-password
-            - sscs-email-mac-secret-text
-            - idam-sscs-oauth2-client-secret
-            - sscs-s2s-secret
-            - s2s-micro
-            - evidence-share-topic-shared-access-key
-            - docmosis-api-key
-            - notification-job-scheduler-db-password
-            - notification-key
-            - notification-test-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: tya-notif-POSTGRES-PASS-FLEX-V15
-              alias: JOB_SCHEDULER_DB_PASSWORD
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2439-be73c70-20231129091726 #{"$imagepolicy": "flux-system:ithc-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-e5e4b3f-20240129224329 #{"$imagepolicy": "flux-system:ithc-sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: pgadmin
         JOB_SCHEDULER_DB_NAME: notification
@@ -44,6 +23,11 @@ spec:
         HOURS_START_TIME: 6
         HOURS_END_TIME: 23
         DUMMY: true
+        ONLINE_HEARING_LINK: https://sscs-cor.ithc.platform.hmcts.net/
+        MYA_EVIDENCE_LINK: https://sscs-cor.ithc.platform.hmcts.net/support-evidence
+        MYA_EXPENSES_LINK: https://sscs-cor.ithc.platform.hmcts.net/support-hearing-expenses
+        MYA_HEARING_LINK: https://sscs-cor.ithc.platform.hmcts.net/support-hearing
+        MYA_LINK: https://sscs-cor.ithc.platform.hmcts.net/sign-in?tya=appeal_id
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
