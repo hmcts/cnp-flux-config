@@ -6,9 +6,16 @@ spec:
   releaseName: rd-profile-sync
   values:
     java:
+      autoscaling:
+        enabled: true
+        maxReplicas: 2
+      memoryRequests: '2048Mi'
+      memoryLimits: '2048Mi'
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/profile-sync:prod-4bebf8c-20240108112646 #{"$imagepolicy": "flux-system:rd-profile-sync"}
+      image: hmctspublic.azurecr.io/rd/profile-sync:prod-8b5f433-20240307112429 #{"$imagepolicy": "flux-system:rd-profile-sync"}
+      environment:
+        DUMMY_VAR: false
   chart:
     spec:
       chart: ./stable/rd-profile-sync

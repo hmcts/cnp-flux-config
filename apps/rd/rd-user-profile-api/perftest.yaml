@@ -6,7 +6,6 @@ spec:
   releaseName: rd-user-profile-api
   values:
     java:
-      replicas: 2
       keyVaults:
         rd:
           secrets:
@@ -26,6 +25,10 @@ spec:
               alias: POSTGRES_USERNAME
             - name: user-profile-api-POSTGRES-PASS-v16
               alias: POSTGRES_PASSWORD
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      replicas: 2
       memoryLimits: "6144Mi"
       memoryRequests: "3072Mi"
       cpuLimits: "4000m"
