@@ -6,12 +6,13 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      replicas: 15
+      replicas: 2
       image: hmctspublic.azurecr.io/ccd/data-store-api:prod-0f9f8ef-20240312115707 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
-        enabled: false
-      memoryRequests: '4Gi'
-      memoryLimits: '5Gi'
+        enabled: true
+        maxReplicas: 15
+      memoryRequests: '6144Mi'
+      memoryLimits: '6144Mi'
       cpuRequests: '1'
       cpuLimits: '3'
       environment:
