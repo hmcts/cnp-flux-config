@@ -6,7 +6,7 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "30 10 13 3 3"
+      schedule: "*/15 * 13 3 *"
       image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:pr-84-680b6b3-20240313103349 #{"$imagepolicy": "flux-system:ithc-ia-cron-ccd-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
@@ -21,3 +21,4 @@ spec:
         MIGRATION_NUMBER_OF_CASES: 5
         ASSIGN_HEARING_ROLES_TO_SYSTEM_USER: "true"
         FUNCTION_ENABLED: "true"
+        AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-ithc.service.core-compute-ithc.internal
