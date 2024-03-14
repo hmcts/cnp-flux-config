@@ -3,6 +3,18 @@ kind: HelmRelease
 metadata:
   name: ccd-admin-web
 spec:
+  values:
+    java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
+      memoryRequests: '512Mi'
+      memoryLimits: '512Mi'
+      cpuRequests: '50m'
+      cpuLimits: '1000m'
   releaseName: ccd-admin-web
   values:
     nodejs:
