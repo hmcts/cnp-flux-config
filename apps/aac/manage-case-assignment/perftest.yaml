@@ -5,6 +5,16 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,prl_cos_api,et_cos
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
