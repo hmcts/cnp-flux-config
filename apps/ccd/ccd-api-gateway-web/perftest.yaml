@@ -6,9 +6,14 @@ spec:
   releaseName: ccd-api-gateway-web
   values:
     nodejs:
-      replicas: 20
+      replicas: 4
       autoscaling:
-        enabled: false
+        enabled: true
+        maxReplicas: 20
+      memoryRequests: '512Mi'
+      memoryLimits: '512Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1000m'
       environment:
         CORS_ORIGIN_WHITELIST: "*"
         TIMING-ALLOW-ORIGIN: "https://www-ccd.perftest.platform.hmcts.net"
