@@ -10,6 +10,11 @@ spec:
         enabled: true
         sessionCookieName: sticky
       image: hmctspublic.azurecr.io/sptribs/dss-update-case-web:prod-d391d5a-20240318115409 #{"$imagepolicy": "flux-system:perftest-sptribs-dss-update-case-web"}
+      environment:
+        VAR_TA: perf-1
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
     global:
       environment: perftest
       enableKeyVaults: true
