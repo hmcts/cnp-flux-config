@@ -10,6 +10,10 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sptribs/frontend:prod-2504b13-20240318112110 #{"$imagepolicy": "flux-system:sptribs-frontend"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 80
       environment:
         DUMMY_ENV_VAR: false
   chart:
