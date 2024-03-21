@@ -6,5 +6,15 @@ spec:
   releaseName: ccd-admin-web
   values:
     nodejs:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
+      memoryRequests: '512Mi'
+      memoryLimits: '512Mi'
+      cpuRequests: '50m'
+      cpuLimits: '1000m'
       environment:
         ADMINWEB_ELASTIC_INDEX_URL: http://ccd-definition-store-api-perftest.service.core-compute-perftest.internal/elastic-support/index
