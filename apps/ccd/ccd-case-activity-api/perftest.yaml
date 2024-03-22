@@ -6,9 +6,14 @@ spec:
   releaseName: ccd-case-activity-api
   values:
     nodejs:
-      replicas: 16
+      replicas: 4
       autoscaling:
-        enabled: false
+        enabled: true
+        maxReplicas: 16
+      memoryRequests: '512Mi'
+      memoryLimits: '1024Mi'
+      cpuRequests: '250m'
+      cpuLimits: '500m'
       environment:
         REDIS_ACTIVITY_TTL: 10
         DUMMY_VAR: 1

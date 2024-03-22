@@ -6,8 +6,16 @@ spec:
   releaseName: ts-translation-service
   values:
     java:
+      replicas: 2
       autoscaling:
-        enabled: false
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       image: hmctspublic.azurecr.io/ts/translation-service:prod-038451a-20240201170916 #{"$imagepolicy": "flux-system:perftest-ts-translation-service"}
       environment:
         DUMMY_RESTART_VAR: 2
