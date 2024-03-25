@@ -1,0 +1,60 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: env-injector-webhook
+  namespace: admin
+spec:
+  chart:
+    spec:
+      version: 0.1.18
+  values:
+    removePodAntiAffinity: true
+    preferredNodeAffinityTerms:
+      - weight: 50
+        preference:
+          matchExpressions:
+            - key: kubernetes.azure.com/scalesetpriority
+              operator: In
+              values:
+                - spot
+      - weight: 1
+        preference:
+          matchExpressions:
+            - key: kubernetes.azure.com/scalesetpriority
+              operator: DoesNotExist
+    tolerations:
+      - key: kubernetes.azure.com/scalesetpriority
+        effect: NoSchedule
+        operator: Equal
+        value: spot
+    topologyConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.azure.com/agentpool
+        whenUnsatisfiable: DoNotSchedule
+        nodeAffinityPolicy: Honor
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/managed-by: Helm
+        matchLabelKeys:
+          - pod-template-hash
+      - maxSkew: 2
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        nodeAffinityPolicy: Honor
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/managed-by: Helm
+        matchLabelKeys:
+          - pod-template-hash
+      - maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: ScheduleAnyway
+        nodeAffinityPolicy: Honor
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/managed-by: Helm
+        matchLabelKeys:
+          - pod-template-hash

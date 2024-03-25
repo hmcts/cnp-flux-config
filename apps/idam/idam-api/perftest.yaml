@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-76e8bdc-20231124141731
+      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
@@ -28,7 +28,7 @@ spec:
         SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-perftest.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-perftest.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-perftest.internal
-        STRATEGIC_SSO_PROVIDERS_0_providerName: keycloak
+        STRATEGIC_SSO_PROVIDERS_0_providerName: azure
         STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: http://idam-perftest-jumpbox.service.core-compute-idam-perftest.internal:9080/auth/realms/jhipster/protocol/openid-connect/userinfo
         STRATEGIC_SSO_PROVIDERS_0_uniqueIdClaim: sub
         STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
@@ -45,11 +45,13 @@ spec:
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
-        trigger_deploy: 21/06/2023-1200
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
+        trigger_deploy: 18/03/2024-1200
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.0
+      version: 0.7.1

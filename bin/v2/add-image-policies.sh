@@ -43,7 +43,7 @@ if [[ ${ACR} == "hmctspublic" ]]
 then
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
@@ -55,7 +55,7 @@ elif [[ ${ACR} == "hmctssandbox" ]]
 then
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
@@ -69,7 +69,7 @@ elif [[ ${ACR} == "hmctsprivate" ]]
 then
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}

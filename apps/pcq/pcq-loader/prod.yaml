@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: pcq-loader
+spec:
+  values:
+    job:
+      autoscaling:
+        minReplicas: 2
+        maxReplicas: 3
+      spotInstances:
+        enabled: false
+      schedule: "0/15 * * * *"
