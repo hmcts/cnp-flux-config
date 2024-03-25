@@ -6,14 +6,16 @@ metadata:
 spec:
   releaseName: rd-slack-help-bot
   values:
-    replicas: 0
+    replicas: 1
     image: hmctspublic.azurecr.io/rd/slack-help-bot:prod-1b0fd74-61 # {"$imagepolicy": "flux-system:rd-slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL: ref-data-request-support
       SLACK_REPORT_CHANNEL_ID: C0647KARC2G
-      JIRA_ISSUE_TYPE_ID: 17602
-      JIRA_ISSUE_TYPE_NAME: "Support Request"
+      JIRA_ISSUE_TYPE_ID: 3
+      JIRA_ISSUE_TYPE_NAME: "Task"
       JIRA_PROJECT: DTSRD
+      JIRA_START_TRANSITION_ID: 21
+      JIRA_DONE_TRANSITION_ID: 41
       DUMMY_VAR: 0
     keyVaults:
       cftptl-intsvc:
