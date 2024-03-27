@@ -9,8 +9,12 @@ spec:
       environment:
         TASK_NAME: UnNotifiedHearingsProcessor
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/hearings-api:prod-ac4d8f7-20240315142740 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      image: hmctspublic.azurecr.io/ia/hearings-api:prod-96e7da1-20240327141556 #{"$imagepolicy": "flux-system:ia-hearings-api"}
       schedule: 0 * * * *
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
     keyVaults:
       ia:
         resourceGroup: ia

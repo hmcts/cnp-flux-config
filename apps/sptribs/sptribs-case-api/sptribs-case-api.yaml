@@ -9,7 +9,14 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-ab4a3ec-20240314151609 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-2cd9ee3-20240326103643 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: "1536Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
   chart:
     spec:
       chart: ./stable/sptribs-case-api

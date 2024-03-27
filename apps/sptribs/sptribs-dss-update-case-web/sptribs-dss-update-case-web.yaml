@@ -11,11 +11,14 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sptribs/dss-update-case-web:prod-1f2c648-20240319105434 #{"$imagepolicy": "flux-system:sptribs-dss-update-case-web"}
-      memoryRequests: "2048Mi"
-      cpuRequests: "1000m"
-      memoryLimits: "4096Mi"
-      cpuLimits: "2000m"
+      image: hmctspublic.azurecr.io/sptribs/dss-update-case-web:prod-e5157c6-20240326120839 #{"$imagepolicy": "flux-system:sptribs-dss-update-case-web"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: "512Mi"
+      memoryLimits: "512Mi"
+      cpuRequests: "50m"
+      cpuLimits: "500m"
   chart:
     spec:
       chart: ./stable/sptribs-dss-update-case-web
