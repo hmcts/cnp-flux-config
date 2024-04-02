@@ -7,6 +7,12 @@ spec:
     function:
       image: hmctspublic.azurecr.io/ccpay/callback-function:prod-de0d84d-20240328103238 #{"$imagepolicy": "flux-system:demo-int-ccpay-callback-function"}
       aadIdentityName: ccpay
+      triggers:
+        - type: azure-servicebus
+          topicName: "servicecallbacktopic"
+          subscriptionName: defaultServiceCallbackSubscription
+          connectionFromEnv: SERVICE_CALLBACK_BUS_CONNECTION
+          queueLength: 1
       environment:
         S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         MICROSERVICE_PAYMENT_APP: "payment_app"
@@ -15,4 +21,9 @@ spec:
       keyVaults:
         "ccpay":
           secrets:
-            - payment-s2s-secret
+            - name: payment-s2s-secret
+              alias: S2S_KEY_PAYMENT_APP
+            - name: sb-primary-connection-string
+              alias: SERVICE_CALLBACK_BUS_CONNECTION
+            - name: AppInsightsInstrumentationKey
+              alias: APPINSIGHTS_INSTRUMENTATIONKEY
