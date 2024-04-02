@@ -6,7 +6,14 @@ spec:
   releaseName: cui-ra
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/cui/ra:prod-0ba0dfa-20240202133557 #{"$imagepolicy": "flux-system:cui-ra"}
+      replicas: 1
+      memoryRequests: '768Mi'
+      cpuRequests: '50m'
+      memoryLimits: '1024Mi'
+      cpuLimits: '500m'
+      autoscaling:
+        enabled: false
+      image: hmctspublic.azurecr.io/cui/ra:prod-6963ba4-20240402091810 #{"$imagepolicy": "flux-system:cui-ra"}
   chart:
     spec:
       chart: ./stable/cui-ra

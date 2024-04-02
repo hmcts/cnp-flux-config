@@ -7,30 +7,9 @@ spec:
   releaseName: sscs-tya-notif
   values:
     java:
-      keyVaults:
-        sscs:
-          secrets:
-            - idam-api
-            - idam-oauth-user
-            - idam-redirect
-            - idam-sscs-systemupdate-user
-            - idam-sscs-systemupdate-password
-            - sscs-email-mac-secret-text
-            - idam-sscs-oauth2-client-secret
-            - sscs-s2s-secret
-            - s2s-micro
-            - evidence-share-topic-shared-access-key
-            - docmosis-api-key
-            - notification-job-scheduler-db-password
-            - notification-key
-            - notification-test-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: tya-notif-POSTGRES-PASS-FLEX-V15
-              alias: JOB_SCHEDULER_DB_PASSWORD
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2439-341135e-20240123160412 #{"$imagepolicy": "flux-system:perftest-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-fbb54f6-20240402124532 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: pgadmin
         JOB_SCHEDULER_DB_NAME: notification

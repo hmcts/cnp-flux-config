@@ -9,9 +9,14 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sptribs/frontend:prod-a02dc5c-20240205120352 #{"$imagepolicy": "flux-system:sptribs-frontend"}
-      environment:
-        DUMMY_ENV_VAR: false
+      image: hmctspublic.azurecr.io/sptribs/frontend:prod-35116e0-20240326112201 #{"$imagepolicy": "flux-system:sptribs-frontend"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: "512Mi"
+      memoryLimits: "512Mi"
+      cpuRequests: "50m"
+      cpuLimits: "500m"
   chart:
     spec:
       chart: ./stable/sptribs-frontend

@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/hmc/cft-hearing-service:prod-b4b8339-20240118154716 #{"$imagepolicy": "flux-system:demo-hmc-cft-hearing-service"}
+      image: hmctspublic.azurecr.io/hmc/cft-hearing-service:pr-456-c83976c-20240304100209 #{"$imagepolicy": "flux-system:demo-hmc-cft-hearing-service"}
       keyVaults:
         hmc:
           secrets:
@@ -41,6 +41,8 @@ spec:
               alias: FH_GET_TOKEN_URL
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CONFIG: DEBUG
-        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_REPOSITORY: DEBUG
+        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_SERVICE: DEBUG
         HMI_BASE_URL: https://hmi-apim.test.platform.hmcts.net/hmi
         CFT_HEARING_SERVICE_S2S_AUTHORISED_SERVICES: xui_webapp,hmc_hmi_inbound_adapter,sscs,fis_hmc_api,civil_service,iac,et-hearings-api
+        HMC_SERVICE_BUS_QUEUE: hmc-from-hmi-demo-temp
+        HMC_OUTBOUND_SERVICE_BUS_QUEUE: hmc-to-hmi-demo-temp

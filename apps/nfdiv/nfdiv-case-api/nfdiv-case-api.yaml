@@ -7,8 +7,15 @@ spec:
   values:
     java:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 9
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-27b73c3-20240205112411 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-ec77560-20240401072019 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       environment:
         VAR_TA: trigger22
   chart:

@@ -5,13 +5,14 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/case-event-handler:prod-9735acd-20240130135916 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
+      image: hmctspublic.azurecr.io/wa/case-event-handler:prod-30f1bab-20240328122402 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
       environment:
         replicas: 2
-        REFRESH_FLAG: "1"
+        REFRESH_FLAG: "0"
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
         TEMP_RESTART: true
+        NEW_MESSAGE_LIVENESS_STATE_HEALTH_CHECK: demo
       keyVaults:
         wa:
           secrets:
