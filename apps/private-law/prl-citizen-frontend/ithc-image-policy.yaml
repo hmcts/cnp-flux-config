@@ -1,7 +1,19 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
 kind: ImagePolicy
 metadata:
+metadata:
   name: ithc-prl-citizen-frontend
+  name: ithc-prl-citizen-frontend
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
+spec:
+  filterTags:
+    pattern: '^pr-1145-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
+  imageRepositoryRef:
   imageRepositoryRef:
     name: prl-citizen-frontend
