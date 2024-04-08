@@ -7,8 +7,10 @@ spec:
   values:
     java:
       replicas: 4
+      autoscaling:
+        enabled: false
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-32f60ac-20240318100506 #{"$imagepolicy": "flux-system:camunda"}
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-f628789-20240327170114 #{"$imagepolicy": "flux-system:camunda"}
       ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         CAMUNDA_API_AUTH_ENABLED: false
