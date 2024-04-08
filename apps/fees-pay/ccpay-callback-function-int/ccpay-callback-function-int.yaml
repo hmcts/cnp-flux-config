@@ -9,8 +9,14 @@ spec:
       image: hmctspublic.azurecr.io/ccpay/callback-function:prod-de0d84d-20240328103238 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
       environment:
         DELAY_MESSAGE_MINUTES: 30
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         SERVICE_LOGGING_ENABLED: true
+      triggers:
+        - type: azure-servicebus
+          topicName: "ccpay-service-callback-topic"
+          subscriptionName: serviceCallbackPremiumSubscription
+          connectionFromEnv: SERVICE_CALLBACK_BUS_CONNECTION
+          queueLength: 1
       secrets:
         APPINSIGHTS_INSTRUMENTATIONKEY:
           secretRef: ccpay-callback-function-premium-sb
