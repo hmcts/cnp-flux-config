@@ -7,8 +7,14 @@ spec:
   values:
     nodejs:
       ingressHost: nfdiv.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/nfdiv/frontend:prod-92b9e0e-20240207153749 #{"$imagepolicy": "flux-system:demo-nfdiv-frontend"}
+      image: hmctspublic.azurecr.io/nfdiv/frontend:pr-3570-9bee3be-20240326161629 #{"$imagepolicy": "flux-system:demo-nfdiv-frontend"}
       environment:
         WEBCHAT_AVAYA_URL: webchat.pp.ctsc.hmcts.net
         WEBCHAT_AVAYA_CLIENT_URL: webchat-client.pp.ctsc.hmcts.net
         WEBCHAT_AVAYA_SERVICE: Divorce
+        DYNATRACE_URL: https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/2ab4686fc177447_complete.js
+        DEMO_TA: autoscaling-test3
+      autoscaling:
+        enabled: true
+        maxReplicas: 8
+        targetCPUUtilizationPercentage: 80

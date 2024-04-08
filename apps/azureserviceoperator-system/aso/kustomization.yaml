@@ -9,3 +9,13 @@ patches:
         value: --crd-pattern=managedidentity.azure.com/*;servicebus.azure.com/*;resources.azure.com/*;managedidentity.azure.com/*;storage.azure.com/*;dbforpostgresql.azure.com/*
     target:
       kind: Deployment
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/nodeSelector
+        value:
+          kubernetes.azure.com/agentpool: system
+    target:
+      kind: Deployment
+  - target:
+      kind: Deployment
+    path: toleration_replicas_patch.yaml
