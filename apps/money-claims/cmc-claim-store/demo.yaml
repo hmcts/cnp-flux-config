@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -6,33 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:pr-2803-da66744-20231127141502 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
-      keyVaults:
-        cmc:
-          resourceGroup: cmc
-          secrets:
-            - AppInsightsInstrumentationKey
-            - cmc-db-password-v11
-            - citizen-oauth-client-secret
-            - claim-store-s2s-secret
-            - anonymous-caseworker-username
-            - anonymous-caseworker-password
-            - system-update-username
-            - system-update-password
-            - notify-api-key
-            - milo-recipient
-            - staff-email
-            - live-support-email
-            - rpa-email-sealed-claim
-            - rpa-email-breathing-space
-            - rpa-email-legal-sealed-claim
-            - rpa-email-more-time-requested
-            - rpa-email-response
-            - rpa-email-ccj
-            - rpa-email-paid-in-full
-            - launchDarkly-sdk-key
-            - sendgrid-api-key
-            - staff-email-legal-rep
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-e5273d6-20240314151530 #{"$imagepolicy": "flux-system:cmc-claim-store"}
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -62,7 +36,6 @@ spec:
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         REFRESH_PODS: true
-        CMC_DB_USERNAME: cmc@cmc-db-v11-demo
-        CMC_DB_HOST: cmc-db-v11-demo.postgres.database.azure.com
         FEATURE_TOGGLES_BREATHING_SPACE: true
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true
+        RIGGER_DEPLOY: trigger1

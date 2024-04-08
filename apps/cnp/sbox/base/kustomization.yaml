@@ -2,28 +2,15 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../plum-batch/plum-batch.yaml
   - test-ingress-redirect.yaml
+  - descheduler-cronjob.yaml
+  - descheduler-helmrepo.yaml
 namespace: cnp
 patches:
   - path: ../../plum-frontend/sbox.yaml
   - path: ../../plum-recipe-backend/sbox.yaml
   - path: ../../plum-recipe-receiver/sbox.yaml
-  - path: ../../identity/sbox.yaml
+  - path: ../../plum-batch/sbox.yaml
   - path: ../../serviceaccount/sbox.yaml
-  - patch: |-
-      - op: add
-        path: /spec/template/spec/affinity/-
-        values:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: "kubernetes.azure.com/scalesetpriority"
-                      operator: In
-                      values:
-                        - "spot"
-    target:
-      group: apps
-      version: v1
-      kind: Deployment
-      name: plum-frontend
+  - path: namespace.yaml

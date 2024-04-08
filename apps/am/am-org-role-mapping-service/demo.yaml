@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: am-org-role-mapping-service
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-5087b99-20231127161047 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
+      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-587cfb1-20240404173152 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
       keyVaults:
         am:
           secrets:
@@ -30,10 +30,6 @@ spec:
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: DEBUG
-        DB_FEATURE_FLAG_ENABLE: st_cic_wa_1_0
-        JUDICIAL_REF_APP_V2_ACTIVE: true
-        JUDICIAL_REF_APP_V2_FILTER_AUTHS_BY_APP_ID: true
-        DUMMY_ENV_VAR: true
-        REFRESH_JOB: LEGAL_OPERATIONS-IA-ABORTED-0-39
+        DB_FEATURE_FLAG_ENABLE: privatelaw_wa_1_4
         ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-postgres-db-v15-demo.postgres.database.azure.com
         ORG_ROLE_MAPPING_DB_USERNAME: pgadmin

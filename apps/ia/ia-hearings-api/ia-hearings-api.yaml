@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ia-hearings-api
@@ -9,7 +9,12 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/hearings-api:prod-b4d7fa5-20231127143402 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      image: hmctspublic.azurecr.io/ia/hearings-api:prod-8e4e2dc-20240328153957 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      memoryRequests: "1.5Gi"
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 80
   chart:
     spec:
       chart: ./stable/ia-hearings-api

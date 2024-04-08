@@ -1,5 +1,4 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plum-frontend
@@ -7,8 +6,8 @@ spec:
   values:
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
-      tolerations:
-        - key: kubernetes.azure.com/scalesetpriority
-          effect: NoSchedule
-          operator: Equal
-          value: spot
+      spotInstances:
+        enabled: true
+      replicas: 4
+      autoscaling:
+        minReplicas: 2

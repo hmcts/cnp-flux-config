@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,9 +7,10 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-76e8bdc-20231124141731
+      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
+        SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
         TESTING_SUPPORT_ENABLED: true
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
@@ -59,10 +60,13 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGDURATION: 4d
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 1d
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
+        trigger_deploy: 21/06/2023-1200
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.0
+      version: 0.7.1

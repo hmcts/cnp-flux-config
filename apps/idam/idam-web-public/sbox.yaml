@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-web-public
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:preview-aa49d2d-20231124092859 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
+      image: hmctspublic.azurecr.io/idam/web-public:preview-a068b8a-20240405005052 #{"$imagepolicy": "flux-system:preview-idam-web-public"}
       ingressHost: idam-web-public.sandbox.platform.hmcts.net
       disableTraefikTls: true
       replicas: 2
@@ -15,4 +15,4 @@ spec:
         TRIGGER: false
   chart:
     spec:
-      version: 0.2.26
+      version: 0.3.0

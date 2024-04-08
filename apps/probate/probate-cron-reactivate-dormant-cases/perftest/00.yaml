@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: probate-cron-reactivate-dormant-cases
@@ -6,8 +6,8 @@ spec:
   releaseName: probate-cron-reactivate-dormant-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-0e8c31a-20231124083000 #{"$imagepolicy": "flux-system:probate-back-office"}
-      schedule: "10,30,50 * * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:prod-96f20ed-20240405105600 #{"$imagepolicy": "flux-system:probate-back-office"}
+      schedule: "50 8 1-31/2 * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true

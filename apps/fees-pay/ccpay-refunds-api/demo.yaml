@@ -1,63 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-refunds-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-7e3e660-20231127113521 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-b7d595c-20240408130143 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
       environment:
-        DUMMY_VARIABLE: true
+        DUMMY_VARIABLE: false
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
-      keyVaults:
-        "ccpay":
-          resourceGroup: ccpay
-          secrets:
-            - name: refunds-api-POSTGRES-PASS-V15
-              alias: POSTGRES_PASSWORD
-            - name: refunds-api-POSTGRES-PORT-V15
-              alias: POSTGRES_PORT
-            - name: refunds-api-POSTGRES-HOST-V15
-              alias: POSTGRES_HOST
-            - name: refunds-api-POSTGRES-USER-V15
-              alias: POSTGRES_USERNAME
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: refunds-s2s-secret
-              alias: OIDC_S2S_SECRET
-            - name: paybubble-idam-client-secret
-              alias: OIDC_CLIENT_SECRET
-            - name: launch-darkly-sdk-key
-              alias: LAUNCH_DARKLY_SDK_KEY
-            - name: liberata-keys-oauth2-client-id
-              alias: LIBERATA_OAUTH2_CLIENT_ID
-            - name: liberata-keys-oauth2-client-secret
-              alias: LIBERATA_OAUTH2_CLIENT_SECRET
-            - name: liberata-keys-oauth2-username
-              alias: LIBERATA_OAUTH2_USERNAME
-            - name: liberata-keys-oauth2-password
-              alias: LIBERATA_OAUTH2_PASSWORD
-            - name: liberata-api-key
-              alias: LIBERATA_API_KEY
-            - name: refunds-api-user-password
-              alias: REFUND_SERVICE_ACCOUNT_PASSWORD
-            - name: refunds-api-client-secret
-              alias: REFUND_SERVICE_ACCOUNT_CLIENT_SECRET
-            - name: notifications-letter-template-id
-              alias: NOTIFICATION_LETTER_TEMPLATE_ID
-            - name: notifications-email-template-id
-              alias: NOTIFICATION_EMAIL_TEMPLATE_ID
-            - name: notifications-letter-cheque-po-cash-template-id
-              alias: NOTIFICATIONS_LETTER_CHEQUE_PO_CASH_TEMPLATE_ID
-            - name: notifications-email-cheque-po-cash-template-id
-              alias: NOTIFICATIONS_EMAIL_CHEQUE_PO_CASH_TEMPLATE_ID
-            - name: notifications-letter-card-pba-template-id
-              alias: NOTIFICATION_LETTER_CARD_PBA_TEMPLATE_ID
-            - name: notifications-email-card-pba-template-id
-              alias: NOTIFICATION_EMAIL_CARD_PBA_TEMPLATE_ID
-            - name: notifications-letter-refund-when-contacted-template-id
-              alias: NOTIFICATION_LETTER_REFUND_WHEN_CONTACTED_TEMPLATE_ID
-            - name: notifications-email-refund-when-contacted-template-id
-              alias: NOTIFICATION_EMAIL_REFUND_WHEN_CONTACTED_TEMPLATE_ID

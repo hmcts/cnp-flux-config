@@ -1,32 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: em-stitching
 spec:
   values:
     java:
-      #      keyVaults:
-      #        em-stitching:
-      #          resourceGroup: em-stitching
-      #          secrets:
-      #            - name: AppInsightsInstrumentationKey
-      #              alias: APPINSIGHTS_INSTRUMENTATIONKEY
-      #            - name: docmosis-access-key
-      #              alias: DOCMOSIS_ACCESS_KEY
-      #            - name: microservicekey-em-stitching-api
-      #              alias: S2S_KEY
-      #            - name: stitching-POSTGRES-PASS-V15
-      #              alias: SPRING_DATASOURCE_PASSWORD
-      #            - name: app-insights-connection-string
-      #              alias: app-insights-connection-string
-      image: hmctspublic.azurecr.io/em/stitching:prod-ccec433-20231127091105 #{"$imagepolicy": "flux-system:demo-em-stitching"}
-      #      replicas: 0
+      image: hmctspublic.azurecr.io/em/stitching:prod-42f48ba-20240408130939 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       environment:
         TEST_VAR: refresh
-        ENTITY_VALUE_COPY_CRONJOB_SCHEDULE: 0 0/5 * * * *
-        ENTITY_VALUE_COPY_PAGE_SIZE: 2000
-        ENTITY_VALUE_COPY_CHUNK_SIZE: 500
-        ENTITY_VALUE_MAX_ITEM_COUNT: 2000
-        ENTITY_VALUE_COPY_ENABLED: true
-#        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-demo.postgres.database.azure.com
-#        SPRING_DATASOURCE_USERNAME: pgadmin
+        CALLBACK_MAX_ATTEMPTS: 5
+        DOCUMENT_TASK_MILLISECONDS: 5000

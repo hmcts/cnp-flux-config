@@ -1,10 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ia-case-notifications-api
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:pr-1107-cdd8b7e-20240404135836 #{"$imagepolicy": "flux-system:demo-ia-case-notifications-api"}
       environment:
         DOCMOSIS_ENDPOINT: https://docmosis.demo.platform.hmcts.net
         DUMMY: true

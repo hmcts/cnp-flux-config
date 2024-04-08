@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -53,7 +53,7 @@ spec:
               jvmOptions: "-XX:MaxRAMPercentage=30 -XX:+UseG1GC -XX:+UseCompressedOops -XX:+UseCompressedClassPointers\
             \ -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+ParallelRefProcEnabled\
             \ -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:+UnlockDiagnosticVMOptions\
-            \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true"
+            \ -XX:G1SummarizeRSetStatsPeriod=1 -Djava.net.preferIPv4Stack=true -Djdk.lang.Process.launchMechanism=vfork"
               location: "UK South"
               noOfParallelJobs: 1
               osDiskSize: 60
@@ -104,7 +104,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.101"
+                          galleryImageVersion: "1.4.136"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
@@ -120,7 +120,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu"
-                          galleryImageVersion: "1.4.101"
+                          galleryImageVersion: "1.4.136"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-builders-arm"
                         templateDesc: "Jenkins build agents running on ARM64 CPUs"
@@ -136,7 +136,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-arm"
-                          galleryImageVersion: "1.4.101"
+                          galleryImageVersion: "1.4.136"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-builders-arm-daily"
                         templateDesc: "Jenkins build agents running on ARM64 CPUs"
@@ -152,5 +152,5 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-arm"
-                          galleryImageVersion: "1.4.101"
+                          galleryImageVersion: "1.4.136"
                         <<: *vm_template_values_anchor

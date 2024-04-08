@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-00fa80b-20231127154548 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-83db46a-20240408094920 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -37,7 +37,7 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
-        IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: true
+        IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: false
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         LOG_AND_AUDIT_IDAM_URL: http://lau-idam-backend-aat.service.core-compute-aat.internal
         LOG_AND_AUDIT_IDAM_ENABLED: true
@@ -54,10 +54,12 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGSCHEDULECRON: "0 */3 * * * *"
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 30m
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALSCHEDULECRON: "0 */5 * * * *"
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
     global:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.0
+      version: 0.7.1

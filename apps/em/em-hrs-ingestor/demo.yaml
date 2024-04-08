@@ -1,13 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
 spec:
   values:
     job:
+      schedule: "*/30 * * * *"
       environment:
         VH_PROCESS_BACK_TO_DAY: 2
         VH_PROCESS: true
-        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
-        VH_STORAGE_CONTAINER_NAME: recordings
       # Run every 30 minutes as demo is a single cluster

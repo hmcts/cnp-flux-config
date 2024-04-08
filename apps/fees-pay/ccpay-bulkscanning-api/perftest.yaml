@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-bulkscanning-api
@@ -8,24 +8,4 @@ spec:
     java:
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
-      keyVaults:
-        "ccpay":
-          resourceGroup: ccpay
-          secrets:
-            - name: bulkscanning-api-POSTGRES-HOST-V15
-              alias: POSTGRES_HOST
-            - name: bulkscanning-api-POSTGRES-PORT-V15
-              alias: POSTGRES_PORT
-            - name: bulkscanning-api-POSTGRES-USER-V15
-              alias: POSTGRES_USERNAME
-            - name: bulkscanning-api-POSTGRES-PASS-V15
-              alias: POSTGRES_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: paybubble-s2s-secret
-              alias: OIDC_S2S_SECRET
-            - name: paybubble-idam-client-secret
-              alias: OIDC_CLIENT_SECRET
+        DUMMY_RESTART_VAR: true

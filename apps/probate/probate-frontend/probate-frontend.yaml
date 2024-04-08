@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: probate-frontend
@@ -8,12 +8,12 @@ spec:
   values:
     nodejs:
       replicas: 2
-      memoryRequests: "512Mi"
+      memoryRequests: "1Gi"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:prod-d214977-20231122151836 #{"$imagepolicy": "flux-system:probate-frontend"}
+      image: hmctspublic.azurecr.io/probate/frontend:prod-3dcd1c4-20240403114632 #{"$imagepolicy": "flux-system:probate-frontend"}
       environment:
         VAR_FV2: trig-base-4
   chart:

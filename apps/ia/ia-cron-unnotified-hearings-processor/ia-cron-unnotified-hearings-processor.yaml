@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: ia-cron-unnotified-hearings-processor
+spec:
+  releaseName: ia-cron-unnotified-hearings-processor
+  values:
+    job:
+      environment:
+        TASK_NAME: UnNotifiedHearingsProcessor
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ia/hearings-api:prod-8e4e2dc-20240328153957 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      schedule: 0 * * * *
+      memoryRequests: "768Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2500m"
+    keyVaults:
+      ia:
+        resourceGroup: ia
+        secrets:
+          - name: docmosis-enabled
+            alias: IA_DOCMOSIS_ENABLED
+          - name: em-stitching-enabled
+            alias: IA_EM_STITCHING_ENABLED
+          - name: system-username
+            alias: IA_SYSTEM_USERNAME
+          - name: system-password
+            alias: IA_SYSTEM_PASSWORD
+          - name: idam-client-id
+            alias: IA_IDAM_CLIENT_ID
+          - name: idam-secret
+            alias: IA_IDAM_SECRET
+          - name: s2s-secret
+            alias: IA_S2S_SECRET
+          - name: s2s-microservice
+            alias: IA_S2S_MICROSERVICE
+          - name: prof-ref-data-url
+            alias: PROF_REF_DATA_URL
+          - name: launch-darkly-sdk-key
+            alias: LAUNCH_DARKLY_SDK_KEY
+          - name: ia-config-validator-secret
+            alias: IA_CONFIG_VALIDATOR_SECRET
+          - name: app-insights-connection-string
+            alias: app-insights-connection-string
+          - name: hmc-servicebus-connection-string
+            alias: HEARINGS_TOPIC_CONNECTION_STRING
+          - name: hmc-servicebus-shared-access-key-tf
+            alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
+  chart:
+    spec:
+      chart: ia-cron-config
+      version: 0.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system

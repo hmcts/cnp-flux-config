@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sptribs-cron-migrate-case-flags
@@ -6,7 +6,7 @@ spec:
   releaseName: sptribs-cron-migrate-case-flags
   values:
     job:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-4e21ae0-20231127134050 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-185cb26-20240403141210 #{"$imagepolicy": "flux-system:sptribs-case-api"}
       keyVaults:
         sptribs:
           secrets:
@@ -28,7 +28,7 @@ spec:
   chart:
     spec:
       chart: sptribs-cron
-      version: 0.0.15
+      version: 1.0.10
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: bar-api
@@ -6,22 +6,6 @@ spec:
   releaseName: bar-api
   values:
     java:
-      image: hmctspublic.azurecr.io/bar/api:prod-275e021-20231123085434 #{"$imagepolicy": "flux-system:bar-api"}
+      image: hmctspublic.azurecr.io/bar/api:prod-4131d8b-20240327165447 #{"$imagepolicy": "flux-system:bar-api"}
       environment:
         DUMMY_RESTART_VAR: false
-      keyVaults:
-        "bar":
-          resourceGroup: bar
-          secrets:
-            - name: api-POSTGRES-PASS-V15
-              alias: POSTGRES_PASSWORD
-            - name: api-POSTGRES-HOST-V15
-              alias: POSTGRES_HOST
-            - name: api-POSTGRES-USER-V15
-              alias: POSTGRES_USERNAME
-            - name: bar-S2S-SECRET
-              alias: S2S_SECRET
-            - name: api-POSTGRES-PORT-V15
-              alias: POSTGRES_PORT
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key

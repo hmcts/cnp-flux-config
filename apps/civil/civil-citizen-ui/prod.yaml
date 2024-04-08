@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: civil-citizen-ui
@@ -11,8 +11,15 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
+      ingressHost: www.moneyclaims.service.gov.uk
       environment:
         GA_TRACKING_ID: UA-97111056-2
         FEATURE_TESTING_SUPPORT: true
         FEATURE_RETURN_ERROR_TO_USER: true
         PCQ_URL: https://equality-and-diversity.platform.hmcts.net
+        IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://hmcts-access.service.gov.uk/login
+        IDAM_END_SESSION_URL: https://hmcts-access.service.gov.uk/o/endSession
+        OCMC_URL: https://www1.moneyclaims.service.gov.uk
+        IDAM_SIGN_OUT_REDIRECT_URL: https://www.moneyclaims.service.gov.uk/dashboard
+        OAUTH_CLIENT_REDIRECT: https://www.moneyclaims.service.gov.uk/oauth2/callback

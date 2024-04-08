@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prl-ccd-case-migration
@@ -6,7 +6,7 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-bccb8ef-20231123145507 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-89eef90-20240213100324 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
@@ -19,16 +19,3 @@ spec:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         MIGRATION_ENABLED: false
         MIGRATION_CASE_IDS: "123456"
-      keyVaults:
-        prl:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: prl-cos-idam-client-secret
-              alias: IDAM_CLIENT_SECRET
-            - name: system-update-user-username
-              alias: SYSTEM_UPDATE_USER_USERNAME
-            - name: system-update-user-password
-              alias: PRL_SYSTEM_UPDATE_PASSWORD
-            - name: microservicekey-prl-cos-api
-              alias: IDAM_S2S_AUTH_TOTP_SECRET

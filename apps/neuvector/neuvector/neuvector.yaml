@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: neuvector
@@ -12,7 +12,7 @@ spec:
       autoScan: true
     rules:
       admission:
-        enable: false
+        enable: true
       response:
         policies:
           - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
@@ -66,7 +66,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.5.1
+      version: 1.5.5
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

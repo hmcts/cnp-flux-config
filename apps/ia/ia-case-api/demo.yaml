@@ -1,11 +1,41 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ia-case-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/case-api:pr-1819-3e006eb-20231127145646 #{"$imagepolicy": "flux-system:demo-ia-case-api"}
+      image: hmctspublic.azurecr.io/ia/case-api:prod-f68bad1-20240403101237 #{"$imagepolicy": "flux-system:ia-case-api"}
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: docmosis-enabled
+              alias: IA_DOCMOSIS_ENABLED
+            - name: em-stitching-enabled
+              alias: IA_EM_STITCHING_ENABLED
+            - name: submit-hearing-requirements-enabled
+              alias: IA_SUBMIT_HEARING_REQUIREMENTS_ENABLED
+            - name: system-username
+              alias: IA_SYSTEM_USERNAME
+            - name: system-password
+              alias: IA_SYSTEM_PASSWORD
+            - name: idam-client-id
+              alias: IA_IDAM_CLIENT_ID
+            - name: idam-secret
+              alias: IA_IDAM_SECRET
+            - name: s2s-secret
+              alias: idam.s2s-auth.totp_secret
+            - name: s2s-microservice
+              alias: IA_S2S_MICROSERVICE
+            - name: prof-ref-data-url
+              alias: PROF_REF_DATA_URL
+            - name: launch-darkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: case-api-POSTGRES-PASS-15
+              alias: spring.datasource.password
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
       environment:
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
@@ -13,5 +43,4 @@ spec:
         IA_HEARINGS_API_URL: http://ia-hearings-api-demo.service.core-compute-demo.internal/
         POSTGRES_HOST: ia-case-api-postgres-db-v15-demo.postgres.database.azure.com
         POSTGRES_USERNAME: pgadmin
-        PAYMENT_AFTER_REMISSION_REJECTION_DUE_IN_MINUTES: 45
-        PAYMENT_EA_HU_NO_REMISSION_DUE_IN_MINUTES: 45
+        LOCATION_REF_DATA_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal

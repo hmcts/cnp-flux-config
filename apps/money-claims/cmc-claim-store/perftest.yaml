@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -6,44 +6,75 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-e5273d6-20240314151530 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc
           secrets:
-            - AppInsightsInstrumentationKey
-            - cmc-db-password-v11
-            - citizen-oauth-client-secret
-            - claim-store-s2s-secret
-            - anonymous-caseworker-username
-            - anonymous-caseworker-password
-            - system-update-username
-            - system-update-password
-            - notify-api-key
-            - milo-recipient
-            - staff-email
-            - live-support-email
-            - rpa-email-sealed-claim
-            - rpa-email-breathing-space
-            - rpa-email-legal-sealed-claim
-            - rpa-email-more-time-requested
-            - rpa-email-response
-            - rpa-email-ccj
-            - rpa-email-paid-in-full
-            - launchDarkly-sdk-key
-            - sendgrid-api-key
-            - staff-email-legal-rep
+            - name: claim-store-db-password
+              alias: CLAIM_STORE_DB_PASSWORD
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: cmc-db-password-v15
+              alias: CMC_DB_PASSWORD
+            - name: cmc-db-username-v15
+              alias: CMC_DB_USERNAME
+            - name: cmc-db-host-v15
+              alias: CMC_DB_HOST
+            - name: citizen-oauth-client-secret
+              alias: oauth2.client.secret
+            - name: claim-store-s2s-secret
+              alias: idam.s2s-auth.totp_secret
+            - name: anonymous-caseworker-username
+              alias: idam.caseworker.anonymous.username
+            - name: anonymous-caseworker-password
+              alias: idam.caseworker.anonymous.password
+            - name: system-update-username
+              alias: idam.caseworker.system.username
+            - name: system-update-password
+              alias: idam.caseworker.system.password
+            - name: notify-api-key
+              alias: GOV_NOTIFY_API_KEY
+            - name: milo-recipient
+              alias: MILO_CSV_RECIPIENT
+            - name: staff-email
+              alias: staff-notifications.recipient
+            - name: live-support-email
+              alias: live-support.recipient
+            - name: rpa-email-sealed-claim
+              alias: rpa.notifications.sealedClaimRecipient
+            - name: rpa-email-breathing-space
+              alias: rpa.notifications.breathingSpaceRecipient
+            - name: rpa-email-legal-sealed-claim
+              alias: rpa.notifications.legalSealedClaimRecipient
+            - name: rpa-email-more-time-requested
+              alias: rpa.notifications.moreTimeRequestedRecipient
+            - name: rpa-email-response
+              alias: rpa.notifications.responseRecipient
+            - name: rpa-email-ccj
+              alias: rpa.notifications.countyCourtJudgementRecipient
+            - name: rpa-email-paid-in-full
+              alias: rpa.notifications.paidInFullRecipient
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: sendgrid-api-key
+              alias: SENDGRID_API_KEY
+            - name: staff-email-legal-rep
+              alias: staff-notifications.legalRecipient
+            - name: appinsights-connection-string
+              alias: appinsights-connection-string
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED: false
+        FEATURE_TOGGLES_CTSC_ENABLED: true
+        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net
         FEATURE_TOGGLES_REMINDER_EMAILS: true
         MILO_CSV_SCHEDULE: "0 0 8 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
         SCHEDULE_STATE_TRANSITION_WAITING_TRANSFER: ""
         REFORM_ENVIRONMENT: perftest
         FEATURE_AUTO_CANCEL_PAYMENTS: true
-        FEATURE_TOGGLES_CTSC_ENABLED: true
-        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/realms/root/realms/hmcts
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
@@ -55,5 +86,3 @@ spec:
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         TEMP_VARIABLE_TO_RESTART: true
-        CMC_DB_USERNAME: cmc@cmc-db-v11-perftest
-        CMC_DB_HOST: cmc-db-v11-perftest.postgres.database.azure.com

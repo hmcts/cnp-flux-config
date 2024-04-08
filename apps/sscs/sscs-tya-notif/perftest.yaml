@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -7,22 +7,17 @@ spec:
   releaseName: sscs-tya-notif
   values:
     java:
-      keyVaults:
-        sscs:
-          secrets:
-            - name: tya-notif-POSTGRES-PASS-FLEX-V15
-              alias: JOB_SCHEDULER_DB_PASSWORD
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2435-a311b97-20231117165053 #{"$imagepolicy": "flux-system:perftest-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-38a6527-20240404163431 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-perftest.postgres.database.azure.com
         COVID_19_NOTIFICATION_FEATURE: false
         PDF_SERVICE_HEALTH_URL: https://docmosis.perftest.platform.hmcts.net/rs/status
         PDF_SERVICE_BASE_URL: https://docmosis.perftest.platform.hmcts.net/rs/render
-        DUMMY_PROPERTY: true
-        JOB_SCHEDULER_DB_USERNAME: "pgadmin@sscs-tya-notif-postgres-v15-db-perftest"
-        JOB_SCHEDULER_DB_NAME: "notification"
-        JOB_SCHEDULER_DB_HOST: "sscs-tya-notif-postgres-v15-db-perftest.postgres.database.azure.com"
+        DUMMY_PROPERTY: false
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

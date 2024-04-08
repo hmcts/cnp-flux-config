@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-089083a-20231101120419
+      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
       replicas: 4
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
@@ -54,12 +54,13 @@ spec:
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: ejudiciary\.net
+        SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
         SPRING_REDIS_TIMEOUT: 300
-        trigger_deploy: INC5539698
   chart:
     spec:
       chart: idam-api
-      version: 0.7.0
+      version: 0.7.1
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
