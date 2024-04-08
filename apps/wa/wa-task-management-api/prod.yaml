@@ -5,6 +5,11 @@ metadata:
 spec:
   values:
     java:
+      replicas: 4
+      memoryLimits: "4096Mi"
+      memoryRequests: "2560Mi"
+      cpuLimits: "4000m"
+      cpuRequests: "2000m"
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
@@ -16,8 +21,3 @@ spec:
         TASK_TYPE_CACHE_TIMEOUT_TIMEUNIT: HOURS
         SPRING_PROFILES_ACTIVE: "replica"
         DB_READER_USERNAME: "DTS JIT Access wa DB Reader SC"
-      replicas: 4
-      memoryLimits: "4096Mi"
-      memoryRequests: "2048Mi"
-      cpuLimits: "4000m"
-      cpuRequests: "2000m"
