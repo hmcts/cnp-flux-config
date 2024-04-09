@@ -9,7 +9,11 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/timed-event-service:prod-654860b-20240130120557 #{"$imagepolicy": "flux-system:ia-timed-event-service"}
+      image: hmctspublic.azurecr.io/ia/timed-event-service:prod-ae081f3-20240402154533 #{"$imagepolicy": "flux-system:ia-timed-event-service"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 80
   chart:
     spec:
       chart: ./stable/ia-timed-event-service
