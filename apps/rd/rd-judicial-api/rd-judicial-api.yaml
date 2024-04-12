@@ -7,8 +7,13 @@ spec:
   values:
     java:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '2048Mi'
+      memoryLimits: '2048Mi'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/judicial-api:prod-dab65fd-20240409110730 #{"$imagepolicy": "flux-system:rd-judicial-api"}
+      image: hmctspublic.azurecr.io/rd/judicial-api:prod-36f0d7f-20240410120822 #{"$imagepolicy": "flux-system:rd-judicial-api"}
       environment:
         DUMMY_VAR: true
   chart:

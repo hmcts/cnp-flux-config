@@ -7,8 +7,13 @@ spec:
   values:
     java:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '2048Mi'
+      memoryLimits: '2048Mi'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/commondata-api:prod-8095a8b-20240409103916 #{"$imagepolicy": "flux-system:rd-commondata-api"}
+      image: hmctspublic.azurecr.io/rd/commondata-api:prod-8481324-20240411095922 #{"$imagepolicy": "flux-system:rd-commondata-api"}
       environment:
         DUMMY_VAR: false
   chart:
