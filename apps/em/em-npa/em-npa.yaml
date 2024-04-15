@@ -7,7 +7,9 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
+      replicas: 2 # minReplicas will default to this value
+      autoscaling:
+        enabled: false
       image: hmctspublic.azurecr.io/em/npa:prod-4763450-20240415104250 #{"$imagepolicy": "flux-system:em-npa"}
   chart:
     spec:
