@@ -7,6 +7,9 @@ spec:
   values:
     nodejs:
       replicas: 1
+      autoscaling:
+        enabled: true
+        maxReplicas: 1 # This is only for lower env. This is not a stand-alone application. media-viewer is consumed by ExUI via npm package.
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/em/media-viewer:prod-aba632e-20240408131415 #{"$imagepolicy": "flux-system:em-media-viewer"}
       environment:
