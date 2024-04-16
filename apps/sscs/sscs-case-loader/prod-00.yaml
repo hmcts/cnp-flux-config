@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     job:
-      schedule: "0 2-7 * * *"
+      schedule: "0 21-23,0-7 * * *"
       startingDeadlineSeconds: 1800
       concurrencyPolicy: Forbid
       memoryRequests: "768Mi"
@@ -22,8 +22,15 @@ spec:
         APACHE_LOG_LEVEL: DEBUG
         PROCESS_MINOR_EVENTS: false
         USE_EXISTING_DATE: false
-        INTERPRETER_DATA_MIGRATION_ENABLED: false
         CASE_LOADER_START_HOUR: 21
-        CASE_LOADER_END_HOUR: 7
+        CASE_LOADER_END_HOUR: 24
+        INTERPRETER_DATA_MIGRATION_ENABLED: false
+        INTERPRETER_MIGRATION_ROLLBACK: false
+        INTERPRETER_MIGRATION_START_HOUR: 20
+        INTERPRETER_MIGRATION_END_HOUR: 24
+        VENUE_MIGRATION_ENABLED: false
+        VENUE_MIGRATION_ROLLBACK: false
+        VENUE_MIGRATION_START_HOUR: 20
+        VENUE_MIGRATION_END_HOUR: 24
     global:
       environment: prod
