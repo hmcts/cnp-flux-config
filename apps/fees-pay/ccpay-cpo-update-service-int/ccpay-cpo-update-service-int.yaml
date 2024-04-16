@@ -8,6 +8,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
+      environment:
+        DUMMY_VARIABLE: false
+        AMQP_HOST: ccpay-servicebus-demo-premium.servicebus.windows.net
+        AMQP_TOPIC_NAME: "ccpay-service-request-cpo-update-topic"
+        AMQP_SUBSCRIPTION: serviceRequestCpoUpdatePremiumSubscription
       image: hmctspublic.azurecr.io/ccpay/cpo-update-service:prod-1f3c53c-20240416115544 #{"$imagepolicy": "flux-system:ccpay-cpo-update-service"}
   chart:
     spec:
