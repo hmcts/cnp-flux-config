@@ -6,6 +6,20 @@ spec:
   values:
     job:
       schedule: "30 22 * * *"
+      keyVaults:
+        "rd":
+          resourceGroup: rd
+          secrets:
+            - name: judicial-api-POSTGRES-DATABASE-v16
+              alias: POSTGRES_DB_NAME
+            - name: judicial-api-POSTGRES-HOST-v16
+              alias: POSTGRES_HOST
+            - name: judicial-api-POSTGRES-PORT-v16
+              alias: POSTGRES_PORT
+            - name: judicial-api-POSTGRES-USER-v16
+              alias: POSTGRES_USERNAME
+            - name: judicial-api-POSTGRES-PASS-v16
+              alias: POSTGRES_PASSWORD
       environment:
         DUMMY_VAR: false
         DELETE_ORG: false
@@ -13,3 +27,6 @@ spec:
         IDAM_URL: https://idam-api.platform.hmcts.net
         MAIL_FROM: no-reply@mail-rd.platform.hmcts.net
         JRD_DATA_PER_MESSAGE: 75
+        POSTGRES_HOST: rd-judicial-ref-api-postgres-db-v16-prod.postgres.database.azure.com
+        POSTGRES_DB_NAME: dbjuddata
+        POSTGRES_PORT: 5432
