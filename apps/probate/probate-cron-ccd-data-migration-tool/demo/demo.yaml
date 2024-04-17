@@ -6,8 +6,10 @@ spec:
   releaseName: probate-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/cron-ccd-data-migration-tool:pr-22-8546518-20240416144458 #{"$imagepolicy":"flux-system:demo-probate-cron-ccd-data-migration-tool"}
-      schedule: "15 16 16 4 *"
+      image: hmctspublic.azurecr.io/probate/cron-ccd-data-migration-tool:pr-22-cdbe30a-20240416144740 #{"$imagepolicy":"flux-system:demo-probate-cron-ccd-data-migration-tool"}
+      schedule: "00 11 17 4 *"
       environment:
         PRD_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
         TRIG: trig-3
+        MIGRATION_ROLLBACK_START_DATETIME: '2024-04-16T11:00:00'
+        MIGRATION_ROLLBACK_END_DATETIME: '2024-04-16T12:00:00'
