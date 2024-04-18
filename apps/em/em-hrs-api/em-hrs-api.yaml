@@ -7,11 +7,13 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      cpuLimits: "2000m"
+      replicas: 2 # minReplicas will default to this value
+      memoryRequests: "2304Mi"
       cpuRequests: "1000m"
-      memoryLimits: "2048Mi"
-      memoryRequests: "1024Mi"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2000m"
+      autoscaling:
+        maxReplicas: 4
       image: hmctspublic.azurecr.io/em/hrs-api:prod-71bd92b-20240418111323 #{"$imagepolicy": "flux-system:em-hrs-api"}
       environment:
   chart:
