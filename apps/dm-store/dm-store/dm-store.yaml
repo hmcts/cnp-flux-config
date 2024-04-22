@@ -6,13 +6,15 @@ spec:
   releaseName: dm-store
   values:
     java:
-      replicas: 2
+      replicas: 2 # minReplicas will default to this value
       memoryRequests: "2Gi"
       cpuRequests: "1000m"
       memoryLimits: "4Gi"
       cpuLimits: "2000m"
+      autoscaling:
+        enabled: false # Will be enabled after completing performance tests.
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-6ad4ed9-20240412150810 #{"$imagepolicy": "flux-system:dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-fd8a8d8-20240422074830 #{"$imagepolicy": "flux-system:dm-store"}
       environment:
   chart:
     spec:
