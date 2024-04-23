@@ -5,12 +5,15 @@ metadata:
 spec:
   values:
     java:
-      replicas: 7
-      memoryRequests: "3Gi"
+      memoryRequests: "4096Mi"
       cpuRequests: "1000m"
-      memoryLimits: "6Gi"
+      memoryLimits: "6144Mi"
       cpuLimits: "2000m"
-      image: hmctspublic.azurecr.io/dm/store:prod-c95ada0-20240408094227 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 7
+      image: hmctspublic.azurecr.io/dm/store:prod-fd8a8d8-20240422074830 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
         SPRING_DATASOURCE_HOST: dm-store-postgres-db-v15-perftest.postgres.database.azure.com
         SPRING_DATASOURCE_USERNAME: pgadmin

@@ -7,10 +7,13 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "1792Mi"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: "2048Mi"
       memoryLimits: "3Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/professional-api:prod-e2ca95f-20240405104007 #{"$imagepolicy": "flux-system:rd-professional-api"}
+      image: hmctspublic.azurecr.io/rd/professional-api:prod-1c6db9f-20240417110148 #{"$imagepolicy": "flux-system:rd-professional-api"}
       environment:
         DUMMY_VAR: false
   chart:

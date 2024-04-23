@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-4403-de8a095-20240404121823 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:pr-4520-caf58ff-20240418140338 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -17,6 +17,8 @@ spec:
         POLLING_EVENT_EMITTER_ENABLED: false
         STITCHING_API_ENABLED: true
         HMC_HEARINGS_SUBSCRIPTION_ENABLED: true
+        TEMP_VAR: 2
+        REFERENCE_DATABASE_MIGRATION: false
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
         CUI_URL_RESPOND_TO_CLAIM: https://moneyclaims.demo.platform.hmcts.net/first-contact/start
         OCMC_CLIENT_URL: https://moneyclaims1.demo.platform.hmcts.net
@@ -78,3 +80,5 @@ spec:
               alias: mediation.emails.recipient
             - name: hmc-servicebus-shared-access-key-tf
               alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
+            - name: mediation-json-notification-recipient
+              alias: mediation.emails.jsonRecipient

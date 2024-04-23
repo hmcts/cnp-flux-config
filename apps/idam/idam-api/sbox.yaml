@@ -7,13 +7,15 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:preview-83db46a-20240408094920 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-0006f88-20240415165821 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.sandbox.platform.hmcts.net
       disableTraefikTls: true
-      replicas: 4
+      replicas: 1
       environment:
         LOG_AND_AUDIT_IDAM_ENABLED: false
         MANAGEMENT_HEALTH_IDAMSERVICEAUTH_ENABLED: false
+        MANAGEMENT_HEALTH_JMS_ENABLED: false
+        SPRING_JMS_SERVICEBUS_ENABLED: false
         TESTING_SUPPORT_ENABLED: true
         STRATEGIC_ADMIN_URL: https://idam-web-admin.sandbox.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.sandbox.platform.hmcts.net
@@ -44,4 +46,4 @@ spec:
         DEPLOY_TRIGGER: false
   chart:
     spec:
-      version: 0.4.11
+      version: 0.8.0
