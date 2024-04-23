@@ -8,7 +8,10 @@ spec:
   values:
     nodejs:
       replicas: 1
-      memoryRequests: "1024Mi"
+      cpuLimits: 150m
+      cpuRequests: 50m
+      memoryLimits: 1024Mi
+      memoryRequests: 512Mi
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/idam/user-dashboard:prod-74a2307-20240423110422 #{"$imagepolicy": "flux-system:idam-user-dashboard"}
       environment:
