@@ -37,6 +37,7 @@ flux install --export > apps/flux-system/base/gotk-components.yaml
 flux install --export --components source-controller,kustomize-controller,helm-controller,notification-controller,image-reflector-controller,image-automation-controller > apps/flux-system/ptl-intsvc/base/gotk-components.yaml 
 ```
 
+
 As Flux in PTL makes use of optional GOTK image automation components, we generate a second `gotk-components.yaml` file just for PTL. Information about Flux GOTK components can be found [here](https://fluxcd.io/flux/components/). 
 
 Both files are maintained by Renovate after generation.
