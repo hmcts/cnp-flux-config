@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-76e8bdc-20231124141731
+      image: hmctspublic.azurecr.io/idam/api:prod-adf1e51-20240410122103
       ingressHost: idam-api.ithc.platform.hmcts.net
       replicas: 1
       environment:
@@ -47,6 +47,8 @@ spec:
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_SKIPARCHIVEDELETIONOFORIGINALRECORD: false
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         trigger_deploy: 09/10/2023-1100
     global:
       environment: ithc
@@ -54,4 +56,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.0
+      version: 0.8.0

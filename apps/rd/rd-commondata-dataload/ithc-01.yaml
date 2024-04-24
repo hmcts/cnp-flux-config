@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: rd-commondata-dataload
@@ -12,15 +12,15 @@ spec:
               alias: app-insights-connection-string
             - name: common-data-api-s2s-secret
               alias: COMMONDATA_API_S2S_SECRET
-            - name: commondata-api-POSTGRES-DATABASE-V15
+            - name: commondata-api-POSTGRES-DATABASE-v16
               alias: POSTGRES_DB_NAME
-            - name: commondata-api-POSTGRES-HOST-V15
+            - name: commondata-api-POSTGRES-HOST-v16
               alias: POSTGRES_HOST
-            - name: commondata-api-POSTGRES-PORT-V15
+            - name: commondata-api-POSTGRES-PORT-v16
               alias: POSTGRES_PORT
-            - name: commondata-api-POSTGRES-USER-V15
+            - name: commondata-api-POSTGRES-USER-v16
               alias: POSTGRES_USERNAME
-            - name: commondata-api-POSTGRES-PASS-V15
+            - name: commondata-api-POSTGRES-PASS-v16
               alias: POSTGRES_PASSWORD
             - name: rd-commondata-storage-account-name
               alias: ACCOUNT_NAME
@@ -40,10 +40,11 @@ spec:
               alias: RD_SENDGRID_API_KEY
             - name: judicial-api-elinks-api-key
               alias: judicial_api_elinks_api_key
-      schedule: "00 12 * * *"
+      schedule: "30 13 * * *"
       environment:
         DELETE_ORG: true
-        POSTGRES_HOST: rd-commondata-api-postgres-db-v15-ithc.postgres.database.azure.com
+        caselinking-route-disable: true
+        POSTGRES_HOST: rd-commondata-api-postgres-db-v16-ithc.postgres.database.azure.com
         POSTGRES_USERNAME: pgadmin
         POSTGRES_DB_NAME: dbcommondata
         POSTGRES_PORT: 5432

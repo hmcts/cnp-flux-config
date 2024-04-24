@@ -1,8 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ia-bail-case-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/bail-case-api:pr-415-16555e2-20231129165407 #{"$imagepolicy": "flux-system:demo-ia-bail-case-api"}
+      image: hmctspublic.azurecr.io/ia/bail-case-api:pr-495-31e0822-20240424105316 #{"$imagepolicy": "flux-system:demo-ia-bail-case-api"}
+      environment:
+        COMMON_DATA_API: http://rd-commondata-api-demo.service.core-compute-demo.internal
+        IA_HEARINGS_API_URL: http://ia-hearings-api-demo.service.core-compute-demo.internal/

@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: neuvector
@@ -22,13 +22,6 @@ spec:
         federation:
           mastersvc:
             type: ClusterIP
-            ingress:
-              enabled: true
-              host: cft-neuvector-multi-cluster.platform.hmcts.net
-              ingressClassName: traefik
-        ingress:
-          host: cft-neuvector-api.platform.hmcts.net
-          enabled: true
         configmap:
           data:
             sysinitcfg.yaml: |

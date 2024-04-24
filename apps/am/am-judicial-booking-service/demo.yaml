@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: am-judicial-booking-service
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-6568438-20231123133909 #{"$imagepolicy": "flux-system:demo-am-judicial-booking-service"}
+      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-17bc430-20240418120502 #{"$imagepolicy": "flux-system:demo-am-judicial-booking-service"}
       keyVaults:
         am:
           secrets:
@@ -23,6 +23,5 @@ spec:
               alias: LD_SDK_KEY
       environment:
         AM_INFO: true
-        DUMMY_VAR: true
         JUDICIAL_BOOKING_SERVICE_POSTGRES_HOST: am-judicial-booking-service-postgres-db-v15-demo.postgres.database.azure.com
         JUDICIAL_BOOKING_SERVICE_POSTGRES_USER: pgadmin

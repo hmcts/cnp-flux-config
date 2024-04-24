@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: wa-task-management-api
@@ -9,10 +9,9 @@ spec:
       replicas: 2
       autoscaling:
         enabled: true
-        minReplicas: 2
         maxReplicas: 6
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/task-management-api:prod-ac003cd-20231120111609 #{"$imagepolicy": "flux-system:wa-task-management-api"}
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-b229fc3-20240423105022 #{"$imagepolicy": "flux-system:wa-task-management-api"}
   chart:
     spec:
       chart: ./stable/wa-task-management-api

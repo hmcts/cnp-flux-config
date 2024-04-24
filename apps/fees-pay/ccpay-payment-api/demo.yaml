@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-payment-api
@@ -6,12 +6,10 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:pr-1510-3293b46-20231122112823 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:pr-1651-f3fb4f0-20240423122156 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
-        #POSTGRES_HOST: payment-postgres-db-v11-{{ .Values.global.environment }}.postgres.database.azure.com
-        #POSTGRES_USERNAME: payment@payment-postgres-db-v11-{{ .Values.global.environment }}
+        DUMMY_RESTART_VAR: false
         TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
@@ -26,16 +24,14 @@ spec:
         "ccpay":
           resourceGroup: ccpay
           secrets:
-            - name: sb-primary-connection-string
+            - name: sb-premium-primary-connection-string
               alias: azure.servicebus.connection-string
-            - name: pci-pal-account-id-cmc
-              alias: pci-pal.account.id.cmc
             - name: pci-pal-account-id-probate
               alias: pci-pal.account.id.probate
             - name: pci-pal-account-id-divorce
               alias: pci-pal.account.id.divorce
-            - name: pci-pal-account-id-finrem
-              alias: pci-pal.account.id.finrem
+            - name: pci-pal-account-id-strategic
+              alias: pci-pal.account.id.strategic
             - name: pci-pal-api-url
               alias: pci-pal.api.url
             - name: pci-pal-api-key
@@ -66,13 +62,13 @@ spec:
               alias: liberata.oauth2.username
             - name: liberata-keys-oauth2-password
               alias: liberata.oauth2.password
-            - name: api-POSTGRES-PASS-V15
+            - name: api-POSTGRES-PASS
               alias: POSTGRES_PASSWORD
-            - name: api-POSTGRES-PORT-V15
+            - name: api-POSTGRES-PORT
               alias: POSTGRES_PORT
-            - name: api-POSTGRES-HOST-V15
+            - name: api-POSTGRES-HOST
               alias: POSTGRES_HOST
-            - name: api-POSTGRES-USER-V15
+            - name: api-POSTGRES-USER
               alias: POSTGRES_USERNAME
             - name: core-case-data-api-url
               alias: core_case_data.api.url
@@ -100,6 +96,8 @@ spec:
               alias: pba.prl.payments.email.to
             - name: pba-iac-payments-email-to
               alias: pba.iac.payments.email.to
+            - name: pba-smc-payments-email-to
+              alias: pba.smc.payments.email.to
             - name: launch-darkly-sdk-key
               alias: launch.darkly.sdk.key
             - name: payment-s2s-secret
@@ -120,16 +118,14 @@ spec:
               alias: pci-pal.antenna.view.id.url
             - name: pci-pal-antenna-return-url
               alias: pci-pal.antenna.return.url
-            - name: pci-pal-antenna-cmc-flow-id
-              alias: pci-pal.antenna.cmc.flow.id
             - name: pci-pal-antenna-probate-flow-id
               alias: pci-pal.antenna.probate.flow.id
             - name: pci-pal-antenna-divorce-flow-id
               alias: pci-pal.antenna.divorce.flow.id
             - name: pci-pal-antenna-prl-flow-id
               alias: pci-pal.antenna.prl.flow.id
-            - name: pci-pal-antenna-financial-remedy-flow-id
-              alias: pci-pal.antenna.financial.remedy.flow.id
+            - name: pci-pal-antenna-strategic-flow-id
+              alias: pci-pal.antenna.strategic.flow.id
             - name: spring-mail-password
               alias: spring.mail.password
             - name: ccpay-payment-status-connection-string

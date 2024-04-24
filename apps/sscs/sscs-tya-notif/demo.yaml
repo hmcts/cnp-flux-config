@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -10,18 +10,18 @@ spec:
       replicas: 2
       enableOAuth: true
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2421-c99cdcf-20231110142123 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2485-ba19f90-20240405133239 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
       environment:
-        JOB_SCHEDULER_DB_USERNAME: "notification@sscs-tya-notif-postgres-v11-db-demo"
-        JOB_SCHEDULER_DB_NAME: "notification"
-        JOB_SCHEDULER_DB_HOST: "sscs-tya-notif-postgres-v11-db-demo.postgres.database.azure.com"
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-demo.postgres.database.azure.com
         COVID_19_NOTIFICATION_FEATURE: false
         PDF_SERVICE_HEALTH_URL: https://docmosis.demo.platform.hmcts.net/rs/status
         PDF_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net/rs/render
         SECURE_DOC_STORE_FEATURE: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         SCOTTISH_PO_BOX_ENABLED: false
-        DUMMY_PROPERTY: false
+        DUMMY_PROPERTY: true
         HOURS_START_TIME: 0
         HOURS_END_TIME: 23
         TEST_PROPERTY: false

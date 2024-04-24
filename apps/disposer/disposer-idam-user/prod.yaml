@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: disposer-idam-user
+spec:
+  values:
+    job:
+      schedule: "0 22 * * sun-thu"
+      memoryRequests: "1024Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "2000m"
+      environment:
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        DISPOSER_IDAM_USER_ENABLED: true
+        DISPOSER_IDAM_USER_SIMULATION_MODE: true
+        DISPOSER_IDAM_USER_BATCH_SIZE: 50
+        DISPOSER_IDAM_USER_REQUESTS_LIMIT: 20000

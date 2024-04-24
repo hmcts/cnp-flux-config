@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-notifications-service
@@ -7,54 +7,8 @@ spec:
     java:
       replicas: 2
       environment:
-        DUMMY_VARIABLE: true
+        DUMMY_VARIABLE: false
         S2S_AUTHORISED_SERVICES: refunds_api,ccpay_bubble,xui_webapp
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
         ISSUER_URI: https://hmcts-access.service.gov.uk/o
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-      keyVaults:
-        "ccpay":
-          resourceGroup: ccpay
-          secrets:
-            - name: notifications-service-POSTGRES-HOST-V15
-              alias: POSTGRES_HOST
-            - name: notifications-service-POSTGRES-PORT-V15
-              alias: POSTGRES_PORT
-            - name: notifications-service-POSTGRES-USER-V15
-              alias: POSTGRES_USERNAME
-            - name: notifications-service-POSTGRES-PASS-V15
-              alias: POSTGRES_PASSWORD
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: notifications-s2s-secret
-              alias: OIDC_S2S_SECRET
-            - name: notifications-email-apikey
-              alias: EMAIL_APIKEY
-            - name: notifications-letter-apikey
-              alias: LETTER_APIKEY
-            - name: freg-idam-generated-user-email-pattern
-              alias: GENERATED_USER_EMAIL_PATTERN
-            - name: refunds-api-user-password
-              alias: REFUND_SERVICE_ACCOUNT_PASSWORD
-            - name: refunds-api-client-secret
-              alias: REFUND_SERVICE_ACCOUNT_CLIENT_SECRET
-            - name: notifications-letter-template-id
-              alias: NOTIFICATION_LETTER_TEMPLATE_ID
-            - name: notifications-email-template-id
-              alias: NOTIFICATION_EMAIL_TEMPLATE_ID
-            - name: notifications-letter-cheque-po-cash-template-id
-              alias: NOTIFICATIONS_LETTER_CHEQUE_PO_CASH_TEMPLATE_ID
-            - name: notifications-email-cheque-po-cash-template-id
-              alias: NOTIFICATIONS_EMAIL_CHEQUE_PO_CASH_TEMPLATE_ID
-            - name: notifications-letter-card-pba-template-id
-              alias: NOTIFICATION_LETTER_CARD_PBA_TEMPLATE_ID
-            - name: notifications-email-card-pba-template-id
-              alias: NOTIFICATION_EMAIL_CARD_PBA_TEMPLATE_ID
-            - name: notifications-letter-refund-when-contacted-template-id
-              alias: NOTIFICATION_LETTER_REFUND_WHEN_CONTACTED_TEMPLATE_ID
-            - name: notifications-email-refund-when-contacted-template-id
-              alias: NOTIFICATION_EMAIL_REFUND_WHEN_CONTACTED_TEMPLATE_ID
-            - name: postcode-address-lookup-id
-              alias: POSTCODE_ADDRESS_LOOKUP_ID
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string

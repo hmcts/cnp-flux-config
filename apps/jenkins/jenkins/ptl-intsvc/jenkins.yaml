@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -57,9 +57,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-01-aks
+                        value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-01-rg
+                        value: cft-preview-00-rg
                       - key: AKS_PTL_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
@@ -146,7 +146,7 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions|sscs-hearings-api)\/master
+                      ^HMCTS.*\/(sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-definitions|sscs-hearings-api|sscs-ccd-e2e-tests)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -188,13 +188,13 @@ spec:
                     title: NFD Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(?!sptribs-dss)(sptribs-).+\/master
+                      ^HMCTS.*\/(?!sptribs-dss-backend)(sptribs-).+\/master
                     name: SPTRIBS
                     recurse: true
                     title: Special Tribunals Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_j_to_z_Nightly.*\/(?!sptribs-dss)(sptribs-).+\/master
+                      ^HMCTS_j_to_z_Nightly.*\/(?!sptribs-dss-backend)(sptribs-).+\/master
                     name: Special Tribunals Nightly
                     recurse: true
                     title: Special Tribunals Builds Dashboard
@@ -266,10 +266,16 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/civil-(?!damages|sdt).*\/master
+                      ^HMCTS.*\/civil-(?!damages|rtl|sdt).*\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/civil-rtl.*\/master
+                    name: Civil-RTL
+                    recurse: true
+                    title: Civil RTL Dashboard
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS.*\/civil-sdt.*\/master
@@ -348,6 +354,12 @@ spec:
                     name: ETPET
                     recurse: true
                     title: ET PET
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(cui-.+)\/master
+                    name: CUI-RA
+                    recurse: true
+                    title: CUI-RA
           location: |
             unclassified:
               location:

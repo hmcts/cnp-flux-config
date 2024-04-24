@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ia-case-notifications-api
@@ -8,8 +8,14 @@ spec:
     java:
       disableTraefikTls: true
       replicas: 2
+      memoryRequests: "1.6Gi"
+      memoryLimits: "2Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-eb85da1-20231129115953 #{"$imagepolicy": "flux-system:ia-case-notifications-api"}
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-12d6b58-20240424124327 #{"$imagepolicy": "flux-system:ia-case-notifications-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        targetCPUUtilizationPercentage: 80
   chart:
     spec:
       chart: ./stable/ia-case-notifications-api

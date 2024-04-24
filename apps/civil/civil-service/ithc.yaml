@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,11 +6,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-01e493f-20231129135637 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-ec84e30-20240424130137 #{"$imagepolicy": "flux-system:civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
-        CMC_DB_USERNAME: 'cmc@cmc-db-v11-ithc'
-        CMC_DB_HOST: cmc-db-v11-ithc.postgres.database.azure.com
         REFERENCE_DATABASE_MIGRATION: true
         POLLING_EVENT_EMITTER_ENABLED: false

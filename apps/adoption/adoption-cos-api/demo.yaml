@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: adoption-cos-api
@@ -7,7 +7,7 @@ spec:
   interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/adoption/cos-api:prod-34ba9fc-20231101145218 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
+      image: hmctspublic.azurecr.io/adoption/cos-api:prod-9439098-20240423151210 #{"$imagepolicy": "flux-system:demo-adoption-cos-api"}
       environment:
         APP_INSIGHTS_KEY: '6c5278dd-ee76-4e7b-92f9-57b27ead382e'
         LA_PORTAL_BASEURL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/la-portal/kba-case-ref
@@ -35,7 +35,3 @@ spec:
               alias: SEND_GRID_NOTIFY_FROM_EMAIL
             - name: app-insight-connection-key
               alias: app-insight-connection-key
-      memoryRequests: 1024Mi
-      cpuRequests: "500m"
-      memoryLimits: 1527Mi
-      cpuLimits: "2500m"

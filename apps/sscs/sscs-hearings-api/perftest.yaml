@@ -1,13 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sscs-hearings-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/hearings-api:prod-c2b7739-20231123095814 #{"$imagepolicy": "flux-system:sscs-hearings-api"}
+      image: hmctspublic.azurecr.io/sscs/hearings-api:prod-bf51f45-20240411112326 #{"$imagepolicy": "flux-system:sscs-hearings-api"}
       environment:
         TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
         TRIBUNALS_EVENT_QUEUE_RETRY_TIMEOUT: 60
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         HMC_HEARINGS_LISTENING_ENABLED: true

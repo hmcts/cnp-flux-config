@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: div-pfe
@@ -6,9 +6,9 @@ metadata:
 spec:
   values:
     nodejs:
-      memoryRequests: "512Mi"
+      memoryRequests: "2Gi"
+      memoryLimits: "3Gi"
       cpuRequests: "500m"
-      memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       ingressHost: www.manage-application.apply-divorce.service.gov.uk
       useInterpodAntiAffinity: true

@@ -1,17 +1,19 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: wa-case-event-handler
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/case-event-handler:prod-2bee708-20231127145540 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
-      autoscaling:
-        enabled: false
-      replicas: 4
+      image: hmctspublic.azurecr.io/wa/case-event-handler:prod-7e48013-20240422185037 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
+      replicas: 2
+      REFRESH_FLAG: "0"
       environment:
+        replicas: 2
+        REFRESH_FLAG: "0"
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
-        TEMP: false
+        LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
+        TEMP_RESTART: true
         PROBLEM_MESSAGE_RESET_ID_LIST:
         PROBLEM_MESSAGE_RESET_NULL_EVENT_TIMESTAMP_ID_LIST:
         PROBLEM_MESSAGE_SET_STATE_TO_PROCESSED_ID_LIST:

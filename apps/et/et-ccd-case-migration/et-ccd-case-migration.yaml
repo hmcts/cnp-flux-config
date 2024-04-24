@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: et-ccd-case-migration
@@ -6,8 +6,9 @@ spec:
   releaseName: et-ccd-case-migration
   values:
     job:
+      suspend: true
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/migration:prod-2213530-20231123124213 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/et/migration:prod-e00ecc6-20240423073055 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
       environment:
         MIGRATION_CASETYPE: ET_EnglandWales
         ROOT_LOGGING_LEVEL: debug

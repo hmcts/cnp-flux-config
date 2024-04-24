@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: em-npa
@@ -7,8 +7,12 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      image: hmctspublic.azurecr.io/em/npa:prod-ba4cdac-20231128184738 #{"$imagepolicy": "flux-system:em-npa"}
+      replicas: 2 # minReplicas will default to this value
+      memoryRequests: '2048Mi'
+      memoryLimits: '3072Mi'
+      autoscaling:
+        maxReplicas: 4 # On each cluster
+      image: hmctspublic.azurecr.io/em/npa:prod-f649f3d-20240424090030 #{"$imagepolicy": "flux-system:em-npa"}
   chart:
     spec:
       chart: ./stable/em-npa

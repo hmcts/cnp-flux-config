@@ -1,12 +1,13 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: plum-batch
+  namespace: cnp
 spec:
   values:
-    schedule: "*/1 * * * *"
     startingDeadlineSeconds: 300
+    schedule: "*/1 * * * *"
     nodeSelector:
       agentpool: spotinstance
     tolerations:

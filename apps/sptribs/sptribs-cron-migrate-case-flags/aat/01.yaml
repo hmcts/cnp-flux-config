@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sptribs-cron-migrate-case-flags
@@ -6,7 +6,8 @@ spec:
   releaseName: sptribs-cron-migrate-case-flags
   values:
     job:
-      schedule: "0,30 8-17 * * *"
+      suspend: false
+      schedule: "0,10,20,30,40,50 8-17 * 11 *"
     global:
       jobKind: CronJob
       enableKeyVaults: true

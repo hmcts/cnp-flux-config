@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,8 +7,12 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-089083a-20231101120419
-      replicas: 4
+      image: hmctspublic.azurecr.io/idam/api:prod-adf1e51-20240410122103
+      replicas: 2
+      cpuRequests: '160m'
+      cpuLimits: '1500m'
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
       useInterpodAntiAffinity: true
@@ -51,15 +55,22 @@ spec:
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_EMAIL_REMINDER_ENABLED: false
+        FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
+        IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: ejudiciary\.net
+        MANAGEMENT_HEALTH_JMS_ENABLED: false
+        SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
+        SPRING_JMS_SERVICEBUS_ENABLED: false
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-prod.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 8999dec3-0104-4a27-94ee-6588559729d1
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-prod
         SPRING_REDIS_TIMEOUT: 300
-        trigger_deploy: INC5539698
   chart:
     spec:
       chart: idam-api
-      version: 0.7.0
+      version: 0.8.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

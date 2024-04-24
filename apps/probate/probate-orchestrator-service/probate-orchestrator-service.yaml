@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: probate-orchestrator-service
@@ -8,15 +8,15 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "512Mi"
+      memoryRequests: "1.5Gi"
       cpuRequests: "250m"
-      memoryLimits: "2048Mi"
+      memoryLimits: "2.5Gi"
       cpuLimits: "1500m"
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-5a78b33-20231108152743 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-1f2f5c2-20240423040741 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
       environment:
         VAR_FV2: trigger1
   chart:

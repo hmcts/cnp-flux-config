@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prl-citizen-frontend
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-6d27d0f-20231121100149 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-4082ea0-20240417151734 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
@@ -32,6 +32,7 @@ spec:
             - citizen-upload-docs-email
             - redis-access-key
       environment:
+        NODE_ENV: ithc
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.ithc.platform.hmcts.net/login
         REFORM_SERVICE_NAME: prl-citizen-frontend
@@ -41,6 +42,11 @@ spec:
         DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
         COS_URL: http://prl-cos-ithc.service.core-compute-ithc.internal
         REDIS_HOST: prl-citizen-frontend-redis-ithc.redis.cache.windows.net
+        REASONABLE_ADJUSTMENTS: https://cui-ra.ithc.platform.hmcts.net
+        LAUNCH_DARKLY_OFFLINE_MODE: false
+        C100_REBUILD_FLAG: true
+        TESTING_SUPPORT_FLAG: true
+        ENABLE_RA_COMPONENT: true
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: civil-citizen-ui
@@ -12,7 +12,21 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       ingressHost: moneyclaims.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-478dea1-20231127150221 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-973fcf1-20240424130149 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
+      keyVaults:
+        civil-cui:
+          resourceGroup: civil-citizen-ui
+          secrets:
+            - appinsights-instrumentation-key
+            - draft-store-access-key
+            - citizen-ui-idam-secret
+            - ordnance-survey-api-key
+            - cmc-s2s-secret
+            - citizen-draft-store-primary
+            - citizen-draft-store-secondary
+            - civil-citizen-ui-token-key
+            - name: launch-darkly-sdk-key-non-prod
+              alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         GA_TRACKING_ID: UA-97111056-1
         FEATURE_TESTING_SUPPORT: true

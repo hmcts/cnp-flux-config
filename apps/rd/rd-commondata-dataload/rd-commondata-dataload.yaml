@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: rd-commondata-dataload
@@ -7,7 +7,9 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/commondata-dataload:prod-ceb0790-20231122143957 #{"$imagepolicy": "flux-system:rd-commondata-dataload"}
+      image: hmctspublic.azurecr.io/rd/commondata-dataload:prod-76f4df9-20240409095411 #{"$imagepolicy": "flux-system:rd-commondata-dataload"}
+      environment:
+        DUMMY_VAR: false
   chart:
     spec:
       chart: ./stable/rd-commondata-dataload

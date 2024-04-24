@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ccpay-bulkscanning-api-int
@@ -6,29 +6,9 @@ spec:
   releaseName: ccpay-bulkscanning-api-int
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-b67308f-20231129150354 #{"$imagepolicy": "flux-system:demo-int-ccpay-bulkscanning-api"}
+      image: hmctspublic.azurecr.io/ccpay/bulkscanning-api:prod-0362868-20240418125701 #{"$imagepolicy": "flux-system:demo-int-ccpay-bulkscanning-api"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         POSTGRES_NAME: postgresqldb2
-      keyVaults:
-        "ccpay":
-          resourceGroup: ccpay
-          secrets:
-            - name: bulkscanning-api-POSTGRES-HOST-V15
-              alias: POSTGRES_HOST
-            - name: bulkscanning-api-POSTGRES-PORT-V15
-              alias: POSTGRES_PORT
-            - name: bulkscanning-api-POSTGRES-USER-V15
-              alias: POSTGRES_USERNAME
-            - name: bulkscanning-api-POSTGRES-PASS-V15
-              alias: POSTGRES_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: paybubble-s2s-secret
-              alias: OIDC_S2S_SECRET
-            - name: paybubble-idam-client-secret
-              alias: OIDC_CLIENT_SECRET
