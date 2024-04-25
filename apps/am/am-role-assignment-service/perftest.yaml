@@ -5,11 +5,16 @@ metadata:
 spec:
   values:
     java:
-      replicas: 5
-      memoryRequests: "1024Mi"
-      memoryLimits: "2048Mi"
-      cpuRequests: "1000m"
+      replicas: 2
+      memoryRequests: "3584Mi"
+      memoryLimits: "4096Mi"
+      cpuRequests: "500m"
       cpuLimits: "2000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 5
+        memory:
+          averageUtilization: 90
       keyVaults:
         am:
           secrets:
