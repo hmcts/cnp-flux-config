@@ -1,0 +1,101 @@
+name: CI PR Summary Pipeline
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs: 
+  review:
+    runs-on: ubuntu-latest
+    env: 
+      X_API_KEY: ${{ secrets.SYSTEM_API_KEY }}
+      X_API_CONSUMER: ${{ secrets.SYSTEM_CONSUMER_UUID }}
+      API_HOST: "https://app-gippi-api-s-latest-uksouth.azurewebsites.net/"
+      WORKING_DIRECTORY: ${{ github.workspace }}/
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Create a diff file
+        run: |
+          git diff origin/master > ${{ env.working_directory }}diff.txt && cat ${{ env.working_directory }}diff.txt
+
+      - name: Generate a response
+        run: |
+          API_HOST=$(printenv API_HOST)
+          WORKING_DIRECTORY=$(printenv WORKING_DIRECTORY)
+          X_API_CONSUMER=$(printenv X_API_CONSUMER)
+          X_API_KEY=$(printenv X_API_KEY)
+          DIFF_FILE="diff.txt"
+          RESPONSE_MD_FILE="response.md"
+
+          if [ ! -f "${WORKING_DIRECTORY}${DIFF_FILE}" ]; then
+              echo "File ${WORKING_DIRECTORY}${DIFF_FILE} not found."
+              exit 1
+          fi
+
+          file_contents=$(cat "${WORKING_DIRECTORY}${DIFF_FILE}")
+          json_body=$(jq -n --arg pt "pullrequest-summary" --arg p "$file_contents" '{prompt_type: $pt, prompt: $p}')
+
+          response=$(curl -s -i -X POST "${API_HOST}/predefined" \
+              -H "Content-Type: application/json" \
+              -H "X-API-CONSUMER: ${X_API_CONSUMER}" \
+              -H "X-API-KEY: ${X_API_KEY}" \
+              -d "$json_body")
+
+          echo "Response: $response"
+
+          response_code=$(echo "$response" | awk -F' ' '/HTTP\/1.1/{print $2}' | head -n 1)
+
+          if [ "$response_code" -eq 200 ]; then
+              echo "File contents sent successfully."
+              # Remove headers
+              response_body=$(echo "$response" | tail -n +2)
+              # Remove more headers
+              response_body=$(echo "$response_body" | sed '/^date: /Id' | sed '/^server: /Id' | sed '/^content-length: /Id' | sed '/^content-type: /Id')
+              # remove trailing and leading quotes
+              response_body=$(echo "$response_body" | sed 's/^"\(.*\)"$/\1/')
+              # remove the initial markdown code block ident if it exists
+              response_body=$(echo "$response_body" | sed 's/```markdown//')
+              # remove the last code block ident
+              response_body=$(echo "$response_body" | sed 's/```//')
+
+              # Write to file
+              echo -e "$response_body" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
+          else
+              echo "Error sending file contents: $response_code"
+              echo -e "Request to gippi failed to process" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
+          fi
+
+          if [ $? -eq 0 ]; then
+              echo "Response saved as response.md"
+          else
+              echo "Error writing to file in ${WORKING_DIRECTORY}."
+              exit 1
+          fi
+          
+      - name: Get the response as a variable 
+        id: get_response
+        run: |
+          {
+            echo 'response<<EOF'
+            cat ${WORKING_DIRECTORY}response.md
+            echo EOF
+          } >> "$GITHUB_ENV"
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            const updatedBody = prBody.includes('## 🤖GIPPI PR SUMMARY🤖')
+              ? prBody.replace(/## 🤖GIPPI PR SUMMARY🤖[\s\S]*/, '') + '\n\n## 🤖GIPPI PR SUMMARY🤖\n\n' + process.env.response
+              : prBody + '\n\n## 🤖GIPPI PR SUMMARY🤖\n\n' + process.env.response;
+            github.rest.pulls.update({
+              pull_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: updatedBody
+            })
