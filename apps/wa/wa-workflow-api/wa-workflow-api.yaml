@@ -9,7 +9,10 @@ spec:
       replicas: 2
       memoryRequests: "1.5Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/wa/workflow-api:prod-962a63c-20240311083646 #{"$imagepolicy": "flux-system:wa-workflow-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      image: hmctspublic.azurecr.io/wa/workflow-api:prod-c67ae97-20240410134122 #{"$imagepolicy": "flux-system:wa-workflow-api"}
   chart:
     spec:
       chart: ./stable/wa-workflow-api

@@ -8,7 +8,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/cos:prod-8312685-20240319094359 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:prod-08bf8fa-20240425074854 #{"$imagepolicy": "flux-system:et-cos"}
+      memoryLimits: "3072Mi"
+      memoryRequests: "2048Mi"
+      cpuLimits: "2000m"
+      cpuRequests: "250m"
+      readinessDelay: 45
   chart:
     spec:
       chart: ./stable/et-cos

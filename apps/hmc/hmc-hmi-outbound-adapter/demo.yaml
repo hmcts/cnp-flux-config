@@ -5,8 +5,11 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-3eacc17-20240423092138 #{"$imagepolicy": "flux-system:demo-hmc-outbound-adapter"}
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CONFIG: DEBUG
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_SERVICE: DEBUG
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_REPOSITORY: DEBUG
-        HMI_BASE_URL: https://hmi-apim.test.platform.hmcts.net/hmi
+        HMI_BASE_URL: https://sds-api-mgmt.test.platform.hmcts.net/hmi
+        HMC_SERVICE_BUS_OUTBOUND_QUEUE: hmc-to-hmi-demo-temp
+        HMC_SERVICE_BUS_INBOUND_QUEUE: hmc-from-hmi-demo-temp

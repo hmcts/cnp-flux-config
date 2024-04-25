@@ -5,6 +5,16 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      memoryRequests: "1536Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       keyVaults:
         am:
           secrets:
@@ -24,3 +34,4 @@ spec:
         AM_INFO: true
         JUDICIAL_BOOKING_SERVICE_POSTGRES_HOST: am-judicial-booking-service-postgres-db-v15-aat.postgres.database.azure.com
         JUDICIAL_BOOKING_SERVICE_POSTGRES_USER: pgadmin
+        DUMMY_VAR: true

@@ -7,18 +7,19 @@ spec:
   releaseName: sscs-ccd-case-migration
   values:
     job:
-      suspend: true
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-8b748d0-20240308095410 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      suspend: false
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-a686e92-20240412165907 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "0 20 11 3 *"
+      schedule: "10 21 16 4 *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         MIGRATION_WA_ENABLED: true
-        MIGRATION_QUERY_SIZE: 10000
-        MIGRATION_CASE_LIMIT: "1100000"
+        MIGRATION_DWP_ENABLED: false
+        MIGRATION_QUERY_SIZE: 500
+        MIGRATION_CASE_LIMIT: "1000000"
         JAVA_OPTS: -Xmx4G

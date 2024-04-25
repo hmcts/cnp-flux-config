@@ -5,6 +5,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-b158449-20240319152255 #{"$imagepolicy": "flux-system:demo-sptribs-case-api"}
+      spotInstances:
+        enabled: false
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-cbc0617-20240424114309 #{"$imagepolicy": "flux-system:demo-sptribs-case-api"}
       environment:
         S2S_AUTHORISED_SERVICES: ccd_definition,ccd_data,xui_webapp,sptribs_case_api,ccd_gw,sptribs_frontend,sptribs_dss_update_case_web
+        DSS_UPDATE_CASE_ENABLED: true

@@ -7,8 +7,10 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-484057c-20240319091836 #{"$imagepolicy": "flux-system:em-ccd-orchestrator"}
+      replicas: 2 # minReplicas will default to this value
+      autoscaling:
+        enabled: false
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-76f50f2-20240424090141 #{"$imagepolicy": "flux-system:em-ccd-orchestrator"}
       environment:
         TEST: "REFRESH"
   chart:

@@ -9,16 +9,14 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sptribs/frontend:prod-c16f1a5-20240319152227 #{"$imagepolicy": "flux-system:sptribs-frontend"}
+      image: hmctspublic.azurecr.io/sptribs/frontend:prod-02bd82d-20240423105802 #{"$imagepolicy": "flux-system:sptribs-frontend"}
       autoscaling:
         enabled: true
         maxReplicas: 4
-      memoryRequests: "512Mi"
-      memoryLimits: "512Mi"
-      cpuRequests: "50m"
-      cpuLimits: "500m"
-      environment:
-        DUMMY_ENV_VAR: false
+      memoryRequests: "1Gi"
+      memoryLimits: "2Gi"
+      cpuRequests: "500m"
+      cpuLimits: "1000m"
   chart:
     spec:
       chart: ./stable/sptribs-frontend

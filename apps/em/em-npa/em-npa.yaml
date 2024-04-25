@@ -7,8 +7,12 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      image: hmctspublic.azurecr.io/em/npa:prod-c5c277a-20240319075717 #{"$imagepolicy": "flux-system:em-npa"}
+      replicas: 2 # minReplicas will default to this value
+      memoryRequests: '2048Mi'
+      memoryLimits: '3072Mi'
+      autoscaling:
+        maxReplicas: 4 # On each cluster
+      image: hmctspublic.azurecr.io/em/npa:prod-9c6a7fe-20240425083758 #{"$imagepolicy": "flux-system:em-npa"}
   chart:
     spec:
       chart: ./stable/em-npa
