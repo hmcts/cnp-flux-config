@@ -8,14 +8,13 @@ spec:
     java:
       disableTraefikTls: true
       replicas: 2
-      memoryRequests: "1.6Gi"
-      memoryLimits: "2Gi"
+      memoryRequests: "1638Mi"
+      memoryLimits: "2048Mi"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-e861874-20240424122801 #{"$imagepolicy": "flux-system:ia-home-office-integration-api"}
       autoscaling:
         enabled: true
         maxReplicas: 6
-        targetCPUUtilizationPercentage: 80
   chart:
     spec:
       chart: ./stable/ia-home-office-integration-api

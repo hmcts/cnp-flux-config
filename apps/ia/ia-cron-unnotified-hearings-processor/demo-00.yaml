@@ -5,14 +5,13 @@ metadata:
 spec:
   releaseName: ia-cron-unnotified-hearings-processor
   values:
-    java:
-      image: hmctspublic.azurecr.io/ia/hearings-api:pr-386-109abfe-20240423122408 #{"$imagepolicy": "flux-system:demo-ia-cron-unnotified-hearings-processor"}
     job:
       schedule: "0/5 8-17 * * 1-5"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
+      image: hmctspublic.azurecr.io/ia/hearings-api:pr-386-5ae3e0a-20240425161238 #{"$imagepolicy": "flux-system:demo-ia-cron-unnotified-hearings-processor"}
       environment:
         HEARINGS_API_URL: "https://ia-hearings-api-demo.service.core-compute-demo.internal"
         CCD_URL: "http://ccd-data-store-api-demo.service.core-compute-demo.internal"
