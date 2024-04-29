@@ -19,13 +19,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: List all branches
-        run: git branch -a | grep summary
-
       - name: Create a diff file
         run: |
-          BRANCH_NAME=${{ github.head_ref }}
-          git diff origin/master...remotes/origin/$BRANCH_NAME > ${{ env.working_directory }}diff.txt && cat ${{ env.working_directory }}diff.txt
+          git diff origin/master...remotes/origin/${{ github.head_ref }} > ${{ env.working_directory }}diff.txt && cat ${{ env.working_directory }}diff.txt
 
       - name: Generate a response
         run: |
