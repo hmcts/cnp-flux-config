@@ -21,7 +21,7 @@ jobs:
 
       - name: Create a diff file
         run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          BRANCH_NAME=${{ github.head_ref }}
           git diff origin/master...$BRANCH_NAME > ${{ env.working_directory }}diff.txt && cat ${{ env.working_directory }}diff.txt
 
       - name: Generate a response
