@@ -6,6 +6,11 @@ spec:
   releaseName: sscs-hearings-api
   values:
     java:
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '1536Mi'
+      memoryLimits: "2048Mi"
       replicas: 2
       image: hmctspublic.azurecr.io/sscs/hearings-api:prod-bf51f45-20240411112326 #{"$imagepolicy": "flux-system:sscs-hearings-api"}
       useInterpodAntiAffinity: true

@@ -7,6 +7,11 @@ spec:
   releaseName: sscs-tribunals-frontend
   values:
     nodejs:
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '512Mi'
+      memoryLimits: "1024Mi"
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-37dfa86-20240424145043 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
