@@ -11,7 +11,12 @@ spec:
       cpuLimits: 150m
       cpuRequests: 50m
       memoryLimits: 1024Mi
-      memoryRequests: 512Mi
+      memoryRequests: 1024Mi
+      autoscaling:
+        enabled: true
+        maxReplicas: 3
+        memory:
+          averageUtilization: 95
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/idam/user-dashboard:prod-408c321-20240429085121 #{"$imagepolicy": "flux-system:idam-user-dashboard"}
       environment:
