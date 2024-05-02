@@ -8,12 +8,13 @@ spec:
     java:
       disableTraefikTls: true
       replicas: 2
+      memoryRequests: "1638Mi"
+      memoryLimits: "2048Mi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-ca5872e-20240416105027 #{"$imagepolicy": "flux-system:ia-case-notifications-api"}
+      image: hmctspublic.azurecr.io/ia/case-notifications-api:prod-c570a7a-20240502113045 #{"$imagepolicy": "flux-system:ia-case-notifications-api"}
       autoscaling:
         enabled: true
         maxReplicas: 6
-        targetCPUUtilizationPercentage: 80
   chart:
     spec:
       chart: ./stable/ia-case-notifications-api

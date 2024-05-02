@@ -8,8 +8,13 @@ spec:
   values:
     java:
       replicas: 2
+      memoryLimits: "3072Mi"
+      memoryRequests: "2048Mi"
+      cpuLimits: "2000m"
+      cpuRequests: "250m"
+      readinessDelay: 45
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-c84e751-20240419073545 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-ae2c59a-20240501080753 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
     environment:
       SECURE_DOC_STORE_FEATURE: false
   chart:
