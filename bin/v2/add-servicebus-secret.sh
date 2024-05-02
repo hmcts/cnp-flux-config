@@ -28,8 +28,8 @@ EOF
 
  yq eval -i '.resources += "../sops-secrets"' apps/${NAMESPACE}/${ENVIRONMENT}/base/kustomization.yaml
 
-else
- SECRET_FILE_NAME="${SECRET_FILE_NAME}" yq eval -i '.resources += [env(SECRET_FILE_NAME)]' apps/${NAMESPACE}/${ENVIRONMENT}/sops-secrets/kustomization.yaml
+elif [ $(SECRET_FILE_NAME="rd-sb-preview.enc.yaml"  yq 'contains({"resources": [env(SECRET_FILE_NAME)]})' apps/rd/preview/sops-secrets/kustomization.yaml) == false ]; then
+  SECRET_FILE_NAME="${SECRET_FILE_NAME}" yq eval -i '.resources += [env(SECRET_FILE_NAME)]' apps/${NAMESPACE}/${ENVIRONMENT}/sops-secrets/kustomization.yaml
 fi
 
 kubectl create secret generic "$SERVICE_BUS_NAMESPACE" -n "$NAMESPACE" --from-literal connectionString="$CONNECTION_STRING" --from-literal primaryKey="$PRIMARY_KEY"  --type=Opaque -o yaml --dry-run=client > apps/"$NAMESPACE"/"$ENVIRONMENT"/sops-secrets/"$SECRET_FILE_NAME"
