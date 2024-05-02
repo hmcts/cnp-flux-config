@@ -21,7 +21,7 @@ jobs:
 
       - name: Create a diff file
         run: |
-          git diff origin/master > ${{ env.working_directory }}diff.txt && cat ${{ env.working_directory }}diff.txt
+          git diff origin/master...remotes/origin/${{ github.head_ref }} > ${{ env.working_directory }}diff.txt && cat ${{ env.working_directory }}diff.txt
 
       - name: Generate a response
         run: |
@@ -38,7 +38,7 @@ jobs:
           fi
 
           file_contents=$(cat "${WORKING_DIRECTORY}${DIFF_FILE}")
-          json_body=$(jq -n --arg pt "pullrequest-summary" --arg p "$file_contents" '{prompt_type: $pt, prompt: $p}')
+          json_body=$(jq -n --arg pt "pullrequest-summary-perfile" --arg p "$file_contents" '{prompt_type: $pt, prompt: $p}')
 
           response=$(curl -s -i -X POST "${API_HOST}/predefined" \
               -H "Content-Type: application/json" \
