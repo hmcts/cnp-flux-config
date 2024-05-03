@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-7a746f5-20240415192811 #{"$imagepolicy": "flux-system:perftest-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-0f333c9-20240501122827 #{"$imagepolicy": "flux-system:perftest-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       memoryLimits: "2048Mi"
@@ -42,6 +42,10 @@ spec:
         COS_URL: http://prl-cos-perftest.service.core-compute-perftest.internal
         REDIS_HOST: prl-citizen-frontend-redis-perftest.redis.cache.windows.net
         REASONABLE_ADJUSTMENTS: https://cui-ra.perftest.platform.hmcts.net
+        LAUNCH_DARKLY_OFFLINE_MODE: false
+        C100_REBUILD_FLAG: true
+        TESTING_SUPPORT_FLAG: true
+        ENABLE_RA_COMPONENT: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

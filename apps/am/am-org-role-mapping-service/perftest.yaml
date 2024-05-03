@@ -5,6 +5,16 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      memoryRequests: "3584Mi"
+      memoryLimits: "4096Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       keyVaults:
         am:
           secrets:
@@ -32,3 +42,5 @@ spec:
         DB_FEATURE_FLAG_ENABLE: employment_wa_1_0
         ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-postgres-db-v15-perftest.postgres.database.azure.com
         ORG_ROLE_MAPPING_DB_USERNAME: pgadmin
+        AMQP_JRD_NEW_ASB_ENABLED: false
+        AMQP_CRD_NEW_ASB_ENABLED: false

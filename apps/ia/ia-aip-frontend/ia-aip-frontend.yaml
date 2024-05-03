@@ -9,9 +9,16 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-5b946bf-20240411090606 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-3f74f1c-20240501104815 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
       environment:
         TIMELINE_ENABLED: true
+      memoryRequests: "512Mi"
+      cpuRequests: "200m"
+      memoryLimits: "1024Mi"
+      cpuLimits: "1000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
     global:
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
