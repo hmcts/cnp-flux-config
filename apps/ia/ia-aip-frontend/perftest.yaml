@@ -6,7 +6,7 @@ spec:
   values:
     nodejs:
       ingressHost: immigration-appeal.perftest.platform.hmcts.net
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-6b946b2-20240418160357 #{"$imagepolicy": "flux-system:perftest-ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-3f74f1c-20240501104815 #{"$imagepolicy": "flux-system:perftest-ia-aip-frontend"}
       environment:
         NODE_ENV: development
         IDAM_WEB_URL: "https://idam-web-public.perftest.platform.hmcts.net"
@@ -14,10 +14,6 @@ spec:
         ASK_FOR_MORE_TIME_ENABLED: true
         RESTART_ME: "Update due to vault change"
         VAR_PERTEST: trigger-1
-      autoscaling:
-        enabled: true
-        maxReplicas: 6
-        targetCPUUtilizationPercentage: 80
       keyVaults:
         ia:
           resourceGroup: ia

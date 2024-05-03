@@ -1,15 +1,15 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
-  name: preview-idam-web-admin
+  name: ithc-adoption-web
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: '^preview-[a-f0-9]+-(?P<ts>[0-9]+)'
+    pattern: '^pr-1536-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
       order: asc
   imageRepositoryRef:
-    name: idam-web-admin
+    name: adoption-web
