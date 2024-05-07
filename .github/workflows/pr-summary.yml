@@ -38,7 +38,7 @@ jobs:
           fi
 
           file_contents=$(cat "${WORKING_DIRECTORY}${DIFF_FILE}")
-          json_body=$(jq -n --arg pt "pullrequest-summary" --arg p "$file_contents" '{prompt_type: $pt, prompt: $p}')
+          json_body=$(jq -n --arg pt "pullrequest-summary-perfile" --arg p "$file_contents" '{prompt_type: $pt, prompt: $p}')
 
           response=$(curl -s -i -X POST "${API_HOST}/predefined" \
               -H "Content-Type: application/json" \
