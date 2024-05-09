@@ -5,11 +5,18 @@ metadata:
 spec:
   values:
     java:
-      memoryRequests: "3072Mi"
-      cpuRequests: "1500m"
-      memoryLimits: "6144Mi"
-      cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-51b662a-20240209115547 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      memoryRequests: "4608Mi"
+      cpuRequests: "2000m"
+      memoryLimits: "7168Mi"
+      cpuLimits: "4000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4 # On each cluster
+        cpu:
+          averageUtilization: 85
+        memory:
+          averageUtilization: 85
+      image: hmctspublic.azurecr.io/em/stitching:prod-2b742fb-20240508191856 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh

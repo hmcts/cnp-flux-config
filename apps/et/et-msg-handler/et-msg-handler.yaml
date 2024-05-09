@@ -9,7 +9,11 @@ spec:
       enableOAuth: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/msg-handler:prod-56bf13b-20231220073151 #{"$imagepolicy": "flux-system:et-msg-handler"}
+      memoryLimits: "2560Mi"
+      memoryRequests: "1700Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "100m"
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-a8d230a-20240509074325 #{"$imagepolicy": "flux-system:et-msg-handler"}
   chart:
     spec:
       chart: ./stable/et-msg-handler
