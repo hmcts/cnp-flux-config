@@ -2,8 +2,11 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cui-ra
+annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   values:
     nodejs:
+      image: hmctspublic.azurecr.io/cui/ra:pr-584-4a4db6f-20240513111455
       spotInstances:
         enabled: true
