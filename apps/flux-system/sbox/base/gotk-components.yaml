@@ -976,16 +976,12 @@ spec:
                   commit:
                     description: |-
                       Commit SHA to check out, takes precedence over all reference fields.
-
-
                       This can be combined with Branch to shallow clone the branch, in which
                       the commit is expected to exist.
                     type: string
                   name:
                     description: |-
                       Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
-
-
                       It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                       Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                     type: string
@@ -1037,8 +1033,6 @@ spec:
                     default: HEAD
                     description: |-
                       Mode specifies which Git object(s) should be verified.
-
-
                       The variants "head" and "HEAD" both imply the same thing, i.e. verify
                       the commit that the HEAD of the Git repository points to. The variant
                       "head" solely exists to ensure backwards compatibility.
@@ -1796,16 +1790,12 @@ spec:
                   commit:
                     description: |-
                       Commit SHA to check out, takes precedence over all reference fields.
-
-
                       This can be combined with Branch to shallow clone the branch, in which
                       the commit is expected to exist.
                     type: string
                   name:
                     description: |-
                       Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
-
-
                       It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                       Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                     type: string
@@ -2010,8 +2000,6 @@ spec:
                   be used to determine if the content of the included repository has
                   changed.
                   It has the format of `<algo>:<checksum>`, for example: `sha256:<checksum>`.
-
-
                   Deprecated: Replaced with explicit fields for observed artifact content
                   config in the status.
                 type: string
@@ -3249,20 +3237,14 @@ spec:
                 description: |-
                   CertSecretRef can be given the name of a Secret containing
                   either or both of
-
-
                   - a PEM-encoded client certificate (`tls.crt`) and private
                   key (`tls.key`);
                   - a PEM-encoded CA certificate (`ca.crt`)
-
-
                   and whichever are supplied, will be used for connecting to the
                   registry. The client cert and key are useful if you are
                   authenticating with a certificate; the CA cert is useful if
                   you are using a self-signed server certificate. The Secret must
                   be of type `Opaque` or `kubernetes.io/tls`.
-
-
                   It takes precedence over the values specified in the Secret referred
                   to by `.spec.secretRef`.
                 properties:
@@ -3801,20 +3783,14 @@ spec:
                 description: |-
                   CertSecretRef can be given the name of a Secret containing
                   either or both of
-
-
                   - a PEM-encoded client certificate (`tls.crt`) and private
                   key (`tls.key`);
                   - a PEM-encoded CA certificate (`ca.crt`)
-
-
                   and whichever are supplied, will be used for connecting to the
                   registry. The client cert and key are useful if you are
                   authenticating with a certificate; the CA cert is useful if
                   you are using a self-signed server certificate. The Secret must
                   be of type `Opaque` or `kubernetes.io/tls`.
-
-
                   It takes precedence over the values specified in the Secret referred
                   to by `.spec.secretRef`.
                 properties:
@@ -4112,20 +4088,14 @@ spec:
                 description: |-
                   CertSecretRef can be given the name of a Secret containing
                   either or both of
-
-
                   - a PEM-encoded client certificate (`tls.crt`) and private
                   key (`tls.key`);
                   - a PEM-encoded CA certificate (`ca.crt`)
-
-
                   and whichever are supplied, will be used for connecting to the
                   registry. The client cert and key are useful if you are
                   authenticating with a certificate; the CA cert is useful if
                   you are using a self-signed server certificate. The Secret must
                   be of type `Opaque` or `kubernetes.io/tls`.
-
-
                   Note: Support for the `caFile`, `certFile` and `keyFile` keys have
                   been deprecated.
                 properties:
@@ -4433,8 +4403,6 @@ spec:
                   be used to determine if the content configuration has changed and the
                   artifact needs to be rebuilt.
                   It has the format of `<algo>:<checksum>`, for example: `sha256:<checksum>`.
-
-
                   Deprecated: Replaced with explicit fields for observed artifact content
                   config in the status.
                 type: string
@@ -6828,16 +6796,12 @@ spec:
                       `Create` or `CreateReplace`. Default is `Create` and if omitted
                       CRDs are installed but not updated.
 
-
                       Skip: do neither install nor replace (update) any CRDs.
-
 
                       Create: new CRDs are created, existing CRDs are neither updated nor deleted.
 
-
                       CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                       but not deleted.
-
 
                       By default, CRDs are applied (installed) during Helm install action.
                       With this option users can opt in to CRD replace existing CRDs on Helm
@@ -6906,7 +6870,6 @@ spec:
                       SkipCRDs tells the Helm install action to not install any CRDs. By default,
                       CRDs are installed if not already present.
 
-
                       Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                     type: boolean
                   timeout:
@@ -6967,12 +6930,10 @@ spec:
                   duration of the reconciliation, instead of being created and destroyed
                   for each (step of a) Helm action.
 
-
                   This can improve performance, but may cause issues with some Helm charts
                   that for example do create Custom Resource Definitions during installation
                   outside Helm's CRD lifecycle hooks, which are then not observed to be
                   available by e.g. post-install hooks.
-
 
                   If not set, it defaults to true.
                 type: boolean
@@ -7251,16 +7212,12 @@ spec:
                       `Create` or `CreateReplace`. Default is `Skip` and if omitted
                       CRDs are neither installed nor upgraded.
 
-
                       Skip: do neither install nor replace (update) any CRDs.
-
 
                       Create: new CRDs are created, existing CRDs are neither updated nor deleted.
 
-
                       CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                       but not deleted.
-
 
                       By default, CRDs are not applied during Helm upgrade action. With this
                       option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
@@ -7858,7 +7815,6 @@ spec:
                   ChartRef holds a reference to a source controller resource containing the
                   Helm chart artifact.
 
-
                   Note: this field is provisional to the v2 API, and not actively used
                   by v2beta1 HelmReleases.
                 properties:
@@ -7913,7 +7869,6 @@ spec:
                   DriftDetection holds the configuration for detecting and handling
                   differences between the manifest in the Helm storage and the resources
                   currently existing in the cluster.
-
 
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
@@ -8005,16 +7960,12 @@ spec:
                       `Create` or `CreateReplace`. Default is `Create` and if omitted
                       CRDs are installed but not updated.
 
-
                       Skip: do neither install nor replace (update) any CRDs.
-
 
                       Create: new CRDs are created, existing CRDs are neither updated nor deleted.
 
-
                       CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                       but not deleted.
-
 
                       By default, CRDs are applied (installed) during Helm install action.
                       With this option users can opt-in to CRD replace existing CRDs on Helm
@@ -8083,7 +8034,6 @@ spec:
                       SkipCRDs tells the Helm install action to not install any CRDs. By default,
                       CRDs are installed if not already present.
 
-
                       Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                     type: boolean
                   timeout:
@@ -8147,12 +8097,10 @@ spec:
                   duration of the reconciliation, instead of being created and destroyed
                   for each (step of a) Helm action.
 
-
                   This can improve performance, but may cause issues with some Helm charts
                   that for example do create Custom Resource Definitions during installation
                   outside Helm's CRD lifecycle hooks, which are then not observed to be
                   available by e.g. post-install hooks.
-
 
                   If not set, it defaults to true.
                 type: boolean
@@ -8509,16 +8457,12 @@ spec:
                       `Create` or `CreateReplace`. Default is `Skip` and if omitted
                       CRDs are neither installed nor upgraded.
 
-
                       Skip: do neither install nor replace (update) any CRDs.
-
 
                       Create: new CRDs are created, existing CRDs are neither updated nor deleted.
 
-
                       CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                       but not deleted.
-
 
                       By default, CRDs are not applied during Helm upgrade action. With this
                       option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
@@ -8743,7 +8687,6 @@ spec:
                   History holds the history of Helm releases performed for this HelmRelease
                   up to the last successfully completed release.
 
-
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
                 items:
@@ -8863,7 +8806,6 @@ spec:
                   LastAttemptedConfigDigest is the digest for the config (better known as
                   "values") of the last reconciliation attempt.
 
-
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
                 type: string
@@ -8871,7 +8813,6 @@ spec:
                 description: |-
                   LastAttemptedGeneration is the last generation the controller attempted
                   to reconcile.
-
 
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
@@ -8881,7 +8822,6 @@ spec:
                 description: |-
                   LastAttemptedReleaseAction is the last release action performed for this
                   HelmRelease. It is used to determine the active remediation strategy.
-
 
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
@@ -8900,7 +8840,6 @@ spec:
                   LastHandledForceAt holds the value of the most recent force request
                   value, so a change of the annotation value can be detected.
 
-
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
                 type: string
@@ -8914,7 +8853,6 @@ spec:
                 description: |-
                   LastHandledResetAt holds the value of the most recent reset request
                   value, so a change of the annotation value can be detected.
-
 
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
@@ -8936,7 +8874,6 @@ spec:
                 description: |-
                   StorageNamespace is the namespace of the Helm release storage for the
                   current release.
-
 
                   Note: this field is provisional to the v2beta2 API, and not actively used
                   by v2beta1 HelmReleases.
@@ -9140,7 +9077,6 @@ spec:
                   ChartRef holds a reference to a source controller resource containing the
                   Helm chart artifact.
 
-
                   Note: this field is provisional to the v2 API, and not actively used
                   by v2beta2 HelmReleases.
                 properties:
@@ -9283,16 +9219,12 @@ spec:
                       `Create` or `CreateReplace`. Default is `Create` and if omitted
                       CRDs are installed but not updated.
 
-
                       Skip: do neither install nor replace (update) any CRDs.
-
 
                       Create: new CRDs are created, existing CRDs are neither updated nor deleted.
 
-
                       CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                       but not deleted.
-
 
                       By default, CRDs are applied (installed) during Helm install action.
                       With this option users can opt in to CRD replace existing CRDs on Helm
@@ -9361,7 +9293,6 @@ spec:
                       SkipCRDs tells the Helm install action to not install any CRDs. By default,
                       CRDs are installed if not already present.
 
-
                       Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                     type: boolean
                   timeout:
@@ -9422,12 +9353,10 @@ spec:
                   duration of the reconciliation, instead of being created and destroyed
                   for each (step of a) Helm action.
 
-
                   This can improve performance, but may cause issues with some Helm charts
                   that for example do create Custom Resource Definitions during installation
                   outside Helm's CRD lifecycle hooks, which are then not observed to be
                   available by e.g. post-install hooks.
-
 
                   If not set, it defaults to true.
                 type: boolean
@@ -9809,16 +9738,12 @@ spec:
                       `Create` or `CreateReplace`. Default is `Skip` and if omitted
                       CRDs are neither installed nor upgraded.
 
-
                       Skip: do neither install nor replace (update) any CRDs.
-
 
                       Create: new CRDs are created, existing CRDs are neither updated nor deleted.
 
-
                       CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                       but not deleted.
-
 
                       By default, CRDs are not applied during Helm upgrade action. With this
                       option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
@@ -11219,7 +11144,6 @@ spec:
                   CertSecretRef specifies the Secret containing
                   a PEM-encoded CA certificate (in the `ca.crt` key).
 
-
                   Note: Support for the `caFile` key has
                   been deprecated.
                 properties:
@@ -11433,7 +11357,6 @@ spec:
                 description: |-
                   CertSecretRef specifies the Secret containing
                   a PEM-encoded CA certificate (in the `ca.crt` key).
-
 
                   Note: Support for the `caFile` key has
                   been deprecated.
