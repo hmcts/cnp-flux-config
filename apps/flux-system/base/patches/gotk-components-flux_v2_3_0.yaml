@@ -5373,100 +5373,6 @@ spec:
                       - patch
                     type: object
                   type: array
-                patches:
-                  description: JSON patches, defined as inline YAML objects.
-                  items:
-                    description: JSONPatch contains a JSON patch and the target
-                      the patch should be applied to.
-                    properties:
-                      patch:
-                        description: Patch contains the JSON patch document with
-                          an array of operation objects.
-                        items:
-                          description: |-
-                            JSON is a JSON operation object.
-                            https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                          properties:
-                            from:
-                              description: |-
-                                From contains a JSON-pointer value that references a location within the target document where the operation is
-                                performed. The meaning of the value depends on the value of Op, and is NOT taken into account by all operations.
-                              type: string
-                            op:
-                              description: |-
-                                Op indicates the operation to perform. Its value MUST be one of "add", "remove", "replace", "move", "copy", or
-                                "test".
-                                https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                              enum:
-                                - test
-                                - remove
-                                - add
-                                - replace
-                                - move
-                                - copy
-                              type: string
-                            path:
-                              description: |-
-                                Path contains the JSON-pointer value that references a location within the target document where the operation
-                                is performed. The meaning of the value depends on the value of Op.
-                              type: string
-                            value:
-                              description: |-
-                                Value contains a valid JSON structure. The meaning of the value depends on the value of Op, and is NOT taken into
-                                account by all operations.
-                              x-kubernetes-preserve-unknown-fields: true
-                          required:
-                            - op
-                            - path
-                          type: object
-                        type: array
-                      target:
-                        description: Target points to the resources that the patch document
-                          should be applied to.
-                        properties:
-                          annotationSelector:
-                            description: |-
-                              AnnotationSelector is a string that follows the label selection expression
-                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                              It matches with the resource annotations.
-                            type: string
-                          group:
-                            description: |-
-                              Group is the API group to select resources from.
-                              Together with Version and Kind it is capable of unambiguously identifying and/or selecting resources.
-                              https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                            type: string
-                          kind:
-                            description: |-
-                              Kind of the API Group to select resources from.
-                              Together with Group and Version it is capable of unambiguously
-                              identifying and/or selecting resources.
-                              https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                            type: string
-                          labelSelector:
-                            description: |-
-                              LabelSelector is a string that follows the label selection expression
-                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                              It matches with the resource labels.
-                            type: string
-                          name:
-                            description: Name to match resources with.
-                            type: string
-                          namespace:
-                            description: Namespace to select resources from.
-                            type: string
-                          version:
-                            description: |-
-                              Version of the API Group to select resources from.
-                              Together with Group and Kind it is capable of unambiguously identifying and/or selecting resources.
-                              https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                            type: string
-                        type: object
-                    required:
-                      - patch
-                      - target
-                    type: object
-                  type: array
                 path:
                   description: |-
                     Path to the directory containing the kustomization.yaml file, or the
@@ -5980,102 +5886,6 @@ spec:
                         type: object
                     required:
                       - patch
-                    type: object
-                  type: array
-                patches:
-                  description: |-
-                    JSON patches, defined as inline YAML objects.
-                    Deprecated: Use Patches instead.
-                  items:
-                    description: JSONPatch contains a JSON patch and the target
-                      the patch should be applied to.
-                    properties:
-                      patch:
-                        description: Patch contains the JSON patch document with
-                          an array of operation objects.
-                        items:
-                          description: |-
-                            JSON is a JSON operation object.
-                            https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                          properties:
-                            from:
-                              description: |-
-                                From contains a JSON-pointer value that references a location within the target document where the operation is
-                                performed. The meaning of the value depends on the value of Op, and is NOT taken into account by all operations.
-                              type: string
-                            op:
-                              description: |-
-                                Op indicates the operation to perform. Its value MUST be one of "add", "remove", "replace", "move", "copy", or
-                                "test".
-                                https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                              enum:
-                                - test
-                                - remove
-                                - add
-                                - replace
-                                - move
-                                - copy
-                              type: string
-                            path:
-                              description: |-
-                                Path contains the JSON-pointer value that references a location within the target document where the operation
-                                is performed. The meaning of the value depends on the value of Op.
-                              type: string
-                            value:
-                              description: |-
-                                Value contains a valid JSON structure. The meaning of the value depends on the value of Op, and is NOT taken into
-                                account by all operations.
-                              x-kubernetes-preserve-unknown-fields: true
-                          required:
-                            - op
-                            - path
-                          type: object
-                        type: array
-                      target:
-                        description: Target points to the resources that the patch document
-                          should be applied to.
-                        properties:
-                          annotationSelector:
-                            description: |-
-                              AnnotationSelector is a string that follows the label selection expression
-                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                              It matches with the resource annotations.
-                            type: string
-                          group:
-                            description: |-
-                              Group is the API group to select resources from.
-                              Together with Version and Kind it is capable of unambiguously identifying and/or selecting resources.
-                              https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                            type: string
-                          kind:
-                            description: |-
-                              Kind of the API Group to select resources from.
-                              Together with Group and Version it is capable of unambiguously
-                              identifying and/or selecting resources.
-                              https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                            type: string
-                          labelSelector:
-                            description: |-
-                              LabelSelector is a string that follows the label selection expression
-                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                              It matches with the resource labels.
-                            type: string
-                          name:
-                            description: Name to match resources with.
-                            type: string
-                          namespace:
-                            description: Namespace to select resources from.
-                            type: string
-                          version:
-                            description: |-
-                              Version of the API Group to select resources from.
-                              Together with Group and Kind it is capable of unambiguously identifying and/or selecting resources.
-                              https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                            type: string
-                        type: object
-                    required:
-                      - patch
-                      - target
                     type: object
                   type: array
                 path:
@@ -6783,14 +6593,10 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Create` and if omitted
                         CRDs are installed but not updated.
-                        
                         Skip: do neither install nor replace (update) any CRDs.
-                        
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
                         By default, CRDs are applied (installed) during Helm install action.
                         With this option users can opt in to CRD replace existing CRDs on Helm
                         install actions, which is not (yet) natively supported by Helm.
@@ -6857,7 +6663,6 @@ spec:
                       description: |-
                         SkipCRDs tells the Helm install action to not install any CRDs. By default,
                         CRDs are installed if not already present.
-                        
                         Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                       type: boolean
                     timeout:
@@ -6917,12 +6722,10 @@ spec:
                     client for this release. When enabled, the client will be reused for the
                     duration of the reconciliation, instead of being created and destroyed
                     for each (step of a) Helm action.
-                    
                     This can improve performance, but may cause issues with some Helm charts
                     that for example do create Custom Resource Definitions during installation
                     outside Helm's CRD lifecycle hooks, which are then not observed to be
                     available by e.g. post-install hooks.
-                    
                     If not set, it defaults to true.
                   type: boolean
                 postRenderers:
@@ -7199,14 +7002,10 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Skip` and if omitted
                         CRDs are neither installed nor upgraded.
-                        
                         Skip: do neither install nor replace (update) any CRDs.
-                        
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
                         By default, CRDs are not applied during Helm upgrade action. With this
                         option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
                         https://helm.sh/docs/chart_best_practices/custom_resource_definitions.
@@ -7802,7 +7601,6 @@ spec:
                   description: |-
                     ChartRef holds a reference to a source controller resource containing the
                     Helm chart artifact.
-                    
                     Note: this field is provisional to the v2 API, and not actively used
                     by v2beta1 HelmReleases.
                   properties:
@@ -7857,7 +7655,6 @@ spec:
                     DriftDetection holds the configuration for detecting and handling
                     differences between the manifest in the Helm storage and the resources
                     currently existing in the cluster.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   properties:
@@ -7947,14 +7744,10 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Create` and if omitted
                         CRDs are installed but not updated.
-                        
                         Skip: do neither install nor replace (update) any CRDs.
-                        
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
                         By default, CRDs are applied (installed) during Helm install action.
                         With this option users can opt-in to CRD replace existing CRDs on Helm
                         install actions, which is not (yet) natively supported by Helm.
@@ -8021,7 +7814,6 @@ spec:
                       description: |-
                         SkipCRDs tells the Helm install action to not install any CRDs. By default,
                         CRDs are installed if not already present.
-                        
                         Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                       type: boolean
                     timeout:
@@ -8084,12 +7876,10 @@ spec:
                     client for this release. When enabled, the client will be reused for the
                     duration of the reconciliation, instead of being created and destroyed
                     for each (step of a) Helm action.
-                    
                     This can improve performance, but may cause issues with some Helm charts
                     that for example do create Custom Resource Definitions during installation
                     outside Helm's CRD lifecycle hooks, which are then not observed to be
                     available by e.g. post-install hooks.
-                    
                     If not set, it defaults to true.
                   type: boolean
                 postRenderers:
@@ -8190,100 +7980,6 @@ spec:
                                   type: object
                               required:
                                 - patch
-                              type: object
-                            type: array
-                          patches:
-                            description: JSON patches, defined as inline YAML objects.
-                            items:
-                              description: JSONPatch contains a JSON patch and
-                                the target the patch should be applied to.
-                              properties:
-                                patch:
-                                  description: Patch contains the JSON patch document
-                                    with an array of operation objects.
-                                  items:
-                                    description: |-
-                                      JSON is a JSON operation object.
-                                      https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                                    properties:
-                                      from:
-                                        description: |-
-                                          From contains a JSON-pointer value that references a location within the target document where the operation is
-                                          performed. The meaning of the value depends on the value of Op, and is NOT taken into account by all operations.
-                                        type: string
-                                      op:
-                                        description: |-
-                                          Op indicates the operation to perform. Its value MUST be one of "add", "remove", "replace", "move", "copy", or
-                                          "test".
-                                          https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                                        enum:
-                                          - test
-                                          - remove
-                                          - add
-                                          - replace
-                                          - move
-                                          - copy
-                                        type: string
-                                      path:
-                                        description: |-
-                                          Path contains the JSON-pointer value that references a location within the target document where the operation
-                                          is performed. The meaning of the value depends on the value of Op.
-                                        type: string
-                                      value:
-                                        description: |-
-                                          Value contains a valid JSON structure. The meaning of the value depends on the value of Op, and is NOT taken into
-                                          account by all operations.
-                                        x-kubernetes-preserve-unknown-fields: true
-                                    required:
-                                      - op
-                                      - path
-                                    type: object
-                                  type: array
-                                target:
-                                  description: Target points to the resources that the
-                                    patch document should be applied to.
-                                  properties:
-                                    annotationSelector:
-                                      description: |-
-                                        AnnotationSelector is a string that follows the label selection expression
-                                        https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                                        It matches with the resource annotations.
-                                      type: string
-                                    group:
-                                      description: |-
-                                        Group is the API group to select resources from.
-                                        Together with Version and Kind it is capable of unambiguously identifying and/or selecting resources.
-                                        https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                                      type: string
-                                    kind:
-                                      description: |-
-                                        Kind of the API Group to select resources from.
-                                        Together with Group and Version it is capable of unambiguously
-                                        identifying and/or selecting resources.
-                                        https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                                      type: string
-                                    labelSelector:
-                                      description: |-
-                                        LabelSelector is a string that follows the label selection expression
-                                        https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                                        It matches with the resource labels.
-                                      type: string
-                                    name:
-                                      description: Name to match resources with.
-                                      type: string
-                                    namespace:
-                                      description: Namespace to select resources from.
-                                      type: string
-                                    version:
-                                      description: |-
-                                        Version of the API Group to select resources from.
-                                        Together with Group and Kind it is capable of unambiguously identifying and/or selecting resources.
-                                        https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                                      type: string
-                                  type: object
-                              required:
-                                - patch
-                                - target
                               type: object
                             type: array
                         type: object
@@ -8438,14 +8134,10 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Skip` and if omitted
                         CRDs are neither installed nor upgraded.
-                        
                         Skip: do neither install nor replace (update) any CRDs.
-                        
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
                         By default, CRDs are not applied during Helm upgrade action. With this
                         option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
                         https://helm.sh/docs/chart_best_practices/custom_resource_definitions.
@@ -8668,7 +8360,6 @@ spec:
                   description: |-
                     History holds the history of Helm releases performed for this HelmRelease
                     up to the last successfully completed release.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   items:
@@ -8787,7 +8478,6 @@ spec:
                   description: |-
                     LastAttemptedConfigDigest is the digest for the config (better known as
                     "values") of the last reconciliation attempt.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   type: string
@@ -8795,7 +8485,6 @@ spec:
                   description: |-
                     LastAttemptedGeneration is the last generation the controller attempted
                     to reconcile.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   format: int64
@@ -8804,7 +8493,6 @@ spec:
                   description: |-
                     LastAttemptedReleaseAction is the last release action performed for this
                     HelmRelease. It is used to determine the active remediation strategy.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   type: string
@@ -8821,7 +8509,6 @@ spec:
                   description: |-
                     LastHandledForceAt holds the value of the most recent force request
                     value, so a change of the annotation value can be detected.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   type: string
@@ -8835,7 +8522,6 @@ spec:
                   description: |-
                     LastHandledResetAt holds the value of the most recent reset request
                     value, so a change of the annotation value can be detected.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   type: string
@@ -8856,7 +8542,6 @@ spec:
                   description: |-
                     StorageNamespace is the namespace of the Helm release storage for the
                     current release.
-                    
                     Note: this field is provisional to the v2beta2 API, and not actively used
                     by v2beta1 HelmReleases.
                   type: string
@@ -9058,7 +8743,6 @@ spec:
                   description: |-
                     ChartRef holds a reference to a source controller resource containing the
                     Helm chart artifact.
-                    
                     Note: this field is provisional to the v2 API, and not actively used
                     by v2beta2 HelmReleases.
                   properties:
@@ -9200,14 +8884,10 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Create` and if omitted
                         CRDs are installed but not updated.
-                        
                         Skip: do neither install nor replace (update) any CRDs.
-                        
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
                         By default, CRDs are applied (installed) during Helm install action.
                         With this option users can opt in to CRD replace existing CRDs on Helm
                         install actions, which is not (yet) natively supported by Helm.
@@ -9274,7 +8954,6 @@ spec:
                       description: |-
                         SkipCRDs tells the Helm install action to not install any CRDs. By default,
                         CRDs are installed if not already present.
-                        
                         Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                       type: boolean
                     timeout:
@@ -9334,12 +9013,10 @@ spec:
                     client for this release. When enabled, the client will be reused for the
                     duration of the reconciliation, instead of being created and destroyed
                     for each (step of a) Helm action.
-                    
                     This can improve performance, but may cause issues with some Helm charts
                     that for example do create Custom Resource Definitions during installation
                     outside Helm's CRD lifecycle hooks, which are then not observed to be
                     available by e.g. post-install hooks.
-                    
                     If not set, it defaults to true.
                   type: boolean
                 postRenderers:
@@ -9440,102 +9117,6 @@ spec:
                                   type: object
                               required:
                                 - patch
-                              type: object
-                            type: array
-                          patches:
-                            description: |-
-                              JSON 6902 patches, defined as inline YAML objects.
-                              Deprecated: use Patches instead.
-                            items:
-                              description: JSONPatch contains a JSON patch and
-                                the target the patch should be applied to.
-                              properties:
-                                patch:
-                                  description: Patch contains the JSON patch document
-                                    with an array of operation objects.
-                                  items:
-                                    description: |-
-                                      JSON is a JSON operation object.
-                                      https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                                    properties:
-                                      from:
-                                        description: |-
-                                          From contains a JSON-pointer value that references a location within the target document where the operation is
-                                          performed. The meaning of the value depends on the value of Op, and is NOT taken into account by all operations.
-                                        type: string
-                                      op:
-                                        description: |-
-                                          Op indicates the operation to perform. Its value MUST be one of "add", "remove", "replace", "move", "copy", or
-                                          "test".
-                                          https://datatracker.ietf.org/doc/html/rfc6902#section-4
-                                        enum:
-                                          - test
-                                          - remove
-                                          - add
-                                          - replace
-                                          - move
-                                          - copy
-                                        type: string
-                                      path:
-                                        description: |-
-                                          Path contains the JSON-pointer value that references a location within the target document where the operation
-                                          is performed. The meaning of the value depends on the value of Op.
-                                        type: string
-                                      value:
-                                        description: |-
-                                          Value contains a valid JSON structure. The meaning of the value depends on the value of Op, and is NOT taken into
-                                          account by all operations.
-                                        x-kubernetes-preserve-unknown-fields: true
-                                    required:
-                                      - op
-                                      - path
-                                    type: object
-                                  type: array
-                                target:
-                                  description: Target points to the resources that the
-                                    patch document should be applied to.
-                                  properties:
-                                    annotationSelector:
-                                      description: |-
-                                        AnnotationSelector is a string that follows the label selection expression
-                                        https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                                        It matches with the resource annotations.
-                                      type: string
-                                    group:
-                                      description: |-
-                                        Group is the API group to select resources from.
-                                        Together with Version and Kind it is capable of unambiguously identifying and/or selecting resources.
-                                        https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                                      type: string
-                                    kind:
-                                      description: |-
-                                        Kind of the API Group to select resources from.
-                                        Together with Group and Version it is capable of unambiguously
-                                        identifying and/or selecting resources.
-                                        https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                                      type: string
-                                    labelSelector:
-                                      description: |-
-                                        LabelSelector is a string that follows the label selection expression
-                                        https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api
-                                        It matches with the resource labels.
-                                      type: string
-                                    name:
-                                      description: Name to match resources with.
-                                      type: string
-                                    namespace:
-                                      description: Namespace to select resources from.
-                                      type: string
-                                    version:
-                                      description: |-
-                                        Version of the API Group to select resources from.
-                                        Together with Group and Kind it is capable of unambiguously identifying and/or selecting resources.
-                                        https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/api-group.md
-                                      type: string
-                                  type: object
-                              required:
-                                - patch
-                                - target
                               type: object
                             type: array
                         type: object
@@ -9712,14 +9293,10 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Skip` and if omitted
                         CRDs are neither installed nor upgraded.
-                        
                         Skip: do neither install nor replace (update) any CRDs.
-                        
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
                         By default, CRDs are not applied during Helm upgrade action. With this
                         option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
                         https://helm.sh/docs/chart_best_practices/custom_resource_definitions.
@@ -11118,7 +10695,6 @@ spec:
                   description: |-
                     CertSecretRef specifies the Secret containing
                     a PEM-encoded CA certificate (in the `ca.crt` key).
-                    
                     Note: Support for the `caFile` key has
                     been deprecated.
                   properties:
@@ -11332,7 +10908,6 @@ spec:
                   description: |-
                     CertSecretRef specifies the Secret containing
                     a PEM-encoded CA certificate (in the `ca.crt` key).
-                    
                     Note: Support for the `caFile` key has
                     been deprecated.
                   properties:
