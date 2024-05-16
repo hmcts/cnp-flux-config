@@ -976,12 +976,14 @@ spec:
                   commit:
                     description: |-
                       Commit SHA to check out, takes precedence over all reference fields.
+
                       This can be combined with Branch to shallow clone the branch, in which
                       the commit is expected to exist.
                     type: string
                   name:
                     description: |-
                       Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
+
                       It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                       Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                     type: string
@@ -1033,6 +1035,7 @@ spec:
                     default: HEAD
                     description: |-
                       Mode specifies which Git object(s) should be verified.
+
                       The variants "head" and "HEAD" both imply the same thing, i.e. verify
                       the commit that the HEAD of the Git repository points to. The variant
                       "head" solely exists to ensure backwards compatibility.
@@ -1790,12 +1793,14 @@ spec:
                   commit:
                     description: |-
                       Commit SHA to check out, takes precedence over all reference fields.
+
                       This can be combined with Branch to shallow clone the branch, in which
                       the commit is expected to exist.
                     type: string
                   name:
                     description: |-
                       Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
+
                       It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                       Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                     type: string
@@ -2000,6 +2005,7 @@ spec:
                   be used to determine if the content of the included repository has
                   changed.
                   It has the format of `<algo>:<checksum>`, for example: `sha256:<checksum>`.
+
                   Deprecated: Replaced with explicit fields for observed artifact content
                   config in the status.
                 type: string
@@ -3237,14 +3243,17 @@ spec:
                 description: |-
                   CertSecretRef can be given the name of a Secret containing
                   either or both of
+
                   - a PEM-encoded client certificate (`tls.crt`) and private
                   key (`tls.key`);
                   - a PEM-encoded CA certificate (`ca.crt`)
+
                   and whichever are supplied, will be used for connecting to the
                   registry. The client cert and key are useful if you are
                   authenticating with a certificate; the CA cert is useful if
                   you are using a self-signed server certificate. The Secret must
                   be of type `Opaque` or `kubernetes.io/tls`.
+
                   It takes precedence over the values specified in the Secret referred
                   to by `.spec.secretRef`.
                 properties:
@@ -3783,14 +3792,17 @@ spec:
                 description: |-
                   CertSecretRef can be given the name of a Secret containing
                   either or both of
+
                   - a PEM-encoded client certificate (`tls.crt`) and private
                   key (`tls.key`);
                   - a PEM-encoded CA certificate (`ca.crt`)
+
                   and whichever are supplied, will be used for connecting to the
                   registry. The client cert and key are useful if you are
                   authenticating with a certificate; the CA cert is useful if
                   you are using a self-signed server certificate. The Secret must
                   be of type `Opaque` or `kubernetes.io/tls`.
+
                   It takes precedence over the values specified in the Secret referred
                   to by `.spec.secretRef`.
                 properties:
@@ -4088,14 +4100,17 @@ spec:
                 description: |-
                   CertSecretRef can be given the name of a Secret containing
                   either or both of
+
                   - a PEM-encoded client certificate (`tls.crt`) and private
                   key (`tls.key`);
                   - a PEM-encoded CA certificate (`ca.crt`)
+
                   and whichever are supplied, will be used for connecting to the
                   registry. The client cert and key are useful if you are
                   authenticating with a certificate; the CA cert is useful if
                   you are using a self-signed server certificate. The Secret must
                   be of type `Opaque` or `kubernetes.io/tls`.
+
                   Note: Support for the `caFile`, `certFile` and `keyFile` keys have
                   been deprecated.
                 properties:
@@ -4403,6 +4418,7 @@ spec:
                   be used to determine if the content configuration has changed and the
                   artifact needs to be rebuilt.
                   It has the format of `<algo>:<checksum>`, for example: `sha256:<checksum>`.
+
                   Deprecated: Replaced with explicit fields for observed artifact content
                   config in the status.
                 type: string
