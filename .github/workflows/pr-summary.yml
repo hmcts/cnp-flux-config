@@ -50,12 +50,6 @@ jobs:
 
           response_code=$(echo "$response" | awk -F' ' '/HTTP\/1.1/{print $2}' | head -n 1)
 
-          # Extract the JSON body from the response
-          json_body=$(echo "$response" | awk -v RS='\r\n\r\n' 'END{print}')
-
-          # Extract the "detail" field from the JSON body
-          detail=$(echo $json_body | jq -r '.detail')
-
           if [ "$response_code" -eq 200 ]; then
               echo "File contents sent successfully."
               # Remove headers
@@ -72,6 +66,11 @@ jobs:
               # Write to file
               echo -e "$response_body" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
           else
+              # Extract the JSON body from the response
+              json_body=$(echo "$response" | awk -v RS='\r\n\r\n' 'END{print}')
+
+              # Extract the "detail" field from the JSON body
+              detail=$(echo $json_body | jq -r '.detail')
               echo "Error sending file contents: $response_code"
               echo -e "Request to AEP failed to process with error: $detail" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
           fi
