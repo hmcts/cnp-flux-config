@@ -9,8 +9,10 @@ spec:
     job:
       suspend: false
       image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-d887211-20240521144539 #{"$imagepolicy": "flux-system:perftest-sscs-ccd-case-migration"}
-      schedule: "15 13 11 4 *"
+      schedule: "20 13 11 4 *"
       environment:
-        MIGRATION_WA_ENABLED: true
-        MIGRATION_QUERY_SIZE: 10000
-        MIGRATION_CASE_LIMIT: "1100000"
+        MIGRATION_WA_ENABLED: false
+        MIGRATION_DWP_ENABLED: false
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: true
+        MIGRATION_QUERY_SIZE: 500
+        MIGRATION_CASE_LIMIT: "400000"
