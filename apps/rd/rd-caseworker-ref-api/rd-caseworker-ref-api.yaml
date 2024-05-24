@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-caseworker-ref-api
@@ -13,10 +13,10 @@ spec:
       memoryRequests: '2048Mi'
       memoryLimits: '2048Mi'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/caseworker-ref-api:prod-e332eeb-20240514071552 #{"$imagepolicy": "flux-system:rd-caseworker-ref-api"}
+      image: hmctspublic.azurecr.io/rd/caseworker-ref-api:prod-ab4ed86-20240521182115 #{"$imagepolicy": "flux-system:rd-caseworker-ref-api"}
       imagePullPolicy: Always
       environment:
-        DUMMY_VAR: false
+        DUMMY_VAR: true
   chart:
     spec:
       chart: ./stable/rd-caseworker-ref-api

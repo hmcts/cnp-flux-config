@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-data-store-api
@@ -7,13 +7,15 @@ spec:
   values:
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-2c19752-20240509132628 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-e0feff4-20240520115505 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: true
         minReplicas: 2
         maxReplicas: 15
+        memory:
+          averageUtilization: 125
       memoryRequests: '4096Mi'
-      memoryLimits: '5120Mi'
+      memoryLimits: '6144Mi'
       cpuRequests: '1000m'
       cpuLimits: '3000m'
       environment:

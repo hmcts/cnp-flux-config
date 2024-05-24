@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tribunals-api
@@ -7,6 +7,7 @@ spec:
   values:
     java:
       aadIdentityName: sscs
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3821-961ad71-20240522093805
       environment:
         CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -40,3 +41,4 @@ spec:
         UPLOAD_HEARING_FILTER_ENABLED: true
         HEARING_RECORDING_REQUEST_CASE_UPDATE_V2_ENABLED: true
         TRIGGER_EVENT_V2_ENABLED: true
+        TESTING_SUPPORT_ENABLED: true

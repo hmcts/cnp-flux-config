@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-judicial-api
@@ -8,15 +8,15 @@ spec:
       keyVaults:
         rd:
           secrets:
-            - name: judicial-api-POSTGRES-DATABASE-v16
+            - name: judicial-api-POSTGRES-DATABASE
               alias: POSTGRES_DB_NAME
-            - name: judicial-api-POSTGRES-HOST-v16
+            - name: judicial-api-POSTGRES-HOST
               alias: POSTGRES_HOST
-            - name: judicial-api-POSTGRES-PORT-v16
+            - name: judicial-api-POSTGRES-PORT
               alias: POSTGRES_PORT
-            - name: judicial-api-POSTGRES-USER-v16
+            - name: judicial-api-POSTGRES-USER
               alias: POSTGRES_USERNAME
-            - name: judicial-api-POSTGRES-PASS-v16
+            - name: judicial-api-POSTGRES-PASS
               alias: POSTGRES_PASSWORD
             - name: judicial-api-elinks-api-key
               alias: judicial_api_elinks_api_key
@@ -47,9 +47,9 @@ spec:
         JRD_SEARCH_SERVICE_CODE: bfa1,bba3,aaa6,aaa7,aba5,aba3,bba2,aba4,bha1
         # elinks properties
         ELINKS_URL: https://jo-staging.elinks.judiciary.uk/api/v5
-        LAST_UPDATED: 1900-01-01
+        LAST_UPDATED: 2014-01-01
         SCHEDULER_ENABLED: false
-        CRON_EXPRESSION: "0 30 09 * * *"
+        CRON_EXPRESSION: "0 0 0 25 03 ?"
         PER_PAGE: 200
         INCLUDE_PREVIOUS_APPOINTMENT: false
         THREAD_PAUSE_TIME: 2000

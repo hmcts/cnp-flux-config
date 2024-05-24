@@ -1,22 +1,9 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-profile-sync
 spec:
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: OAUTH2-CLIENT-SECRET
-              alias: idam.api-redirect-uri
-            - name: OAUTH2-AUTH
-              alias: idam.api.authorization
-            - name: OAUTH2-CLIENT-AUTH
-              alias: idam.api.client-authorization
-            - name: idam-rd-system-user-username
-              alias: RD_SYSTEM_USER_USERNAME
-            - name: idam-rd-system-user-password
-              alias: RD_SYSTEM_USER_PASSWORD
       environment:
         DELETE_ORG: true
