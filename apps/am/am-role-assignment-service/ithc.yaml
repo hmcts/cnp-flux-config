@@ -1,29 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-role-assignment-service
 spec:
   values:
     java:
-      keyVaults:
-        am:
-          secrets:
-            - name: am-role-assignment-service-s2s-secret
-              alias: AM_ROLE_ASSIGNMENT_SERVICE_SECRET
-            - name: role-assignment-service-POSTGRES-PASS-V15
-              alias: ROLE_ASSIGNMENT_DB_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: role-assignment-service-IDAM-CLIENT-SECRET
-              alias: ROLE_ASSIGNMENT_IDAM_CLIENT_SECRET
-            - name: role-assignment-service-IDAM-ADMIN-SECRET
-              alias: ROLE_ASSIGNMENT_IDAM_ADMIN_PASSWORD
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: DEBUG
-        ROLE_ASSIGNMENT_DB_HOST: am-role-assignment-service-postgres-db-v15-ithc.postgres.database.azure.com
         ROLE_ASSIGNMENT_S2S_AUTHORISED_SERVICES: ccd_gw,am_role_assignment_service,am_org_role_mapping_service,am_role_assignment_refresh_batch,wa_task_management_api,wa_task_configuration_api,xui_webapp,aac_manage_case_assignment,ccd_data,wa_workflow_api,wa_task_monitor,wa_case_event_handler,iac,hmc_cft_hearing_service,ccd_case_disposer,sscs,fis_hmc_api,fpl_case_service,disposer-idam-user,civil_service,prl_cos_api
-        ROLE_ASSIGNMENT_DB_USERNAME: pgadmin
         RUN_DB_MIGRATION_ON_STARTUP: true

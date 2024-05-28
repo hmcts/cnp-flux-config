@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-commondata-api
@@ -13,9 +13,9 @@ spec:
       memoryRequests: '2048Mi'
       memoryLimits: '2048Mi'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/commondata-api:prod-1267c8f-20240503030936 #{"$imagepolicy": "flux-system:rd-commondata-api"}
+      image: hmctspublic.azurecr.io/rd/commondata-api:prod-25759d1-20240524123518 #{"$imagepolicy": "flux-system:rd-commondata-api"}
       environment:
-        DUMMY_VAR: false
+        DUMMY_VAR: true
   chart:
     spec:
       chart: ./stable/rd-commondata-api

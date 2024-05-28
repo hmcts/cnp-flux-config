@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fpl-cron-ccd-data-migration-tool
@@ -6,7 +6,7 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      schedule: "10 12 09 05 *"
+      schedule: "30 12 22 05 *"
       environment:
         ENABLED: true
         MIGRATION_ID: DFPL-log
@@ -15,3 +15,4 @@ spec:
         DEFAULT_THREAD_DELAY: 19
         DEFAULT_THREAD_LIMIT: 1
         CASE_MIGRATION_TIMEOUT: 18000
+        RETRY_FAILURES: false

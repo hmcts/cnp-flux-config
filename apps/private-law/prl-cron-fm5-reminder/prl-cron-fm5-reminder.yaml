@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cron-fm5-reminder
@@ -7,11 +7,19 @@ spec:
   releaseName: prl-cron-fm5-reminder
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/cos:prod-cb246cb-20240515185304 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-5ffc34f-20240524155420 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: Fm5ReminderNotificationTask
         HEARING_AWAY_DAYS: 18
-      schedule: 0 0 31 12 *
+        VAR: trigger1
+        FEATURE_EXAMPLE: true
+        APP_ENV: "prod"
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
+        CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
+        FM5_REMINDER_APPLICANT_RESPONDENT_SOLICITOR: d-b6b04932b1ac464b9a8c718d1b1a604a
+      schedule: 00,10,20,30,40,50 * * * *
   chart:
     spec:
       chart: prl-cron
