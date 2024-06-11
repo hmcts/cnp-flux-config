@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-final-order-overdue
+spec:
+  releaseName: nfdiv-cron-final-order-overdue
+  values:
+    job:
+      disableActiveClusterCheck: false
+      suspend: true
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: perftest

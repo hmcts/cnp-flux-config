@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccpay-cpo-update-service
@@ -7,3 +7,6 @@ spec:
     java:
       environment:
         DUMMY_VARIABLE: false
+        AMQP_HOST: ccpay-servicebus-ithc-premium.servicebus.windows.net
+        AMQP_TOPIC_NAME: "ccpay-service-request-cpo-update-topic"
+        AMQP_SUBSCRIPTION: serviceRequestCpoUpdatePremiumSubscription

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: repl-docmosis-service
@@ -6,10 +6,6 @@ metadata:
 spec:
   values:
     java:
-      autoscaling:
-        enabled: false
-      memoryLimits: "4096Mi"
-      cpuLimits: "3000m"
       environment:
         TORNADO_URL: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_URL: https://idam-api.platform.hmcts.net

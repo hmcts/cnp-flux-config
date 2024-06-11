@@ -1,11 +1,24 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cui-ra
 spec:
   values:
     nodejs:
-      replicas: 0
-      ingressHost: www.manage-your-support-for-hmcts-services.service.gov.uk
+      replicas: 2
+      memoryRequests: "768Mi"
+      cpuRequests: "50m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 3
+        cpu:
+          enabled: true
+          averageUtilization: 90
+        memory:
+          enabled: true
+          averageUtilization: 80
+      ingressHost: manage-your-support-for-hmcts-services.service.gov.uk
+      spotInstances:
+        enabled: false
       environment:
-        DEMO_ENABLED: 'false'
+        DEMO_ENABLED: false

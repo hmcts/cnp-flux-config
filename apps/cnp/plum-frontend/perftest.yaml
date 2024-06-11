@@ -1,9 +1,12 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: plum-frontend
 spec:
   values:
     nodejs:
+      spotInstances:
+        enabled: true
+      replicas: 4
       ingressHost: plum.perftest.platform.hmcts.net

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-ccd-migration-tool
@@ -6,15 +6,18 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "55 12 15 9 *"
+      schedule: "* * 31 2 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "true"
+        MIGRATION_ENABLED: "false"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
+        FUNCTION_ENABLED: "true"
         MIGRATION_NUMBER_OF_CASES: 2000
+        ASSIGN_HEARING_ROLES_TO_SYSTEM_USER: "true"
+        AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal

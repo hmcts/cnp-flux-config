@@ -1,12 +1,25 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-org-role-mapping-service
 spec:
   values:
     java:
+      replicas: 2
+      memoryRequests: "3584Mi"
+      memoryLimits: "4096Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: INFO
         SPRING_DATASOURCE_HIKARI_CONNECTIONTIMEOUT: 10000
         TESTING_SUPPORT_ENABLED: true
+        DB_FEATURE_FLAG_ENABLE: sscs_wa_1_3
+        AMQP_JRD_NEW_ASB_ENABLED: false
+        AMQP_CRD_NEW_ASB_ENABLED: false

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-ccd-migration-tool
@@ -19,5 +19,8 @@ spec:
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
         MIGRATION_NUMBER_OF_CASES: 0
+        FUNCTION_ENABLED: "true"
+        ASSIGN_HEARING_ROLES_TO_SYSTEM_USER: "true"
         RD_COMMON_DATA_LOCAL: http://rd-commondata-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal

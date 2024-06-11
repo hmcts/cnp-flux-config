@@ -1,51 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rpe-send-letter-service
 spec:
   values:
     java:
-      keyVaults:
-        "rpe-send-letter":
-          secrets:
-            - name: ftp-user
-              alias: FTP_USER
-            - name: ftp-private-key
-              alias: FTP_PRIVATE_KEY
-            - name: ftp-public-key
-              alias: FTP_PUBLIC_KEY
-            - name: xerox-ftp-hostname
-              alias: FTP_HOSTNAME
-            - name: upload-summary-report-recipients
-              alias: UPLOAD_SUMMARY_REPORT_RECIPIENTS
-            - name: send-letter-service-POSTGRES-FLEXIBLE-PASS
-              alias: LETTER_TRACKING_DB_PASSWORD
-            - name: send-letter-service-POSTGRES-FLEXIBLE-USER
-              alias: LETTER_TRACKING_DB_USER_NAME
-            - name: send-letter-service-POSTGRES-FLEXIBLE-DATABASE
-              alias: LETTER_TRACKING_DB_NAME
-            - name: send-letter-service-POSTGRES-FLEXIBLE-PORT
-              alias: LETTER_TRACKING_DB_PORT
-            - name: send-letter-service-POSTGRES-FLEXIBLE-HOST
-              alias: LETTER_TRACKING_DB_HOST
-            - name: encryption-public-key
-              alias: ENCRYPTION_PUBLIC_KEY
-            - name: app-insights-instrumentation-key
-              alias: azure.application-insights.instrumentation-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: reports-email-password
-              alias: SMTP_PASSWORD
-            - name: reports-email-username
-              alias: SMTP_USERNAME
-            - name: delayed-stale-report-recipients
-              alias: DELAYED_STALE_REPORT_RECIPIENTS
-            - name: actions-api-key
-              alias: ACTIONS_API_KEY
-            - name: launch-darkly-sdk-key
-              alias: LAUNCH_DARKLY_SDK_KEY
-            - name: launch-darkly-offline-mode
-              alias: LAUNCH_DARKLY_OFFLINE_MODE
       environment:
         ENCRYPTION_ENABLED: false
         CIVIL_SERVICE_ENABLED: true

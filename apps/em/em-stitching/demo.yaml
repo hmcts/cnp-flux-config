@@ -1,12 +1,15 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-stitching
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/stitching:pr-2075-62dfcf2-20240301143816 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      memoryRequests: "3072Mi"
+      image: hmctspublic.azurecr.io/em/stitching:prod-d9c71a0-20240610210948 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       environment:
         TEST_VAR: refresh
         CALLBACK_MAX_ATTEMPTS: 5
         DOCUMENT_TASK_MILLISECONDS: 5000
+      spotInstances:
+        enabled: true

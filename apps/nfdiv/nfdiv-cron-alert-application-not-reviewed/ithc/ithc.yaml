@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-eligible-for-switch-to-sole
@@ -6,6 +6,7 @@ spec:
   releaseName: nfdiv-cron-eligible-for-switch-to-sole
   values:
     job:
+      suspend: true
       disableActiveClusterCheck: false
       schedule: "10,30,50 * * * *"
       environment:

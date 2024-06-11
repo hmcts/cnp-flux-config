@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-sdt
@@ -8,8 +8,10 @@ spec:
   values:
     java:
       replicas: 1
+      autoscaling:
+        enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/civil/sdt:prod-7c8d903-20240304131207 #{"$imagepolicy": "flux-system:civil-sdt"}
+      image: hmctspublic.azurecr.io/civil/sdt:prod-8503bf9-20240607102100 #{"$imagepolicy": "flux-system:civil-sdt"}
       environment:
   chart:
     spec:

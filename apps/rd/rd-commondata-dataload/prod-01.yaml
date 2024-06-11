@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-commondata-dataload
@@ -7,6 +7,7 @@ spec:
     job:
       schedule: "00 21 * * *"
       environment:
+        DUMMY_VAR: false
         DELETE_ORG: false
         caselinking-route-disable: true
         ELINKS_URL: https://prod.elinks.judiciary.uk
