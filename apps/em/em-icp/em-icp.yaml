@@ -10,6 +10,11 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/em/icp:prod-67eaf69-20240605083810
       ingressHost: em-icp.{{ .Values.global.environment }}.platform.hmcts.net
+      startupDelay: 15
+      startupPeriod: 15
+      startupTimeout: 5
+      livenessPeriod: 20
+      readinessPeriod: 20
       environment:
         SLACK_CHANNEL: "em-dev-chat"
         SLACK_NOTIFY_SUCCESS: "true"
