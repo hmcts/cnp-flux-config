@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-7cd7a05-20240610143846 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-bc43aec-20240613130959 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -48,6 +48,11 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_PUBLISHER: azure
         FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ARCHIVAL_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
         SPRING_JMS_SERVICEBUS_ENABLED: false
         SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-preview.servicebus.windows.net/
         SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 1c4f0704-a29e-403d-b719-b90c34ef14c9
