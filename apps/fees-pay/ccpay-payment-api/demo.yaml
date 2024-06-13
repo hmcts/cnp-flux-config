@@ -6,10 +6,10 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:pr-1667-c226838-20240610151108
+      image: hmctspublic.azurecr.io/payment/api:prod-07bccec-20240613142947 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
         TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
@@ -100,8 +100,6 @@ spec:
               alias: pba.prl.payments.email.to
             - name: pba-iac-payments-email-to
               alias: pba.iac.payments.email.to
-            - name: pba-smc-payments-email-to
-              alias: pba.smc.payments.email.to
             - name: launch-darkly-sdk-key
               alias: launch.darkly.sdk.key
             - name: payment-s2s-secret
@@ -136,3 +134,5 @@ spec:
               alias: spring.mail.password
             - name: ccpay-payment-status-connection-string
               alias: ccpay-payment-status-connection-string
+            - name: pba-smc-payments-email-to
+              alias: pba.smc.payments.email.to
