@@ -8,8 +8,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/icp:prod-a53d779-20240604143105 #{"$imagepolicy": "flux-system:em-icp"}
+      image: hmctspublic.azurecr.io/em/icp:prod-167275f-20240610122251 #{"$imagepolicy": "flux-system:em-icp"}
       ingressHost: em-icp.{{ .Values.global.environment }}.platform.hmcts.net
+      startupDelay: 15
+      startupPeriod: 15
+      startupTimeout: 5
+      livenessPeriod: 20
+      readinessPeriod: 20
       environment:
         SLACK_CHANNEL: "em-dev-chat"
         SLACK_NOTIFY_SUCCESS: "true"
