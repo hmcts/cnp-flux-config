@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-bf4bf47-20240605171413 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-b63f378-20240617170455 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
@@ -28,6 +28,7 @@ spec:
             - launchDarkly-sdk-key
             - citizen-upload-docs-email
             - redis-access-key
+            - prl-pcq-token-key
       environment:
         NODE_ENV: demo
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
@@ -45,6 +46,7 @@ spec:
         TESTING_SUPPORT_FLAG: true
         ENABLE_RA_COMPONENT: true
         ENABLE_CASE_TRAIN_TRACK: true
+        ENABLE_PCQ_COMPONENT: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
