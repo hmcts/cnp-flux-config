@@ -95,7 +95,7 @@ jobs:
         with:
           script: |
             const prBody = context.payload.pull_request.body || '';
-            const summaryText = '## 🤖AEP PR SUMMARY🤖\n\nI\'m a bot that generates AI summaries of pull requests, see [AEP](https://kainossoftwareltd.github.io/ai-enhanced-platform/) for more details\n\n' + process.env.response;
+            const summaryText = '## 🤖AEP PR SUMMARY🤖\n\n_I\'m a bot that generates AI summaries of pull requests, see [AEP](https://kainossoftwareltd.github.io/ai-enhanced-platform/) for more details_\n\n' + process.env.response;
             const updatedBody = prBody.includes('## 🤖AEP PR SUMMARY🤖')
               ? prBody.replace(/## 🤖AEP PR SUMMARY🤖[\s\S]*/, '') + '\n\n' + summaryText
               : prBody + '\n\n' + summaryText;
