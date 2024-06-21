@@ -1,4 +1,4 @@
-# cnp-flux-config Thomas
+# cnp-flux-config
 Flux v2 config for CFT AKS clusters
 
 ## Repo Structure
