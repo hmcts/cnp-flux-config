@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cron-one-off-task
@@ -6,9 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "0 0,1,2,3,4,5,6 15 5 *"
-      memoryRequests: '2Gi'
-      memoryLimits: '4Gi'
+      schedule: "0 0 15 5 *"
       environment:
         TASK_NAME: CfvUpdateTask
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -31,8 +29,7 @@ spec:
         CRON_APPLICATION_TYPE_ADD_ENABLED: false
         CRON_CFV_CATEGORISATION_TASK_ENABLED: false
         CRON_MIAM_EXEMPTIONS_UPDATE_ENABLED: false
-        CRON_CFV_UPDATE_TASK_ENABLED: true
-        CRON_CFV_UPDATE_BATCH_SIZE: 2000
+        CRON_CFV_UPDATE_TASK_ENABLED: false
     global:
       jobKind: CronJob
       enableKeyVaults: true

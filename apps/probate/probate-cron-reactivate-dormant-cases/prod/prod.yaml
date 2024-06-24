@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-cron-reactivate-dormant-cases
@@ -10,7 +10,7 @@ spec:
         CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
         IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
         PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
-      schedule: "20 3 29 2 *"
+      schedule: "20 3 * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true

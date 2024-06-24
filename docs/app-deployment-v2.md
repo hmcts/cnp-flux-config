@@ -68,7 +68,7 @@ All application deployments are managed with `HelmRelease`.
    ```
 - Add a comment next to `image` section in HelmRelease with ImagePolicy name as shown below.
     ```yaml
-    apiVersion: helm.toolkit.fluxcd.io/v2beta2
+    apiVersion: helm.toolkit.fluxcd.io/v2
     kind: HelmRelease
     metadata:
       name: <component-name>
@@ -106,7 +106,7 @@ If you want to add a new app only to a one environment, see [Add application to 
 - If you wish to override this default behaviour in a specific environment, create a environment patch as described in the previous section and override image automation comment like below: 
 
 ```yaml
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: <component-name>

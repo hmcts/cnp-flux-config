@@ -1,47 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-judicial-api
 spec:
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: judicial-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: judicial-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: judicial-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: judicial-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: judicial-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
-            - name: judicial-api-elinks-api-key
-              alias: judicial_api_elinks_api_key
-            - name: judicial-api-s2s-secret
-              alias: JUDICIAL_API_S2S_SECRET
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: OAUTH2-CLIENT-SECRET
-              alias: OAUTH2_CLIENT_SECRET
-            - name: OAUTH2-AUTH
-              alias: OAUTH2_AUTH
-            - name: OAUTH2-CLIENT-AUTH
-              alias: OAUTH2_CLIENT_AUTH
-            - name: rd-sendgrid-api-key
-              alias: RD_SENDGRID_API_KEY
-            - name: judicial-topic-primary-send-listen-shared-access-key
-              alias: JUDICIAL_TOPIC_PRIMARY_SEND_LISTEN_SHARED_ACCESS_KEY
-            - name: idam-rd-system-user-username
-              alias: RD_SYSTEM_USER_USERNAME
-            - name: idam-rd-system-user-password
-              alias: RD_SYSTEM_USER_PASSWORD
       environment:
         DUMMY_VAR: false
+        ROOT_LOGGING_LEVEL: WARN
         DELETE_ORG: false
         IDAM_URL: https://idam-api.platform.hmcts.net
         OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
@@ -60,7 +26,3 @@ spec:
         CUSTOMIZE_UPDATEDSINCE: false
         DB_READER_USERNAME: "DTS JIT Access rd DB Reader SC"
         MAIL_FROM: no-reply@mail-rd.platform.hmcts.net
-        POSTGRES_HOST: rd-judicial-ref-api-postgres-db-v16-prod.postgres.database.azure.com
-        POSTGRES_DB_NAME: dbjuddata
-        POSTGRES_PORT: 5432
-        POSTGRES_USERNAME: pgadmin

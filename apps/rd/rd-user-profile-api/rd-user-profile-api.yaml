@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-user-profile-api
@@ -11,9 +11,10 @@ spec:
         enabled: true
         maxReplicas: 4
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/user-profile-api:prod-422f665-20240503031113 #{"$imagepolicy": "flux-system:rd-user-profile-api"}
+      image: hmctspublic.azurecr.io/rd/user-profile-api:prod-65cfcde-20240617202024 #{"$imagepolicy": "flux-system:rd-user-profile-api"}
       environment:
-        DUMMY_VAR: false
+        ROOT_LOGGING_LEVEL: WARN
+        DUMMY_VAR: true
   chart:
     spec:
       chart: ./stable/rd-user-profile-api

@@ -1,35 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-commondata-api
 spec:
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: common-data-api-s2s-secret
-              alias: COMMONDATA_API_S2S_SECRET
-            - name: commondata-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: commondata-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: commondata-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: commondata-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: commondata-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
       environment:
+        ROOT_LOGGING_LEVEL: INFO
         DELETE_CWR: false
         OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
         CRD_S2S_AUTHORISED_SERVICES: ccd_data,xui_webapp,sscs,sscs_bulkscan,cui_ra,prl_cos_api,civil_service,iac,sptribs_case_api,et_cos
         IDAM_URL: https://idam-api.platform.hmcts.net
-        POSTGRES_HOST: rd-commondata-api-postgres-db-v16-prod.postgres.database.azure.com
-        POSTGRES_DB_NAME: dbcommondata
-        POSTGRES_PORT: 5432
-        POSTGRES_USERNAME: pgadmin

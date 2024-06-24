@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: failed-deployments
+  namespace: monitoring
+  labels:
+    app: failed-deployments
+spec:
+  schedule: "0 9 * * 1-5"
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 3
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: failed-deployments-sa
+          containers:
+            - name: failed-deployments
+              image: hmctspublic.azurecr.io/failed-deployments:prod-e36fc8b-20240613161521 #{"$imagepolicy": "flux-system:failed-deployments"}
+              imagePullPolicy: Always
+              env:
+                - name: CLUSTER_NAME
+                  value: "cft-${CLUSTER_FULL_NAME}-aks"
+                - name: COSMOS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: helm-base-versions #Use's same secrets as helm-chart-base-version
+                      key: cosmos-key
+                - name: SLACK_WEBHOOK
+                  valueFrom:
+                    secretKeyRef:
+                      name: helm-base-versions #Use's same secrets as helm-chart-base-version
+                      key: slack-webhook
+                - name: ARTIFACT_URL
+                  value: "http://source-controller.flux-system.svc.cluster.local."
+                - name: API_SERVER_URL
+                  value: "https://kubernetes.default.svc.cluster.local"

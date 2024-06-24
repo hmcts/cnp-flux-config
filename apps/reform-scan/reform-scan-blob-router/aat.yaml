@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
@@ -12,6 +12,7 @@ spec:
         CREATE_RECONCILIATION_SUMMARY_REPORT_ENABLED: "false"
         CREATE_RECONCILIATION_DETAILED_REPORT_CRON: "* */5 * * * *"
         CREATE_RECONCILIATION_DETAILED_REPORT_ENABLED: "false"
+        TASK_SCAN_DELAY: 300000
       testsConfig:
         serviceAccountName: tests-service-account
         keyVaults:
