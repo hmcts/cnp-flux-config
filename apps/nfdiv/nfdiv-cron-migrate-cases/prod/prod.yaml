@@ -1,12 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-process-failed-pronounced-cases
+  name: nfdiv-cron-migrate-cases
 spec:
-  releaseName: nfdiv-cron-process-failed-pronounced-cases
+  releaseName: nfdiv-cron-migrate-cases
   values:
     job:
-      schedule: "0,20,40 * * * *"
+      disableActiveClusterCheck: false
+      schedule: "0,20,40 20-23,0-7 * * *"
       environment:
         IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
         S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
