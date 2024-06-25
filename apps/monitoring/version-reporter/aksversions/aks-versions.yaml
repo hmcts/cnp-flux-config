@@ -27,8 +27,6 @@ spec:
     successfulJobsHistoryLimit: 5
     backoffLimit: 3
     restartPolicy: Never
-    saEnabled: false
-    customServiceAccountName: version-reporter-service-sa
     runAsRoot: true
     kind: CronJob
     image: hmctspublic.azurecr.io/version-reporter-service/aksversions:prod-bb44b45-20240624141509 #{"$imagepolicy": "flux-system:version-reporter-aksversions"}
@@ -42,7 +40,7 @@ spec:
           - name: cosmos-key
             alias: COSMOS_KEY
           - name: cosmos-endpoint
-            alias: COSMOS_KEY
+            alias: COSMOS_DB_URI
           - name: cosmos-db-name
             alias: COSMOS_DB_NAME
     nodeSelector:
