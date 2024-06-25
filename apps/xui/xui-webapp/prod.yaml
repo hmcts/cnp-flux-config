@@ -5,7 +5,11 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 24
+      autoscaling:        
+        enabled: true
+        minReplicas: 20
+        maxReplicas: 24
+        targetCPUUtilizationPercentage: 80
       memoryLimits: "4Gi"
       memoryRequests: "3Gi"
       ingressHost: manage-case.platform.hmcts.net
