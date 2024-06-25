@@ -27,6 +27,7 @@ spec:
     successfulJobsHistoryLimit: 5
     backoffLimit: 3
     restartPolicy: Never
+    runAsRoot: true
     kind: CronJob
     image: hmctspublic.azurecr.io/version-reporter-service/aksversions:prod-bb44b45-20240624141509 #{"$imagepolicy": "flux-system:version-reporter-aksversions"}
     imagePullPolicy: Always
@@ -42,6 +43,12 @@ spec:
             alias: COSMOS_KEY
           - name: cosmos-db-name
             alias: COSMOS_DB_NAME
+          - name: SP-TenantId
+            alias: AZURE_TENANT_ID
+          - name: SP-ClientId
+            alias: AZURE_CLIENT_ID
+          - name: SP-ClientSecret
+            alias: AZURE_CLIENT_SECRET
     nodeSelector:
       agentpool: cronjob
     tolerations:
