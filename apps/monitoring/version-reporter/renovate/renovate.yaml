@@ -27,8 +27,6 @@ spec:
     successfulJobsHistoryLimit: 5
     backoffLimit: 3
     restartPolicy: Never
-    saEnabled: false
-    customServiceAccountName: version-reporter-service-sa
     kind: CronJob
     image: hmctspublic.azurecr.io/version-reporter-service/renovate:prod-528d4ee-20240624152301 #{"$imagepolicy": "flux-system:version-reporter-renovate"}
     imagePullPolicy: Always
@@ -43,9 +41,11 @@ spec:
           - name: cosmos-key
             alias: COSMOS_KEY
           - name: cosmos-endpoint
-            alias: COSMOS_KEY
+            alias: COSMOS_DB_URI
           - name: cosmos-db-name
             alias: COSMOS_DB_NAME
+          - name: githubToken
+            alias: GH_TOKEN
     nodeSelector:
       agentpool: cronjob
     tolerations:
