@@ -12,7 +12,8 @@ EXCLUSIONS_LIST=(
     apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
     apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
     apps/probate/*
-    apps/prl-citizen-frontend/aat.yaml
+    apps/private-law/prl-citizen-frontend/aat.yaml
+    apps/bsp/bulk-scan-sample-app/aat.yaml
     apps/sscs/sscs-tribunals-frontend/*
     .*perftest.*
     .*sbox.*
