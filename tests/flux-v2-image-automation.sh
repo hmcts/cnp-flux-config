@@ -7,19 +7,20 @@ EXCLUSIONS_LIST=(
     apps/clamav-mirror/clamav/clamav.yaml
     apps/ccd/ccd-int/ccd-int.yaml.disabled
     apps/docmosis/docmosis/docmosis.yaml
+    apps/docmosis/docmosis/aat.yaml
     apps/flux-system/ptl-intsvc/base/gotk-components.yaml
     apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
     apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
     apps/probate/*
+    apps/private-law/prl-citizen-frontend/aat.yaml
+    apps/bsp/bulk-scan-sample-app/aat.yaml
     apps/sscs/sscs-tribunals-frontend/*
     .*perftest.*
     .*sbox.*
     .*test.*
-    .*stg.*
     .*preview.*
     .*staging.*
     .*dev.*
-    .*aat.*
     .*demo.*
     .*ithc.*
     .*toffee.*
