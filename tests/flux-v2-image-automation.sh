@@ -19,7 +19,6 @@ EXCLUSIONS_LIST=(
     .*preview.*
     .*staging.*
     .*dev.*
-    .*aat.*
     .*demo.*
     .*ithc.*
     .*toffee.*
