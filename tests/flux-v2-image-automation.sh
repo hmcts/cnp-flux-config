@@ -15,11 +15,9 @@ EXCLUSIONS_LIST=(
     .*perftest.*
     .*sbox.*
     .*test.*
-    .*stg.*
     .*preview.*
     .*staging.*
     .*dev.*
-    .*aat.*
     .*demo.*
     .*ithc.*
     .*toffee.*
