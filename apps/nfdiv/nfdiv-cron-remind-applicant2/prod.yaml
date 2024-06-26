@@ -1,11 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-progress-to-awaiting-final-order
+  name: nfdiv-cron-remind-applicant2
 spec:
-  releaseName: nfdiv-cron-progress-to-awaiting-final-order
+  releaseName: nfdiv-cron-remind-applicant2
   values:
     job:
+      disableActiveClusterCheck: false
       schedule: "0,20,40 * * * *"
       environment:
         IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
