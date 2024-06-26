@@ -1,12 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nfdiv-cron-process-failed-scheduled-cases
+  name: nfdiv-cron-progress-to-awaiting-final-order
 spec:
-  releaseName: nfdiv-cron-process-failed-scheduled-cases
+  releaseName: nfdiv-cron-progress-to-awaiting-final-order
   values:
     job:
-      schedule: "10,30,50 * * * *"
+      disableActiveClusterCheck: false
+      schedule: "0,20,40 * * * *"
       environment:
         IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
         S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
@@ -19,7 +20,7 @@ spec:
         NOTIFY_TEMPLATE_SIGN_IN_DISSOLUTION_URL: https://www.end-civil-partnership.service.gov.uk/
         NOTIFY_TEMPLATE_SIGN_IN_DIVORCE_URL: https://www.apply-divorce.service.gov.uk/
         PRD_API_BASEURL: http://rd-professional-api-prod.service.core-compute-prod.internal
-        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-prod.service.core-compute-prod.internals
+        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
     global:
       jobKind: CronJob
       enableKeyVaults: true
