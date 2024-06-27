@@ -8,7 +8,7 @@ roleRef:
   name: version-reporter-service-clusterrole
 subjects:
   - kind: ServiceAccount
-    name: version-reporter-service-sa
+    name: monitoring
     namespace: monitoring
 
 ---
@@ -29,10 +29,3 @@ rules:
   - apiGroups: ['']
     resources: ['secrets']
     verbs: ['list', 'get']
-
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: version-reporter-service-sa
-  namespace: monitoring
