@@ -28,12 +28,13 @@ spec:
     backoffLimit: 3
     restartPolicy: Never
     kind: CronJob
-    image: hmctspublic.azurecr.io/version-reporter-service/renovate:prod-528d4ee-20240624152301 #{"$imagepolicy": "flux-system:version-reporter-renovate"}
+    image: hmctspublic.azurecr.io/version-reporter-service/renovate:prod-f224320-20240626160350 #{"$imagepolicy": "flux-system:version-reporter-renovate"}
     imagePullPolicy: Always
     environment:
       MAX_DAYS_AWAY: 3
       MAX_REPOS: 300
       COSMOS_DB_CONTAINER: renovate
+      VAULT_NAME: version-reporter-ptl
     keyVaults:
       version-reporter-ptl:
         excludeEnvironmentSuffix: true
@@ -45,7 +46,7 @@ spec:
           - name: cosmos-db-name
             alias: COSMOS_DB_NAME
           - name: githubToken
-            alias: GITHUB_TOKEN
+            alias: GH_TOKEN
     nodeSelector:
       agentpool: cronjob
     tolerations:
