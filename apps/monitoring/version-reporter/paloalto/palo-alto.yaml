@@ -28,14 +28,12 @@ spec:
     backoffLimit: 3
     restartPolicy: Never
     kind: CronJob
-    image: hmctspublic.azurecr.io/version-reporter-service/paloalto:prod-bb44b45-20240624141538 #{"$imagepolicy": "flux-system:version-reporter-paloalto"}
+    image: hmctspublic.azurecr.io/version-reporter-service/paloalto:prod-a27ff8b-20240627120031 #{"$imagepolicy": "flux-system:version-reporter-paloalto"}
     imagePullPolicy: Always
     environment:
-      ENVIRONMENT: prod
-      SERVER_IP: 10.50.10.132
-      HUB_SUBSCRIPTION_ID: 0978315c-75fe-4ada-9d11-1eb5e0e0b214
       DESIRED_VERSION: 11.0.2
       COSMOS_DB_CONTAINER: paloalto
+      VAULT_NAME: version-reporter-ptl
     keyVaults:
       version-reporter-ptl:
         excludeEnvironmentSuffix: true
