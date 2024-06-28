@@ -11,6 +11,7 @@ patches:
         value: --crd-pattern=managedidentity.azure.com/*;servicebus.azure.com/*;resources.azure.com/*;managedidentity.azure.com/*;storage.azure.com/*;dbforpostgresql.azure.com/*
     target:
       kind: Deployment
+      name: azureserviceoperator-controller-manager
   - patch: |-
       - op: replace
         path: /spec/template/spec/nodeSelector
@@ -18,6 +19,8 @@ patches:
           kubernetes.azure.com/agentpool: system
     target:
       kind: Deployment
+      name: azureserviceoperator-controller-manager
   - target:
       kind: Deployment
+      name: azureserviceoperator-controller-manager
     path: toleration_replicas_patch.yaml
