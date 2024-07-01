@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: docmosis-api-rewrite@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: docmosis-rstoapipathrewrite@kubernetescrd
   name: docmosis-ingress
   namespace: docmosis
 spec:
@@ -17,14 +17,14 @@ spec:
               service:
                 name: docmosis-base
                 port:
-                  number: 80
+                  number: 8080
             path: /rs
             pathType: Prefix
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: docmosis-api-rewrite
+  name: rstoapipathrewrite
   namespace: docmosis
 spec:
   replacePathRegex:
