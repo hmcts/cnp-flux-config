@@ -1,11 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: camunda-api
 spec:
   values:
     java:
-      image: hmctsprivate.azurecr.io/camunda/bpm:pr-761-9544756-20240226150451 #{"$imagepolicy": "flux-system:upgrade-camunda"}
       environment:
         CAMUNDA_DB_HOST: "hmcts-camunda-v14-flexible-{{ .Values.global.environment }}.postgres.database.azure.com"
         CAMUNDA_DB_USER_NAME: "camundaadmin"
@@ -13,3 +12,7 @@ spec:
         LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG: DEBUG
         LOGGING_LEVEL_COM_ZAXXER_HIKARI: TRACE
         LOGGING_LEVEL_ROOT: INFO
+        CAMUNDA_HISTORY_CLEANUP_START_TIME: "12:15+0100"
+        CAMUNDA_HISTORY_CLEANUP_END_TIME: "13:45+0100"
+        CAMUNDA_HISTORY_CLEANUP_STRATEGY: "removalTimeBased"
+        CAMUNDA_PARALLELISM: 1

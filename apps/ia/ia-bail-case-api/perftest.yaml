@@ -1,8 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-bail-case-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/bail-case-api:pr-415-dd0624d-20240219165958 #{"$imagepolicy": "flux-system:perftest-ia-bail-case-api"}
+      image: hmctspublic.azurecr.io/ia/bail-case-api:prod-1db59a2-20240628121848 #{"$imagepolicy": "flux-system:perftest-ia-bail-case-api"}
+      environment:
+        COMMON_DATA_API: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
+        IA_HEARINGS_API_URL: http://ia-hearings-api-perftest.service.core-compute-perftest.internal/

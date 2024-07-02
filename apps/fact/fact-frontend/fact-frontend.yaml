@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-frontend
@@ -6,10 +6,10 @@ spec:
   releaseName: fact-frontend
   values:
     nodejs:
-      memoryRequests: "512Mi"
+      memoryRequests: "650Mi"
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fact/frontend:prod-ac66dca-20240226113626 #{"$imagepolicy": "flux-system:fact-frontend"}
+      image: hmctspublic.azurecr.io/fact/frontend:prod-aa6443d-20240627112818 #{"$imagepolicy": "flux-system:fact-frontend"}
       environment:
         VAR_TA: trigger13
       keyVaults:

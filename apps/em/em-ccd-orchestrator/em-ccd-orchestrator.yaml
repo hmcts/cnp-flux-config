@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
@@ -7,8 +7,10 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-bdcb238-20240223160646 #{"$imagepolicy": "flux-system:em-ccd-orchestrator"}
+      replicas: 2 # minReplicas will default to this value
+      autoscaling:
+        enabled: false
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-5ab91cc-20240701190054 #{"$imagepolicy": "flux-system:em-ccd-orchestrator"}
       environment:
         TEST: "REFRESH"
   chart:

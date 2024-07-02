@@ -1,15 +1,22 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-stitching
 spec:
   values:
     java:
-      memoryRequests: "3072Mi"
-      cpuRequests: "1500m"
-      memoryLimits: "6144Mi"
-      cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-f8e350c-20240227172202 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      memoryRequests: "4608Mi"
+      cpuRequests: "2000m"
+      memoryLimits: "7168Mi"
+      cpuLimits: "4000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4 # On each cluster
+        cpu:
+          averageUtilization: 85
+        memory:
+          averageUtilization: 85
+      image: hmctspublic.azurecr.io/em/stitching:prod-2644933-20240628110023 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh

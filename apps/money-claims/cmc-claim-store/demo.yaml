@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-fa88d14-20240130094134 #{"$imagepolicy": "flux-system:cmc-claim-store"}
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-5cff420-20240701171901 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       environment:
         CLAIM_STORE_TEST_SUPPORT_ENABLED: true
         FEATURE_TOGGLES_SAVE_CLAIM_STATE_ENABLED: true
@@ -25,7 +25,7 @@ spec:
         SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
         DOC_ASSEMBLY_URL: http://dg-docassembly-demo.service.core-compute-demo.internal
         FRONTEND_BASE_URL: https://moneyclaims1.demo.platform.hmcts.net
-        RESPOND_TO_CLAIM_URL: https://moneyclaims1.demo.platform.hmcts.net/first-contact/start
+        RESPOND_TO_CLAIM_URL: https://moneyclaims.demo.platform.hmcts.net/first-contact/start
         FEATURE_TOGGLES_BULK_PRINT_TRANSFER_ENABLED: true
         FEATURE_TOGGLES_STAFF_EMAILS_ENABLED_FOR_LEGAL_REP: true
         STAFF_NOTIFICATIONS_LEGAL_RECIPIENT: Win10UAT_006@test.justice.gov.uk
@@ -38,3 +38,4 @@ spec:
         REFRESH_PODS: true
         FEATURE_TOGGLES_BREATHING_SPACE: true
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true
+        RIGGER_DEPLOY: trigger2

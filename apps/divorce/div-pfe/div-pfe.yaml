@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: div-pfe
@@ -8,8 +8,10 @@ spec:
   values:
     nodejs:
       replicas: 2
-      memoryRequests: "2Gi"
-      memoryLimits: "3Gi"
+      autoscaling:
+        enabled: false
+      memoryRequests: "1Gi"
+      memoryLimits: "1.5Gi"
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/div/pfe:prod-76a12a2-20230623125639 #{"$imagepolicy": "flux-system:div-pfe"}
       environment:

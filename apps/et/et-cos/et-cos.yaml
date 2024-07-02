@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-cos
@@ -8,7 +8,12 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/cos:prod-6ec9b9a-20240227124331 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:prod-34412f5-20240701152509 #{"$imagepolicy": "flux-system:et-cos"}
+      memoryLimits: "3072Mi"
+      memoryRequests: "2048Mi"
+      cpuLimits: "2000m"
+      cpuRequests: "250m"
+      readinessDelay: 45
   chart:
     spec:
       chart: ./stable/et-cos

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: dg-docassembly
@@ -8,12 +8,11 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      memoryRequests: "1Gi"
-      cpuRequests: "250m"
-      memoryLimits: "2Gi"
-      cpuLimits: "1500m"
-      image: hmctspublic.azurecr.io/dg/docassembly:prod-caf1474-20240227164916 #{"$imagepolicy": "flux-system:dg-docassembly"}
+      replicas: 2 # minReplicas will default to this value
+      memoryRequests: '1536Mi'
+      autoscaling:
+        maxReplicas: 4
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-ef593d8-20240702091613 #{"$imagepolicy": "flux-system:dg-docassembly"}
       environment:
         TEST_FV2: Trigger-3
   chart:

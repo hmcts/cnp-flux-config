@@ -1,10 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-case-api
 spec:
   values:
-    image: hmctspublic.azurecr.io/ia/case-api:pr-1497-7886a32-20240228092654 #{"$imagepolicy": "flux-system:perftest-ia-case-api"}
+    image: hmctspublic.azurecr.io/ia/case-api:pr-1497-f9b5fcc-20240627170409 #{"$imagepolicy": "flux-system:perftest-ia-case-api"}
     java:
       keyVaults:
         ia:
@@ -41,3 +41,6 @@ spec:
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
         POSTGRES_HOST: ia-case-api-postgres-db-v15-perftest.postgres.database.azure.com
         POSTGRES_USERNAME: pgadmin
+        COMMON_DATA_API: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
+        IA_HEARINGS_API_URL: http://ia-hearings-api-perftest.service.core-compute-perftest.internal/
+        LOCATION_REF_DATA_URL: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: camunda-ui
@@ -8,7 +8,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-029336f-20240219095809 #{"$imagepolicy": "flux-system:camunda"}
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-3e055a6-20240701065042 #{"$imagepolicy": "flux-system:camunda"}
       ingressHost: camunda-bpm.{{ .Values.global.environment }}.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true

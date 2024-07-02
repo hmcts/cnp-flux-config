@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cron-court-list-update
@@ -8,7 +8,7 @@ spec:
     job:
       schedule: "0/10 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-eed973a-20240228112233 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-1734029-20240701102750 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
         TASK_NAME: CourtListUpdateTask
   chart:

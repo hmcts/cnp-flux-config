@@ -1,10 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: bulk-scan-processor
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-3302-8c5f98d-20240624181212
       environment:
         #60 days in seconds
         SAS_TOKEN_VALIDITY: "5184000"
@@ -19,64 +20,3 @@ spec:
         FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-flexible-postgres-db-v15-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
         FLYWAY_USER: bulk_scanner
         REFRESH_PODS: "yes"
-      keyVaults:
-        "bulk-scan":
-          secrets:
-            - name: processor-POSTGRES-FLEXIBLE-PASS
-              alias: BULK_SCANNING_DB_PASSWORD
-            - name: s2s-secret
-              alias: S2S_SECRET
-            - name: processor-POSTGRES-FLEXIBLE-PASS
-              alias: flyway.password
-            - name: envelopes-queue-send-shared-access-key-premium
-              alias: QUEUE_ENVELOPE_SEND_ACCESS_KEY
-            - name: notifications-queue-send-shared-access-key-premium
-              alias: QUEUE_NOTIFICATIONS_SEND_ACCESS_KEY
-            - name: processed-envelopes-queue-listen-shared-access-key-premium
-              alias: QUEUE_PROCESSED_ENVELOPES_READ_ACCESS_KEY
-            - name: storage-account-name
-              alias: storage.account_name
-            - name: storage-account-primary-key
-              alias: storage.key
-            - name: app-insights-instrumentation-key
-              alias: azure.application-insights.instrumentation-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: reports-email-username
-              alias: SMTP_USERNAME
-            - name: reports-email-password
-              alias: SMTP_PASSWORD
-            - name: reports-recipients
-              alias: REPORTS_RECIPIENTS
-            - name: actions-api-key
-              alias: ACTIONS_API_KEY
-            - name: idam-client-secret
-              alias: IDAM_CLIENT_SECRET
-            - name: idam-users-bulkscan-username
-              alias: idam.users.bulkscan.username
-            - name: idam-users-bulkscan-password
-              alias: idam.users.bulkscan.password
-            - name: idam-users-cmc-username
-              alias: idam.users.cmc.username
-            - name: idam-users-cmc-password
-              alias: idam.users.cmc.password
-            - name: idam-users-div-username
-              alias: idam.users.divorce.username
-            - name: idam-users-div-password
-              alias: idam.users.divorce.password
-            - name: idam-users-probate-username
-              alias: idam.users.probate.username
-            - name: idam-users-probate-password
-              alias: idam.users.probate.password
-            - name: idam-users-publiclaw-username
-              alias: idam.users.publiclaw.username
-            - name: idam-users-publiclaw-password
-              alias: idam.users.publiclaw.password
-            - name: idam-users-privatelaw-username
-              alias: idam.users.privatelaw.username
-            - name: idam-users-privatelaw-password
-              alias: idam.users.privatelaw.password
-            - name: idam-users-sscs-username
-              alias: idam.users.sscs.username
-            - name: idam-users-sscs-password
-              alias: idam.users.sscs.password

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,9 +6,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-7e705d6-20240227132628 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-a8c0e95-20240701221534 #{"$imagepolicy": "flux-system:civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
         REFERENCE_DATABASE_MIGRATION: true
+        SPRING_FLYWAY_TABLE: schema_version
+        SPRING_FLYWAY_BASELINE_ON_MIGRATE: true
         POLLING_EVENT_EMITTER_ENABLED: false

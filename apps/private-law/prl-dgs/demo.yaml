@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-dgs
@@ -10,9 +10,9 @@ spec:
       replicas: 2
       readinessDelay: 45
       readinessTimeout: 10
-      readinessPeriod: 15
+      readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/dgs:pr-292-af3bdde-20240220124436 #{"$imagepolicy": "flux-system:prl-dgs-api"}
+      image: hmctspublic.azurecr.io/prl/dgs:prod-5dc52d9-20240531140434 #{"$imagepolicy": "flux-system:demo-prl-dgs-api"}
       environment:
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: "https://docmosis.demo.platform.hmcts.net"

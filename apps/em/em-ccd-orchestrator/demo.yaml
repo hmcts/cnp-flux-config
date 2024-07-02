@@ -1,10 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/ccdorc:prod-bdcb238-20240223160646 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
+      image: hmctspublic.azurecr.io/em/ccdorc:prod-5ab91cc-20240701190054 #{"$imagepolicy": "flux-system:demo-em-ccd-orchestrator"}
       environment:
         DUMMY_VAR: DELETE_ME-1
+      spotInstances:
+        enabled: true

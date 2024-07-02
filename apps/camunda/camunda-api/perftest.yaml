@@ -1,10 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: camunda-api
 spec:
   values:
     java:
+      image: hmctsprivate.azurecr.io/camunda/bpm:pr-849-ecbff45-20240702091349 #{"$imagepolicy": "flux-system:perftest-camunda"}
       memoryRequests: '2Gi'
       memoryLimits: '4Gi'
       cpuRequests: '1'

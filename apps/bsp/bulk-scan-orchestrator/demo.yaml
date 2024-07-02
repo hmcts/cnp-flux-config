@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: bulk-scan-orchestrator
@@ -18,65 +18,3 @@ spec:
         DELETE_ENVELOPES_DLQ_MESSAGES_CRON: "* */2 * * * *"
         CDAM_ENABLED: "true"
         SUPPLEMENTARY_DATA_ENABLED_SSCS: "true"
-        REFRESH_PODS: "true"
-      keyVaults:
-        bulk-scan:
-          secrets:
-            - name: idam-client-secret
-              alias: IDAM_CLIENT_SECRET
-            - name: s2s-secret-bulk-scan-orchestrator
-              alias: S2S_SECRET
-            - name: idam-users-bulkscan-username
-              alias: idam.users.bulkscan.username
-            - name: idam-users-bulkscan-password
-              alias: idam.users.bulkscan.password
-            - name: idam-users-cmc-username
-              alias: idam.users.cmc.username
-            - name: idam-users-cmc-password
-              alias: idam.users.cmc.password
-            - name: idam-users-div-username
-              alias: idam.users.divorce.username
-            - name: idam-users-div-password
-              alias: idam.users.divorce.password
-            - name: idam-users-probate-username
-              alias: idam.users.probate.username
-            - name: idam-users-probate-password
-              alias: idam.users.probate.password
-            - name: idam-users-publiclaw-username
-              alias: idam.users.publiclaw.username
-            - name: idam-users-publiclaw-password
-              alias: idam.users.publiclaw.password
-            - name: idam-users-privatelaw-username
-              alias: idam.users.privatelaw.username
-            - name: idam-users-privatelaw-password
-              alias: idam.users.privatelaw.password
-            - name: idam-users-sscs-username
-              alias: idam.users.sscs.username
-            - name: idam-users-sscs-password
-              alias: idam.users.sscs.password
-            - name: envelopes-queue-listen-shared-access-key-premium
-              alias: ENVELOPES_QUEUE_READ_ACCESS_KEY
-            - name: payments-queue-send-shared-access-key-premium
-              alias: PAYMENTS_QUEUE_WRITE_ACCESS_KEY
-            - name: processed-envelopes-queue-send-shared-access-key-premium
-              alias: PROCESSED_ENVELOPES_QUEUE_WRITE_ACCESS_KEY
-            - name: envelopes-queue-max-delivery-count-premium
-              alias: ENVELOPES_QUEUE_MAX_DELIVERY_COUNT
-            - name: app-insights-instrumentation-key
-              alias: azure.application-insights.instrumentation-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: orchestrator-POSTGRES-FLEXIBLE-PASS
-              alias: DB_PASSWORD
-            - name: orchestrator-POSTGRES-FLEXIBLE-USER
-              alias: DB_USER
-            - name: orchestrator-POSTGRES-FLEXIBLE-HOST
-              alias: DB_HOST
-            - name: orchestrator-POSTGRES-FLEXIBLE-PORT
-              alias: DB_PORT
-            - name: orchestrator-POSTGRES-FLEXIBLE-DATABASE
-              alias: DB_NAME
-            - name: launch-darkly-sdk-key
-              alias: LAUNCH_DARKLY_SDK_KEY
-            - name: launch-darkly-offline-mode
-              alias: LAUNCH_DARKLY_OFFLINE_MODE

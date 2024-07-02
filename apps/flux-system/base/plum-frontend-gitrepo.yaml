@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: plum-frontend
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/hmcts/cnp-plum-frontend
+  ref:
+    branch: DTSPO-16337
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/

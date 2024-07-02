@@ -1,23 +1,23 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-task-management-api
 spec:
   values:
     java:
+      replicas: 4
+      memoryLimits: "4096Mi"
+      memoryRequests: "2560Mi"
+      cpuLimits: "4000m"
+      cpuRequests: "2000m"
       environment:
         IDAM_URL: https://idam-api.platform.hmcts.net
         OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
         LOGGING_LEVEL_UK_GOV_HMCTS: INFO
-        ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw
-        ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps
+        ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw,employment
+        ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps,privatelaw_exceptionrecord,et_englandwales,et_scotland,benefit
         REFRESH_FLAG: "3"
         TASK_TYPE_CACHE_TIMEOUT_DURATION: 2
         TASK_TYPE_CACHE_TIMEOUT_TIMEUNIT: HOURS
         SPRING_PROFILES_ACTIVE: "replica"
         DB_READER_USERNAME: "DTS JIT Access wa DB Reader SC"
-      replicas: 4
-      memoryLimits: "4096Mi"
-      memoryRequests: "2048Mi"
-      cpuLimits: "4000m"
-      cpuRequests: "2000m"

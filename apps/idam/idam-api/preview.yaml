@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-8a60104-20240226185056 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-c804d18-20240702051205 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -27,15 +27,11 @@ spec:
         SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-preview.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-preview.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-preview.internal
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.preview.platform.hmcts.net
-        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.preview.platform.hmcts.net
+        STRATEGIC_ADMIN_URL: https://idam-user-dashboard.preview.platform.hmcts.net
+        STRATEGIC_FRONTEND_URL: https://idam-web-public.preview.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.preview.platform.hmcts.net
-        STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
-        STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
-        STRATEGIC_SSO_PROVIDERS_1_providerName: moj
-        STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
-        STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
-        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: false
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
@@ -47,7 +43,21 @@ spec:
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
-        trigger_deploy: 19/06/2023-1400
+        FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
+        FEATUREFLAGS_EVENTPUBLISHINGENABLEDV2: true
+        FEATUREFLAGS_EVENTPUBLISHING_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_PUBLISHER: azure
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ARCHIVAL_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
+        SPRING_JMS_SERVICEBUS_ENABLED: false
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-preview.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 1c4f0704-a29e-403d-b719-b90c34ef14c9
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-preview
         IDAM_CACHE_TTL: 15
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_IDAM_SPI_CLIENT_SERVICE_USERSEARCHSERVICE: DEBUG
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGDURATION: 15m
@@ -56,10 +66,11 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALSCHEDULECRON: "0 */5 * * * *"
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
+        TRIGGER_DEPLOY: 180420241651
     global:
       environment: preview
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.1
+      version: 0.8.0

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-partner-not-applied-for-final-order
@@ -9,7 +9,7 @@ spec:
       environment:
         TASK_NAME: SystemNotifyApplicantThatPartnerNotAppliedForFOTask
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-25a18b3-20240228075059 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-2b4138a-20240702114012 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
     keyVaults:
       nfdiv:
         secrets:
@@ -29,7 +29,7 @@ spec:
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.20
+      version: 0.0.23
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

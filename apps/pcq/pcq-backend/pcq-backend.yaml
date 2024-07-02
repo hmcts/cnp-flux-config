@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: pcq-backend
@@ -6,13 +6,12 @@ spec:
   releaseName: pcq-backend
   values:
     java:
-      memoryRequests: "1024Mi"
+      memoryRequests: "2048Mi"
       cpuRequests: "500m"
-      memoryLimits: "2048Mi"
+      memoryLimits: "4096Mi"
       cpuLimits: "1500m"
-      replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/pcq/backend:prod-c26655d-20240223111136 #{"$imagepolicy": "flux-system:pcq-backend"}
+      image: hmctspublic.azurecr.io/pcq/backend:prod-cfecd95-20240702063653 #{"$imagepolicy": "flux-system:pcq-backend"}
   chart:
     spec:
       chart: ./stable/pcq-backend

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: lau-frontend
@@ -6,11 +6,15 @@ spec:
   releaseName: lau-frontend
   values:
     nodejs:
-      replicas: 2
-      memoryLimits: "2048Mi"
-      cpuLimits: "2000m"
+      replicas: 1
+      memoryRequests: '768Mi'
+      cpuRequests: '50m'
+      memoryLimits: "1024Mi"
+      cpuLimits: "500m"
+      autoscaling:
+        enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/lau/frontend:prod-1b46496-20240228085840 #{"$imagepolicy": "flux-system:lau-frontend"}
+      image: hmctspublic.azurecr.io/lau/frontend:prod-254aa82-20240628164151 #{"$imagepolicy": "flux-system:lau-frontend"}
   chart:
     spec:
       chart: ./stable/lau-frontend

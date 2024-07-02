@@ -1,12 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
 spec:
   values:
     job:
-      schedule: "*/30 * * * *"
+      schedule: "*/10 * * * *"
+      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-c0ebe0d-20240701121857 #{"$imagepolicy": "flux-system:perftest-em-hrs-ingestor"}
       environment:
-        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
-        VH_STORAGE_CONTAINER_NAME: recordings
-        ENABLE_CRONJOB: false
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: false
+        ENABLE_CRONJOB: true

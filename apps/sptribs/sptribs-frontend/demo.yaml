@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sptribs-frontend
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/sptribs/frontend:prod-a02dc5c-20240205120352 #{"$imagepolicy": "flux-system:demo-sptribs-frontend"}
+      spotInstances:
+        enabled: false
       environment:
         PCQ_ENABLED: false
-        DUMMY_ENV_VAR: false

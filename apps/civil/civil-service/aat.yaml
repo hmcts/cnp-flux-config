@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,9 +6,71 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        civil:
+          resourceGroup: civil
+          secrets:
+            - name: civil-idam-client-secret
+              alias: idam.client.secret
+            - name: microservicekey-civil-service
+              alias: idam.s2s-auth.totp_secret
+            - name: system-update-user-username
+              alias: CIVIL_SYSTEM_UPDATE_USERNAME
+            - name: system-update-user-password
+              alias: CIVIL_SYSTEM_UPDATE_PASSWORD
+            - name: cross-access-user-username
+              alias: CIVIL_CROSS_ACCESS_USERNAME
+            - name: cross-access-user-password
+              alias: CIVIL_CROSS_ACCESS_PASSWORD
+            - name: prd-admin-user-username
+              alias: CIVIL_PRD_ADMIN_USERNAME
+            - name: prd-admin-user-password
+              alias: CIVIL_PRD_ADMIN_PASSWORD
+            - name: appinsights-connection-string
+              alias: appinsights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: docmosis-api-key
+              alias: docmosis.tornado.key
+            - name: cmc-db-password-v15
+              alias: CMC_DB_PASSWORD
+            - name: cmc-db-username-v15
+              alias: CMC_DB_USERNAME
+            - name: cmc-db-host-v15
+              alias: CMC_DB_HOST
+            - name: gov-notify-guest-list-api-key
+              alias: GOV_NOTIFY_API_KEY
+            - name: sendgrid-api-key
+              alias: SENDGRID_API_KEY
+            - name: robotics-notification-sender
+              alias: robotics.notification.sender
+            - name: robotics-notification-recipient
+              alias: robotics.notification.recipient
+            - name: launch-darkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: robotics-notification-multipartyrecipient
+              alias: robotics.notification.multipartyrecipient
+            - name: robotics-notification-recipient-spec
+              alias: robotics.notification.specRecipient
+            - name: robotics-notification-recipient-lipj
+              alias: robotics.notification.lipJRecipient
+            - name: ordnance-survey-api-key
+              alias: OS_POSTCODE_LOOKUP_API_KEY
+            - name: notification-caseworker-spec-receiver
+              alias: notification.caseworker.spec.receiver
+            - name: mediation-notification-sender
+              alias: mediation.emails.sender
+            - name: mediation-notification-recipient
+              alias: mediation.emails.recipient
+            - name: hmc-servicebus-shared-access-key-tf
+              alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
+            - name: mediation-json-notification-recipient
+              alias: mediation.emails.jsonRecipient
       environment:
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
-        POLLING_EVENT_EMITTER_ENABLED: false
+        POLLING_EVENT_EMITTER_ENABLED: true
         OCMC_CLIENT_URL: https://moneyclaims.aat.platform.hmcts.net
+        CIVIL_AAT_FLUX_TRIGGER: trigger1
+        CASE_FLAGS_LOGGING_ENABLED: true

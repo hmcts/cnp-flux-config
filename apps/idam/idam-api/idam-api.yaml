@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,14 +7,23 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
-      replicas: 4
+      image: hmctspublic.azurecr.io/idam/api:prod-ceed6b2-20240621132404
+      replicas: 2
+      cpuRequests: '160m'
+      cpuLimits: '1500m'
+      memoryRequests: '2560Mi'
+      memoryLimits: '2560Mi'
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 95
       ingressHost: idam-api.platform.hmcts.net
       aadIdentityName: idam
       useInterpodAntiAffinity: true
       environment:
         ENDPOINTS_INFO_ENABLED: true
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.platform.hmcts.net
+        STRATEGIC_ADMIN_URL: https://idam-user-dashboard.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://hmcts-access.service.gov.uk
         STRATEGIC_API_URL: https://idam-api.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-prod.internal:8443/openam
@@ -51,16 +60,22 @@ spec:
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_EMAIL_REMINDER_ENABLED: false
+        FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: ejudiciary\.net
+        MANAGEMENT_HEALTH_JMS_ENABLED: false
         SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
+        SPRING_JMS_SERVICEBUS_ENABLED: false
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-prod.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 8999dec3-0104-4a27-94ee-6588559729d1
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-prod
         SPRING_REDIS_TIMEOUT: 300
   chart:
     spec:
       chart: idam-api
-      version: 0.7.1
+      version: 0.8.0
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

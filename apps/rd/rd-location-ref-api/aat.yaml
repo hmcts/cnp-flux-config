@@ -1,15 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-location-ref-api
 spec:
   values:
     java:
-      autoscaling:
-        enabled: true
-        maxReplicas: 4
-      memoryRequests: '2048Mi'
-      memoryLimits: '2048Mi'
       keyVaults:
         rd:
           secrets:
@@ -19,18 +14,18 @@ spec:
               alias: LD_SDK_KEY
             - name: location-ref-api-s2s-secret
               alias: LOCATION_REF_API_S2S_SECRET
-            - name: location-ref-api-POSTGRES-DATABASE-v16
+            - name: location-ref-api-POSTGRES-DATABASE
               alias: POSTGRES_DB_NAME
-            - name: location-ref-api-POSTGRES-HOST-v16
+            - name: location-ref-api-POSTGRES-HOST
               alias: POSTGRES_HOST
-            - name: location-ref-api-POSTGRES-PORT-v16
+            - name: location-ref-api-POSTGRES-PORT
               alias: POSTGRES_PORT
-            - name: location-ref-api-POSTGRES-USER-v16
+            - name: location-ref-api-POSTGRES-USER
               alias: POSTGRES_USERNAME
-            - name: location-ref-api-POSTGRES-PASS-v16
+            - name: location-ref-api-POSTGRES-PASS
               alias: POSTGRES_PASSWORD
       environment:
-        LRD_S2S_AUTHORISED_SERVICES: rd_location_ref_api,payment_app,rd_caseworker_ref_api,rd_judicial_api,ccd_data,xui_webapp,prl_cos_api,sscs,sscs_bulkscan,adoption_web,civil_service,civil_general_applications,sptribs_case_api,fis_hmc_api,jps_judicial_payment_frontend,jps_judicial_payment_service,et_cos,iac
+        LRD_S2S_AUTHORISED_SERVICES: rd_location_ref_api,payment_app,rd_caseworker_ref_api,rd_judicial_api,ccd_data,xui_webapp,prl_cos_api,sscs,sscs_bulkscan,adoption_web,civil_service,civil_general_applications,sptribs_case_api,fis_hmc_api,et_cos,iac
         DELETE_ORG: true
         ACTIVE_ORG_EXT: true
         POSTGRES_HOST: rd-location-ref-api-postgres-db-v16-aat.postgres.database.azure.com

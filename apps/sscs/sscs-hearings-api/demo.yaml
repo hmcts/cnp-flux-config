@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-hearings-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/hearings-api:pr-526-4e43f9c-20240226100312 #{"$imagepolicy": "flux-system:demo-sscs-hearings-api"}
+      image: hmctspublic.azurecr.io/sscs/hearings-api:pr-595-f7bcd67-20240702114600 #{"$imagepolicy": "flux-system:demo-sscs-hearings-api"}
       environment:
         TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
         SSCS_LOG_LEVEL: DEBUG
@@ -16,3 +16,4 @@ spec:
         POST_HEARING_ENABLED: true
         APPLICATIONINSIGHTS_INSTRUMENTATION_LOGGING_LEVEL: DEBUG
         ELINKS_V2_FEATURE_ENABLED: true
+        HEARINGS_CASE_UPDATE_V2_ENABLED: true

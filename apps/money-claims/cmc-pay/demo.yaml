@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cmc-pay
@@ -19,10 +19,10 @@ spec:
         enabled: false
     fees-register-api:
       java:
-        image: hmctspublic.azurecr.io/fees-register/api:prod-b17870c-20240226111139 #{"$imagepolicy": "flux-system:fees-register-api"}
+        image: hmctspublic.azurecr.io/fees-register/api:prod-5ba1342-20240625103635 #{"$imagepolicy": "flux-system:fees-register-api"}
     payment-api:
       java:
-        image: hmctspublic.azurecr.io/payment/api:prod-c2fa65b-20240227114705 #{"$imagepolicy": "flux-system:ccpay-payment-app"}
+        image: hmctspublic.azurecr.io/payment/api:prod-07bccec-20240613142947 #{"$imagepolicy": "flux-system:ccpay-payment-app"}
         ingressHost: ""
         releaseNameOverride: "{{ .Release.Name }}-payment-api"
         secrets:

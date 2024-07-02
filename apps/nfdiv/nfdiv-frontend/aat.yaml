@@ -1,18 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nfdiv-frontend
 spec:
   values:
     nodejs:
-      replicas: 2
-      autoscaling:
-        enabled: true
-        maxReplicas: 8
-      memoryRequests: '512Mi'
-      cpuRequests: '200m'
-      memoryLimits: '512Mi'
-      cpuLimits: '1000m'
       environment:
         IGNORE_LINKED_INVITES: ENABLED
         IDAM_TOKEN_CACHE: true

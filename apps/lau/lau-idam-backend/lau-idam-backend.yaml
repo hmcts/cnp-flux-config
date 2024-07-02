@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: lau-idam-backend
@@ -6,9 +6,22 @@ spec:
   releaseName: lau-idam-backend
   values:
     java:
-      replicas: 2
+      replicas: 1
+      memoryRequests: "2048Mi"
+      cpuRequests: "100m"
+      memoryLimits: "4096Mi"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 3
+        cpu:
+          enabled: true
+          averageUtilization: 90
+        memory:
+          enabled: true
+          averageUtilization: 80
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/lau/idam-backend:prod-7ba8fe2-20240223080652 #{"$imagepolicy": "flux-system:lau-idam-backend"}
+      image: hmctspublic.azurecr.io/lau/idam-backend:prod-aebce3c-20240702102926 #{"$imagepolicy": "flux-system:lau-idam-backend"}
   chart:
     spec:
       chart: ./stable/lau-idam-backend

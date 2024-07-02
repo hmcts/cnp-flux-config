@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-task-management-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/task-management-api:pr-1220-217c946-20240215174632 #{"$imagepolicy": "flux-system:demo-wa-task-management-api"}
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-8191dd1-20240626113839 #{"$imagepolicy": "flux-system:demo-wa-task-management-api"}
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
         LOGGING_LEVEL_ORG_HIBERNATE_SQL: DEBUG
@@ -15,3 +15,5 @@ spec:
         ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps,privatelaw_exceptionrecord,et_englandwales,et_scotland,benefit,criminalinjuriescompensation,financialremedycontested,financialremedymvp2,finrem_exceptionrecord
         TASK_TYPE_CACHE_TIMEOUT_DURATION: 1
         SPRING_PROFILES_ACTIVE: "replica"
+      spotInstances:
+        enabled: true

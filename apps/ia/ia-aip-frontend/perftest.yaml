@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-aip-frontend
@@ -6,13 +6,14 @@ spec:
   values:
     nodejs:
       ingressHost: immigration-appeal.perftest.platform.hmcts.net
-      image: hmctspublic.azurecr.io/ia/aip-frontend:pr-972-fe35865-20240219100402 #{"$imagepolicy": "flux-system:perftest-ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-cade474-20240702144236 #{"$imagepolicy": "flux-system:perftest-ia-aip-frontend"}
       environment:
         NODE_ENV: development
         IDAM_WEB_URL: "https://idam-web-public.perftest.platform.hmcts.net"
         IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
         ASK_FOR_MORE_TIME_ENABLED: true
         RESTART_ME: "Update due to vault change"
+        VAR_PERTEST: trigger-1
       keyVaults:
         ia:
           resourceGroup: ia

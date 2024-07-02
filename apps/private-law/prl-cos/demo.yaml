@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cos
@@ -26,6 +26,7 @@ spec:
             - idam-solicitor-password
             - filtered-court-ids
             - da-filtered-court-ids
+            - ca-default-court-epimms-id
             - postcode-lookup-token
             - prl-rd-api-system-username
             - prl-rd-api-system-user-password
@@ -40,9 +41,9 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-1a97238-20240227223801 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-2437-4a334f8-20240702132129 #{"$imagepolicy": "flux-system:demo-prl-cos"}
       environment:
-        FEATURE_EXAMPLE: true
+        FEATURE_EXAMPLE: false
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-demo.service.core-compute-demo.internal/oauth2/callback
@@ -64,6 +65,7 @@ spec:
         REFDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
         SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        APP_ENV: "demo"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -6,7 +6,8 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
+      image: hmctspublic.azurecr.io/idam/api:prod-ceed6b2-20240621132404
+      replicas: 2
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:
         TESTING_SUPPORT_ENABLED: true
@@ -14,7 +15,7 @@ spec:
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3
         CACHING_USERS_MAXHTTPCALLS: 1
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.perftest.platform.hmcts.net
+        STRATEGIC_ADMIN_URL: https://idam-user-dashboard.perftest.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.perftest.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.perftest.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam
@@ -47,11 +48,11 @@ spec:
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
-        trigger_deploy: 21/06/2023-1200
+        trigger_deploy: 18/03/2024-1200
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.1
+      version: 0.8.0

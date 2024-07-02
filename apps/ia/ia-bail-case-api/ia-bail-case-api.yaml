@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-bail-case-api
@@ -8,13 +8,12 @@ spec:
     java:
       disableTraefikTls: true
       replicas: 2
-      memoryRequests: "1.5Gi"
+      memoryRequests: "1536Mi"
       autoscaling:
         enabled: true
-        maxReplicas: 5
-        targetCPUUtilizationPercentage: 80
+        maxReplicas: 6
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/bail-case-api:prod-6c7335c-20240215140230 #{"$imagepolicy": "flux-system:ia-bail-case-api"}
+      image: hmctspublic.azurecr.io/ia/bail-case-api:prod-1db59a2-20240628121848 #{"$imagepolicy": "flux-system:ia-bail-case-api"}
   chart:
     spec:
       chart: ./stable/ia-bail-case-api

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: xui-webapp
@@ -7,13 +7,13 @@ spec:
     nodejs:
       ingressHost: manage-case.demo.platform.hmcts.net
       environment:
-        DUMMY_VAR_FOR_RESTART: 1
+        DUMMY_VAR_FOR_RESTART: 2
         FEATURE_JRD_E_LINKS_V2_ENABLED: true
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,ADOPTION,EMPLOYMENT,CIVIL,AUTOTEST1,CMC,HRS,BEFTA_JURISDICTION_1,PRIVATELAW,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3,ST_CIC,ST_PHL,ST_CS,ST_SEND,ST_MH,BEFTA_MASTER
         GLOBAL_SEARCH_SERVICES: IA,CIVIL,PRIVATELAW,PUBLICLAW,SSCS,ST_CIC,EMPLOYMENT
-        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS,ST_CIC
         HEARINGS_JURISDICTIONS: SSCS,PRIVATELAW,CIVIL,IA,EMPLOYMENT,ST_CIC
         FEATURE_OIDC_ENABLED: true
         SERVICES_IDAM_ISS_URL: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
@@ -49,4 +49,4 @@ spec:
         SERVICES_REFUNDS_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
         SERVICES_NOTIFICATIONS_API_URL: http://ccpay-notifications-service-demo.service.core-compute-demo.internal
         SERVICES_PAYMENTS_URL: http://payment-api-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/xui/webapp:prod-540e194-20240226144214 #{"$imagepolicy": "flux-system:demo-xui-webapp"}
+      image: hmctspublic.azurecr.io/xui/webapp:prod-1fa916e-20240626150535 #{"$imagepolicy": "flux-system:xui-webapp"}

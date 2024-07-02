@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-bulk-scan
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-0e93118-20240226091426 #{"$imagepolicy": "flux-system:demo-sscs-bulk-scan"}
+      image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-b90db7d-20240701133813 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}
       keyVaults:
         sscs-bulk-scan:
           secrets:
@@ -23,7 +23,7 @@ spec:
       environment:
         DO_NOT_REMOVE_PROPERTY: true
         UC_OFFICE_FEATURE: true
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         WORK_ALLOCATION_FEATURE: true
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         CASE_ACCESS_MANAGEMENT_FEATURE: true

@@ -1,9 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: docmosis
 spec:
   releaseName: docmosis
+  timeout: 10m
   values:
     disableTraefikTls: true
     language: java
@@ -15,12 +16,12 @@ spec:
     ingressSessionAffinity:
       enabled: true
     envFromSecret: docmosis-secret
-    image: hmctsprivate.azurecr.io/docmosis:prod-5bba527-533054 #{"$imagepolicy": "flux-system:docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:prod-e3b9b08-605988 #{"$imagepolicy": "flux-system:docmosis"}
     java:
-      memoryRequests: '1024Mi'
-      cpuRequests: '1000m'
-      memoryLimits: '3072Mi'
-      cpuLimits: '2000m'
+      memoryRequests: "1024Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "3072Mi"
+      cpuLimits: "2000m"
   chart:
     spec:
       chart: base

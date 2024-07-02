@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cos
@@ -26,6 +26,7 @@ spec:
             - idam-solicitor-password
             - filtered-court-ids
             - da-filtered-court-ids
+            - ca-default-court-epimms-id
             - postcode-lookup-token
             - prl-rd-api-system-username
             - prl-rd-api-system-user-password
@@ -40,7 +41,7 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-1a97238-20240227223801 #{"$imagepolicy": "flux-system:perftest-prl-cos-api"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-06c09dc-20240628170158 #{"$imagepolicy": "flux-system:perftest-prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
@@ -70,6 +71,7 @@ spec:
         STAFF_DETAILS_API: http://rd-caseworker-ref-api-perftest.service.core-compute-perftest.internal
         COMMON_DATA_API: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
         SEND_LETTER_URL: http://rpe-send-letter-service-perftest.service.core-compute-perftest.internal
+        APP_ENV: "perftest"
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-ccd-case-migration
@@ -9,8 +9,8 @@ spec:
     job:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-13-d9b10c3-20240227103609 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "0 10 23 2 *"
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-50b02cf-20240701133903 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      schedule: "45 16 20 3 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -23,12 +23,23 @@ spec:
               alias: IDAM_PASS
             - name: sscs-s2s-secret
               alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
-        MIGRATION_WA_ENABLED: true
-        MIGRATION_QUERY_SIZE: 1000
-        MIGRATION_CASE_LIMIT: 100
+        RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
+        JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
+        MIGRATION_WA_ENABLED: false
+        MIGRATION_DWP_ENABLED: false
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
+        MIGRATION_QUERY_SIZE: 500
+        MIGRATION_CASE_LIMIT: "400000"
+        DUMMY: true
     global:
       environment: demo
       enableKeyVaults: true

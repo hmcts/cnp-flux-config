@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-icp
@@ -8,8 +8,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/em/icp:prod-7e8cb81-20240111105234 #{"$imagepolicy": "flux-system:em-icp"}
+      image: hmctspublic.azurecr.io/em/icp:prod-07209dd-20240627132527 #{"$imagepolicy": "flux-system:em-icp"}
       ingressHost: em-icp.{{ .Values.global.environment }}.platform.hmcts.net
+      startupDelay: 15
+      startupPeriod: 15
+      startupTimeout: 5
+      livenessPeriod: 20
+      readinessPeriod: 20
       environment:
         SLACK_CHANNEL: "em-dev-chat"
         SLACK_NOTIFY_SUCCESS: "true"

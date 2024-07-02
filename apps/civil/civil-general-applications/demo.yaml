@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-general-applications
@@ -6,30 +6,36 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/general-applications:prod-07d36a8-20240221105020 #{"$imagepolicy": "flux-system:demo-civil-general-applications"}
+      image: hmctspublic.azurecr.io/civil/general-applications:prod-126c86e-20240701133849 #{"$imagepolicy": "flux-system:demo-civil-general-applications"}
       keyVaults:
         civil:
           resourceGroup: civil
           secrets:
-            - civil-idam-client-secret
-            - microservicekey-civil-service
-            - system-update-user-username
-            - system-update-user-password
-            - cross-access-user-username
-            - cross-access-user-password
-            - prd-admin-user-username
-            - prd-admin-user-password
+            - name: civil-idam-client-secret
+              alias: idam.client.secret
+            - name: system-update-user-username
+              alias: CIVIL_SYSTEM_UPDATE_USERNAME
+            - name: system-update-user-password
+              alias: CIVIL_SYSTEM_UPDATE_PASSWORD
+            - name: cross-access-user-username
+              alias: CIVIL_CROSS_ACCESS_USERNAME
+            - name: cross-access-user-password
+              alias: CIVIL_CROSS_ACCESS_PASSWORD
+            - name: prd-admin-user-username
+              alias: CIVIL_PRD_ADMIN_USERNAME
+            - name: prd-admin-user-password
+              alias: CIVIL_PRD_ADMIN_PASSWORD
             - name: genapp-appinsights-connection-string
               alias: appinsights-connection-string
-            - docmosis-api-key
-            - cmc-db-password-v11
-            - gov-notify-api-key
-            - sendgrid-api-key
-            - robotics-notification-sender
-            - robotics-notification-recipient
-            - launch-darkly-sdk-key
-            - robotics-notification-multipartyrecipient
-            - ordnance-survey-api-key
+            - name: docmosis-api-key
+              alias: docmosis.tornado.key
+            - name: gov-notify-api-key
+              alias: GOV_NOTIFY_API_KEY
+            - name: sendgrid-api-key
+              alias: SENDGRID_API_KEY
+            - name: launch-darkly-sdk-key-non-prod
+              alias: launch-darkly-sdk-key
       environment:
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
+        CUI_URL: https://moneyclaims.demo.platform.hmcts.net

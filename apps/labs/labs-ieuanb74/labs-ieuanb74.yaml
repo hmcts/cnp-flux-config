@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-ieuanb74
+  namespace: labs
+spec:
+  releaseName: labs-ieuanb74
+  chart:
+    spec:
+      chart: ./stable/labs-ieuanb74
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctspublic.azurecr.io/labs/ieuanb74:prod-a0557be-20240701141149 # {"$imagepolicy": "flux-system:labs-ieuanb74"}
+      disableTraefikTls: true

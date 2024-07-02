@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-hmcts-access
@@ -9,7 +9,11 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/idam/hmcts-access:prod-3112aa3-20240228110211 #{"$imagepolicy": "flux-system:idam-hmcts-access"}
+      image: hmctspublic.azurecr.io/idam/hmcts-access:prod-dd7893d-20240702111311 #{"$imagepolicy": "flux-system:idam-hmcts-access"}
+      memoryRequests: "512Mi"
+      memoryLimits: "1024Mi"
+      cpuRequests: "60m"
+      cpuLimits: "1000m"
   chart:
     spec:
       chart: ./stable/idam-hmcts-access

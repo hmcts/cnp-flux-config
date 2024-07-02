@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fpl-cron-ccd-data-migration-tool
@@ -6,7 +6,11 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-eaa66d0-20240223155706 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
-      schedule: "30 12 30 2 *"
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-03dcecd-20240614084847 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
+      schedule: "15 16 02 05 *"
       environment:
-        ENABLED: false
+        ENABLED: true
+        MIGRATION_ID: DFPL-log
+        USE_CASE_ID_MAPPING: true
+        DEFAULT_THREAD_DELAY: 10
+        DEFAULT_THREAD_LIMIT: 1

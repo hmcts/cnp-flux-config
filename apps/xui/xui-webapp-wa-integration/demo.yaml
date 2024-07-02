@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: xui-webapp-wa-integration
@@ -39,6 +39,7 @@ spec:
         SERVICES_JUDICIAL_BOOKING_API_PATH: http://am-judicial-booking-service-demo.service.core-compute-demo.internal
         SERVICES_WA_WORKFLOW_API_URL: http://wa-workflow-api-demo.service.core-compute-demo.internal
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
+        SERVICES_PAYMENTS_URL: http://payment-api-int-demo.service.core-compute-demo.internal
         SERVICES_ROLE_ASSIGNMENT_MAPPING_API: http://am-org-role-mapping-service-demo.service.core-compute-demo.internal
-        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW
-      image: hmctspublic.azurecr.io/xui/webapp:prod-540e194-20240226144214 #{"$imagepolicy": "flux-system:demo-xui-webapp-wa-integration"}
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,ST_CIC
+      image: hmctspublic.azurecr.io/xui/webapp:prod-1fa916e-20240626150535 #{"$imagepolicy": "flux-system:demo-xui-webapp-wa-integration"}

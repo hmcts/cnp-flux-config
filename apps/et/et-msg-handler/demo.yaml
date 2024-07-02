@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-msg-handler
@@ -6,40 +6,4 @@ spec:
   releaseName: et-msg-handler
   values:
     java:
-      image: hmctspublic.azurecr.io/et/msg-handler:prod-aa66839-20240220205442 #{"$imagepolicy": "flux-system:et-msg-handler"}
-      environment:
-        ET_MSG_HANDLER_DB_HOST: et-msg-handler-postgres-v15-demo.postgres.database.azure.com
-        ET_MSG_HANDLER_DB_USER_NAME: pgadmin
-      keyVaults:
-        et-msg-handler:
-          secrets:
-            - name: caseworker-user-name
-              alias: CASEWORKER_USER_NAME
-            - name: caseworker-password
-              alias: CASEWORKER_PASSWORD
-            - name: gov-notify-api-key
-              alias: GOV_NOTIFY_API_KEY
-            - name: et-msg-handler-s2s-secret
-              alias: ET_MSG_HANDLER_S2S_SECRET
-            - name: idam-client-secret
-              alias: IDAM_CLIENT_SECRET
-            - name: et-msg-handler-postgres-user-v15
-              alias: ET_MSG_HANDLER_POSTGRES_USER
-            - name: et-msg-handler-postgres-password-v15
-              alias: ET_MSG_HANDLER_POSTGRES_PASSWORD
-            - name: et-msg-handler-postgres-host-v15
-              alias: ET_MSG_HANDLER_POSTGRES_HOST
-            - name: et-msg-handler-postgres-port-v15
-              alias: ET_MSG_HANDLER_POSTGRES_PORT
-        et:
-          secrets:
-            - name: create-updates-queue-send-connection-string
-              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
-            - name: create-updates-queue-listen-connection-string
-              alias: CREATE_UPDATES_QUEUE_LISTEN_CONNECTION_STRING
-            - name: update-case-queue-send-connection-string
-              alias: UPDATE_CASE_QUEUE_SEND_CONNECTION_STRING
-            - name: update-case-queue-listen-connection-string
-              alias: UPDATE_CASE_QUEUE_LISTEN_CONNECTION_STRING
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-e5c2e1d-20240702080942 #{"$imagepolicy": "flux-system:et-msg-handler"}

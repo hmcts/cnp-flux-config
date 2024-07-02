@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sscs-cron
+  namespace: sscs
+spec:
+  values:
+    global:
+      jobKind: CronJob
+    job:
+      schedule: "0/15 * 17 4 *"
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-9072e57-20240701135104 #{"$imagepolicy": "flux-system:demo-sscs-cron"}

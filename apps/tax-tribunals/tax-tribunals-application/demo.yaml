@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: tax-tribunals-application
@@ -7,4 +7,34 @@ spec:
   values:
     base:
       environment:
-        RESTART_ME: '1'
+        Trig_1: Demo3
+        AZURE_STORAGE_CONTAINER: 'private'
+        AZURE_STORAGE_ACCOUNT: 'taxtribunalssademo'
+        TEST_VALUE: 'test'
+        NOTIFY_CASE_CONFIRMATION_TEMPLATE_ID: 'fa138a1a-5bea-4b01-993f-f25927363d02'
+        NOTIFY_FTT_CASE_NOTIFICATION_TEMPLATE_ID: 'c2362d14-f99e-4420-b102-8d297dd3a62f'
+        NOTIFY_NEW_CASE_SAVED_TEMPLATE_ID: 'effca85f-0718-483a-bcd8-529a4e7e6b0f'
+        NOTIFY_CHANGE_PASSWORD_TEMPLATE_ID: 'cc99c21b-7c28-442e-b8fa-20eba92dec52'
+        NOTIFY_RESET_PASSWORD_TEMPLATE_ID: 'fcb832bf-a46d-4bf2-a539-b9daa56bbfee'
+        NOTIFY_CASE_FIRST_REMINDER_TEMPLATE_ID: 'ff66f5ae-6f8c-4365-bb43-a608cbde1e1c'
+        NOTIFY_CASE_LAST_REMINDER_TEMPLATE_ID: '23ecd5e1-2a6f-4cbb-9839-d6567360943a'
+        NOTIFY_REPORT_PROBLEM_TEMPLATE_ID: '01248de5-4018-4165-8a6f-2508fc481c20'
+        NOTIFY_SEND_APPLICATION_DETAIL_TEMPLATE_ID: 'aa55e7f3-d26b-411c-bba9-1e3b55815814'
+        NOTIFY_SEND_APPLICATION_DETAIL_TEXT_TEMPLATE_ID: 'f1f4a25e-9a85-4dd7-9d97-2e3dbd103b38'
+        NOTIFY_GLIMR_GENERATION_COMPLETE_ID: '1c3306da-c99a-492a-96a4-c553dc8732de'
+        REPORT_PROBLEM_EMAIL_ADDRESS: 'test@example.com'
+        NOTIFY_CASE_CONFIRMATION_CY_TEMPLATE_ID: 'ef48c6b6-e3fa-4b1c-8463-9c4fbe504279'
+        NOTIFY_FTT_CASE_NOTIFICATION_CY_TEMPLATE_ID: 'c2362d14-f99e-4420-b102-8d297dd3a62f'
+        NOTIFY_NEW_CASE_SAVED_CY_TEMPLATE_ID: 'f5e99be0-f809-4624-87a9-993a55065f14'
+        NOTIFY_CHANGE_PASSWORD_CY_TEMPLATE_ID: '309c3ac0-3e26-42e2-9a3e-926f66fa3dc2'
+        NOTIFY_RESET_PASSWORD_CY_TEMPLATE_ID: 'bd60f125-9dc8-4eba-85ca-8059e9dcfe7c'
+        NOTIFY_CASE_FIRST_REMINDER_CY_TEMPLATE_ID: 'fcddda68-3bcc-4272-85f1-143274a4ae02'
+        NOTIFY_CASE_LAST_REMINDER_CY_TEMPLATE_ID: '066415bc-1150-4e51-b506-0c074059cde1'
+        NOTIFY_SEND_APPLICATION_DETAIL_CY_TEMPLATE_ID: '16ff8919-9ab5-4e2f-802b-f36168203f32'
+        NOTIFY_SEND_APPLICATION_DETAIL_TEXT_CY_TEMPLATE_ID: 'f1f4a25e-9a85-4dd7-9d97-2e3dbd103b38'
+      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-217-618753d-20240702140110
+      keyVaults:
+        tax-tribunals-cft:
+          secrets:
+            - name: tt-storage-account-primary-access-key
+              alias: NEW_AZURE_STORAGE_KEY

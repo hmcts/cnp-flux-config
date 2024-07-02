@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-case-documents-api
@@ -8,8 +8,13 @@ spec:
     java:
       disableTraefikTls: true
       replicas: 2
+      memoryRequests: "1638Mi"
+      memoryLimits: "2048Mi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-bc61a18-20240223061543 #{"$imagepolicy": "flux-system:ia-case-documents-api"}
+      image: hmctspublic.azurecr.io/ia/case-documents-api:prod-7d5e8c1-20240628122910 #{"$imagepolicy": "flux-system:ia-case-documents-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
   chart:
     spec:
       chart: ./stable/ia-case-documents-api

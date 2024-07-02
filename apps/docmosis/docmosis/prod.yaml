@@ -1,10 +1,16 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: docmosis
 spec:
   values:
     memoryRequests: "2Gi"
+    replicas: 3
     ingressHost: docmosis.platform.hmcts.net
     java:
-      memoryRequests: '2Gi'
+      memoryRequests: "2Gi"
+      keyVaults:
+        docmosis-infra:
+          secrets:
+            - name: appinsights-connection-string
+              alias: appinsights-connection-string
