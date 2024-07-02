@@ -6,6 +6,21 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-153560c-20240429100245 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}
+      keyVaults:
+        hmc:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: cft-hearing-service-POSTGRES-USER-V15
+              alias: CFT_HEARING_SERVICE_DB_USERNAME
+            - name: cft-hearing-service-POSTGRES-PASS-V15
+              alias: CFT_HEARING_SERVICE_DB_PASSWORD
+            - name: cft-hearing-service-POSTGRES-HOST-V15
+              alias: CFT_HEARING_SERVICE_DB_HOST
+            - name: cft-hearing-service-POSTGRES-PORT
+              alias: CFT_HEARING_SERVICE_DB_PORT
+            - name: cft-hearing-service-POSTGRES-DATABASE
+              alias: CFT_HEARING_SERVICE_DB_NAME
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CONFIG: DEBUG
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_SERVICE: DEBUG
