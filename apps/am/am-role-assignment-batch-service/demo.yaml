@@ -7,36 +7,12 @@ spec:
     job:
       schedule: "*/10 * * * *"
       image: hmctspublic.azurecr.io/am/role-assignment-batch-service:prod-9cced15-20240624134252 #{"$imagepolicy": "flux-system:demo-am-role-assignment-batch-service"}
-      keyVaults:
-        am:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: am-role-assignment-service-s2s-secret
-              alias: AM_ROLE_ASSIGNMENT_SERVICE_SECRET
-            - name: role-assignment-service-POSTGRES-PASS
-              alias: ROLE_ASSIGNMENT_DB_PASSWORD
-            - name: role-assignment-service-POSTGRES-USER
-              alias: ROLE_ASSIGNMENT_DB_USERNAME
-            - name: role-assignment-service-POSTGRES-HOST
-              alias: ROLE_ASSIGNMENT_DB_HOST
-            - name: am-sendgrid-api-key
-              alias: AM_SENDGRID_API_KEY
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: judicial-booking-service-POSTGRES-PASS
-              alias: JUDICIAL_BOOKING_SERVICE_POSTGRES_PASS
-            - name: judicial-booking-service-POSTGRES-USER
-              alias: JUDICIAL_BOOKING_SERVICE_POSTGRES_USER
-            - name: judicial-booking-service-POSTGRES-HOST
-              alias: JUDICIAL_BOOKING_SERVICE_POSTGRES_HOST
-            - name: role-assignment-batch-service-EMAIL-LIST
-              alias: EMAIL_LIST
       environment:
         DELETE_ORG: false
         CCD_AM_MIGRATION_MASTER_FLAG: false
         MIGRATION_MASTERFLAG: false
         MIGRATION_RENAMETABLES: false
         CCD_AM_MIGRATION_RENAME_TABLES_FLAG: false
-        EMAIL_ENABLED: true
+        EMAIL_LIST: sankar.padakula@hmcts.net
+        EMAIL_ENABLED: false
         AM_SENDGRID_API_EMAIL_FROM: no-reply@mail-am-nonprod.platform.hmcts.net
