@@ -5,6 +5,7 @@ metadata:
 spec:
   values:
     java:
+      image: hmctsprivate.azurecr.io/camunda/bpm:pr-849-ecbff45-20240702091349 #{"$imagepolicy": "flux-system:perftest-camunda"}
       environment:
         CAMUNDA_DB_HOST: "hmcts-camunda-v14-flexible-{{ .Values.global.environment }}.postgres.database.azure.com"
         CAMUNDA_DB_USER_NAME: "camundaadmin"
@@ -12,7 +13,5 @@ spec:
         LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG: DEBUG
         LOGGING_LEVEL_COM_ZAXXER_HIKARI: TRACE
         LOGGING_LEVEL_ROOT: INFO
-        CAMUNDA_HISTORY_CLEANUP_START_TIME: "12:15+0100"
-        CAMUNDA_HISTORY_CLEANUP_END_TIME: "13:45+0100"
-        CAMUNDA_HISTORY_CLEANUP_STRATEGY: "removalTimeBased"
-        CAMUNDA_PARALLELISM: 1
+        CAMUNDA_HISTORY_CLEANUP_START_TIME: "12:00+0100"
+        CAMUNDA_HISTORY_CLEANUP_END_TIME: "14:00+0100"
