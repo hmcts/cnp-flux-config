@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-hwf-process-awp
+  namespace: private-law
+spec:
+  releaseName: prl-cron-hwf-process-awp
+  values:
+    job:
+      keyVaults:
+        prl:
+          secrets:
+            - prl-cos-idam-client-secret
+            - microservicekey-prl-cos-api
+            - system-update-user-username
+            - system-update-user-password
+            - notification-client-api-key
+            - test-genericpassword
+            - launchDarkly-sdk-key
+            - send-grid-api-key
+            - rpa-notify-to-email
+            - rpa-notify-from-email
+            - AppInsightsInstrumentationKey
+            - southampton-court-email-address
+            - idam-solicitor-username
+            - idam-solicitor-password
+            - filtered-court-ids
+            - da-filtered-court-ids
+            - ca-default-court-epimms-id
+            - postcode-lookup-token
+            - prl-rd-api-system-username
+            - prl-rd-api-system-user-password
+            - welsh-court-mapping
+            - app-insights-connection-string
+      image: hmctspublic.azurecr.io/prl/cos:prod-09313a2-20240702154357 #{"$imagepolicy": "flux-system:prl-cos"}
+      environment:
+        TASK_NAME: Fm5ReminderNotificationTask
+        HEARING_AWAY_DAYS: 18
+        VAR: trigger1
+        FEATURE_EXAMPLE: true
+        APP_ENV: "prod"
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-prod.service.core-compute-prod.internal
+        PRL_DGS_API_URL: http://prl-dgs-prod.service.core-compute-prod.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
+        XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
+        CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
+        FM5_REMINDER_APPLICANT_RESPONDENT_SOLICITOR: d-b6b04932b1ac464b9a8c718d1b1a604a
+      schedule: 0 5 31 2 *
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod
