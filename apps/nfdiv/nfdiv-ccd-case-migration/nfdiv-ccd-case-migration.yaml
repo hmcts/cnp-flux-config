@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-ccd-case-migration
+spec:
+  releaseName: nfdiv-ccd-case-migration
+  values:
+    job:
+      image: hmctspublic.azurecr.io/nfdiv/ccd-case-migration:prod-90e879f-20240626135612 #{"$imagepolicy": "flux-system:nfdiv-ccd-case-migration"}
+      schedule: "0 * * * *"
+      suspend: true
+      environment:
+        MIGRATION_ID: NFDIV-4080
+        MIGRATION_CASETYPE: NFD-MIGRATION
+        MIGRATION_ENABLED: false
+        DEFAULT_QUERY_SIZE: 1
+        RETRY_FAILURES: true
+      keyVaults:
+        nfdiv:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: s2s-case-api-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: idam-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: idam-systemupdate-username
+              alias: IDAM_USERNAME
+            - name: idam-systemupdate-password
+              alias: IDAM_PASSWORD
+  chart:
+    spec:
+      chart: ./stable/nfdiv-ccd-case-migration
+      version: 0.0.23
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
