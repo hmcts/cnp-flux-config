@@ -1,17 +1,17 @@
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: rpe-response-api-slack
   namespace: response
   annotations:
+    kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
     - host: response-api-slack.platform.hmcts.net
       http:
         paths:
-          - path: /slack/
+          - path: /slack
             pathType: Prefix
             backend:
               service:
