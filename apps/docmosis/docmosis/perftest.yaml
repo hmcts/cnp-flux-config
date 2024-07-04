@@ -4,10 +4,12 @@ metadata:
   name: docmosis
 spec:
   values:
+    replicas: 3
     ingressHost: docmosis.perftest.platform.hmcts.net
     image: hmctsprivate.azurecr.io/docmosis:perftest-a166909-607396 #{"$imagepolicy": "flux-system:perftest-docmosis"}
     java:
-      memoryRequests: "2Gi"
+      memoryRequests: "3Gi"
+      memoryLimits: "4Gi"
       keyVaults:
         docmosis-infra:
           secrets:
