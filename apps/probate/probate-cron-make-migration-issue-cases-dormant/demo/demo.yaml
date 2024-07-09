@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-make-migration-issue-cases-dormant
+spec:
+  releaseName: probate-cron-make-migration-issue-cases-dormant
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2619-69e4ce7-20240624112030 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0,20,40 * * * *"
+      environment:
+        TRIG: trig-1
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
