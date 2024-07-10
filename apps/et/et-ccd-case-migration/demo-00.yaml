@@ -5,9 +5,9 @@ metadata:
 spec:
   values:
     job:
-      suspend: true
-      schedule: "*/30 * * * *"
-      image: hmctspublic.azurecr.io/et/migration:prod-30a5074-20240708081003 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
+      suspend: false
+      schedule: "*/56 * * * *"
+      image: hmctspublic.azurecr.io/et/migration:prod-b5b5da7-20240709065737 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
@@ -17,6 +17,7 @@ spec:
         IDAM_CLIENT_REDIRECT_URI: https://et-cos-demo.service.core-compute-demo.internal/oauth2redirect
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_ROLLBACK: false
+        MIGRATION_CASETYPE: Leeds
     global:
       environment: demo
       enableKeyVaults: true
