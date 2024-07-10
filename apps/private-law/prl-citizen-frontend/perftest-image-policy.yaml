@@ -3,5 +3,11 @@ kind: ImagePolicy
 metadata:
   name: perftest-prl-citizen-frontend
 spec:
+  filterTags:
+    pattern: '^pr-1498-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: prl-citizen-frontend
