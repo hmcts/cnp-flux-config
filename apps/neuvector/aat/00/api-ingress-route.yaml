@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: nv-ingressroute-api
+  namespace: neuvector
+spec:
+  routes:
+  - match: HostSNI(`cft-neuvector00-api.aat.platform.hmcts.net`)
+    services:
+    - name: neuvector-svc-controller-api
+      port: 10443
+  entryPoints:
+  - websecure
+  - web
+  tls:
+    passthrough: true
