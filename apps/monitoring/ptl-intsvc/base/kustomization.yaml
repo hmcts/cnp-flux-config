@@ -1,20 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../opentelemetry-collector
-- ../../kube-prometheus-stack/jenkins-alerts-rules.yaml
-- ../../flux-monitoring
-- ../../version-reporter
-- ../../identity/identity.yaml
-- prometheus-values.yaml
-- opentelemetry-values.yaml
+  - ../../base
+  - ../../opentelemetry-collector
+  - ../../kube-prometheus-stack/jenkins-alerts-rules.yaml
+  - ../../flux-monitoring
+  - ../../version-reporter
+  - ../../identity/identity.yaml
+  - prometheus-values.yaml
+  - opentelemetry-values.yaml
 
 patches:
-- path: ../../kube-prometheus-stack/empty-nodelocaldns-alert-rules.yaml
-- path: ../../kube-prometheus-stack/jenkins-service-monitors.yaml
-- path: ../../version-reporter/paloalto/ptl.yaml
-- path: ../../version-reporter/platopsapps/environment-patches/ptl.yaml
-- path: ../../version-reporter/helmcharts/environment-patches/ptl.yaml
-- path: ../../identity/ptl-intsvc.yaml
-- path: ../../serviceaccount/ptl-intsvc.yaml
+  - path: ../../kube-prometheus-stack/empty-nodelocaldns-alert-rules.yaml
+  - path: ../../kube-prometheus-stack/jenkins-service-monitors.yaml
+  - path: ../../version-reporter/paloalto/ptl.yaml
+  - path: ../../version-reporter/platopsapps/environment-patches/ptl.yaml
+  - path: ../../version-reporter/helmcharts/environment-patches/ptl-intsvc.yaml
+  - path: ../../identity/ptl-intsvc.yaml
+  - path: ../../serviceaccount/ptl-intsvc.yaml
