@@ -22,6 +22,8 @@ spec:
       enableKeyVaults: true
     schedule: "30 8 * * 1-5" # interval 8:30am weekdays
     concurrencyPolicy: "Forbid"
+    spotInstances:
+      enabled: false
     failedJobsHistoryLimit: 5
     startingDeadlineSeconds: 300
     successfulJobsHistoryLimit: 5
@@ -29,7 +31,7 @@ spec:
     restartPolicy: Never
     runAsRoot: true
     kind: CronJob
-    image: hmctspublic.azurecr.io/version-reporter-service/platopsapps:prod-48a1cfc-20240703152746 #{"$imagepolicy": "flux-system:version-reporter-platopsapps"}
+    image: hmctspublic.azurecr.io/version-reporter-service/platopsapps:prod-a464868-20240710085012 #{"$imagepolicy": "flux-system:version-reporter-platopsapps"}
     imagePullPolicy: Always
     environment:
       COSMOS_DB_CONTAINER: platopsapps
