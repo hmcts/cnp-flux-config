@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-logstash
+spec:
+  releaseName: ccd-logstash-civil
+  values:
+    logstashPipeline:
+      01_input.conf: |
+        input {
+          jdbc {
+            jdbc_connection_string => "${DATA_STORE_URL}"
+            jdbc_user => "${DATA_STORE_USER}"
+            jdbc_password => "${DATA_STORE_PASS}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_default_timezone => "UTC"
+            parameters => {
+                        "jurisdiction" => "CIVIL"
+                          }
+            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction = :jurisdiction RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            clean_run => false
+            schedule => "* * * * * *"
+          }
+        }
