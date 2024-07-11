@@ -11,10 +11,15 @@ spec:
       suspend: true
       environment:
         MIGRATION_ID: NFDIV-4080
-        MIGRATION_CASETYPE: NFD-MIGRATION
-        MIGRATION_ENABLED: false
-        DEFAULT_QUERY_SIZE: 1
+        MIGRATION_CASETYPE: NFD
+        MIGRATION_ENABLED: true
+        MIGRATION_QUERY_SIZE: 10000
+        MIGRATION_CASE_LIMIT: 500
         RETRY_FAILURES: true
+        IDAM_API_URL: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
+        IDAM_S2S_URL: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        IDAM_REDIRECT_URL: https://nfdiv.{{ .Values.global.environment }}.platform.hmcts.net/oauth2/callback
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       keyVaults:
         nfdiv:
           secrets:
@@ -25,7 +30,7 @@ spec:
             - name: idam-secret
               alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
             - name: idam-systemupdate-username
-              alias: IDAM_USERNAME
+              alias: IDAM_USER
             - name: idam-systemupdate-password
               alias: IDAM_PASSWORD
   chart:
