@@ -3,17 +3,10 @@ kind: HelmRelease
 metadata:
   name: nfdiv-ccd-case-migration
 spec:
-  releaseName: nfdiv-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/ccd-case-migration:prod-90e879f-20240626135612 #{"$imagepolicy": "flux-system:nfdiv-ccd-case-migration"}
-      disableActiveClusterCheck: false
       suspend: false
       environment:
-        IDAM_API_URL: https://idam-api.platform.hmcts.net
-        IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
-        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
-        IDAM_REDIRECT_URL: https://nfdiv-apply-for-divorce.prod.platform.hmcts.net/oauth/callback
         MIGRATION_ENABLED: true
     global:
       jobKind: CronJob
