@@ -8,7 +8,7 @@ spec:
     job:
       image: hmctspublic.azurecr.io/nfdiv/ccd-case-migration:prod-a07e1a6-20240711131624 #{"$imagepolicy": "flux-system:nfdiv-ccd-case-migration"}
       disableActiveClusterCheck: false
-      schedule: "0 * * * *"
+      schedule: "0,30 * * * *"
       suspend: true
       environment:
         MIGRATION_ID: NFDIV-4080
@@ -36,8 +36,7 @@ spec:
               alias: IDAM_PASSWORD
   chart:
     spec:
-      chart: ./stable/nfdiv-ccd-case-migration
-      version: 0.0.23
+      chart: nfdiv-ccd-case-migration
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
