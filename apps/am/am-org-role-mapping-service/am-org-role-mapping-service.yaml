@@ -7,8 +7,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1536Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-ec5edb0-20240709161916 #{"$imagepolicy": "flux-system:am-org-role-mapping-service"}
+      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-7ea23f6-20240711132420 #{"$imagepolicy": "flux-system:am-org-role-mapping-service"}
   chart:
     spec:
       chart: ./stable/am-org-role-mapping-service
