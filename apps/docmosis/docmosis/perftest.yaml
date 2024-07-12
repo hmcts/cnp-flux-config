@@ -1,10 +1,17 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: docmosis
 spec:
   values:
+    replicas: 3
     ingressHost: docmosis.perftest.platform.hmcts.net
-    image: hmctsprivate.azurecr.io/docmosis:perftest-b85cd27-556199 #{"$imagepolicy": "flux-system:perftest-docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:perftest-4249f97-612147 #{"$imagepolicy": "flux-system:perftest-docmosis"}
     java:
-      memoryRequests: '2Gi'
+      memoryRequests: "3Gi"
+      memoryLimits: "4Gi"
+      keyVaults:
+        docmosis-infra:
+          secrets:
+            - name: appinsights-connection-string
+              alias: appinsights-connection-string

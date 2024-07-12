@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-professional-api
@@ -6,34 +6,6 @@ spec:
   releaseName: rd-professional-api
   values:
     java:
-      autoscaling:
-        enabled: true
-        maxReplicas: 4
-      memoryRequests: '2048Mi'
-      memoryLimits: '2048Mi'
-      keyVaults:
-        rd:
-          secrets:
-            - name: professional-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: professional-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: professional-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: professional-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: professional-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: professional-api-s2s-secret
-              alias: PROFESSIONAL_API_S2S_SECRET
-            - name: rd-prd-storage-account-name
-              alias: ACCOUNT_NAME
-            - name: rd-prd-storage-account-primary-key
-              alias: ACCOUNT_KEY
       environment:
         DUMMY_VAR: true
         DELETE_ORG: false
@@ -43,6 +15,3 @@ spec:
         CONTAINER_NAME: rd-prd-data
         SCHEDULER_ENABLED: false
         CRON_EXPRESSION: "0 0 0 25 03 ?"
-        POSTGRES_HOST: rd-professional-api-postgres-db-v16-perftest.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_DB_NAME: dbrefdata

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: case-payment-orders-api
@@ -6,6 +6,7 @@ spec:
   values:
     java:
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: 1
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
+        CPO_CASE_PAYMENT_ORDERS_DB_HOST: cpo-case-payment-orders-api-postgres-db-v15-prod.postgres.database.azure.com

@@ -1,12 +1,14 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: repl-docmosis-service
   namespace: ethos
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: repl-docmosis-service
   values:
     java:
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-99fd631-20240404105938 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-78d8973-20240711094340 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
       environment:
         TRIGGER_RESTART: 2

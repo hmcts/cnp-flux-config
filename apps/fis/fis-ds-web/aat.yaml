@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fis-ds-web
+  namespace: fis
+spec:
+  values:
+    nodejs:
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      image: hmctspublic.azurecr.io/fis/ds-web:prod-03d4f01-20230117164120 #{"$imagepolicy": "flux-system:fis-ds-web"}
+      environment:
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/login
+        REFORM_TEAM: fis
+        REFORM_SERVICE_NAME: fis-ds-web
+        RPE_API: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        FIS_COS_API: http://fis-cos-api-aat.service.core-compute-aat.internal
+        REDIS_HOST: fis-ds-web-session-storage-aat.redis.cache.windows.net

@@ -13,7 +13,7 @@ Update `./apps/neuvector/neuvector/neuvector.yaml` with the latest chart version
 ```YAML
   chart:
     spec:
-      version: 1.5.4
+      version: 1.5.8
 ```
 
 ## CRDs

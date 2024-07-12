@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-role-assignment-refresh-batch
@@ -6,25 +6,7 @@ spec:
   values:
     job:
       schedule: "*/20 * * * *"
-      keyVaults:
-        am:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: orm-IDAM-CLIENT-ID
-              alias: ORM_IDAM_CLIENT_ID
-            - name: orm-IDAM-CLIENT-SECRET
-              alias: ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET
-            - name: orm-IDAM-ADMIN-SECRET
-              alias: ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD
-            - name: am-role-assignment-refresh-batch-s2s-secret
-              alias: AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: org-role-mapping-service-POSTGRES-PASS-V15
-              alias: ORG_ROLE_MAPPING_DB_PASSWORD
       environment:
         AM_INFO: true
         DELETE_ORG: true
-        ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-postgres-db-v15-perftest.postgres.database.azure.com
-        ORG_ROLE_MAPPING_DB_USERNAME: pgadmin
+        REFRESH_JOB_DELAY_DURATION: 60000

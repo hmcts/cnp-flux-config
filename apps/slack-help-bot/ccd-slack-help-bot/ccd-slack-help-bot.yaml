@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-slack-help-bot
@@ -7,23 +7,28 @@ spec:
   releaseName: ccd-slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/ccd/slack-help-bot:prod-3650c7a-20240219163924 #{"$imagepolicy": "flux-system:ccd-slack-help-bot"}
+    image: hmctspublic.azurecr.io/ccd/slack-help-bot:prod-b75ddf2-20240625130320 #{"$imagepolicy": "flux-system:ccd-slack-help-bot"}
     environment:
       CCD_SLACK_REPORT_CHANNEL: ccd_support
       CCD_SLACK_REPORT_CHANNEL_ID: CG1QC1L66
       CCD_JIRA_PROJECT: CCD
-      CCD_JIRA_ISSUE_TYPE_ID: 17602
-      CCD_JIRA_ISSUE_TYPE_NAME: "Support Request"
+      CCD_JIRA_ISSUE_TYPE_ID: 18400
+      CCD_JIRA_ISSUE_TYPE_NAME: "Support"
       CFTS_SLACK_REPORT_CHANNEL: cft-support
       CFTS_SLACK_REPORT_CHANNEL_ID: C020EH6BYSX
       CFTS_JIRA_PROJECT: CFTS
-      CFTS_JIRA_ISSUE_TYPE_ID: 17602
-      CFTS_JIRA_ISSUE_TYPE_NAME: "Support Request"
+      CFTS_JIRA_ISSUE_TYPE_ID: 18400
+      CFTS_JIRA_ISSUE_TYPE_NAME: "Support"
+      XUI_SLACK_REPORT_CHANNEL: cft-support
+      XUI_SLACK_REPORT_CHANNEL_ID: C020EH6BYSX
+      XUI_JIRA_PROJECT: CFTS
+      XUI_JIRA_ISSUE_TYPE_ID: 18400
+      XUI_JIRA_ISSUE_TYPE_NAME: "Support"
       HMC_SLACK_REPORT_CHANNEL: hmc-support
       HMC_SLACK_REPORT_CHANNEL_ID: C068PNG4GRY
       HMC_JIRA_PROJECT: HMAN
-      HMC_JIRA_ISSUE_TYPE_ID: 17602
-      HMC_JIRA_ISSUE_TYPE_NAME: "Support Request"
+      HMC_JIRA_ISSUE_TYPE_ID: 18400
+      HMC_JIRA_ISSUE_TYPE_NAME: "Support"
       DUMMY_VAR: 1
     keyVaults:
       cftptl-intsvc:

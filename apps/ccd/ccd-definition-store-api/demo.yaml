@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-definition-store-api
@@ -13,24 +13,7 @@ spec:
       cpuLimits: "4"
       autoscaling:
         enabled: false
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:pr-1346-97ee9ee-20240408143051 #{"$imagepolicy": "flux-system:demo-ccd-definition-store-api"}
-      keyVaults:
-        ccd:
-          secrets:
-            - name: definition-store-api-POSTGRES-USER-V15
-              alias: DEFINITION_STORE_DB_USERNAME
-            - name: definition-store-api-POSTGRES-PASS-V15
-              alias: DEFINITION_STORE_DB_PASSWORD
-            - name: ccd-definition-s2s-secret
-              alias: DEFINITION_STORE_IDAM_KEY
-            - name: ccd-ELASTIC-SEARCH-URL
-              alias: ELASTIC_SEARCH_HOST
-            - name: ccd-ELASTIC-SEARCH-PASSWORD
-              alias: ELASTIC_SEARCH_PASSWORD
-            - name: storage-account-primary-connection-string
-              alias: AZURE_STORAGE_CONNECTION_STRING
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-6bd7bb5-20240703093411 #{"$imagepolicy": "flux-system:demo-ccd-definition-store-api"}
       environment:
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
         DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"

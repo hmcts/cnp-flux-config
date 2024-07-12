@@ -1,12 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-ccd-case-migration
 spec:
   values:
     job:
-      suspend: true
-      schedule: "*/5 * * * *"
+      suspend: false
+      schedule: "*/56 * * * *"
+      image: hmctspublic.azurecr.io/et/migration:prod-b5b5da7-20240709065737 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
@@ -14,8 +15,9 @@ spec:
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/hmcts
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         IDAM_CLIENT_REDIRECT_URI: https://et-cos-demo.service.core-compute-demo.internal/oauth2redirect
-        MIGRATION_QUERY_SIZE: 100
+        MIGRATION_QUERY_SIZE: 10000
         MIGRATION_ROLLBACK: false
+        MIGRATION_CASETYPE: Leeds
     global:
       environment: demo
       enableKeyVaults: true

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: repl-docmosis-service
@@ -8,8 +8,13 @@ spec:
   values:
     java:
       replicas: 2
+      memoryLimits: "3072Mi"
+      memoryRequests: "2048Mi"
+      cpuLimits: "2000m"
+      cpuRequests: "250m"
+      readinessDelay: 45
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-99fd631-20240404105938 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-78d8973-20240711094340 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
     environment:
       SECURE_DOC_STORE_FEATURE: false
   chart:

@@ -1,44 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-profile-sync
 spec:
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: profile-sync-s2s-secret
-              alias: S2S_SECRET
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: SEARCH-QUERY-FROM
-              alias: scheduler.hours
-            - name: CRON-SCHEDULE
-              alias: scheduler.config
-            - name: profile-sync-POSTGRES-DATABASE-v16
-              alias: POSTGRES_NAME
-            - name: profile-sync-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: profile-sync-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: profile-sync-POSTGRES-USER-V16
-              alias: POSTGRES_USERNAME
-            - name: profile-sync-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
-            - name: OAUTH2-REDIRECT-URI
-              alias: OAUTH2_REDIRECT_URI
-            - name: OAUTH2-CLIENT-SECRET
-              alias: OAUTH2_CLIENT_SECRET
-            - name: OAUTH2-CLIENT-ID
-              alias: OAUTH2_CLIENT_ID
-            - name: idam-rd-system-user-username
-              alias: RD_SYSTEM_USER_USERNAME
-            - name: idam-rd-system-user-password
-              alias: RD_SYSTEM_USER_PASSWORD
       environment:
         DELETE_ORG: false
-        POSTGRES_HOST: rd-profile-sync-postgres-db-v16-aat.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_NAME: dbsyncdata
-        POSTGRES_PORT: 5432
+        DUMMY_VAR: true

@@ -1,52 +1,17 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-judicial-api
 spec:
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: judicial-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: judicial-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: judicial-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: judicial-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: judicial-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
-            - name: judicial-api-elinks-api-key
-              alias: judicial_api_elinks_api_key
-            - name: judicial-api-s2s-secret
-              alias: JUDICIAL_API_S2S_SECRET
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: OAUTH2-CLIENT-SECRET
-              alias: OAUTH2_CLIENT_SECRET
-            - name: OAUTH2-AUTH
-              alias: OAUTH2_AUTH
-            - name: OAUTH2-CLIENT-AUTH
-              alias: OAUTH2_CLIENT_AUTH
-            - name: rd-sendgrid-api-key
-              alias: RD_SENDGRID_API_KEY
-            - name: judicial-topic-primary-send-listen-shared-access-key
-              alias: JUDICIAL_TOPIC_PRIMARY_SEND_LISTEN_SHARED_ACCESS_KEY
-            - name: idam-rd-system-user-username
-              alias: RD_SYSTEM_USER_USERNAME
-            - name: idam-rd-system-user-password
-              alias: RD_SYSTEM_USER_PASSWORD
-      image: hmctspublic.azurecr.io/rd/judicial-api:prod-dab65fd-20240409110730 #{"$imagepolicy": "flux-system:rd-judicial-api"}
+      image: hmctspublic.azurecr.io/rd/judicial-api:prod-8aef494-20240705165452 #{"$imagepolicy": "flux-system:rd-judicial-api"}
       environment:
-        DUMMY_VAR: true
+        DUMMY_VAR: false
         DELETE_ORG: true
         TEST_IDAM_ENABLED: true
         TEST_IDAM_URL: https://idam-api.demo.platform.hmcts.net
-        JRD_S2S_AUTHORISED_SERVICES: rd_judicial_api,am_org_role_mapping_service,iac,xui_webapp,civil_service,civil_general_applications,sscs,ccd_data,sscs_bulkscan,sptribs_case_api,fis_hmc_api,adoption_cos_api,prl_cos_api,jps_judicial_payment_frontend,jps_judicial_payment_service,et_cos,fpl_case_service
+        JRD_S2S_AUTHORISED_SERVICES: rd_judicial_api,am_org_role_mapping_service,iac,xui_webapp,civil_service,civil_general_applications,sscs,ccd_data,sscs_bulkscan,sptribs_case_api,fis_hmc_api,adoption_cos_api,prl_cos_api,et_cos,fpl_case_service
         JRD_SEARCH_SERVICE_CODE: bfa1,bba3,aaa6,aaa7,aba5,aba3,bba2,aba4,bha1
         #elinks property
         ELINKS_URL: https://jo-staging.elinks.judiciary.uk/api/v5
@@ -54,12 +19,8 @@ spec:
         SCHEDULER_ENABLED: false
         CRON_EXPRESSION: "0 0 0 25 03 ?"
         PER_PAGE: 200
-        INCLUDE_PREVIOUS_APPOINTMENT: false
+        INCLUDE_PREVIOUS_APPOINTMENT: true
         THREAD_PAUSE_TIME: 2000
         THREAD_RETRIGGER_TIME: 1000
         JRD_DATA_PER_MESSAGE: 75
         CUSTOMIZE_UPDATEDSINCE: true
-        POSTGRES_HOST: rd-judicial-ref-api-postgres-db-v16-demo.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_DB_NAME: dbjuddata
-        POSTGRES_PORT: 5432

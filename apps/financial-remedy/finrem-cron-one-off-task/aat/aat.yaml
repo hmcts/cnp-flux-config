@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cron-one-off-task
@@ -6,35 +6,27 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "0/30 * * * *"
+      schedule: "0 0 15 5 *"
       environment:
-        CRON_LIST_FOR_HEARING_ENABLED: false
+        TASK_NAME: CfvUpdateTask
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
+        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
         SECURE_DOC_ENABLED: false
         FEATURE_PBA_CASE_TYPE: false
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
+        FEATURE_CFV_ENABLED: true
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
+        CRON_WAIT_TIME_MINS: 1
+        CRON_LIST_FOR_HEARING_ENABLED: false
         CRON_GENERAL_APPLICATION_REMOVE_ENABLED: false
         CRON_APPLICATION_TYPE_ADD_ENABLED: false
         CRON_CFV_CATEGORISATION_TASK_ENABLED: false
-        CRON_CFV_CATEGORISATION_RELEASE_DATE: "06-02-2024 23:59"
-        CRON_CFV_CATEGORISATION_BATCH_SIZE: 1500
-        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
-        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
-        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
-        VAR_TA: trigger5
-        DUMMY_PROPERTY: DUMMY1
+        CRON_CFV_UPDATE_TASK_ENABLED: false
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: aat
-  chart:
-    spec:
-      chart: finrem-cron
-      version: 0.0.4
-      sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
-        namespace: flux-system

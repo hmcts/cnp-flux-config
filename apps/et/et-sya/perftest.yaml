@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-sya
@@ -7,5 +7,8 @@ spec:
   releaseName: et-sya
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/et/sya:prod-2a3c1b2-20240410090910 #{"$imagepolicy": "flux-system:et-sya"}
+      image: hmctspublic.azurecr.io/et/sya:prod-d66714a-20240712100332 #{"$imagepolicy": "flux-system:et-sya"}
       ingressHost: et-sya.perftest.platform.hmcts.net
+      environment:
+        MANAGE_ORG_URL: 'https://manage-org.perftest.platform.hmcts.net'
+        MANAGE_CASE_URL: 'https://manage-case.perftest.platform.hmcts.net'

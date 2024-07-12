@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-msg-handler
@@ -9,7 +9,11 @@ spec:
       enableOAuth: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/msg-handler:prod-229250e-20240410082544 #{"$imagepolicy": "flux-system:et-msg-handler"}
+      memoryLimits: "2560Mi"
+      memoryRequests: "1700Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "100m"
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-cacb43a-20240712085414 #{"$imagepolicy": "flux-system:et-msg-handler"}
   chart:
     spec:
       chart: ./stable/et-msg-handler

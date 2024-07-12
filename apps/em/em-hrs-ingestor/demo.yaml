@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
@@ -6,7 +6,11 @@ spec:
   values:
     job:
       schedule: "*/30 * * * *"
+      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-e873759-20240712085458 #{"$imagepolicy": "flux-system:demo-em-hrs-ingestor"}
       environment:
         VH_PROCESS_BACK_TO_DAY: 2
         VH_PROCESS: true
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
       # Run every 30 minutes as demo is a single cluster
+      spotInstances:
+        enabled: true

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-anno
@@ -7,8 +7,13 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      image: hmctspublic.azurecr.io/em/anno:prod-2223497-20240410080743 #{"$imagepolicy": "flux-system:em-anno"}
+      replicas: 2 # minReplicas will default to this value
+      memoryRequests: '1536Mi'
+      autoscaling:
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
+      image: hmctspublic.azurecr.io/em/anno:prod-fd52b78-20240712111954 #{"$imagepolicy": "flux-system:em-anno"}
       environment:
         ENABLE_METADATA_ENDPOINT: true
         TEST_VAR: value1

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-api
@@ -7,12 +7,14 @@ spec:
   values:
     java:
       useInterpodAntiAffinity: true
-      replicas: 2
-      cpuLimits: "2000m"
+      replicas: 2 # minReplicas will default to this value
+      memoryRequests: "2304Mi"
       cpuRequests: "1000m"
-      memoryLimits: "2048Mi"
-      memoryRequests: "1024Mi"
-      image: hmctspublic.azurecr.io/em/hrs-api:prod-32f6160-20240410085259 #{"$imagepolicy": "flux-system:em-hrs-api"}
+      memoryLimits: "3072Mi"
+      cpuLimits: "2000m"
+      autoscaling:
+        maxReplicas: 4
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-d3fe5c6-20240711100856 #{"$imagepolicy": "flux-system:em-hrs-api"}
       environment:
   chart:
     spec:

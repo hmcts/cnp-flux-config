@@ -1,11 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
 spec:
   values:
     job:
-      schedule: "*/30 * * * *"
+      schedule: "0 0 31 2 *" #Uses schedule-off.yaml schedule to disable the job
+      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-e873759-20240712085458 #{"$imagepolicy": "flux-system:perftest-em-hrs-ingestor"}
       environment:
         USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: false
         ENABLE_CRONJOB: true

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-ccd-case-migration
@@ -7,6 +7,7 @@ spec:
     job:
       suspend: true
       schedule: "*/5 * * * *"
+      image: hmctspublic.azurecr.io/et/migration:prod-b5b5da7-20240709065737 #{"$imagepolicy": "flux-system:et-ccd-case-migration"}
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
@@ -16,7 +17,7 @@ spec:
         IDAM_CLIENT_REDIRECT_URI: https://et-cos-demo.service.core-compute-demo.internal/oauth2redirect
         MIGRATION_QUERY_SIZE: 100
         MIGRATION_ROLLBACK: false
-        MIGRATION_CASETYPE: ET_Scotland
+        MIGRATION_CASETYPE: Leeds
     global:
       environment: demo
       enableKeyVaults: true
