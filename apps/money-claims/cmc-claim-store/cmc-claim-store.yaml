@@ -8,6 +8,15 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "2048Mi"
+      memoryLimits: "2508Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enable: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 125
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/cmc/claim-store:prod-56b9b2b-20240710140134 #{"$imagepolicy": "flux-system:cmc-claim-store"}
       environment:
