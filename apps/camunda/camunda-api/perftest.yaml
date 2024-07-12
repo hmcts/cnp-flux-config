@@ -5,10 +5,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprivate.azurecr.io/camunda/bpm:pr-849-81306a8-20240709113754 #{"$imagepolicy": "flux-system:perftest-camunda"}
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-ede72f8-20240712104534 #{"$imagepolicy": "flux-system:perftest-camunda"}
       memoryRequests: '2Gi'
       memoryLimits: '4Gi'
       cpuRequests: '1'
       cpuLimits: '2'
       environment:
         WA_AUTO_CONFIGURE_TASKS_ENABLED: false
+        CAMUNDA_HISTORY_CLEANUP_START_TIME: "12:00+0100"
+        CAMUNDA_HISTORY_CLEANUP_END_TIME: "14:00+0100"
+        CAMUNDA_HISTORY_CLEANUP_STRATEGY: "removalTimeBased"

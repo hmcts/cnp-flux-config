@@ -5,20 +5,12 @@ metadata:
 spec:
   values:
     java:
-      replicas: 2
-      memoryRequests: "1536Mi"
-      memoryLimits: "2048Mi"
-      cpuRequests: "250m"
-      cpuLimits: "1500m"
-      autoscaling:
-        enabled: true
-        maxReplicas: 4
-        memory:
-          enabled: false
       environment:
         AM_INFO: false
         APPLICATION_LOGGING_LEVEL: INFO
         DB_FEATURE_FLAG_ENABLE: employment_wa_1_0
-        AMQP_JRD_NEW_ASB_ENABLED: false
+        AMQP_JRD_NEW_ASB_ENABLED: true
         AMQP_CRD_NEW_ASB_ENABLED: false
         DUMMY_VAR: true
+        REFRESH_JOB: LEGAL_OPERATIONS-SSCS-NEW-0-44:LEGAL_OPERATIONS-SSCS-NEW-0-45:LEGAL_OPERATIONS-SSCS-NEW-0-46
+        REFRESH_BULK_ASSIGNMENT_INCLUDE_BOOKINGS: true

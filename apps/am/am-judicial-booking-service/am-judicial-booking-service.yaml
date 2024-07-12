@@ -7,8 +7,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-43b6fbc-20240708170321 #{"$imagepolicy": "flux-system:am-judicial-booking-service"}
+      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-b6d65fc-20240709170706 #{"$imagepolicy": "flux-system:am-judicial-booking-service"}
   chart:
     spec:
       chart: ./stable/am-judicial-booking-service
