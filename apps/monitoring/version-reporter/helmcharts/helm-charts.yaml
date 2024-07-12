@@ -28,7 +28,7 @@ spec:
     backoffLimit: 3
     restartPolicy: Never
     runAsRoot: true
-    kind: linux
+    kind: CronJob
     image: hmctspublic.azurecr.io/version-reporter-service/helmcharts:prod-7a22702-20240705121136 #{"$imagepolicy": "flux-system:version-reporter-helmcharts"}
     imagePullPolicy: Always
     environment:
@@ -46,7 +46,7 @@ spec:
           - name: cosmos-db-name
             alias: COSMOS_DB_NAME
     nodeSelector:
-      agentpool: cronjob
+      agentpool: linux
     tolerations:
       - key: dedicated
         effect: NoSchedule
