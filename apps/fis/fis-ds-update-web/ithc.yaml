@@ -7,6 +7,12 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/fis/ds-update-web:pr-89-d75dc14-20230317141052 #{"$imagepolicy": "flux-system:ithc-fis-ds-update-web"}
+      keyVaults:
+        fis-kv:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - redis-access-key
+            - redis-access-key-v6
       environment:
         FEATURE_EXAMPLE: true
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net/o/token
