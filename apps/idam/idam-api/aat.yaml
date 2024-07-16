@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,14 +7,14 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-460738d-20240129112804
+      image: hmctspublic.azurecr.io/idam/api:prod-ceed6b2-20240621132404
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
         TESTING_SUPPORT_ENABLED: true
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.aat.platform.hmcts.net
+        STRATEGIC_ADMIN_URL: https://idam-user-dashboard.aat.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.aat.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-aat.internal:8443/openam
@@ -24,6 +24,7 @@ spec:
         IDAMHEALTHCHECK_AM_TARGET: http://forgerock-am.service.core-compute-idam-aat.internal:9292
         IDAMHEALTHCHECK_IDM_TARGET: http://forgerock-idm.service.core-compute-idam-aat.internal:9292
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIME_TO_LIVE: "60s"
+        MANAGEMENT_HEALTH_JMS_ENABLED: false
         SSL_TRUST_DNS_0: C=UK,ST=London,L=London,O=Amido,CN=*.service.core-compute-idam-aat2.internal,emailAddress=devops@amido.com
         SSL_TRUST_DNS_1: C=None,ST=None,L=None,OU=None,O=OpenDJ Self-Signed Certificate,CN=openidm-localhost
         SSL_TRUST_DNS_2: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-aat2.internal,emailAddress=devops@hmcts.net
@@ -46,6 +47,7 @@ spec:
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
         LOG_AND_AUDIT_IDAM_ENABLED: true
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: true
+        IDAM_RATELIMIT_PASSWORDGRANT_TOKENLIMIT: 300
         IDAM_SCHEDULED_BATCH_PROCESSING_ENABLED: false
         FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
         FEATUREFLAGS_PULLREQUESTREWRITEENABLED: true
@@ -53,6 +55,7 @@ spec:
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CACHE: DEBUG
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_INTEGRATION_REDIS: DEBUG
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
@@ -62,11 +65,14 @@ spec:
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
-        trigger_deploy: 21/06/2023-1200
+        SPRING_JMS_SERVICEBUS_ENABLED: false
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-aat.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 1c4f0704-a29e-403d-b719-b90c34ef14c9
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-aat
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.7.1
+      version: 0.8.0

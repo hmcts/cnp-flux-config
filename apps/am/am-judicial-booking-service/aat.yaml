@@ -1,27 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-judicial-booking-service
 spec:
   values:
     java:
-      keyVaults:
-        am:
-          secrets:
-            - name: am-judicial-booking-service-s2s-secret
-              alias: AM_JUDICIAL_BOOKING_SERVICE_SECRET
-            - name: judicial-booking-service-POSTGRES-PASS-V15
-              alias: JUDICIAL_BOOKING_SERVICE_POSTGRES_PASS
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: judicial-booking-service-IDAM-CLIENT-SECRET
-              alias: JUDICIAL_BOOKING_IDAM_CLIENT_SECRET
-            - name: judicial-booking-service-IDAM-ADMIN-SECRET
-              alias: JUDICIAL_BOOKING_IDAM_ADMIN_PASSWORD
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
       environment:
         AM_INFO: true
-        JUDICIAL_BOOKING_SERVICE_POSTGRES_HOST: am-judicial-booking-service-postgres-db-v15-aat.postgres.database.azure.com
-        JUDICIAL_BOOKING_SERVICE_POSTGRES_USER: pgadmin
-        DUMMY_VAR: true
+        DUMMY_VAR: false

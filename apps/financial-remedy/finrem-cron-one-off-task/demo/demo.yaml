@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cron-one-off-task
@@ -6,13 +6,13 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-c54efb3-20240410073101 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 * * * *"
+      schedule: "30 * 2 5 *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
+        FEATURE_CFV_ENABLED: true
         FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
         PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
@@ -21,8 +21,10 @@ spec:
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         SECURE_DOC_ENABLED: false
         CRON_APPLICATION_TYPE_ADD_ENABLED: false
-        CRON_CFV_CATEGORISATION_TASK_ENABLED: true
+        CRON_CFV_CATEGORISATION_TASK_ENABLED: false
+        CRON_MIAM_EXEMPTIONS_UPDATE_ENABLED: false
         TRIG: trig-6
+        TASK_NAME: MiamExemptionsUpdateTask
     global:
       jobKind: CronJob
       enableKeyVaults: true

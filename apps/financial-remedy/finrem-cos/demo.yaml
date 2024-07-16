@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cos
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/finrem/cos:pr-1631-241cab3-20240404133616 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:pr-1631-083bd2f-20240715162329 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_SOLICITOR_NOC: true
@@ -18,5 +18,7 @@ spec:
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         FEATURE_CFV_ENABLED: true
-        SECURE_DOC_ENABLED: true
+        SECURE_DOC_ENABLED: false
         TRIGGER_DEPLOY: trigger1
+      spotInstances:
+        enabled: true

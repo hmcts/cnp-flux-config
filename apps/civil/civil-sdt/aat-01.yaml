@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-sdt
@@ -6,7 +6,9 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/civil/sdt:prod-b49108d-20240712125857 #{"$imagepolicy": "flux-system:aat-civil-sdt"}
       environment:
         PURGE_SCHEDULE_CRON: 0 15 0 * * 1,2,3
         RETRY_SEND_CRON: 0 0 * * * 1,2,3
         REQUEUE_SCHEDULE_CRON: 0 */20 * * * 1,2,3
+        LOGGING_LEVEL_UK_GOV_MOJ_SDT: DEBUG

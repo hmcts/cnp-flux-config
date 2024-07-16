@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -57,9 +57,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-01-aks
+                        value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-01-rg
+                        value: cft-preview-00-rg
                       - key: AKS_PTL_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
@@ -140,13 +140,13 @@ spec:
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|jps.*\/master|.*ccd-case-migration-starter\/master)
+                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|.*ccd-case-migration-starter\/master)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-callback-orchestrator|sscs-ccd-definitions|sscs-hearings-api|sscs-ccd-e2e-tests)\/master
+                      ^HMCTS.*\/(sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-definitions|sscs-hearings-api|sscs-ccd-e2e-tests)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -188,13 +188,13 @@ spec:
                     title: NFD Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(?!sptribs-dss-backend)(sptribs-).+\/master
+                      ^HMCTS.*\/(?!sptribs-dss-backend)(sptribs-|st-).+\/master
                     name: SPTRIBS
                     recurse: true
                     title: Special Tribunals Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_j_to_z_Nightly.*\/(?!sptribs-dss-backend)(sptribs-).+\/master
+                      ^HMCTS_j_to_z_Nightly.*\/(?!sptribs-dss-backend)(sptribs-|st-).+\/master
                     name: Special Tribunals Nightly
                     recurse: true
                     title: Special Tribunals Builds Dashboard
@@ -236,7 +236,7 @@ spec:
                     title: Adoption Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fpl-ccd-configuration|fpl-wa-task-configuration|fpl-cron-ccd-data-migration-tool)\/master
+                      ^HMCTS.*\/(fpl-ccd-configuration|fpl-wa-task-configuration|fpl-cron-ccd-data-migration-tool|fpl-api-gateway)\/master
                     name: FPLA
                     recurse: true
                     title: Family Public Law
@@ -284,7 +284,7 @@ spec:
                     title: Civil SDT Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/wa-.+\/master
+                      ^HMCTS.*\/wa-(?!performance).+\/master
                     name: WA
                     recurse: true
                     title: WA
@@ -314,7 +314,7 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests|prl-ccd-case-migration)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests|prl-ccd-case-migration|prl-cron)\/master
                     name: PRL
                     recurse: true
                     title: Private Law

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-judicial-data-load
@@ -6,6 +6,9 @@ spec:
   values:
     job:
       schedule: "30 22 * * *"
+      keyVaults:
+        "rd":
+          resourceGroup: rd
       environment:
         DUMMY_VAR: false
         DELETE_ORG: false

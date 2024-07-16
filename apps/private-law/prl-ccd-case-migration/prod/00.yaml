@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-ccd-case-migration
@@ -6,9 +6,9 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      schedule: "30 10 13 02 *"
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-89eef90-20240213100324 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
+      schedule: "15 16 24 06 *"
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-90e879f-20240626135612 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
       environment:
         MIGRATION_ENABLED: true
-        MIGRATION_CASE_IDS: "1685962975024549,1690371035211653,1686674945981646,1690193372055596,1689605754889063,1688131575045232,1689950265123903,1684403975876134,1689874211855444,1685088473911746,1688049547324164,1686128665688113,1688553091043047,1686131113058418,1690541086271307,1685562570271097,1688642342496748"
+        MIGRATION_CASE_IDS: "1716974171115198,1717573864517329"
         IDAM_API_URL: https://idam-api.platform.hmcts.net

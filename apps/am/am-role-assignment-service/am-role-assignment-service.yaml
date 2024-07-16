@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-role-assignment-service
@@ -7,8 +7,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "2048Mi"
+      memoryLimits: "3072Mi"
+      cpuRequests: "250m"
+      cpuLimits: "2000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 5
+        memory:
+          enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/am/role-assignment-service:prod-b4a7e26-20240404121433 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+      image: hmctspublic.azurecr.io/am/role-assignment-service:prod-f1df9fd-20240709164602 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
   chart:
     spec:
       chart: ./stable/am-role-assignment-service

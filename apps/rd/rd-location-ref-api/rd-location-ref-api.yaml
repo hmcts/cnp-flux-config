@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-location-ref-api
@@ -7,9 +7,16 @@ spec:
   values:
     java:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '2048Mi'
+      memoryLimits: '2048Mi'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/location-ref-api:prod-3bb0c8e-20240409151247 #{"$imagepolicy": "flux-system:rd-location-ref-api"}
+      image: hmctspublic.azurecr.io/rd/location-ref-api:prod-bc8c8c2-20240715152021 #{"$imagepolicy": "flux-system:rd-location-ref-api"}
       environment:
+        ROOT_LOGGING_LEVEL: WARN
+        TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX: hmctspublic.azurecr.io/imported/
         DUMMY_VAR: false
   chart:
     spec:

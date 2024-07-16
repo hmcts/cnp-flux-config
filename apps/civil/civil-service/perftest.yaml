@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,10 +6,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-d1c25b9-20240409162158 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-1056fbc-20240716075208 #{"$imagepolicy": "flux-system:civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
+        REFERENCE_DATABASE_MIGRATION: true
+        SPRING_FLYWAY_TABLE: schema_version
+        SPRING_FLYWAY_BASELINE_ON_MIGRATE: true
         POLLING_EVENT_EMITTER_ENABLED: false
         SERVICE_REQUEST_UPDATE: http://civil-service-perftest.service.core-compute-perftest.internal/service-request-update
         ASYNC_HANDLER_CORE_POOL_SIZE: 50

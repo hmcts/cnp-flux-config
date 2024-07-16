@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-judicial-api
@@ -7,10 +7,17 @@ spec:
   values:
     java:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '2048Mi'
+      memoryLimits: '2048Mi'
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/judicial-api:prod-dab65fd-20240409110730 #{"$imagepolicy": "flux-system:rd-judicial-api"}
+      image: hmctspublic.azurecr.io/rd/judicial-api:prod-27e165d-20240715152214 #{"$imagepolicy": "flux-system:rd-judicial-api"}
       environment:
-        DUMMY_VAR: true
+        ROOT_LOGGING_LEVEL: WARN
+        TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX: hmctspublic.azurecr.io/imported/
+        DUMMY_VAR: false
   chart:
     spec:
       chart: ./stable/rd-judicial-api

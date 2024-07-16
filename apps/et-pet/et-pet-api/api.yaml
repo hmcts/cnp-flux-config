@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: api
@@ -11,13 +11,13 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et-pet/api:prod-13e7203-20240403134020 #{"$imagepolicy": "flux-system:et-pet-api"}
+      image: hmctspublic.azurecr.io/et-pet/api:prod-5c61b85-20240715093817 #{"$imagepolicy": "flux-system:et-pet-api"}
       memoryLimits: "1024Mi"
       memoryRequests: "512Mi"
       cpuLimits: "500m"
       cpuRequests: "250m"
     sidekiq:
-      image: hmctspublic.azurecr.io/et-pet/api:prod-13e7203-20240403134020 #{"$imagepolicy": "flux-system:et-pet-api"}
+      image: hmctspublic.azurecr.io/et-pet/api:prod-5c61b85-20240715093817 #{"$imagepolicy": "flux-system:et-pet-api"}
       memoryLimits: "1024Mi"
       memoryRequests: "512Mi"
       cpuLimits: "500m"

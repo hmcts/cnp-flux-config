@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-ccd-migration-tool
@@ -14,13 +14,12 @@ spec:
       environment:
         TRIG: trig-2
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        MIGRATION_ENABLED: "false"
+        MIGRATION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 0
-        FUNCTION_ENABLED: "true"
-        ASSIGN_HEARING_ROLES_TO_SYSTEM_USER: "true"
+        MIGRATION_NUMBER_OF_CASES: 25000
+        MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: true
         RD_COMMON_DATA_LOCAL: http://rd-commondata-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
         AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal

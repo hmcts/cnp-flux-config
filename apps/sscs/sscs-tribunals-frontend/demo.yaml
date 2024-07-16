@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tribunals-frontend
@@ -7,7 +7,7 @@ spec:
   values:
     nodejs:
       ingressHost: benefit-appeal.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-718c576-20240409092141 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-frontend"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1482-f6c785a-20240703132447 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-frontend"}
       environment:
         CONTACT_US_WEBCHAT_ENABLED: "true"
         FT_ALLOW_UC_HEARING_OPTIONS: "true"
@@ -20,4 +20,4 @@ spec:
         WEBCHAT_URL: "webchat.pp.ctsc.hmcts.net"
         WEBCHAT_CLIENT_URL: "webchat-client.pp.ctsc.hmcts.net"
         TEST_PROPERTY: "false"
-        DUMMY_PROPERTY: false
+        DUMMY_PROPERTY: true

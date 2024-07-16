@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sptribs-dss-update-case-web
@@ -11,7 +11,7 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sptribs/dss-update-case-web:prod-3863413-20240409110357 #{"$imagepolicy": "flux-system:sptribs-dss-update-case-web"}
+      image: hmctspublic.azurecr.io/sptribs/dss-update-case-web:prod-9e77954-20240715132220 #{"$imagepolicy": "flux-system:sptribs-dss-update-case-web"}
       autoscaling:
         enabled: true
         maxReplicas: 4
@@ -19,6 +19,8 @@ spec:
       memoryLimits: "2Gi"
       cpuRequests: "500m"
       cpuLimits: "1000m"
+      environment:
+        DUMMY_ENV_VAR: false
   chart:
     spec:
       chart: ./stable/sptribs-dss-update-case-web

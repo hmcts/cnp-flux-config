@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-location-ref-data-load
@@ -7,8 +7,9 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/location-ref-data-load:prod-79cd583-20240327105454 #{"$imagepolicy": "flux-system:rd-location-ref-data-load"}
+      image: hmctspublic.azurecr.io/rd/location-ref-data-load:prod-ea536fc-20240705103529 #{"$imagepolicy": "flux-system:rd-location-ref-data-load"}
       environment:
+        TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX: hmctspublic.azurecr.io/imported/
         DUMMY_VAR: false
   chart:
     spec:

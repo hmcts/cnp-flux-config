@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-ccd-case-migration
@@ -8,9 +8,11 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-11445f9-20240320155518 #{"$imagepolicy": "flux-system:perftest-sscs-ccd-case-migration"}
-      schedule: "10 16 5 3 *"
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-50b02cf-20240701133903 #{"$imagepolicy": "flux-system:perftest-sscs-ccd-case-migration"}
+      schedule: "00 15 23 5 *"
       environment:
-        MIGRATION_WA_ENABLED: true
-        MIGRATION_QUERY_SIZE: 10000
-        MIGRATION_CASE_LIMIT: "1100000"
+        MIGRATION_WA_ENABLED: false
+        MIGRATION_DWP_ENABLED: false
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: true
+        MIGRATION_QUERY_SIZE: 500
+        MIGRATION_CASE_LIMIT: "10000"

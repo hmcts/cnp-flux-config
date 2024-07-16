@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccpay-callback-function-int
@@ -6,12 +6,13 @@ spec:
   releaseName: ccpay-callback-function-int
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-de0d84d-20240328103238 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
+      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-512fd0a-20240422161519 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
       environment:
         DELAY_MESSAGE_MINUTES: 30
-        DUMMY_RESTART_VAR: false
+        DUMMY_RESTART_VAR: true
         SERVICE_LOGGING_ENABLED: true
         SERVICE_CALLBACK_SUBSCRIPTION: serviceCallbackPremiumSubscription
+        SERVICE_CALLBACK_TOPIC_NAME: ccpay-service-callback-topic
       triggers:
         - type: azure-servicebus
           topicName: "ccpay-service-callback-topic"

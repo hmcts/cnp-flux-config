@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-api
@@ -7,15 +7,21 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:preview-621f84a-20240410093442 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:prod-ceed6b2-20240621132404
       ingressHost: idam-api.sandbox.platform.hmcts.net
       disableTraefikTls: true
-      replicas: 4
+      replicas: 1
+      cpuRequests: '160m'
+      cpuLimits: '1500m'
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
       environment:
         LOG_AND_AUDIT_IDAM_ENABLED: false
         MANAGEMENT_HEALTH_IDAMSERVICEAUTH_ENABLED: false
+        MANAGEMENT_HEALTH_JMS_ENABLED: false
+        SPRING_JMS_SERVICEBUS_ENABLED: false
         TESTING_SUPPORT_ENABLED: true
-        STRATEGIC_ADMIN_URL: https://idam-web-admin.sandbox.platform.hmcts.net
+        STRATEGIC_ADMIN_URL: https://idam-user-dashboard.sandbox.platform.hmcts.net
         STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.sandbox.platform.hmcts.net
         STRATEGIC_API_URL: http://idam-api
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-sandbox.internal:8443/openam
@@ -39,9 +45,11 @@ spec:
         STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
         STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_ENABLED: false
+        STRATEGIC_SSO_PROVIDERS_MOJ_ENABLED: false
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         DEPLOY_TRIGGER: false
   chart:
     spec:
-      version: 0.4.11
+      version: 0.8.0

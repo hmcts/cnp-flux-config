@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
@@ -14,6 +14,11 @@ spec:
         USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
         VH_STORAGE_CONTAINER_NAME: recordings
         APPLICATIONINSIGHTS_INSTRUMENTATION_LOGGING_LEVEL: INFO
-        VH_PROCESS_BACK_TO_DAY: 2
-        VH_PROCESS: false
+        VH_PROCESS_BACK_TO_DAY: -1
+        VH_MAX_BLOB_PROCESS_COUNT: 250
+        VH_PROCESS: true
+        VH_LEASED_FOR_MINUTES: 60
         CVP_PROCESS: true
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+      spotInstances:
+        enabled: false
