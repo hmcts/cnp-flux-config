@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-ceed6b2-20240621132404
+      image: hmctspublic.azurecr.io/idam/api:prod-ed1021c-20240716150330
       replicas: 1
       ingressHost: idam-api.demo.platform.hmcts.net
       environment:
@@ -28,19 +28,12 @@ spec:
         SSL_TRUST_DNS_1: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-demo.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-demo.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-demo.internal
-        STRATEGIC_SSO_PROVIDERS_0_providerName: azure
-        STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
-        STRATEGIC_SSO_PROVIDERS_0_uniqueIdClaim: oid
-        STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
-        STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
-        STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
-        STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
-        STRATEGIC_SSO_PROVIDERS_1_providerName: moj
-        STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
-        STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
-        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         LOG_AND_AUDIT_IDAM_ENABLED: true
         IDAM_SCHEDULED_BATCH_PROCESSING_ENABLED: false
+        FEATUREFLAGS_EVENTPUBLISHINGENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
         FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
@@ -56,4 +49,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.8.0
+      version: 0.8.1
