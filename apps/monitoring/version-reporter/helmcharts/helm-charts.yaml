@@ -20,7 +20,7 @@ spec:
     global:
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
-    schedule: "45 8 * * *" # interval 8:45am just before play
+    schedule: "30 9 * * 1" # interval 9:30am Monday
     concurrencyPolicy: "Forbid"
     failedJobsHistoryLimit: 5
     startingDeadlineSeconds: 300
@@ -46,7 +46,7 @@ spec:
           - name: cosmos-db-name
             alias: COSMOS_DB_NAME
     nodeSelector:
-      agentpool: cronjob
+      agentpool: linux
     tolerations:
       - key: dedicated
         effect: NoSchedule
