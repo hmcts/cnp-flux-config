@@ -5,10 +5,51 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-6d23272-20240627073816 #{"$imagepolicy": "flux-system:fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-5391-edc52fd-20240716101234 #{"$imagepolicy": "flux-system:ithc-fpl-case-service"}
       ingressHost: fpl-case-service-ithc.service.core-compute-ithc.internal
       environment:
         RELEASE: AGAIN
         GATEWAY_URL: https://gateway-ccd.ithc.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
         TESTING_SUPPORT_ENABLED: true
+      keyVaults:
+        fpl:
+          secrets:
+            - notify-api-key
+            - docmosis-api-key
+            - send-grid-api-key
+            - fpl-case-service-s2s-secret
+            - fpl-case-service-idam-client-secret
+            - local-authority-email-to-code-mapping
+            - local-authority-code-to-name-mapping
+            - local-authority-user-mapping
+            - local-authority-code-to-hmcts-court-mapping
+            - local-authority-code-to-cafcass-mapping
+            - local-authority-code-to-org-id-mapping
+            - local-authority-code-to-shared-inbox-mapping
+            - eps-to-local-authorities-mapping
+            - mla-to-local-authorities-mapping
+            - local-authority-fallback-inbox
+            - system-update-user-username
+            - system-update-user-password
+            - robotics-notification-sender
+            - robotics-notification-recipient
+            - translation-notification-sender
+            - translation-notification-recipient
+            - cafcass-notification-sender
+            - cafcass-notification-recipient-order
+            - cafcass-notification-recipient-courtbundle
+            - cafcass-notification-recipient-large-file
+            - cafcass-notification-recipient-new-application
+            - cafcass-notification-recipient-new-document
+            - cafcass-notification-recipient-additional-document
+            - cafcass-notification-recipient-notice-of-hearing
+            - ld-sdk-key
+            - ctsc-inbox
+            - ctsc-team-lead-inbox
+            - AppInsightsInstrumentationKey
+            - app-insights-connection-string
+            - scheduler-db-password-v15
+            - rcj-family-high-court-inbox
+            - court-to-court-admin-mapping
+            - update-summary-tab-cron

@@ -6,11 +6,14 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-b63f378-20240617170455 #{"$imagepolicy": "flux-system:aat-prl-citizen-frontend"}
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-faf77e0-20240716102354 #{"$imagepolicy": "flux-system:aat-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
-      readinessTimeout: 15
+      readinessTimeout: 10
       readinessPeriod: 15
       keyVaults:
         prl:

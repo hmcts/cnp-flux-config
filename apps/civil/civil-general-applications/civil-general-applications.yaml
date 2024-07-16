@@ -8,8 +8,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1536Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enable: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 125
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/civil/general-applications:prod-d59ace5-20240627160351 #{"$imagepolicy": "flux-system:civil-general-applications"}
+      image: hmctspublic.azurecr.io/civil/general-applications:prod-885bc82-20240712155255 #{"$imagepolicy": "flux-system:civil-general-applications"}
       environment:
   chart:
     spec:

@@ -6,7 +6,7 @@ spec:
   values:
     java:
       ingressHost: fpl-case-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/fpl/case-service:pr-5391-10b8de5-20240627154307 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:pr-5490-8c35dd3-20240716130331 #{"$imagepolicy": "flux-system:demo-fpl-case-service"}
       environment:
         RELEASE: NOW
         GATEWAY_URL: https://gateway-ccd.demo.platform.hmcts.net
@@ -33,43 +33,86 @@ spec:
         SCHEDULER_DB_HOST: fpl-case-service-postgresql-v15-flexible-server-{{ .Values.global.environment }}.postgres.database.azure.com
         SCHEDULER_DB_PORT: 5432
         SCHEDULER_ENABLED: true
+        CHASE_CMO_EMAIL_CRON: 0 30 13 ? * * *
       keyVaults:
         fpl:
+          resourceGroup: fpl
           secrets:
-            - notify-api-key
-            - docmosis-api-key
-            - send-grid-api-key
-            - fpl-case-service-s2s-secret
-            - fpl-case-service-idam-client-secret
-            - local-authority-email-to-code-mapping
-            - local-authority-code-to-name-mapping
-            - local-authority-user-mapping
-            - local-authority-code-to-hmcts-court-mapping
-            - local-authority-code-to-cafcass-mapping
-            - local-authority-code-to-org-id-mapping
-            - local-authority-code-to-shared-inbox-mapping
-            - eps-to-local-authorities-mapping
-            - mla-to-local-authorities-mapping
-            - local-authority-fallback-inbox
-            - system-update-user-username
-            - system-update-user-password
-            - robotics-notification-sender
-            - robotics-notification-recipient
-            - translation-notification-sender
-            - translation-notification-recipient
-            - cafcass-notification-sender
-            - cafcass-notification-recipient-order
-            - cafcass-notification-recipient-courtbundle
-            - cafcass-notification-recipient-large-file
-            - cafcass-notification-recipient-new-application
-            - cafcass-notification-recipient-new-document
-            - cafcass-notification-recipient-additional-document
-            - cafcass-notification-recipient-notice-of-hearing
-            - ld-sdk-key
-            - ctsc-inbox
-            - ctsc-team-lead-inbox
-            - AppInsightsInstrumentationKey
-            - scheduler-db-password-v15
-            - rcj-family-high-court-inbox
-            - court-to-court-admin-mapping
-            - update-summary-tab-cron
+            - name: notify-api-key
+              alias: notify.api_key
+            - name: docmosis-api-key
+              alias: docmosis.tornado.key
+            - name: send-grid-api-key
+              alias: send-grid.api_key
+            - name: fpl-case-service-s2s-secret
+              alias: idam.s2s-auth.totp_secret
+            - name: fpl-case-service-idam-client-secret
+              alias: idam.client.secret
+            - name: local-authority-email-to-code-mapping
+              alias: fpl.local_authority_email_to_code.mapping
+            - name: local-authority-code-to-name-mapping
+              alias: fpl.local_authority_code_to_name.mapping
+            - name: local-authority-user-mapping
+              alias: fpl.local_authority_user.mapping
+            - name: local-authority-code-to-hmcts-court-mapping
+              alias: fpl.local_authority_code_to_hmcts_court.mapping
+            - name: local-authority-code-to-cafcass-mapping
+              alias: fpl.local_authority_code_to_cafcass.mapping
+            - name: local-authority-code-to-org-id-mapping
+              alias: fpl.local_authority_code_to_org_id.mapping
+            - name: local-authority-code-to-shared-inbox-mapping
+              alias: fpl.local_authority_code_to_shared_inbox.mapping
+            - name: eps-to-local-authorities-mapping
+              alias: fpl.eps_to_local_authorities.mapping
+            - name: mla-to-local-authorities-mapping
+              alias: fpl.mla_to_local_authorities.mapping
+            - name: local-authority-fallback-inbox
+              alias: fpl.local_authority_fallback_inbox
+            - name: system-update-user-username
+              alias: fpl.system_update.username
+            - name: system-update-user-password
+              alias: fpl.system_update.password
+            - name: robotics-notification-sender
+              alias: robotics.notification.sender
+            - name: robotics-notification-recipient
+              alias: robotics.notification.recipient
+            - name: translation-notification-sender
+              alias: translation.notification.sender
+            - name: translation-notification-recipient
+              alias: translation.notification.recipient
+            - name: cafcass-notification-sender
+              alias: cafcass.notification.sender
+            - name: cafcass-notification-recipient-order
+              alias: cafcass.notification.order
+            - name: cafcass-notification-recipient-courtbundle
+              alias: cafcass.notification.courtbundle
+            - name: cafcass-notification-recipient-large-file
+              alias: cafcass.notification.large
+            - name: cafcass-notification-recipient-new-application
+              alias: cafcass.notification.newapplication
+            - name: cafcass-notification-recipient-new-document
+              alias: cafcass.notification.newdocument
+            - name: cafcass-notification-recipient-additional-document
+              alias: cafcass.notification.additionaldocument
+            - name: cafcass-notification-recipient-notice-of-hearing
+              alias: cafcass.notification.noticeofhearing
+            - name: cafcass-notification-recipient-change-of-address
+              alias: cafcass.notification.changeofaddress
+            - name: ld-sdk-key
+              alias: ld.sdk_key
+            - name: ctsc-inbox
+              alias: fpl.ctsc_inbox
+            - name: ctsc-team-lead-inbox
+              alias: fpl.ctsc_team_lead_inbox
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string # azure.application-insights.appinsights.connection_string in bootstrap.yaml? TBC check this??
+            - name: scheduler-db-password-v15
+              alias: SCHEDULER_DB_PASSWORD
+            - name: rcj-family-high-court-inbox
+              alias: fpl.rcj_family_high_court_inbox
+            - name: court-to-court-admin-mapping
+              alias: fpl.court_to_court_admin.mapping
+            - name: update-summary-tab-cron
+              alias: UPDATE_SUMMARY_TAB_CRON

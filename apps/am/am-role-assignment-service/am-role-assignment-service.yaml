@@ -7,8 +7,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "2048Mi"
+      memoryLimits: "3072Mi"
+      cpuRequests: "250m"
+      cpuLimits: "2000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 5
+        memory:
+          enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/am/role-assignment-service:prod-617c2dc-20240624134302 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
+      image: hmctspublic.azurecr.io/am/role-assignment-service:prod-f1df9fd-20240709164602 #{"$imagepolicy": "flux-system:am-role-assignment-service"}
   chart:
     spec:
       chart: ./stable/am-role-assignment-service

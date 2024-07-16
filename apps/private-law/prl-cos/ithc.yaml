@@ -9,28 +9,50 @@ spec:
       keyVaults:
         prl:
           secrets:
-            - prl-cos-idam-client-secret
-            - microservicekey-prl-cos-api
-            - system-update-user-username
-            - system-update-user-password
-            - notification-client-api-key
-            - test-genericpassword
-            - launchDarkly-sdk-key
-            - send-grid-api-key
-            - rpa-notify-to-email
-            - rpa-notify-from-email
-            - AppInsightsInstrumentationKey
-            - southampton-court-email-address
-            - idam-solicitor-username
-            - idam-solicitor-password
-            - filtered-court-ids
-            - da-filtered-court-ids
-            - ca-default-court-epimms-id
-            - postcode-lookup-token
-            - prl-rd-api-system-username
-            - prl-rd-api-system-user-password
-            - welsh-court-mapping
-            - app-insights-connection-string
+          - name: prl-cos-idam-client-secret
+            alias: IDAM_CLIENT_SECRET
+          - name: microservicekey-prl-cos-api
+            alias: IDAM_S2S_AUTH_TOTP_SECRET
+          - name: system-update-user-username
+            alias: SYSTEM_UPDATE_USER_USERNAME
+          - name: system-update-user-password
+            alias: PRL_SYSTEM_UPDATE_PASSWORD
+          - name: notification-client-api-key
+            alias: UK_GOV_NOTIFY_API_KEY
+          - name: test-genericpassword
+            alias: PRL_GENERIC_PASSWORD
+          - name: launchDarkly-sdk-key
+            alias: LAUNCH_DARKLY_SDK_KEY
+          - name: send-grid-api-key
+            alias: SEND_GRID_API_KEY
+          - name: rpa-notify-to-email
+            alias: RPA_NOTIFY_TO_EMAIL
+          - name: rpa-notify-from-email
+            alias: RPA_NOTIFY_FROM_EMAIL
+          - name: AppInsightsInstrumentationKey
+            alias: APP_INSIGHTS_INSTRUMENTATION_KEY
+          - name: southampton-court-email-address
+            alias: SOUTHAMPTON_COURT_EMAIL_ADDRESS
+          - name: idam-solicitor-username
+            alias: IDAM_SOLICITOR_USERNAME
+          - name: idam-solicitor-password
+            alias: IDAM_SOLICITOR_PASSWORD
+          - name: filtered-court-ids
+            alias: COURT_IDS_TO_FILTER
+          - name: da-filtered-court-ids
+            alias: DA_COURT_IDS_TO_FILTER
+          - name: ca-default-court-epimms-id
+            alias: CA_DEFAULT_COURT_EPIMMS_ID
+          - name: postcode-lookup-token
+            alias: POST_CODE_LOOKUP_KEY
+          - name: prl-rd-api-system-username
+            alias: PRL_IDAM_REFDATA_USERNAME
+          - name: prl-rd-api-system-user-password
+            alias: PRL_IDAM_REFDATA_PASSWORD
+          - name: welsh-court-mapping
+            alias: WELSH_COURT_MAPPING
+          - name: app-insights-connection-string
+            alias: app-insights-connection-string
       replicas: 2
       memoryRequests: "768Mi"
       cpuRequests: "1000m"
@@ -40,7 +62,7 @@ spec:
       readinessTimeout: 45
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-45f3f22-20240626164529 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-2529-270ab9f-20240711130109 #{"$imagepolicy": "flux-system:ithc-prl-cos-api"}
       environment:
         FEATURE_EXAMPLE: false
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
