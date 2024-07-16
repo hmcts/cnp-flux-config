@@ -1,35 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-org-role-mapping-service
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-37fcdda-20240409160004 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
-      keyVaults:
-        am:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: am-org-role-mapping-service-s2s-secret
-              alias: AM_ORG_ROLE_MAPPING_SERVICE_SECRET
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: orm-IDAM-CLIENT-ID
-              alias: ORM_IDAM_CLIENT_ID
-            - name: orm-IDAM-CLIENT-SECRET
-              alias: ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET
-            - name: orm-IDAM-ADMIN-SECRET
-              alias: ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD
-            - name: caseworker-topic-primary-send-listen-shared-access-key
-              alias: AMQP_CRD_SHARED_ACCESS_KEY_VALUE
-            - name: org-role-mapping-service-POSTGRES-PASS-V15
-              alias: ORG_ROLE_MAPPING_DB_PASSWORD
-            - name: judicial-topic-primary-send-listen-shared-access-key
-              alias: AMQP_JRD_SHARED_ACCESS_KEY_VALUE
+      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-7ea23f6-20240711132420 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: DEBUG
-        DB_FEATURE_FLAG_ENABLE: privatelaw_wa_1_4
-        ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-postgres-db-v15-demo.postgres.database.azure.com
-        ORG_ROLE_MAPPING_DB_USERNAME: pgadmin
+        DB_FEATURE_FLAG_ENABLE: sscs_wa_1_3

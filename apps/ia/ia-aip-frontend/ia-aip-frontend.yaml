@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-aip-frontend
@@ -9,9 +9,16 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-6559c3d-20240409152407 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
+      image: hmctspublic.azurecr.io/ia/aip-frontend:prod-b2333d4-20240709113355 #{"$imagepolicy": "flux-system:ia-aip-frontend"}
       environment:
         TIMELINE_ENABLED: true
+      memoryRequests: "512Mi"
+      cpuRequests: "200m"
+      memoryLimits: "1024Mi"
+      cpuLimits: "1000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
     global:
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true

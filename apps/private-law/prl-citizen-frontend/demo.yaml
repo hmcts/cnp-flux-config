@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-citizen-frontend
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1315-a824ef2-20240328175200 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-af18797-20240715102206 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
@@ -28,6 +28,7 @@ spec:
             - launchDarkly-sdk-key
             - citizen-upload-docs-email
             - redis-access-key
+            - prl-pcq-token-key
       environment:
         NODE_ENV: demo
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
@@ -39,6 +40,13 @@ spec:
         DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         COS_URL: http://prl-cos-demo.service.core-compute-demo.internal
         REDIS_HOST: prl-citizen-frontend-redis-demo.redis.cache.windows.net
+        REASONABLE_ADJUSTMENTS: https://cui-ra.demo.platform.hmcts.net
+        LAUNCH_DARKLY_OFFLINE_MODE: false
+        C100_REBUILD_FLAG: true
+        TESTING_SUPPORT_FLAG: true
+        ENABLE_RA_COMPONENT: true
+        ENABLE_CASE_TRAIN_TRACK: true
+        ENABLE_PCQ_COMPONENT: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

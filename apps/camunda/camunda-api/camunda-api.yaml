@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: camunda-api
@@ -10,7 +10,7 @@ spec:
       autoscaling:
         enabled: false
       useInterpodAntiAffinity: true
-      image: hmctsprivate.azurecr.io/camunda/bpm:prod-f628789-20240327170114 #{"$imagepolicy": "flux-system:camunda"}
+      image: hmctsprivate.azurecr.io/camunda/bpm:prod-ede72f8-20240712104534 #{"$imagepolicy": "flux-system:camunda"}
       ingressHost: camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
       environment:
         CAMUNDA_API_AUTH_ENABLED: false

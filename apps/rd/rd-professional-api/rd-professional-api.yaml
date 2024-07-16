@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-professional-api
@@ -7,12 +7,17 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "1792Mi"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: "2048Mi"
       memoryLimits: "3Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/professional-api:prod-e2ca95f-20240405104007 #{"$imagepolicy": "flux-system:rd-professional-api"}
+      image: hmctspublic.azurecr.io/rd/professional-api:prod-63a0021-20240617202037 #{"$imagepolicy": "flux-system:rd-professional-api"}
       environment:
-        DUMMY_VAR: false
+        ROOT_LOGGING_LEVEL: WARN
+        TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX: hmctspublic.azurecr.io/imported/
+        DUMMY_VAR: true
   chart:
     spec:
       chart: ./stable/rd-professional-api

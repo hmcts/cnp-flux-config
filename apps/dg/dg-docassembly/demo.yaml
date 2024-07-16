@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: dg-docassembly
@@ -7,6 +7,8 @@ spec:
   releaseName: dg-docassembly
   values:
     java:
-      image: hmctspublic.azurecr.io/dg/docassembly:prod-865b28b-20240410080903 #{"$imagepolicy": "flux-system:demo-dg-docassembly"}
+      image: hmctspublic.azurecr.io/dg/docassembly:prod-627b90d-20240715132658 #{"$imagepolicy": "flux-system:demo-dg-docassembly"}
       environment:
         VAR_FV2: value2
+      spotInstances:
+        enabled: true

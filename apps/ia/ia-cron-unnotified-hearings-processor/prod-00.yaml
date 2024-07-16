@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-unnotified-hearings-processor
@@ -6,12 +6,16 @@ spec:
   releaseName: ia-cron-unnotified-hearings-processor
   values:
     job:
-      schedule: "* * 31 2 *"
+      schedule: "7/15 7-18 * * 1-5"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
-        IDAM_API_URL: https://idam-api.platform.hmcts.net
-        RD_COMMON_DATA_LOCAL: http://rd-commondata-api-prod.service.core-compute-prod.internal
-        IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        IDAM_URL: https://idam-api.platform.hmcts.net
+        OPEN_ID_IDAM_URL: "https://hmcts-access.service.gov.uk"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

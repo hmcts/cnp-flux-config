@@ -2,6 +2,11 @@ apiVersion: image.toolkit.fluxcd.io/v2beta1
 kind: ImagePolicy
 metadata:
   name: demo-help-with-fees-publicapp
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   imageRepositoryRef:
     name: help-with-fees-publicapp
+  filterTags:
+    pattern: '^pr-887-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'

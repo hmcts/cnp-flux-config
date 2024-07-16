@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -9,7 +9,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-38a6527-20240404163431 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2501-85144ef-20240619133233 #{"$imagepolicy": "flux-system:perftest-sscs-tya-notif"}
       environment:
         JOB_SCHEDULER_DB_USERNAME: pgadmin
         JOB_SCHEDULER_DB_NAME: notification
@@ -17,7 +17,7 @@ spec:
         COVID_19_NOTIFICATION_FEATURE: false
         PDF_SERVICE_HEALTH_URL: https://docmosis.perftest.platform.hmcts.net/rs/status
         PDF_SERVICE_BASE_URL: https://docmosis.perftest.platform.hmcts.net/rs/render
-        DUMMY_PROPERTY: false
+        BYPASS_NOTIFICATIONS_SERVICE: true
     global:
       environment: perftest
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

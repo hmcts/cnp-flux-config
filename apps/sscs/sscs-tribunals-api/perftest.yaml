@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tribunals-api
@@ -6,7 +6,64 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-34e14f4-20240410095306 #{"$imagepolicy": "flux-system:perftest-sscs-tribunals-api"}
+      keyVaults:
+        sscs:
+          secrets:
+            - name: sscs-email-mac-secret-text
+              alias: SUBSCRIPTIONS_MAC_SECRET
+            - name: idam-oauth-user
+              alias: IDAM_OAUTH2_CLIENT_ID
+            - name: idam-redirect
+            - name: ccd-api
+              alias: CORE_CASE_DATA_API_URL
+            - name: ccd-jid
+              alias: CORE_CASE_DATA_JURISDICTION_ID
+            - name: ccd-tid
+              alias: CORE_CASE_DATA_CASE_TYPE_ID
+            - name: idam-redirect
+              alias: IDAM_OAUTH2_REDIRECT_URL
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: idam-sscs-oauth2-client-secret
+              alias: IDAM_OAUTH2_CLIENT_SECRET
+            - name: sscs-s2s-secret
+              alias: IDAM_S2S_AUTH_TOTP_SECRET
+            - name: s2s-micro
+              alias: IDAM_S2S_AUTH_MICROSERVICE
+            - appeal-email-to
+            - appeal-email-from
+            - docmosis-endpoint
+            - name: docmosis-api-key
+              alias: PDF_SERVICE_ACCESS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: sscs-servicebus-connection-string-tf
+              alias: HEARINGS_EVENT_SERVICE_BUS_CONNECTION_STRING
+            - name: evidence-share-topic-shared-access-key
+              alias: AMQP_PASSWORD
+            - name: robotics-email-to
+              alias: ROBOTICS_EMAIL_TO
+            - name: robotics-email-from
+              alias: ROBOTICS_EMAIL_FROM
+            - name: robotics-email-scottish-to
+              alias: ROBOTICS_EMAIL_SCOTTISH_TO
+            - name: robotics-email-pip-ae-to
+              alias: ROBOTICS_EMAIL_PIP_AE_TO
+            - name: ld-sdk-key
+              alias: ld.sdk-key
+            - name: sscs-sendgrid-api-key
+              alias: send-grid.apiKey
+            - name: notification-key
+              alias: NOTIFICATION_API_KEY
+            - name: notification-test-key
+              alias: NOTIFICATION_API_TEST_KEY
+            - name: tya-notif-POSTGRES-PASS-FLEX-V15
+              alias: JOB_SCHEDULER_DB_PASSWORD
+            - name: sscs-email-mac-secret-text
+              alias: EMAIL_MAC_SECRET_TEXT
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3764-8c1dc36-20240708113702 #{"$imagepolicy": "flux-system:perftest-sscs-tribunals-api"}
       aadIdentityName: sscs
       environment:
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -29,3 +86,9 @@ spec:
         PDF_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net/rs/render
         VAR_TO_RESTART_THE_APP: 40
         SCOTTISH_PO_BOX_ENABLED: true
+        BYPASS_EVIDENCE_SHARE_SERVICE: true
+        BYPASS_NOTIFICATIONS_SERVICE: true
+        SSCS_TRACK_YOUR_APPEAL_LINK: https://track-appeal.nonprod.platform.hmcts.net/trackyourappeal/appeal_id
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-{{ .Values.global.environment }}.postgres.database.azure.com

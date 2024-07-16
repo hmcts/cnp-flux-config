@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-data-store-api
@@ -7,13 +7,17 @@ spec:
   values:
     java:
       replicas: 15
-      image: hmctspublic.azurecr.io/ccd/data-store-api:pr-2395-64ac13d-20240404125726 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-d70f4c0-20240703105536 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: false
-      memoryRequests: '4Gi'
-      memoryLimits: '5Gi'
-      cpuRequests: '1'
-      cpuLimits: '3'
+        minReplicas: 4
+        maxReplicas: 8
+        memory:
+          averageUtilization: 125
+      memoryRequests: '4096Mi'
+      memoryLimits: '6144Mi'
+      cpuRequests: '1000m'
+      cpuLimits: '3000m'
       environment:
         CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
@@ -38,28 +42,4 @@ spec:
         HTTP_CLIENT_READ_TIMEOUT: 29000
         FEIGN_CLIENT_READ_TIMEOUT: 29000
         HTTP_CLIENT_CONNECTION_DEFINITION_STORE_TIMEOUT: 8000
-      keyVaults:
-        ccd:
-          secrets:
-            - name: data-store-api-POSTGRES-USER-V15
-              alias: DATA_STORE_DB_USERNAME
-            - name: data-store-api-POSTGRES-PASS-V15
-              alias: DATA_STORE_DB_PASSWORD
-            - name: data-store-api-draft-key
-              alias: CCD_DRAFT_ENCRYPTION_KEY
-            - name: ccd-data-s2s-secret
-              alias: DATA_STORE_IDAM_KEY
-            - name: ccd-ELASTIC-SEARCH-URL
-              alias: ELASTIC_SEARCH_HOSTS
-            - name: ccd-ELASTIC-SEARCH-DATA-NODES-URL
-              alias: ELASTIC_SEARCH_DATA_NODES_HOSTS
-            - name: ccd-ELASTIC-SEARCH-PASSWORD
-              alias: ELASTIC_SEARCH_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: idam-data-store-client-secret
-              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
-            - name: idam-data-store-system-user-username
-              alias: IDAM_DATA_STORE_SYSTEM_USER_USERNAME
-            - name: idam-data-store-system-user-password
-              alias: IDAM_DATA_STORE_SYSTEM_USER_PASSWORD
+        UPLOAD_TIMESTAMP_FEATURED_CASE_TYPES: xuiTestCaseType_dev,AAT_AUTH_15,BEFTA_CASETYPE_2_1,BEFTA_CASETYPE_2_2,abc,BEFTA_CASETYPE_3_2,FT_MasterCaseType,FT_CaseFileView_1,FT_CaseFileView_2,FT_CRUD_2

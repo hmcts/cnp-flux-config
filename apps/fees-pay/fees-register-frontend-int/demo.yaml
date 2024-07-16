@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fees-register-frontend-int
@@ -6,7 +6,7 @@ spec:
   releaseName: fees-register-frontend-int
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/fees-register/frontend:prod-3429cd1-20240404135044 #{"$imagepolicy": "flux-system:demo-int-fees-register-frontend"}
+      image: hmctspublic.azurecr.io/fees-register/frontend:prod-6798fc3-20240710145615 #{"$imagepolicy": "flux-system:demo-int-fees-register-frontend"}
       environment:
         DUMMY_RESTART_VAR: true
         FEES_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

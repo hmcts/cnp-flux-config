@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-citizen-frontend
@@ -6,15 +6,12 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-5b3bdeb-20240408110302 #{"$imagepolicy": "flux-system:ithc-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-af18797-20240715102206 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
-      memoryLimits: "2048Mi"
-      memoryRequests: "512Mi"
-      replicas: 2
       readinessDelay: 45
-      readinessTimeout: 20
-      readinessPeriod: 10
+      readinessTimeout: 15
+      readinessPeriod: 15
       keyVaults:
         prl:
           secrets:
@@ -31,6 +28,7 @@ spec:
             - launchDarkly-sdk-key
             - citizen-upload-docs-email
             - redis-access-key
+            - prl-pcq-token-key
       environment:
         NODE_ENV: ithc
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net/o/token
@@ -47,6 +45,8 @@ spec:
         C100_REBUILD_FLAG: true
         TESTING_SUPPORT_FLAG: true
         ENABLE_RA_COMPONENT: true
+        ENABLE_CASE_TRAIN_TRACK: true
+        ENABLE_PCQ_COMPONENT: true
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

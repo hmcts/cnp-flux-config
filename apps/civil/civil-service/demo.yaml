@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-d1c25b9-20240409162158 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:pr-5003-446d369-20240712135846 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -14,12 +14,19 @@ spec:
         SERVICE_REQUEST_UPDATE: http://civil-service-demo.service.core-compute-demo.internal/service-request-update
         SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-demo.service.core-compute-demo.internal/service-request-update-claim-issued
         WA_TOGGLE: "Prod"
-        POLLING_EVENT_EMITTER_ENABLED: false
+        POLLING_EVENT_EMITTER_ENABLED: true
         STITCHING_API_ENABLED: true
         HMC_HEARINGS_SUBSCRIPTION_ENABLED: true
+        TEMP_VAR: 3
+        REFERENCE_DATABASE_MIGRATION: false
+        SPRING_FLYWAY_TABLE: schema_version
+        SPRING_FLYWAY_BASELINE_ON_MIGRATE: false
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
         CUI_URL_RESPOND_TO_CLAIM: https://moneyclaims.demo.platform.hmcts.net/first-contact/start
         OCMC_CLIENT_URL: https://moneyclaims1.demo.platform.hmcts.net
+        FEIGN_CLIENT_CONFIG_DEFAULT_URL: http://camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/engine-rest/
+        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        ROLE_INITIALISATION_ENABLED: true
       keyVaults:
         civil:
           resourceGroup: civil
@@ -78,3 +85,5 @@ spec:
               alias: mediation.emails.recipient
             - name: hmc-servicebus-shared-access-key-tf
               alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
+            - name: mediation-json-notification-recipient
+              alias: mediation.emails.jsonRecipient

@@ -1,21 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: message-publisher
 spec:
   values:
     java:
-      keyVaults:
-        ccd:
-          secrets:
-            - name: ccd-servicebus-connection-string
-              alias: SERVICE_BUS_CONNECTION_STRING
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: data-store-api-POSTGRES-PASS-V15
-              alias: DATA_STORE_DB_PASSWORD
-            - name: data-store-api-POSTGRES-USER-V15
-              alias: DATA_STORE_DB_USERNAME
       environment:
         DATA_STORE_DB_HOST: ccd-data-store-api-postgres-db-v15-aat.postgres.database.azure.com
         CCD_CASE_EVENTS_ENABLED: false

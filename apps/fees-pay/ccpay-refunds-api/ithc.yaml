@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccpay-refunds-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-b7d595c-20240408130143 #{"$imagepolicy": "flux-system:ithc-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-49a4722-20240715090755 #{"$imagepolicy": "flux-system:ithc-ccpay-refunds-api"}
       environment:
         S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,ccd_gw
         PAYMENT_API_URL: http://payment-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
