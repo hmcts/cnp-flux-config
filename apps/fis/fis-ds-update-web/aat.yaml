@@ -10,6 +10,11 @@ spec:
         enabled: true
         sessionCookieName: sticky
       image: hmctspublic.azurecr.io/fis/ds-update-web:prod-9d1be3e-20240717173535 #{"$imagepolicy": "flux-system:fis-ds-update-web"}
+      keyVaults:
+        fis-kv:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - redis-access-key-dss-update-case
       environment:
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/login
@@ -17,4 +22,4 @@ spec:
         REFORM_SERVICE_NAME: fis-ds-update-web
         RPE_API: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         FIS_COS_API: http://fis-cos-api-aat.service.core-compute-aat.internal
-        REDIS_HOST: fis-ds-web-session-storage-aat.redis.cache.windows.net
+        REDIS_HOST: fis-dss-update-case-redis-aat.redis.cache.windows.net
