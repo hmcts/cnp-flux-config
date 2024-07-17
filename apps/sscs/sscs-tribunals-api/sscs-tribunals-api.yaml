@@ -7,6 +7,11 @@ spec:
   releaseName: sscs-tribunals-api
   values:
     java:
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '3072Mi'
+      memoryLimits: "4096Mi"
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-a37f339-20240704120619 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
