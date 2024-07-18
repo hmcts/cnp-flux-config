@@ -8,10 +8,12 @@ spec:
     java:
       replicas: 6
       autoscaling:
-        enabled: false
-      memoryRequests: "4Gi"
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 6
+      memoryRequests: "4096Mi"
       cpuRequests: "1000m"
-      memoryLimits: "5Gi"
+      memoryLimits: "5120Mi"
       cpuLimits: "3000m"
       environment:
         CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
