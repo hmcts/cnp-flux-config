@@ -5,19 +5,18 @@ metadata:
   namespace: fis
 spec:
   values:
-    java:
-      image: hmctspublic.azurecr.io/fis/ds-web:pr-89-d75dc14-20230317141052 #{"$imagepolicy": "flux-system:ithc-fis-ds-web"}
+    nodejs:
+      image: hmctspublic.azurecr.io/fis/ds-web:pr-336-9b3307a-20240718073748 #{"$imagepolicy": "flux-system:ithc-fis-ds-web"}
       keyVaults:
         fis-kv:
-        secrets:
-          - idam-ui-secret
-          - idam-system-user-name
-          - idam-system-user-password
-          - redis-access-key
-          - redis-access-key-v6
-          - s2s-secret
-          - AppInsightsInstrumentationKey
-          - postcode-lookup-token
+          secrets:
+            - idam-ui-secret
+            - idam-system-user-name
+            - idam-system-user-password
+            - redis-access-key-dss-create-case
+            - s2s-secret
+            - AppInsightsInstrumentationKey
+            - postcode-lookup-token
       environment:
         FEATURE_EXAMPLE: true
         REFORM_TEAM: fis
@@ -26,7 +25,8 @@ spec:
         SERVICE_AUTH_PROVIDER_URL: 'http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal'
         IDAM_WEB_URL: 'https://idam-web-public.ithc.platform.hmcts.net/login'
         IDAM_API_URL: 'https://idam-api.ithc.platform.hmcts.net/o/token'
-        REDIS_HOST: 'fis-ds-web-session-storage-ithc.redis.cache.windows.net'
+        REDIS_HOST: 'fis-dss-create-case-redis-ithc.redis.cache.windows.net'
+        APP_ENV: 'ithc'
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
