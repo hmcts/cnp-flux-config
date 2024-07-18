@@ -11,10 +11,12 @@ spec:
         enabled: true
         minReplicas: 2
         maxReplicas: 6
+        memory:
+          averageUtilization: 125
       memoryRequests: "4096Mi"
-      cpuRequests: "1000m"
+      cpuRequests: "1"
       memoryLimits: "5120Mi"
-      cpuLimits: "3000m"
+      cpuLimits: "3"
       environment:
         CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|(dm-store-aat\.service\.core-compute-aat\.internal|dm-store-(pr-[0-9]+|preview)(\.service\.core-compute-preview\.internal|\.preview\.platform\.hmcts\.net))(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|((em-hrs-api-(?:aat|staging)\.service\.core-compute-aat\.internal|em-hrs-api-staging\.aat\.platform\.hmcts\.net|em-hrs-api-(pr-[0-9]+|preview)(\.service\.core-compute-preview\.internal|\.preview\.platform\.hmcts\.net))(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/((segments\/[0-9]+)|(file/\S+))))
