@@ -4,5 +4,12 @@ metadata:
   name: demo-hmc-cft-hearing-service
   annotations:
     hmcts.github.com/prod-automated: enabled
+  spec:
+  filterTags:
+    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: hmc-cft-hearing-service
