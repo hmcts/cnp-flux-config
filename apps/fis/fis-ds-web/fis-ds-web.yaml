@@ -2,12 +2,27 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fis-ds-web
+  namespace: fis
 spec:
   releaseName: fis-ds-web
   interval: 1m
   values:
     nodejs:
+      disableTraefikTls: true
+      replicas: 2
+      useInterpodAntiAffinity: true
+      memoryRequests: 512Mi
+      memoryLimits: 2Gi
       image: hmctspublic.azurecr.io/fis/ds-web:prod-03d4f01-20230117164120 #{"$imagepolicy": "flux-system:fis-ds-web"}
+      environment:
+        NODE_ENV: production
+        REFORM_TEAM: fis
+        REFORM_SERVICE_NAME: fis-ds-web
+        SERVICE_AUTH_PROVIDER_URL: 'http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+        IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
+        IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
+        REDIS_HOST: 'fis-dss-create-case-redis-{{ .Values.global.environment }}.redis.cache.windows.net'
+        FIS_COS_API: 'http://prl-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
   chart:
     spec:
       chart: ./stable/fis-ds-web
