@@ -6,6 +6,9 @@ metadata:
 spec:
   values:
     nodejs:
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
       image: hmctspublic.azurecr.io/fis/ds-web:pr-336-9b3307a-20240718073748 #{"$imagepolicy": "flux-system:ithc-fis-ds-web"}
       keyVaults:
         fis-kv:
@@ -26,6 +29,7 @@ spec:
         IDAM_WEB_URL: 'https://idam-web-public.ithc.platform.hmcts.net/login'
         IDAM_API_URL: 'https://idam-api.ithc.platform.hmcts.net/o/token'
         REDIS_HOST: 'fis-dss-create-case-redis-ithc.redis.cache.windows.net'
+        FIS_COS_API: 'http://prl-cos-ithc.service.core-compute-ithc.internal'
         NODE_ENV: ithc
     global:
       environment: ithc
