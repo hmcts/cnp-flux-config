@@ -6,13 +6,13 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      replicas: 4
+      replicas: 6
       autoscaling:
         enabled: false
-      memoryRequests: "2048Mi"
-      cpuRequests: "2000m"
-      memoryLimits: "4096Mi"
-      cpuLimits: "4000m"
+      memoryRequests: "4Gi"
+      cpuRequests: "1000m"
+      memoryLimits: "5Gi"
+      cpuLimits: "3000m"
       environment:
         CCD_CONDITIONAL_APIS_CASE_ASSIGNED_USER_AND_ROLES_ENABLED: true
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|(dm-store-aat\.service\.core-compute-aat\.internal|dm-store-(pr-[0-9]+|preview)(\.service\.core-compute-preview\.internal|\.preview\.platform\.hmcts\.net))(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|((em-hrs-api-(?:aat|staging)\.service\.core-compute-aat\.internal|em-hrs-api-staging\.aat\.platform\.hmcts\.net|em-hrs-api-(pr-[0-9]+|preview)(\.service\.core-compute-preview\.internal|\.preview\.platform\.hmcts\.net))(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/((segments\/[0-9]+)|(file/\S+))))
