@@ -6,8 +6,28 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/fis/cos-api:prod-0de4e58-20240628143731 #{"$imagepolicy": "flux-system:ithc-fis-cos-api"}
+      keyVaults:
+        fis-kv:
+          secrets:
+            - name: idam-system-user-name
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-system-user-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: s2s-secret-fis-cos-api
+              alias: S2S_SECRET
+            - name: AppInsightsInstrumentationKey
+            - name: idam-ui-secret
+              alias: OAUTH2_CLIENT_SECRET
       environment:
         FEATURE_EXAMPLE: true
+        REFORM_TEAM: fis
+        REFORM_SERVICE_NAME: fis-cos-api
+        SERVICE_AUTH_PROVIDER_URL: 'http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal'
+        IDAM_WEB_URL: 'https://idam-web-public.ithc.platform.hmcts.net/login'
+        IDAM_API_URL: 'https://idam-api.ithc.platform.hmcts.net'
+        IDAM_API_BASEURL: 'https://idam-api.ithc.platform.hmcts.net'
+        CASE_DATA_STORE_BASEURL: 'https://ccd-data-store-api-ithc.service.core-compute-ithc.internal'
+        CCD_CASE_DOCS_AM_API: "http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal"
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
