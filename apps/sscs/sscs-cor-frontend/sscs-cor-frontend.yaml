@@ -7,6 +7,13 @@ spec:
   releaseName: sscs-cor-frontend
   values:
     nodejs:
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '512Mi'
+      memoryLimits: "1024Mi"
+      cpuRequests: 200m
+      cpuLimits: 1000m
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs-cor/frontend:prod-49d1080-20240710101424 #{"$imagepolicy": "flux-system:sscs-cor-frontend"}

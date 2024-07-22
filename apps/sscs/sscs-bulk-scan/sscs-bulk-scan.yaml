@@ -7,6 +7,11 @@ spec:
   releaseName: sscs-bulk-scan
   values:
     java:
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '1536Mi'
+      memoryLimits: "2048Mi"
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/sscs/bulk-scan:prod-ee7e40d-20240704122744 #{"$imagepolicy": "flux-system:sscs-bulk-scan"}

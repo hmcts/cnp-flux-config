@@ -15,18 +15,18 @@ spec:
       interval: 1m
   values:
     base:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-b2d7354-20240708095025 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
+      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-8d72039-20240719142023 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       disableTraefikTls: true
       replicas: 2
-      memoryRequests: 512Mi
-      memoryLimits: 2048Mi
+      memoryRequests: 2Gi
+      memoryLimits: 3Gi
       autoscaling:
         enabled: true
         maxReplicas: 4
       workloadClientID: ${WORKLOAD_IDENTITY_ID}
     sidekiq:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-b2d7354-20240708095025 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
+      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-8d72039-20240719142023 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       workloadClientID: ${WORKLOAD_IDENTITY_ID}
     job:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-b2d7354-20240708095025 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
+      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-8d72039-20240719142023 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       workloadClientID: ${WORKLOAD_IDENTITY_ID}
