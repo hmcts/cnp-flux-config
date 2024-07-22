@@ -7,8 +7,10 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/probate/cron-ccd-data-migration-tool:pr-31-784d82e-20240715135408 #{"$imagepolicy":"flux-system:demo-probate-cron-ccd-data-migration-tool"}
-      schedule: "35 13 15 7 *"
+      schedule: "35 15 16 7 *"
       environment:
         PRD_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
         TRIG: trig-2
         ROLLBACK_CASEREFERENCES: false
+        MIGRATION_ROLLBACK_START_DATETIME: '2024-04-16T11:00:00'
+        MIGRATION_ROLLBACK_END_DATETIME: '2024-04-16T12:00:00'
