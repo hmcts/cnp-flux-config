@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: civil-citizen-ui
+  namespace: civil
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-2c8b3fd-20240715160900 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
+      environment:
+        GA_TRACKING_ID: UA-97111056-1
+        FEATURE_TESTING_SUPPORT: true
+        FEATURE_RETURN_ERROR_TO_USER: true
+        PCQ_URL: https://pcq.demo.platform.hmcts.net
+        OCMC_URL: https://moneyclaims1.demo.platform.hmcts.net
+        IDAM_SIGN_OUT_REDIRECT_URL: https://moneyclaims.demo.platform.hmcts.net/dashboard
+        OAUTH_CLIENT_REDIRECT: https://moneyclaims.demo.platform.hmcts.net/oauth2/callback
