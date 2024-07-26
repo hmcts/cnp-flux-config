@@ -17,6 +17,7 @@ EXCLUSIONS_LIST=(
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-tya-notif/aat.yaml
+    apps/lau/lau-frontend/aat.yaml
     .*perftest.*
     .*sbox.*
     .*test.*
