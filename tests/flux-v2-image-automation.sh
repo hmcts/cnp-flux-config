@@ -18,6 +18,7 @@ EXCLUSIONS_LIST=(
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-tya-notif/aat.yaml
     apps/lau/lau-frontend/aat.yaml
+    apps/lau/lau-frontend/aat-image-policy.yaml
     .*perftest.*
     .*sbox.*
     .*test.*
