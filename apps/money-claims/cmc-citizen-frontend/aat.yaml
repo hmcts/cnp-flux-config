@@ -6,6 +6,16 @@ metadata:
 spec:
   values:
     nodejs:
+      replicas: 2
+      memoryRequests: "614Mi"
+      memoryLimits: "1024Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enable: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 80
       ingressHost: moneyclaims.aat.platform.hmcts.net
       environment:
         FEATURE_TESTING_SUPPORT: true
