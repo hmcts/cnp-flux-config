@@ -4,6 +4,7 @@ metadata:
   name: prl-cos
   namespace: private-law
 spec:
+  releaseName: prl-cos
   values:
     java:
       keyVaults:
@@ -64,7 +65,7 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/prl/cos:pr-1485-af7ed62-20240723113013 #{"$imagepolicy": "flux-system:ithc-prl-cos"}
       environment:
-        FEATURE_EXAMPLE: false
+        FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-ithc.service.core-compute-ithc.internal/oauth2/callback
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
@@ -100,3 +101,11 @@ spec:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
+  chart:
+    spec:
+      chart: ./stable/prl-cos
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
