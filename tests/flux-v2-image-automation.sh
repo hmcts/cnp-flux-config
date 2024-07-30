@@ -17,7 +17,7 @@ EXCLUSIONS_LIST=(
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-tya-notif/aat.yaml
-    apps/hmc/hmc-operational-reports-runner/demo.yaml
+    apps/hmc/hmc-operational-reports-runner-int/hmc-operational-reports-runner-int.yaml
     .*perftest.*
     .*sbox.*
     .*test.*
