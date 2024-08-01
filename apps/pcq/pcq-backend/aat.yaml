@@ -12,8 +12,10 @@ spec:
         DB_ALLOW_DELETE_RECORD: true
         PCQ_DISPOSER_DRY_RUN: true
         PCQ_DISPOSER_ENABLED: false
+        image: 'hmctspublic.azurecr.io/pcq/backend:latest' #{"$imagepolicy": "flux-system:aat-pcq-backend"}
     job:
       schedule: "0/15 * * * *"
       environment:
         PCQ_DISPOSER_ENABLED: true
         PCQ_DISPOSER_DRY_RUN: true
+        PCQ_DISPOSER_THROW_EXCEPTION: true
