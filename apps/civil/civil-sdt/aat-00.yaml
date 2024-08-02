@@ -6,9 +6,14 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/sdt:pr-556-9881d71-20240618135833 #{"$imagepolicy": "flux-system:aat-civil-sdt"}
+      image: hmctspublic.azurecr.io/civil/sdt:prod-50f94a7-20240731170236 #{"$imagepolicy": "flux-system:aat-civil-sdt"}
       environment:
         PURGE_SCHEDULE_CRON: 0 15 0 * * 4,5,6,7
         RETRY_SEND_CRON: 0 0 * * * 4,5,6,7
         REQUEUE_SCHEDULE_CRON: 0 */20 * * * 4,5,6,7
         LOGGING_LEVEL_UK_GOV_MOJ_SDT: DEBUG
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_JMS_LISTENER: DEBUG
+        LOGGING_LEVEL_ORG_APACHE_QPID: DEBUG
+        ENABLE_QUEUE_RESET: true
+        ENABLE_SINGLE_EXECUTOR: true
+        DUMMY_VAR: 1

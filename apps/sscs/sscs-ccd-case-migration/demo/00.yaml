@@ -7,11 +7,14 @@ spec:
   releaseName: sscs-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-a1b71f6-20240523223340 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "20 10 29 5 *"
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-35-3fa9a76-20240729145418 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "30 08 30 7 *"
       environment:
+        ELASTIC_ENABLED: false
+        CASES_FILE_NAME: "SSCS-12552-DEMO.json"
+        MIGRATION_SSCS_12552_ENABLED: true
         MIGRATION_WA_ENABLED: false
         MIGRATION_DWP_ENABLED: false
-        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: true
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
         MIGRATION_QUERY_SIZE: 1000
         MIGRATION_CASE_LIMIT: "1000"
