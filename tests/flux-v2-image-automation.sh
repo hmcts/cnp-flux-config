@@ -4,6 +4,7 @@
 EXCLUSIONS_LIST=(
     apps/jenkins/jenkins/ptl-intsvc/jenkins.yaml
     apps/jenkins/jenkins/jenkins.yaml
+    apps/civil/civil-service/aat.yaml
     apps/clamav-mirror/clamav/clamav.yaml
     apps/ccd/ccd-int/ccd-int.yaml.disabled
     apps/docmosis/docmosis/docmosis.yaml
