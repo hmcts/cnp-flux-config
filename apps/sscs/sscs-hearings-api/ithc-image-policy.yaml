@@ -3,5 +3,11 @@ kind: ImagePolicy
 metadata:
   name: ithc-sscs-hearings-api
 spec:
+  filterTags:
+    pattern: '^pr-603-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: sscs-hearings-api
