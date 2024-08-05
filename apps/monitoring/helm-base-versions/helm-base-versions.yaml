@@ -3,8 +3,6 @@ kind: CronJob
 metadata:
   name: helm-chart-base-versions
   namespace: monitoring
-  labels:
-    app: helm-chart-base-versions
 spec:
   schedule: "0 9 * * 1-5"
   concurrencyPolicy: "Forbid"
@@ -13,7 +11,10 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 3
-      template:
+      template: 
+        metadata:
+          labels:
+            azure.workload.identity/use: "true"
         spec:
           restartPolicy: Never
           serviceAccountName: monitoring
