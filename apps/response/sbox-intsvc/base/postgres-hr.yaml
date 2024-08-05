@@ -1,0 +1,26 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: response
+spec:
+  chart:
+    repository: sbox-response-postgresql
+    name: postgresql
+    version: 15.5.20
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 16.3.0
+      debug: true
+    postgresqlDataDir: "/data/pgdata"
+    persistence:
+      enabled: true
+      mountPath: "/data/"
+      storageClass: longhorn-static
+    volumePermissions:
+      enabled: true
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
