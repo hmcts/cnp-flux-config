@@ -13,13 +13,16 @@ spec:
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "20 16 20 3 *"
+      schedule: "30 * * * *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        MIGRATION_CASE_LIST: INPUT_FILE
         MIGRATION_WA_ENABLED: false
-        MIGRATION_DWP_ENABLED: true
+        MIGRATION_DWP_ENABLED: false
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
+        MIGRATION_WA_FIELDS_REMOVAL_ENABLED: true
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: "1100000"
         JAVA_OPTS: -Xmx4G
