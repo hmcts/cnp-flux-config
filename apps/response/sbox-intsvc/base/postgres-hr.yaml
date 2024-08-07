@@ -1,0 +1,22 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: response
+spec:
+  chart:
+    repository: bitnami-postgresql
+    name: postgresql
+    version: 15.5.20
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 14.12.0
+      debug: true
+    postgresqlDataDir: "/data/pgdata"
+    volumePermissions:
+      enabled: true
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
