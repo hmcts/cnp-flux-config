@@ -4,12 +4,8 @@ metadata:
   name: pcq-backend
 spec:
   values:
-    java:
-      image: 'hmctspublic.azurecr.io/pcq/backend:prod-8eeff00-20240807072800' #{"$imagepolicy": "flux-system:demo-pcq-backend"}
     job:
-      image: 'hmctspublic.azurecr.io/pcq/backend:prod-8eeff00-20240807072800' #{"$imagepolicy": "flux-system:demo-pcq-backend"}
-      schedule: "15 12 6 8 *"
+      schedule: "0/15 * * * *"
       environment:
         PCQ_DISPOSER_ENABLED: true
         PCQ_DISPOSER_DRY_RUN: true
-        PCQ_DISPOSER_THROW_EXCEPTION: true
