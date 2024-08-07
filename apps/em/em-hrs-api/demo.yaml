@@ -5,11 +5,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/hrs-api:pr-1890-3bf3539-20240614171059 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-956dea1-20240802171040 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_EM_HRS: DEBUG
-        SMTP_HOST: smtp.office365.com
-        MONTHLY_HEARING_REPORT_CRON: "0 0 * * * *"
-        MONTHLY_HEARING_REPORT_ENABLED: true
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
       spotInstances:
         enabled: true

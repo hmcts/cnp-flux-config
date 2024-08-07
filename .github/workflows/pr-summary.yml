@@ -95,9 +95,10 @@ jobs:
         with:
           script: |
             const prBody = context.payload.pull_request.body || '';
+            const summaryText = '## 🤖AEP PR SUMMARY🤖\n\n_I\'m a bot that generates AI summaries of pull requests, see [AEP](https://kainossoftwareltd.github.io/ai-enhanced-platform/) for more details_\n\n' + process.env.response;
             const updatedBody = prBody.includes('## 🤖AEP PR SUMMARY🤖')
-              ? prBody.replace(/## 🤖AEP PR SUMMARY🤖[\s\S]*/, '') + '\n\n## 🤖AEP PR SUMMARY🤖\n\n' + process.env.response
-              : prBody + '\n\n## 🤖AEP PR SUMMARY🤖\n\n' + process.env.response;
+              ? prBody.replace(/## 🤖AEP PR SUMMARY🤖[\s\S]*/, '') + '\n\n' + summaryText
+              : prBody + '\n\n' + summaryText;
             github.rest.pulls.update({
               pull_number: context.issue.number,
               owner: context.repo.owner,

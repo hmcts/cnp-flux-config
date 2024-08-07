@@ -3,8 +3,6 @@ kind: CronJob
 metadata:
   name: helm-chart-base-versions
   namespace: monitoring
-  labels:
-    app: helm-chart-base-versions
 spec:
   schedule: "0 9 * * 1-5"
   concurrencyPolicy: "Forbid"
@@ -14,21 +12,19 @@ spec:
     spec:
       backoffLimit: 3
       template:
+        metadata:
+          labels:
+            azure.workload.identity/use: "true"
         spec:
           restartPolicy: Never
-          serviceAccountName: helm-chart-base-versions-sa
+          serviceAccountName: monitoring
           containers:
             - name: helm-chart-base-versions
-              image: hmctspublic.azurecr.io/helm-base-versions:prod-e36fc8b-20240613161521 #{"$imagepolicy": "flux-system:helm-base-versions"}
+              image: hmctspublic.azurecr.io/helm-base-versions:prod-f3ec4e5-20240805183644Z #{"$imagepolicy": "flux-system:helm-base-versions"}
               imagePullPolicy: Always
               env:
                 - name: CLUSTER_NAME
                   value: "cft-${CLUSTER_FULL_NAME}-aks"
-                - name: COSMOS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: helm-base-versions
-                      key: cosmos-key
                 - name: SLACK_WEBHOOK
                   valueFrom:
                     secretKeyRef:

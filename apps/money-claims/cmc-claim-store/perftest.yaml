@@ -6,7 +6,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-95f2ad4-20240516115304 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
+      replicas: 3
+      autoscaling:
+        maxReplicas: 5
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-bd45c9b-20240806134003 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc

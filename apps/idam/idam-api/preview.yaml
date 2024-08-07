@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-b7bdf40-20240618112659 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-2c0caeb-20240730172307 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -28,7 +28,7 @@ spec:
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-preview.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-preview.internal
         STRATEGIC_ADMIN_URL: https://idam-user-dashboard.preview.platform.hmcts.net
-        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.preview.platform.hmcts.net
+        STRATEGIC_FRONTEND_URL: https://idam-web-public.preview.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.preview.platform.hmcts.net
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
@@ -53,6 +53,7 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
         SPRING_JMS_SERVICEBUS_ENABLED: false
         SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-preview.servicebus.windows.net/
         SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 1c4f0704-a29e-403d-b719-b90c34ef14c9
