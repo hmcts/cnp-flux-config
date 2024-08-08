@@ -1,13 +1,17 @@
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: postgres
   namespace: response
 spec:
   chart:
-    repository: bitnami-postgresql
-    name: postgresql
-    version: 15.5.20
+    spec:
+      chart: postgresql
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-postgresql
+        namespace: flux-system
+      version: 15.5.20
   values:
     image:
       repository: bitnami/postgresql
