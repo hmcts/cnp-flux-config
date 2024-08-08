@@ -4,6 +4,7 @@
 EXCLUSIONS_LIST=(
     apps/jenkins/jenkins/ptl-intsvc/jenkins.yaml
     apps/jenkins/jenkins/jenkins.yaml
+    apps/civil/civil-service/aat.yaml
     apps/clamav-mirror/clamav/clamav.yaml
     apps/ccd/ccd-int/ccd-int.yaml.disabled
     apps/docmosis/docmosis/docmosis.yaml
@@ -15,6 +16,9 @@ EXCLUSIONS_LIST=(
     apps/private-law/prl-citizen-frontend/aat.yaml
     apps/bsp/bulk-scan-sample-app/aat.yaml
     apps/sscs/sscs-tribunals-frontend/*
+    apps/sscs/sscs-tribunals-api/aat.yaml
+    apps/sscs/sscs-tya-notif/aat.yaml
+    apps/hmc/hmc-operational-reports-runner-int/hmc-operational-reports-runner-int.yaml
     .*perftest.*
     .*sbox.*
     .*test.*
