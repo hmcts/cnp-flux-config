@@ -1,9 +1,17 @@
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+kind: GitRepository
 metadata:
   name: bitnami-postgresql
   namespace: flux-system
 spec:
-  type: "oci"
-  url: oci://registry-1.docker.io/bitnamicharts/postgresql
+  url: ssh://github.com/bitnami/charts
   interval: 10m
+  ref:
+    branch: main
+  secretRef:
+    name: git-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/bitnami/postgresql/
