@@ -14,7 +14,7 @@ spec:
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "0/10 19 12 8 *"
+      schedule: "30 19 29 5 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -33,19 +33,15 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_USER
             - name: idam-sscs-systemupdate-password
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
-            - name: encoded-data-string-wa-fields-removal
-              alias: WA_FIELDS_ENCODED_DATA_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-prod.service.core-compute-prod.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
-        MIGRATION_CASE_LIST: INPUT_FILE
         MIGRATION_WA_ENABLED: false
         MIGRATION_DWP_ENABLED: false
-        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
-        MIGRATION_WA_FIELDS_REMOVAL_ENABLED: true
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: true
         CASE_MIGRATION_MAX_RETRIES: 5
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "400000"
