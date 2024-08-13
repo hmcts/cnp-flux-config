@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -10,7 +10,7 @@ spec:
       replicas: 2
       enableOAuth: true
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:pr-2449-933bd5d-20240429152342 #{"$imagepolicy": "flux-system:demo-sscs-tya-notif"}
+      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-b46e94d-20240806131335 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       spotInstances:
         enabled: true
       environment:
@@ -23,7 +23,7 @@ spec:
         SECURE_DOC_STORE_FEATURE: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         SCOTTISH_PO_BOX_ENABLED: false
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         HOURS_START_TIME: 0
         HOURS_END_TIME: 23
         TEST_PROPERTY: false
