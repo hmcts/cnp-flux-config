@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -8,8 +8,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1536Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enable: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 125
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-722a1e0-20240430153440 #{"$imagepolicy": "flux-system:cmc-claim-store"}
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-26019e8-20240807143516 #{"$imagepolicy": "flux-system:cmc-claim-store"}
       environment:
         MANAGEMENT_HEALTH_MAIL_ENABLED: false
   chart:

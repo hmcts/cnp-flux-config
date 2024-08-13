@@ -1,14 +1,14 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-task-management-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/task-management-api:prod-56c10e2-20240502132233 #{"$imagepolicy": "flux-system:ithc-wa-task-management-api"}
+      image: hmctspublic.azurecr.io/wa/task-management-api:prod-c295659-20240812092417 #{"$imagepolicy": "flux-system:ithc-wa-task-management-api"}
       environment:
         REFRESH_FLAG: "3"
         ALLOWED_JURISDICTIONS: wa,ia,sscs,civil,publiclaw,privatelaw
         ALLOWED_CASE_TYPES: asylum,wacasetype,sscs,civil,generalapplication,care_supervision_epo,prlapps,privatelaw_exceptionrecord,benefit
       spotInstances:
-        enabled: true
+        enabled: false

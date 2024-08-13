@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-profile-sync
@@ -13,9 +13,11 @@ spec:
       memoryLimits: '2048Mi'
       replicas: 1
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rd/profile-sync:prod-fec82aa-20240503160358 #{"$imagepolicy": "flux-system:rd-profile-sync"}
+      image: hmctspublic.azurecr.io/rd/profile-sync:prod-c554c49-20240725074214 #{"$imagepolicy": "flux-system:rd-profile-sync"}
       environment:
-        DUMMY_VAR: true
+        ROOT_LOGGING_LEVEL: WARN
+        TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX: hmctspublic.azurecr.io/imported/
+        DUMMY_VAR: false
   chart:
     spec:
       chart: ./stable/rd-profile-sync

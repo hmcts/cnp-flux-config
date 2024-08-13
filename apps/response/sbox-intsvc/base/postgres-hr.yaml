@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: response
+spec:
+  chart:
+    spec:
+      chart: bitnami/postgresql
+      sourceRef:
+        kind: GitRepository
+        name: bitnami-postgresql
+        namespace: flux-system
+      version: 15.5.20
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 14.12.0
+      debug: true
+    postgresqlDataDir: "/bitnami/postgresql/data"
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false

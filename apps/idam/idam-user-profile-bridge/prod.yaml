@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: idam-user-profile-bridge
+  namespace: idam
+spec:
+  releaseName: idam-user-profile-bridge
+  values:
+    java:
+      ingressHost: idam-user-profile-bridge.platform.hmcts.net
+      environment:
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://hmcts-access.service.gov.uk/o/jwks
+        SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_IDAMUSERPROFILEBRIDGE_TOKENURI: https://hmcts-access.service.gov.uk/o/token
+        SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_RDUSERPROFILEAPI_TOKENURI: https://hmcts-access.service.gov.uk/o/token
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-prod.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 8999dec3-0104-4a27-94ee-6588559729d1
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-prod

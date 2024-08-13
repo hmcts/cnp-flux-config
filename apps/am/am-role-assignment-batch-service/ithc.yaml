@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-role-assignment-batch-service
@@ -6,29 +6,9 @@ spec:
   values:
     job:
       schedule: "30 16 * * *"
-      keyVaults:
-        am:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: am-role-assignment-service-s2s-secret
-              alias: AM_ROLE_ASSIGNMENT_SERVICE_SECRET
-            - name: role-assignment-service-POSTGRES-PASS-V15
-              alias: ROLE_ASSIGNMENT_DB_PASSWORD
-            - name: am-sendgrid-api-key
-              alias: AM_SENDGRID_API_KEY
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: judicial-booking-service-POSTGRES-PASS-V15
-              alias: JUDICIAL_BOOKING_SERVICE_POSTGRES_PASS
       environment:
         DELETE_ORG: false
         CCD_AM_MIGRATION_MASTER_FLAG: false
         CCD_AM_MIGRATION_RENAME_TABLES_FLAG: false
-        EMAIL_LIST: nitish.singla@hmcts.net,aashish.aggarwal@hmcts.net
         EMAIL_ENABLED: false
         AM_SENDGRID_API_EMAIL_FROM: no-reply@mail-am-nonprod.platform.hmcts.net
-        ROLE_ASSIGNMENT_DB_HOST: am-role-assignment-service-postgres-db-v15-ithc.postgres.database.azure.com
-        ROLE_ASSIGNMENT_DB_USERNAME: pgadmin
-        JUDICIAL_BOOKING_SERVICE_POSTGRES_HOST: am-judicial-booking-service-postgres-db-v15-ithc.postgres.database.azure.com
-        JUDICIAL_BOOKING_SERVICE_POSTGRES_USER: pgadmin

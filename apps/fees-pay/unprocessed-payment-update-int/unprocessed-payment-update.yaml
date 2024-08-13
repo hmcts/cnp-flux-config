@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: unprocessed-payment-update-int
@@ -6,7 +6,7 @@ spec:
   releaseName: unprocessed-payment-update
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:prod-cf33f7c-20240507142443" #{"$imagepolicy": "flux-system:unprocessed-payment-update"}
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-db47544-20240813074726" #{"$imagepolicy": "flux-system:unprocessed-payment-update"}
       schedule: "*/15 0 * * 1,2,3,4,5"
       environment:
         REPORT_NAME: unprocessed-payment-update

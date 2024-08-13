@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: slack-help-bot
@@ -7,7 +7,7 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-33bf1f9-20240503071955 #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-111cc2f-20240813071833Z #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL: platops-help
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
@@ -24,7 +24,7 @@ spec:
           - slack-app-token
           - jira-username
           - jira-api-token
-          - app-insights-instrumentation-key
+          - app-insights-connection-string
   chart:
     spec:
       chart: nodejs

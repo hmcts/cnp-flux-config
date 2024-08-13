@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cmc-citizen-frontend
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-15eca35-20240501171719 #{"$imagepolicy": "flux-system:demo-cmc-citizen-frontend"}
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:pr-3679-44cede9-20240812153004 #{"$imagepolicy": "flux-system:demo-cmc-citizen-frontend"}
       ingressHost: moneyclaims1.demo.platform.hmcts.net
       environment:
         GA_TRACKING_ID: UA-97111056-1
@@ -16,3 +16,5 @@ spec:
         DRAFT_STORE_URL: http://draft-store-service-demo.service.core-compute-demo.internal
         PAY_RETURN_URL: https://moneyclaims1.demo.platform.hmcts.net
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
+        CIVIL_CITIZEN_URL: https://moneyclaims.demo.platform.hmcts.net
+        CIVIL_CITIZEN_UI_REDIRECT: true

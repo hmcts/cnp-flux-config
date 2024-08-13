@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: chart-neuvector-test
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: ssh://github.com/hmcts/chart-neuvector
+  ref:
+    tag: 1.5.7-alpha
+  secretRef:
+    name: git-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/neuvector-azure-keyvault/

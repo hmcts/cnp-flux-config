@@ -1,15 +1,15 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
-  name: ithc-prl-cos-api
+  name: ithc-prl-cos
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
+  imageRepositoryRef:
+    name: prl-cos
   filterTags:
-    pattern: '^pr-1731-[a-f0-9]+-(?P<ts>[0-9]+)'
+    pattern: '^pr-2502-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
       order: asc
-  imageRepositoryRef:
-    name: prl-cos

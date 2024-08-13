@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,6 +6,9 @@ metadata:
 spec:
   values:
     java:
+      replicas: 4
+      autoscaling:
+        maxReplicas: 8
       environment:
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -21,3 +24,6 @@ spec:
         CUI_URL_RESPOND_TO_CLAIM: https://www.moneyclaims.service.gov.uk/first-contact/start
         OCMC_CLIENT_URL: https://www1.moneyclaims.service.gov.uk
         POLLING_EVENT_EMITTER_ENABLED: true
+        SIMPLE_STATE_FLOW_ENGINE_ENABLED: true
+      spotInstances:
+        enabled: false

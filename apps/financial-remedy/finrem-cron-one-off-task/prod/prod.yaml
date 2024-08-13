@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cron-one-off-task
@@ -6,9 +6,9 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "30 6 7 5 *"
+      schedule: "0 0 15 5 *"
       environment:
-        CRON_LIST_FOR_HEARING_ENABLED: false
+        TASK_NAME: CfvUpdateTask
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
         CTSC_EMAIL: contactFinancialRemedy@justice.gov.uk
@@ -23,14 +23,13 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
+        CRON_WAIT_TIME_MINS: 1
+        CRON_LIST_FOR_HEARING_ENABLED: false
         CRON_GENERAL_APPLICATION_REMOVE_ENABLED: false
         CRON_APPLICATION_TYPE_ADD_ENABLED: false
         CRON_CFV_CATEGORISATION_TASK_ENABLED: false
-        CRON_CFV_CATEGORISATION_RELEASE_DATE: "10-04-2024 12:00"
-        CRON_CFV_CATEGORISATION_BATCH_SIZE: 1000
-        CRON_WAIT_TIME_MINS: 1
         CRON_MIAM_EXEMPTIONS_UPDATE_ENABLED: false
-        TASK_NAME: MiamExemptionsUpdateTask
+        CRON_CFV_UPDATE_TASK_ENABLED: false
     global:
       jobKind: CronJob
       enableKeyVaults: true

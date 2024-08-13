@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: case-payment-orders-api
@@ -7,21 +7,5 @@ spec:
     java:
       autoscaling:
         enabled: false
-      image: hmctspublic.azurecr.io/cpo/case-payment-orders-api:prod-429177e-20240201150844 #{"$imagepolicy": "flux-system:perftest-case-payment-orders-api"}
-      keyVaults:
-        cpo:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: case-payment-orders-api-POSTGRES-USER-V15
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_USERNAME
-            - name: case-payment-orders-api-POSTGRES-PASS-V15
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_PASSWORD
-            - name: case-payment-orders-api-POSTGRES-HOST-V15
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_HOST
-            - name: case-payment-orders-api-POSTGRES-PORT
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_PORT
-            - name: case-payment-orders-api-POSTGRES-DATABASE
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_NAME
       environment:
-        DUMMY_RESTART_VAR: 0
+        DUMMY_RESTART_VAR: 1

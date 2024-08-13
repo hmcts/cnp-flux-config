@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-ccd-case-migration
@@ -8,7 +8,7 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-a686e92-20240412165907 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-f2af85c-20240806160609 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       keyVaults:
         sscs:
           secrets:
@@ -20,6 +20,14 @@ spec:
               alias: IDAM_PASS
             - name: sscs-s2s-secret
               alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-data-string-wa-fields-removal
+              alias: WA_FIELDS_ENCODED_DATA_STRING
       environment:
         MIGRATION_WA_ENABLED: false
   chart:

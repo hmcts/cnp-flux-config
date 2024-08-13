@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-4608-d0337a4-20240507102751 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-22a58d5-20240813064603 #{"$imagepolicy": "flux-system:civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -19,10 +19,14 @@ spec:
         HMC_HEARINGS_SUBSCRIPTION_ENABLED: true
         TEMP_VAR: 3
         REFERENCE_DATABASE_MIGRATION: false
+        SPRING_FLYWAY_TABLE: schema_version
+        SPRING_FLYWAY_BASELINE_ON_MIGRATE: false
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
         CUI_URL_RESPOND_TO_CLAIM: https://moneyclaims.demo.platform.hmcts.net/first-contact/start
         OCMC_CLIENT_URL: https://moneyclaims1.demo.platform.hmcts.net
         FEIGN_CLIENT_CONFIG_DEFAULT_URL: http://camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/engine-rest/
+        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        ROLE_INITIALISATION_ENABLED: true
       keyVaults:
         civil:
           resourceGroup: civil
