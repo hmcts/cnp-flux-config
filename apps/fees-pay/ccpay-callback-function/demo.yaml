@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-512fd0a-20240422161519 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
+      image: hmctspublic.azurecr.io/ccpay/callback-function:pr-171-5783631-20240801082755 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
       aadIdentityName: ccpay
       environment:
         S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
@@ -16,3 +16,7 @@ spec:
         "ccpay":
           secrets:
             - payment-s2s-secret
+  chart:
+    spec:
+      chart: ccpay-callback-function
+      version: 2.5.3

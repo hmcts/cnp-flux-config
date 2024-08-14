@@ -53,7 +53,11 @@ Once you're finished with your lab app you can clean up the flux configuration b
 Inside the labs directory run the clean up script to remove the flux config you created earlier.
 
 ```shell
-./clean-up-lab-flux-config.sh yourGitHubUsername
+./clean-up-lab-flux-config.sh yourGitHubUsername-nodejs
+```
+
+```shell
+./clean-up-lab-flux-config.sh yourGitHubUsername-java
 ```
 
 Once the script has successfully finished, you will need to check and then commit the changes and push to GitHub and create a PR.
