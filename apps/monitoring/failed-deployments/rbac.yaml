@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: failed-deployments-clusterrolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: failed-deployments-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: failed-deployments-sa
+    namespace: monitoring
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: failed-deployments-clusterrole
+rules:
+  - apiGroups: ['']
+    resources: ['namespaces']
+    verbs: ['list', 'get']
+  - apiGroups: ['apps']
+    resources: ['deployments']
+    verbs: ['list', 'get']
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: failed-deployments-sa
+  namespace: monitoring

@@ -1,11 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-timed-event-service
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/timed-event-service:prod-7d9dbd3-20240429133650 #{"$imagepolicy": "flux-system:ia-timed-event-service"}
+      image: hmctspublic.azurecr.io/ia/timed-event-service:prod-878825b-20240812110030 #{"$imagepolicy": "flux-system:ia-timed-event-service"}
       keyVaults:
         ia:
           resourceGroup: ia
@@ -33,3 +33,5 @@ spec:
       environment:
         POSTGRES_HOST: ia-timed-event-service-postgres-db-v15-demo.postgres.database.azure.com
         POSTGRES_USERNAME: pgadmin
+      spotInstances:
+        enabled: true

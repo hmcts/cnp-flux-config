@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-caseworker-ref-api
@@ -8,15 +8,15 @@ spec:
       keyVaults:
         rd:
           secrets:
-            - name: caseworker-ref-api-POSTGRES-DATABASE-v16
+            - name: caseworker-ref-api-POSTGRES-DATABASE
               alias: POSTGRES_DB_NAME
-            - name: caseworker-ref-api-POSTGRES-HOST-v16
+            - name: caseworker-ref-api-POSTGRES-HOST
               alias: POSTGRES_HOST
-            - name: caseworker-ref-api-POSTGRES-PORT-v16
+            - name: caseworker-ref-api-POSTGRES-PORT
               alias: POSTGRES_PORT
-            - name: caseworker-ref-api-POSTGRES-USER-v16
+            - name: caseworker-ref-api-POSTGRES-USER
               alias: POSTGRES_USERNAME
-            - name: caseworker-ref-api-POSTGRES-PASS-v16
+            - name: caseworker-ref-api-POSTGRES-PASS
               alias: POSTGRES_PASSWORD
             - name: caseworker-ref-api-s2s-secret
               alias: CASEWORKER_REF_API_S2S_SECRET
@@ -30,13 +30,9 @@ spec:
               alias: app-insights-connection-string
       environment:
         DELETE_CWR: true
-        CRD_S2S_AUTHORISED_SERVICES: rd_caseworker_ref_api,am_org_role_mapping_service,iac,xui_webapp,ccd_data,sscs,sscs_bulkscan,prl_cos_api,jps_judicial_payment_frontend,jps_judicial_payment_service,et_cos,rd_profile_sync,fpl_case_service,idam-user-profile-bridge
+        CRD_S2S_AUTHORISED_SERVICES: rd_caseworker_ref_api,am_org_role_mapping_service,iac,xui_webapp,ccd_data,sscs,sscs_bulkscan,prl_cos_api,et_cos,rd_profile_sync,fpl_case_service,idam-user-profile-bridge
         STAFF_DATA_FILE_VERSION: v1.15
         EMAIL_DOMAIN_LIST: justice.gov.uk,dwp.gov.uk,hmrc.gov.uk,hmcts.net,dfcni.gov.uk,gov.wales,cica.gov.uk
         #file upload config
         STAFF_UPLOAD_FILE: false # false: Block the File,  true: Able to Upload the File
         IDAM_ROLE_MAPPING_FILE: true # false: Block the File,  true: Able to Upload the File
-        POSTGRES_HOST: rd-caseworker-ref-api-postgres-db-v16-aat.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_DB_NAME: dbrdcaseworker
-        POSTGRES_PORT: 5432

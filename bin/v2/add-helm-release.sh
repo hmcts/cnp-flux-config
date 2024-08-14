@@ -10,6 +10,12 @@ COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
 LANGUAGE=${5}
 ENVIRONMENT=${6}
 
+TAG=$(az acr manifest list-metadata https://${ACR}.azurecr.io/${NAMESPACE}/${COMPONENT} | jq -r '.[].tags[] | select(contains("prod"))')
+
+if [ -z "${TAG}" ]; then
+  TAG="latest"
+fi
+
 cd "$(dirname "$0")"
 
 if [ ! -d "${NAMESPACE_DIR}/${ENVIRONMENT}" ]; then
@@ -37,7 +43,7 @@ fi
 (
 cat <<EOF
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ${PRODUCT}-${COMPONENT}
@@ -54,7 +60,7 @@ spec:
       interval: 1m
   values:
     ${LANGUAGE}:
-      image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:latest # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
+      image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:${TAG} # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
       disableTraefikTls: true
 EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"

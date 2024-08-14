@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: reform-scan-blob-router
@@ -10,9 +10,7 @@ spec:
       replicas: 2
       memoryLimits: "4096Mi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-4a7aebc-20240426110728 #{"$imagepolicy": "flux-system:reform-scan-blob-router"}
-      environment:
-        PRIVATELAW_ENABLED: true
+      image: hmctspublic.azurecr.io/reform-scan/blob-router:prod-fb13e47-20240813085322 #{"$imagepolicy": "flux-system:reform-scan-blob-router"}
       smoketests:
         image: hmctspublic.azurecr.io/reform-scan/blob-router-test:prod-ef489f9-20221213095518 #{"$imagepolicy": "flux-system:reform-scan-blob-router-blob-router-test"}
       functionaltests:

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: finrem-cron-one-off-task
@@ -6,9 +6,9 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "0/10 * * * *"
+      schedule: "0 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/finrem/cos:prod-b1a7499-20240430064030 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-63835e0-20240812145138 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
         TASK_NAME: CfvMigrationTask
   chart:

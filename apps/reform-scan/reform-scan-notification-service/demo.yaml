@@ -1,10 +1,46 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: reform-scan-notification-service
 spec:
   values:
     java:
+      keyVaults:
+        "reform-scan":
+          secrets:
+            - name: app-insights-instrumentation-key
+              alias: azure.application-insights.instrumentation-key
+            - name: error-notifications-secondary-password
+              alias: clients.error-notifications.secondary.password
+            - name: error-notifications-secondary-url
+              alias: clients.error-notifications.secondary.url
+            - name: error-notifications-secondary-username
+              alias: clients.error-notifications.secondary.username
+            - name: error-notifications-password
+              alias: clients.error-notifications.password
+            - name: error-notifications-url
+              alias: clients.error-notifications.url
+            - name: error-notifications-username
+              alias: clients.error-notifications.username
+            - name: notification-service-POSTGRES-PASS
+              alias: DB_PASSWORD
+            - name: notification-service-POSTGRES-USER
+              alias: DB_USER
+            - name: notification-service-POSTGRES-HOST
+              alias: DB_HOST
+            - name: notification-service-POSTGRES-PORT
+              alias: DB_PORT
+            - name: notification-service-POSTGRES-DATABASE
+              alias: DB_NAME
+            - name: notification-queue-listen-shared-access-key-premium
+              alias: QUEUE_READ_ACCESS_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: launch-darkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: launch-darkly-offline-mode
+              alias: LAUNCH_DARKLY_OFFLINE_MODE
       environment:
         PENDING_NOTIFICATIONS_SEND_DELAY_IN_MINUTE: 0
         REFRESH_PODS: "true"
+        CLIENTS_ERROR_NOTIFICATIONS_SECONDARY_JURISDICTIONS: "cmc,privatelaw,divorce"

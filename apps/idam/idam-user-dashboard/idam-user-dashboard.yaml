@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-user-dashboard
@@ -11,9 +11,14 @@ spec:
       cpuLimits: 150m
       cpuRequests: 50m
       memoryLimits: 1024Mi
-      memoryRequests: 512Mi
+      memoryRequests: 1024Mi
+      autoscaling:
+        enabled: true
+        maxReplicas: 3
+        memory:
+          averageUtilization: 95
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/idam/user-dashboard:prod-408c321-20240429085121 #{"$imagepolicy": "flux-system:idam-user-dashboard"}
+      image: hmctspublic.azurecr.io/idam/user-dashboard:prod-182e85a-20240812120902 #{"$imagepolicy": "flux-system:idam-user-dashboard"}
       environment:
         trigger_deploy: 21/06/2023-1200
   chart:

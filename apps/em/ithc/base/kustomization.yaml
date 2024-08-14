@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../em-icp/em-icp.yaml
   - ../../../rbac/nonprod-role.yaml
+  - ../../../base/slack-provider/ithc
 namespace: em
 patches:
   - path: ../../identity/ithc.yaml
@@ -12,4 +14,5 @@ patches:
   - path: ../../em-npa/ithc.yaml
   - path: ../../em-stitching/ithc.yaml
   - path: ../../em-hrs-api/ithc.yaml
+  - path: ../../em-icp/ithc.yaml
   - path: ../../serviceaccount/ithc.yaml

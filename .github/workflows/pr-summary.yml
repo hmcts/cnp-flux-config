@@ -15,7 +15,7 @@ jobs:
       WORKING_DIRECTORY: ${{ github.workspace }}/
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -66,8 +66,13 @@ jobs:
               # Write to file
               echo -e "$response_body" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
           else
+              # Extract the JSON body from the response
+              json_body=$(echo "$response" | awk -v RS='\r\n\r\n' 'END{print}')
+
+              # Extract the "detail" field from the JSON body
+              detail=$(echo $json_body | jq -r '.detail')
               echo "Error sending file contents: $response_code"
-              echo -e "Request to gippi failed to process" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
+              echo -e "Request to AEP failed to process with error: $detail" > "${WORKING_DIRECTORY}${RESPONSE_MD_FILE}"
           fi
 
           if [ $? -eq 0 ]; then
@@ -86,13 +91,14 @@ jobs:
             echo EOF
           } >> "$GITHUB_ENV"
 
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           script: |
             const prBody = context.payload.pull_request.body || '';
-            const updatedBody = prBody.includes('## 🤖GIPPI PR SUMMARY🤖')
-              ? prBody.replace(/## 🤖GIPPI PR SUMMARY🤖[\s\S]*/, '') + '\n\n## 🤖GIPPI PR SUMMARY🤖\n\n' + process.env.response
-              : prBody + '\n\n## 🤖GIPPI PR SUMMARY🤖\n\n' + process.env.response;
+            const summaryText = '## 🤖AEP PR SUMMARY🤖\n\n_I\'m a bot that generates AI summaries of pull requests, see [AEP](https://kainossoftwareltd.github.io/ai-enhanced-platform/) for more details_\n\n' + process.env.response;
+            const updatedBody = prBody.includes('## 🤖AEP PR SUMMARY🤖')
+              ? prBody.replace(/## 🤖AEP PR SUMMARY🤖[\s\S]*/, '') + '\n\n' + summaryText
+              : prBody + '\n\n' + summaryText;
             github.rest.pulls.update({
               pull_number: context.issue.number,
               owner: context.repo.owner,

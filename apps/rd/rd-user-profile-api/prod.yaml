@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-user-profile-api
@@ -11,6 +11,7 @@ spec:
       cpuLimits: "4000m"
       cpuRequests: "2000m"
       environment:
+        ROOT_LOGGING_LEVEL: INFO
         DELETE_ORG: true
         IDAM_URL: https://idam-api.platform.hmcts.net
         OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o

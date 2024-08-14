@@ -1,0 +1,11 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: aso
+  namespace: flux-system
+spec:
+  path: ./apps/azureserviceoperator-system/${ENVIRONMENT}/${CLUSTER}
+  postBuild:
+    substitute:
+      NAMESPACE: "azureserviceoperator-system"
+      TEAM_NOTIFICATION_CHANNEL: "${ENV_MONITOR_CHANNEL}"

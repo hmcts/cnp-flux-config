@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-ccd-case-migration
@@ -8,18 +8,50 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-a686e92-20240412165907 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-f2af85c-20240806160609 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "10 21 16 4 *"
+      restartPolicy: Never
+      schedule: "0 19 12 8 *"
+      keyVaults:
+        sscs:
+          resourceGroup: sscs
+          secrets:
+            - name: idam-sscs-oauth2-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_PASS
+            - name: sscs-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-data-string-wa-fields-removal
+              alias: WA_FIELDS_ENCODED_DATA_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        MIGRATION_WA_ENABLED: true
+        RD_LOCATION_REF_API_URL: http://rd-location-ref-api-prod.service.core-compute-prod.internal
+        JUDICIAL_REF_API_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
+        MIGRATION_CASE_LIST: INPUT_FILE
+        MIGRATION_WA_ENABLED: false
         MIGRATION_DWP_ENABLED: false
+        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
+        MIGRATION_WA_FIELDS_REMOVAL_ENABLED: false
+        CASE_MIGRATION_MAX_RETRIES: 5
         MIGRATION_QUERY_SIZE: 500
-        MIGRATION_CASE_LIMIT: "1000000"
+        MIGRATION_CASE_LIMIT: "400000"
         JAVA_OPTS: -Xmx4G
+    global:
+      environment: prod
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+      jobKind: CronJob
