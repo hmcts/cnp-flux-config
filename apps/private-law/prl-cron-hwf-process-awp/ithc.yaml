@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-hwf-process-awp
+spec:
+  releaseName: prl-cron-hwf-process-awp
+  values:
+    job:
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/prl/cos:prod-09313a2-20240702154357 #{"$imagepolicy": "flux-system:prl-cos"}
+      environment:
+        APP_ENV: "ithc"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: ithc
