@@ -4,16 +4,17 @@ nameSuffix: "-slack"
 resources:
   - ../helm-base-versions/helm-base-versions.yaml
 patches:
-  - patch: |-
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: helm-chart-base-versions
+    patch: |-
       - op: add
-        path: "/spec/jobTemplate/spec/template/spec/containers/0/env/-"
+        path: /spec/jobTemplate/spec/template/spec/containers/0/env/-
         value:
           name: MODE
           value: "notify"
       - op: replace
-        path: "/spec/schedule"
+        path: /spec/schedule
         value: "00 10 * * 1-5"
-    target:
-      kind: HelmRelease
-      namespace: monitoring
-      name: helm-chart-base-versions
