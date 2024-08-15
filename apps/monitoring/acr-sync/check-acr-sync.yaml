@@ -8,52 +8,54 @@ metadata:
 spec:
   chart:
     spec:
-      chart: job
+      chart: cronjob-chart
       sourceRef:
         kind: GitRepository
-        name: chart-job
+        name: chart-repo
         namespace: flux-system
       interval: 1m
   interval: 5m
-  schedule: "*/15 * * * *"
-  concurrencyPolicy: "Forbid"
-  failedJobsHistoryLimit: 3
-  startingDeadlineSeconds: 300
-  jobTemplate:
-    spec:
-      backoffLimit: 3
-      template:
+  values:
+    cronJob:
+      schedule: "*/15 * * * *"
+      concurrencyPolicy: "Forbid"
+      failedJobsHistoryLimit: 3
+      startingDeadlineSeconds: 300
+      jobTemplate:
         spec:
-          restartPolicy: Never
-          containers:
-            - name: check-acr-sync
-              image: hmctspublic.azurecr.io/check-acr-sync:db14885
-              imagePullPolicy: IfNotPresent
-              resources:
-                requests:
-                  memory: "64Mi"
-                  cpu: "250m"
-                limits:
-                  memory: "256Mi"
-                  cpu: "500m"
-              env:
-                - name: SLACK_WEBHOOK
-                  valueFrom:
-                    secretKeyRef:
-                      name: monitoring-values
-                      key: slack-webhook
-                - name: SLACK_ICON
-                  value: flux
-                - name: ACR_MAX_RESULTS
-                  value: "3000"
-                - name: ACR_SYNC_DEBUG
-                  value: "true"
-                - name: SLACK_CHANNEL
-                  value: "${TEAM_NOTIFICATION_CHANNEL}"
-                - name: AKS_CLUSTER
-                  value: "${ENVIRONMENT}"
-                - name: CLUSTER_NAME
-                  value: "cft-${CLUSTER_FULL_NAME}-aks"
-              envFrom:
-                - secretRef:
-                    name: acr-sync
+          backoffLimit: 3
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+                - name: check-acr-sync
+                  image: hmctspublic.azurecr.io/check-acr-sync:db14885
+                  imagePullPolicy: IfNotPresent
+                  resources:
+                    requests:
+                      memory: "64Mi"
+                      cpu: "250m"
+                    limits:
+                      memory: "256Mi"
+                      cpu: "500m"
+                  env:
+                    - name: SLACK_WEBHOOK
+                      valueFrom:
+                        secretKeyRef:
+                          name: monitoring-values
+                          key: slack-webhook
+                    - name: SLACK_ICON
+                      value: flux
+                    - name: ACR_MAX_RESULTS
+                      value: "3000"
+                    - name: ACR_SYNC_DEBUG
+                      value: "true"
+                    - name: SLACK_CHANNEL
+                      value: "${TEAM_NOTIFICATION_CHANNEL}"
+                    - name: AKS_CLUSTER
+                      value: "${ENVIRONMENT}"
+                    - name: CLUSTER_NAME
+                      value: "cft-${CLUSTER_FULL_NAME}-aks"
+                  envFrom:
+                    - secretRef:
+                        name: acr-sync
