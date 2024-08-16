@@ -53,9 +53,7 @@ spec:
         value: "${ENVIRONMENT}"
       - name: CLUSTER_NAME
         value: "cft-${CLUSTER_FULL_NAME}-aks"
-    envFrom:
-      - secretRef:
-          name: acr-sync
+    envFromSecret: "acr-sync"
     nodeSelector:
       agentpool: linux
     tolerations:
