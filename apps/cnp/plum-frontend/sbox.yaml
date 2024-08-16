@@ -5,7 +5,16 @@ metadata:
 spec:
   values:
     nodeSelector:
-      agentpool: azurelinux
+      agentpool: azurelinux        # Ensures pods run on nodes with this label
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                    - azurelinux   # Ensures the pod is only scheduled on 'azurelinux' nodes
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
       spotInstances:
