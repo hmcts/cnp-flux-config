@@ -6,56 +6,60 @@ metadata:
   labels:
     app: check-acr-sync
 spec:
+  releaseName: check-acr-sync
   chart:
     spec:
-      chart: cronjob-chart
+      chart: job
       sourceRef:
         kind: GitRepository
-        name: chart-repo
+        name: chart-job
         namespace: flux-system
       interval: 1m
   interval: 5m
   values:
-    cronJob:
-      schedule: "*/15 * * * *"
-      concurrencyPolicy: "Forbid"
-      failedJobsHistoryLimit: 3
-      startingDeadlineSeconds: 300
-      jobTemplate:
-        spec:
-          backoffLimit: 3
-          template:
-            spec:
-              restartPolicy: Never
-              containers:
-                - name: check-acr-sync
-                  image: hmctspublic.azurecr.io/check-acr-sync:db14885
-                  imagePullPolicy: IfNotPresent
-                  resources:
-                    requests:
-                      memory: "64Mi"
-                      cpu: "250m"
-                    limits:
-                      memory: "256Mi"
-                      cpu: "500m"
-                  env:
-                    - name: SLACK_WEBHOOK
-                      valueFrom:
-                        secretKeyRef:
-                          name: monitoring-values
-                          key: slack-webhook
-                    - name: SLACK_ICON
-                      value: flux
-                    - name: ACR_MAX_RESULTS
-                      value: "3000"
-                    - name: ACR_SYNC_DEBUG
-                      value: "true"
-                    - name: SLACK_CHANNEL
-                      value: "${TEAM_NOTIFICATION_CHANNEL}"
-                    - name: AKS_CLUSTER
-                      value: "${ENVIRONMENT}"
-                    - name: CLUSTER_NAME
-                      value: "cft-${CLUSTER_FULL_NAME}-aks"
-                  envFrom:
-                    - secretRef:
-                        name: acr-sync
+    schedule: "*/15 * * * *"
+    concurrencyPolicy: "Forbid"
+    failedJobsHistoryLimit: 3
+    startingDeadlineSeconds: 300
+    successfulJobsHistoryLimit: 3
+    backoffLimit: 3
+    restartPolicy: Never
+    runAsRoot: true
+    kind: CronJob
+    image: hmctspublic.azurecr.io/check-acr-sync:db14885
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+    environment:
+      - name: SLACK_WEBHOOK
+        valueFrom:
+          secretKeyRef:
+            name: monitoring-values
+            key: slack-webhook
+      - name: SLACK_ICON
+        value: flux
+      - name: ACR_MAX_RESULTS
+        value: "3000"
+      - name: ACR_SYNC_DEBUG
+        value: "true"
+      - name: SLACK_CHANNEL
+        value: "${TEAM_NOTIFICATION_CHANNEL}"
+      - name: AKS_CLUSTER
+        value: "${ENVIRONMENT}"
+      - name: CLUSTER_NAME
+        value: "cft-${CLUSTER_FULL_NAME}-aks"
+    envFrom:
+      - secretRef:
+          name: acr-sync
+    nodeSelector:
+      agentpool: linux
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs

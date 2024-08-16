@@ -18,7 +18,7 @@ spec:
       interval: 1m
   interval: 5m
   values:
-    schedule: "0 9 * * 1-5"
+    schedule: "00 10 * * 1-5"
     concurrencyPolicy: "Forbid"
     failedJobsHistoryLimit: 3
     startingDeadlineSeconds: 300
@@ -29,6 +29,7 @@ spec:
     kind: CronJob
     image: hmctspublic.azurecr.io/helm-base-versions:prod-0bf5a71-20240814143926Z #{"$imagepolicy": "flux-system:helm-base-versions"}
     imagePullPolicy: Always
+    MODE: "notify"
     environment:
       CLUSTER_NAME: "cft-${CLUSTER_FULL_NAME}-aks"
       SLACK_WEBHOOK:
