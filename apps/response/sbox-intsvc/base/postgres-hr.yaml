@@ -6,9 +6,9 @@ metadata:
 spec:
   chart:
     spec:
-      chart: postgresql
+      chart: bitnami/postgresql
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: bitnami-postgresql
         namespace: flux-system
       version: 15.5.20
@@ -17,9 +17,7 @@ spec:
       repository: bitnami/postgresql
       tag: 14.12.0
       debug: true
-    postgresqlDataDir: "/data/pgdata"
-    volumePermissions:
-      enabled: true
+    postgresqlDataDir: "/bitnami/postgresql/data"
     livenessProbe:
       enabled: false
     readinessProbe:

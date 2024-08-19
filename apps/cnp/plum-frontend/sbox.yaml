@@ -4,10 +4,15 @@ metadata:
   name: plum-frontend
 spec:
   values:
+    tolerations:
+      - key: "custom.azurelinux"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
       spotInstances:
         enabled: false
-      replicas: 4
+      replicas: 2
       autoscaling:
-        minReplicas: 2
+        minReplicas: 1
