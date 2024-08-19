@@ -13,11 +13,13 @@ EXCLUSIONS_LIST=(
     apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
     apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
     apps/probate/*
+    apps/monitoring/acr-sync/check-acr-sync.yaml
     apps/private-law/prl-citizen-frontend/aat.yaml
     apps/bsp/bulk-scan-sample-app/aat.yaml
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-tya-notif/aat.yaml
+    apps/hmc/hmc-operational-reports-runner-int/hmc-operational-reports-runner-int.yaml
     .*perftest.*
     .*sbox.*
     .*test.*

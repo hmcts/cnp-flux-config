@@ -4,10 +4,19 @@ metadata:
   name: plum-frontend
 spec:
   values:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                    - azurelinux   # Ensures the pod is only scheduled on 'azurelinux' nodes
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
       spotInstances:
         enabled: false
-      replicas: 4
+      replicas: 2
       autoscaling:
-        minReplicas: 2
+        minReplicas: 1

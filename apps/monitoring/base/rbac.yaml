@@ -11,7 +11,6 @@ subjects:
   - kind: ServiceAccount
     name: monitoring
     namespace: monitoring
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -38,4 +37,7 @@ rules:
     verbs: ["list", "get"]
   - apiGroups: [""]
     resources: ["secrets"]
-    verbs: ["list", "get"]
+    verbs: ["create", "get", "list", "watch", "update"]
+  - apiGroups: ["batch"]
+    resources: ["cronjobs"]
+    verbs: ["get", "list", "watch"]
