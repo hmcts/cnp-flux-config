@@ -6,7 +6,7 @@ spec:
   releaseName: sptribs-cron-migrate-global-search-fields
   values:
     job:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-804bd32-20240819115357 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-0086dd4-20240819160721 #{"$imagepolicy": "flux-system:sptribs-case-api"}
       keyVaults:
         sptribs:
           secrets:
@@ -26,6 +26,8 @@ spec:
               alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         TASK_NAME: SystemMigrateGlobalSearchTask
+        GLOBAL_SEARCH_MIGRATION_ENABLED: true
+        GLOBAL_SEARCH_MIGRATION_TEST_CASE_REF: "1709541736486585"
       schedule: 0 8 * * 1-5
   chart:
     spec:
