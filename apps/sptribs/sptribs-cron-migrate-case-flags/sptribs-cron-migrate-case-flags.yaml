@@ -6,7 +6,7 @@ spec:
   releaseName: sptribs-cron-migrate-case-flags
   values:
     job:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-5974672-20240717165833 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-9e2aa7b-20240821092004 #{"$imagepolicy": "flux-system:sptribs-case-api"}
       keyVaults:
         sptribs:
           secrets:
@@ -22,6 +22,8 @@ spec:
               alias: IDAM_SYSTEM_UPDATE_USERNAME
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         TASK_NAME: SystemMigrateCaseFlagsTask
       schedule: 0/10 * * * *
