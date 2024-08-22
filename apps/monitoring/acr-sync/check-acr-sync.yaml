@@ -36,17 +36,16 @@ spec:
         memory: "256Mi"
         cpu: "500m"
     environment:
-      SLACK_WEBHOOK:
-        valueFrom:
-          secretKeyRef:
-            name: monitoring-values
-            key: slack-webhook
+      CLUSTER_NAME: "cft-${CLUSTER_FULL_NAME}-aks"
       SLACK_ICON: "flux"
       ACR_MAX_RESULTS: "3000"
       ACR_SYNC_DEBUG: "true"
       SLACK_CHANNEL: "${TEAM_NOTIFICATION_CHANNEL}"
       AKS_CLUSTER: "${ENVIRONMENT}"
-      CLUSTER_NAME: "cft-${CLUSTER_FULL_NAME}-aks"
+    secrets:
+      SLACK_WEBHOOK:
+        secretRef: monitoring-values
+        key: slack-webhook
     envFromSecret: "acr-sync"
     nodeSelector:
       agentpool: linux

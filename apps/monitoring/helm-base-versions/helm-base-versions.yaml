@@ -7,7 +7,6 @@ metadata:
     app: helm-chart-base-versions
 spec:
   releaseName: helm-chart-base-versions
-  serviceAccountName: monitoring
   chart:
     spec:
       chart: job
@@ -19,6 +18,7 @@ spec:
   interval: 5m
   values:
     schedule: "0 9 * * 1-5" # interval 9:00am Monday to Friday
+    disableActiveClusterCheck: true
     concurrencyPolicy: "Forbid"
     failedJobsHistoryLimit: 3
     startingDeadlineSeconds: 300
@@ -27,17 +27,16 @@ spec:
     restartPolicy: Never
     runAsRoot: true
     kind: CronJob
-    image: hmctspublic.azurecr.io/helm-base-versions:prod-0bf5a71-20240814143926Z #{"$imagepolicy": "flux-system:helm-base-versions"}
+    image: hmctspublic.azurecr.io/helm-base-versions:prod-866bf28-20240819154417 #{"$imagepolicy": "flux-system:helm-base-versions"}
     imagePullPolicy: Always
     environment:
       CLUSTER_NAME: "cft-${CLUSTER_FULL_NAME}-aks"
-      SLACK_WEBHOOK:
-        valueFrom:
-          secretKeyRef:
-            name: helm-base-versions
-            key: slack-webhook
       ARTIFACT_URL: "http://source-controller.flux-system.svc.cluster.local."
       API_SERVER_URL: "https://kubernetes.default.svc.cluster.local"
+    secrets:
+      SLACK_WEBHOOK:
+        secretRef: helm-base-versions
+        key: slack-webhook
     nodeSelector:
       agentpool: linux
     tolerations:
