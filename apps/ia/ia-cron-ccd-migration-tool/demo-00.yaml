@@ -6,7 +6,7 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "17 13 * * *"
+      schedule: "00 13 * * *"
       image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:pr-163-cbe4d77-20240815121949 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
@@ -18,8 +18,9 @@ spec:
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 15000
+        MIGRATION_NUMBER_OF_CASES: 10
         MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
-        MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: true
+        MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
+        MIGRATE_IS_ARIA_MIGRATED: true
         SERVICE_ID: BFA1
         LOCATION_REF_DATA_URL: "http://rd-location-ref-api-demo.service.core-compute-demo.internal"
