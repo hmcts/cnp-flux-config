@@ -1,0 +1,21 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  generation: 2
+  name: team-alerts
+  namespace: ${NAMESPACE}
+spec:
+  providerRef:
+    name: slack
+  summary: ${CLUSTER_FULL_NAME}-aks
+  eventSeverity: info
+  eventSources:
+    - kind: Kustomization
+      namespace: flux-system
+      name: ${NAMESPACE}
+    - kind: HelmRelease
+      namespace: ${NAMESPACE}
+      name: '*'
+    - kind: HelmChart
+      namespace: ${NAMESPACE}
+      name: '*'

@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-ceed6b2-20240621132404
+      image: hmctspublic.azurecr.io/idam/api:prod-ed1021c-20240716150330
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
@@ -15,7 +15,7 @@ spec:
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
         ENDPOINTS_INFO_ENABLED: true
         STRATEGIC_ADMIN_URL: https://idam-user-dashboard.aat.platform.hmcts.net
-        STRATEGIC_WEBPUBLIC_URL: https://idam-web-public.aat.platform.hmcts.net
+        STRATEGIC_FRONTEND_URL: https://idam-web-public.aat.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.aat.platform.hmcts.net
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-aat.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-aat.internal:8443
@@ -33,17 +33,8 @@ spec:
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-aat2.internal
         SSL_TRUST_HOSTNAMES_2: forgerock-idm.service.core-compute-idam-aat.internal
         SSL_TRUST_HOSTNAMES_3: forgerock-am.service.core-compute-idam-aat.internal
-        STRATEGIC_SSO_PROVIDERS_0_providerName: azure
-        STRATEGIC_SSO_PROVIDERS_0_userinfoEndpoint: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
-        STRATEGIC_SSO_PROVIDERS_0_uniqueIdClaim: oid
-        STRATEGIC_SSO_PROVIDERS_0_roles_0: judiciary
-        STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeName: groups
-        STRATEGIC_SSO_PROVIDERS_0_requiredAttributes_0_attributeValue: 7d960c29-7bbe-4762-b9dc-f54d425ee284
-        STRATEGIC_SSO_PROVIDERS_0_accountCreateEnabled: true
-        STRATEGIC_SSO_PROVIDERS_1_providerName: moj
-        STRATEGIC_SSO_PROVIDERS_1_userinfoEndpoint: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
-        STRATEGIC_SSO_PROVIDERS_1_uniqueIdClaim: oid
-        STRATEGIC_SSO_PROVIDERS_1_accountCreateEnabled: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
         LOG_AND_AUDIT_IDAM_ENABLED: true
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: true
@@ -55,7 +46,15 @@ spec:
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
-        FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
+        FEATUREFLAGS_EVENTPUBLISHING_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_PUBLISHER: azure
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ARCHIVAL_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CACHE: DEBUG
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_INTEGRATION_REDIS: DEBUG
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
@@ -69,10 +68,11 @@ spec:
         SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-aat.servicebus.windows.net/
         SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 1c4f0704-a29e-403d-b719-b90c34ef14c9
         SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-aat
+        SPRING_CLOUD_AZURE_SERVICEBUS_NAMESPACE: idam-servicebus-aat
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.8.0
+      version: 0.8.1
