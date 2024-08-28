@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: monitoring
+  namespace: monitoring
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: monitoring-binding
+  namespace: monitoring
+spec:
+  azureIdentity: monitoring
+  selector: monitoring

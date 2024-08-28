@@ -6,6 +6,8 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctspublic.azurecr.io/et/cos:prod-996e577-20240618070759 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:pr-2222-e6f4be7-20240822090050 #{"$imagepolicy": "flux-system:perftest-et-cos"}
       environment:
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
+        CRON_BFACTION_TASK: 0 0 * * * ?
+        ES_NOTIFICATIONS_PARTITION_SIZE: 2000

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - response-secret.yaml
+  - postgres-hr.yaml
+patches:
+  - path: ../../serviceaccount/ptl.yaml
+  - path: patches/response-frontend.yaml
+  - path: patches/response-api.yaml
+  - path: patches/slack-ingress.yaml
