@@ -27,17 +27,18 @@ spec:
       existingSecret: response
       secretKeys:
         adminPasswordKey: DB_PASSWORD
-    primary:
-      containerSecurityContext:
-        enabled: true
-        seLinuxOptions: {}
-        runAsUser: 0
-        runAsGroup: 0
-        runAsNonRoot: false
-        privileged: false
-        readOnlyRootFilesystem: true
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop: ["ALL"]
-        seccompProfile:
+    securityContext:
+      enabled: true
+      fsGroup: 0
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      privileged: false
+      readOnlyRootFilesystem: false
+      allowPrivilegeEscalation: true
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
         type: "RuntimeDefault"
