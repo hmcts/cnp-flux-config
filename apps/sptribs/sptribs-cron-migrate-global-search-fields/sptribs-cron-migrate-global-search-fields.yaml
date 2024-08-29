@@ -6,7 +6,8 @@ spec:
   releaseName: sptribs-cron-migrate-global-search-fields
   values:
     job:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-20cd4c0-20240730080550 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-c4e559e-20240828140820 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      disableActiveClusterCheck: true
       keyVaults:
         sptribs:
           secrets:
@@ -22,6 +23,8 @@ spec:
               alias: IDAM_SYSTEM_UPDATE_USERNAME
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         TASK_NAME: SystemMigrateGlobalSearchTask
       schedule: 0 8 * * 1-5
