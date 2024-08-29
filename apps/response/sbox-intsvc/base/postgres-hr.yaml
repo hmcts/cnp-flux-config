@@ -27,20 +27,3 @@ spec:
       existingSecret: response
       secretKeys:
         adminPasswordKey: DB_PASSWORD
-    primary:
-      containerSecurityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
-        runAsNonRoot: false
-        readOnlyRootFilesystem: false
-        allowPrivilegeEscalation: true
-      podSecurityContext:
-        fsGroup: 0
-      initContainers:
-        - name: volume-permissions
-          image: bitnami/minideb
-          command: ['sh', '-c', 'chown -R 0:0 /bitnami/postgresql']
-          volumeMounts:
-            - name: data
-              mountPath: /bitnami/postgresql
