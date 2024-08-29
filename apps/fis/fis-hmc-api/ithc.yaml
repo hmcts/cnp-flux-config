@@ -1,10 +1,31 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fis-hmc-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/fis/hmc-api:prod-db694af-20240118212227 #{"$imagepolicy": "flux-system:fis-hmc-api"}
+      image: hmctspublic.azurecr.io/fis/hmc-api:prod-d5a5a2c-20240723105505 #{"$imagepolicy": "flux-system:ithc-fis-hmc-api"}
       environment:
         DUMMY_VAR_TO_REDEPLOY: 2
+      keyVaults:
+        fis-kv:
+          secrets:
+            - name: hmc-topic-shared-access-key
+              alias: HMC_TOPIC_SHARED_ACCESS_KEY
+            - name: fis-hmc-api-s2s-secret
+              alias: OIDC_S2S_SECRET
+            - name: fis-hmc-idam-client-id
+              alias: FIS_HMC_IDAM_CLIENT_ID
+            - name: fis-hmc-idam-client-secret
+              alias: FIS_HMC_IDAM_CLIENT_SECRET
+            - name: fis-hmc-idam-user-name
+              alias: FIS_HMC_IDAM__USER_NAME
+            - name: prl-hearing-manager
+              alias: PRL_IDAM_USER_NAME
+            - name: idam-hmc-component-user-password
+              alias: IDAM_HMC_COMPONENT_USER_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY

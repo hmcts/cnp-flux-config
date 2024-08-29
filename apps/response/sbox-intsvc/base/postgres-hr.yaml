@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: response
+spec:
+  chart:
+    spec:
+      chart: bitnami/postgresql
+      sourceRef:
+        kind: GitRepository
+        name: bitnami-postgresql
+        namespace: flux-system
+      version: 15.5.20
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 14.12.0
+      debug: true
+    postgresqlDataDir: "/bitnami/postgresql/data"
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
+    auth:
+      enablePostgresUser: true
+      existingSecret: response
+      secretKeys:
+        adminPasswordKey: DB_PASSWORD
+    securityContext:
+      enabled: true
+      fsGroup: 0
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      privileged: false
+      readOnlyRootFilesystem: false
+      allowPrivilegeEscalation: true
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: "RuntimeDefault"

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: lau-case-backend
@@ -6,9 +6,22 @@ spec:
   releaseName: lau-case-backend
   values:
     java:
-      replicas: 2
+      replicas: 1
+      memoryRequests: "2048Mi"
+      cpuRequests: "100m"
+      memoryLimits: "4096Mi"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 3
+        cpu:
+          enabled: true
+          averageUtilization: 90
+        memory:
+          enabled: true
+          averageUtilization: 80
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/lau/case-backend:prod-ed885b4-20240117164523 #{"$imagepolicy": "flux-system:lau-case-backend"}
+      image: hmctspublic.azurecr.io/lau/case-backend:prod-974ae5f-20240829071529 #{"$imagepolicy": "flux-system:lau-case-backend"}
   chart:
     spec:
       chart: ./stable/lau-case-backend

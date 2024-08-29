@@ -1,11 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/hrs-api:prod-26fd04b-20240118165534 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-de396be-20240828153254 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_EM_HRS: DEBUG
         USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
+      spotInstances:
+        enabled: true

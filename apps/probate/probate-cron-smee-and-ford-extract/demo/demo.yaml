@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-cron-smee-and-ford-extract
@@ -6,8 +6,8 @@ spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-570faa5-20240118163704 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "0/15 * * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2692-8d3aeaf-20240829142528 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "15 15 * * *"
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         DUMMY_PROPERTY: DUMMY24

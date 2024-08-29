@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-sya-api
@@ -8,7 +8,11 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/sya-api:prod-bffac3c-20240115092133 #{"$imagepolicy": "flux-system:et-sya-api"}
+      image: hmctspublic.azurecr.io/et/sya-api:prod-33966a2-20240827154240 #{"$imagepolicy": "flux-system:et-sya-api"}
+      memoryLimits: "2560Mi"
+      memoryRequests: "1700Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "100m"
   chart:
     spec:
       chart: ./stable/et-sya-api

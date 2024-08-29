@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cos
@@ -16,7 +16,7 @@ spec:
       readinessTimeout: 30
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-21b0c91-20240118173023 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-09edae3-20240829134658 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: true
         IDAM_API_URL: https://idam-api.platform.hmcts.net
@@ -25,6 +25,19 @@ spec:
         CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
         SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
         SNED_GRID_OTHER_ORGANISATION_ORDER: d-42ae211ce60c4305a8916322d85c5d29
+        SEND_GRID_SERVE_ORDER_PERSONAL_APPLICANT_SOLICITOR: d-b77aa01c9a8f4ccba6d1f6abc4be6359
+        SEND_GRID_SERVE_ORDER_NON_PERSONAL_SOLLICITOR: d-4b075c7028b84a188e8eb7485e3c7e72
+        SEND_GRID_CAFCASS_CYMRU_ORDER: d-47eb569d0de645799f60d290700b5170
+        SOA_SERVE_APPLICANT_SOLICITOR_NONPER_PER_CA_CB: d-3f5316dc50a0493da04de7dfbe8552a9
+        SEND_GRID_SOA_CA_LOCAL_AUTHORITY: d-9017541478fd41b183f8cacb8f8798d4
+        SEND_GRID_SOA_PERSONAL_CA_DA_APPLICANT_LEGAL_REP: d-ed772d1fa142488ca8de744d1d136402
+        SEND_GRID_SERVE_ORDER_APPLICANT_RESPONDENT: d-1c88331b33b14a2e9f01ee5cfe6bf7d1
+        SOA_CA_APPLICANT_LIP_PERSONAL: d-dc6f5d1e84b841dcb98c884384ea3b35
+        SOA_CA_NON_PERSONAL_SERVICE_APPLICANT_LIP: d-c200a425942c4623932517c0fafdd4ae
+        SOA_CA_NON_PERSONAL_SERVICE_RESPONDENT_LIP: d-2e12a893c9224e759b65a528efc5eb43
+        SEND_GRID_SERVE_ORDER_CA_PERSONAL_APPLICANT_LIP: d-639134a6a1704909893faa387340d156
+        SERVE_ORDER_DA_PERSONAL_APPLICANT_LIP: d-c039fe7f8a2b4ecbaee88333402e2953
+        APP_ENV: "prod"
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

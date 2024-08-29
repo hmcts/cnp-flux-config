@@ -1,11 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-home-office-integration-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/home-office-integration-api:pr-344-b2b06b4-20231220100324 #{"$imagepolicy": "flux-system:demo-ia-home-office-integration-api"}
+      image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-bda62a4-20240807102236 #{"$imagepolicy": "flux-system:ia-home-office-integration-api"}
       environment:
         DOCMOSIS_ENDPOINT: https://docmosis.demo.platform.hmcts.net
         DUMMY: true
+      spotInstances:
+        enabled: true

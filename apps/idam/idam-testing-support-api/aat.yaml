@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-testing-support-api
@@ -7,13 +7,15 @@ spec:
   releaseName: idam-testing-support-api
   values:
     java:
+      replicas: 1
       ingressHost: idam-testing-support-api.aat.platform.hmcts.net
       environment:
+        DUMMY: true
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-web-public.aat.platform.hmcts.net/o/jwks
         SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_IDAMTESTINGSUPPORTAPI_TOKENURI: https://idam-web-public.aat.platform.hmcts.net/o/token
         SCHEDULER_SESSION_TRIGGEREXPIRYFREQUENCYMS: 240000
-        SCHEDULER_BURNER_TRIGGEREXPIRYFREQUENCYMS: 60000
+        SCHEDULER_BURNER_TRIGGEREXPIRYFREQUENCYMS: 180000
+        CLEANUP_BURNER_BATCHSIZE: 50
         CLEANUP_SESSION_BATCHSIZE: 50
-        CLEANUP_SESSION_LIFESPAN: 8h
-        CLEANUP_BURNER_BATCHSIZE: 120
+        CLEANUP_SESSION_LIFESPAN: 3h

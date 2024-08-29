@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: card-payment-job-int
@@ -7,7 +7,7 @@ spec:
   releaseName: card-payment-job-int
   values:
     job:
-      image: "hmctspublic.azurecr.io/payment/jobs:prod-aa3d475-20240117105619" #{"$imagepolicy": "flux-system:card-csv-report"}
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-9b4a26c-20240823075426" #{"$imagepolicy": "flux-system:card-csv-report"}
       schedule: "30 2 * * *"
       environment:
         REPORT_NAME: card-csv-report

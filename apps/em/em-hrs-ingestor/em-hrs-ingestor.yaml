@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-hrs-ingestor
@@ -6,13 +6,13 @@ spec:
   releaseName: em-hrs-ingestor
   values:
     job:
-      schedule: "0/22 * * * *"
+      schedule: "*/30 * * * *"
       useInterpodAntiAffinity: true
       cpuLimits: "4000m"
       cpuRequests: "2000m"
       memoryLimits: "2048Mi"
       memoryRequests: "1024Mi"
-      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-f568a2b-20240117155855 #{"$imagepolicy": "flux-system:em-hrs-ingestor"}
+      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-72a89c2-20240828071428 #{"$imagepolicy": "flux-system:em-hrs-ingestor"}
       environment:
         MAX_FILES_TO_PROCESS: 50
   chart:

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-frontend
@@ -9,4 +9,13 @@ spec:
       environment:
         EQUALITY_URL: https://pcq.perftest.platform.hmcts.net
         LAUNCHDARKLY_ENABLED: true
-        EXCEPTED_ESTATE_DATE_OF_DEATH: "2021-11-01"
+        EXCEPTED_ESTATE_DATE_OF_DEATH: "2022-01-01"
+        VAR_PERF: temp-2
+      autoscaling:
+        enabled: true
+        cpu:
+          enabled: true
+          averageUtilization: 80
+        memory:
+          enabled: true
+          averageUtilization: 82

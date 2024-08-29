@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   labels:
@@ -12,8 +12,10 @@ spec:
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
+      autoscaling:
+        enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/case-service:prod-e91c0d5-20240117153440 #{"$imagepolicy": "flux-system:fpl-case-service"}
+      image: hmctspublic.azurecr.io/fpl/case-service:prod-fbcfb7a-20240828144536 #{"$imagepolicy": "flux-system:fpl-case-service"}
   chart:
     spec:
       chart: ./stable/fpl-case-service

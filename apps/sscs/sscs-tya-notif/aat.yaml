@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -7,13 +7,10 @@ spec:
   releaseName: sscs-tya-notif
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-248d353-20231218153733 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
-        JOB_SCHEDULER_DB_USERNAME: notification@sscs-tya-notif-postgres-v11-db-aat
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
         JOB_SCHEDULER_DB_NAME: notification
-        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v11-db-aat.postgres.database.azure.com
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-aat.postgres.database.azure.com
         SSCS_TRACK_YOUR_APPEAL_LINK: https://track-appeal.nonprod.platform.hmcts.net/trackyourappeal/appeal_id
         HOURS_START_TIME: 0
         HOURS_END_TIME: 21
@@ -24,6 +21,8 @@ spec:
         SECURE_DOC_STORE_FEATURE: true
         DUMMY_PROPERTY: true
         TEST_RECIPIENTS_POSTCODE: "CF24 0AB"
+        NOTIFICATION_LETTER_CORRESPONDENCE_V2: true
+        NOTIFICATION_CORRESPONDENCE_V2: true
     global:
       environment: aat
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

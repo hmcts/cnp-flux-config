@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: xui-webapp-integration2
@@ -7,7 +7,7 @@ spec:
     nodejs:
       ingressHost: manage-case-int2.demo.platform.hmcts.net
       environment:
-        DUMMY_VAR_FOR_RESTART: 2
+        DUMMY_VAR_FOR_RESTART: 1
         FEATURE_SECURE_COOKIE_ENABLED: false
         FEATURE_JRD_E_LINKS_V2_ENABLED: true
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
@@ -40,4 +40,5 @@ spec:
         SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-demo.service.core-compute-demo.internal
         MC_BASE_URL: https://manage-case-int2.demo.platform.hmcts.net
         SERVICES_TRANSLATION_API_URL: http://ts-translation-service-demo.service.core-compute-demo.internal
-      image: hmctspublic.azurecr.io/xui/webapp:prod-549329c-20240115190303 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration2"}
+        SERVICES_PAYMENTS_URL: http://payment-api-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/xui/webapp:pr-3843-089b032-20240828152605 #{"$imagepolicy": "flux-system:demo-xui-webapp-integration2"}

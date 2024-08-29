@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sptribs-cron-migrate-case-flags
@@ -6,7 +6,7 @@ spec:
   releaseName: sptribs-cron-migrate-case-flags
   values:
     job:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-79ef694-20240118203920 #{"$imagepolicy": "flux-system:sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-f864b85-20240829092120 #{"$imagepolicy": "flux-system:sptribs-case-api"}
       keyVaults:
         sptribs:
           secrets:
@@ -22,6 +22,8 @@ spec:
               alias: IDAM_SYSTEM_UPDATE_USERNAME
             - name: idam-systemupdate-password
               alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
       environment:
         TASK_NAME: SystemMigrateCaseFlagsTask
       schedule: 0/10 * * * *

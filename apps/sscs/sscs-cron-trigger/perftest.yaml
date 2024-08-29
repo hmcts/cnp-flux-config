@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sscs-cron-trigger
+  namespace: sscs
+spec:
+  values:
+    job:
+      image: hmctspublic.azurecr.io/sscs/cron-trigger:prod-03d2816-20240829131824 #{"$imagepolicy": "flux-system:perftest-sscs-cron-trigger"}
+      aadIdentityName: sscs
+      environment:
+        IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
+        IDAM_S2S_AUTH: "http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal"
+        CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-perftest.service.core-compute-perftest.internal"
+    global:
+      environment: perftest
+      jobKind: CronJob

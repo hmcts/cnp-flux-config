@@ -1,14 +1,15 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-case-event-handler
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/wa/case-event-handler:prod-43d243f-20240118141532 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
+      image: hmctspublic.azurecr.io/wa/case-event-handler:prod-c32fb0a-20240829110344 #{"$imagepolicy": "flux-system:wa-case-event-handler"}
       environment:
-        REFRESH_FLAG: "1"
+        REFRESH_FLAG: "0"
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
+        NEW_MESSAGE_LIVENESS_STATE_HEALTH_CHECK: perftest
       keyVaults:
         wa:
           secrets:

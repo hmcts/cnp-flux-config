@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-ccd-case-migration
+spec:
+  values:
+    job:
+      suspend: false
+      environment:
+        MIGRATION_ENABLED: true
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

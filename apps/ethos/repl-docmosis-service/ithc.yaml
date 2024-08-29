@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: repl-docmosis-service
@@ -7,30 +7,4 @@ spec:
   releaseName: repl-docmosis-service
   values:
     java:
-      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-462c019-20240109015723 #{"$imagepolicy": "flux-system:repl-docmosis-service"}
-      # TO BE REMOVED ONCE BASE CHART IS v15
-#      environment:
-#        ETHOS_REPL_DB_USER_NAME: pgadmin
-#        ETHOS_REPL_DB_HOST: ethos-postgres-v15-{{ .Values.global.environment }}.postgres.database.azure.com
-#      keyVaults:
-#        ethos-shared:
-#          resourceGroup: ethos
-#          secrets:
-#            - name: Ocp-Apim-Subscription-Key
-#              alias: ACAS_KEY
-#            - name: create-updates-queue-send-connection-string
-#              alias: CREATE_UPDATES_QUEUE_SEND_CONNECTION_STRING
-#            - name: app-insights-connection-string
-#              alias: app-insights-connection-string
-#            - name: tornado-access-key
-#              alias: TORNADO_ACCESS_KEY
-#            - name: ethos-repl-service-s2s-secret
-#              alias: ETHOS_REPL_SERVICE_S2S_SECRET
-#            - name: ethos-postgres-user-v15
-#              alias: ETHOS_REPL_DB_USER_NAME
-#            - name: ethos-postgres-password-v15
-#              alias: ETHOS_REPL_DB_PASSWORD
-#            - name: ethos-postgres-host-v15
-#              alias: ETHOS_REPL_DB_HOST
-#            - name: ethos-postgres-port-v15
-#              alias: ETHOS_REPL_DB_PORT
+      image: hmctspublic.azurecr.io/ethos/repl-docmosis-backend:prod-216bf4b-20240729140303 #{"$imagepolicy": "flux-system:repl-docmosis-service"}

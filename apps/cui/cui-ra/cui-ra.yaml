@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cui-ra
@@ -6,7 +6,14 @@ spec:
   releaseName: cui-ra
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/cui/ra:prod-90ca559-20240105125408 #{"$imagepolicy": "flux-system:cui-ra"}
+      replicas: 1
+      memoryRequests: '768Mi'
+      cpuRequests: '50m'
+      memoryLimits: '1024Mi'
+      cpuLimits: '500m'
+      autoscaling:
+        enabled: false
+      image: hmctspublic.azurecr.io/cui/ra:prod-df9e69f-20240828115307 #{"$imagepolicy": "flux-system:cui-ra"}
   chart:
     spec:
       chart: ./stable/cui-ra

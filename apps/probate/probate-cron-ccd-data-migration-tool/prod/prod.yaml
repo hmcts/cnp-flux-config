@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-ccd-data-migration-tool
+spec:
+  releaseName: probate-cron-ccd-data-migration-tool
+  values:
+    job:
+      schedule: "20 20 28 8 *"
+      cpuRequests: "1000m"
+      cpuLimits: "2500m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      environment:
+        TRIG: trig-2
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        PRD_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal

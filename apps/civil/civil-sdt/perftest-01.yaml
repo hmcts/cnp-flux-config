@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-sdt
@@ -6,9 +6,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/sdt:prod-1c6c319-20240118134533 #{"$imagepolicy": "flux-system:perftest-civil-sdt"}
+      image: hmctspublic.azurecr.io/civil/sdt:prod-e5e87c1-20240823093108 #{"$imagepolicy": "flux-system:perftest-civil-sdt"}
       environment:
         PURGE_SCHEDULE_CRON: 0 15 0 * * 1,2,3
+        RETRY_SEND_CRON: 0 0 * * * 1,2,3
+        REQUEUE_SCHEDULE_CRON: 0 */20 * * * 1,2,3
         LOGGING_LEVEL_UK_GOV_MOJ_SDT: DEBUG
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: DEBUG
         QUEUE_DELAY: 500

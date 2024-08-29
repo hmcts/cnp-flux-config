@@ -1,34 +1,23 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-stitching
 spec:
   values:
     java:
-      keyVaults:
-        em-stitching:
-          resourceGroup: em-stitching
-          secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: APPINSIGHTS_INSTRUMENTATIONKEY
-            - name: docmosis-access-key
-              alias: DOCMOSIS_ACCESS_KEY
-            - name: microservicekey-em-stitching-api
-              alias: S2S_KEY
-            - name: stitching-POSTGRES-PASS-V15
-              alias: SPRING_DATASOURCE_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-      memoryRequests: "3072Mi"
-      cpuRequests: "1500m"
-      memoryLimits: "6144Mi"
-      cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-f0048e4-20240118163412 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      memoryRequests: "4608Mi"
+      cpuRequests: "2000m"
+      memoryLimits: "7168Mi"
+      cpuLimits: "4000m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4 # On each cluster
+        cpu:
+          averageUtilization: 85
+        memory:
+          averageUtilization: 85
+      image: hmctspublic.azurecr.io/em/stitching:prod-7c8f04c-20240829131420 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh
-        SPRING_DATASOURCE_HOST: em-stitching-postgres-db-v15-perftest.postgres.database.azure.com
-        SPRING_DATASOURCE_USERNAME: pgadmin
         HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 180
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
-        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 * * * *

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-ccd-case-migration
@@ -6,7 +6,7 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-100-4a28d85-20240112140731 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-98d1242-20240829090057 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
       schedule: "0 15 24 5 *"
       environment:
         MIGRATION_ENABLED: false

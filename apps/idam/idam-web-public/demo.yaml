@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-web-public
@@ -6,7 +6,8 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-34be9e1-20231211094927
+      image: hmctspublic.azurecr.io/idam/web-public:prod-70b8cc5-20240717153141
+      replicas: 1
       ingressHost: idam-web-public.demo.platform.hmcts.net
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.demo.platform.hmcts.net
@@ -20,4 +21,4 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.3.0
+      version: 0.4.1

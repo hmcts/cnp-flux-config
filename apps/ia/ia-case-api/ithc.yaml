@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-case-api
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/case-api:pr-1616-15281a6-20231129095528 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
+      image: hmctspublic.azurecr.io/ia/case-api:prod-84a1e88-20240829082140 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
       aadIdentityName: ia
       keyVaults:
         ia:
@@ -43,3 +43,6 @@ spec:
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
         POSTGRES_HOST: ia-case-api-postgres-db-v15-ithc.postgres.database.azure.com
         POSTGRES_USERNAME: pgadmin
+        COMMON_DATA_API: http://rd-commondata-api-ithc.service.core-compute-ithc.internal
+        IA_HEARINGS_API_URL: http://ia-hearings-api-ithc.service.core-compute-ithc.internal/
+        LOCATION_REF_DATA_URL: http://rd-location-ref-api-ithc.service.core-compute-ithc.internal

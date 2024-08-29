@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-next-hearing-date-updater
+spec:
+  values:
+    job:
+      image: hmctspublic.azurecr.io/ccd/next-hearing-date-updater:prod-5bc78d3-20240829135625 #{"$imagepolicy": "flux-system:demo-ccd-next-hearing-date-updater"}
+      schedule: "0 */2 * * *"
+      environment:
+        CASE_TYPES: FT_NextHearingDate,PRLAPPS,CIVIL,Asylum
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-judicial-booking-service
@@ -7,8 +7,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: false
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-9c3ffaa-20240116172718 #{"$imagepolicy": "flux-system:am-judicial-booking-service"}
+      image: hmctspublic.azurecr.io/am/judicial-booking-service:prod-f6a13bb-20240828154931 #{"$imagepolicy": "flux-system:am-judicial-booking-service"}
   chart:
     spec:
       chart: ./stable/am-judicial-booking-service

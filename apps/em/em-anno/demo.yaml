@@ -1,10 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-anno
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/anno:prod-8d9ecd0-20240118173246 #{"$imagepolicy": "flux-system:demo-em-anno"}
+      image: hmctspublic.azurecr.io/em/anno:prod-c1abcfc-20240828091111 #{"$imagepolicy": "flux-system:demo-em-anno"}
       environment:
         TEST_VAR: refresh
+      spotInstances:
+        enabled: true

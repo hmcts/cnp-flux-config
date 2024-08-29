@@ -1,10 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-task-batch-reconfiguration-failure
 spec:
   values:
     job:
+      suspend: true
       schedule: "5-59/10 * * * *"
       environment:
         JOB_NAME: RECONFIGURATION_FAILURES

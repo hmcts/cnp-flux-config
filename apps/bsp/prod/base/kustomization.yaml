@@ -2,10 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../../base/slack-provider/prod
 namespace: bsp
 patches:
-  - path: ../../identity/prod.yaml
   - path: ../../bulk-scan-orchestrator/prod.yaml
   - path: ../../bulk-scan-payment-processor/prod.yaml
   - path: ../../bulk-scan-processor/prod.yaml
+  - path: ../../rpe-send-letter-service/prod.yaml
   - path: ../../serviceaccount/prod.yaml

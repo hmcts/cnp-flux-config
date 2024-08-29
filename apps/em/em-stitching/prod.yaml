@@ -1,13 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-stitching
 spec:
   values:
     java:
-      memoryRequests: "4Gi"
+      memoryRequests: "4608Mi"
       cpuRequests: "2000m"
-      memoryLimits: "8Gi"
+      memoryLimits: "7168Mi"
       cpuLimits: "4000m"
       autoscaling:
         enabled: true
@@ -22,8 +22,14 @@ spec:
         DOCMOSIS_RENDER_ENDPOINT: https://docmosis.platform.hmcts.net/rs/render
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
         OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
-        FLAG: "refresh2"
+        FLAG: "refresh3"
         APPLICATIONINSIGHTS_INSTRUMENTATION_LOGGING_LEVEL: INFO
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 90
-        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 100
-        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 * * * *
+        HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 180
+        HISTORIC_DOCUMENT_TASKS_NO_OF_RECORDS: 200
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: 0 0/15 3-5 * * *
+        # Do not delete below lines.
+        # UPDATE_STATUS_DOCUMENT_TASKS_ENABLED: true
+        # UPDATE_STATUS_DOCUMENT_TASKS_NO_OF_ROWS: 100
+        # UPDATE_DOCUMENT_TASKS_STATUS_CRONJOB_SCHEDULE: 0 0/15 * * * *
+      spotInstances:
+        enabled: false

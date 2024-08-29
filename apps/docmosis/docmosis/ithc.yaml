@@ -1,8 +1,14 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: docmosis
 spec:
   values:
     ingressHost: docmosis.ithc.platform.hmcts.net
-    image: hmctsprivate.azurecr.io/docmosis:ithc-3539054-509229 #{"$imagepolicy": "flux-system:ithc-docmosis"}
+    java:
+      keyVaults:
+        docmosis-infra:
+          secrets:
+            - name: appinsights-connection-string
+              alias: appinsights-connection-string
+    image: hmctsprivate.azurecr.io/docmosis:ithc-17a86a3-642266 #{"$imagepolicy": "flux-system:ithc-docmosis"}

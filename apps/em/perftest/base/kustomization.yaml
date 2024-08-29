@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../em-icp/em-icp.yaml
   - ../../../rbac/nonprod-role.yaml
+  - ../../../base/slack-provider/perftest
 namespace: em
 patches:
   - path: ../../identity/perftest.yaml
@@ -12,4 +14,5 @@ patches:
   - path: ../../em-stitching/perftest.yaml
   - path: ../../em-npa/perftest.yaml
   - path: ../../em-hrs-api/perftest.yaml
+  - path: ../../em-icp/perftest.yaml
   - path: ../../serviceaccount/perftest.yaml

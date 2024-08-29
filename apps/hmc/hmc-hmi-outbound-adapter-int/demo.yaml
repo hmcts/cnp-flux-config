@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: hmc-hmi-outbound-adapter-int
@@ -6,4 +6,5 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-9355511-20240108162937 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}
+      replicas: 0
+      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:pr-219-c37c8ad-20240814150155 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}

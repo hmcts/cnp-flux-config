@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: dynatrace-operator
@@ -10,7 +10,7 @@ spec:
     spec:
       chart: dynatrace-operator
       # update the CRDs in dynatrace-crds when changing this value
-      version: 0.12.1
+      version: 1.2.2
       sourceRef:
         name: dynatrace-operator
         kind: HelmRepository
@@ -26,6 +26,14 @@ spec:
           key: CriticalAddonsOnly
           operator: Equal
           value: "true"
+        - effect: NoSchedule
+          key: kubernetes.azure.com/scalesetpriority
+          operator: Equal
+          value: "spot"
+        - effect: NoSchedule
+          key: dedicated
+          operator: Equal
+          value: "jobs"
     operator:
       tolerations:
         - effect: NoSchedule

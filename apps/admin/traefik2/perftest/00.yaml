@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: traefik2
@@ -13,3 +13,16 @@ spec:
         useWorkloadIdentity: "true"
     serviceAccount:
       name: admin
+    additionalArguments:
+      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=90"
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=90"
+      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=90"
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=90"
+      - "--entryPoints.web.forwardedHeaders.insecure=true"
+      - "--entryPoints.websecure.forwardedHeaders.insecure=true"
+    ingressRoute:
+      dashboard:
+        enabled: true
+    logs:
+      general:
+        level: DEBUG

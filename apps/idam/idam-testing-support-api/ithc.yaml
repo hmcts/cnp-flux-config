@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-testing-support-api
@@ -9,6 +9,7 @@ spec:
     java:
       ingressHost: idam-testing-support-api.ithc.platform.hmcts.net
       environment:
+        CLEANUP_SESSION_LIFESPAN: 90d
         IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: https://idam-web-public.ithc.platform.hmcts.net/o/jwks
         SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_IDAMTESTINGSUPPORTAPI_TOKENURI: https://idam-web-public.ithc.platform.hmcts.net/o/token

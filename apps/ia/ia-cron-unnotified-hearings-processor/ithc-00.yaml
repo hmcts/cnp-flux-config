@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-unnotified-hearings-processor
@@ -6,8 +6,32 @@ spec:
   releaseName: ia-cron-unnotified-hearings-processor
   values:
     job:
-      schedule: "* * 31 2 *"
+      schedule: "0/5 8-17 * * 1-5"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
+      environment:
+        HEARINGS_API_URL: "https://ia-hearings-api-ithc.service.core-compute-ithc.internal"
+        CCD_URL: "http://ccd-data-store-api-ithc.service.core-compute-ithc.internal"
+        AAC_URL: "http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal"
+        CCD_GW_URL: "http://dm-store-ithc.service.core-compute-ithc.internal"
+        DM_URL: "http://dm-store-ithc.service.core-compute-ithc.internal"
+        IA_IDAM_REDIRECT_URI: "https://ia-hearings-api-ithc.service.core-compute-ithc.internal/oauth2/callback"
+        IDAM_URL: "https://idam-api.ithc.platform.hmcts.net"
+        OPEN_ID_IDAM_URL: "https://idam-web-public.ithc.platform.hmcts.net"
+        S2S_URL: "http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal"
+        PROF_REF_DATA_URL: "http://rd-professional-api-ithc.service.core-compute-ithc.internal"
+        HMC_API_URL: "http://hmc-cft-hearing-service-ithc.service.core-compute-ithc.internal"
+        XUI_URL: "https://manage-case.ithc.platform.hmcts.net/"
+        HMC_HEARINGS_TOPIC_NAMESPACE: "hmc-servicebus-ithc"
+        HMC_HEARINGS_TOPIC_NAME: "hmc-to-cft-ithc"
+        HMC_HEARINGS_TOPIC_SUBSCRIPTION_NAME: "hmc-ia-subs-to-cft-ithc"
+        HMC_HEARINGS_LISTENING_ENABLED: false
+        HMC_HEARINGS_TOPIC_POLICY_NAME: SendAndListenSharedAccessKey
+        TASK_NAME: UnNotifiedHearingsProcessor
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: ithc

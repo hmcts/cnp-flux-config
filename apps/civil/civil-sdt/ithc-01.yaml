@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-sdt
@@ -8,3 +8,5 @@ spec:
     java:
       environment:
         PURGE_SCHEDULE_CRON: 0 15 0 * * 1,2,3
+        RETRY_SEND_CRON: 0 0 * * * 1,2,3
+        REQUEUE_SCHEDULE_CRON: 0 */20 * * * 1,2,3

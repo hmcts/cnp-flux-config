@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -7,14 +7,14 @@ spec:
   values:
     java:
       replicas: 3
-      memoryRequests: '1024Mi'
-      memoryLimits: '3072Mi'
       readinessDelay: 60
       readinessTimeout: 5
       readinessPeriod: 15
       livenessDelay: 60
       livenessTimeout: 5
       livenessPeriod: 15
+      autoscaling:
+        maxReplicas: 5
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CLAIM_STORE_TEST_SUPPORT_ENABLED: false
@@ -22,7 +22,7 @@ spec:
         MILO_CSV_SCHEDULE: "0 0 3 * * ?"
         CLAIM_STAYED_SCHEDULE: "0 0 16 ? * MON-FRI *"
         SCHEDULE_ISSUE_CREATED_CLAIMS: "0 0 2 ? * * *"
-        FRONTEND_BASE_URL: https://www.moneyclaims.service.gov.uk
+        FRONTEND_BASE_URL: https://www1.moneyclaims.service.gov.uk
         RESPOND_TO_CLAIM_URL: https://www.gov.uk/respond-money-claim
         REFORM_ENVIRONMENT: prod
         FEATURE_TOGGLES_STAFF_EMAILS_TESTING: false
@@ -42,3 +42,5 @@ spec:
         DOC_ASSEMBLY_URL: http://dg-docassembly-prod.service.core-compute-prod.internal
         DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true
+      spotInstances:
+        enabled: false

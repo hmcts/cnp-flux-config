@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-general-applications
@@ -8,8 +8,17 @@ spec:
   values:
     java:
       replicas: 2
+      memoryRequests: "1536Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enable: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 125
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/civil/general-applications:prod-349e7b8-20240118150341 #{"$imagepolicy": "flux-system:civil-general-applications"}
+      image: hmctspublic.azurecr.io/civil/general-applications:prod-75821a6-20240828130253 #{"$imagepolicy": "flux-system:civil-general-applications"}
       environment:
   chart:
     spec:

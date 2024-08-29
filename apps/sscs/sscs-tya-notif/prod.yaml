@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tya-notif
@@ -7,9 +7,6 @@ spec:
   releaseName: sscs-tya-notif
   values:
     java:
-      replicas: 2
-      useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/tya-notif:prod-248d353-20231218153733 #{"$imagepolicy": "flux-system:sscs-tya-notif"}
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_JWK_URL: https://idam-api.platform.hmcts.net/jwks
@@ -27,9 +24,9 @@ spec:
         ONLINE_HEARING_LINK: https://www.manage.appeal-benefit-decision.service.gov.uk/
         PDF_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net/rs/render
         PDF_SERVICE_HEALTH_URL: https://docmosis.platform.hmcts.net/rs/status
-        JOB_SCHEDULER_DB_USERNAME: notification@sscs-tya-notif-postgres-v11-db-prod
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
         JOB_SCHEDULER_DB_NAME: notification
-        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v11-db-prod.postgres.database.azure.com
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-prod.postgres.database.azure.com
         COVID_19_NOTIFICATION_FEATURE: false
         HOURS_START_TIME: 6
         HOURS_END_TIME: 19
