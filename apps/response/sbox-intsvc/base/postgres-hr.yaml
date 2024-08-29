@@ -35,3 +35,12 @@ spec:
         runAsNonRoot: false
         readOnlyRootFilesystem: false
         allowPrivilegeEscalation: true
+      podSecurityContext:
+        fsGroup: 0
+      initContainers:
+        - name: volume-permissions
+          image: bitnami/minideb
+          command: ['sh', '-c', 'chown -R 0:0 /bitnami/postgresql']
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/postgresql
