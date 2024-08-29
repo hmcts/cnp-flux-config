@@ -30,15 +30,8 @@ spec:
     securityContext:
       enabled: true
       fsGroup: 0
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      privileged: false
-      readOnlyRootFilesystem: false
-      allowPrivilegeEscalation: true
-      capabilities:
-        drop: ["ALL"]
-      seccompProfile:
-        type: "RuntimeDefault"
+    volumePermissions:
+      containerSecurityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
