@@ -27,11 +27,11 @@ spec:
       existingSecret: response
       secretKeys:
         adminPasswordKey: DB_PASSWORD
-    securityContext:
-      enabled: true
-      fsGroup: 0
-    volumePermissions:
+    primary:
       containerSecurityContext:
         runAsUser: 0
         runAsGroup: 0
+        fsGroup: 0
         runAsNonRoot: false
+        readOnlyRootFilesystem: false
+        allowPrivilegeEscalation: true
