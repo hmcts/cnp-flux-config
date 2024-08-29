@@ -1,10 +1,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: prl-cron-hwf-process-awp
+  name: prl-cron-hwf-citizen-update-state
   namespace: private-law
 spec:
-  releaseName: prl-cron-hwf-process-awp
+  releaseName: prl-cron-hwf-citizen-update-state
   values:
     job:
       keyVaults:
@@ -56,7 +56,7 @@ spec:
               alias: app-insights-connection-string
       image: hmctspublic.azurecr.io/prl/cos:pr-2544-c823153-20240828164354 #{"$imagepolicy": "flux-system:demo-prl-cron-hwf-process-awp"}
       environment:
-        TASK_NAME: AwpProcessHwfPaymentTask
+        TASK_NAME: HwfProcessUpdateCaseStateTask
         VAR: trigger1
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
