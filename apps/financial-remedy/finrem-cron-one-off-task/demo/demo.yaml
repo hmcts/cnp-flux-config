@@ -6,25 +6,25 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "30 * 2 5 *"
+      schedule: "*/10 * * * *"
+      image: hmctspublic.azurecr.io/finrem/cos:pr-1835-3969a32-20240830100617
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
+        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
+        SECURE_DOC_ENABLED: false
         FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
         PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
-        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
-        SECURE_DOC_ENABLED: false
-        CRON_APPLICATION_TYPE_ADD_ENABLED: false
-        CRON_CFV_CATEGORISATION_TASK_ENABLED: false
-        CRON_MIAM_EXEMPTIONS_UPDATE_ENABLED: false
-        TRIG: trig-6
-        TASK_NAME: MiamExemptionsUpdateTask
+        TASK_NAME: BulkAddOrganisationPolicyTask
+        CRON_BULK_ADD_ORGANISATION_POLICY_ENABLED: true
+        CRON_BULK_ADD_ORGANISATION_POLICY_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_BULK_ADD_ORGANISATION_POLICY_BATCH_SIZE: 500
     global:
       jobKind: CronJob
       enableKeyVaults: true

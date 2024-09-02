@@ -7,7 +7,9 @@ spec:
   values:
     java:
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-86fa0e1-20240808092639 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3945-e3756c6-20240829140455 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
+      spotInstances:
+        enabled: true
       environment:
         CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -18,9 +20,9 @@ spec:
         ENHANCED_CONFIDENTIALITY_FEATURE: true
         SECURE_DOC_STORE_FEATURE: true
         POSTPONEMENTS_FEATURE: true
-        DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net/cases
+        DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net
         SSCS2_FEATURE: true
-        DUMMY_PROPERTY: true
+        DUMMY_PROPERTY: false
         WORK_ALLOCATION_FEATURE: true
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal

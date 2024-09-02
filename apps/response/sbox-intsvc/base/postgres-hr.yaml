@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: postgresql
+      chart: bitnami/postgresql
       sourceRef:
         kind: GitRepository
         name: bitnami-postgresql
@@ -15,12 +15,23 @@ spec:
   values:
     image:
       repository: bitnami/postgresql
-      tag: 14.12.0
+      tag: 16.4.0
       debug: true
-    postgresqlDataDir: "/data/pgdata"
-    volumePermissions:
-      enabled: true
+    postgresqlDataDir: "/bitnami/postgresql/data"
     livenessProbe:
       enabled: false
     readinessProbe:
       enabled: false
+    auth:
+      enablePostgresUser: true
+      database: response
+      existingSecret: response
+      secretKeys:
+        adminPasswordKey: DB_PASSWORD
+    primary:
+      containerSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        allowPrivilegeEscalation: true
+        runAsNonRoot: false
