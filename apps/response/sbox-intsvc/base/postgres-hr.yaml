@@ -15,7 +15,7 @@ spec:
   values:
     image:
       repository: bitnami/postgresql
-      tag: 14.12.0
+      tag: 16.4.0
       debug: true
     postgresqlDataDir: "/bitnami/postgresql/data"
     livenessProbe:
@@ -24,21 +24,14 @@ spec:
       enabled: false
     auth:
       enablePostgresUser: true
+      database: response
       existingSecret: response
       secretKeys:
         adminPasswordKey: DB_PASSWORD
-    securityContext:
-      enabled: true
-      fsGroup: 0
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      privileged: false
-      readOnlyRootFilesystem: false
-      allowPrivilegeEscalation: true
-      capabilities:
-        drop: ["ALL"]
-      seccompProfile:
-        type: "RuntimeDefault"
+    primary:
+      containerSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        allowPrivilegeEscalation: true
+        runAsNonRoot: false
