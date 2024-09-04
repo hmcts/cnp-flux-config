@@ -27,21 +27,19 @@ spec:
           - "ReadWriteOnce"
         size: 128Gi
         storageClassName: "managed"
-      # persistence:
-      #   enabled: true
-      #   storageClassName: "managed"
-      #   size: 128Gi
+      persistence:
+        enabled: false
       replicaCount: 2
-    database:
-      allowNonPostgresql: true
-    postgresql:
-      enabled: false
-    nginx:
-      enabled: false
-    ingress:
-      enabled: true
-      hosts:
-        - artifactory.sandbox.platform.hmcts.net
-      className: traefik
-      annotations:
-        traefik.ingress.kubernetes.io/router.tls: "true"
+      database:
+        allowNonPostgresql: true
+      postgresql:
+        enabled: false
+      nginx:
+        enabled: false
+      ingress:
+        enabled: true
+        hosts:
+          - artifactory.sandbox.platform.hmcts.net
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
