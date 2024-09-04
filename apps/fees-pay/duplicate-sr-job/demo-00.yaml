@@ -1,15 +1,16 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta1
-kind: ImagePolicy
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
-  name: demo-duplicate-sr-job
-  annotations:
-    hmcts.github.com/prod-automated: disabled
+  name: duplicate-sr-job
+  namespace: fees-pay
 spec:
-  filterTags:
-    pattern: '^pr-135-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
-  policy:
-    alphabetical:
-      order: asc
-  imageRepositoryRef:
-    name: duplicate-sr-job
+  releaseName: duplicate-sr-job
+  values:
+    job:
+      image: "hmctspublic.azurecr.io/payment/jobs:prod-a60caba-20240815065021" #{"$imagepolicy": "flux-system:duplicate-sr-report"}
+      schedule: "30 2 * * 4"
+      environment:
+        DUMMY_RESTART_VAR: true
+    global:
+      environment: demo
+
