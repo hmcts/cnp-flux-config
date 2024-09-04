@@ -8,11 +8,12 @@ spec:
     java:
       cpuRequests: '2'
       cpuLimits: '4'
-      memoryRequests: '2Gi'
-      memoryLimits: '4Gi'
+      memoryRequests: '2048Mi'
+      memoryLimits: '4096Mi'
       replicas: 2
       autoscaling:
-        enabled: false
+        enabled: true
+        maxReplicas: 4
       image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7baa50c-20240815121505 #{"$imagepolicy": "flux-system:ithc-ccd-definition-store-api"}
       environment:
         DEFINITION_STORE_DB_HOST: ccd-definition-store-api-postgres-db-v15-ithc.postgres.database.azure.com
