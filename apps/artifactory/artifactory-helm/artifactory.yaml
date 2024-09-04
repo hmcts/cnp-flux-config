@@ -20,10 +20,17 @@ spec:
       #speicifes the artifactory-oss container image version
       image:
         tag: 7.90.9
-      persistence:
-        enabled: true
-        storageClassName: "managed"
+      customPersistentVolumeClaim:
+        name: artifactory-data
+        mountPath: "/var/opt/jfrog/artifactory"
+        accessModes:
+          - "ReadWriteOnce"
         size: 128Gi
+        storageClassName: "managed"
+      # persistence:
+      #   enabled: true
+      #   storageClassName: "managed"
+      #   size: 128Gi
       replicaCount: 2
     database:
       allowNonPostgresql: true
