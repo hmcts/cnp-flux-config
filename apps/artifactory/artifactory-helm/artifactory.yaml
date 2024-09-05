@@ -22,6 +22,7 @@ spec:
       #speicifes the artifactory-oss container image version
       image:
         tag: 7.90.9
+      replicaCount: 2
       customPersistentVolumeClaim:
         name: artifactory-data
         mountPath: "/var/opt/jfrog/artifactory"
@@ -29,9 +30,14 @@ spec:
           - "ReadWriteOnce"
         size: 128Gi
         storageClassName: "managed"
+      customVolumeMounts: |
+        - name: artifactory-startup-config
+          mountPath: /tmp/artifactory-config-map
+      copyOnEveryStartup:
+        - source: /tmp/artifactory-config-map/artifactory.config.xml
+          target: /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml
       persistence:
         enabled: false
-      replicaCount: 2
       postgresql:
         enabled: false
       nginx:
