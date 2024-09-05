@@ -16,22 +16,33 @@ spec:
         namespace: artifactory
   interval: 1m
   values:
-    database:
-      allowNonPostgresql: true
     artifactory:
-      #speicifes the artifactory-oss container image version
-      image:
-        tag: 7.90.9
-      customPersistentVolumeClaim:
-        name: artifactory-data
-        mountPath: "/var/opt/jfrog/artifactory"
-        accessModes:
-          - "ReadWriteOnce"
-        size: 128Gi
-        storageClassName: "managed"
-      persistence:
-        enabled: false
-      replicaCount: 2
+      artifactory:
+        #speicifes the artifactory-oss container image version
+        image:
+          tag: 7.90.9
+        replicaCount: 2
+        customPersistentVolumeClaim:
+          name: artifactory-data
+          mountPath: "/var/opt/jfrog/artifactory"
+          accessModes:
+            - "ReadWriteOnce"
+          size: 128Gi
+          storageClassName: "managed"
+        customVolumes:
+          - name: artifactory-startup-config
+            configMap:
+              name: artifactory-startup-config
+        customVolumeMounts: |
+          - name: artifactory-startup-config
+            mountPath: /tmp/artifactory-startup-config
+        copyOnEveryStartup:
+          - source: /tmp/artifactory-config-map/artifactory.config.xml
+            target: /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml
+        database:
+          allowNonPostgresql: true
+        persistence:
+          enabled: false
       postgresql:
         enabled: false
       nginx:
@@ -43,4 +54,3 @@ spec:
         className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.tls: "true"
-      configMapName: artifactory-startup-config
