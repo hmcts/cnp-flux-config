@@ -3,16 +3,17 @@ kind: HelmRelease
 metadata:
   name: artifactory-oss
   namespace: artifactory
-values:
-  artifactory:
-    customVolumeMounts: |
-      - name: artifactory-configmap
-        mountPath: /tmp/artifactory-config-map
-    copyOnEveryStartup:
-      - source: /tmp/artifactory-config-map/artifactory.config.xml
-        target: /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml
-    configMaps: |
-      artifactory.config.xml: |
+spec:
+  values:
+    artifactory:
+      customVolumeMounts: |
+        - name: artifactory-configmap
+          mountPath: /tmp/artifactory-config-map
+      copyOnEveryStartup:
+        - source: /tmp/artifactory-config-map/artifactory.config.xml
+          target: /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml
+      configMaps: |
+        artifactory.config.xml: |
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <config xmlns="http://artifactory.jfrog.org/xsd/2.1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.jfrog.org/xsd/artifactory-v2_1_6.xsd">
             <offlineMode>false</offlineMode>
