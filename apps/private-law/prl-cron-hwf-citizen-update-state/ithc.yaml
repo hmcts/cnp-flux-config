@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-hwf-citizen-update-state
+spec:
+  releaseName: prl-cron-hwf-citizen-update-state
+  values:
+    job:
+      ingressClass: traefik-private
+      image: hmctspublic.azurecr.io/prl/cos:prod-623850f-20240906093349 #{"$imagepolicy": "flux-system:prl-cos"}
+      environment:
+        APP_ENV: "ithc"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: ithc

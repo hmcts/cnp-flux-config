@@ -7,10 +7,10 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-c36a396-20240708095750Z #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-1e324b6-20240906083536Z #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
-      SLACK_REPORT_CHANNEL: platops-help
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
+      SLACK_REPORT_CHANNEL_CRIME_ID: C07KMBUFMA5
       JIRA_START_TRANSITION_ID: 181
       JIRA_DONE_TRANSITION_ID: 201
       JIRA_PROJECT: DTSPO
@@ -24,11 +24,11 @@ spec:
           - slack-app-token
           - jira-username
           - jira-api-token
-          - app-insights-instrumentation-key
+          - app-insights-connection-string
   chart:
     spec:
       chart: nodejs
-      version: 3.0.0
+      version: 3.1.1
       sourceRef:
         kind: HelmRepository
         name: hmctspublic
