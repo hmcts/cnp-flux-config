@@ -16,37 +16,33 @@ spec:
         namespace: artifactory
   interval: 1m
   values:
-    database:
-      allowNonPostgresql: true
     artifactory:
-      #speicifes the artifactory-oss container image version
-      image:
-        tag: 7.90.9
-      replicaCount: 2
-      customPersistentVolumeClaim:
-        name: artifactory-data
-        mountPath: "/var/opt/jfrog/artifactory"
-        accessModes:
-          - "ReadWriteOnce"
-        size: 128Gi
-        storageClassName: "managed"
-      customInitContainers: |
-        - name: artifactory-init
-          image: hmctspublic.azurecr.io/artifactory-init:0.1.0
-          securityContext:
-            runAsNonRoot: false
-            allowPrivilegeEscalation: true
-          command:
-            [
-              "sh",
-              "-c",
-              "mkdir -p /var/opt/jfrog/artifactory/etc; cp artifactory.config.xml /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml; chown -R 1030:1030 /var/opt/jfrog/artifactory; chmod -R 0700 /var/opt/jfrog/artifactory;",
-            ]
-          volumeMounts:
-            - mountPath: "var/opt/jfrog/artifactory"
-              name: artifactory-data
-      persistence:
-        enabled: false
+      artifactory:
+        #speicifes the artifactory-oss container image version
+        image:
+          tag: 7.90.9
+        replicaCount: 2
+        customPersistentVolumeClaim:
+          name: artifactory-data
+          mountPath: "/var/opt/jfrog/artifactory"
+          accessModes:
+            - "ReadWriteOnce"
+          size: 128Gi
+          storageClassName: "managed"
+        customVolumes:
+          - name: artifactory-startup-config
+            configMap:
+              name: artifactory-startup-config
+        customVolumeMounts: |
+          - name: artifactory-startup-config
+            mountPath: /tmp/artifactory-startup-config
+        copyOnEveryStartup:
+          - source: /tmp/artifactory-config-map/artifactory.config.xml
+            target: /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml
+        database:
+          allowNonPostgresql: true
+        persistence:
+          enabled: false
       postgresql:
         enabled: false
       nginx:
@@ -58,3 +54,5 @@ spec:
         className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.tls: "true"
+    postgresql:
+      enabled: false
