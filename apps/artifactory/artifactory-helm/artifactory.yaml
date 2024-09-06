@@ -17,8 +17,6 @@ spec:
   interval: 1m
   values:
     artifactory:
-      database:
-        allowNonPostgresql: true
       artifactory:
         customPersistentVolumeClaim:
           accessModes:
@@ -32,6 +30,12 @@ spec:
         persistence:
           enabled: false
           mountPath: /temp/persistence-mount
+        database:
+          allowNonPostgresql: true
+        extraSystemYaml:
+          shared:
+            database:
+              allowNonPostgresql: true   
         configMapName: artifactory-oss-configmaps
         configMaps: |
           artifactory.config.import.xml: |-
