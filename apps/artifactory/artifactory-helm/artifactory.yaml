@@ -21,16 +21,9 @@ spec:
         consoleLog: true
         joinKeySecretName: join-key
         masterKeySecretName: master-key
-        customPersistentVolumeClaim:
-          accessModes:
-          - ReadWriteOnce
-          mountPath: /var/opt/jfrog/artifactory
-          name: artifactory-data
-          size: 128Gi
-          storageClassName: managed
         persistence:
-          enabled: false
-          mountPath: /temp/persistence-mount
+          storageClassName: managed
+          size: 128Gi
         database:
           allowNonPostgresql: true
         systemYaml: |
