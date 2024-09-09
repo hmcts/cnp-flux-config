@@ -6,9 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "0 0 15 5 *"
+      schedule: "0 0 1 9 *"
       environment:
-        TASK_NAME: CfvUpdateTask
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
         SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
@@ -20,11 +19,10 @@ spec:
         FEATURE_CFV_ENABLED: true
         FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         CRON_WAIT_TIME_MINS: 1
-        CRON_LIST_FOR_HEARING_ENABLED: false
-        CRON_GENERAL_APPLICATION_REMOVE_ENABLED: false
-        CRON_APPLICATION_TYPE_ADD_ENABLED: false
-        CRON_CFV_CATEGORISATION_TASK_ENABLED: false
-        CRON_CFV_UPDATE_TASK_ENABLED: false
+        TASK_NAME: BulkAddOrganisationPolicyTask
+        CRON_BULK_ADD_ORGANISATION_POLICY_ENABLED: false
+        CRON_BULK_ADD_ORGANISATION_POLICY_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_BULK_ADD_ORGANISATION_POLICY_BATCH_SIZE: 2000
     global:
       jobKind: CronJob
       enableKeyVaults: true

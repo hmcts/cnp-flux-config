@@ -8,6 +8,20 @@ spec:
       ingressHost: plum.sandbox.platform.hmcts.net
       spotInstances:
         enabled: false
-      replicas: 4
+      replicas: 2
       autoscaling:
-        minReplicas: 2
+        minReplicas: 1
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values:
+                      - azurelinux
+      tolerations:
+        - key: "custom.azurelinux"
+          operator: Equal
+          value: true
+          effect: NoSchedule
