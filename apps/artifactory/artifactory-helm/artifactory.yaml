@@ -640,6 +640,73 @@ spec:
                     <fileMinimumSize>5</fileMinimumSize>
                 </downloadRedirectConfig>
             </config>
+          artifactory.security.import.xml: |-
+            <security version="v10">
+                <user>
+                    <username>anonymous</username>
+                    <admin>false</admin>
+                    <policyViewer>false</policyViewer>
+                    <policyManager>false</policyManager>
+                    <watchManager>false</watchManager>
+                    <reportsManager>false</reportsManager>
+                    <enabled>true</enabled>
+                    <updatableProfile>false</updatableProfile>
+                    <accountNonExpired>true</accountNonExpired>
+                    <credentialsExpired>true</credentialsExpired>
+                    <credentialsNonExpired>false</credentialsNonExpired>
+                    <accountNonLocked>true</accountNonLocked>
+                    <realm>internal</realm>
+                    <transientUser>false</transientUser>
+                    <groups/>
+                    <userPropertyInfos/>
+                    <lastLoginTimeMillis>0</lastLoginTimeMillis>
+                    <lastAccessTimeMillis>0</lastAccessTimeMillis>
+                    <shouldInvite>false</shouldInvite>
+                    <locked>false</locked>
+                    <mfaStatus>NONE</mfaStatus>
+                    <isAppliedPermissionsGroups>false</isAppliedPermissionsGroups>
+                    <isIdentity>false</isIdentity>
+                </user>
+                <acls>
+                    <acl>
+                        <aces>
+                            <ace>
+                                <principal>anonymous</principal>
+                                <group>false</group>
+                                <mask>7</mask>
+                            </ace>
+                        </aces>
+                        <lastUpdated>0</lastUpdated>
+                        <accessIdentifier>artifactory-system-default-build-permission_artifact</accessIdentifier>
+                        <permissionTarget>
+                            <name>artifactory-system-default-build-permission</name>
+                            <includes>
+                                <string>**</string>
+                            </includes>
+                            <excludes/>
+                            <repoKeys>
+                                <string>ANY REMOTE</string>
+                            </repoKeys>
+                        </permissionTarget>
+                    </acl>
+                </acls>
+                <buildAcls>
+                    <buildAcl>
+                        <lastUpdated>0</lastUpdated>
+                        <accessIdentifier>artifactory-system-default-build-permission_build</accessIdentifier>
+                        <permissionTarget>
+                            <name>artifactory-system-default-build-permission</name>
+                            <includes>
+                                <string>**</string>
+                            </includes>
+                            <excludes/>
+                            <repoKeys>
+                                <string>artifactory-build-info</string>
+                            </repoKeys>
+                        </permissionTarget>
+                    </buildAcl>
+                </buildAcls>
+            </security>
       ingress:
         annotations:
           traefik.ingress.kubernetes.io/router.tls: "true"
