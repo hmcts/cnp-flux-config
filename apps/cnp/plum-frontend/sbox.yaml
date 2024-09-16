@@ -11,17 +11,3 @@ spec:
       replicas: 2
       autoscaling:
         minReplicas: 1
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: agentpool
-                    operator: In
-                    values:
-                      - azurelinux
-      tolerations:
-        - key: "custom.azurelinux"
-          operator: Equal
-          value: true
-          effect: NoSchedule
