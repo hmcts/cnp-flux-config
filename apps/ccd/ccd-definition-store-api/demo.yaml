@@ -6,14 +6,15 @@ spec:
   releaseName: ccd-definition-store-api
   values:
     java:
-      replicas: 4
-      memoryRequests: "2Gi"
-      memoryLimits: "4Gi"
+      replicas: 2
+      memoryRequests: "2048Mi"
+      memoryLimits: "4096Mi"
       cpuRequests: "1"
       cpuLimits: "4"
       autoscaling:
-        enabled: false
-      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-7baa50c-20240815121505 #{"$imagepolicy": "flux-system:demo-ccd-definition-store-api"}
+        enabled: true
+        maxReplicas: 4
+      image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-ac47276-20240828113104 #{"$imagepolicy": "flux-system:demo-ccd-definition-store-api"}
       environment:
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
         DEFINITION_STORE_DB_OPTIONS: "?sslmode=require&gssEncMode=disable"

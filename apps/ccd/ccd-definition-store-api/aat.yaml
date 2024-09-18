@@ -7,12 +7,13 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "2Gi"
-      memoryLimits: "8Gi"
+      memoryRequests: "2048Mi"
+      memoryLimits: "8192Mi"
       cpuRequests: "1"
       cpuLimits: "4"
       autoscaling:
-        enabled: false
+        enabled: true
+        maxReplicas: 4
       environment:
         ELASTIC_SEARCH_FAIL_ON_IMPORT: true
         DEFINITION_STORE_DB_MAX_POOL_SIZE: 25

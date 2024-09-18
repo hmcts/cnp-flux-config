@@ -7,8 +7,14 @@ spec:
   values:
     nodejs:
       replicas: 2
+      cpuRequests: "50m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/admin-web:prod-aa19ef9-20240805100139 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+      image: hmctspublic.azurecr.io/ccd/admin-web:prod-4230819-20240916100951 #{"$imagepolicy": "flux-system:ccd-admin-web"}
   chart:
     spec:
       chart: ./stable/ccd-admin-web
