@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fis-ds-web
+  namespace: fis
+spec:
+  values:
+    image: hmctspublic.azurecr.io/fis/ds-web:prod-91f1617-20240722095642 #{"$imagepolicy": "flux-system:fis-ds-web"}
+    pdb:
+      enabled: false
