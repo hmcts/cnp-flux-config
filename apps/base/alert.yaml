@@ -7,11 +7,9 @@ metadata:
 spec:
   providerRef:
     name: slack
-  eventSeverity: info
+  summary: ${CLUSTER_FULL_NAME}-aks
+  eventSeverity: error
   eventSources:
-    - kind: Kustomization
-      namespace: flux-system
-      name: ${NAMESPACE}
     - kind: HelmRelease
       namespace: ${NAMESPACE}
       name: '*'

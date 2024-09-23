@@ -7,14 +7,14 @@ spec:
   values:
     java:
       replicas: 3
-      memoryRequests: '1024Mi'
-      memoryLimits: '3072Mi'
       readinessDelay: 60
       readinessTimeout: 5
       readinessPeriod: 15
       livenessDelay: 60
       livenessTimeout: 5
       livenessPeriod: 15
+      autoscaling:
+        maxReplicas: 5
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         CLAIM_STORE_TEST_SUPPORT_ENABLED: false
@@ -42,3 +42,5 @@ spec:
         DOC_ASSEMBLY_URL: http://dg-docassembly-prod.service.core-compute-prod.internal
         DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
         FEATURE_TOGGLES_SECURE_DOC_STORE_ENABLED: true
+      spotInstances:
+        enabled: false

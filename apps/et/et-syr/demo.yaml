@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-syr
+  namespace: et
+spec:
+  releaseName: et-syr
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/et/syr:pr-109-b63d4c3-20240923130026 #{"$imagepolicy": "flux-system:demo-et-syr"}
+      ingressHost: et-syr.demo.platform.hmcts.net
