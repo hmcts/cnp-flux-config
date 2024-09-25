@@ -3,5 +3,8 @@ kind: ImagePolicy
 metadata:
   name: demo-dm-store
 spec:
+  filterTags:
+    pattern: '^pr-2408-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
   imageRepositoryRef:
     name: dm-store
