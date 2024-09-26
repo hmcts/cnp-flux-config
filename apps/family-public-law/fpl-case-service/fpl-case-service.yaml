@@ -8,12 +8,19 @@ spec:
   releaseName: fpl-case-service
   values:
     java:
-      replicas: 2
+      replicas: 4
+      memoryRequests: '1536Mi'
+      cpuRequests: '250m'
+      memoryLimits: '2048Mi'
+      cpuLimits: '2000m'
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       autoscaling:
-        enabled: false
+        enabled: true
+        maxReplicas: 6
+        memory:
+          averageUtilization: 120
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/fpl/case-service:prod-43eb141-20240925133748 #{"$imagepolicy": "flux-system:fpl-case-service"}
   chart:
