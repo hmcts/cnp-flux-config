@@ -10,7 +10,7 @@ spec:
     spec:
       chart: traefik
       # update the crd version in traefik-crds when updating this
-      version: 26.0.0
+      version: 30.0.2
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -40,6 +40,10 @@ spec:
     ingressClass:
       enabled: true
       isDefaultClass: false
+    ingressRoute:
+      dashboard:
+        enabled: false
+        entryPoints: ["web", "websecure"]
     deployment:
       additionalVolumes:
         - name: traefik-default-cert
