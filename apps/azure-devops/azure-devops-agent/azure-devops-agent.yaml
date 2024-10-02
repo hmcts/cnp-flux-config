@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: azure-devops-agent
@@ -7,7 +7,7 @@ spec:
   releaseName: azure-devops-agent
   values:
     scaleType: Job
-    image: hmctspublic.azurecr.io/azure-devops-agent:prod-97ab16c3-1693560380 # {"$imagepolicy": "flux-system:azure-devops-agent"}
+    image: hmctspublic.azurecr.io/azure-devops-agent:prod-9358ac88-1718114129 # {"$imagepolicy": "flux-system:azure-devops-agent"}
     runAsRoot: true
     affinity:
       podAntiAffinity:
@@ -25,10 +25,6 @@ spec:
       AZP_POOL: hmcts-cftptl-agent-pool
     job:
       activeDeadlineSeconds: 10800
-    secrets:
-      AZP_TOKEN:
-        secretRef: azure-devops-token
-        key: token
     memoryRequests: 1024Mi
     cpuRequests: 250m
     memoryLimits: 4096Mi

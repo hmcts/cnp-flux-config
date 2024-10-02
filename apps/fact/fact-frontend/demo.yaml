@@ -1,9 +1,10 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-frontend
 spec:
   values:
     nodejs:
+      image: hmctspublic.azurecr.io/fact/frontend:prod-d3a22b9-20240920145554 #{"$imagepolicy": "flux-system:fact-frontend"}
       autoscaling:
         enabled: false

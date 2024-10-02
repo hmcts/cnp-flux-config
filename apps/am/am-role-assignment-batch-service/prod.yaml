@@ -1,16 +1,15 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: am-role-assignment-batch-service
 spec:
   values:
     job:
-      schedule: "0 22 * * *"
+      schedule: "00 22 * * *"
       environment:
         DELETE_ORG: true
         CCD_AM_MIGRATION_MASTER_FLAG: false
         CCD_AM_MIGRATION_RENAME_TABLES_FLAG: false
-        EMAIL_LIST: sankar.padakula@HMCTS.NET
         EMAIL_ENABLED: true
         AM_SENDGRID_API_EMAIL_FROM: no-reply@mail-am.platform.hmcts.net
         DAYS: 730

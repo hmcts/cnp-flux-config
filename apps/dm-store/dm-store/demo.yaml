@@ -1,11 +1,14 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: dm-store
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/dm/store:prod-c55cd1d-20240321144549 #{"$imagepolicy": "flux-system:demo-dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-a1831ca-20241001080038 #{"$imagepolicy": "flux-system:demo-dm-store"}
       environment:
         ENABLE_TTL: false
         TEST_VAR: refresh_true
+        ENABLE_PASSWORD_CHECK: true
+      spotInstances:
+        enabled: true

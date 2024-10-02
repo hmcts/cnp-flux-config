@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cmc-claim-store
@@ -6,7 +6,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-e5273d6-20240314151530 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
+      replicas: 3
+      autoscaling:
+        maxReplicas: 5
+      image: hmctspublic.azurecr.io/cmc/claim-store:prod-342a6c7-20240930110337 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
       keyVaults:
         cmc:
           resourceGroup: cmc

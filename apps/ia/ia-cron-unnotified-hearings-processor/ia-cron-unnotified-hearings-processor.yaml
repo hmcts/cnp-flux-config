@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-unnotified-hearings-processor
@@ -9,7 +9,7 @@ spec:
       environment:
         TASK_NAME: UnNotifiedHearingsProcessor
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/hearings-api:prod-ac4d8f7-20240315142740 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      image: hmctspublic.azurecr.io/ia/hearings-api:prod-934ddd1-20240902100852 #{"$imagepolicy": "flux-system:ia-cron-unnotified-hearings-processor"}
       schedule: 0 * * * *
       memoryRequests: "768Mi"
       cpuRequests: "1000m"

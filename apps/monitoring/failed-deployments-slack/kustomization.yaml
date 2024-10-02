@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: "-slack"
+resources:
+  - ../failed-deployments/failed-deployments.yaml
+patches:
+  - patch: |-
+      - op: add
+        path: "/spec/jobTemplate/spec/template/spec/containers/0/env/-"
+        value:
+          name: MODE
+          value: "notify"
+      - op: replace
+        path: "/spec/schedule"
+        value: "0 10 * * 1-5"
+    target:
+      kind: CronJob
+      namespace: monitoring
+      name: failed-deployments

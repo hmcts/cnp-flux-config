@@ -1,5 +1,5 @@
 # TODO: update resource group name in storage chart and clean up
-apiVersion: resources.azure.com/v1beta20200601
+apiVersion: resources.azure.com/v1api20200601
 kind: ResourceGroup
 metadata:
   name: aso-aks-rg
@@ -7,7 +7,7 @@ metadata:
 spec:
   location: uksouth
 ---
-apiVersion: resources.azure.com/v1beta20200601
+apiVersion: resources.azure.com/v1api20200601
 kind: ResourceGroup
 metadata:
   name: chart-tests-aso-rg
@@ -17,8 +17,14 @@ metadata:
 spec:
   location: uksouth
   azureName: chart-tests-aso-${ENVIRONMENT}-rg
+  tags:
+    application: core
+    builtFrom: https://github.com/hmcts/cnp-flux-config
+    businessArea: CFT
+    environment: development
+    exemptFromAutoLock: "true"
 ---
-apiVersion: servicebus.azure.com/v1beta20210101preview
+apiVersion: servicebus.azure.com/v1api20211101
 kind: Namespace
 metadata:
   name: chart-tests-servicebus

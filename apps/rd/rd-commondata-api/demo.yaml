@@ -1,33 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-commondata-api
 spec:
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: common-data-api-s2s-secret
-              alias: COMMONDATA_API_S2S_SECRET
-            - name: commondata-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: commondata-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: commondata-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: commondata-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: commondata-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
+      spotInstances:
+        enabled: false
       environment:
         DELETE_ORG: true
         CRD_S2S_AUTHORISED_SERVICES: rd_commondata_api,xui_webapp,ccd_data,sscs,sscs_bulkscan,iac,civil_service,prl_cos_api,cui_ra,sptribs_case_api,et_cos,fpl_case_service,st_cic
-        POSTGRES_HOST: rd-commondata-api-postgres-db-v16-demo.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_DB_NAME: dbcommondata
-        POSTGRES_PORT: 5432

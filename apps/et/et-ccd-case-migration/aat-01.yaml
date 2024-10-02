@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-ccd-case-migration
@@ -6,7 +6,7 @@ spec:
   values:
     job:
       suspend: true
-      schedule: "*/5 * * * *"
+      schedule: "*/30 * * * *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
@@ -15,9 +15,9 @@ spec:
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         IDAM_CLIENT_REDIRECT_URI: https://et-cos-aat.service.core-compute-aat.internal/oauth2redirect
         MIGRATION_ROLLBACK: true
-        MIGRATION_QUERY_SIZE: 10
-        MIGRATION_CASE_LIMIT: 10
-        MIGRATION_CASETYPE: ET_Scotland
+        MIGRATION_QUERY_SIZE: 5000
+        MIGRATION_CASE_LIMIT: 500
+        MIGRATION_CASETYPE: Leeds
     global:
       environment: aat
       enableKeyVaults: true

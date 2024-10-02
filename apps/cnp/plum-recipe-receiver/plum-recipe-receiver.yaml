@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: plum-recipe-receiver
@@ -23,7 +23,7 @@ spec:
       image: hmctspublic.azurecr.io/plum/recipe-receiver:prod-1100a0e-20220609130124
       triggers:
         - type: azure-servicebus
-          namespace: plum-servicebus-${ENVIRONMENT}
+          serviceBusName: plum-servicebus-${ENVIRONMENT}
           queueName: recipes
           queueLength: "5"
       environment:

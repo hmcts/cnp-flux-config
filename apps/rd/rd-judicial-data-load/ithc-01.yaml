@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-judicial-data-load
@@ -8,21 +8,6 @@ spec:
       keyVaults:
         "rd":
           resourceGroup: rd
-          secrets:
-            - name: judicial-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: judicial-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: judicial-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: judicial-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: judicial-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
       schedule: "00 15 * * *"
       environment:
         DELETE_ORG: true
-        POSTGRES_HOST: rd-judicial-ref-api-postgres-db-v16-ithc.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_DB_NAME: dbjuddata
-        POSTGRES_PORT: 5432

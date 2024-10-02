@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-applicant-can-sts-after-intention-fo
@@ -6,6 +6,7 @@ spec:
   releaseName: nfdiv-cron-applicant-can-sts-after-intention-fo
   values:
     job:
+      suspend: true
       disableActiveClusterCheck: false
       schedule: "0,20,40 * * * *"
       environment:

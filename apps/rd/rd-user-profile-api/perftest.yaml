@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rd-user-profile-api
@@ -6,39 +6,16 @@ spec:
   releaseName: rd-user-profile-api
   values:
     java:
-      keyVaults:
-        rd:
-          secrets:
-            - name: user-profile-api-s2s-secret
-              alias: USER_PROFILE_API_S2S_SECRET
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: user-profile-api-POSTGRES-DATABASE-v16
-              alias: POSTGRES_DB_NAME
-            - name: user-profile-api-POSTGRES-HOST-v16
-              alias: POSTGRES_HOST
-            - name: user-profile-api-POSTGRES-PORT-v16
-              alias: POSTGRES_PORT
-            - name: user-profile-api-POSTGRES-USER-v16
-              alias: POSTGRES_USERNAME
-            - name: user-profile-api-POSTGRES-PASS-v16
-              alias: POSTGRES_PASSWORD
       autoscaling:
         enabled: true
         maxReplicas: 4
       replicas: 2
-      memoryLimits: "6144Mi"
-      memoryRequests: "3072Mi"
+      memoryLimits: "4096Mi"
+      memoryRequests: "2048Mi"
       cpuLimits: "4000m"
       cpuRequests: "2000m"
       environment:
         DELETE_ORG: true
         IDAM_URL1: https://idam-api.perftest.platform.hmcts.net
-        PRD_S2S_AUTHORISED_SERVICES: rd_professional_api,rd_user_profile_api,rd_profile_sync,rd_caseworker_ref_api,iac,idam-user-profile-bridge
+        PRD_S2S_AUTHORISED_SERVICES: rd_professional_api,rd_user_profile_api,rd_profile_sync,rd_caseworker_ref_api,iac,idam-user-profile-bridge,et_cos
         DUMMY_VAR_TO_RESTART: 0
-        POSTGRES_HOST: rd-user-profile-api-postgres-db-v16-perftest.postgres.database.azure.com
-        POSTGRES_USERNAME: pgadmin
-        POSTGRES_DB_NAME: dbuserprofile
-        POSTGRES_PORT: 5432
