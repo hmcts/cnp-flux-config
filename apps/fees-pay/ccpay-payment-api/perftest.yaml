@@ -6,6 +6,14 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       image: hmctspublic.azurecr.io/payment/api:prod-0c22461-20241003095057 #{"$imagepolicy": "flux-system:perftest-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
