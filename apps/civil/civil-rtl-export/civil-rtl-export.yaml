@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: civil-rtl-export
+  namespace: civil
+spec:
+  releaseName: civil-rtl-export
+  values:
+    java:
+      image: hmctspublic.azurecr.io/civil/rtl-export:prod-a6b5f16-20241007123558 #{"$imagepolicy": "flux-system:civil-rtl-export"}
+      environment:
+  chart:
+    spec:
+      chart: ./stable/civil-rtl-export
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
