@@ -7,8 +7,11 @@ spec:
   values:
     nodejs:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-print-service:prod-10e06b5-20240916114805 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
+      image: hmctspublic.azurecr.io/ccd/case-print-service:prod-db69a71-20241004220455 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
       environment:
         DUMMY_VAR_TO_REDEPLOY: 1
   chart:

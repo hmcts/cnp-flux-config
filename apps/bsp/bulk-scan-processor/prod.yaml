@@ -15,19 +15,3 @@ spec:
         DELETE_COMPLETE_FILES_CRON: "0 0/10 * * * *"
         STORAGE_BLOB_LEASE_TIMEOUT: 60
         UPLOAD_MAX_TRIES: 30
-      testsConfig:
-        memoryLimits: "4096Mi"
-        serviceAccountName: tests-service-account
-        keyVaults:
-          bulk-scan:
-            secrets:
-              - name: test-s2s-secret
-                alias: TEST_S2S_SECRET
-        environment:
-          TEST_URL: "http://bulk-scan-processor-prod.service.core-compute-prod.internal"
-          SLACK_CHANNEL: "bsp-test-notices"
-          SLACK_NOTIFY_SUCCESS: false
-          TEST_S2S_NAME: "bulk_scan_processor_tests"
-          TEST_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
-      smoketests:
-        enabled: false

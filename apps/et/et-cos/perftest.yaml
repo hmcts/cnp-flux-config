@@ -6,8 +6,16 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctspublic.azurecr.io/et/cos:prod-b22afd1-20240919141134 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:pr-2266-8822405-20240930134053 #{"$imagepolicy": "flux-system:perftest-et-cos"}
       environment:
-        EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
+        MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,prl_cos_api,et_cos,nfdiv_case_api,et_sya_api
+        RD_PROFESSIONAL_API_URL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+        AAC_URL: http://aac-manage-case-assignment-perftest.service.core-compute-perftest.internal
+        EXUI_CASE_DETAILS_URL: "https://manage-case.perftest.platform.hmcts.net/cases/case-details/"
+        CITIZEN_CASE_DETAILS_URL: "https://et-sya.perftest.platform.hmcts.net/citizen-hub/"
+        BUNDLE_URL: http://em-ccd-orchestrator-perftest.service.core-compute-perftest.internal/
+        RESTART_MANUALLY: 1
         CRON_BFACTION_TASK: 0 0 * * * ?
+        CRON_UPDATE_TRANSFERRED_CASE_LINKS: 0 */30 * * * ?
+        EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
         ES_NOTIFICATIONS_PARTITION_SIZE: 2000
