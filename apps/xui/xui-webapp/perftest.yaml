@@ -5,16 +5,9 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 14
-      memoryLimits: "3Gi"
-      memoryRequests: "1.5Gi"
-      autoscaling:
-        enabled: true
-        maxReplicas: 24
-        cpu:
-          averageUtilization: 70
-        memory:
-          averageUtilization: 70
+      replicas: 24
+      memoryLimits: "4Gi"
+      memoryRequests: "3Gi"
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
         DUMMY_VAR: true
@@ -62,4 +55,4 @@ spec:
         SERVICES_TRANSLATION_API_URL: http://ts-translation-service-perftest.service.core-compute-perftest.internal
         SERVICES_NOTIFICATIONS_API_URL: http://ccpay-notifications-service-perftest.service.core-compute-perftest.internal
         SERVICES_PAYMENTS_URL: http://payment-api-perftest.service.core-compute-perftest.internal
-      image: hmctspublic.azurecr.io/xui/webapp:prod-239aa4b-20240930141306 #{"$imagepolicy": "flux-system:perftest-xui-webapp"}
+      image: hmctspublic.azurecr.io/xui/webapp:prod-e5f11e1-20241007105426 #{"$imagepolicy": "flux-system:perftest-xui-webapp"}
