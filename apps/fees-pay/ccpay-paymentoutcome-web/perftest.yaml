@@ -6,6 +6,13 @@ spec:
   values:
     nodejs:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '512Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '100m'
+      cpuLimits: '1500m'
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/ccpay/paymentoutcome-web:prod-4e4eba6-20240917103248 #{"$imagepolicy": "flux-system:ccpay-paymentoutcome-web"}
       imagePullPolicy: Always
