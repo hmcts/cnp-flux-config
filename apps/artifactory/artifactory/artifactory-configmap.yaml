@@ -468,6 +468,31 @@ spec:
                         <propagateQueryParams>false</propagateQueryParams>
                     </remoteRepository>
                 </remoteRepositories>
+                <virtualRepositories>
+                    <virtualRepository>
+                        <key>maven-virtual</key>
+                        <type>maven</type>
+                        <includesPattern>**/*</includesPattern>
+                        <excludesPattern>com/github/jknack**</excludesPattern>
+                        <repoLayoutRef>maven-2-default</repoLayoutRef>
+                        <dockerApiVersion>V2</dockerApiVersion>
+                        <forceNugetAuthentication>false</forceNugetAuthentication>
+                        <artifactoryRequestsCanRetrieveRemoteArtifacts>false</artifactoryRequestsCanRetrieveRemoteArtifacts>
+                        <repositories>
+                            <repositoryRef>gradle-plugins</repositoryRef>
+                            <repositoryRef>hmcts</repositoryRef>
+                            <repositoryRef>jcenter</repositoryRef>
+                            <repositoryRef>jenkins</repositoryRef>
+                            <repositoryRef>maven-central</repositoryRef>
+                            <repositoryRef>jitpack</repositoryRef>
+                        </repositories>
+                        <pomRepositoryReferencesCleanupPolicy>discard_active_reference</pomRepositoryReferencesCleanupPolicy>
+                        <virtualCacheConfig>
+                            <virtualRetrievalCachePeriodSecs>600</virtualRetrievalCachePeriodSecs>
+                        </virtualCacheConfig>
+                        <forceMavenAuthentication>false</forceMavenAuthentication>
+                    </virtualRepository>
+                </virtualRepositories>
                 <distributionRepositories/>
                 <releaseBundlesRepositories/>
                 <proxies/>
