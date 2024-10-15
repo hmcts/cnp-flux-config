@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-42e6bad-20240924085549 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-3ddd5bc-20241013121732 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       replicas: 2
@@ -43,11 +43,12 @@ spec:
         REDIS_HOST: prl-citizen-frontend-secondary-redis-aat.redis.cache.windows.net
         REASONABLE_ADJUSTMENTS: https://cui-ra.aat.platform.hmcts.net
         FACT_URL: http://fact-api-aat.service.core-compute-aat.internal
+        EQUALITY_URL: https://pcq.aat.platform.hmcts.net
         LAUNCH_DARKLY_OFFLINE_MODE: false
         C100_REBUILD_FLAG: true
         TESTING_SUPPORT_FLAG: true
         ENABLE_RA_COMPONENT: true
-        ENABLE_CASE_TRAIN_TRACK: true
+        ENABLE_CASE_TRAIN_TRACK: false
         ENABLE_PCQ_COMPONENT: true
         ALLOWED_COURTS: Swansea Civil Justice Centre
     global:
