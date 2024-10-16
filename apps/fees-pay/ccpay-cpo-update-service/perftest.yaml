@@ -5,6 +5,17 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '100m'
+      cpuLimits: '250m'
       environment:
         DUMMY_VARIABLE: false
         AMQP_HOST: ccpay-servicebus-perftest-premium.servicebus.windows.net

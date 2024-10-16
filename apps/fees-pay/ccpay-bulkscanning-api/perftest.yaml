@@ -6,6 +6,17 @@ spec:
   releaseName: ccpay-bulkscanning-api
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '70m'
+      cpuLimits: '250m'
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: true
