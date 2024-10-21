@@ -6,6 +6,17 @@ spec:
   releaseName: ccpay-bubble-frontend
   values:
     nodejs:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '512Mi'
+      memoryLimits: '1024Mi'
+      cpuRequests: '150m'
+      cpuLimits: '500m'
       image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-10c983b-20241014142550 #{"$imagepolicy": "flux-system:perftest-ccpay-bubble-frontend"}
       environment:
         PCIPAL_ANTENNA_URL: https://paybubble.perftest.platform.hmcts.net/ccd-search
