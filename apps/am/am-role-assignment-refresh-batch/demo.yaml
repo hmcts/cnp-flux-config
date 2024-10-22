@@ -5,36 +5,9 @@ metadata:
 spec:
   values:
     job:
-      keyVaults:
-        am:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: orm-IDAM-CLIENT-ID
-              alias: ORM_IDAM_CLIENT_ID
-            - name: orm-IDAM-CLIENT-SECRET
-              alias: ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET
-            - name: orm-IDAM-ADMIN-SECRET
-              alias: ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD
-            - name: am-role-assignment-refresh-batch-s2s-secret
-              alias: AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET
-            - name: role-assignment-service-LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: org-role-mapping-service-POSTGRES-PASS
-              alias: ORG_ROLE_MAPPING_DB_PASSWORD
-            - name: org-role-mapping-service-POSTGRES-USER
-              alias: ORG_ROLE_MAPPING_DB_USERNAME
-            - name: org-role-mapping-service-POSTGRES-HOST
-              alias: ORG_ROLE_MAPPING_DB_HOST
-            - name: role-assignment-refresh-batch-EMAIL-LIST
-              alias: EMAIL_LIST
-            - name: am-sendgrid-api-key
-              alias: AM_SENDGRID_API_KEY
       schedule: "*/20 * * * *"
       environment:
         DELETE_ORG: false
         AM_RAS_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
-        REFRESH_ENV: "demo"
         EMAIL_ENABLED: true
-        DUMMY_VAR: true
       image: hmctspublic.azurecr.io/am/role-assignment-refresh-batch:pr-876-122bd3e-20241022133325 #{"$imagepolicy": "flux-system:demo-am-role-assignment-refresh-batch"}
