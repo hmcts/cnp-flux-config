@@ -5,7 +5,18 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/notifications-service:prod-a2eb1d8-20240923103639 #{"$imagepolicy": "flux-system:perftest-ccpay-notifications-service"}
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
+      image: hmctspublic.azurecr.io/ccpay/notifications-service:prod-ff97e17-20241007105721 #{"$imagepolicy": "flux-system:perftest-ccpay-notifications-service"}
       environment:
         DUMMY_VARIABLE: true
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"

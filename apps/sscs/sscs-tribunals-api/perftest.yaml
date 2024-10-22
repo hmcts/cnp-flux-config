@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3930-3da947c-20241001133737 #{"$imagepolicy": "flux-system:perftest-sscs-tribunals-api"}
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-cff77a7-20241021150605 #{"$imagepolicy": "flux-system:perftest-sscs-tribunals-api"}
       aadIdentityName: sscs
       environment:
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -32,3 +32,8 @@ spec:
         BYPASS_EVIDENCE_SHARE_SERVICE: true
         BYPASS_NOTIFICATIONS_SERVICE: true
         BYPASS_HEARING_API_SERVICE: true
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-perftest.postgres.database.azure.com
+        COVID_19_NOTIFICATION_FEATURE: false
+        SUBMIT_APPEAL_SERVICE_V2_ENABLED: true
