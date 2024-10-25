@@ -9,34 +9,7 @@ spec:
       cpuLimits: "2500m"
       memoryRequests: "3072Mi"
       cpuRequests: "1000m"
-      image: hmctspublic.azurecr.io/rd/judicial-api:pr-901-b84af88-20241010100748 #{"$imagepolicy": "flux-system:demo-rd-judicial-api"}
-      keyVaults:
-        rd:
-          secrets:
-            - name: judicial-api-POSTGRES-PASS
-              alias: spring.datasource.password
-            - name: judicial-api-s2s-secret
-              alias: JUDICIAL_API_S2S_SECRET
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: LD-SDK-KEY
-              alias: LD_SDK_KEY
-            - name: judicial-api-elinks-api-key-new
-              alias: judicial_api_elinks_api_key
-            - name: OAUTH2-CLIENT-SECRET
-              alias: OAUTH2_CLIENT_SECRET
-            - name: OAUTH2-AUTH
-              alias: OAUTH2_AUTH
-            - name: OAUTH2-CLIENT-AUTH
-              alias: OAUTH2_CLIENT_AUTH
-            - name: rd-sendgrid-api-key
-              alias: RD_SENDGRID_API_KEY
-            - name: judicial-topic-primary-send-listen-shared-access-key
-              alias: JUDICIAL_TOPIC_PRIMARY_SEND_LISTEN_SHARED_ACCESS_KEY
-            - name: idam-rd-system-user-username
-              alias: RD_SYSTEM_USER_USERNAME
-            - name: idam-rd-system-user-password
-              alias: RD_SYSTEM_USER_PASSWORD
+      image: hmctspublic.azurecr.io/rd/judicial-api:prod-80baec6-20241021110315 #{"$imagepolicy": "flux-system:demo-rd-judicial-api"}
       environment:
         DUMMY_VAR: false
         DELETE_ORG: true
@@ -48,11 +21,11 @@ spec:
         ELINKS_URL: https://gateway.staging.elinks.judiciary.uk/elinks/api/v5
         LAST_UPDATED: 1900-01-01
         SCHEDULER_ENABLED: true
-        CRON_EXPRESSION: "0 00 13 10 10 ?"
+        CRON_EXPRESSION: "* 00 08 * * *"
         PER_PAGE: 200
         INCLUDE_PREVIOUS_APPOINTMENT: true
         THREAD_PAUSE_TIME: 2000
         THREAD_RETRIGGER_TIME: 1000
         JRD_DATA_PER_MESSAGE: 75
-        CUSTOMIZE_UPDATEDSINCE: true
+        CUSTOMIZE_UPDATEDSINCE: false
         Del_Joh_Profiles: true

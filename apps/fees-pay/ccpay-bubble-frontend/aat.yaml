@@ -6,6 +6,18 @@ spec:
   releaseName: ccpay-bubble-frontend
   values:
     nodejs:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '512Mi'
+      memoryLimits: '1024Mi'
+      cpuRequests: '150m'
+      cpuLimits: '500m'
       ingressHost: paybubble.aat.platform.hmcts.net
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-3b5dc1c-20241024133716 #{"$imagepolicy": "flux-system:ccpay-bubble-frontend"}
     environment:
       DUMMY_RESTART_VAR: true
