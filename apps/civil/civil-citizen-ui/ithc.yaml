@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: civil-citizen-ui
+  namespace: civil
+spec:
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-8db476e-20241028084042 #{"$imagepolicy": "flux-system:ithc-civil-citizen-ui"}
+      keyVaults:
+        civil-cui:
+          resourceGroup: civil-citizen-ui
+          secrets:
+            - appinsights-instrumentation-key
+            - draft-store-access-key
+            - citizen-ui-idam-secret
+            - ordnance-survey-api-key
+            - cmc-s2s-secret
+            - citizen-draft-store-primary
+            - citizen-draft-store-secondary
+            - civil-citizen-ui-token-key
+            - name: launch-darkly-sdk-key-non-prod
+              alias: LAUNCH_DARKLY_SDK_KEY

@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:pr-1926-53fe7dc-20241022144925 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
-      schedule: "15 14 22 10 *"
+      image: hmctspublic.azurecr.io/finrem/cos:pr-1926-72cb3cf-20241024100849 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
+      schedule: "30 10 24 10 *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -23,8 +23,8 @@ spec:
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: NullCaseRoleIdsWhereEmptyTask
         CRON_NULL_CASEROLEIDS_WHERE_EMPTY_ENABLED: true
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_CASE_TYPE_ID: FinancialRemedyMVP2
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_BATCH_SIZE: 10
+        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_BATCH_SIZE: 500
     global:
       jobKind: CronJob
       enableKeyVaults: true

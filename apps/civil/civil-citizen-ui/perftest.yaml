@@ -5,5 +5,24 @@ metadata:
   namespace: civil
 spec:
   values:
-    java:
-      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-2c8b3fd-20240715160900 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
+    nodejs:
+      replicas: 2
+      readinessDelay: 45
+      readinessTimeout: 5
+      readinessPeriod: 15
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-895185f-20241028152004 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
+      keyVaults:
+        civil-cui:
+          resourceGroup: civil-citizen-ui
+          secrets:
+            - appinsights-instrumentation-key
+            - draft-store-access-key
+            - citizen-ui-idam-secret
+            - ordnance-survey-api-key
+            - cmc-s2s-secret
+            - citizen-draft-store-primary
+            - citizen-draft-store-secondary
+            - civil-citizen-ui-token-key
+            - name: launch-darkly-sdk-key-non-prod
+              alias: LAUNCH_DARKLY_SDK_KEY
