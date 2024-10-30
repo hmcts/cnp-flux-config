@@ -6,7 +6,7 @@ spec:
   releaseName: nfdiv-cron-states-report
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-06d34b1-20241030090744 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-914187d-20241030110255 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
@@ -26,6 +26,8 @@ spec:
               alias: REPORT_EMAIL
       environment:
         TASK_NAME: SystemGenerateCurrentStateCountsReport
+        CCD_SEARCH_PAGE_SIZE: 1000
+        CCD_SEARCH_MAX_RESULTS: 15000
       schedule: 0 17 * * *
   chart:
     spec:
