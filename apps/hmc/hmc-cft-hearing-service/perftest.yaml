@@ -6,10 +6,17 @@ spec:
   releaseName: hmc-cft-hearing-service
   values:
     java:
-      memoryLimits: "3Gi"
-      memoryRequests: "2Gi"
-      cpuLimits: "2000m"
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: "2304Mi"
+      memoryLimits: "3072Mi"
       cpuRequests: "500m"
+      cpuLimits: "2000m"
       keyVaults:
         hmc:
           secrets:
