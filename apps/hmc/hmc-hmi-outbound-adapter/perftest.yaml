@@ -5,6 +5,17 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '300m'
+      cpuLimits: '1500m'
+      environment:
+        HMI_BASE_URL: https://hmi-apim.demo.platform.hmcts.net/hmi
+        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CLIENT_FUTUREHEARING: DEBUG
       keyVaults:
         hmc:
           secrets:
@@ -32,8 +43,3 @@ spec:
               alias: HMC_SERVICE_BUS_INBOUND_CONNECTION_STRING
             - name: fh-get-token-url
               alias: FH_GET_TOKEN_URL
-      environment:
-        DUMMY_RESTART_VAR: 2
-        HMI_BASE_URL: https://sds-api-mgmt.demo.platform.hmcts.net/hmi
-        LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CLIENT_FUTUREHEARING: DEBUG
-      memoryRequests: '1Gi'

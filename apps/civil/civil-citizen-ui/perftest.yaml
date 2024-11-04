@@ -11,7 +11,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-2a90f8f-20241028101215 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-56a33b5-20241102101919 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
       keyVaults:
         civil-cui:
           resourceGroup: civil-citizen-ui
@@ -26,3 +26,5 @@ spec:
             - civil-citizen-ui-token-key
             - name: launch-darkly-sdk-key-non-prod
               alias: LAUNCH_DARKLY_SDK_KEY
+      environment:
+        CIVIL_GENERAL_APPLICATIONS_URL: http://civil-general-applications-perftest.service.core-compute-perftest.internal
