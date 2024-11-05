@@ -7,7 +7,7 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-84898d3-20241104080231Z #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-dad30aa-20241105084047Z #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
       SLACK_REPORT_CHANNEL_CRIME_ID: C07KMBUFMA5
@@ -25,6 +25,8 @@ spec:
           - jira-username
           - jira-api-token
           - app-insights-connection-string
+    autoscaling:
+      enabled: false
   chart:
     spec:
       chart: nodejs
