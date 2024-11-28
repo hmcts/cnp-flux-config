@@ -6,11 +6,14 @@ spec:
   releaseName: finrem-cron-draft-order-review-overdue
   values:
     job:
+      image: hmctspublic.azurecr.io/finrem/cos:prod-fe3b7af-20241127084057 #{"$imagepolicy": "flux-system:finrem-cos"}
       schedule: "0 12 * * *"
+      useInterpodAntiAffinity: true
       environment:
-        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: false
+        TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: true
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
-        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 14
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 1
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
@@ -26,3 +29,11 @@ spec:
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: aat
+  chart:
+    spec:
+      chart: finrem-cron
+      version: 0.0.8
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
