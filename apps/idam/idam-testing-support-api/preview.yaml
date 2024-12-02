@@ -4,11 +4,52 @@ metadata:
   name: idam-testing-support-api
   namespace: idam
 spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: idam-testing-support-api
+      version: 0.0.34
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
   releaseName: idam-testing-support-api
   values:
     java:
       ingressHost: idam-testing-support-api.preview.platform.hmcts.net
       disableTraefikTls: false
+      keyVaults:
+        idam-idam-preview:
+          resourceGroup: idam-idam-preview
+          secrets:
+            - name: AppInsightsConnectionString
+              alias: app-insights-connection-string
+            - name: idam-testing-support-api-POSTGRES-HOST-SECRET
+              alias: DATASOURCE_HOST
+            - name: idam-testing-support-api-POSTGRES-PORT-SECRET
+              alias: DATASOURCE_PORT
+            - name: idam-testing-support-api-POSTGRES-DATABASE-SECRET
+              alias: DATASOURCE_DATABASE
+            - name: idam-testing-support-api-POSTGRES-USER-SECRET
+              alias: spring.datasource.username
+            - name: idam-testing-support-api-POSTGRES-PASS-SECRET
+              alias: spring.datasource.password
+            - name: notify-api-key
+              alias: notify.key
+            - name: idam-testing-support-api-client-secret
+              alias: spring.security.oauth2.client.registration.idam-testing-support-api.client-secret
+            - name: idam-testing-support-api-client-secret
+              alias: spring.security.oauth2.client.registration.rd-userprofile-api.client-secret
+            - name: idam-user-profile-bridge-rd-system-username
+              alias: rd.userprofile.client.registration.service-account-user
+            - name: idam-user-profile-bridge-rd-system-password
+              alias: rd.userprofile.client.registration.service-account-password
+            - name: redis-hostname
+              alias: spring.data.redis.host
+            - name: redis-key
+              alias: spring.data.redis.password
+            - name: redis-port
+              alias: spring.data.redis.port
       environment:
         IDAM_API_URL: http://idam-api
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: http://idam-web-public/o/jwks
