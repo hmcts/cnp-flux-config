@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # set -ex
 
+NAMESPACE='${NAMESPACE}'
+ENVIRONMENT='${ENVIRONMENT}'
 NAMESPACE_NAME="$1"
 APP_NAME="$2"
 APPS_DIR="../../apps/"
@@ -29,12 +31,12 @@ apiVersion: dbforpostgresql.azure.com/v1api20210601
 kind: FlexibleServersConfiguration
 metadata:
   name: extensions
-  namespace: '${NAMESPACE}'
+  namespace: ${NAMESPACE}
   annotations:
     serviceoperator.azure.com/reconcile-policy: detach-on-delete
 spec:
   owner:
-    name: '${NAMESPACE}'-preview
+    name: ${NAMESPACE}-${ENVIRONMENT}
   azureName: azure.extensions
   source: user-override
   value: "btree_gin"
@@ -46,8 +48,8 @@ EOF
 apiVersion: dbforpostgresql.azure.com/v1api20210601
 kind: FlexibleServer
 metadata:
-  name: '${NAMESPACE}'-preview
-  namespace: "${NAMESPACE}"
+  name: ${NAMESPACE}-${ENVIRONMENT}
+  namespace: ${NAMESPACE}
 spec:
   version: "14"
   network:
