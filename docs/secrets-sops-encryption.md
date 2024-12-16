@@ -5,7 +5,7 @@ Install sops:
 brew install sops
 ```
 
-#### Steps to SOPS Encrypt
+## Encryption of a helm file
 
 The following is an example for kube-prometheus-stack:
 
@@ -44,7 +44,7 @@ metadata:
 type: Opaque
 ```
 
-## Here is where you Encrypt using SOP in Flux V2:
+## Encryption of other files:
 
 You want to use the kv that matches your environment.
 The number after sops-key is the CURRENT VERSION this can be found in azure keyvault under keys/sops-key.
