@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-6b761c4-20240919124532
+      image: hmctspublic.azurecr.io/idam/web-public:prod-bcfa00f-20241211110131
       ingressHost: idam-web-public.aat.platform.hmcts.net
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.aat.platform.hmcts.net
@@ -21,4 +21,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
+      chart: idam-web-public
       version: 0.4.1
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system

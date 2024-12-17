@@ -6,13 +6,9 @@ metadata:
 spec:
   values:
     nodejs:
-      cpuLimits: "600m"
-      cpuRequests: "50m"
-      memoryLimits: "1536Mi"
-      memoryRequests: "512Mi"
       autoscaling:
-        enabled: true
-        maxReplicas: 4
+        cpu:
+          averageUtilization: 300 #AAT only: To prevent pods scaling when pipelines run
       environment:
         PCQ_ENABLED: "true"
         #Pilot local-court email-Ids

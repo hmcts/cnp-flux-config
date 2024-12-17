@@ -6,10 +6,10 @@ spec:
   releaseName: finrem-cron-draft-order-review-overdue
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:pr-1949-1f065e4-20241107082446 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
-      schedule: "0 * * * *"
+      image: hmctspublic.azurecr.io/finrem/cos:prod-4553822-20241216144028 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "30 1 26 11 *"
       environment:
-        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: true
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: false
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 1
         FEATURE_PBA_CASE_TYPE: true

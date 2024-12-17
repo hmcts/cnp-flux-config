@@ -7,16 +7,20 @@ spec:
   interval: 1m
   values:
     nodejs:
-      cpuLimits: "1000m"
-      cpuRequests: "500m"
-      memoryLimits: "2048Mi"
+      cpuLimits: "500m"
+      cpuRequests: "50m"
+      memoryLimits: "1536Mi"
       memoryRequests: "512Mi"
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      livenessDelay: 130
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/adoption/web:prod-d746a85-20241106101112 #{"$imagepolicy": "flux-system:adoption-web"}
+      image: hmctspublic.azurecr.io/adoption/web:prod-2ad0a29-20241212142300 #{"$imagepolicy": "flux-system:adoption-web"}
       environment:
         SOCIAL_WORKER_SUPPORTED_DOMAINS:
           - gov.uk
