@@ -5,11 +5,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/hrs-api:pr-2031-2d9c447-20241018091612 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-971902f-20241220084537 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_EM_HRS: DEBUG
-        TTL_ENABLED: true
-        DELETE_CASE_ENDPOINT_ENABLED: true
+        TTL_ENABLED: false
+        # DELETE_CASE_ENDPOINT_ENABLED: true
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
         DELETE_CASE_S2S_WHITELIST: ccd_case_disposer,em_gw
       spotInstances:
         enabled: true

@@ -5,5 +5,16 @@ metadata:
 spec:
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       environment:
         DUMMY_VARIABLE: true
