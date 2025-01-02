@@ -16,6 +16,8 @@ spec:
       image: hmctspublic.azurecr.io/probate/frontend:prod-012bb61-20241219135856 #{"$imagepolicy": "flux-system:probate-frontend"}
       environment:
         VAR_FV2: trig-base-4
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-frontend
