@@ -18,7 +18,8 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-92e4cd6-20250109122700 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
       environment:
-        VAR_FV2: trigger1
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-orchestrator-service

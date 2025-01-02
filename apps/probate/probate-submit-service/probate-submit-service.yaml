@@ -18,7 +18,8 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/submit-service:prod-26bbfc6-20250109122254 #{"$imagepolicy": "flux-system:probate-submit-service"}
       environment:
-        VAR_FV2: trigger2
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-submit-service
