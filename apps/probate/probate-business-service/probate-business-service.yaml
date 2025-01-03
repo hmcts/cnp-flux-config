@@ -13,6 +13,8 @@ spec:
       image: hmctspublic.azurecr.io/probate/business-service:prod-f74b689-20250103092144 #{"$imagepolicy": "flux-system:probate-business-service"}
       environment:
         VAR_FV2: trig-base-2
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-business-service

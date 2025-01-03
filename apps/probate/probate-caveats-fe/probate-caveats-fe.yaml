@@ -12,6 +12,8 @@ spec:
       image: hmctspublic.azurecr.io/probate/caveats-fe:prod-8a46807-20241220101746 #{"$imagepolicy": "flux-system:probate-caveats-fe"}
       environment:
         VAR_FV2: trig-base-2
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-caveats-fe

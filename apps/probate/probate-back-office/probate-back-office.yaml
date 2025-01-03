@@ -13,6 +13,8 @@ spec:
       image: hmctspublic.azurecr.io/probate/back-office:prod-19baae5-20241219143143 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
         VAR_FV2: base-0
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-back-office
