@@ -75,7 +75,7 @@ metadata:
     namespace: $NAMESPACE_NAME
 type: Opaque
 EOF
-) >"apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc.yaml"
+) >"apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc_temp.yaml"
 
 if ! [ -f /usr/local/bin/sops ]; then
   echo "Sops is not installed... installing..."
@@ -84,7 +84,13 @@ if ! [ -f /usr/local/bin/sops ]; then
   chmod +x /usr/local/bin/sops
 fi
 
-sops --encrypt --azure-kv https://dcdcftappsdevkv.vault.azure.net/keys/sops-key/aedb9ea38954430ca1d0a46ed589c049 --encrypted-regex "^(data|stringData)$" --in-place apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc.yaml
+sops --encrypt --azure-kv https://dcdcftappsdevkv.vault.azure.net/keys/sops-key/aedb9ea38954430ca1d0a46ed589c049 --encrypted-regex "^(data|stringData)$" --in-place apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc_temp.yaml
+
+# making sure the indentation is with 2 spaces
+yq eval --indent 2 -P "apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc_temp.yaml" > "apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc.yaml"
+
+# deleting the temp file
+rm "./apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc_temp.yaml"
 
 (
   cat <<EOF
