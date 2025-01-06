@@ -5,7 +5,7 @@ Install sops:
 brew install sops
 ```
 
-## Encryption of a helm file
+## Encryption of a helm file:
 
 The following is an example for kube-prometheus-stack:
 
