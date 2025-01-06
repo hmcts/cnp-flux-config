@@ -69,5 +69,5 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
 
 - Run [postgres-setup.sh](../bin/v2/postgres-setup.sh) with your namespace and app name.
    ```bash
-    ./bin/v2/add-namespace.sh <your namespace> <app name>
+    ./bin/v2/postgres-setup.sh <your namespace> <app name>
    ```
