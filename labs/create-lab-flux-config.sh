@@ -23,7 +23,7 @@ set -ex
 NAMESPACE=labs
 PRODUCT=labs
 COMPONENT=$1
-ACR=hmctssandbox
+ACR=hmctspublic
 NAMESPACE_DIR="../apps/${NAMESPACE}"
 COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
 ENVIRONMENT="sbox"
