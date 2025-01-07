@@ -7,9 +7,36 @@ spec:
   values:
     job:
       ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/prl/cos:prod-2ed0e0b-20241125224725 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-76bf995-20241216170533 #{"$imagepolicy": "flux-system:ithc-prl-cron-hearing-actual-task"}
       environment:
+        TASK_NAME: UpdateHearingActualTask
+        HEARING_AWAY_DAYS: 18
+        VAR: trigger1
+        FEATURE_EXAMPLE: true
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
+        PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-demo.service.core-compute-demo.internal/oauth2/callback
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.demo.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        XUI_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details
+        PAY_URL: http://payment-api-demo.service.core-compute-demo.internal
+        PAY_CALLBACK_URL: http://prl-cos-demo.service.core-compute-demo.internal/service-request-update
+        PRL_DGS_API_URL: http://prl-dgs-demo.service.core-compute-demo.internal
+        FEE_REGISTER_API_URL: http://fees-register-api-demo.service.core-compute-demo.internal
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
+        FACT_API: http://fact-api-demo.service.core-compute-demo.internal
+        LOCATION_REF_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
+        BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
+        REFDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-demo.service.core-compute-demo.internal
         APP_ENV: "ithc"
+      schedule: 0,10,20,30,40,50 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

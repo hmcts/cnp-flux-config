@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-47ce76f-20240920110926
+      image: hmctspublic.azurecr.io/idam/api:prod-9ec8645-20241211110057
       replicas: 2
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:
@@ -60,4 +60,10 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.8.1
+      version: 0.8.0
+      chart: ./stable/idam-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

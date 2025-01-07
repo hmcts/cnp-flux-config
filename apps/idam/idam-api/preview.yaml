@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-240b0f1-20241002090530
+      image: hmctspublic.azurecr.io/idam/api:preview-9b8f639-20241220133421 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -75,4 +75,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.8.0
+      chart: ./stable/idam-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

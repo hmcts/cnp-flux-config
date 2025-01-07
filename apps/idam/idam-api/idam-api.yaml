@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-47ce76f-20240920110926
+      image: hmctspublic.azurecr.io/idam/api:prod-9ec8645-20241211110057
       replicas: 2
       cpuRequests: '160m'
       cpuLimits: '1500m'
@@ -60,6 +60,7 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
+        FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: false
         IDAM_QUERIES_CHANGED-USERS-WITH-ROLES_QUERY-ID: query-lastChanged-with-roles-user-value
         IDAM_QUERIES_CHANGED-USERS-WITH-SINGLE-ROLE_ENABLED: false
         IDAM_QUERIES_TIMEFILTERTEMPLATE: createTimestamp gt "%s"
@@ -72,12 +73,12 @@ spec:
         SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-prod
         SPRING_CLOUD_AZURE_SERVICEBUS_NAMESPACE: idam-servicebus-prod
         SPRING_REDIS_TIMEOUT: 300
-        TRIGGER_RESTART: CHG5018936
+        TRIGGER_RESTART: INC5672371
   chart:
     spec:
       chart: idam-api
       version: 0.8.1
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system

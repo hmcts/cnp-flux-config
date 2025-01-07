@@ -14,13 +14,17 @@ spec:
       cpuRequests: '300m'
       cpuLimits: '1500m'
       environment:
-        HMI_BASE_URL: https://hmi-apim.demo.platform.hmcts.net/hmi
+        # HMI/LA integration
+        #HMI_BASE_URL: https://hmi-apim.demo.platform.hmcts.net/hmi
+        # Stubbing without using HMI/LA
+        HMI_BASE_URL: http://ccd-test-stubs-service-perftest.service.core-compute-perftest.internal/hmi
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CLIENT_FUTUREHEARING: DEBUG
+        DUMMY_VAR: 1
       keyVaults:
         hmc:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: cft-hearing-service-POSTGRES-USER-V15
               alias: CFT_HEARING_SERVICE_DB_USERNAME
             - name: cft-hearing-service-POSTGRES-PASS-V15

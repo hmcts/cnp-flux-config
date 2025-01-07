@@ -7,15 +7,15 @@ spec:
   releaseName: idam-user-profile-bridge
   chart:
     spec:
-      chart: idam-user-profile-bridge
-      version: 0.0.42
+      chart: ./stable/idam-user-profile-bridge
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/user-profile-bridge:prod-41391f0-20241122180042 # {"$imagepolicy": "flux-system:idam-user-profile-bridge"}
+      image: hmctspublic.azurecr.io/idam/user-profile-bridge:prod-4e63ce1-20250103180029 # {"$imagepolicy": "flux-system:idam-user-profile-bridge"}
       disableTraefikTls: true
       environment:
         SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-prod.servicebus.windows.net/
