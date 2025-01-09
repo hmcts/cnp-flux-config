@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-ashleigh31-nodejs
+  namespace: labs
+spec:
+  releaseName: labs-ashleigh31-nodejs
+  chart:
+    spec:
+      chart: ./stable/labs-ashleigh31-nodejs
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctssandbox.azurecr.io/labs/ashleigh31-nodejs:prod-69bc6ab-20250106150147 # {"$imagepolicy": "flux-system:labs-ashleigh31-nodejs"}
+      disableTraefikTls: true
