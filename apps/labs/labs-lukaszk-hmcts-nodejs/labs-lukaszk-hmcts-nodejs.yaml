@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-lukaszk-hmcts-nodejs
+  namespace: labs
+spec:
+  releaseName: labs-lukaszk-hmcts-nodejs
+  chart:
+    spec:
+      chart: ./stable/labs-lukaszk-hmcts-nodejs
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctssandbox.azurecr.io/labs/lukaszk-hmcts-nodejs:prod-4366fe4-20250109105053 # {"$imagepolicy": "flux-system:labs-lukaszk-hmcts-nodejs"}
+      disableTraefikTls: true
