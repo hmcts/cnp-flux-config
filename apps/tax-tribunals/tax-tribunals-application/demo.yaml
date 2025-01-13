@@ -155,11 +155,16 @@ spec:
             - name: dynatrace-ui-tracking-id
               alias: DYNATRACE_UI_TRACKING_ID
 
+    sidekiq:
+      args: ['./sidekiq.sh']
+
     job:
       schedule: "*/5 * * * *"
       disableActiveClusterCheck: true
       suspend: false
       startingDeadlineSeconds: 300
+      concurrencyPolicy: Forbid
+      ttlSecondsAfterFinished: 216000 # 60 hours
       backoffLimit: 0
       command:
         - "bin/rails"
