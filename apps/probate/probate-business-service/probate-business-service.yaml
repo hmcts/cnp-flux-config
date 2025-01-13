@@ -12,7 +12,8 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/business-service:prod-9cfcb82-20250110124256 #{"$imagepolicy": "flux-system:probate-business-service"}
       environment:
-        VAR_FV2: trig-base-2
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-business-service

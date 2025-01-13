@@ -12,7 +12,8 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/back-office:prod-6707e09-20250109124038 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
-        VAR_FV2: base-0
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abc
   chart:
     spec:
       chart: ./stable/probate-back-office
