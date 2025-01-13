@@ -8,7 +8,8 @@ APP_NAME="$2"
 APPS_DIR="../../apps/"
 CLUSTERS_DIR="../../clusters"
 
-PASSWORD=$(openssl rand -base64 15)
+PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 16 ; echo)
+PASSWORD=$(echo -n $PASSWORD | base64 )
 
 function usage() {
   echo 'usage: ./postgres-setup.sh <namespace> <app_name>'
@@ -27,31 +28,16 @@ if [ ! -f "apps/$NAMESPACE_NAME/preview/aso" ]; then
 
   (
     cat <<EOF
-apiVersion: dbforpostgresql.azure.com/v1api20210601
-kind: FlexibleServersConfiguration
-metadata:
-  name: extensions
-  namespace: ${NAMESPACE}
-  annotations:
-    serviceoperator.azure.com/reconcile-policy: detach-on-delete
-spec:
-  owner:
-    name: ${NAMESPACE}-${ENVIRONMENT}
-  azureName: azure.extensions
-  source: user-override
-  value: "btree_gin"
-EOF
-  ) >"apps/$NAMESPACE_NAME/preview/aso/$NAMESPACE_NAME-postgres-config.yaml"
-
-  (
-    cat <<EOF
-apiVersion: dbforpostgresql.azure.com/v1api20210601
+apiVersion: dbforpostgresql.azure.com/v1api20230601preview
 kind: FlexibleServer
 metadata:
   name: ${NAMESPACE}-${ENVIRONMENT}
   namespace: ${NAMESPACE}
 spec:
   version: "16"
+  sku:
+    name: Standard_D2ds_v5
+    tier: GeneralPurpose
 EOF
   ) >"apps/$NAMESPACE_NAME/preview/aso/$NAMESPACE_NAME-postgres.yaml"
 fi
@@ -67,7 +53,7 @@ fi
   cat <<EOF
 apiVersion: v1
 data:
-    PASSWORD: $PASSWORD
+  PASSWORD: $PASSWORD
 kind: Secret
 metadata:
     creationTimestamp: null
@@ -97,7 +83,79 @@ rm "./apps/$NAMESPACE_NAME/preview/sops-secrets/$APP_NAME-values.enc_temp.yaml"
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - $APP_NAME-postgres.enc.yaml
+  - $APP_NAME-values.enc.yaml
 namespace: $NAMESPACE_NAME
 EOF
 ) >"apps/$NAMESPACE_NAME/preview/sops-secrets/kustomization.yaml"
+
+if [ ! -f "apps/$NAMESPACE_NAME/preview/base/kustomization.yaml" ]; then
+  echo "Creating kustomization in preview/base"
+  mkdir -p apps/$NAMESPACE_NAME
+  mkdir -p apps/$NAMESPACE_NAME/preview
+  mkdir -p apps/$NAMESPACE_NAME/preview/base
+
+  (
+    cat <<EOF
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../sops-secrets
+namespace: $NAMESPACE_NAME
+patches:
+  - path: ../aso/$NAMESPACE_NAME-postgres.yaml
+EOF
+  ) >"apps/$NAMESPACE_NAME/preview/base/kustomization.yaml"
+else
+(
+    cat <<EOF
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml\\
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml\\
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml\\
+  - ../sops-secrets
+EOF
+  ) >"apps/$NAMESPACE_NAME/preview/base/kustomization_resources_temp.yaml"
+(
+    cat <<EOF
+  - path: ../aso/$NAMESPACE_NAME-postgres.yaml
+EOF
+  ) >"apps/$NAMESPACE_NAME/preview/base/kustomization_patches_temp.yaml"
+
+# Path to the kustomization.yaml file
+KUSTOMIZATION_FILE="apps/$NAMESPACE_NAME/preview/base/kustomization.yaml"
+
+# Path to the file to be included
+FILE_RESOURCES_TO_INCLUDE="apps/$NAMESPACE_NAME/preview/base/kustomization_resources_temp.yaml"
+
+# Read the contents of the file to be included
+FILE_RESOURCES_CONTENTS=$(cat "$FILE_RESOURCES_TO_INCLUDE")
+
+# Path to the file to be included
+FILE_PATCHES_TO_INCLUDE="apps/$NAMESPACE_NAME/preview/base/kustomization_patches_temp.yaml"
+
+# Read the contents of the file to be included
+FILE_PATCHES_CONTENTS=$(cat "$FILE_PATCHES_TO_INCLUDE")
+
+echo $FILE_RESOURCES_CONTENTS
+echo $FILE_PATCHES_CONTENTS
+
+# Update the kustomization.yaml file
+sed -i.bak "/namespace:/i\\
+$FILE_RESOURCES_CONTENTS
+" "$KUSTOMIZATION_FILE"
+
+echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_TO_RESOURCES_INCLUDE"
+
+# Update the kustomization.yaml file
+sed -i.bak "/patches:/a\\
+$FILE_PATCHES_CONTENTS
+" "$KUSTOMIZATION_FILE"
+
+echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_TO_PATCHES_INCLUDE"
+
+# deleting the temp file
+rm "./apps/$NAMESPACE_NAME/preview/base/kustomization_resources_temp.yaml"
+rm "./apps/$NAMESPACE_NAME/preview/base/kustomization_patches_temp.yaml"
+fi
