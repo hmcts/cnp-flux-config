@@ -7,19 +7,18 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/finrem/cos:prod-a02d57e-20250109084311 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "0 12 * * *"
+      schedule: "0 2 * * *"
       useInterpodAntiAffinity: true
       environment:
         TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: false
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
-        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 1
-        FEATURE_PBA_CASE_TYPE: true
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 14
+        FEATURE_PBA_CASE_TYPE: false
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
-        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
         SECURE_DOC_ENABLED: false
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-prod.service.core-compute-prod.internal
         SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
@@ -29,11 +28,3 @@ spec:
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: prod
-  chart:
-    spec:
-      chart: finrem-cron
-      version: 0.0.8
-      sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
-        namespace: flux-system
