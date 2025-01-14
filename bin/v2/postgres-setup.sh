@@ -109,6 +109,7 @@ patches:
 EOF
   ) >"apps/$NAMESPACE_NAME/preview/base/kustomization.yaml"
 else
+echo "Updating kustomization in preview/base"
 (
     cat <<EOF
   - ../../../azureserviceoperator-system/resources/resource-group.yaml\\
@@ -146,16 +147,17 @@ sed -i.bak "/namespace:/i\\
 $FILE_RESOURCES_CONTENTS
 " "$KUSTOMIZATION_FILE"
 
-echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_TO_RESOURCES_INCLUDE"
+echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_RESOURCES_TO_INCLUDE"
 
 # Update the kustomization.yaml file
 sed -i.bak "/patches:/a\\
 $FILE_PATCHES_CONTENTS
 " "$KUSTOMIZATION_FILE"
 
-echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_TO_PATCHES_INCLUDE"
+echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_PATCHES_TO_INCLUDE"
 
 # deleting the temp file
 rm "./apps/$NAMESPACE_NAME/preview/base/kustomization_resources_temp.yaml"
 rm "./apps/$NAMESPACE_NAME/preview/base/kustomization_patches_temp.yaml"
+rm "./apps/cnp/preview/base/kustomization.yaml.bak"
 fi
