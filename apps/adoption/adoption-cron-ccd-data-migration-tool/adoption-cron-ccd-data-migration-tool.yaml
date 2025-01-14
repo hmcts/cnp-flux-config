@@ -10,14 +10,20 @@ spec:
     job:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:prod-cff7e78-20250114122452 #{"$imagepolicy": "flux-system:adoption-cron-ccd-data-migration-tool"}
-      schedule: "10 20 14 01 *"
+      schedule: "20 20 14 01 *"
       environment:
         MIGRATION_ID: ADOP-2555
-        ENABLED: true
         USE_CASE_ID_MAPPING: true
-        UPDATE: migration
+        ENABLED: true
+        UPDATE: rollback
+        IDAM_REDIRECT_URL: https://adoption-web.platform.hmcts.net/receiver
+        IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        JRD_BASE_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
         DEFAULT_THREAD_LIMIT: 25
         DEFAULT_QUERY_SIZE: 100
+        RETRY_FAILURES: true
   chart:
     spec:
       chart: ./stable/adoption-cron-ccd-data-migration-tool
