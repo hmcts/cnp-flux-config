@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adoption-cron-ccd-data-migration-tool
+spec:
+  releaseName: adoption-cron-ccd-data-migration-tool
+  values:
+    job:
+      schedule: "30 12 30 2 *"
+      environment:
+        ENABLED: true
+        MIGRATION_ID: ADOP-log
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        USE_CASE_ID_MAPPING: true
