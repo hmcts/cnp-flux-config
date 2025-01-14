@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: recipes-frontend
+spec:
+  releaseName: recipes-frontend
+  chart:
+    spec:
+      chart: ./stable/recipes-frontend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/recipes/frontend:prod-38d2785-20250113181748 # {"$imagepolicy": "flux-system:recipes-frontend"}
+      useWorkloadIdentity: true
+      workloadClientID: ${WORKLOAD_IDENTITY_ID}
+      environment:
+        RECIPE_BACKEND_URL: http://recipes-backend-java
