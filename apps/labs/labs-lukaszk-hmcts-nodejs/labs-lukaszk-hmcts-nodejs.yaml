@@ -1,13 +1,14 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: labs-dawidstrozak-nodejs
+  name: labs-lukaszk-hmcts-nodejs
   namespace: labs
 spec:
-  releaseName: labs-dawidstrozak-nodejs
+  releaseName: labs-lukaszk-hmcts-nodejs
   chart:
     spec:
-      chart: ./stable/labs-dawidstrozak-nodejs
+      chart: ./stable/labs-lukaszk-hmcts-nodejs
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
@@ -15,5 +16,5 @@ spec:
       interval: 1m
   values:
     nodejs:
-      image: hmctssandbox.azurecr.io/labs/dawidstrozak-nodejs:prod-213cd92-20250108150622 # {"$imagepolicy": "flux-system:labs-dawidstrozak-nodejs"}
+      image: hmctssandbox.azurecr.io/labs/lukaszk-hmcts-nodejs:prod-4366fe4-20250109105053 # {"$imagepolicy": "flux-system:labs-lukaszk-hmcts-nodejs"}
       disableTraefikTls: true
