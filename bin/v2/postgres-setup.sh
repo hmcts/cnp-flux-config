@@ -159,5 +159,5 @@ echo "Updated $KUSTOMIZATION_FILE with contents of $FILE_PATCHES_TO_INCLUDE"
 # deleting the temp file
 rm "./apps/$NAMESPACE_NAME/preview/base/kustomization_resources_temp.yaml"
 rm "./apps/$NAMESPACE_NAME/preview/base/kustomization_patches_temp.yaml"
-rm "./apps/cnp/preview/base/kustomization.yaml.bak"
+rm "./apps/$NAMESPACE_NAME/preview/base/kustomization.yaml.bak"
 fi
