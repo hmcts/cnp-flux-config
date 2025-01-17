@@ -64,3 +64,10 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
       key: connectionString
   ```
 - Follow [chart-servicebus](https://github.com/hmcts/chart-servicebus) documentation for configuring queues and topics.
+
+## Postgres Flexible Server
+
+- Run [postgres-setup.sh](../bin/v2/postgres-setup.sh) with your namespace and app name.
+   ```bash
+    ./bin/v2/postgres-setup.sh <your namespace> <app name>
+   ```
