@@ -6,9 +6,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/submit-service:pr-1023-9068001-20250109135258 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-1d32afe-20250116151308 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
       environment:
-        VAR_FV2: demo-3
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: abc
       keyVaults:
         probate:
           secrets:
