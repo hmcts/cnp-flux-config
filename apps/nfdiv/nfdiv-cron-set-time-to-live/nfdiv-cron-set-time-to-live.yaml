@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-set-time-to-live
+spec:
+  releaseName: nfdiv-cron-set-time-to-live
+  values:
+    job:
+      disableActiveClusterCheck: false
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-c26ecd8-20250113102502 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      suspend: true
+      keyVaults:
+        nfdiv:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: s2s-case-api-secret
+              alias: S2S_SECRET
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-systemupdate-username
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-systemupdate-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
+      environment:
+        TASK_NAME: SystemSetTimeToLiveTask
+        CCD_SEARCH_PAGE_SIZE: 500
+        CCD_SEARCH_MAX_RESULTS: 2000
+      schedule: 0,30 * * * *
+  chart:
+    spec:
+      chart: nfdiv-cron
+      version: 0.0.23
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
