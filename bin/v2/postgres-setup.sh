@@ -102,6 +102,7 @@ resources:
   - ../../../base
   - ../../../azureserviceoperator-system/resources/resource-group.yaml
   - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
   - ../sops-secrets
 namespace: $NAMESPACE_NAME
 patches:
