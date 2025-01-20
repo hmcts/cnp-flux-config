@@ -12,7 +12,7 @@ PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 16 ; echo)
 PASSWORD=$(echo -n $PASSWORD | base64 )
 
 function usage() {
-  echo 'usage: ./postgres-setup.sh <namespace> <app_name>'
+  echo 'usage: ./aso-postgres-server.sh <namespace> <app_name>'
 }
 
 if [ -z "${NAMESPACE_NAME}" ] || [ -z "${APP_NAME}" ]; then

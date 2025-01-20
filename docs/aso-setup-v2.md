@@ -67,7 +67,7 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
 
 ## Postgres Flexible Server
 
-- Run [postgres-setup.sh](../bin/v2/postgres-setup.sh) with your namespace and app name.
+- Run [aso-postgres-server.sh](../bin/v2/aso-postgres-server.sh) with your namespace and app name.
    ```bash
-    ./bin/v2/postgres-setup.sh <your namespace> <app name>
+    ./bin/v2/aso-postgres-server.sh <your namespace> <app name>
    ```
