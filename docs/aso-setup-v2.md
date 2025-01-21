@@ -67,7 +67,9 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
 
 ## Postgres Flexible Server
 
-- Run [postgres-setup.sh](../bin/v2/postgres-setup.sh) with your namespace and app name.
+- Run [add-postgres-server.sh](../bin/v2/add-postgres-server.sh) with your namespace and app name.
    ```bash
-    ./bin/v2/postgres-setup.sh <your namespace> <app name>
+    ./bin/v2/add-postgres-server.sh <your namespace> <app name>
    ```
+
+  Expected output of the script should look similar to this [PR](https://github.com/hmcts/cnp-flux-config/pull/36233/files).
