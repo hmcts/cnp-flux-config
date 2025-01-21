@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-2953-81fe675-20250110103411 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-9eaffdb-20250120154322 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         PROBATE_POSTGRESQL_USER: pgadmin
@@ -18,7 +18,8 @@ spec:
         IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
         BACK_OFFICE_BASEURL: http://probate-back-office-demo.service.core-compute-demo.internal
         ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
-        VAR_FV2: demo-3
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: abc
       keyVaults:
         probate:
           secrets:
