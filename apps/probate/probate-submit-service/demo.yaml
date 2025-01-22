@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-submit-service
@@ -6,9 +6,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/submit-service:prod-ca6e4a6-20240125132006 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-bc0acac-20250122114034 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
       environment:
-        VAR_FV2: Demo-1
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: abc
       keyVaults:
         probate:
           secrets:

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccpay-bubble-frontend
@@ -6,7 +6,18 @@ spec:
   releaseName: ccpay-bubble-frontend
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-ec0aee4-20240123144453 #{"$imagepolicy": "flux-system:perftest-ccpay-bubble-frontend"}
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '512Mi'
+      memoryLimits: '1024Mi'
+      cpuRequests: '150m'
+      cpuLimits: '500m'
+      image: hmctspublic.azurecr.io/ccpay/bubble-frontend:prod-c241cef-20250106160102 #{"$imagepolicy": "flux-system:perftest-ccpay-bubble-frontend"}
       environment:
         PCIPAL_ANTENNA_URL: https://paybubble.perftest.platform.hmcts.net/ccd-search
         DUMMY_RESTART_VAR: false

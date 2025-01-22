@@ -1,9 +1,11 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-hearings-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/hearings-api:prod-3d987d4-20240124171659 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      image: hmctspublic.azurecr.io/ia/hearings-api:pr-477-86fb542-20250117134205 #{"$imagepolicy": "flux-system:demo-ia-hearings-api"}
       ingressHost: ia-hearings-api-demo.service.core-compute-demo.internal
+      spotInstances:
+        enabled: true

@@ -1,5 +1,26 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../base
   - aso-controller-settings.yaml
+  - https://github.com/Azure/azure-service-operator/releases/download/v2.10.0/azureserviceoperator_v2.10.0.yaml
+  - https://github.com/jetstack/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --crd-pattern=managedidentity.azure.com/*;servicebus.azure.com/*;resources.azure.com/*;managedidentity.azure.com/*;storage.azure.com/*;dbforpostgresql.azure.com/*
+    target:
+      kind: Deployment
+      name: azureserviceoperator-controller-manager
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/nodeSelector
+        value:
+          kubernetes.azure.com/agentpool: system
+    target:
+      kind: Deployment
+      name: azureserviceoperator-controller-manager
+  - target:
+      kind: Deployment
+      name: azureserviceoperator-controller-manager
+    path: toleration_replicas_patch.yaml

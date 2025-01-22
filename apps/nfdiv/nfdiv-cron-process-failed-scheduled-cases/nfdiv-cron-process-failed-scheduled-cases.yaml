@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nfdiv-cron-process-failed-scheduled-cases
@@ -6,7 +6,7 @@ spec:
   releaseName: nfdiv-cron-process-failed-scheduled-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-d98e69f-20240125102717 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-ae80177-20250120105658 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       keyVaults:
         nfdiv:
           secrets:
@@ -28,7 +28,7 @@ spec:
   chart:
     spec:
       chart: nfdiv-cron
-      version: 0.0.20
+      version: 0.0.23
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

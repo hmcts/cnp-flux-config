@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - ../../../base
   - ../../../base/workload-identity
-  - ../../identity/identity.yaml
   - ../../../xui/identity/identity.yaml
   - ../../../ccd/identity/identity.yaml
   - ../../../am/identity/identity.yaml
@@ -11,10 +10,8 @@ resources:
   - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
   - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
   - ../sops-secrets
-#  - resource-limits.yaml
 namespace: financial-remedy
 patches:
-  - path: ../../identity/aat.yaml
   - path: ../../../xui/identity/aat.yaml
   - path: ../../../ccd/identity/aat.yaml
   - path: ../../../am/identity/aat.yaml

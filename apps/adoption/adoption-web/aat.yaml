@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: adoption-web
@@ -6,8 +6,11 @@ metadata:
 spec:
   values:
     nodejs:
+      autoscaling:
+        cpu:
+          averageUtilization: 300 #AAT only: To prevent pods scaling when pipelines run
       environment:
-        PCQ_ENABLED: "false"
+        PCQ_ENABLED: "true"
         #Pilot local-court email-Ids
         CHELMSFORD_FAMILY_COURT_EMAIL: 'chelmsfordadoptionapplication.aat@mailinator.com'
         OXFORD_FAMILY_COURT_EMAIL: 'Oxfordadoptionapplication.aat@mailinator.com'

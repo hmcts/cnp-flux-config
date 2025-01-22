@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-syr
+  namespace: et
+spec:
+  releaseName: et-syr
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/et/syr:prod-f229f26-20250122111956 #{"$imagepolicy": "flux-system:perftest-et-syr"}
+      ingressHost: et-syr.perftest.platform.hmcts.net

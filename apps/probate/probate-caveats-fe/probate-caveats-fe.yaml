@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-caveats-fe
@@ -9,9 +9,10 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-b295434-20240108130645 #{"$imagepolicy": "flux-system:probate-caveats-fe"}
+      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-6d9a525-20250122115812 #{"$imagepolicy": "flux-system:probate-caveats-fe"}
       environment:
-        VAR_FV2: trig-base-2
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abcd
   chart:
     spec:
       chart: ./stable/probate-caveats-fe
