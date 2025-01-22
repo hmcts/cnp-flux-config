@@ -16,9 +16,10 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-f8c6d85-20250110122134 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-507f608-20250122113333 #{"$imagepolicy": "flux-system:probate-orchestrator-service"}
       environment:
-        VAR_FV2: trigger1
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abcd
   chart:
     spec:
       chart: ./stable/probate-orchestrator-service
