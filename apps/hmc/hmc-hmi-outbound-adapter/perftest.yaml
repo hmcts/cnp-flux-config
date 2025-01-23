@@ -1,11 +1,49 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: hmc-hmi-outbound-adapter
 spec:
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '300m'
+      cpuLimits: '1500m'
       environment:
-        HMI_BASE_URL: https://hmi-apim.demo.platform.hmcts.net/hmi
+        # HMI/LA integration
+        #HMI_BASE_URL: https://hmi-apim.demo.platform.hmcts.net/hmi
+        # Stubbing without using HMI/LA
+        HMI_BASE_URL: http://ccd-test-stubs-service-perftest.service.core-compute-perftest.internal/hmi
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CLIENT_FUTUREHEARING: DEBUG
-      memoryRequests: '1Gi'
+        DUMMY_VAR: 1
+      keyVaults:
+        hmc:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: cft-hearing-service-POSTGRES-USER-V15
+              alias: CFT_HEARING_SERVICE_DB_USERNAME
+            - name: cft-hearing-service-POSTGRES-PASS-V15
+              alias: CFT_HEARING_SERVICE_DB_PASSWORD
+            - name: cft-hearing-service-POSTGRES-HOST-V15
+              alias: CFT_HEARING_SERVICE_DB_HOST
+            - name: cft-hearing-service-POSTGRES-PORT
+              alias: CFT_HEARING_SERVICE_DB_PORT
+            - name: cft-hearing-service-POSTGRES-DATABASE
+              alias: CFT_HEARING_SERVICE_DB_NAME
+            - name: ClientId
+              alias: CLIENT_ID
+            - name: ClientSecret
+              alias: CLIENT_SECRET
+            - name: Scope
+              alias: SCOPE
+            - name: hmc-servicebus-connection-string
+              alias: HMC_SERVICE_BUS_OUTBOUND_CONNECTION_STRING
+            - name: hmc-servicebus-connection-string
+              alias: HMC_SERVICE_BUS_INBOUND_CONNECTION_STRING
+            - name: fh-get-token-url
+              alias: FH_GET_TOKEN_URL

@@ -24,7 +24,7 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
 - Create a patch `<namespace>-servicebus.yaml` in `apps/<namespace>/<environment>/aso` as below:
 
     ```yaml
-    apiVersion: servicebus.azure.com/v1beta20210101preview
+    apiVersion: servicebus.azure.com/v1api20211101
     kind: Namespace
     metadata:
       name: ${NAMESPACE}-servicebus-${ENVIRONMENT}
@@ -37,7 +37,7 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
   You can get correct application tag value from [team config](https://github.com/hmcts/cnp-jenkins-config/blob/master/team-config.yml)
 - ServiceBus namespace is setup as `Basic` tier by default. [If you want any features not in `Basic`](https://www.azure.cn/en-us/pricing/details/service-bus/) like Topics/ Sessions, you can override the tier in the patch file created above.
      ```yaml
-    apiVersion: servicebus.azure.com/v1beta20210101preview
+    apiVersion: servicebus.azure.com/v1api20211101
     kind: Namespace
     metadata:
       name: ${NAMESPACE}-servicebus-${ENVIRONMENT}
@@ -64,3 +64,12 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
       key: connectionString
   ```
 - Follow [chart-servicebus](https://github.com/hmcts/chart-servicebus) documentation for configuring queues and topics.
+
+## Postgres Flexible Server
+
+- Run [add-postgres-server.sh](../bin/v2/add-postgres-server.sh) with your namespace and app name.
+   ```bash
+    ./bin/v2/add-postgres-server.sh <your namespace> <app name>
+   ```
+
+  Expected output of the script should look similar to this [PR](https://github.com/hmcts/cnp-flux-config/pull/36233/files).

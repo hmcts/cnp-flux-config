@@ -5,7 +5,7 @@ Install sops:
 brew install sops
 ```
 
-#### Steps to SOPS Encrypt
+## Create a Kubernetes Secret (Unencrypted):
 
 The following is an example for kube-prometheus-stack:
 
@@ -31,7 +31,7 @@ Create the secret:
  kubectl create secret generic prometheus-values -n monitoring --from-file=values.yaml --type=Opaque -o yaml --dry-run=client > prometheus-values.enc.yaml
 ```
 
-Your prometheus-values.enc.yaml content will look like this:
+Your prometheus-values.enc.yaml content will look like this, note the secret value is encoded in base64:
 ```
 apiVersion: v1
 data:
@@ -44,7 +44,7 @@ metadata:
 type: Opaque
 ```
 
-## Here is where you Encrypt using SOP in Flux V2:
+## Encrypt Kubernetes Secret (from step 1):
 
 You want to use the kv that matches your environment.
 The number after sops-key is the CURRENT VERSION this can be found in azure keyvault under keys/sops-key.
@@ -100,4 +100,12 @@ If you ever need to decrypt the file e.g. to update the secret value or change t
 
 ```
 sops --decrypt --in-place prometheus-values.enc.yaml
+```
+
+The file output by SOPS will encode the secret in base64. You can get the plaintext value of the secret by decoding it:
+
+```
+echo $MY_SECRET | base64 -d
+extraArgs:
+  slack-hook-url: https://hooks.slack.com/services/11111111111111111111/22222222222222
 ```

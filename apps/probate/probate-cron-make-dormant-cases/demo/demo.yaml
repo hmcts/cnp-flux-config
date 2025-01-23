@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-cron-make-dormant-cases
@@ -6,8 +6,8 @@ spec:
   releaseName: probate-cron-make-dormant-cases
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-b2677fe-20240124144328 #{"$imagepolicy": "flux-system:probate-back-office"}
-      schedule: "0,20,40 * * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:prod-a1ad549-20250122111931 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0 12 * * *"
       environment:
         TRIG: trig-1
     global:

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-user-profile-api
@@ -6,18 +6,10 @@ spec:
   releaseName: ccd-user-profile-api
   values:
     java:
-      replicas: 4
+      replicas: 2
       autoscaling:
-        enabled: false
-      keyVaults:
-        ccd:
-          secrets:
-            - name: user-profile-api-POSTGRES-USER-V15
-              alias: USER_PROFILE_DB_USERNAME
-            - name: user-profile-api-POSTGRES-PASS-V15
-              alias: USER_PROFILE_DB_PASSWORD
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
+        enabled: true
+        maxReplicas: 4
       environment:
         USER_PROFILE_DB_HOST: ccd-user-profile-api-postgres-db-v15-aat.postgres.database.azure.com
         USER_PROFILE_DB_NAME: ccd_user_profile

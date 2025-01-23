@@ -1,14 +1,14 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-next-hearing-date-updater
 spec:
   values:
     job:
-      image: hmctspublic.azurecr.io/ccd/next-hearing-date-updater:prod-18925a2-20240123142848 #{"$imagepolicy": "flux-system:demo-ccd-next-hearing-date-updater"}
+      image: hmctspublic.azurecr.io/ccd/next-hearing-date-updater:prod-ef49c5d-20250109101341 #{"$imagepolicy": "flux-system:demo-ccd-next-hearing-date-updater"}
       schedule: "0 */2 * * *"
       environment:
-        CASE_TYPES: FT_NextHearingDate,PRLAPPS,CIVIL
+        CASE_TYPES: FT_NextHearingDate,PRLAPPS,CIVIL,Asylum
     global:
       jobKind: CronJob
       enableKeyVaults: true

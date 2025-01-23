@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: recipes-backend
+spec:
+  chart:
+    spec:
+      chart: ./stable/recipes-backend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  releaseName: recipes-backend
+  values:
+    java:
+      image: hmctspublic.azurecr.io/recipes/backend:prod-27f0bf4-20241217163623 # {"$imagepolicy": "flux-system:recipes-backend"}
+      keyVaults:
+        "recipeskv":
+          secrets:
+            - name: recipes-backend-POSTGRES-DATABASE-CFT
+              alias: POSTGRES_DATABASE
+            - name: recipes-backend-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: recipes-backend-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: recipes-backend-POSTGRES-PASS
+              alias: POSTGRES_PASSWORD

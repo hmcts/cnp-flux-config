@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-frontend
@@ -13,9 +13,10 @@ spec:
       memoryLimits: "2048Mi"
       cpuLimits: "1000m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/frontend:prod-9431d7b-20240117195816 #{"$imagepolicy": "flux-system:probate-frontend"}
+      image: hmctspublic.azurecr.io/probate/frontend:prod-bec9a3f-20250122131212 #{"$imagepolicy": "flux-system:probate-frontend"}
       environment:
-        VAR_FV2: trig-base-4
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abcd
   chart:
     spec:
       chart: ./stable/probate-frontend

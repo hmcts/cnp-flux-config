@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-workflow-api
@@ -10,6 +10,8 @@ spec:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
         POSTGRES_HOST: wa-workflow-api-postgres-db-flex-demo.postgres.database.azure.com
         DB_READER_USERNAME: "DTS CFT DB Access Reader"
+      spotInstances:
+        enabled: true
       keyVaults:
         wa:
           secrets:

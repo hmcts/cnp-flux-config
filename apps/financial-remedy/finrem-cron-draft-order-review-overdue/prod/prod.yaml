@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: finrem-cron-draft-order-review-overdue
+spec:
+  releaseName: finrem-cron-draft-order-review-overdue
+  values:
+    job:
+      image: hmctspublic.azurecr.io/finrem/cos:prod-010f0cf-20250122143453 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "0 2 * * *"
+      useInterpodAntiAffinity: true
+      environment:
+        TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: false
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 14
+        FEATURE_PBA_CASE_TYPE: false
+        FEATURE_USE_USER_TOKEN: true
+        FEATURE_SOLICITOR_NOC: true
+        FEATURE_CASEWORKER_NOC: true
+        FEATURE_CFV_ENABLED: true
+        SECURE_DOC_ENABLED: false
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-prod.service.core-compute-prod.internal
+        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

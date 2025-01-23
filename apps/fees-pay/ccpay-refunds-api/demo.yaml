@@ -1,11 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccpay-refunds-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-ca460dd-20240115151735 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-ac1dbfe-20250122163215 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
       environment:
         DUMMY_VARIABLE: false
+        IAC_SERVICE_API_URL: "http://ia-case-access-api-demo.service.core-compute-demo.internal"
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"

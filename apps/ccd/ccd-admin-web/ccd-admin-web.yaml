@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-admin-web
@@ -7,8 +7,14 @@ spec:
   values:
     nodejs:
       replicas: 2
+      cpuRequests: "50m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/admin-web:prod-5322c76-20231115162118 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+      image: hmctspublic.azurecr.io/ccd/admin-web:prod-2d74fd3-20250116120645 #{"$imagepolicy": "flux-system:ccd-admin-web"}
   chart:
     spec:
       chart: ./stable/ccd-admin-web

@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sptribs-dss-update-case-web
+  namespace: sptribs
+spec:
+  values:
+    nodejs:
+      spotInstances:
+        enabled: false
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
