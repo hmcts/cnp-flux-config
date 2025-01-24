@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: tax-tribunals-application
@@ -15,18 +15,18 @@ spec:
       interval: 1m
   values:
     base:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-f237310-20240122171016 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
+      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-0cf970e-20250114151744 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       disableTraefikTls: true
       replicas: 2
-      memoryRequests: 512Mi
-      memoryLimits: 2048Mi
+      memoryRequests: 2Gi
+      memoryLimits: 3Gi
       autoscaling:
         enabled: true
         maxReplicas: 4
       workloadClientID: ${WORKLOAD_IDENTITY_ID}
     sidekiq:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-f237310-20240122171016 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
+      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-0cf970e-20250114151744 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       workloadClientID: ${WORKLOAD_IDENTITY_ID}
     job:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-f237310-20240122171016 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
+      image: hmctspublic.azurecr.io/tax-tribunals/application:prod-0cf970e-20250114151744 # {"$imagepolicy": "flux-system:tax-tribunals-application"}
       workloadClientID: ${WORKLOAD_IDENTITY_ID}

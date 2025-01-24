@@ -1,27 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: case-payment-orders-api
 spec:
   values:
     java:
-      keyVaults:
-        cpo:
-          secrets:
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: case-payment-orders-api-POSTGRES-USER-V15
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_USERNAME
-            - name: case-payment-orders-api-POSTGRES-PASS-V15
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_PASSWORD
-            - name: case-payment-orders-api-POSTGRES-HOST-V15
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_HOST
-            - name: case-payment-orders-api-POSTGRES-PORT
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_PORT
-            - name: case-payment-orders-api-POSTGRES-DATABASE
-              alias: CPO_CASE_PAYMENT_ORDERS_DB_NAME
       environment:
         CPO_S2S_AUTHORISED_SERVICES: xui_webapp,payment_app,service_request_cpo_update_service,ccpay_cpo_function_node
         S2S_AUTHORIZATIONS_CCPAY_ID: ccpay_cpo_function_node
         S2S_AUTHORIZATIONS_CCPAY_PERMISSION: C
-        DUMMY_RESTART_VAR: 1
+        DUMMY_RESTART_VAR: 2

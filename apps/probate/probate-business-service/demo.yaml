@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-business-service
@@ -6,21 +6,16 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/business-service:prod-d933fe9-20240108145623 #{"$imagepolicy": "flux-system:demo-probate-business-service"}
+      image: hmctspublic.azurecr.io/probate/business-service:pr-961-01a0717-20250123140942 #{"$imagepolicy": "flux-system:demo-probate-business-service"}
       environment:
-        VAR_FV2: Demo-1
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: abc
       keyVaults:
         probate:
           secrets:
             - name: probate-notify-invite-apikey
               alias: services.notify.apiKey
-            - name: business-services-notify-invitedata-templateId
-              alias: services.notify.invitedata.templateId
-            - name: business-services-notify-pin-templateId
-              alias: services.notify.pin.templateId
             - name: s2s-probate-backend
               alias: services.auth.provider.totp_secret
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
             - name: app-insights-connection-string
               alias: app-insights-connection-string

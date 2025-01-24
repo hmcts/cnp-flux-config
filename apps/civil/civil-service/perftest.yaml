@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: civil-service
@@ -6,10 +6,16 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-f8b8a5b-20240125135210 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-2a0c76c-20250123125006 #{"$imagepolicy": "flux-system:civil-service"}
+      replicas: 4
+      autoscaling:
+        maxReplicas: 8
       environment:
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
+        SPRING_FLYWAY_TABLE: schema_version
         POLLING_EVENT_EMITTER_ENABLED: false
         SERVICE_REQUEST_UPDATE: http://civil-service-perftest.service.core-compute-perftest.internal/service-request-update
-        SERVICE_REQUEST_UPDATE_CLAIM_ISSUED: http://civil-service-perftest.service.core-compute-perftest.internal/service-request-update-claim-issue
+        ASYNC_HANDLER_CORE_POOL_SIZE: 50
+        ASYNC_HANDLER_MAX_POOL_SIZE: 100
+        ASYNC_HANDLER_QUEUE_CAPACITY: 1500

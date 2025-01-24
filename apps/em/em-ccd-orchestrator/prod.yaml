@@ -1,13 +1,19 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: em-ccd-orchestrator
 spec:
   values:
     java:
+      memoryRequests: '1536Mi'
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
       environment:
         IDAM_API_BASE_URI: https://idam-api.platform.hmcts.net
         OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
         S2S_NAMES_WHITELIST: sscs,ccd,ccd_data,iac,em_stitching_api,civil_service,prl_cos_api,sptribs_case_api,et_cos,ethos_repl_service
         DUMMY_VAR: delete_me
         APPLICATIONINSIGHTS_INSTRUMENTATION_LOGGING_LEVEL: INFO
+      spotInstances:
+        enabled: false

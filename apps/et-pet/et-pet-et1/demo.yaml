@@ -1,10 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et1
 spec:
   values:
     base:
-      image: hmctspublic.azurecr.io/et-pet/et1:prod-48a7c0b-20230914174139 #{"$imagepolicy": "demo-flux-system:et-pet-et1"}
+      image: hmctspublic.azurecr.io/et-pet/et1:prod-4b88c62-20250113140309 #{"$imagepolicy": "flux-system:demo-et-pet-et1"}
+      environment:
+        DYNATRACE_UI_TRACKING_ID: "bf00910jpo/217fee92a2f92b97"
     sidekiq:
-      image: hmctspublic.azurecr.io/et-pet/et1:prod-48a7c0b-20230914174139 #{"$imagepolicy": "demo-flux-system:et-pet-et1"}
+      image: hmctspublic.azurecr.io/et-pet/et1:prod-4b88c62-20250113140309 #{"$imagepolicy": "flux-system:demo-et-pet-et1"}

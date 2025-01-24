@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -53,9 +53,9 @@ spec:
                       - key: PTL_AKS_RESOURCE_GROUP
                         value: cft-ptl-00-rg
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-00-aks
+                        value: cft-aat-01-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-00-rg
+                        value: cft-aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -92,7 +92,7 @@ spec:
                     name: all
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure|camunda-.*)\/master
+                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure|recipes-frontend|recipes-backend|recipes-shared-infrastructure|camunda-.*)\/master
                     name: Platform
                     recurse: true
                     title: Platform
@@ -116,10 +116,10 @@ spec:
                     title: BSP
                 - buildMonitor:
                     includeRegex: >-
-                      .+\/(rpx-.*)\/(master|demo)
-                    name: RPX
+                      .+((rpx-xui.+)|(em-media-viewer.+)|(em-showcase.+)|(ccd-case-ui-toolkit.+))\/master
+                    name: XUI
                     recurse: true
-                    title: RPX
+                    title: XUI
                 - buildMonitor:
                     includeRegex: >-
                       .+\/(rpx-.*)\/(.*PR-.*)
@@ -140,13 +140,13 @@ spec:
                     title: CDM Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|jps.*\/master|.*ccd-case-migration-starter\/master)
+                      ^HMCTS.*\/(.*ccd-user-profile-api.*PR-399|.*ccd-definition-store-api.*PR-575|.*ccd-data-store-api.*PR-1260|.*ccd-case-migration-starter\/master)
                     name: CDM DEV
                     recurse: true
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-evidence-share|sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-track-your-appeal-notifications|sscs-tribunals-case-api|sscs-ccd-e2e-tests|sscs-ccd-callback-orchestrator|sscs-ccd-definitions|sscs-hearings-api)\/master
+                      ^HMCTS.*\/(sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -188,13 +188,13 @@ spec:
                     title: NFD Nightly Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(?!sptribs-dss)(sptribs-).+\/master
+                      ^HMCTS.*\/(?!sptribs-dss-backend)(sptribs-).+\/master
                     name: SPTRIBS
                     recurse: true
                     title: Special Tribunals Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS_j_to_z_Nightly.*\/(?!sptribs-dss)(sptribs-).+\/master
+                      ^HMCTS_j_to_z_Nightly.*\/(?!sptribs-dss-backend)(sptribs-).+\/master
                     name: Special Tribunals Nightly
                     recurse: true
                     title: Special Tribunals Builds Dashboard
@@ -224,7 +224,7 @@ spec:
                     title: CMC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(rd-professional-api|rd-user-profile-api|rd-profile-sync|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
+                      ^HMCTS.*\/(rd-professional-api|rd-user-profile-api|rd-judicial-data-load|rd-judicial-api|rd-shared-infrastructure|rd-location-ref-api|rd-location-ref-data-load|rd-caseworker-ref-api|rd-lrd-performance|rd-crd-performance|rd-commondata-api|rd-commondata-dataload)\/master
                     name: RD
                     recurse: true
                     title: Ref Data Dashboard
@@ -236,7 +236,7 @@ spec:
                     title: Adoption Data Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(fpl-ccd-configuration|fpl-wa-task-configuration|fpl-cron-ccd-data-migration-tool)\/master
+                      ^HMCTS.*\/(fpl-ccd-configuration|fpl-wa-task-configuration|fpl-cron-ccd-data-migration-tool|fpl-api-gateway)\/master
                     name: FPLA
                     recurse: true
                     title: Family Public Law
@@ -260,7 +260,7 @@ spec:
                     title: RSE
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|em-media-viewer|em-showcase|document-management-store-app|dg-docassembly-api|em-hrs-api|em-hrs-ingestor)\/master
+                      ^HMCTS.*\/(em-ccd-orchestrator|em-native-pdf-annotator-app|em-annotation-api|em-stitching-api|document-management-store-app|dg-docassembly-api|em-hrs-api|em-hrs-ingestor|em-shared-infrastructure|dm-shared-infrastructure)\/master
                     name: Evidence
                     recurse: true
                     title: Evidence Management
@@ -284,7 +284,7 @@ spec:
                     title: Civil SDT Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/wa-.+\/master
+                      ^HMCTS.*\/wa-(?!performance).+\/master
                     name: WA
                     recurse: true
                     title: WA
@@ -314,7 +314,7 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests|prl-ccd-case-migration)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests|prl-ccd-case-migration|prl-cron|prl-e2e-tests)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
@@ -326,7 +326,7 @@ spec:
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-sya-api|et-xui-e2e-tests|et-hearings-api|et-ccd-definitions-[a-z]+)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests|et-ccd-definitions-[a-z]+)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
@@ -360,6 +360,12 @@ spec:
                     name: CUI-RA
                     recurse: true
                     title: CUI-RA
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/pcs-.+\/master
+                    name: PCS
+                    recurse: true
+                    title: Possession Claim Service Dashboard
           location: |
             unclassified:
               location:

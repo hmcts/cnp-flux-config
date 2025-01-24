@@ -40,7 +40,7 @@ rules:
   verbs: ['create', 'update', 'delete']
 - apiGroups: ['servicebus.azure.com']
   resources: ['namespaces', 'namespacesqueues', 'namespacestopics', 'namespacestopicssubscriptions']
-  verbs: ['create', 'update', 'delete']
+  verbs: ['create', 'update', 'delete', 'patch']
 - apiGroups: ['storage.azure.com']
   resources: ['StorageAccount', 'StorageAccountsBlobService', 'StorageAccountsBlobServicesContainer']
   verbs: ['create', 'update', 'delete']
@@ -53,6 +53,9 @@ rules:
 - apiGroups: ['dbforpostgresql.azure.com']
   resources: ['flexibleservers', 'flexibleserversconfigurations', 'flexibleserversdatabases']
   verbs: ['get', 'list', 'watch']
+- apiGroups: ['dbforpostgresql.azure.com']
+  resources: ['flexibleserversdatabases']
+  verbs: ['create', 'update', 'delete', 'patch']
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

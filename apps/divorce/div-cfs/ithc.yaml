@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: div-cfs
+  namespace: divorce
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/div/cfs:prod-c1a1d97-20240425110244 #{"$imagepolicy": "flux-system:div-cfs"}
+      environment:
+        IDAM_API_BASEURL: "https://idam-api.ithc.platform.hmcts.net"
+        VAR_FV2: ithc1
+      prometheus:
+        enabled: true

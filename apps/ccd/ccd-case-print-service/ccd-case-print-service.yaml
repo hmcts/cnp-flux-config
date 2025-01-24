@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ccd-case-print-service
@@ -7,8 +7,11 @@ spec:
   values:
     nodejs:
       replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ccd/case-print-service:prod-95698e3-20231109134446 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
+      image: hmctspublic.azurecr.io/ccd/case-print-service:prod-39d5082-20250121133009 #{"$imagepolicy": "flux-system:ccd-case-print-service"}
       environment:
         DUMMY_VAR_TO_REDEPLOY: 1
   chart:

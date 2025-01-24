@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: recipes-backend
+spec:
+  releaseName: recipes-backend
+  values:
+    java:
+      ingressHost: recipes-backend-aat.service.core-compute-aat.internal
+      testsConfig:
+        environment:
+          TEST_URL: http://recipes-backend-java
+          SLACK_CHANNEL: "platops-build-notices"
+          SLACK_NOTIFY_SUCCESS: "false"

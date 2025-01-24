@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sscs-tribunals-api
@@ -6,8 +6,10 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-4338941-20250123152649 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3468-1a9f82d-20240115104014 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-api"}
+      spotInstances:
+        enabled: true
       environment:
         CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -18,10 +20,10 @@ spec:
         ENHANCED_CONFIDENTIALITY_FEATURE: true
         SECURE_DOC_STORE_FEATURE: true
         POSTPONEMENTS_FEATURE: true
-        DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net/cases
+        DM_GATEWAY_URL: https://manage-case.demo.platform.hmcts.net
         SSCS2_FEATURE: true
-        DUMMY_PROPERTY: false
-        WORK_ALLOCATION_FEATURE: true
+        DUMMY_PROPERTY: true
+        WORK_ALLOCATION_FEATURE: false
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
         GAPS_SWITCHOVER_FEATURE: true
@@ -31,3 +33,26 @@ spec:
         POST_HEARINGS_B_FEATURE: true
         ADJOURNMENT_FEATURE: true
         ELINKS_V2_FEATURE_ENABLED: true
+        ROBOTICS_EMAIL_TO: jaroslaw.pierchala@hmcts.net
+        WLU_EMAIL_FROM: noreply@mail-sscs-nonprod.platform.hmcts.net
+        WLU_EMAIL_TO: jaroslaw.pierchala@hmcts.net
+        PDF_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net/rs/render
+        VAR_TO_RESTART_THE_APP: 40
+        SCOTTISH_PO_BOX_ENABLED: true
+        HOURS_START_TIME: 0
+        HOURS_END_TIME: 23
+        TEST_RECIPIENTS_POSTCODE: "*"
+        BYPASS_EVIDENCE_SHARE_SERVICE: true
+        UPLOAD_HEARING_FILTER_ENABLED: true
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-demo.postgres.database.azure.com
+        COVID_19_NOTIFICATION_FEATURE: false
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        TEST_PROPERTY: false
+        TYA_EVIDENCE_SUBMISSION_INFO_LINK: https://www.track-benefit-appeal.service.gov.uk/evidence/appeal_id
+        TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
+        HMC_HEARINGS_LISTENING_ENABLED: true
+        ADJOURNMENT_ENABLED: true
+        POST_HEARING_ENABLED: true
+        INFECTED_BLOOD_COMPENSATION_ENABLED: true

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-admin
@@ -7,8 +7,11 @@ spec:
   values:
     nodejs:
       replicas: 2
+      memoryRequests: "720Mi"
+      memoryLimits: "1024Mi"
+      cpuRequests: "100m"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fact/admin:prod-4ec2670-20240118092629 #{"$imagepolicy": "flux-system:fact-admin"}
+      image: hmctspublic.azurecr.io/fact/admin:prod-eaa1c94-20250116150830 #{"$imagepolicy": "flux-system:fact-admin"}
       environment:
         VAR_TA: trigger18
   chart:

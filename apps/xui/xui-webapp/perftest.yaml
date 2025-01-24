@@ -1,23 +1,17 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: xui-webapp
 spec:
   values:
     nodejs:
-      replicas: 14
-      memoryLimits: "3Gi"
-      memoryRequests: "1.5Gi"
-      autoscaling:
-        enabled: true
-        maxReplicas: 24
-        cpu:
-          averageUtilization: 70
-        memory:
-          averageUtilization: 70
+      replicas: 24
+      memoryLimits: "4Gi"
+      memoryRequests: "3Gi"
       ingressHost: manage-case.perftest.platform.hmcts.net
       environment:
         DUMMY_VAR: true
+        NODE_OPTIONS: --max-old-space-size=2048
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,HRS,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,PRIVATELAW,BEFTA_JURISDICTION_3,DISPOSER_MASTER,ST_CIC,BEFTA_MASTER
         HEARINGS_JURISDICTIONS: SSCS,PRIVATELAW,CIVIL,IA,EMPLOYMENT,ST_CIC
         GLOBAL_SEARCH_SERVICES: IA,CIVIL,PRIVATELAW,PUBLICLAW,SSCS,ST_CIC,EMPLOYMENT
@@ -41,7 +35,7 @@ spec:
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal
         UV_THREADPOOL_SIZE: 96
         HEALTH_CCD_ACTIVITY_API: http://ccd-case-activity-api-perftest.service.core-compute-perftest.internal/health
-        SERVICES_ICP_API: http://em-icp-perftest.service.core-compute-perftest.internal
+        SERVICES_ICP_API: https://em-icp.perftest.platform.hmcts.net
         SERVICES_EM_DOCASSEMBLY_API: http://dg-docassembly-perftest.service.core-compute-perftest.internal
         SERVICES_REFUNDS_API_URL: http://ccpay-refunds-api-perftest.service.core-compute-perftest.internal
         SERVICES_LOCATION_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
@@ -51,7 +45,7 @@ spec:
         SERVICES_PRD_JUDICIAL_API: http://rd-judicial-api-perftest.service.core-compute-perftest.internal
         SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
-        SERVICES_HEARINGS_COMPONENT_API_SSCS: http://sscs-hearings-api-perftest.service.core-compute-perftest.internal
+        SERVICES_HEARINGS_COMPONENT_API_SSCS: http://sscs-tribunals-api-perftest.service.core-compute-perftest.internal
         SERVICES_HEARINGS_CASETYPES_SSCS: Benefit
         SERVICES_HEARINGS_COMPONENT_API_PRIVATELAW: http://fis-hmc-api-perftest.service.core-compute-perftest.internal
         SERVICES_HEARINGS_CASETYPES_PRIVATELAW: PRLAPPS
@@ -62,4 +56,4 @@ spec:
         SERVICES_TRANSLATION_API_URL: http://ts-translation-service-perftest.service.core-compute-perftest.internal
         SERVICES_NOTIFICATIONS_API_URL: http://ccpay-notifications-service-perftest.service.core-compute-perftest.internal
         SERVICES_PAYMENTS_URL: http://payment-api-perftest.service.core-compute-perftest.internal
-      image: hmctspublic.azurecr.io/xui/webapp:pr-2746-ec02b56-20240125142633 #{"$imagepolicy": "flux-system:perftest-xui-webapp"}
+      image: hmctspublic.azurecr.io/xui/webapp:prod-1c72a6c-20250123191828 #{"$imagepolicy": "flux-system:perftest-xui-webapp"}

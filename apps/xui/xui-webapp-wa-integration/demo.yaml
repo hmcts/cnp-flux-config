@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: xui-webapp-wa-integration
@@ -8,6 +8,7 @@ spec:
       ingressHost: manage-case-wa-int.demo.platform.hmcts.net
       environment:
         DUMMY_VAR: 2
+        FEATURE_JRD_E_LINKS_V2_ENABLED: true
         FEATURE_SECURE_COOKIE_ENABLED: false
         SERVICES_MARKUP_API: http://em-npa-demo.service.core-compute-demo.internal
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL,AUTOTEST1,CMC,HRS,BEFTA_JURISDICTION_1,PRIVATELAW,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3
@@ -18,14 +19,14 @@ spec:
         STUB: false
         SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
         SERVICES_PRD_API: http://rd-professional-api-demo.service.core-compute-demo.internal
-        SERVICES_ICP_API: http://em-icp-demo.service.core-compute-demo.internal
+        SERVICES_ICP_API: https://em-icp.demo.platform.hmcts.net
         SERVICES_EM_DOCASSEMBLY_API: http://dg-docassembly-demo.service.core-compute-demo.internal
         SERVICES_REFUNDS_API_URL: http://ccpay-refunds-api-demo.service.core-compute-demo.internal
         SERVICES_LOCATION_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         SERVICES_CASE_JUDICIAL_API: http://rd-judicial-api-demo.service.core-compute-demo.internal
         SERVICES_HEARINGS_COMPONENT_API_ST_CIC: http://sptribs-case-api-demo.service.core-compute-demo.internal
         SERVICES_HEARINGS_CASETYPES_ST_CIC: CriminalInjuriesCompensation
-        SERVICES_HEARINGS_COMPONENT_API_SSCS: http://sscs-hearings-api-demo.service.core-compute-demo.internal
+        SERVICES_HEARINGS_COMPONENT_API_SSCS: http://sscs-tribunals-api-demo.service.core-compute-demo.internal
         SERVICES_HEARINGS_CASETYPES_SSCS: Benefit
         SERVICES_HEARINGS_COMPONENT_API_PRIVATELAW: http://fis-hmc-api-demo.service.core-compute-demo.internal
         SERVICES_HEARINGS_CASETYPES_PRIVATELAW: PRLAPPS
@@ -39,6 +40,7 @@ spec:
         SERVICES_JUDICIAL_BOOKING_API_PATH: http://am-judicial-booking-service-demo.service.core-compute-demo.internal
         SERVICES_WA_WORKFLOW_API_URL: http://wa-workflow-api-demo.service.core-compute-demo.internal
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
+        SERVICES_PAYMENTS_URL: http://payment-api-int-demo.service.core-compute-demo.internal
         SERVICES_ROLE_ASSIGNMENT_MAPPING_API: http://am-org-role-mapping-service-demo.service.core-compute-demo.internal
-        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW
-      image: hmctspublic.azurecr.io/xui/webapp:pr-3494-6cc6fa1-20240124172547 #{"$imagepolicy": "flux-system:demo-xui-webapp-wa-integration"}
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,ST_CIC,EMPLOYMENT,SSCS
+      image: hmctspublic.azurecr.io/xui/webapp:pr-4190-b16f12f-20250121091904 #{"$imagepolicy": "flux-system:demo-xui-webapp-wa-integration"}

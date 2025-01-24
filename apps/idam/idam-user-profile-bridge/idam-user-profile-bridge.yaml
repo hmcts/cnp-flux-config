@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-user-profile-bridge
@@ -7,13 +7,18 @@ spec:
   releaseName: idam-user-profile-bridge
   chart:
     spec:
-      chart: idam-user-profile-bridge
-      version: 0.0.33
+      chart: ./stable/idam-user-profile-bridge
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/user-profile-bridge:prod-cec25f8-20240124181210 # {"$imagepolicy": "flux-system:idam-user-profile-bridge"}
+      image: hmctspublic.azurecr.io/idam/user-profile-bridge:prod-c3ab98c-20250121171249 # {"$imagepolicy": "flux-system:idam-user-profile-bridge"}
       disableTraefikTls: true
+      environment:
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-prod.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 8999dec3-0104-4a27-94ee-6588559729d1
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-prod
+        SCHEDULER_ENABLED: false

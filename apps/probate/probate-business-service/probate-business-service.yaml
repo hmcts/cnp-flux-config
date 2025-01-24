@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-business-service
@@ -10,9 +10,10 @@ spec:
       replicas: 2
       memoryRequests: "1.5Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/business-service:prod-d933fe9-20240108145623 #{"$imagepolicy": "flux-system:probate-business-service"}
+      image: hmctspublic.azurecr.io/probate/business-service:prod-4572e2d-20250123104636 #{"$imagepolicy": "flux-system:probate-business-service"}
       environment:
-        VAR_FV2: trig-base-2
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abcd
   chart:
     spec:
       chart: ./stable/probate-business-service

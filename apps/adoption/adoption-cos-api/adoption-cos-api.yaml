@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: adoption-cos-api
@@ -7,16 +7,22 @@ spec:
   interval: 1m
   values:
     java:
-      cpuLimits: "1000m"
-      cpuRequests: "500m"
-      memoryLimits: "1.5Gi"
-      memoryRequests: "1Gi"
+      cpuLimits: "1500m"
+      cpuRequests: "250m"
+      memoryLimits: "2048Mi"
+      memoryRequests: "1536Mi"
       replicas: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 4
+        memory:
+          averageUtilization: 120
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/adoption/cos-api:prod-8d377e4-20240116174625 #{"$imagepolicy": "flux-system:adoption-cos-api"}
+      image: hmctspublic.azurecr.io/adoption/cos-api:prod-c66b63b-20250117160631 #{"$imagepolicy": "flux-system:adoption-cos-api"}
       environment:
         LA_PORTAL_BASEURL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/la-portal/kba-case-ref
         MULTI_CHILDREN_CUI_URL: https://adoption-web.{{ .Values.global.environment }}.platform.hmcts.net/new-application-redirect

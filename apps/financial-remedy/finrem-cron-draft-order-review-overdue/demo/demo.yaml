@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: finrem-cron-draft-order-review-overdue
+spec:
+  releaseName: finrem-cron-draft-order-review-overdue
+  values:
+    job:
+      image: hmctspublic.azurecr.io/finrem/cos:prod-c4fef25-20250124100145 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "30 1 26 11 *"
+      environment:
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: false
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 1
+        FEATURE_PBA_CASE_TYPE: true
+        FEATURE_USE_USER_TOKEN: true
+        FEATURE_SOLICITOR_NOC: true
+        FEATURE_CASEWORKER_NOC: true
+        FEATURE_CFV_ENABLED: true
+        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
+        SECURE_DOC_ENABLED: false
+        FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
+        PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
+        DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
+        SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
+        CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

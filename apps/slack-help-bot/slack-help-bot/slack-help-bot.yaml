@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: slack-help-bot
@@ -7,15 +7,15 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-aa42c83-20240119074538 #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-57183e5-20250120071128Z #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
-      SLACK_REPORT_CHANNEL: platops-help
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
+      SLACK_REPORT_CHANNEL_CRIME_ID: C07KMBUFMA5
       JIRA_START_TRANSITION_ID: 181
       JIRA_DONE_TRANSITION_ID: 201
       JIRA_PROJECT: DTSPO
-      JIRA_ISSUE_TYPE_ID: 17100
-      JIRA_ISSUE_TYPE_NAME: "BAU Task"
+      JIRA_ISSUE_TYPE_ID: 18400
+      JIRA_ISSUE_TYPE_NAME: "Support"
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -24,11 +24,13 @@ spec:
           - slack-app-token
           - jira-username
           - jira-api-token
-          - app-insights-instrumentation-key
+          - app-insights-connection-string
+    autoscaling:
+      enabled: false
   chart:
     spec:
       chart: nodejs
-      version: 3.0.0
+      version: 3.1.1
       sourceRef:
         kind: HelmRepository
         name: hmctspublic

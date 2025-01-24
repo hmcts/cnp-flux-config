@@ -1,11 +1,16 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: pcq-frontend
 spec:
   values:
     nodejs:
+      replicas: 2
       ingressHost: equality-and-diversity.platform.hmcts.net
+      autoscaling:
+        maxReplicas: 3
+      spotInstances:
+        enabled: false
       environment:
         DUMMY_RESTART_VAR: 1
         NODE_ENV: "production"

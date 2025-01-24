@@ -1,10 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sptribs-case-api
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-3f02b69-20240124110132 #{"$imagepolicy": "flux-system:demo-sptribs-case-api"}
+      spotInstances:
+        enabled: false
+      image: hmctspublic.azurecr.io/sptribs/case-api:prod-ad89c66-20250116124031 #{"$imagepolicy": "flux-system:demo-sptribs-case-api"}
       environment:
-        S2S_AUTHORISED_SERVICES: ccd_definition,ccd_data,xui_webapp,sptribs_case_api,ccd_gw,sptribs_frontend
+        S2S_AUTHORISED_SERVICES: ccd_definition,ccd_data,xui_webapp,sptribs_case_api,ccd_gw,sptribs_frontend,sptribs_dss_update_case_web
+        WA_FEATURE_ENABLED: true
