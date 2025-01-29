@@ -8,13 +8,13 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-8e014fd-20250123111439 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-2814d8d-20250129095913 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "18 23 12 12 *"
+      schedule: "15 20 28 01 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -37,6 +37,8 @@ spec:
               alias: WA_FIELDS_ENCODED_DATA_STRING
             - name: encoded-data-string-hearing-outcome-migration
               alias: HEARING_OUTCOME_ENCODED_DATA_STRING
+            - name: encoded-data-string-hmcts-dwp-state-migration
+              alias: HMCTS_DWP_STATE_ENCODED_DATA_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -49,6 +51,7 @@ spec:
         MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
         MIGRATION_WA_FIELDS_REMOVAL_ENABLED: false
         HEARING_OUTCOMES_MIGRATION_ENABLED: false
+        HMCTS_DWP_STATE_MIGRATION_ENABLED: true
         CASE_MIGRATION_MAX_RETRIES: 5
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "400000"
