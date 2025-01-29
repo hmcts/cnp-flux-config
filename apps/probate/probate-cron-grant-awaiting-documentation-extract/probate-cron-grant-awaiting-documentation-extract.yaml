@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: probate-cron-grant-awaiting-documentation-extract
+  name: probate-cron-grant-awaiting-docs-extract
 spec:
-  releaseName: probate-cron-grant-awaiting-documentation-extract
+  releaseName: probate-cron-grant-awaiting-docs-extract
   values:
     job:
       environment:
-        TASK_NAME: GrantAwaitingDocumentationExtractTask
+        TASK_NAME: GrantAwaitingDocsExtractTask
         VAR_FV2: trigger-2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/back-office:prod-c382603-20250129094508 #{"$imagepolicy": "flux-system:probate-back-office"}
