@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-hwf-process-awp
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/cos:prod-01226bd-20250129124650 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-2ddcc65-20250203160257 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: AwpProcessHwfPaymentTask
         VAR: trigger1
@@ -23,7 +23,7 @@ spec:
         SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
         XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
         CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
-      schedule: 0 5 31 2 *
+      schedule: 30 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
