@@ -7,11 +7,11 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/finrem/cos:prod-8f96468-20250204071551 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 1 26 11 *"
+      schedule: "*/15 * * * *"
       environment:
-        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: false
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: true
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
-        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 1
+        CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_DAYS_SINCE_ORDER_UPLOAD: 14
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
