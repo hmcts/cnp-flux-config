@@ -34,3 +34,30 @@ spec:
         NOTIFY_REPORT_PROBLEM_TEMPLATE_ID: '6449ed0c-1424-4977-829b-4ce3efb04bcb'
       memoryRequests: 2Gi
       memoryLimits: 3Gi
+
+    job:
+      useWorkloadIdentity: true
+      kind: CronJob
+      global:
+        jobKind: CronJob
+      schedule: "0 3 * * *"
+      disableActiveClusterCheck: true
+      suspend: false
+      startingDeadlineSeconds: 300
+      concurrencyPolicy: Forbid
+      ttlSecondsAfterFinished: 216000
+      backoffLimit: 0
+      command:
+        - "bin/rails"
+        - "daily_tasks"
+
+    sidekiq:
+      applicationPort: 7433
+      readinessPath: /health
+      livenessPath: /health
+      startupPath: /health
+      args: ['./sidekiq.sh']
+      useWorkloadIdentity: true
+      memoryRequests: "2Gi"
+      cpuRequests: "500m"
+      memoryLimits: "3Gi"
