@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-back-office
@@ -10,4 +10,5 @@ spec:
         CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
         IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
         PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
-        VAR_FV2: prd-02
+        # Does what it says on the tin - if this changes then prod should redeploy
+        CHANGE_TO_REDEPLOY_PROD: abc

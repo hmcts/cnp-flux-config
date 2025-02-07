@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lau-frontend
+spec:
+  values:
+    nodejs:
+      replicas: 2
+      memoryRequests: "768Mi"
+      cpuRequests: "50m"
+      autoscaling:
+        enabled: false
+      spotInstances:
+        enabled: false

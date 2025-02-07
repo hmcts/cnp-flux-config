@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: jenkins
@@ -12,7 +12,7 @@ spec:
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
         -XX:MinRAMPercentage=20.0
-        -XX:+UseParallelOldGC
+        -XX:+UseParallelGC
         -Xlog:gc*=info,ref*=debug,ergo*=trace,age*=trace:file=/var/jenkins_home/workspace/gc.log::filecount=5,filesize=40M
         -Djenkins.azure-keyvault.uami.enabled=true
         -Djenkins.ui.refresh=true

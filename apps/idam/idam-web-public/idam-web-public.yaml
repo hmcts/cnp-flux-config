@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-web-public
@@ -7,7 +7,17 @@ spec:
   releaseName: idam-web-public
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-34be9e1-20231211094927
+      image: hmctspublic.azurecr.io/idam/web-public:prod-bcfa00f-20241211110131
+      replicas: 2
+      cpuRequests: '60m'
+      cpuLimits: '1500m'
+      memoryRequests: '2560Mi'
+      memoryLimits: '2560Mi'
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 95
       ingressHost: hmcts-access.service.gov.uk
       aadIdentityName: idam
       useInterpodAntiAffinity: true
@@ -17,12 +27,12 @@ spec:
         FEATURES_GOOGLE_TAG_MANAGER: false
         FEDERATED_SSO: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/c6874728-71e6-41fe-a9e1-2e8c36776ad8/
-        trigger_deploy: 202311271605
+        trigger_deploy: 20241125
   chart:
     spec:
       chart: idam-web-public
-      version: 0.3.0
+      version: 0.4.1
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system

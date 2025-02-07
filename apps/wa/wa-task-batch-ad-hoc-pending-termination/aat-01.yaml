@@ -1,11 +1,12 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-task-batch-ad-hoc-pending-termination
 spec:
   values:
     job:
-      schedule: "15,45 * * * *"
+      suspend: true
+      schedule: "* * 1 7 *"
       environment:
         JOB_NAME: AD_HOC_PENDING_TERMINATION_TASKS
     global:

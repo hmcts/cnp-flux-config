@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: lau-case-backend
@@ -7,10 +7,10 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "1024Mi"
-      cpuRequests: "1000m"
-      memoryLimits: "2048Mi"
-      cpuLimits: "2000m"
+      autoscaling:
+        maxReplicas: 4
+      spotInstances:
+        enabled: false
       environment:
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
         DUMMY_RESTART_VAR: 1

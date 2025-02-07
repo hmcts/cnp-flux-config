@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ia-cron-ccd-migration-tool
@@ -6,7 +6,8 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "11 */5 * 9 *"
+      schedule: "15 10 15 1 *"
+      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-aa66c47-20250121171836 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
@@ -16,5 +17,13 @@ spec:
         MIGRATION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
-        MIGRATE_CASE_FLAGS_INTERNAL: "true"
-        MIGRATION_NUMBER_OF_CASES: 70000
+        MIGRATE_CASE_FLAGS_INTERNAL: "false"
+        MIGRATION_NUMBER_OF_CASES: 1000
+        MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
+        MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
+        MIGRATION_NUMBER_OF_THREADS: 20
+        SERVICE_ID: BFA1
+        LOCATION_REF_DATA_URL: "http://rd-location-ref-api-demo.service.core-compute-demo.internal"
+        #MIGRATION_CASE_ID: 1721041488385667,1711125479412028,1711125604215247,1711125635460150,1711125676071874,1711125704587651,1606229697208842,1606229922775904
+        MIGRATE_IS_ARIA_MIGRATED: "false"
+        MIGRATE_DRAFT_TTL_SET: "true"

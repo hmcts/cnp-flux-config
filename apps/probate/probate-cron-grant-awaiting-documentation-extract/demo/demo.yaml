@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-grant-awaiting-docs-extract
+spec:
+  releaseName: probate-cron-grant-awaiting-docs-extract
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:prod-30b81cc-20250206143436 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "42 13 * * *"
+      environment:
+        TRIG: trig-1
+        ADHOC_JOB_DATE: "2024-10-01"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: bulk-scan-orchestrator
@@ -9,11 +9,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-8abd08e-20240112133850 #{"$imagepolicy": "flux-system:bulk-scan-orchestrator"}
-      smoketests:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-0bf23c8-20221215083423 #{"$imagepolicy": "flux-system:bulk-scan-orchestrator-orchestrator-test"}
-      functionaltests:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator-test:prod-0bf23c8-20221215083423 #{"$imagepolicy": "flux-system:bulk-scan-orchestrator-orchestrator-test"}
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:prod-f61ccb2-20250109155338 #{"$imagepolicy": "flux-system:bulk-scan-orchestrator"}
   chart:
     spec:
       chart: ./stable/bulk-scan-orchestrator

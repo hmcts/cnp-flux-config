@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: div-emca
@@ -8,7 +8,7 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "1.5Gi"
+      memoryRequests: "2.0Gi"
       cpuRequests: "250m"
       memoryLimits: "3Gi"
       cpuLimits: "1500m"
@@ -16,7 +16,7 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/emca:prod-6617d00-20230530130356 #{"$imagepolicy": "flux-system:div-emca"}
+      image: hmctspublic.azurecr.io/div/emca:prod-8295596-20240517113834 #{"$imagepolicy": "flux-system:div-emca"}
       environment:
         IDAM_API_HEALTH_URI: https://idam-api.platform.hmcts.net/health
         IDAM_API_URL: https://idam-api.platform.hmcts.net

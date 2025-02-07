@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: reform-scan-notification-service
@@ -8,11 +8,7 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-5185f4f-20240112133636 #{"$imagepolicy": "flux-system:reform-scan-notification-service"}
-      smoketests:
-        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:prod-fee0ac0-20221215083342 #{"$imagepolicy": "flux-system:reform-scan-notification-service-notification-service-test"}
-      functionaltests:
-        image: hmctspublic.azurecr.io/reform-scan/notification-service-test:prod-fee0ac0-20221215083342 #{"$imagepolicy": "flux-system:reform-scan-notification-service-notification-service-test"}
+      image: hmctspublic.azurecr.io/reform-scan/notification-service:prod-1f6390a-20250107154259 #{"$imagepolicy": "flux-system:reform-scan-notification-service"}
   chart:
     spec:
       chart: ./stable/reform-scan-notification-service

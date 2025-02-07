@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: idam-web-public
@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-34be9e1-20231211094927
+      image: hmctspublic.azurecr.io/idam/web-public:prod-bcfa00f-20241211110131
       ingressHost: idam-web-public.ithc.platform.hmcts.net
       replicas: 1
       environment:
@@ -20,4 +20,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.3.0
+      chart: ./stable/idam-web-public
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

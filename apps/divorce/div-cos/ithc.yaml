@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: div-cos
@@ -6,6 +6,7 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/div/cos:prod-93443d8-20240424155852 #{"$imagepolicy": "flux-system:div-cos"}
       environment:
         IDAM_API_URL: "https://idam-api.ithc.platform.hmcts.net"
         FEATURE_DN_REFUSAL: "true"

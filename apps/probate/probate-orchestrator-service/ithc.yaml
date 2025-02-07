@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: probate-orchestrator-service
@@ -8,4 +8,5 @@ spec:
     java:
       ingressHost: probate-orchestrator-service-ithc.service.core-compute-ithc.internal
       environment:
-        VAR_FV2: ithc-trig1
+        # Does what it says on the tin - if this changes then ithc should redeploy
+        CHANGE_TO_REDEPLOY_ITHC: abc
