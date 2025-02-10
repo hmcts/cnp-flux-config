@@ -13,7 +13,7 @@ spec:
         enabled: true
         minReplicas: 2
         maxReplicas: 7
-      image: hmctspublic.azurecr.io/dm/store:prod-91160b0-20250130113505 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:pr-2565-8c09a6a-20250206161500 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
         SPRING_DATASOURCE_HOST: dm-store-postgres-db-v15-perftest.postgres.database.azure.com
         SPRING_DATASOURCE_USERNAME: pgadmin
@@ -21,4 +21,7 @@ spec:
         ENABLE_TTL: false
         DOCUMENT_DELETE_TASK_CRON: 0 0/5 0-6,21-23 * * *
         TEST_VAR: refresh
-#        MAX_MEDIA_FILE_SIZE: 4096
+        # Case Document Deletion Job Config
+        CASE_DOCUMENTS_DELETION_JOB_SCHEDULE: '0 15 12 * * *'
+        CASE_DOCUMENTS_DELETION_LIMIT: 1000
+        ENABLE_CASE_DOCUMENTS_DELETION: 'true'
