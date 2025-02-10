@@ -5,12 +5,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-8d0cf58-20241112091344 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}
+      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-33dfe63-20250102163110 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}
       keyVaults:
         hmc:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: cft-hearing-service-POSTGRES-USER-V15
               alias: CFT_HEARING_SERVICE_DB_USERNAME
             - name: cft-hearing-service-POSTGRES-PASS-V15
@@ -34,7 +34,7 @@ spec:
             - name: fh-get-token-url
               alias: FH_GET_TOKEN_URL
       environment:
-        DUMMY_RESTART_VAR: 2
+        DUMMY_RESTART_VAR: 1
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_CONFIG: DEBUG
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_SERVICE: DEBUG
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_HMC_REPOSITORY: DEBUG
