@@ -6,11 +6,12 @@ spec:
   releaseName: probate-cron-retain-and-disposal
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-30b81cc-20250206143436
+      image: hmctspublic.azurecr.io/probate/back-office:prod-30b81cc-20250206143436  #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       schedule: "15 15 31 2 *"
       environment:
         DISPOSAL_ADHOC_JOB_DATE:
-        JOB_SHUTDOWN_DELAY: 10
+        MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details/<CASE_ID>
+        FRONTEND_URL: https://probate.demo.platform.hmcts.net/get-case/<CASE_ID>?probateType=<CASE_TYPE>
     global:
       jobKind: CronJob
       enableKeyVaults: true
