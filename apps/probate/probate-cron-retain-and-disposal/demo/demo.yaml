@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-retain-and-disposal
+spec:
+  releaseName: probate-cron-retain-and-disposal
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3005-c2c860f-20250214074718 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "35 18 13 2 *"
+      environment:
+        DISPOSAL_ADHOC_JOB_DATE: "2024-03-15"
+        RETENTION_POLICY_START_DATE: "2024-03-15"
+        MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details/<CASE_ID>
+        FRONTEND_URL: https://probate.demo.platform.hmcts.net/get-case/<CASE_ID>?probateType=<CASE_TYPE>
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
