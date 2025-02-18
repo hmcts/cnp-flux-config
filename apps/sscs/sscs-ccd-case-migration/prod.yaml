@@ -8,13 +8,13 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-c41dfa3-20250212111548 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-6992790-20250217171124 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "15 20 30 01 *"
+      schedule: "15 20 18 02 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -35,10 +35,14 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
             - name: encoded-data-string-wa-fields-removal
               alias: WA_FIELDS_ENCODED_DATA_STRING
-            - name: encoded-data-string-hearing-outcome-migration
-              alias: HEARING_OUTCOME_ENCODED_DATA_STRING
+            - name: encoded-data-string-completed-hearings-outcomes
+              alias: COMPLETED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
+            - name: encoded-data-string-non-listed-hearings-outcomes
+              alias: NON_LISTED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
             - name: encoded-data-string-hmcts-dwp-state-migration
               alias: HMCTS_DWP_STATE_ENCODED_DATA_STRING
+            - name: encoded-data-string-case-outcome-gaps-migration
+              alias: CASE_OUTCOME_GAPS_ENCODED_DATA_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -50,8 +54,10 @@ spec:
         MIGRATION_DWP_ENABLED: false
         MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
         MIGRATION_WA_FIELDS_REMOVAL_ENABLED: false
-        HEARING_OUTCOMES_MIGRATION_ENABLED: false
+        COMPLETED_HEARINGS_OUTCOMES_ENABLED: false
+        NON_LISTED_HEARINGS_OUTCOMES_ENABLED: false
         HMCTS_DWP_STATE_MIGRATION_ENABLED: false
+        CASE_OUTCOME_GAPS_MIGRATION_ENABLED: true
         CASE_MIGRATION_MAX_RETRIES: 5
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "400000"
