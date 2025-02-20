@@ -7,9 +7,6 @@ metadata:
 spec:
   releaseName: botkube
   interval: 5m
-  serviceAccount:
-    create: false
-    name: botkube
   chart:
     spec:
       chart: helm/botkube
@@ -21,6 +18,8 @@ spec:
     - kind: Secret
       name: "botkube-values"
   values:
+    serviceAccount:
+      name: botkube
     image:
       tag: v1.10.0
     settings:
