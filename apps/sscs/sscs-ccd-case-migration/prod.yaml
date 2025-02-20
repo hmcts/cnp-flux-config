@@ -14,7 +14,7 @@ spec:
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "15 20 18 02 *"
+      schedule: "0 21-23,0-7 * * *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -49,7 +49,7 @@ spec:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-prod.service.core-compute-prod.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
-        MIGRATION_CASE_LIST: INPUT_FILE
+        ARCHIVE_OLD_DRAFTS_ENABLED: true
         MIGRATION_WA_ENABLED: false
         MIGRATION_DWP_ENABLED: false
         MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
@@ -57,10 +57,10 @@ spec:
         COMPLETED_HEARINGS_OUTCOMES_ENABLED: false
         NON_LISTED_HEARINGS_OUTCOMES_ENABLED: false
         HMCTS_DWP_STATE_MIGRATION_ENABLED: false
-        CASE_OUTCOME_GAPS_MIGRATION_ENABLED: true
+        CASE_OUTCOME_GAPS_MIGRATION_ENABLED: false
         CASE_MIGRATION_MAX_RETRIES: 5
-        MIGRATION_QUERY_SIZE: 500
-        MIGRATION_CASE_LIMIT: "400000"
+        MIGRATION_QUERY_SIZE: 10000
+        MIGRATION_CASE_LIMIT: 500
         JAVA_OPTS: -Xmx4G
     global:
       environment: prod
