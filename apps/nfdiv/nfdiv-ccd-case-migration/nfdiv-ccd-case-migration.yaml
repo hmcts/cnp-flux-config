@@ -6,15 +6,15 @@ spec:
   releaseName: nfdiv-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/nfdiv/ccd-case-migration:prod-4fd2da7-20250217084658 #{"$imagepolicy": "flux-system:nfdiv-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/nfdiv/ccd-case-migration:prod-254871e-20250219085239 #{"$imagepolicy": "flux-system:nfdiv-ccd-case-migration"}
       disableActiveClusterCheck: false
-      schedule: "*/15 * * * *"
+      schedule: "*/12 * * * *"
       suspend: true
       environment:
         MIGRATION_ID: NFDIV-4080
         MIGRATION_CASETYPE: NFD
         MIGRATION_ENABLED: false
-        MIGRATION_QUERY_SIZE: 2000
+        MIGRATION_QUERY_SIZE: 1000
         MIGRATION_CASE_LIMIT: 750
         RETRY_FAILURES: true
         IDAM_API_URL: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
