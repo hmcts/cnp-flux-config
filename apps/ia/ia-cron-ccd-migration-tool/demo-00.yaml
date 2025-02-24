@@ -6,7 +6,7 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "30 11 24 2 *"
+      schedule: "40 12 24 2 *"
       image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:pr-186-ee977fe-20250221172650 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
@@ -14,7 +14,7 @@ spec:
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "false"
+        MIGRATION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
@@ -29,5 +29,3 @@ spec:
         MIGRATE_APPEAL_STARTED_TTL_SET: "true"
         MIGRATE_APPLICATION_STARTED_TTL_SET: "false"
         MIGRATE_APPLICATION_STARTED_BY_LR_TTL_SET: "false"
-        FUNCTION_ENABLED: "true"
-        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "true"
