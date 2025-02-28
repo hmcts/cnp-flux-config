@@ -5,6 +5,12 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/em/hrs-api:pr-2351-3c83ce7-20250228100826 #{"$imagepolicy": "flux-system:perftest-em-hrs-api"}
       cpuRequests: "1000m"
       cpuLimits: "2000m"
       environment:
+        TTL_ENABLED: false
+        JOB_TEST_FILE_CREATION_ENABLED: true
+        JOB_TEST_FILE_CREATION_SCHEDULE: '0 15 17 * * *'
+        JOB_TEST_FILE_CREATION_TEST_CASES: 10
+        JOB_TEST_FILE_CREATION_MAX_CONCURRENT_UPLOADS: 10
