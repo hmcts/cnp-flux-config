@@ -6,7 +6,17 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctspublic.azurecr.io/et/cos:prod-3a3fd8e-20250211114150 #{"$imagepolicy": "flux-system:perftest-et-cos"}
+      memoryLimits: "3072Mi"
+      memoryRequests: "1536Mi"
+      cpuLimits: "1000m"
+      cpuRequests: "400m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
+      image: hmctspublic.azurecr.io/et/cos:prod-dcdfad2-20250303103438 #{"$imagepolicy": "flux-system:perftest-et-cos"}
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,prl_cos_api,et_cos,nfdiv_case_api,et_sya_api
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-perftest.service.core-compute-perftest.internal

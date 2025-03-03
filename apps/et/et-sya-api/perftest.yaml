@@ -7,7 +7,17 @@ spec:
   releaseName: et-sya-api
   values:
     java:
-      image: hmctspublic.azurecr.io/et/sya-api:prod-66f7bf0-20250212092036 #{"$imagepolicy": "flux-system:perftest-et-sya-api"}
+      memoryLimits: "2048Mi"
+      memoryRequests: "1536Mi"
+      cpuLimits: "1000m"
+      cpuRequests: "300m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
+      image: hmctspublic.azurecr.io/et/sya-api:prod-d057ca3-20250303111141 #{"$imagepolicy": "flux-system:perftest-et-sya-api"}
       environment:
         ACAS_BASE_URL: https://api-dev-acas-01.azure-api.net/ECCLUAT
         AAC_URL: "http://aac-manage-case-assignment-perftest.service.core-compute-perftest.internal"
