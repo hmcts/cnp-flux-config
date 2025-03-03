@@ -8,10 +8,16 @@ spec:
   values:
     nodejs:
       memoryLimits: "1024Mi"
-      memoryRequests: "600Mi"
-      cpuLimits: "3000m"
-      cpuRequests: "600m"
-      image: hmctspublic.azurecr.io/et/sya:prod-406282d-20250227100337 #{"$imagepolicy": "flux-system:et-sya"}
+      memoryRequests: "512Mi"
+      cpuLimits: "1000m"
+      cpuRequests: "300m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
+      image: hmctspublic.azurecr.io/et/sya:prod-7d38f6a-20250303134905 #{"$imagepolicy": "flux-system:et-sya"}
       ingressHost: et-sya.perftest.platform.hmcts.net
       environment:
         MANAGE_ORG_URL: 'https://manage-org.perftest.platform.hmcts.net'
