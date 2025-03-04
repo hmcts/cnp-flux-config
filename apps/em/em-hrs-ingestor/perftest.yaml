@@ -5,9 +5,8 @@ metadata:
 spec:
   values:
     job:
-      #schedule: "0 0 31 2 *" #Uses schedule-off.yaml schedule to disable the job
-      schedule: '0 0/15 * * * *'
-      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-f2cf2f1-20250228170301 #{"$imagepolicy": "flux-system:perftest-em-hrs-ingestor"}
+      schedule: "*/15 * * * *"
       environment:
         USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: false
         ENABLE_CRONJOB: true
+        REFRESH: true
