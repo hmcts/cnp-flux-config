@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-hwf-citizen-update-state
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/cos:pr-3015-b0f7f7a-20250303103955 #{"$imagepolicy": "flux-system:demo-prl-cron-hwf-citizen-update-state"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-3015-7b68318-20250304100215 #{"$imagepolicy": "flux-system:demo-prl-cron-hwf-citizen-update-state"}
       environment:
         TASK_NAME: HwfProcessUpdateCaseStateTask
         VAR: trigger1
@@ -35,7 +35,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
         HEARING_API_BASEURL: http://fis-hmc-api-demo.service.core-compute-demo.internal
         APP_ENV: "demo"
-      schedule: 0 * * * *
+      schedule: 0,30 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
