@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-kainos-rogery-nodejs
+  namespace: labs
+spec:
+  releaseName: labs-kainos-rogery-nodejs
+  chart:
+    spec:
+      chart: ./stable/labs-kainos-rogery-nodejs
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctssandbox.azurecr.io/labs/kainos-rogery-nodejs:prod-04b5b21-20250307160202 # {"$imagepolicy": "flux-system:labs-kainos-rogery-nodejs"}
+      disableTraefikTls: true
