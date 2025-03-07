@@ -29,7 +29,7 @@ fi
 
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: ${PRODUCT}-${COMPONENT}
