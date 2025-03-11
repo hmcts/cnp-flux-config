@@ -6,4 +6,14 @@ spec:
   releaseName: et-msg-handler
   values:
     java:
-      image: hmctspublic.azurecr.io/et/msg-handler:prod-e8c1950-20241010084210 #{"$imagepolicy": "flux-system:et-msg-handler"}
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-2d91552-20250307094335 #{"$imagepolicy": "flux-system:et-msg-handler"}
+      memoryLimits: "2048Mi"
+      memoryRequests: "1536Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "200m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120

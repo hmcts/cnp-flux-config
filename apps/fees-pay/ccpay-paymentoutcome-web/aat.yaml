@@ -5,5 +5,16 @@ metadata:
 spec:
   values:
     nodejs:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '512Mi'
+      memoryLimits: '1024Mi'
+      cpuRequests: '70m'
+      cpuLimits: '250m'
       environment:
         DUMMY_VARIABLE: true

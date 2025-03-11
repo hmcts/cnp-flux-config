@@ -8,15 +8,12 @@ spec:
     java:
       replicas: 2 # minReplicas will default to this value
       memoryRequests: "2Gi"
-      cpuRequests: "1000m"
       memoryLimits: "4Gi"
-      cpuLimits: "2000m"
       autoscaling:
         enabled: false # Will be enabled after completing performance tests.
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/dm/store:prod-7b6f626-20241022090606 #{"$imagepolicy": "flux-system:dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-5855833-20250307094927 #{"$imagepolicy": "flux-system:dm-store"}
       environment:
-        ENABLE_PASSWORD_CHECK: true
   chart:
     spec:
       chart: ./stable/dm-store

@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adoption-cron-ccd-data-migration-tool
+spec:
+  releaseName: adoption-cron-ccd-data-migration-tool
+  values:
+    global:
+      jobKind: CronJob
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:prod-b5fbece-20250117101820 #{"$imagepolicy": "flux-system:adoption-cron-ccd-data-migration-tool"}
+      schedule: "58 20 14 01 *"
+      environment:
+        MIGRATION_ID: ADOP-2555
+        USE_CASE_ID_MAPPING: true
+        ENABLED: false
+        UPDATE: rollback
+        IDAM_REDIRECT_URL: https://apply-to-adopt-a-child-placed-in-your-care.service.gov.uk/receiver
+        IDAM_CLIENT_ID: adoption-web
+        IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        JRD_BASE_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100
+        RETRY_FAILURES: true
+  chart:
+    spec:
+      chart: ./stable/adoption-cron-ccd-data-migration-tool
+      version: 0.0.17
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system

@@ -7,15 +7,15 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-be897bc-20241022084520Z #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-d3b3681-20250306091820Z #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
       SLACK_REPORT_CHANNEL_CRIME_ID: C07KMBUFMA5
       JIRA_START_TRANSITION_ID: 181
       JIRA_DONE_TRANSITION_ID: 201
       JIRA_PROJECT: DTSPO
-      JIRA_ISSUE_TYPE_ID: 17100
-      JIRA_ISSUE_TYPE_NAME: "BAU Task"
+      JIRA_ISSUE_TYPE_ID: 18400
+      JIRA_ISSUE_TYPE_NAME: "Support"
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -25,6 +25,8 @@ spec:
           - jira-username
           - jira-api-token
           - app-insights-connection-string
+    autoscaling:
+      enabled: false
   chart:
     spec:
       chart: nodejs

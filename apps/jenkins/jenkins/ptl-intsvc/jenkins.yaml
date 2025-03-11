@@ -57,9 +57,9 @@ spec:
                       - key: AAT_AKS_RESOURCE_GROUP
                         value: cft-aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-00-aks
+                        value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-00-rg
+                        value: cft-preview-01-rg
                       - key: AKS_PTL_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
@@ -92,7 +92,7 @@ spec:
                     name: all
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure|camunda-.*)\/master
+                      ^HMCTS.*\/(draft-store|rpe-pdf-service|service-auth-provider-app|spring-boot-template|cnp-plum-recipes-service|cnp-plum-frontend|cnp-plum-shared-infrastructure|recipes-frontend|recipes-backend|recipes-shared-infrastructure|camunda-.*)\/master
                     name: Platform
                     recurse: true
                     title: Platform
@@ -116,7 +116,7 @@ spec:
                     title: BSP
                 - buildMonitor:
                     includeRegex: >-
-                      .+\/(rpx-.*)\/(master)
+                      .+((rpx-xui.+)|(em-media-viewer.+)|(em-showcase.+)|(ccd-case-ui-toolkit.+))\/master
                     name: XUI
                     recurse: true
                     title: XUI
@@ -146,25 +146,25 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api|sscs-hearings-api)\/master
+                      ^HMCTS.*\/(sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/ia.*\/master
+                      ^HMCTS.*\/(ia.*|AIP-Performance)\/master
                     name: IA
                     recurse: true
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app|ccpay-notifications-service)\/master
+                      ^HMCTS.*\/(ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app|ccpay-notifications-service)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure)\/master
+                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure|probate-performance)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -326,7 +326,7 @@ spec:
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests|et-ccd-definitions-[a-z]+)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
