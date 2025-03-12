@@ -6,7 +6,9 @@ spec:
   releaseName: bulk-scan-payment-processor
   values:
     java:
-      replicas: 2
+      autoscaling:
+        enabled: false
+      replicas: 0
       useInterpodAntiAffinity: true
       image: http://hmctspublic.azurecr.io/bulk-scan/payment-processor:pr-1219 #{"$imagepolicy": "flux-system:bulk-scan-payment-processor"}
   chart:
