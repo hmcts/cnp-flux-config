@@ -2,12 +2,36 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cron-hwf-citizen-update-state
+  namespace: private-law
 spec:
   releaseName: prl-cron-hwf-citizen-update-state
   values:
     job:
       environment:
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.aat.platform.hmcts.net
+        PRD_API_BASEURL: http://rd-professional-api-aat.service.core-compute-aat.internal
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-aat.service.core-compute-aat.internal/oauth2/callback
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.aat.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+        XUI_URL: https://manage-case.aat.platform.hmcts.net/cases/case-details
+        PAY_URL: http://payment-api-aat.service.core-compute-aat.internal
+        PAY_CALLBACK_URL: http://prl-cos-aat.service.core-compute-aat.internal/service-request-update
+        PRL_DGS_API_URL: http://prl-dgs-aat.service.core-compute-aat.internal
+        FEE_REGISTER_API_URL: http://fees-register-api-aat.service.core-compute-aat.internal
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
+        FACT_API: http://fact-api-aat.service.core-compute-aat.internal
+        LOCATION_REF_API: http://rd-location-ref-api-aat.service.core-compute-aat.internal
+        BUNDLE_URL: http://em-ccd-orchestrator-aat.service.core-compute-aat.internal
+        REFDATA_API_URL: http://rd-commondata-api-aat.service.core-compute-aat.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-aat.service.core-compute-aat.internal
         APP_ENV: "aat"
+      schedule: 0,30 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

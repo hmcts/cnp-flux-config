@@ -5,10 +5,16 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-2716-8282c8a-20250226172631 #{"$imagepolicy": "flux-system:perftest-bulk-scan-orchestrator"}
       environment:
-        image: hmctspublic.azurecr.io/bulk-scan/orchestrator:pr-2712-5044b72-20250227133544
         IDAM_API_URL: "https://idam-api.perftest.platform.hmcts.net"
         AUTO_CASE_CREATION_ENABLED_PROBATE: "true"
         CASE_DEFINITION_HAS_ENVELOPE_IDS_PROBATE: "true"
         CAN_SEARCH_CASES_BY_ENVELOPE_ID_PROBATE: "true"
         REFRESH_PODS: "true"
+        SMTP_HOST: false
+        PAYMENT_API_URL: http://bulk-scan-payment-processor-perftest.service.core-compute-perftest.internal/payment
+        PAYMENT_REPORTS_RECIPIENTS: danny.furnivall@justice.gov.uk
+        PAYMENT_PROCESSING_INTERVAL: 10000
+        SMTP_USERNAME: false
+        SMTP_PASSWORD: false
