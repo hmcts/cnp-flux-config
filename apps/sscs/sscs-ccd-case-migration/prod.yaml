@@ -8,13 +8,13 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-1699f3b-20250227124421 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-51a95c7-20250312163922 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "0 21-23,0-7 * * *"
+      schedule: "0 21 * * *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -54,7 +54,7 @@ spec:
         MIGRATION_DWP_ENABLED: false
         MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
         MIGRATION_WA_FIELDS_REMOVAL_ENABLED: false
-        COMPLETED_HEARINGS_OUTCOMES_ENABLED: false
+        COMPLETED_HEARINGS_OUTCOMES_ENABLED: true
         NON_LISTED_HEARINGS_OUTCOMES_ENABLED: false
         HMCTS_DWP_STATE_MIGRATION_ENABLED: false
         CASE_OUTCOME_GAPS_MIGRATION_ENABLED: false
