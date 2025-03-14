@@ -6,8 +6,13 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-171-1674ab4-20250314164207 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
-      schedule: "30 17 14 03 *"
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-171-afe15ee-20250314172225 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
+      schedule: "10 10 17 03 *"
+      keyVaults:
+        prl:
+          secrets:
+            - name: migration-data
+              alias: MIGRATION_DATA
       environment:
         MIGRATION_ENABLED: true
         MIGRATION_CASE_IDS: "1741964465745957"
