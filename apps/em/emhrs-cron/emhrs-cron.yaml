@@ -6,10 +6,14 @@ spec:
   releaseName: emhrs-cron
   values:
     job:
+      disableActiveClusterCheck: true
       image: hmctspublic.azurecr.io/em/hrs-api:prod-89102d1-20250317121823 #{"$imagepolicy": "flux-system:em-hrs-api"}
       environment:
-        TASK_NAME: SystemNotifyApplicantDisputeFormOverdueTask
+        TASK_NAME: UpdateJurisdictionCodesTask
       schedule: "0 0 31 2 *" #schedule of "0 0 31 2 *" is a mechanism to not run the job at all (31st feb is a nonfiring date)
+      global:
+        jobKind: CronJob
+        enableKeyVaults: true
   chart:
     spec:
       chart: ./stable/emhrs-cron
