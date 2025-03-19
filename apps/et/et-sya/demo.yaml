@@ -2,10 +2,11 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: et-sya
-  namespace: et
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
-  releaseName: et-sya
+  releaseName: et-syr
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/et/sya:prod-6d35709-20250319095802 #{"$imagepolicy": "flux-system:demo-et-sya"}
+      image: hmctspublic.azurecr.io/et/sya:pr-1903-af4f60a-20250319153300 #{"$imagepolicy": "flux-system:demo-et-sya"}
       ingressHost: et-sya.demo.platform.hmcts.net
