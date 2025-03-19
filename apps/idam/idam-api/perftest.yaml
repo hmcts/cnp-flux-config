@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-9ec8645-20241211110057
+      image: hmctspublic.azurecr.io/idam/api:prod-9464119-20250304160009
       replicas: 2
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:
@@ -15,7 +15,8 @@ spec:
         TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_ENABLED: true
         TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_USERINFOENDPOINT: http://idam-perftest-jumpbox.service.core-compute-idam-perftest.internal:9080/auth/realms/jhipster/protocol/openid-connect
         TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_ACCOUNTCREATEENABLED: true
-        TESTING_SUPPORT_SSO_PROVIDERS_IDAM_ENABLED: false
+        TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_ACCOUNTNOTFOUNDSTRATEGY: CREATE
+        TESTING_SUPPORT_SSO_PROVIDERS_IDAM_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3
         CACHING_USERS_MAXHTTPCALLS: 1
