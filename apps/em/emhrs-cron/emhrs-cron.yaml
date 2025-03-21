@@ -10,6 +10,8 @@ spec:
       image: hmctspublic.azurecr.io/em/hrs-api:prod-0fb1745-20250320152147 #{"$imagepolicy": "flux-system:em-hrs-api"}
       environment:
         TASK_NAME: UpdateJurisdictionCodesTask
+        INGESTION_ENABLED: false
+        CCDUPLOAD_ENABLED: false
       schedule: "0 0 31 2 *" #schedule of "0 0 31 2 *" is a mechanism to not run the job at all (31st feb is a nonfiring date)
       global:
         jobKind: CronJob
