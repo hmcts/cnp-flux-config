@@ -10,9 +10,15 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/et/sya:prod-deebc43-20250324100917 #{"$imagepolicy": "flux-system:et-sya"}
       memoryLimits: "1024Mi"
-      memoryRequests: "600Mi"
-      cpuLimits: "1500m"
+      memoryRequests: "512Mi"
+      cpuLimits: "1000m"
       cpuRequests: "100m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
   chart:
     spec:
       chart: ./stable/et-sya
