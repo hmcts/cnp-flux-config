@@ -46,6 +46,36 @@ Once the script has been executed, you will need to create a new branch, add and
 
 More information on flux v2, its components and custom resources can be found on [flux docs site](https://fluxcd.io/docs/concepts/).
 
+## Azure Container Registry
+
+There are two container registries where your application image may end up:
+- **hmctspublic** where majority of images are uploaded
+- **hmctssandbox** where sandbox application images should be uploaded
+
+The reason for this is that there will most likely be two separate Jenkins pipelines for your application once you create your repo (e.g. NodeJS) defined in two separate Jenkins instances both of which scan for new repos:
+
+- [PTL Jenkins](https://build.hmcts.net/) ([defined under ptl-intsvc](https://github.com/hmcts/cnp-flux-config/blob/master/apps/jenkins/jenkins/ptl-intsvc/jenkins.yaml))
+- [Sandbox Jenkins](https://sandbox-build.hmcts.net/) ([defined under sbox-intsvc](https://github.com/hmcts/cnp-flux-config/blob/master/apps/jenkins/jenkins/sbox-intsvc/jenkins.yaml))
+
+
+The lab script mentioned above will generate configuration with the ACR set to **hmctssandbox** - this is where Flux will look for your image.
+
+If your build is executed by the PTL Jenkins then this may cause issues because pipelines in this Jenkins will upload images into the **hmctspublic** ACR (you can see this if you open the respective ACR in Azure portal and search for your image).
+
+Once you merge your Flux config and notice that you container is in error state with status **"ImageError"** or **"ImagePullBackOff"** then most likely your image is missing from the **hmctssandbox** ACR. 
+
+You can check the status of your containers by running:
+
+  `kubectl get pods -n labs`
+
+Or to get more detailed information:
+
+  `kuberctl describe pod labs-<github-username-nodejs-nodejs-abc-xyz>`
+
+To avoid this issue, ensure that the registry defined in your application charts matches where your image will actually be uploaded. For the purpose of the Golden Path tutorial just ensure that the pipeline within Sandbox Jenkins has passed on your master branch and that your image has been uploaded to the sandbox ACR. 
+
+You may also end up with images in both registries if both pipelines have run, e.g. as a result of a trigger on merge to master.
+
 ## Deleting the flux config for your lab application
 
 Once you're finished with your lab app you can clean up the flux configuration by running the [`clean-up-lab-flux-config.sh`](./create-lab-flux-config.sh) script.

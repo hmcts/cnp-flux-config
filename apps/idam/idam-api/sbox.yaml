@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-47ce76f-20240920110926
+      image: hmctspublic.azurecr.io/idam/api:prod-9464119-20250304160009
       ingressHost: idam-api.sandbox.platform.hmcts.net
       disableTraefikTls: true
       replicas: 1
@@ -35,10 +35,18 @@ spec:
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-sandbox.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-sandbox.internal
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_ENABLED: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
         STRATEGIC_SSO_PROVIDERS_MOJ_ENABLED: false
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
+        FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: true
   chart:
     spec:
-      version: 0.8.1
+      chart: ./stable/idam-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

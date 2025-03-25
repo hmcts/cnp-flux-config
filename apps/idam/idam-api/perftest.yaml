@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-47ce76f-20240920110926
+      image: hmctspublic.azurecr.io/idam/api:prod-9464119-20250304160009
       replicas: 2
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:
@@ -15,7 +15,8 @@ spec:
         TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_ENABLED: true
         TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_USERINFOENDPOINT: http://idam-perftest-jumpbox.service.core-compute-idam-perftest.internal:9080/auth/realms/jhipster/protocol/openid-connect
         TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_ACCOUNTCREATEENABLED: true
-        TESTING_SUPPORT_SSO_PROVIDERS_IDAM_ENABLED: false
+        TESTING_SUPPORT_SSO_PROVIDERS_KEYCLOAK_ACCOUNTNOTFOUNDSTRATEGY: CREATE
+        TESTING_SUPPORT_SSO_PROVIDERS_IDAM_ENABLED: true
         ENDPOINTS_INFO_ENABLED: true
         CACHING_USERS_MAXTHREADS: 3
         CACHING_USERS_MAXHTTPCALLS: 1
@@ -50,6 +51,7 @@ spec:
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
+        FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: true
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         SPRING_CLOUD_AZURE_SERVICEBUS_NAMESPACE: idam-servicebus-perftest
@@ -60,4 +62,10 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.8.1
+      version: 0.8.0
+      chart: ./stable/idam-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

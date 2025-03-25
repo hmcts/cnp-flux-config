@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-iron-mountain-extract
+spec:
+  releaseName: probate-cron-iron-mountain-extract
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-2982-857b985-20250325134901 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "33 09 * * *"
+      environment:
+        TRIG: trig-1
+        ADHOC_JOB_DATE: "2025-03-11"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

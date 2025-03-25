@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-47ce76f-20240920110926
+      image: hmctspublic.azurecr.io/idam/api:prod-9464119-20250304160009
       replicas: 1
       ingressHost: idam-api.demo.platform.hmcts.net
       environment:
@@ -28,6 +28,8 @@ spec:
         SSL_TRUST_DNS_1: C=UK, ST=London, L=London, O=HMCTS, CN=*.service.core-compute-idam-demo.internal,emailAddress=devops@hmcts.net
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-demo.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-demo.internal
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         LOG_AND_AUDIT_IDAM_ENABLED: true
@@ -46,6 +48,7 @@ spec:
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_SKIPARCHIVEDELETIONOFORIGINALRECORD: true
+        FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: true
         IDAM_CACHE_TTL: 1
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
@@ -60,4 +63,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.8.1
+      chart: ./stable/idam-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
