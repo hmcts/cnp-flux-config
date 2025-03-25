@@ -7,7 +7,11 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/probate/back-office:pr-2982-857b985-20250325134901 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "20 17 25 03 *"
+      schedule: "40 17 25 03 *"
+      cpuRequests: "250m"
+      cpuLimits: "1000m"
+      memoryRequests: "512Mi"
+      memoryLimits: "2048Mi"
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         DUMMY_PROPERTY: DUMMY24
