@@ -4,6 +4,12 @@ metadata:
   name: adoption-cron-submit-application-to-court-alerts
 spec:
   releaseName: adoption-cron-submit-application-to-court-alerts
+  values:
+    job:
+      image: hmctspublic.azurecr.io/adoption/cos-api:prod-e6102d2-20250319114709 #{"$imagepolicy": "flux-system:adoption-cos-api"}
+      environment:
+        TASK_NAME: AlertToSubmitApplicationToCourtTask
+      schedule: 30 2 * * *
   chart:
     spec:
       chart: adoption-cron
