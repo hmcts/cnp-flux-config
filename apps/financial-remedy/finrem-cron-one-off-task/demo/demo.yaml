@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-6e6a083-20250325131538 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
-      schedule: "30 10 27 3 *"
+      image: hmctspublic.azurecr.io/finrem/cos:pr-2215-e75078f-20250326083609 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
+      schedule: "*/10 * * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -26,6 +26,27 @@ spec:
         CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyContested
         CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 500
         CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+      keyVaults:
+        finrem:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: finrem-case-orchestration-service-s2s-key
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: idam-secret
+              alias: OAUTH2_CLIENT_FINREM
+            - name: finrem-system-update-username
+              alias: FINREM_SYSTEMUPDATE_USERNAME
+            - name: finrem-system-update-password
+              alias: FINREM_SYSTEMUPDATE_PASSWORD
+            - name: finrem-idam-client-secret
+              alias: FINREM_IDAM_CLIENT_SECRET
+            - name: docmosis-api-key
+              alias: PDF_SERVICE_ACCESS_KEY
+            - name: docmosis-endpoint
+              alias: PDF_SERVICE_BASEURL
+            - name: cron-csv-file-decrypt-key
+              alias: CRON_CSV_FILE_DECRYPT_KEY
     global:
       jobKind: CronJob
       enableKeyVaults: true
