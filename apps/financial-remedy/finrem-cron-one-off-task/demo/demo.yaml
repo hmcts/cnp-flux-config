@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-04976e7-20250313140047 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
-      schedule: "30 10 24 10 *"
+      image: hmctspublic.azurecr.io/finrem/cos:pr-2215-285df00-20250326180858
+      schedule: "*/10 * * * *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -21,10 +21,11 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
-        TASK_NAME: NullCaseRoleIdsWhereEmptyTask
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_ENABLED: true
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_BATCH_SIZE: 500
+        TASK_NAME: AmendGeneralEmailTask
+        CRON_AMEND_GENERAL_EMAIL_ENABLED: true
+        CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 500
+        CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true

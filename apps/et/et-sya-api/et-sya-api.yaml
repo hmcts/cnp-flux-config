@@ -8,11 +8,17 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/sya-api:prod-8bb21fe-20250307103159 #{"$imagepolicy": "flux-system:et-sya-api"}
-      memoryLimits: "2560Mi"
-      memoryRequests: "1700Mi"
+      image: hmctspublic.azurecr.io/et/sya-api:prod-7854078-20250327101646 #{"$imagepolicy": "flux-system:et-sya-api"}
+      memoryLimits: "2048Mi"
+      memoryRequests: "1536Mi"
       cpuLimits: "1500m"
       cpuRequests: "100m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
   chart:
     spec:
       chart: ./stable/et-sya-api
