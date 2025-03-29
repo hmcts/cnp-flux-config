@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-draft-cases-with-payment
+spec:
+  releaseName: probate-cron-draft-cases-with-payment
+  values:
+    job:
+      schedule: 30 10 31 2 *
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: perftest
