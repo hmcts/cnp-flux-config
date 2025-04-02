@@ -7,9 +7,10 @@ spec:
   values:
     job:
       disableActiveClusterCheck: false
-      image: hmctspublic.azurecr.io/em/hrs-api:prod-b95075d-20250325133218 #{"$imagepolicy": "flux-system:em-hrs-api"}
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-bf46318-20250401144003 #{"$imagepolicy": "flux-system:em-hrs-api"}
       environment:
-        TASK_NAME: UpdateJurisdictionCodesTask
+        TASK_NAME: UpdateTtlJob
+        UPDATE_TTL_BATCH_SIZE: 150
         INGESTION_ENABLED: false
         CCDUPLOAD_ENABLED: false
       schedule: "0 0 31 2 *" #schedule of "0 0 31 2 *" is a mechanism to not run the job at all (31st feb is a nonfiring date)
