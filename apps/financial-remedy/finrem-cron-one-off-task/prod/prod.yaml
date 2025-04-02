@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "30 16 2 4 *"
+      schedule: "30 7 3 4 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -30,6 +30,11 @@ spec:
         CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyMVP2
         CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 100
         CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+      keyVaults:
+        finrem:
+          secrets:
+            - name: cron-csv-file-decrypt-key
+              alias: CRON_CSV_FILE_DECRYPT_KEY
     global:
       jobKind: CronJob
       enableKeyVaults: true
