@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "30 7 3 4 *"
+      schedule: "15 8 3 4 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -33,6 +33,18 @@ spec:
       keyVaults:
         finrem:
           secrets:
+            - name: app-insights-connection-string
+            - alias: app-insights-connection-string
+            - name: finrem-case-orchestration-service-s2s-key
+            - alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: idam-secret
+            - alias: OAUTH2_CLIENT_FINREM
+            - name: finrem-system-update-username
+            - alias: FINREM_SYSTEMUPDATE_USERNAME
+            - name: finrem-system-update-password
+            - alias: FINREM_SYSTEMUPDATE_PASSWORD
+            - name: finrem-idam-client-secret
+            - alias: FINREM_IDAM_CLIENT_SECRET
             - name: cron-csv-file-decrypt-key
               alias: CRON_CSV_FILE_DECRYPT_KEY
     global:
