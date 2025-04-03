@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "0 6 1 11 *"
+      schedule: "30 9 3 4 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -25,10 +25,28 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: NullCaseRoleIdsWhereEmptyTask
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_ENABLED: true
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_NULL_CASEROLEIDS_WHERE_EMPTY_BATCH_SIZE: 2000
+        TASK_NAME: AmendGeneralEmailTask
+        CRON_AMEND_GENERAL_EMAIL_ENABLED: true
+        CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyMVP2
+        CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 100
+        CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+      keyVaults:
+        finrem:
+          secrets:
+            - name: app-insights-connection-string
+            - alias: app-insights-connection-string
+            - name: finrem-case-orchestration-service-s2s-key
+            - alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: idam-secret
+            - alias: OAUTH2_CLIENT_FINREM
+            - name: finrem-system-update-username
+            - alias: FINREM_SYSTEMUPDATE_USERNAME
+            - name: finrem-system-update-password
+            - alias: FINREM_SYSTEMUPDATE_PASSWORD
+            - name: finrem-idam-client-secret
+            - alias: FINREM_IDAM_CLIENT_SECRET
+            - name: cron-csv-file-decrypt-key
+              alias: CRON_CSV_FILE_DECRYPT_KEY
     global:
       jobKind: CronJob
       enableKeyVaults: true
