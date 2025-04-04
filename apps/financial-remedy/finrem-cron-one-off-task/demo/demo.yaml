@@ -7,7 +7,7 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/finrem/cos:prod-ab0f790-20250403104042 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
-      schedule: "30 10 24 10 *"
+      schedule: "30 16 4 4 *"
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -21,9 +21,9 @@ spec:
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: AmendGeneralEmailTask
-        CRON_AMEND_GENERAL_EMAIL_ENABLED: false
-        CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 500
+        CRON_AMEND_GENERAL_EMAIL_ENABLED: true
+        CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyMVP2
+        CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 100
         CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
     global:
       jobKind: CronJob
