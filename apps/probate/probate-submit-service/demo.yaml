@@ -9,7 +9,7 @@ spec:
       image: hmctspublic.azurecr.io/probate/submit-service:pr-1074-f5eae2d-20250408082300 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
       environment:
         # Does what it says on the tin - if this changes then demo should redeploy
-        CHANGE_TO_REDEPLOY_DEMO: a
+        CHANGE_TO_REDEPLOY_DEMO: b
       keyVaults:
         probate:
           secrets:
@@ -19,3 +19,7 @@ spec:
               alias: azure.application-insights.instrumentation-key
             - name: app-insights-connection-string
               alias: app-insights-connection-string
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
