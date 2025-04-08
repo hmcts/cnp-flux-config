@@ -17,6 +17,13 @@ spec:
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/probate/submit-service:prod-df1c42c-20250408095026 #{"$imagepolicy": "flux-system:probate-submit-service"}
+      keyVaults:
+        probate:
+          secrets:
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
       environment:
         # Does what it says on the tin - if this changes then all envs should redeploy
         CHANGE_TO_REDEPLOY_ALL_ENVS: abcd
