@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: botkube
+  namespace: monitoring
+spec:
+  releaseName: botkube
+  values:
+    rbac:
+      groups:
+      'botkube-plugins-default':
+        create: true
+        rules:
+          - apiGroups: ["*"]
+            resources: ["namespaces", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
+            verbs: ["get", "watch", "list"]
