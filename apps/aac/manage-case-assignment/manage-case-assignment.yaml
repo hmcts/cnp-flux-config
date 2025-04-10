@@ -6,7 +6,12 @@ spec:
   releaseName: manage-case-assignment
   values:
     java:
+      memoryRequests: "1536Mi"
       replicas: 2
+      autoscaling:
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-701889e-20250326101806 #{"$imagepolicy": "flux-system:manage-case-assignment"}
       environment:
