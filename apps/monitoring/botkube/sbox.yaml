@@ -6,11 +6,31 @@ metadata:
 spec:
   releaseName: botkube
   values:
+    executors:
+      k8s-default-tools:
+        botkube/kubectl:
+          enabled: true
+          config:
+            defaultNamespace: "default"
+            interactiveBuilder:
+              allowed:
+                verbs: ["describe", "get", "top"]
+                resources: ["events", "namespaces", "nodes", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
+          context:
+            rbac:
+              group:
+                type: Static
+                prefix: ""
+                static:
+                  values: ["botkube-plugins-default"]
     rbac:
       groups:
-      'botkube-plugins-default':
+      botkube-plugins-default:
         create: true
         rules:
           - apiGroups: ["*"]
             resources: ["namespaces", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
             verbs: ["get", "watch", "list"]
+          - apiGroups: [""]
+            resources: ["pods/log", "secrets"]
+            verbs: []
