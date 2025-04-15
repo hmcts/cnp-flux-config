@@ -1,0 +1,10 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: aat-sscs-ccd-case-migration
+spec:
+  imageRepositoryRef:
+    name: sscs-ccd-case-migration
+  filterTags:
+    pattern: '^pr-72-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
