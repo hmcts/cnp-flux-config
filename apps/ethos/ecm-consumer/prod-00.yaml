@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ecm-consumer
+  namespace: ethos
+spec:
+  releaseName: ecm-consumer
+  values:
+    java:
+      environment:
+        CRON_CASE_TYPE_ID: Leeds
+        CRON_MAX_CASES_PER_SEARCH: 100
+        CRON_MIGRATE_TO_REFORM: 0 0 * * * ?
+        CRON_MIGRATE_TO_REFORM_ENABLED: true

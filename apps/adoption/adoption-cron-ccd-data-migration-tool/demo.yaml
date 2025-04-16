@@ -6,12 +6,12 @@ spec:
   releaseName: adoption-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:pr-41-6bfa4e6-20241219143340 #{"$imagepolicy": "flux-system:demo-adoption-cron-ccd-data-migration-tool"}
+      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:pr-75-583ec6c-20250416125914 #{"$imagepolicy": "flux-system:demo-adoption-cron-ccd-data-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
-      schedule: "0 12 20 6 *"
+      schedule: "30 * * * *"
       environment:
         MIGRATION_ID: ADOP-log
         ENABLED: false
@@ -26,8 +26,6 @@ spec:
       keyVaults:
         adoption:
           secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
             - name: idam-system-user-name
               alias: IDAM_USERNAME
             - name: idam-system-user-password
@@ -38,3 +36,5 @@ spec:
               alias: DATA_STORE_IDAM_KEY
             - name: migration-tool-case-id-list-mapping
               alias: CASE_ID_LIST_MAPPING
+            - name: app-insight-connection-key
+              alias: app-insight-connection-key
