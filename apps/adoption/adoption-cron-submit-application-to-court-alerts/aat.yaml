@@ -1,15 +1,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: hmc-operational-reports-runner-int
+  name: adoption-cron-submit-application-to-court-alerts
 spec:
+  releaseName: adoption-cron-submit-application-to-court-alerts
   values:
     job:
-      schedule: "01 02 * * *"
-      suspend: true
       environment:
+        VAR: trigger1
     global:
       jobKind: CronJob
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      environment: demo
+      environment: aat
