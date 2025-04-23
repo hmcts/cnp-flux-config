@@ -11,9 +11,10 @@ spec:
       cpuRequests: '500m'
       cpuLimits: '2500m'
       applicationPort: 8095
+      schedule: "15 13 * * *"
       image: hmctspublic.azurecr.io/dm/store:pr-2671-fede625-20250422182921 #{"$imagepolicy": "flux-system:perftest-dm-store"}
-      schedule: "00 13 * * *"
       environment:
+        TASK_NAME: CaseDocumentsDeletionTask
         CASE_DOCUMENTS_DELETION_THREAD_LIMIT: 20
         CASE_DOCUMENTS_DELETION_NO_OF_ITERATIONS: 1
         CASE_DOCUMENTS_DELETION_BATCH_SIZE: 50000
