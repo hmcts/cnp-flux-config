@@ -1,0 +1,18 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  generation: 2
+  name: team-alerts
+  namespace: ${NAMESPACE}
+spec:
+  providerRef:
+    name: slack
+  summary: ${CLUSTER_FULL_NAME}-aks
+  eventSeverity: error
+  eventSources:
+    - kind: HelmRelease
+      namespace: ${NAMESPACE}
+      name: '*'
+    - kind: HelmChart
+      namespace: ${NAMESPACE}
+      name: '*'
