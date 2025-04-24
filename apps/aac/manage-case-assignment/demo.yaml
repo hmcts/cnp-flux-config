@@ -6,6 +6,25 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-2e5bc6a-20250415112937 #{"$imagepolicy": "flux-system:manage-case-assignment"}
+      keyVaults:
+        aac:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: aac-manage-case-s2s-secret
+              alias: MANAGE_CASE_S2S_KEY
+            - name: idam-mca-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-mca-system-user-username
+              alias: IDAM_CAA_USERNAME
+            - name: idam-mca-system-user-password
+              alias: IDAM_CAA_PASSWORD
+            - name: idam-noc-approver-username
+              alias: IDAM_NOC_APPROVER_USERNAME
+            - name: idam-noc-approver-password
+              alias: IDAM_NOC_APPROVER_PASSWORD
+            - name: notify-mca-api-key-secret
+              alias: NOTIFY_MCA_API_KEY
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,nfdiv_case_api,civil_service,probate_backend,prl_cos_api,et_cos,et_sya_api
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
