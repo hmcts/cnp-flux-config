@@ -7,19 +7,12 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/probate/back-office:pr-3092-6986adf-20250423155537 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "27 12 * * *"
+      schedule: "7 13 * * *"
       environment:
         TRIG: trig-1
         ADHOC_JOB_DATE: "2024-01-20"
         ADHOC_JOB_TO_DATE: "2025-04-09"
         EXCELA_EMAIL: "Tom.Saunders@justice.gov.uk"
-      keyVaults:
-        probate:
-          secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
     global:
       jobKind: CronJob
       enableKeyVaults: true
