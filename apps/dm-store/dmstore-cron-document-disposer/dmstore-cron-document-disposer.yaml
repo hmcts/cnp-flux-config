@@ -7,7 +7,7 @@ spec:
   values:
     job:
       disableActiveClusterCheck: false
-      image: hmctspublic.azurecr.io/dm/store:prod-2c933e5-20250415145657 #{"$imagepolicy": "flux-system:dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-393a7ed-20250425100555 #{"$imagepolicy": "flux-system:dm-store"}
       environment:
         TASK_NAME: UpdateTtlJob
       schedule: "0 0 31 2 *" #schedule of "0 0 31 2 *" is a mechanism to not run the job at all (31st feb is a nonfiring date)
@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: dmstore-cron
-      version: 0.0.1
+      version: 0.0.2
       sourceRef:
         kind: HelmRepository
         name: hmctspublic-oci
