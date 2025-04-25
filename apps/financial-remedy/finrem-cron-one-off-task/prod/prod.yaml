@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "0 12 8 4 *"
+      schedule: "0 0 0 0 0"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -25,11 +25,8 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: AmendGeneralEmailTask
-        CRON_AMEND_GENERAL_EMAIL_ENABLED: false
-        CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyMVP2
-        CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 100
-        CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+        TASK_NAME: ResendInterimHearingTask
+        CRON_RESEND_INTERIM_HEARING_ENABLED: false
     global:
       jobKind: CronJob
       enableKeyVaults: true
