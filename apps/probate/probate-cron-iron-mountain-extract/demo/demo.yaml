@@ -6,11 +6,15 @@ spec:
   releaseName: probate-cron-iron-mountain-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-3005-c263a2a-20250226161204 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "40 13 * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:prod-b2d54b3-20250429094550 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "56 13 * * *"
+      cpuRequests: "250m"
+      cpuLimits: "1000m"
+      memoryRequests: "512Mi"
+      memoryLimits: "2048Mi"
       environment:
         TRIG: trig-1
-        ADHOC_JOB_DATE: "2025-01-20"
+        ADHOC_JOB_DATE: "2025-04-02"
     global:
       jobKind: CronJob
       enableKeyVaults: true

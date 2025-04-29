@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: disposer-fee-and-pay
+spec:
+  values:
+    job:
+      schedule: "0 20 * * sun-thu"
+      memoryRequests: "1024Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "2000m"
+      environment:
+        DISPOSER_FEE_PAY_ENABLED: false

@@ -6,20 +6,21 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "*/10 * * * *"
-      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-69539a3-20250212155501 #{"$imagepolicy": "flux-system:ithc-ia-cron-ccd-migration-tool"}
+      schedule: "00 11 3 4 *"
+#      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-1cd172f-20250317135609 #{"$imagepolicy": "flux-system:ithc-ia-cron-ccd-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "true"
+        MIGRATION_ENABLED: "false"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
         MIGRATION_NUMBER_OF_CASES: 1000
         ASSIGN_HEARING_ROLES_TO_SYSTEM_USER: "false"
-        FUNCTION_ENABLED: "false"
+        FUNCTION_ENABLED: "true"
+        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "true"
         AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-ithc.service.core-compute-ithc.internal
-        MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: true
+        MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
