@@ -6,8 +6,8 @@ spec:
   releaseName: fact-cron-trigger
   values:
     job:
-      image: hmctspublic.azurecr.io/fact/cron-trigger:prod-7300524-20250410102826 # {"$imagepolicy": "flux-system:fact-cron-trigger"}
-      disableTraefikTls: true
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/fact/cron-trigger:prod-7300524-20250410102826 #{"$imagepolicy": "flux-system:fact-cron-trigger"}
   chart:
     spec:
       chart: ./stable/fact-cron-trigger
@@ -16,7 +16,3 @@ spec:
         name: hmcts-charts
         namespace: flux-system
       interval: 5m
-  install:
-    disableWait: true
-  upgrade:
-    disableWait: true
