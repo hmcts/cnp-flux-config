@@ -11,6 +11,12 @@ spec:
       image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-5e47040-20250430193754 #{"$imagepolicy": "flux-system:hmc-hmi-outbound-adapter"}
       environment:
         DUMMY_VAR: 0
+        PR_DELETION_WAIT_INTERVAL: 30,DAYS
+        PR_ESCALATION_WAIT_INTERVAL: 1,DAY
+        PR_EXCEPTION_LIMIT_IN_HOURS: 24
+        PR_PENDING_WAIT_IN_MILLISECS: 120000
+        PR_PENDING_WAIT_INTERVAL: 2,MINUTES
+        PR_RETRY_LIMIT_IN_MINUTES: 15
   chart:
     spec:
       chart: ./stable/hmc-hmi-outbound-adapter
