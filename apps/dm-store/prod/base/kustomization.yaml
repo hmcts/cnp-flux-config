@@ -3,8 +3,11 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../base/slack-provider/prod
+  - ../../../base/docker-registry/prod
+  - ../../dmstore-cron-document-disposer/dmstore-cron-document-disposer.yaml
 namespace: dm-store
 patches:
   - path: ../../identity/prod.yaml
   - path: ../../dm-store/prod.yaml
+  - path: ../../dmstore-cron-document-disposer/prod.yaml
   - path: ../../serviceaccount/prod.yaml

@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-9464119-20250304160009
+      image: hmctspublic.azurecr.io/idam/api:prod-004bc7e-20250506143700
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
@@ -79,9 +79,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      chart: idam-api
-      version: 0.8.1
+      chart: ./stable/idam-api
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m
