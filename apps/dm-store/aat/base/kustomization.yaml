@@ -1,10 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: dm-store
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
   - ../../../base/slack-provider/aat
+  - ../../../base/docker-registry/aat
+  - ../../dmstore-cron-document-disposer/dmstore-cron-document-disposer.yaml
 patches:
   - path: ../../identity/aat.yaml
   - path: ../../dm-store/aat.yaml
+  - path: ../../dmstore-cron-document-disposer/aat.yaml
   - path: ../../serviceaccount/aat.yaml
