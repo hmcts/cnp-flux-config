@@ -10,6 +10,11 @@ spec:
       schedule: "0 10 * * *"
       environment:
         TRIG: trig-1
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
   chart:
     spec:
       chart: probate-cron
@@ -18,8 +23,3 @@ spec:
         kind: HelmRepository
         name: hmctspublic
         namespace: flux-system
-    global:
-      jobKind: CronJob
-      enableKeyVaults: true
-      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-      environment: demo
