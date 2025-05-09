@@ -7,7 +7,7 @@ spec:
   releaseName: ccpay-slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/ccpay/slack-help-bot:prod-ecc845d-20241004181604Z #{"$imagepolicy": "flux-system:ccpay-slack-help-bot"}
+    image: hmctspublic.azurecr.io/ccpay/slack-help-bot:prod-f944428-20250506122205 #{"$imagepolicy": "flux-system:ccpay-slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL: cc-payments
       SLACK_REPORT_CHANNEL_ID: C422ARM9T
@@ -16,7 +16,7 @@ spec:
       JIRA_ISSUE_TYPE_NAME: "Task"
       JIRA_START_TRANSITION_ID: 381
       JIRA_DONE_TRANSITION_ID: 401
-      DUMMY_VAR: 1
+      DUMMY_VAR: 0
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -28,8 +28,8 @@ spec:
   chart:
     spec:
       chart: nodejs
-      version: 3.0.0
+      version: 3.2.0
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system
