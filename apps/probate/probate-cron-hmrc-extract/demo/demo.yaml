@@ -7,7 +7,7 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/probate/back-office:pr-3075-cf98000-20250508122522 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "*/20 * * * *"
+      schedule: "0 10 * * *"
       environment:
         TRIG: trig-1
     global:
@@ -15,11 +15,3 @@ spec:
       enableKeyVaults: true
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       environment: demo
-  chart:
-    spec:
-      chart: probate-cron
-      version: 0.0.30
-      sourceRef:
-        kind: HelmRepository
-        name: hmctspublic-oci
-        namespace: flux-system
