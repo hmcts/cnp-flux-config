@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bsp-cron-trigger-daily-checks
+spec:
+  releaseName: bsp-cron-trigger-daily-checks
+  values:
+    job:
+      schedule: "0,5 * * * *"
+      environment:
+        SEND_LETTER_SERVICE_URL: http://rpe-send-letter-service-perftest.service.core-compute-perftest.internal
+        TRIGGER_TYPE: SEND_LETTER_HEALTH_CHECK

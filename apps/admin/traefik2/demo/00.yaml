@@ -13,3 +13,10 @@ spec:
         useWorkloadIdentity: "true"
     serviceAccount:
       name: admin
+    additionalArguments:
+      - "--entryPoints.web.forwardedHeaders.insecure=true"
+      - "--entryPoints.websecure.forwardedHeaders.insecure=true"
+      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=180"
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=180"
+      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=180"
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=180"
