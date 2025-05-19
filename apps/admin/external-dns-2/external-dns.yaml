@@ -8,10 +8,10 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 8.7.5
+      version: 8.8.2
       sourceRef:
         kind: HelmRepository
-        name: external-dns
+        name: bitnami-charts
         namespace: admin
   interval: 1m
   values:
@@ -19,11 +19,12 @@ spec:
     image:
       registry: hmctspublic.azurecr.io
       repository: imported/bitnami/external-dns
-      tag: 0.13.6-debian-11-r28
+      tag: 0.16.1-debian-12-r5
     policy: sync
     serviceAccount:
       create: false
       name: admin
+      automountServiceAccountToken: true
     podLabels:
       azure.workload.identity/use: "true"
     sources:
