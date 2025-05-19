@@ -8,17 +8,18 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-329c13b-20250507104200 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-e00f0af-20250519095057 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "*/15 * 07 05 *"
+      schedule: "*/10 13 12 05 *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         MULTIPLE_HEARINGS_OUTCOMES_ENABLED: false
+        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: true
         DUMMY_RESTART_VAR: true
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: "1000"
