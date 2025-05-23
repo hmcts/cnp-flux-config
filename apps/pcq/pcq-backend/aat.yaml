@@ -5,8 +5,6 @@ metadata:
 spec:
   values:
     java:
-      spotInstances:
-        enabled: false
       environment:
         S2S_URL: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
         DB_ALLOW_DELETE_RECORD: true
@@ -14,7 +12,8 @@ spec:
         PCQ_DISPOSER_ENABLED: false
         NUMBER_OF_DAYS_LIMIT: 90
     job:
-      schedule: "0/15 * * * *"
+      schedule: "0 10 * * *"
       environment:
-        PCQ_DISPOSER_ENABLED: false
+        PCQ_DISPOSER_ENABLED: true
         PCQ_DISPOSER_DRY_RUN: true
+        PCQ_DISPOSER_RATE_LIMIT: 1000
