@@ -7,5 +7,12 @@ spec:
   values:
     job:
       applicationPort: 8095
+      #schedule: "0 16 * * *"
+      backoffLimit: 1
+      image: hmctspublic.azurecr.io/dm/store:prod-a92a680-20250529104510 #{"$imagepolicy": "flux-system:demo-dm-store"}
+      environment:
+        TASK_NAME: CaseDocumentsDeletionTask
+        CASE_DOCUMENTS_DELETION_NO_OF_ITERATIONS: 1
+        CASE_DOCUMENTS_DELETION_BATCH_SIZE: 10
     global:
       environment: demo
