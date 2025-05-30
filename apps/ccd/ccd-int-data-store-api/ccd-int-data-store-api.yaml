@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-int-data-store-api
+spec:
+  releaseName: ccd-int-data-store-api
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      ingressHost: ccd-int-data-store-api-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-86c59b2-20250527085749 #{"$imagepolicy": "flux-system:ccd-int-data-store-api"}
+      environment:
+        CCD_MULTIPARTY_FIX_ENABLED: true
+        CCD_MULTIPARTY_CASE_TYPES: "*"
+        CCD_MULTIPARTY_EVENTS: "*"
+        CCD_MULTIPARTY_LOG_LEVEL: INFO
+  chart:
+    spec:
+      chart: ./stable/ccd-data-store-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
