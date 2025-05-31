@@ -3,6 +3,14 @@ kind: HelmRelease
 metadata:
   name: plum-frontend
 spec:
+  chart:
+    spec:
+      chart: ./charts/plum-frontend
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: plum-frontend
+        namespace: flux-system
   values:
     nodejs:
       ingressHost: plum.sandbox.platform.hmcts.net
