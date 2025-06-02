@@ -7,13 +7,14 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/probate/back-office:pr-3092-b921722-20250522143422 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "5 9 * * *"
+      schedule: "30 13 * * *"
       cpuRequests: "250m"
       cpuLimits: "1000m"
       memoryRequests: "512Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-1
+      ADHOC_JOB_DATE: "2025-05-29"
     global:
       jobKind: CronJob
       enableKeyVaults: true

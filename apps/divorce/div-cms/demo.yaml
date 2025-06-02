@@ -6,12 +6,24 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/cms:pr-782-cf02a1a-20250513092948 #{"$imagepolicy": "flux-system:demo-div-cms"}
+      image: hmctspublic.azurecr.io/div/cms:pr-782-cf6fdc2-20250529174543 #{"$imagepolicy": "flux-system:demo-div-cms"}
       keyVaults:
         div:
           secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
             - name: app-insights-connection-string
               alias: app-insights-connection-string
+            - name: ccd-submission-s2s-auth-secret
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: idam-secret
+              alias: AUTH2_CLIENT_SECRET
+            - name: draft-store-api-encryption-key
+              alias: DRAFT_STORE_API_ENCRYPTION_KEY_VALUE
+            - name: idam-caseworker-username
+              alias: IDAM_CASEWORKER_USERNAME
+            - name: idam-caseworker-password
+              alias: IDAM_CASEWORKER_PASSWORD
       environment:
         IDAM_API_BASEURL: "https://idam-api.demo.platform.hmcts.net"
         TRIGGER_DEPLOY: trigger

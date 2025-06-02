@@ -8,13 +8,13 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-e00f0af-20250519095057 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-be31a3d-20250528115158 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "0 21 * * *"
+      schedule: "30 20 * * *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -45,6 +45,8 @@ spec:
               alias: CASE_OUTCOME_GAPS_ENCODED_DATA_STRING
             - name: encoded-data-string-multiple-hearings-outcomes
               alias: MULTIPLE_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
+            - name: encoded-string-update-listing-reqs-amend-reason
+              alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -52,15 +54,7 @@ spec:
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-prod.service.core-compute-prod.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
         ARCHIVE_OLD_DRAFTS_ENABLED: true
-        MIGRATION_WA_ENABLED: false
-        MIGRATION_DWP_ENABLED: false
-        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
-        MIGRATION_WA_FIELDS_REMOVAL_ENABLED: false
-        COMPLETED_HEARINGS_OUTCOMES_ENABLED: false
-        NON_LISTED_HEARINGS_OUTCOMES_ENABLED: false
-        MULTIPLE_HEARINGS_OUTCOMES_ENABLED: false
-        HMCTS_DWP_STATE_MIGRATION_ENABLED: false
-        CASE_OUTCOME_GAPS_MIGRATION_ENABLED: false
+        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: false
         CASE_MIGRATION_MAX_RETRIES: 5
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: 1000

@@ -6,12 +6,20 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/dgs:pr-653-e7e1139-20250523164733 #{"$imagepolicy": "flux-system:demo-div-dgs"}
+      image: hmctspublic.azurecr.io/div/dgs:pr-659-efbe1f9-20250529174838 #{"$imagepolicy": "flux-system:demo-div-dgs"}
       keyVaults:
         div:
           secrets:
+            - name: div-doc-s2s-auth-secret
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: docmosis-api-key
+              alias: DOCMOSIS_SERVICE_ACCESS_KEY
+            - name: idam-secret
+              alias: OAUTH2_CLIENT_DIV
             - name: app-insights-connection-string
               alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
         FEATURE_RESP_SOLICITOR_DETAILS: "true"

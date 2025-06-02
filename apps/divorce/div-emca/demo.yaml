@@ -6,10 +6,14 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/emca:pr-457-d14d206-20250523152715 #{"$imagepolicy": "flux-system:demo-div-emca"}
+      image: hmctspublic.azurecr.io/div/emca:pr-457-0380fc5-20250530110616 #{"$imagepolicy": "flux-system:demo-div-emca"}
       keyVaults:
         div:
           secrets:
+            - name: div-doc-s2s-auth-secret
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
             - name: app-insights-connection-string
               alias: app-insights-connection-string
       environment:
