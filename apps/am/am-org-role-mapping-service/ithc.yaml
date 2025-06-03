@@ -5,11 +5,12 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/am/org-role-mapping-service:prod-fed3b07-20250602141719 #{"$imagepolicy": "flux-system:ithc-am-org-role-mapping-service"}
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: INFO
-        DB_FEATURE_FLAG_ENABLE: st_cic_wa_1_0
-        REFRESH_JOB: LEGAL_OPERATIONS-ST_CIC-ABORTED-0-5
-        # Please set 'REFRESH_JOB_ALLOW_UPDATE' to false before next refresh
-        REFRESH_JOB_ALLOW_UPDATE: true
+        DB_FEATURE_FLAG_ENABLE: civil_wa_2_3
+        REFRESH_JOB: LEGAL_OPERATIONS-CIVIL-NEW-0-6
+        # always set 'REFRESH_JOB_ALLOW_UPDATE' to false before next refresh (i.e. only use when setting existing job to ABORTED)
+        REFRESH_JOB_ALLOW_UPDATE: false
         DUMMY_VAR: false

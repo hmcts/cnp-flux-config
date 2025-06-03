@@ -8,7 +8,7 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-51a95c7-20250312163922 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-be31a3d-20250528115158 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       keyVaults:
         sscs:
           secrets:
@@ -32,10 +32,14 @@ spec:
               alias: COMPLETED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
             - name: encoded-data-string-non-listed-hearings-outcomes
               alias: NON_LISTED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
+            - name: encoded-data-string-multiple-hearings-outcomes
+              alias: MULTIPLE_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
             - name: encoded-data-string-hmcts-dwp-state-migration
               alias: HMCTS_DWP_STATE_ENCODED_DATA_STRING
             - name: encoded-data-string-case-outcome-gaps-migration
               alias: CASE_OUTCOME_GAPS_ENCODED_DATA_STRING
+            - name: encoded-string-update-listing-reqs-amend-reason
+              alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
       environment:
         MIGRATION_WA_ENABLED: false
   chart:

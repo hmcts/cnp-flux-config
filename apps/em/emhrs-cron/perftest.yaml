@@ -6,8 +6,16 @@ spec:
   releaseName: emhrs-cron
   values:
     job:
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '500m'
+      cpuLimits: '2500m'
       applicationPort: 8095
-      image: hmctspublic.azurecr.io/em/hrs-api:pr-2351-c62ce6c-20250326152901 #{"$imagepolicy": "flux-system:perftest-em-hrs-api"}
-      # schedule: "*/10 * * * *"
+      image: hmctspublic.azurecr.io/em/hrs-api:pr-2475-ea89606-20250520143059 #{"$imagepolicy": "flux-system:perftest-em-hrs-api"}
+      #schedule: "50 11 * * *"
+      environment:
+        UPDATE_TTL_BATCH_SIZE: 10000
+        UPDATE_TTL_THREAD_LIMIT: 20
+        UPDATE_TTL_NO_OF_ITERATIONS: 81
     global:
       environment: perftest

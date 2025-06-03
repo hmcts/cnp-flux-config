@@ -48,11 +48,21 @@ spec:
               allowed:
                 verbs: ["describe", "get", "top"]
                 resources: ["events", "namespaces", "nodes", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
+          context:
+            rbac:
+              group:
+                type: Static
+                prefix: ""
+                static:
+                  values: ["botkube-plugins-default"]
     rbac:
-      rules:
-        - apiGroups: ["*"]
-          resources: ["events", "namespaces", "nodes", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
-          verbs: ["get", "watch", "list"]
+      groups:
+        botkube-plugins-default:
+          create: true
+          rules:
+            - apiGroups: ["*"]
+              resources: ["namespaces", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
+              verbs: ["get", "watch", "list"]
     resources:
       requests:
         cpu: 100m

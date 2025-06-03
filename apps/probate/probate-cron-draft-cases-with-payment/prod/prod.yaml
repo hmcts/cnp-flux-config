@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-draft-cases-with-payment
+spec:
+  releaseName: probate-cron-draft-cases-with-payment
+  values:
+    job:
+      schedule: "45 13 1 5 *"
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
+        IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
+        PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
+        ADHOC_JOB_DATE: "1990-01-01"
+        ADHOC_JOB_TO_DATE: "2090-01-01"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

@@ -7,7 +7,7 @@ spec:
   releaseName: idam-web-public
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-e0abb4e-20250304161436
+      image: hmctspublic.azurecr.io/idam/web-public:prod-5cf448a-20250416160831
       replicas: 2
       cpuRequests: '60m'
       cpuLimits: '1500m'
@@ -30,9 +30,9 @@ spec:
         trigger_deploy: 20241125
   chart:
     spec:
-      chart: idam-web-public
-      version: 0.4.1
+      chart: ./stable/idam-web-public
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m
