@@ -6,12 +6,16 @@ spec:
   releaseName: probate-cron-exela-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-3036-3858aeb-20250326134443 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "30 09 * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3075-7556100-20250603105045 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "32 13 * * *"
+      cpuRequests: "250m"
+      cpuLimits: "1000m"
+      memoryRequests: "512Mi"
+      memoryLimits: "2048Mi"
       environment:
         TRIG: trig-1
-        ADHOC_JOB_DATE: "2024-01-20"
-        ADHOC_JOB_TO_DATE: "2025-03-13"
+        EXCELA_EMAIL: "Elife.Toplu@justice.gov.uk"
+        ADHOC_JOB_DATE: "2025-05-28"
     global:
       jobKind: CronJob
       enableKeyVaults: true

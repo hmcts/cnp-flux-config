@@ -6,30 +6,8 @@ spec:
   releaseName: adoption-cron-submit-application-to-court-alerts
   values:
     job:
-      image: hmctspublic.azurecr.io/adoption/cos-api:pr-917-9305905-20250326170154 #{"$imagepolicy": "flux-system:demo-adoption-cron-submit-application-to-court-alerts"}
       environment:
-        TASK_NAME: AlertToSubmitApplicationToCourtTask
         VAR: trigger1
-      schedule: 10 11 * * *
-      keyVaults:
-        adoption:
-          secrets:
-            - name: uk-gov-notify-api-key
-              alias: UK_GOV_NOTIFY_API_KEY
-            - name: s2s-secret-cos-api
-              alias: S2S_SECRET
-            - name: s2s-secret
-              alias: S2S_SECRET_WEB
-            - name: idam-secret
-              alias: IDAM_CLIENT_SECRET
-            - name: idam-system-user-name
-              alias: IDAM_SYSTEM_UPDATE_USERNAME
-            - name: idam-system-user-password
-              alias: IDAM_SYSTEM_UPDATE_PASSWORD
-            - name: launchDarkly-sdk-key
-              alias: LAUNCH_DARKLY_SDK_KEY
-            - name: app-insight-connection-key
-              alias: app-insight-connection-key
     global:
       jobKind: CronJob
       enableKeyVaults: true

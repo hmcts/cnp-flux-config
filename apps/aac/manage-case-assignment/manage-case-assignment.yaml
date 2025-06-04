@@ -6,9 +6,14 @@ spec:
   releaseName: manage-case-assignment
   values:
     java:
+      memoryRequests: "1536Mi"
       replicas: 2
+      autoscaling:
+        maxReplicas: 4
+        memory:
+          averageUtilization: 90
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-701889e-20250326101806 #{"$imagepolicy": "flux-system:manage-case-assignment"}
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-7e1b6f5-20250602101143 #{"$imagepolicy": "flux-system:manage-case-assignment"}
       environment:
         SPRING_CACHE_CAFFEINE_SPEC: expireAfterWrite=1800s
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,nfdiv_case_api,fpl_case_service,probate_backend,prl_cos_api,et_cos,civil_service,et_sya_api

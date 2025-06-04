@@ -5,18 +5,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/em/hrs-api:prod-47fabe3-20250327082558 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
+      image: hmctspublic.azurecr.io/em/hrs-api:prod-ebe51e8-20250603075948 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS_REFORM_EM_HRS: DEBUG
-        TTL_ENABLED: false
-        # DELETE_CASE_ENDPOINT_ENABLED: true
-        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: false
         DELETE_CASE_S2S_WHITELIST: ccd_case_disposer,em_gw
-        # JURISDICTION_CODES_UPDATE_ENABLED: true
-        # JURISDICTION_CODES_UPDATE_CRONJOB_SCHEDULE: '0 0/15 * * * *'
-        JOB_TEST_FILE_CREATION_ENABLED: true
-        JOB_TEST_FILE_CREATION_SCHEDULE: '0 0 11 * * *'
-        JOB_TEST_FILE_CREATION_TEST_CASES: 100
-        JOB_TEST_FILE_CREATION_MAX_CONCURRENT_UPLOADS: 10
-      spotInstances:
-        enabled: true
+        DELETE_CASE_ENDPOINT_ENABLED: true
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
+        VH_STORAGE_CONTAINER_NAME: recordings
+        CVP_STORAGE_CONTAINER_NAME: recordings
+        refresh: delete_me
