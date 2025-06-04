@@ -10,13 +10,13 @@ spec:
         TASK_NAME: GrantAwaitingDocsExtractTask
         VAR_FV2: trigger-2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-b11e72f-20250220144541 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-a29c70d-20250604100100 #{"$imagepolicy": "flux-system:demo-probate-orchestrator-service"}
       schedule: 0 * * * *
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.26
+      version: 0.0.30
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system

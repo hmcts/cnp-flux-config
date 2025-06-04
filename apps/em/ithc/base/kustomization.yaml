@@ -2,9 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - ../../em-icp/em-icp.yaml
+  - ../../emhrs-cron/emhrs-cron.yaml
   - ../../../rbac/nonprod-role.yaml
   - ../../../base/slack-provider/ithc
+  - ../../../base/docker-registry/ithc
 namespace: em
 patches:
   - path: ../../em-ccd-orchestrator/ithc.yaml
@@ -13,5 +14,6 @@ patches:
   - path: ../../em-npa/ithc.yaml
   - path: ../../em-stitching/ithc.yaml
   - path: ../../em-hrs-api/ithc.yaml
+  - path: ../../emhrs-cron/ithc.yaml
   - path: ../../em-icp/ithc.yaml
   - path: ../../serviceaccount/ithc.yaml

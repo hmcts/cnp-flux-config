@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/case-api:pr-2461-36dc580-20250217175044 #{"$imagepolicy": "flux-system:demo-ia-case-api"}
+      image: hmctspublic.azurecr.io/ia/case-api:prod-befc413-20250519172439 #{"$imagepolicy": "flux-system:ia-case-api"}
       environment:
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
@@ -15,8 +15,6 @@ spec:
         POSTGRES_USERNAME: pgadmin
         LOCATION_REF_DATA_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         FEES_REGISTER_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
-        RESTART_ME: "true"
+        RESTART_ME: "yes"
         SAVE_NOTIFICATIONS_DATA_SCHEDULE_HOUR: 19
         SAVE_NOTIFICATIONS_DATA_SCHEDULE_MAX_MINUTES: 50
-      spotInstances:
-        enabled: true

@@ -2,14 +2,38 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cron-hwf-citizen-update-state
+  namespace: private-law
 spec:
   releaseName: prl-cron-hwf-citizen-update-state
   values:
     job:
       ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/prl/cos:prod-67e881b-20250221105824 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-95fcd4d-20250603141320 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.ithc.platform.hmcts.net
+        PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-ithc.service.core-compute-ithc.internal/oauth2/callback
+        IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.ithc.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
+        XUI_URL: https://manage-case.ithc.platform.hmcts.net/cases/case-details
+        PAY_URL: http://payment-api-ithc.service.core-compute-ithc.internal
+        PAY_CALLBACK_URL: http://prl-cos-ithc.service.core-compute-ithc.internal/service-request-update
+        PRL_DGS_API_URL: http://prl-dgs-ithc.service.core-compute-ithc.internal
+        FEE_REGISTER_API_URL: http://fees-register-api-ithc.service.core-compute-ithc.internal
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
+        FACT_API: http://fact-api-ithc.service.core-compute-ithc.internal
+        LOCATION_REF_API: http://rd-location-ref-api-ithc.service.core-compute-ithc.internal
+        BUNDLE_URL: http://em-ccd-orchestrator-ithc.service.core-compute-ithc.internal
+        REFDATA_API_URL: http://rd-commondata-api-ithc.service.core-compute-ithc.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-ithc.service.core-compute-ithc.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-ithc.service.core-compute-ithc.internal
         APP_ENV: "ithc"
+      schedule: 0,15 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

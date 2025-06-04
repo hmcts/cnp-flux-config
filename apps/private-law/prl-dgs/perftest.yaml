@@ -12,7 +12,7 @@ spec:
       readinessTimeout: 15
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/dgs:prod-20c991b-20241115171828 #{"$imagepolicy": "flux-system:prl-dgs"}
+      image: hmctspublic.azurecr.io/prl/dgs:prod-ce1776c-20250417103048 #{"$imagepolicy": "flux-system:prl-dgs"}
       environment:
         FEATURE_EXAMPLE: true
       keyVaults:
@@ -39,8 +39,12 @@ spec:
               alias: SYSTEM_UPDATE_USER_USERNAME
             - name: system-update-user-password
               alias: PRL_SYSTEM_UPDATE_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
     global:
       environment: perftest
+      DOCMOSIS_SERVICE_DEV_MODE_FLAG: false
+      DOCMOSIS_SERVICE_BASE_URL: "https://docmosis.perftest.platform.hmcts.net"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:

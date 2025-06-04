@@ -2,16 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - ../../em-icp/em-icp.yaml
+  - ../../emhrs-cron/emhrs-cron.yaml
   - ../../../rbac/nonprod-role.yaml
   - ../../../base/slack-provider/perftest
+  - ../../../base/docker-registry/perftest
 namespace: em
 patches:
   - path: ../../em-ccd-orchestrator/perftest.yaml
   - path: ../../em-anno/perftest.yaml
-  - path: ../../em-hrs-ingestor/schedule-off.yaml
   - path: ../../em-stitching/perftest.yaml
   - path: ../../em-npa/perftest.yaml
   - path: ../../em-hrs-api/perftest.yaml
+  - path: ../../em-hrs-ingestor/perftest.yaml
+  - path: ../../emhrs-cron/perftest.yaml
   - path: ../../em-icp/perftest.yaml
   - path: ../../serviceaccount/perftest.yaml

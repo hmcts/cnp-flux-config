@@ -6,26 +6,28 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "00 11 19 2 *"
-      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-69539a3-20250212155501 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
+      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-e289ab4-20250501162157 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
+      schedule: "40 10 25 4 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "false"
+        MIGRATION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 1000
+        MIGRATION_NUMBER_OF_CASES: 125
         MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
         MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
         MIGRATION_NUMBER_OF_THREADS: 20
         SERVICE_ID: BFA1
         LOCATION_REF_DATA_URL: "http://rd-location-ref-api-demo.service.core-compute-demo.internal"
-        #MIGRATION_CASE_ID: 1721041488385667,1711125479412028,1711125604215247,1711125635460150,1711125676071874,1711125704587651,1606229697208842,1606229922775904
+        #MIGRATION_CASE_ID: 1738165320868951,1739878598070469,1739878075557798
         MIGRATE_IS_ARIA_MIGRATED: "false"
-        MIGRATE_DRAFT_TTL_SET: "false"
-        FUNCTION_ENABLED: "true"
-        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "true"
+        MIGRATE_APPEAL_STARTED_TTL_SET: "false"
+        MIGRATE_APPLICATION_STARTED_TTL_SET: "false"
+        MIGRATE_APPLICATION_STARTED_BY_LR_TTL_SET: "false"
+        MIGRATION_PA_APPEALS_IN_PENDING_PAYMENT: "true"
+        DUMMY_VARIABLE: "yes"

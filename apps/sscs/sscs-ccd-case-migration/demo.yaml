@@ -9,8 +9,8 @@ spec:
     job:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-8e33ca2-20250220101043 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "45 16 20 3 *"
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-be31a3d-20250528115158 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "*/10 * 27 5 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -29,18 +29,17 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_USER
             - name: idam-sscs-systemupdate-password
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-string-update-listing-reqs-amend-reason
+              alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
         ELASTIC_ENABLED: true
-        MIGRATION_WA_ENABLED: false
-        MIGRATION_DWP_ENABLED: false
-        MIGRATION_SSCS_12552_ENABLED: false
-        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
         MIGRATION_QUERY_SIZE: 500
-        MIGRATION_CASE_LIMIT: "400000"
+        MIGRATION_CASE_LIMIT: "1000"
+        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: true
         DUMMY: true
     global:
       environment: demo

@@ -9,11 +9,17 @@ spec:
       enableOAuth: true
       replicas: 2
       useInterpodAntiAffinity: true
-      memoryLimits: "2560Mi"
-      memoryRequests: "1700Mi"
+      memoryLimits: "2048Mi"
+      memoryRequests: "1536Mi"
       cpuLimits: "1500m"
-      cpuRequests: "100m"
-      image: hmctspublic.azurecr.io/et/msg-handler:prod-c007943-20250221092313 #{"$imagepolicy": "flux-system:et-msg-handler"}
+      cpuRequests: "200m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
+      image: hmctspublic.azurecr.io/et/msg-handler:prod-a7c12d1-20250603075611 #{"$imagepolicy": "flux-system:et-msg-handler"}
   chart:
     spec:
       chart: ./stable/et-msg-handler

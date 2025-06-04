@@ -8,11 +8,17 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/cos:prod-b42e915-20250220133014 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctspublic.azurecr.io/et/cos:prod-5b8e7ab-20250604094420 #{"$imagepolicy": "flux-system:et-cos"}
       memoryLimits: "3072Mi"
-      memoryRequests: "2048Mi"
-      cpuLimits: "2000m"
-      cpuRequests: "250m"
+      memoryRequests: "1536Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "200m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
       readinessDelay: 45
   chart:
     spec:

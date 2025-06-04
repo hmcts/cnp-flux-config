@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-1056abb-20250213111525
+      image: hmctspublic.azurecr.io/idam/api:prod-004bc7e-20250506143700
       ingressHost: idam-api.ithc.platform.hmcts.net
       replicas: 1
       environment:
@@ -30,6 +30,8 @@ spec:
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-ithc.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-ithc.internal
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
         STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         LOG_AND_AUDIT_IDAM_ENABLED: true
         IDAM_SCHEDULED_BATCH_PROCESSING_ENABLED: false

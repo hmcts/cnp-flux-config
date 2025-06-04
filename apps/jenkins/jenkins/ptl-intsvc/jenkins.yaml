@@ -53,9 +53,9 @@ spec:
                       - key: PTL_AKS_RESOURCE_GROUP
                         value: cft-ptl-00-rg
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -116,16 +116,16 @@ spec:
                     title: BSP
                 - buildMonitor:
                     includeRegex: >-
-                      .+((rpx-xui.+)|(em-media-viewer.+)|(em-showcase.+)|(ccd-case-ui-toolkit.+))\/master
+                      ^HMCTS.*\/(rpx-xui.+|em-icp-api|em-media-viewer|em-showcase)\/master
                     name: XUI
                     recurse: true
-                    title: XUI
+                    title: ExUI Apps Master Builds
                 - buildMonitor:
                     includeRegex: >-
-                      .+\/(rpx-.*)\/(.*PR-.*)
-                    name: RPX-PR
+                      ^HMCTS.*\/(rpx-xui.+|em-icp-api|em-media-viewer|em-showcase)\/(.*PR-.*)
+                    name: XUI-PR
                     recurse: true
-                    title: RPX-PR
+                    title: ExUI Apps PR Builds
                 - buildMonitor:
                     includeRegex: >-
                       ^HMCTS_(\w_to_\w)(?!.*Nightly).*\/(?!.*ccd-case-disposer|.*ccd-case-migration-starter)(ccd.*|aac.*|cpo.*|hmc-.*|ts.*)\/master
@@ -146,7 +146,7 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-bulk-scan|sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api)\/master
+                      ^HMCTS.*\/(sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -158,13 +158,13 @@ spec:
                     title: I & A Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(bar-api|bar-web|bar-shared-infrastructure|ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app|ccpay-notifications-service)\/master
+                      ^HMCTS.*\/(ccfr-fees-register-app|ccfr-fees-register-admin-web|ccpay-bulkscanning-app|ccpay-payment-app|ccpayfr-shared-infrastructure|ccpay-payment-api-gateway|ccpay-scheduled-jobs|ccpay-functions-node|ccpay-service-request-cpo-update-service|ccpay-bubble|ccpay-paymentoutcome-web|ccpay-refunds-app|ccpay-notifications-service)\/master
                     name: Fees-and-Pay
                     recurse: true
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure)\/master
+                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure|probate-performance)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -366,6 +366,12 @@ spec:
                     name: PCS
                     recurse: true
                     title: Possession Claim Service Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/enforcement-.+\/master
+                    name: Enforcement
+                    recurse: true
+                    title: Enforcement Service Dashboard
           location: |
             unclassified:
               location:

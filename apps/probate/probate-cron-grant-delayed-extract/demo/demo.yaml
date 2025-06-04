@@ -6,10 +6,31 @@ spec:
   releaseName: probate-cron-grant-delayed-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-3005-d4dd72c-20250218183542 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "41 13 * * *"
+      image: hmctspublic.azurecr.io/probate/orchestrator-service:prod-a29c70d-20250604100100 #{"$imagepolicy": "flux-system:demo-probate-orchestrator-service"}
+      schedule: "40 14 * * *"
       environment:
         TRIG: trig-1
+      keyVaults:
+        probate:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: s2s-probate-backend
+              alias: S2S_AUTH_TOTP_SECRET
+            - name: ccidam-idam-api-secrets-probate
+              alias: AUTH2_CLIENT_SECRET
+            - name: idamRedirectUrl
+              alias: IDAM_API_REDIRECT_URL
+            - name: payCaseWorkerPass
+              alias: PAYMENT_CASEWORKER_PASSWORD
+            - name: payCaseWorkerUser
+              alias: PAYMENT_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerUser
+              alias: SCHEDULER_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerPass
+              alias: SCHEDULER_CASEWORKER_PASSWORD
     global:
       jobKind: CronJob
       enableKeyVaults: true

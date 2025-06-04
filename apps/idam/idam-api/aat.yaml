@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-1056abb-20250213111525
+      image: hmctspublic.azurecr.io/idam/api:prod-004bc7e-20250506143700
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
@@ -33,6 +33,8 @@ spec:
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-aat2.internal
         SSL_TRUST_HOSTNAMES_2: forgerock-idm.service.core-compute-idam-aat.internal
         SSL_TRUST_HOSTNAMES_3: forgerock-am.service.core-compute-idam-aat.internal
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
@@ -77,9 +79,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      chart: idam-api
-      version: 0.8.1
+      chart: ./stable/idam-api
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m

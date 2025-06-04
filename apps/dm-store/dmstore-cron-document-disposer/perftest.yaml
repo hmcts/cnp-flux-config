@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dmstore-cron-document-disposer
+spec:
+  releaseName: dmstore-cron-document-disposer
+  values:
+    job:
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '500m'
+      cpuLimits: '2500m'
+      applicationPort: 8095
+      #schedule: "30 12 * * *"
+      backoffLimit: 1
+      image: hmctspublic.azurecr.io/dm/store:prod-56767b9-20250603152310 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      environment:
+        HIKARI_MAX_POOL_SIZE: 100
+        TASK_NAME: CaseDocumentsDeletionTask
+        CASE_DOCUMENTS_DELETION_THREAD_LIMIT: 20
+        CASE_DOCUMENTS_DELETION_NO_OF_ITERATIONS: 1
+        CASE_DOCUMENTS_DELETION_BATCH_SIZE: 50000
+    global:
+      environment: perftest

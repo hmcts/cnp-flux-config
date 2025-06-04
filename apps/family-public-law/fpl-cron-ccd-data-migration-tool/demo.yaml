@@ -6,7 +6,7 @@ spec:
   releaseName: fpl-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-a2cd882-20250213115220 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-286-d93e68f-20250529082619 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
@@ -22,18 +22,3 @@ spec:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         DEFAULT_THREAD_LIMIT: 25
         DEFAULT_QUERY_SIZE: 100
-      keyVaults:
-        fpl:
-          secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: system-update-user-username
-              alias: IDAM_USERNAME
-            - name: system-update-user-password
-              alias: IDAM_PASSWORD
-            - name: fpl-case-service-idam-client-secret
-              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
-            - name: fpl-case-service-s2s-secret
-              alias: DATA_STORE_IDAM_KEY
-            - name: migration-tool-case-id-list-mapping
-              alias: CASE_ID_LIST_MAPPING

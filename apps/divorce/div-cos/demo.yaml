@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/cos:prod-93443d8-20240424155852 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      image: hmctspublic.azurecr.io/div/cos:pr-1906-c3d698a-20250603121100 #{"$imagepolicy": "flux-system:demo-div-cos"}
       keyVaults:
         div:
           secrets:
@@ -34,8 +34,14 @@ spec:
               alias: DIV_SCHEDULER_DB_PASSWORD
             - name: AppInsightsInstrumentationKey
               alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
             - name: spring-mail-password
               alias: spring.mail.password
+            - name: idam-caseworker-superuser-username
+              alias: IDAM_CASEWORKER_SUPERUSER_USERNAME
+            - name: idam-caseworker-superuser-password
+              alias: IDAM_CASEWORKER_SUPERUSER_PASSWORD
       environment:
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         FEATURE_DN_REFUSAL: true

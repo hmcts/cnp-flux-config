@@ -6,7 +6,16 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/div/emca:prod-8295596-20240517113834 #{"$imagepolicy": "flux-system:demo-div-emca"}
+      image: hmctspublic.azurecr.io/div/emca:pr-457-0380fc5-20250530110616 #{"$imagepolicy": "flux-system:demo-div-emca"}
+      keyVaults:
+        div:
+          secrets:
+            - name: div-doc-s2s-auth-secret
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
       environment:
         IDAM_API_HEALTH_URI: https://idam-api.demo.platform.hmcts.net/health
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net

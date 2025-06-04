@@ -9,8 +9,8 @@ spec:
       jobKind: CronJob
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:prod-b5fbece-20250117101820 #{"$imagepolicy": "flux-system:adoption-cron-ccd-data-migration-tool"}
-      schedule: "58 20 14 01 *"
+      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:prod-35b23af-20250529114904 #{"$imagepolicy": "flux-system:adoption-cron-ccd-data-migration-tool"}
+      schedule: "05 20 31 02 *"
       environment:
         MIGRATION_ID: ADOP-2555
         USE_CASE_ID_MAPPING: true
@@ -25,6 +25,21 @@ spec:
         DEFAULT_THREAD_LIMIT: 25
         DEFAULT_QUERY_SIZE: 100
         RETRY_FAILURES: true
+      keyVaults:
+        adoption:
+          secrets:
+            - name: idam-system-user-name
+              alias: IDAM_USERNAME
+            - name: idam-system-user-password
+              alias: IDAM_PASSWORD
+            - name: idam-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: s2s-secret-cos-api
+              alias: DATA_STORE_IDAM_KEY
+            - name: migration-tool-case-id-list-mapping
+              alias: CASE_ID_LIST_MAPPING
+            - name: app-insight-connection-key
+              alias: app-insight-connection-key
   chart:
     spec:
       chart: ./stable/adoption-cron-ccd-data-migration-tool

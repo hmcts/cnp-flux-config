@@ -7,32 +7,7 @@ spec:
   releaseName: prl-cron-hearing-actual-task
   values:
     job:
-      keyVaults:
-        prl:
-          secrets:
-            - prl-cos-idam-client-secret
-            - microservicekey-prl-cos-api
-            - system-update-user-username
-            - system-update-user-password
-            - notification-client-api-key
-            - test-genericpassword
-            - launchDarkly-sdk-key
-            - send-grid-api-key
-            - rpa-notify-to-email
-            - rpa-notify-from-email
-            - AppInsightsInstrumentationKey
-            - southampton-court-email-address
-            - idam-solicitor-username
-            - idam-solicitor-password
-            - filtered-court-ids
-            - da-filtered-court-ids
-            - ca-default-court-epimms-id
-            - postcode-lookup-token
-            - prl-rd-api-system-username
-            - prl-rd-api-system-user-password
-            - welsh-court-mapping
-            - app-insights-connection-string
-      image: hmctspublic.azurecr.io/prl/cos:prod-67e881b-20250221105824 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-95fcd4d-20250603141320 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: UpdateHearingActualTask
         HEARING_AWAY_DAYS: 18
@@ -59,7 +34,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
         REFDATA_API_URL: http://rd-commondata-api-prod.service.core-compute-prod.internal
-      schedule: 20 0 * * *
+      schedule: 0 14 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

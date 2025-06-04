@@ -36,7 +36,8 @@ spec:
         NOTIFY_CHANGE_PASSWORD_CY_TEMPLATE_ID: '55370725-5926-4733-b139-aaee70d08562'
         NOTIFY_RESET_PASSWORD_CY_TEMPLATE_ID: '2ed5aede-caa9-4d39-9696-7bb2f1256ad5'
         NOTIFY_FTT_CASE_NOTIFICATION_CY_TEMPLATE_ID: '316df615-d4b1-4999-85fb-2a312d1cdc7b'
-      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-418-d601254-20250220135743 # {"$imagepolicy": "flux-system:demo-tax-tribunals-application"}
+        NOTIFY_EMPLOYEE_INVITE_TEMPLATE_ID: '6a70ce06-3823-45f4-b3da-006ed153e8be'
+      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-486-55d37c1-20250519135711     # {"$imagepolicy": "flux-system:demo-tax-tribunals-application"}
       keyVaults:
         tax-tribunals-cft:
           secrets:
@@ -160,7 +161,7 @@ spec:
       readinessPath: /health
       livenessPath: /health
       startupPath: /health
-      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-418-d601254-20250220135743
+      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-486-55d37c1-20250519135711
       args: ['./sidekiq.sh']
       useWorkloadIdentity: true
       memoryRequests: "2Gi"
@@ -172,6 +173,7 @@ spec:
         SECRETS_PATH: "/mnt/secrets/tax-tribunals-cft"
         RAILS_ENV: "production"
         DB_NAME: taxtribunals
+        SENTRY_DSN: "https://7a07916756f361626ba183336f3a9bf4@o345774.ingest.us.sentry.io/4507429453824000"
         NOTIFY_CASE_CONFIRMATION_TEMPLATE_ID: "02018001-b936-4ac1-a54b-1361f6059d49"
         NOTIFY_FTT_CASE_NOTIFICATION_TEMPLATE_ID: "c2362d14-f99e-4420-b102-8d297dd3a62f"
         NOTIFY_NEW_CASE_SAVED_TEMPLATE_ID: "5b8647bd-4fa2-47eb-9f38-a36a0f33161b"
@@ -193,6 +195,7 @@ spec:
         NOTIFY_CASE_LAST_REMINDER_CY_TEMPLATE_ID: "4bbd075a-2a5d-4146-93a6-dc53435a5f64"
         NOTIFY_SEND_APPLICATION_DETAIL_CY_TEMPLATE_ID: "be590b09-7371-4f46-8c6e-3393df5faef4"
         NOTIFY_SEND_APPLICATION_DETAIL_TEXT_CY_TEMPLATE_ID: "0654c83d-842c-4464-bdbf-a14160cde0c3"
+        NOTIFY_EMPLOYEE_INVITE_TEMPLATE_ID: "6a70ce06-3823-45f4-b3da-006ed153e8be"
       keyVaults:
         tax-tribunals-cft:
           secrets:
@@ -264,7 +267,7 @@ spec:
               alias: TEST_ENV_ID
 
     job:
-      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-418-d601254-20250220135743
+      image: hmctspublic.azurecr.io/tax-tribunals/application:pr-482-e8dd693-20250507091124
       useWorkloadIdentity: true
       # set for aat and preview, overridden in flux for other environments
       workloadClientID: "0af403db-e3ab-450b-bcde-884101a065cd"
@@ -306,6 +309,7 @@ spec:
         NOTIFY_CASE_LAST_REMINDER_CY_TEMPLATE_ID: "4bbd075a-2a5d-4146-93a6-dc53435a5f64"
         NOTIFY_SEND_APPLICATION_DETAIL_CY_TEMPLATE_ID: "be590b09-7371-4f46-8c6e-3393df5faef4"
         NOTIFY_SEND_APPLICATION_DETAIL_TEXT_CY_TEMPLATE_ID: "0654c83d-842c-4464-bdbf-a14160cde0c3"
+        NOTIFY_EMPLOYEE_INVITE_TEMPLATE_ID: "6a70ce06-3823-45f4-b3da-006ed153e8be"
       keyVaults:
         tax-tribunals-cft:
           secrets:

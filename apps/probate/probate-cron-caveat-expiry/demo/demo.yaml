@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-caveat-expiry
+spec:
+  releaseName: probate-cron-caveat-expiry
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3075-7556100-20250603105045 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0 2 31 2 *"
+      environment:
+        ADHOC_JOB_DATE: "2025-03-19"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

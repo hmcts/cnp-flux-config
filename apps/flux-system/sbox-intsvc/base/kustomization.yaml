@@ -3,7 +3,8 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/gotk-components.yaml
-- aks-sops-aadpodidentity.yaml
+- ../workload-identity
 - ../../base/bitnami-helmrepo.yaml
 patches:
-- path: ../../base/patches/kustomize-controller-patch.yaml
+- path: ../../serviceaccount/sbox-intsvc.yaml
+- path: ../../base/patches/workload-identity-deployment-patch.yaml

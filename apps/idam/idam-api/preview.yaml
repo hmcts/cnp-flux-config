@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-6c20ad3-20250220181703 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-c9401ad-20250603172147 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -30,6 +30,8 @@ spec:
         STRATEGIC_ADMIN_URL: https://idam-user-dashboard.preview.platform.hmcts.net
         STRATEGIC_FRONTEND_URL: https://idam-web-public.preview.platform.hmcts.net
         STRATEGIC_API_URL: https://idam-api.preview.platform.hmcts.net
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
@@ -67,7 +69,7 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_PENDINGSCHEDULECRON: "0 */3 * * * *"
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALDURATION: 30m
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALSCHEDULECRON: "0 */5 * * * *"
-        IDAM_SCHEDULED_INVITATIONS_APPOINTMENTS_LIFESPAN: 2d
+        IDAM_SCHEDULED_INVITATIONS_APPOINTMENTS_LIFESPAN: 5m
         IDAM_SCHEDULED_INVITATIONS_APPOINTMENTS_CLEANUPCRON: "0 30 11 * * TUE"
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net

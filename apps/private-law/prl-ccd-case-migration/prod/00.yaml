@@ -6,9 +6,25 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      schedule: "45 15 16 01 *"
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-8a3a29f-20250116105508 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
+      schedule: "30 15 20 05 *"
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-cdf4cdd-20250520150621 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
+      keyVaults:
+        prl:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: prl-cos-idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: system-update-user-username
+              alias: SYSTEM_UPDATE_USER_USERNAME
+            - name: system-update-user-password
+              alias: PRL_SYSTEM_UPDATE_PASSWORD
+            - name: microservicekey-prl-cos-api
+              alias: IDAM_S2S_AUTH_TOTP_SECRET
+            - name: migration-data
+              alias: MIGRATION_DATA
       environment:
         MIGRATION_ENABLED: true
-        MIGRATION_CASE_IDS: "1687515858959468"
+        MIGRATION_CASE_IDS: "1743604684094260"
         IDAM_API_URL: https://idam-api.platform.hmcts.net
+        ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-prod.service.core-compute-prod.internal

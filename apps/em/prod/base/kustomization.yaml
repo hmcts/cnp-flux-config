@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
+  - ../../emhrs-cron/emhrs-cron.yaml
   - ../../../base/slack-provider/prod
+  - ../../../base/docker-registry/prod
 namespace: em
 patches:
   - path: ../../em-ccd-orchestrator/prod.yaml
@@ -11,4 +13,6 @@ patches:
   - path: ../../em-npa/prod.yaml
   - path: ../../em-stitching/prod.yaml
   - path: ../../em-hrs-api/prod.yaml
+  - path: ../../emhrs-cron/prod.yaml
   - path: ../../serviceaccount/prod.yaml
+  - path: ../../em-icp/prod.yaml

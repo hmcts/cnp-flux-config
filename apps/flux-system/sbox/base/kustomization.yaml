@@ -3,6 +3,10 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/gotk-components.yaml
-- aks-sops-aadpodidentity.yaml
+- ../../workload-identity
+- aso-controller-settings-patch.yaml
+- ../../docker-regcreds/sbox
+- ../../base/plum-frontend-gitrepo.yaml
 patches:
-- path: ../../base/patches/kustomize-controller-patch.yaml
+- path: ../../serviceaccount/sbox.yaml
+- path: ../../base/patches/workload-identity-deployment-patch.yaml

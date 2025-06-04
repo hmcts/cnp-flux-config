@@ -5,17 +5,18 @@ metadata:
 spec:
   values:
     job:
-      suspend: true
-      schedule: "*/10 * * * *"
+      suspend: false
+      schedule: "15 * * * *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://idam-web-public.platform.hmcts.net
         OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-prod.internal:8443/openam/oauth2/hmcts
         MIGRATION_ROLLBACK: false
-        MIGRATION_QUERY_SIZE: 10000
-        MIGRATION_CASE_LIMIT: 10000
-        MIGRATION_CASETYPE: ET_Scotland
+        MIGRATION_QUERY_SIZE: 25
+        MIGRATION_CASE_LIMIT: 25
+        MIGRATION_CASETYPE: Scotland
+        CASE_IDS_TO_SKIP: 1668464957518037,1668464942167999,1668464956361884,1668464953405080,1668465351204751,1718275530301307,1668465298457389,1668465299509980,1668464953942215,1668464961155479
     global:
       environment: prod
       enableKeyVaults: true

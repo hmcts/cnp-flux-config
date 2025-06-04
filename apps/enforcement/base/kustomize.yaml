@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: enforcement
+  namespace: flux-system
+spec:
+  path: ./apps/enforcement/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "enforcement"
+      WI_NAME: "enforcement"
+      TEAM_NOTIFICATION_CHANNEL: "enforcement-tech"
+      TEAM_AAD_GROUP_ID: "94f8713a-25d2-43e8-a1d4-aa8fde88fdaf"

@@ -7,10 +7,10 @@ spec:
   releaseName: prl-cron-fm5-reminder
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/cos:prod-67e881b-20250221105824 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-95fcd4d-20250603141320 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: Fm5ReminderNotificationTask
-        HEARING_AWAY_DAYS: 18
+        HEARING_AWAY_DAYS: 3
         VAR: trigger1
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
@@ -36,7 +36,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
         HEARING_API_BASEURL: http://fis-hmc-api-demo.service.core-compute-demo.internal
         APP_ENV: "demo"
-      schedule: 0 7 * * *
+      schedule: 00 16 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

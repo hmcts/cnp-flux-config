@@ -6,8 +6,12 @@ spec:
   releaseName: probate-cron-smee-and-ford-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-3005-d4dd72c-20250218183542 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "15 15 * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3075-7556100-20250603105045 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "45 14 04 04 *"
+      cpuRequests: "250m"
+      cpuLimits: "1000m"
+      memoryRequests: "512Mi"
+      memoryLimits: "2048Mi"
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         DUMMY_PROPERTY: DUMMY24
@@ -17,8 +21,8 @@ spec:
         BLOB_STORAGE_SMEEANDFORD_FEATURE_ENABLED: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
-        ADHOC_JOB_DATE:
         JOB_SHUTDOWN_DELAY: 10
+        ADHOC_JOB_DATE: "2025-03-19"
     global:
       jobKind: CronJob
       enableKeyVaults: true
