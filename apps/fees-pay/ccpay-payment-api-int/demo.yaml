@@ -9,7 +9,7 @@ spec:
       image: hmctspublic.azurecr.io/payment/api:pr-1796-6d13a14-20250604074458 #{"$imagepolicy": "flux-system:demo-int-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
+        DUMMY_RESTART_VAR: true
         POSTGRES_NAME: postgresqldb2
         TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
@@ -23,3 +23,27 @@ spec:
         FEES_REGISTER_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         PAYBUBBLE_HOME_URL: https://ccpay-bubble-frontend-int.{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         CCPAY_BULK_SCANNING_API_URL: http://ccpay-bulkscanning-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+            - name: pci-pal-kerv-tenant-name
+              alias: pci-pal.kerv.tenant.name
+            - name: pci-pal-kerv-client-id
+              alias: pci-pal.kerv.client.id
+            - name: pci-pal-kerv-client-secret
+              alias: pci-pal.kerv.client.secret
+            - name: pci-pal-kerv-launch-url
+              alias: pci-pal.kerv.launch.url
+            - name: pci-pal-kerv-view-id-url
+              alias: pci-pal.kerv.view.id.url
+            - name: pci-pal-kerv-probate-flow-id
+              alias: pci-pal.kerv.probate.flow.id
+            - name: pci-pal-kerv-divorce-flow-id
+              alias: pci-pal.kerv.divorce.flow.id
+            - name: pci-pal-kerv-prl-flow-id
+              alias: pci-pal.kerv.prl.flow.id
+            - name: pci-pal-kerv-iac-flow-id
+              alias: pci-pal.kerv.iac.flow.id
+            - name: pci-pal-kerv-strategic-flow-id
+              alias: pci-pal.kerv.strategic.flow.id
