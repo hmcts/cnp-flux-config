@@ -4,6 +4,14 @@ kind: HelmRelease
 metadata:
   name: plum-frontend
 spec:
+  chart:
+    spec:
+      chart: ./charts/plum-frontend
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts-github-app
+        namespace: flux-system
   values:
     nodejs:
       replicas: 4
