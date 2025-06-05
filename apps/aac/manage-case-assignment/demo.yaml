@@ -5,11 +5,30 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-e4c92bd-20250410140041 #{"$imagepolicy": "flux-system:manage-case-assignment"}
+      image: hmctspublic.azurecr.io/aac/manage-case-assignment:prod-7e1b6f5-20250602101143 #{"$imagepolicy": "flux-system:manage-case-assignment"}
+      keyVaults:
+        aac:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: aac-manage-case-s2s-secret
+              alias: MANAGE_CASE_S2S_KEY
+            - name: idam-mca-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: idam-mca-system-user-username
+              alias: IDAM_CAA_USERNAME
+            - name: idam-mca-system-user-password
+              alias: IDAM_CAA_PASSWORD
+            - name: idam-noc-approver-username
+              alias: IDAM_NOC_APPROVER_USERNAME
+            - name: idam-noc-approver-password
+              alias: IDAM_NOC_APPROVER_PASSWORD
+            - name: notify-mca-api-key-secret
+              alias: NOTIFY_MCA_API_KEY
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,nfdiv_case_api,civil_service,probate_backend,prl_cos_api,et_cos,et_sya_api
         MCA_DS_PROXY_URLS_ALLOWED_LIST: /searchCases.*,/internal/searchCases.*,/internal/cases.*
         CCD_DEFINITION_STORE_API_BASE_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal
         MCA_DEF_STORE_PROXY_URLS_ALLOWED_LIST: /api/display/challenge-questions.*
         ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
-        DUMMY_VAR: 1
+        DUMMY_VAR: 2

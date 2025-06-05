@@ -7,18 +7,18 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-776c8fb-20250410104807 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-141cd4b-20250605085824 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
       environment:
         TASK_NAME: SystemFindCasesWithSuccessfulPaymentsTask
         PAYMENT_API_BASEURL: 'http://payment-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
         CCD_SEARCH_MAX_RESULTS: 5000
         VAR_TA: trigger-2
-      schedule: "*/10 * * * *"
+      schedule: 0 6,18 * * *
   chart:
     spec:
       chart: nfdiv-cron
       version: 0.0.23
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system

@@ -8,27 +8,19 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-6bc07d0-20250404160835 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-8b9ae41-20250604124150 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "30 10 07 04 *"
+      schedule: "00 16 28 05 *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
-        ARCHIVE_OLD_DRAFTS_ENABLED: true
-        MIGRATION_WA_ENABLED: false
-        MIGRATION_DWP_ENABLED: false
-        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
-        MIGRATION_WA_FIELDS_REMOVAL_ENABLED: false
-        COMPLETED_HEARINGS_OUTCOMES_ENABLED: false
-        NON_LISTED_HEARINGS_OUTCOMES_ENABLED: false
         MULTIPLE_HEARINGS_OUTCOMES_ENABLED: false
-        HMCTS_DWP_STATE_MIGRATION_ENABLED: false
-        CASE_OUTCOME_GAPS_MIGRATION_ENABLED: false
+        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: true
         DUMMY_RESTART_VAR: true
         MIGRATION_QUERY_SIZE: 10000
-        MIGRATION_CASE_LIMIT: "1100000"
+        MIGRATION_CASE_LIMIT: "1000"
         JAVA_OPTS: -Xmx4G

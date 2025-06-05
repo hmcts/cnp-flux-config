@@ -10,13 +10,13 @@ spec:
         TASK_NAME: ExelaExtractTask
         VAR_FV2: trigger-2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:pr-1145-1feadbd-20250411100635 #{"$imagepolicy": "flux-system:demo-probate-orchestrator-service"}
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3075-e3e028e-20250605114753 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       schedule: 0 * * * *
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.26
+      version: 0.0.30
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system

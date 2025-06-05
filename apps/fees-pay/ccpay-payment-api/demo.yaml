@@ -6,11 +6,11 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:prod-1c078ab-20250325094742 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:prod-dcbf090-20250602145541 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
-        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
+        DUMMY_RESTART_VAR: true
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
         PCI_PAL_CALLBACK_URL: https://cft-mtls-api-mgmt-appgw.demo.platform.hmcts.net/telephony-api/telephony/callback
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
@@ -113,6 +113,8 @@ spec:
               alias: launch.darkly.sdk.key
             - name: payment-s2s-secret
               alias: PAYMENT_S2S_SECRET
+            - name: pci-pal-kerv-probate-flow-id
+              alias: PCI_PAL_KERV_PROBATE_FLOW_ID
             - name: pci-pal-antenna-tenant-name
               alias: pci-pal.antenna.tenant.name
             - name: pci-pal-antenna-user-name

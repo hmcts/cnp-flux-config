@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "0 10 * * *"
-      image: hmctspublic.azurecr.io/finrem/cos:prod-8d8735b-20250411114835 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "25 14 * * *"
+      image: hmctspublic.azurecr.io/finrem/cos:prod-127f005-20250605075124 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -20,8 +20,8 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
-        TASK_NAME: ResendListForHearingTask
-        CRON_RESEND_LIST_FOR_HEARING_ENABLED: false
+        TASK_NAME: ResendInterimHearingTask
+        CRON_RESEND_INTERIM_HEARING_ENABLED: false
     global:
       jobKind: CronJob
       enableKeyVaults: true

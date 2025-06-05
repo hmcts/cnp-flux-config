@@ -9,7 +9,7 @@ spec:
       jobKind: CronJob
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-497d717-20250325153858 #{"$imagepolicy": "flux-system:fpl-cron-ccd-data-migration-tool"}
+      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-15bce4e-20250605123445 #{"$imagepolicy": "flux-system:fpl-cron-ccd-data-migration-tool"}
       schedule: "30 12 30 2 *"
       environment:
         MIGRATION_ID: DFPL-1124Rollback
@@ -17,6 +17,23 @@ spec:
         UPDATE: migration
         DEFAULT_THREAD_LIMIT: 25
         DEFAULT_QUERY_SIZE: 100
+      keyVaults:
+        fpl:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: system-update-user-username
+              alias: IDAM_USERNAME
+            - name: system-update-user-password
+              alias: IDAM_PASSWORD
+            - name: fpl-case-service-idam-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: fpl-case-service-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: migration-tool-case-id-list-mapping
+              alias: CASE_ID_LIST_MAPPING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
   chart:
     spec:
       chart: ./stable/fpl-cron-ccd-data-migration-tool

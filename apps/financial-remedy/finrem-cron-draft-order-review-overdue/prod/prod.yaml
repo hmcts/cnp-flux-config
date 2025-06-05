@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-draft-order-review-overdue
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-8d8735b-20250411114835 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-127f005-20250605075124 #{"$imagepolicy": "flux-system:finrem-cos"}
       schedule: "0 2 * * *"
       useInterpodAntiAffinity: true
       environment:
@@ -20,6 +20,7 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
         SECURE_DOC_ENABLED: false
+        FEATURE_SEND_TO_FRC: true
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-prod.service.core-compute-prod.internal

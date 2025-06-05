@@ -1,0 +1,13 @@
+apiVersion: dbforpostgresql.azure.com/v1api20230601preview
+kind: FlexibleServersConfiguration
+metadata:
+  name: extensions
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: ${NAMESPACE}-${ENVIRONMENT}
+  azureName: azure.extensions
+  source: user-override
+  value: "btree_gin"

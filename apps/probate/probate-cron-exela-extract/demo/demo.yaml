@@ -6,34 +6,16 @@ spec:
   releaseName: probate-cron-exela-extract
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/orchestrator-service:pr-1145-1feadbd-20250411100635 #{"$imagepolicy": "flux-system:demo-probate-orchestrator-service"}
-      schedule: "27 13 * * *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3075-e3e028e-20250605114753 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "32 13 * * *"
+      cpuRequests: "250m"
+      cpuLimits: "1000m"
+      memoryRequests: "512Mi"
+      memoryLimits: "2048Mi"
       environment:
         TRIG: trig-1
-        ADHOC_JOB_DATE: "2024-01-20"
-        ADHOC_JOB_TO_DATE: "2025-04-09"
-        EXCELA_EMAIL: "Gareth.Evans4@justice.gov.uk"
-      keyVaults:
-        probate:
-          secrets:
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
-            - name: s2s-probate-backend
-              alias: S2S_AUTH_TOTP_SECRET
-            - name: ccidam-idam-api-secrets-probate
-              alias: AUTH2_CLIENT_SECRET
-            - name: idamRedirectUrl
-              alias: IDAM_API_REDIRECT_URL
-            - name: payCaseWorkerPass
-              alias: PAYMENT_CASEWORKER_PASSWORD
-            - name: payCaseWorkerUser
-              alias: PAYMENT_CASEWORKER_USERNAME
-            - name: schedulerCaseWorkerUser
-              alias: SCHEDULER_CASEWORKER_USERNAME
-            - name: schedulerCaseWorkerPass
-              alias: SCHEDULER_CASEWORKER_PASSWORD
+        EXCELA_EMAIL: "Elife.Toplu@justice.gov.uk"
+        ADHOC_JOB_DATE: "2025-05-28"
     global:
       jobKind: CronJob
       enableKeyVaults: true
