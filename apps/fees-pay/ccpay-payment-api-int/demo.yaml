@@ -6,10 +6,10 @@ spec:
   releaseName: ccpay-payment-api-int
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:pr-1796-710eb33-20250605083252 #{"$imagepolicy": "flux-system:demo-int-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:prod-dcbf090-20250602145541 #{"$imagepolicy": "flux-system:demo-int-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
+        DUMMY_RESTART_VAR: true
         POSTGRES_NAME: postgresqldb2
         TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,api_gw,finrem_payment_service,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
@@ -23,3 +23,139 @@ spec:
         FEES_REGISTER_URL: http://fees-register-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         PAYBUBBLE_HOME_URL: https://ccpay-bubble-frontend-int.{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         CCPAY_BULK_SCANNING_API_URL: http://ccpay-bulkscanning-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+            - name: sb-premium-primary-connection-string
+              alias: azure.servicebus.connection-string
+            - name: pci-pal-account-id-probate
+              alias: pci-pal.account.id.probate
+            - name: pci-pal-account-id-divorce
+              alias: pci-pal.account.id.divorce
+            - name: pci-pal-account-id-strategic
+              alias: pci-pal.account.id.strategic
+            - name: pci-pal-api-url
+              alias: pci-pal.api.url
+            - name: pci-pal-api-key
+              alias: pci-pal.api.key
+            - name: gov-pay-keys-reference
+              alias: GOV_PAY_AUTH_KEY_REFERENCE
+            - name: gov-pay-keys-cmc
+              alias: gov.pay.auth.key.cmc
+            - name: gov-pay-keys-cmc
+              alias: gov.pay.auth.key.civil_service
+            - name: gov-pay-keys-cmc-claim-store
+              alias: gov.pay.auth.key.cmc_claim_store
+            - name: gov-pay-keys-divorce
+              alias: gov.pay.auth.key.divorce_frontend
+            - name: gov-pay-keys-divorce
+              alias: gov.pay.auth.key.nfdiv_case_api
+            - name: gov-pay-keys-probate
+              alias: gov.pay.auth.key.probate_frontend
+            - name: gov-pay-keys-iac
+              alias: gov.pay.auth.key.iac
+            - name: gov-pay-keys-adoption
+              alias: gov.pay.auth.key.adoption_web
+            - name: gov-pay-keys-prl
+              alias: gov.pay.auth.key.prl_cos_api
+            - name: liberata-keys-oauth2-client-id
+              alias: liberata.oauth2.client.id
+            - name: liberata-keys-oauth2-client-secret
+              alias: liberata.oauth2.client.secret
+            - name: liberata-keys-oauth2-username
+              alias: liberata.oauth2.username
+            - name: liberata-keys-oauth2-password
+              alias: liberata.oauth2.password
+            - name: api-POSTGRES-PASS
+              alias: POSTGRES_PASSWORD
+            - name: api-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: api-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: api-POSTGRES-USER
+              alias: POSTGRES_USERNAME
+            - name: core-case-data-api-url
+              alias: core_case_data.api.url
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: card-payments-email-to
+              alias: card.payments.email.to
+            - name: pba-cmc-payments-email-to
+              alias: pba.cmc.payments.email.to
+            - name: pba-probate-payments-email-to
+              alias: pba.probate.payments.email.to
+            - name: pba-finrem-payments-email-to
+              alias: pba.finrem.payments.email.to
+            - name: pba-divorce-payments-email-to
+              alias: pba.divorce.payments.email.to
+            - name: pba-fpl-payments-email-to
+              alias: pba.fpl.payments.email.to
+            - name: pba-civil-payments-email-to
+              alias: pba.civil.payments.email.to
+            - name: pba-prl-payments-email-to
+              alias: pba.prl.payments.email.to
+            - name: pba-iac-payments-email-to
+              alias: pba.iac.payments.email.to
+            - name: launch-darkly-sdk-key
+              alias: launch.darkly.sdk.key
+            - name: payment-s2s-secret
+              alias: PAYMENT_S2S_SECRET
+            - name: pci-pal-antenna-tenant-name
+              alias: pci-pal.antenna.tenant.name
+            - name: pci-pal-antenna-user-name
+              alias: pci-pal.antenna.user.name
+            - name: pci-pal-antenna-client-id
+              alias: pci-pal.antenna.client.id
+            - name: pci-pal-antenna-client-secret
+              alias: pci-pal.antenna.client.secret
+            - name: pci-pal-antenna-get-tokens-url
+              alias: pci-pal.antenna.get.tokens.url
+            - name: pci-pal-antenna-launch-url
+              alias: pci-pal.antenna.launch.url
+            - name: pci-pal-antenna-view-id-url
+              alias: pci-pal.antenna.view.id.url
+            - name: pci-pal-antenna-return-url
+              alias: pci-pal.antenna.return.url
+            - name: pci-pal-antenna-probate-flow-id
+              alias: pci-pal.antenna.probate.flow.id
+            - name: pci-pal-antenna-divorce-flow-id
+              alias: pci-pal.antenna.divorce.flow.id
+            - name: pci-pal-antenna-prl-flow-id
+              alias: pci-pal.antenna.prl.flow.id
+            - name: pci-pal-antenna-iac-flow-id
+              alias: pci-pal.antenna.iac.flow.id
+            - name: pci-pal-antenna-strategic-flow-id
+              alias: pci-pal.antenna.strategic.flow.id
+            - name: pci-pal-kerv-tenant-name
+              alias: pci-pal.kerv.tenant.name
+            - name: pci-pal-kerv-client-id
+              alias: pci-pal.kerv.client.id
+            - name: pci-pal-kerv-client-secret
+              alias: pci-pal.kerv.client.secret
+            - name: pci-pal-kerv-launch-url
+              alias: pci-pal.kerv.launch.url
+            - name: pci-pal-kerv-view-id-url
+              alias: pci-pal.kerv.view.id.url
+            - name: pci-pal-kerv-probate-flow-id
+              alias: pci-pal.kerv.probate.flow.id
+            - name: pci-pal-kerv-divorce-flow-id
+              alias: pci-pal.kerv.divorce.flow.id
+            - name: pci-pal-kerv-prl-flow-id
+              alias: pci-pal.kerv.prl.flow.id
+            - name: pci-pal-kerv-iac-flow-id
+              alias: pci-pal.kerv.iac.flow.id
+            - name: pci-pal-kerv-strategic-flow-id
+              alias: pci-pal.kerv.strategic.flow.id
+            - name: spring-mail-password
+              alias: spring.mail.password
+            - name: ccpay-payment-status-connection-string
+              alias: ccpay-payment-status-connection-string
+            - name: pba-smc-payments-email-to
+              alias: pba.smc.payments.email.to
+            - name: duplicate-payments-email-to
+              alias: duplicate.payments.email.to
+            - name: service-request-email-to
+              alias: service.request.email.to
