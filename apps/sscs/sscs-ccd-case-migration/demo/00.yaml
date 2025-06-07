@@ -7,14 +7,43 @@ spec:
   releaseName: sscs-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-6bc07d0-20250404160835 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "30 08 30 7 *"
+      suspend: false
+      useInterpodAntiAffinity: true
+      aadIdentityName: sscs
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-8b9ae41-20250604124150 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "*/10 * 27 5 *"
+      keyVaults:
+        sscs:
+          resourceGroup: sscs
+          secrets:
+            - name: idam-sscs-oauth2-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_PASS
+            - name: sscs-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-string-update-listing-reqs-amend-reason
+              alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
       environment:
-        ELASTIC_ENABLED: false
-        CASES_FILE_NAME: "SSCS-12552-DEMO.json"
-        MIGRATION_SSCS_12552_ENABLED: true
-        MIGRATION_WA_ENABLED: false
-        MIGRATION_DWP_ENABLED: false
-        MIGRATION_CASE_MANAGERMENT_LOCATION_ENABLED: false
-        MIGRATION_QUERY_SIZE: 1000
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
+        JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
+        ELASTIC_ENABLED: true
+        MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
+        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: true
+        DUMMY: true
+    global:
+      environment: demo
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

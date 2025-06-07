@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-dns-private
+  namespace: admin
+spec:
+  releaseName: external-dns-private
+  chart:
+    spec:
+      chart: external-dns
+      version: 8.8.2
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+  interval: 1m
+  values:
+    provider: azure-private-dns
+    annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"
+    image:
+      registry: hmctspublic.azurecr.io
+      repository: imported/bitnami/external-dns
+      tag: 0.16.1-debian-12-r5
+    policy: sync
+    serviceAccount:
+      create: false
+      name: admin
+      automountServiceAccountToken: true
+    podLabels:
+      azure.workload.identity/use: "true"
+    sources:
+      - ingress
+    azure:
+      resourceGroup: core-infra-intsvc-rg
+      tenantId: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
+      subscriptionId: 1baf5470-1c3e-40d3-a6f7-74bfbce4b348
+      useWorkloadIdentityExtension: true
+    global:
+      security:
+        allowInsecureImages: true
