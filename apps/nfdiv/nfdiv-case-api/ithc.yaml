@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-case-api
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-776c8fb-20250410104807 #{"$imagepolicy": "flux-system:demo-nfdiv-case-api"}
+      environment:
+        CASE_HOLDING_WEEKS: 20
+        BULK_ACTION_BATCH_SIZE_MIN: 3
+        BULK_ACTION_BATCH_SIZE_MAX: 5
+        OVERSEAS_RESPONDENT_HAS_EMAIL_APPLICATION_ISSUED_WELSH_NOTIFICATION_ID: 1162cc6f-3d04-4d1d-8240-4754c5242803
+        CREATE_PAPER_CASE_MOCK_NOTIFICATION: true
