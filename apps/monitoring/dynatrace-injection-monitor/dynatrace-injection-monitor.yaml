@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dynatrace-injection-monitor
+  namespace: monitoring
+  labels:
+    app: dynatrace-injection-monitor
+spec:
+  releaseName: dynatrace-injection-monitor
+  chart:
+    spec:
+      chart: job
+      sourceRef:
+        kind: GitRepository
+        name: chart-job
+        namespace: flux-system
+      interval: 1m
+  interval: 5m
+  values:
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    schedule: "30 7 * * Mon-Fri" # interval 9:30am Monday
+    concurrencyPolicy: "Forbid"
+    failedJobsHistoryLimit: 5
+    startingDeadlineSeconds: 300
+    successfulJobsHistoryLimit: 5
+    backoffLimit: 3
+    restartPolicy: Never
+    runAsRoot: true
+    kind: CronJob
+    image: hmctspublic.azurecr.io/dynatrace-injection-monitor:prod-fad1be9-20250616150934 #{"$imagepolicy": "flux-system:dynatrace-injection-monitor"}
+    imagePullPolicy: Always
+    environment:
+      DRY_RUN: false
+      ADDITIONAL_EXCLUDED_NAMESPACES: "kube-system,monitoring,flux-system"
+    nodeSelector:
+      agentpool: linux
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs
