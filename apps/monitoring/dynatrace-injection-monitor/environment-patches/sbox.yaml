@@ -7,7 +7,10 @@ metadata:
     app: dynatrace-injection-monitor
 spec:
   values:
-    image: hmctspublic.azurecr.io/dynatrace-injection-monitor:pr-f609117-20250617153209 #{"$imagepolicy": "flux-system:dynatrace-injection-monitor-pr"}
+    image: hmctspublic.azurecr.io/dynatrace-injection-monitor:pr-f609117-20250617153209 #{"$imagepolicy": "flux-system:sbox-dynatrace-injection-monitor"}
     environment:
-      DRY_RUN: true
-      ADDITIONAL_EXCLUDED_NAMESPACES: "kube-system,monitoring,flux-system,admin,thomas-namespace"
+      DRY_RUN: false
+      # Please note the following namespaces are excluded by default and do not need to be added as additional exclusions:
+      # "default", "kube-system", "kube-node-lease", "kube-public", "monitoring", "dynatrace", "flux-system",
+      # ADDITIONAL_EXCLUDED_NAMESPACES: "kube-system,monitoring,flux-system"
+      ADDITIONAL_EXCLUDED_NAMESPACES: "admin,thomas-namespace"

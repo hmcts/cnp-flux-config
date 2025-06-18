@@ -19,7 +19,7 @@ spec:
   values:
     global:
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-    schedule: "30 7 * * Mon-Fri" # 7:30am Mon-Fri
+    schedule: "30 8 * * Mon-Fri" # 8:30am Mon-Fri
     concurrencyPolicy: "Forbid"
     failedJobsHistoryLimit: 5
     startingDeadlineSeconds: 300
@@ -34,7 +34,9 @@ spec:
     imagePullPolicy: Always
     environment:
       DRY_RUN: false
-      ADDITIONAL_EXCLUDED_NAMESPACES: "kube-system,monitoring,flux-system"
+      # Please note the following namespaces are excluded by default and do not need to be added as additional exclusions:
+      # "default", "kube-system", "kube-node-lease", "kube-public", "monitoring", "dynatrace", "flux-system",
+      ADDITIONAL_EXCLUDED_NAMESPACES: "admin,aks-command,azureserviceoperator-system"
     nodeSelector:
       agentpool: linux
     tolerations:
