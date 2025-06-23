@@ -39,7 +39,7 @@ spec:
           secretName: nv-storage-secret
           shareName: neuvector-data-${CLUSTER}
         ingress:
-          host: cft-neuvector${CLUSTER}-api.${ENVIRONMENT}.platform.hmcts.net
+          host: cft-neuvector{{ .Values.Global.Cluster }}-api.${ENVIRONMENT}.platform.hmcts.net
           enabled: true
           path: "/"
           annotations:
@@ -65,7 +65,7 @@ spec:
                 - event
                 - security-event
                 - audit
-              Cluster_Name: ${ENVIRONMENT}${CLUSTER}
+              Cluster_Name: ${ENVIRONMENT}{{ .Values.Global.Cluster }}
             samlinitcfg.yaml: |
               SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
               Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
@@ -80,7 +80,7 @@ spec:
         env:
           ssl: false
         ingress:
-          host: cft-neuvector${CLUSTER}.${ENVIRONMENT}.platform.hmcts.net
+          host: cft-neuvector{{ .Values.Global.Cluster }}.${ENVIRONMENT}.platform.hmcts.net
           enabled: true
           httpredirect: true
           annotations:
