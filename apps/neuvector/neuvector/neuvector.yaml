@@ -37,7 +37,10 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
+          shareName: neuvector-data-${CLUSTER}
         ingress:
+          host: cft-neuvector${CLUSTER}-api.${ENVIRONMENT}.platform.hmcts.net
+          enabled: true
           path: "/"
           annotations:
             kubernetes.io/ingress.class: traefik
@@ -47,12 +50,37 @@ spec:
             traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           enabled: true
+          data:
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_in_json: true
+              Scan_Config:
+                Auto_Scan: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Cluster_Name: ${ENVIRONMENT}${CLUSTER}
+            samlinitcfg.yaml: |
+              SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
+              Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
       enforcer:
         priorityClassName: system-node-critical
       manager:
         env:
           ssl: false
         ingress:
+          host: cft-neuvector${CLUSTER}.${ENVIRONMENT}.platform.hmcts.net
           enabled: true
           httpredirect: true
           annotations:
