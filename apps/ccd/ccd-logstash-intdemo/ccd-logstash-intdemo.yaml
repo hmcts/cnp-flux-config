@@ -3,10 +3,10 @@ kind: HelmRelease
 metadata:
   name: ccd-logstash
 spec:
-  releaseName: ccd-logstash-intdemo
+  releaseName: ccd-logstash
   values:
     image: "hmctspublic.azurecr.io/imported/logstash/logstash"
-    imageTag: "7.16.1-intdemo"
+    imageTag: "7.16.1"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
@@ -18,7 +18,7 @@ spec:
         memory: "8Gi"
     envFrom:
       - secretRef:
-          name: logstash-secret-intdemo
+          name: logstash-secret
     extraEnvs:
       - name: DUMMY_RESTART_VAR
         value: "true8"
@@ -56,9 +56,9 @@ spec:
       01_input.conf: |
         input  {
           jdbc {
-            jdbc_connection_string => "${DATA_STORE_URL}"
-            jdbc_user => "${DATA_STORE_USER}"
-            jdbc_password => "${DATA_STORE_PASS}"
+            jdbc_connection_string => "${DATA_STORE_INT_DEMO_URL}"
+            jdbc_user => "${DATA_STORE_INT_DEMO_USER}"
+            jdbc_password => "${DATA_STORE_INT_DEMO_PASS}"
             jdbc_validate_connection => true
             jdbc_validation_timeout => "1"
             jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
