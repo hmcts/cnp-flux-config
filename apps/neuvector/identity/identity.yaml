@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  type: 0
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: neuvector-binding
+  namespace: neuvector
+spec:
+  azureIdentity: neuvector
+  selector: neuvector
