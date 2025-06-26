@@ -25,3 +25,38 @@ spec:
         DUMMY_RESTART_VAR: 1
         WELSH_TRANSLATION_ENABLED: true
         DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 180
+        DEFINITION_STORE_DB_USERNAME:
+          valueFrom:
+            secretKeyRef:
+              name: definition-store-api-POSTGRES-USER-V15
+              key: DEFINITION_STORE_DB_USERNAME
+        DEFINITION_STORE_DB_PASSWORD:
+          valueFrom:
+            secretKeyRef:
+              name: definition-store-api-POSTGRES-PASS-V15
+              key: DEFINITION_STORE_DB_PASSWORD
+        DEFINITION_STORE_IDAM_KEY:
+          valueFrom:
+            secretKeyRef:
+              name: ccd-definition-s2s-secret
+              key: DEFINITION_STORE_IDAM_KEY
+        ELASTIC_SEARCH_HOST:
+          valueFrom:
+            secretKeyRef:
+              name: ccd-intdemo-ELASTIC_SEARCH_HOST
+              key: ELASTIC_SEARCH_HOST
+        ELASTIC_SEARCH_PASSWORD:
+          valueFrom:
+            secretKeyRef:
+              name: ccd-ELASTIC-SEARCH-PASSWORD
+              key: ELASTIC_SEARCH_PASSWORD
+        AZURE_STORAGE_CONNECTION_STRING:
+          valueFrom:
+            secretKeyRef:
+              name: storage-account-primary-connection-string
+              key: AZURE_STORAGE_CONNECTION_STRING
+        app-insights-connection-string:
+          valueFrom:
+            secretKeyRef:
+              name: app-insights-connection-string
+              key: app-insights-connection-string
