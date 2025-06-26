@@ -14,6 +14,23 @@ spec:
       autoscaling:
         enabled: false
         maxReplicas: 2
+      keyVaults:
+        ccd:
+          secrets:
+          - name: definition-store-api-POSTGRES-USER-V15
+            alias: DEFINITION_STORE_DB_USERNAME
+          - name: definition-store-api-POSTGRES-PASS-V15
+            alias: DEFINITION_STORE_DB_PASSWORD
+          - name: ccd-definition-s2s-secret
+            alias: DEFINITION_STORE_IDAM_KEY
+          - name: ccd-int-demo-ELASTIC-SEARCH-URL
+            alias: ELASTIC_SEARCH_HOST
+          - name: ccd-ELASTIC-SEARCH-PASSWORD
+            alias: ELASTIC_SEARCH_PASSWORD
+          - name: storage-account-primary-connection-string
+            alias: AZURE_STORAGE_CONNECTION_STRING
+          - name: app-insights-connection-string
+            alias: app-insights-connection-string
       image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-44db740-20250626115838 #{"$imagepolicy": "flux-system:ccd-int-definition-store-api"}
       environment:
         IDAM_USER_URL: https://idam-web-public.demo.platform.hmcts.net
@@ -25,38 +42,3 @@ spec:
         DUMMY_RESTART_VAR: 1
         WELSH_TRANSLATION_ENABLED: true
         DEFINITION_STORE_TX_TIMEOUT_DEFAULT: 180
-        DEFINITION_STORE_DB_USERNAME:
-          valueFrom:
-            secretKeyRef:
-              name: definition-store-api-POSTGRES-USER-V15
-              key: DEFINITION_STORE_DB_USERNAME
-        DEFINITION_STORE_DB_PASSWORD:
-          valueFrom:
-            secretKeyRef:
-              name: definition-store-api-POSTGRES-PASS-V15
-              key: DEFINITION_STORE_DB_PASSWORD
-        DEFINITION_STORE_IDAM_KEY:
-          valueFrom:
-            secretKeyRef:
-              name: ccd-definition-s2s-secret
-              key: DEFINITION_STORE_IDAM_KEY
-        ELASTIC_SEARCH_HOST:
-          valueFrom:
-            secretKeyRef:
-              name: ccd-intdemo-ELASTIC_SEARCH_HOST
-              key: ELASTIC_SEARCH_HOST
-        ELASTIC_SEARCH_PASSWORD:
-          valueFrom:
-            secretKeyRef:
-              name: ccd-ELASTIC-SEARCH-PASSWORD
-              key: ELASTIC_SEARCH_PASSWORD
-        AZURE_STORAGE_CONNECTION_STRING:
-          valueFrom:
-            secretKeyRef:
-              name: storage-account-primary-connection-string
-              key: AZURE_STORAGE_CONNECTION_STRING
-        app-insights-connection-string:
-          valueFrom:
-            secretKeyRef:
-              name: app-insights-connection-string
-              key: app-insights-connection-string
