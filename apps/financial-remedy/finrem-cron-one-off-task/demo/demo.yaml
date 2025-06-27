@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "15 10 27 6 *"
+      schedule: "0 11 27 6 *"
       image: hmctspublic.azurecr.io/finrem/cos:pr-2367-1d3c06e-20250626154104
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -22,6 +22,7 @@ spec:
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: SetConsentOrderFRCNameTask
         CRON_UPDATE_CONSENT_ORDER_FRC_NAME_ENABLED: true
+        CRON_UPDATE_CONSENT_ORDER_FRC_NAME_CASE_LIST_FILENAME: "updateConsentOrderFRCName-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
