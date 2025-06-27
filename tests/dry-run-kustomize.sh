@@ -68,8 +68,9 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
-    curl -sL https://raw.githubusercontent.com/yannh/kubeconform/master/schema/kustomization-kustomize-v1.json -o /tmp/schemas/$ENVIRONMENT/$CLUSTER/kustomization-kustomize-v1.json
-    sed -i 's/"CLUSTER_NUMERIC": { "type": "string" }/"CLUSTER_NUMERIC": { "type": "integer" }/' /tmp/schemas/$ENVIRONMENT/$CLUSTER/kustomization-kustomize-v1.json
+    cat /tmp/schemas/ithc/00/
+    curl -sL https://raw.githubusercontent.com/yannh/kubeconform/master/schema/kustomization-kustomize-v1.json -o ./kustomization-kustomize-v1.json
+    sed -i 's/"CLUSTER_NUMERIC": { "type": "string" }/"CLUSTER_NUMERIC": { "type": "integer" }/' ./kustomization-kustomize-v1.json
 
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
