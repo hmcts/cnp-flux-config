@@ -3,16 +3,15 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
-  - ../../ccpay-cpo-callback-function/ccpay-cpo-callback-function.yaml
   - ../../ccpay-notifications-service/ccpay-notifications-service.yaml
   - ../../fees-register-api/fees-register-api.yaml
   - ../../unprocessed-payment-update/unprocessed-payment-update.yaml
   - ccpay-callback-function-aat-premium-sb.yaml
   - ../../../base/slack-provider/aat
+  - ../../../base/docker-registry/aat
 namespace: fees-pay
 patches:
   - path: ../../ccpay-refunds-api/aat.yaml
-  - path: ../../ccpay-cpo-callback-function/aat.yaml
   - path: ../../ccpay-cpo-update-service/aat.yaml
   - path: ../../ccpay-notifications-service/aat.yaml
   - path: ../../ccpay-bulkscanning-api/aat.yaml
