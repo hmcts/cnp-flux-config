@@ -2,6 +2,14 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: sptribs-cron-migrate-cases
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   imageRepositoryRef:
-    name: sptribs-cron-migrate-cases
+    name: sptribs-case-api
+  filterTags:
+    pattern: '^pr-2153-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
