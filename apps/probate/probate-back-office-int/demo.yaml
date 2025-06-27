@@ -1,0 +1,94 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-back-office-int
+spec:
+  values:
+    java:
+      ingressHost: probate-back-office-int-demo.service.core-compute-demo.internal
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3118-0e1c615-20250626090726
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
+        PROBATE_POSTGRESQL_USER: pgadmin
+        PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-flexible-db-demo.postgres.database.azure.com
+        PROBATE_POSTGRESQL_PORT: 5432
+        EXCEPTED_ESTATE_DATE_OF_DEATH: "2022-01-01"
+        BLOB_STORAGE_SMEEANDFORD_FEATURE_ENABLED: true
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
+        BACK_OFFICE_BASEURL: http://probate-back-office-int-demo.service.core-compute-demo.internal
+        ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: 20250528
+        MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details/<CASE_ID>
+        FRONTEND_URL: https://probate.demo.platform.hmcts.net/get-case/<CASE_ID>?probateType=<CASE_TYPE>
+        DEMO_INT_TOGGLE: true
+      keyVaults:
+        probate:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: probatemandb-POSTGRES-PASS-FLEX
+              alias: spring.datasource.password
+            - name: s2s-probate-backend
+              alias: idam.s2s-auth.totp_secret
+            - name: probate-bo-govNotifyApiKey
+              alias: notifications.govNotifyApiKey
+            - name: authTokenEmail
+              alias: auth.provider.client.email
+            - name: authTokenPassword
+              alias: auth.provider.client.password
+            - name: excelaEmail
+              alias: excelaEmail
+            - name: smeeAndFordEmail
+              alias: smeeAndFordEmail
+            - name: hmrcEmail
+              alias: hmrcEmail
+            - name: sealedAndCertifiedEmail
+              alias: sealedAndCertifiedEmail
+            - name: ftpSignature
+              alias: ftp.client.signature
+            - name: ftpEnv
+              alias: ftp.client.environment
+            - name: probate-bo-grantSignatureKey
+              alias: pdf.service.grantSignatureSecretKey
+            - name: probate-bo-grantSignatureFile
+              alias: pdf.service.grantSignatureEncryptedFile
+            - name: pdfServiceBaseUrl
+              alias: docmosis.service.uri
+            - name: pdfServiceAccessKey
+              alias: docmosis.service.accessKey
+            - name: pdfServiceHealthUrl
+              alias: docmosis.service.health.uri
+            - name: idam-secret-probate
+              alias: auth.provider.client.secret
+            - name: idamRedirectUrl
+              alias: auth.provider.client.redirect
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
+            - name: levPublicCertificate
+              alias: lev.ssl.publicCertificate
+            - name: levPrivateKey
+              alias: lev.ssl.privateKey
+            - name: levAccessTokenUri
+              alias: spring.security.oauth2.client.provider.homeoffice.token-uri
+            - name: levClientId
+              alias: spring.security.oauth2.client.registration.homeoffice.client-id
+            - name: levClientSecret
+              alias: spring.security.oauth2.client.registration.homeoffice.client-secret
+            - name: levUsername
+              alias: lev.bearertoken.username
+            - name: levPassword
+              alias: lev.bearertoken.password
+            - name: levDeathUrl
+              alias: spring.security.oauth2.client.provider.homeoffice.authorization-uri
+            - name: schedulerCaseWorkerUser
+              alias: SCHEDULER_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerPass
+              alias: SCHEDULER_CASEWORKER_PASSWORD
+            - name: probate-storage-account-primary-connection-string
+              alias: PROBATE_STORAGE_ACCOUNT_PRIMARY_CONNECTION_STRING
