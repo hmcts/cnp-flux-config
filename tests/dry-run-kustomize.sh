@@ -69,10 +69,12 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     cd "$CURRENT_DIRECTORY"
 
     sed -i '/"substitute": {/a\
-                "CLUSTER_NUMERIC": {\
-                  "type": "integer",\
-                  "description": "A numeric value representing the cluster identifier."\
-                },
+                "properties": {\
+                  "CLUSTER_NUMERIC": {\
+                    "type": "integer",\
+                    "description": "A numeric value representing the cluster identifier."\
+                  }\
+                }
             ' /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
     cat /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
 
