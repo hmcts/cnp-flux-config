@@ -70,7 +70,6 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
 
     sleep 10
 
-    ls -l /tmp/ithc/00/
     sed -i '/"substitute": {/a\
                 "properties": {\
                   "CLUSTER_NUMERIC": {\
@@ -83,7 +82,6 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
                   }\
                 }\
             ' /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
-    cat /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
 
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
