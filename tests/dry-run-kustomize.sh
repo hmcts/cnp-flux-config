@@ -73,14 +73,12 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
                   "CLUSTER_NUMERIC": {\
                     "type": "integer",\
                     "description": "A numeric value representing the cluster identifier."\
-                  }\
-                },\
-                "additionalProperties": {\
-                  "not": {\
-                    "required": ["CLUSTER_NUMERIC"]\
                   },\
-                  "type": "string"\
-                }
+                  "*": {\
+                    "type": "string",\
+                    "description": "Wildcard pattern for other entries."\
+                  }\
+                }\
             ' /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
     cat /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
 
