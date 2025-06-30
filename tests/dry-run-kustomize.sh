@@ -70,7 +70,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
 
     #ls /tmp/schemas/ithc/00/master-standalone-strict/
     #cat /tmp/schemas/ithc/00/master-standalone-strict
-    sed -i 's/"CLUSTER_NUMERIC": { "type": "string" }/"CLUSTER_NUMERIC": { "type": "integer" }/' tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
+    sed -i 's/"CLUSTER_NUMERIC": { "type": "string" }/"CLUSTER_NUMERIC": { "type": "integer" }/' /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
 
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
