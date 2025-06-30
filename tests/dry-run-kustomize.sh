@@ -68,6 +68,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
+    ls -l /tmp/ithc/00/
     sed -i '/"substitute": {/a\
                 "properties": {\
                   "CLUSTER_NUMERIC": {\
