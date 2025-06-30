@@ -83,5 +83,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
                 }\
             ' /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
 
+    cat  /tmp/ithc/00/Kustomization-help-with-fees.yml
+
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
