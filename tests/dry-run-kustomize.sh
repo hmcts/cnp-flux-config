@@ -68,7 +68,7 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
-    sed -i '' '/"substitute": {/a\
+    sed -i '/"substitute": {/a\
                 "CLUSTER_NUMERIC": {\
                   "type": "integer",\
                   "description": "A numeric value representing the cluster identifier."\
