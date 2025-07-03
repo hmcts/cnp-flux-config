@@ -6,6 +6,8 @@ metadata:
 spec:
   values:
     controller:
+      # image version is managed in jenkins-controller-version.yaml
+      image: "hmctspublic.azurecr.io/jenkins/jenkins"
       ingress:
         hostName: build.hmcts.net
       secondaryingress:
@@ -526,3 +528,6 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
+      sidecars:
+        configAutoReload:
+          image: hmctspublic.azurecr.io/imported/kiwigrid/k8s-sidecar:1.27.4

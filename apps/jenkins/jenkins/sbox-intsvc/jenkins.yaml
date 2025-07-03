@@ -7,6 +7,10 @@ spec:
   values:
     checkDeprecation: false
     controller:
+      image:
+        registry: hmctspublic.azurecr.io
+        repository: jenkins/jenkins
+        tag: 2.517-957
       # image version is managed in jenkins-controller-version.yaml
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
@@ -270,3 +274,17 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
+      sidecars:
+        configAutoReload:
+          image:
+            registry: hmctspublic.azurecr.io
+            repository: imported/kiwigrid/k8s-sidecar
+            tag: 1.27.4
+  chart:
+    spec:
+      chart: jenkins
+      version: 5.8.65
+      sourceRef:
+        kind: HelmRepository
+        name: jenkins
+        namespace: jenkins
