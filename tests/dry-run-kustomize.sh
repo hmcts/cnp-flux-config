@@ -68,5 +68,22 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
+    sleep 10
+
+    sed -i '/"substitute": {/a\
+                "properties": {\
+                  "CLUSTER_NUMERIC": {\
+                    "type": "integer",\
+                    "description": "A numeric value representing the cluster identifier."\
+                  },\
+                  "*": {\
+                    "type": "string",\
+                    "description": "Wildcard pattern for other entries."\
+                  }\
+                }\
+            ' /tmp/schemas/ithc/00/master-standalone-strict/kustomization-kustomize-v1.json
+
+    cat  /tmp/ithc/00/Kustomization-help-with-fees.yml
+
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
