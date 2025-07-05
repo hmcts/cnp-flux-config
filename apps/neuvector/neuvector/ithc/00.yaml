@@ -13,7 +13,7 @@ spec:
           shareName: neuvector-data-00
         ingress:
           host: cft-neuvector00-api.ithc.platform.hmcts.net
-          enabled: false
+          enabled: true
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -58,4 +58,4 @@ spec:
               Cluster_Name: ithc00
       manager:
         ingress:
-          host: cft-neuvector00.ithc.platform.hmcts.net
+          host: cft-neuvector{{ .Values.global.environment.CLUSTER_NAME | regexReplaceAll ".*-([0-9]{2})-.*" "$1" }}.ithc.platform.hmcts.net
