@@ -37,8 +37,11 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
+          shareName: neuvector-data-{CLUSTER}
         ingress:
           path: "/"
+          host: cft-neuvector{CLUSTER}-api.{ENVIRONMENT}.platform.hmcts.net
+          enabled: true
           annotations:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.tls: "true"
@@ -47,6 +50,22 @@ spec:
             traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           enabled: true
+          data:
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_in_json: true
+              Scan_Config:
+                Auto_Scan: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Cluster_Name: {ENVIRONMENT}{CLUSTER}
       enforcer:
         priorityClassName: system-node-critical
       manager:
@@ -54,10 +73,11 @@ spec:
           ssl: false
         ingress:
           enabled: true
-          httpredirect: true
+          httpredirect: false
+          host: cft-neuvector-{ENVIRONMENT}{CLUSTER}.hmcts.net
           annotations:
             kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
+            traefik.ingress.kubernetes.io/router.tls: "false"
       cve:
         updater:
           # If false, cve updater will not be installed
