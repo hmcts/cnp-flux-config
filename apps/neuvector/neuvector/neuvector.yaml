@@ -37,10 +37,10 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
-          shareName: neuvector-data-{CLUSTER}
+          shareName: neuvector-data-${CLUSTER}
         ingress:
           path: "/"
-          host: cft-neuvector{CLUSTER}-api.{ENVIRONMENT}.platform.hmcts.net
+          host: cft-neuvector${CLUSTER}-api.${ENVIRONMENT}.platform.hmcts.net
           enabled: true
           annotations:
             kubernetes.io/ingress.class: traefik
@@ -65,7 +65,7 @@ spec:
                 - event
                 - security-event
                 - audit
-              Cluster_Name: {ENVIRONMENT}{CLUSTER}
+              Cluster_Name: ${ENVIRONMENT}${CLUSTER}
       enforcer:
         priorityClassName: system-node-critical
       manager:
@@ -74,7 +74,7 @@ spec:
         ingress:
           enabled: true
           httpredirect: false
-          host: cft-neuvector-{ENVIRONMENT}{CLUSTER}.hmcts.net
+          host: cft-neuvector-${ENVIRONMENT}${CLUSTER}.hmcts.net
           annotations:
             kubernetes.io/ingress.class: traefik
             traefik.ingress.kubernetes.io/router.tls: "false"
