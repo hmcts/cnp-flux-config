@@ -8,12 +8,6 @@ spec:
   values:
     neuvector:
       controller:
-        azureFileShare:
-          secretName: nv-storage-secret
-          shareName: neuvector-data-01
-        ingress:
-          host: cft-neuvector01-api.ithc.platform.hmcts.net
-          enabled: true
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -41,21 +35,3 @@ spec:
               Role_Groups:
                 admin:
                   - e7ea2042-4ced-45dd-8ae3-e051c6551789
-            sysinitcfg.yaml: |
-              New_Service_Policy_Mode: Discover
-              Syslog_ip: fluentbit-log
-              Syslog_IP_Proto: 6
-              Syslog_Port: 5140
-              Syslog_Level: Warning
-              Syslog_status: true
-              Syslog_in_json: true
-              Scan_Config:
-                Auto_Scan: true
-              Syslog_Categories:
-                - event
-                - security-event
-                - audit
-              Cluster_Name: ithc01
-      manager:
-        ingress:
-          host: cft-neuvector01.ithc.platform.hmcts.net
