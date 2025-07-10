@@ -47,7 +47,7 @@ spec:
   postBuild:
     substitute:
       ENVIRONMENT: "${ENVIRONMENT}"
-      CLUSTER: "\"${CLUSTER}\""
+      CLUSTER: ${quote}${CLUSTER}${quote}
       CLUSTER_PATH: "${ENVIRONMENT}/${CLUSTER}"
       CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"
       ISSUER_URL: "${ISSUER_URL:-not-set-yet}"
