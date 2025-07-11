@@ -9,6 +9,13 @@ spec:
     neuvector:
       serviceAccount: neuvector
       controller:
+        ingress:
+          host: cft-neuvector00-api.ithc.platform.hmcts.net
+          path: "/"
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -35,3 +42,12 @@ spec:
               Role_Groups:
                 admin:
                   - e7ea2042-4ced-45dd-8ae3-e051c6551789
+
+      manager:
+        ingress:
+          enabled: true
+          httpredirect: false
+          host: cft-neuvector-ithc00.hmcts.net
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "false"
