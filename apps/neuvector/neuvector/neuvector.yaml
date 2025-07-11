@@ -38,13 +38,6 @@ spec:
           enabled: true
           secretName: nv-storage-secret
           shareName: neuvector-data-${CLUSTER//\"/}
-        ingress:
-          path: "/"
-          host: cft-neuvector${CLUSTER//\"/}-api.${ENVIRONMENT}.platform.hmcts.net
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
         apisvc:
           annotations:
             traefik.ingress.kubernetes.io/service.serversscheme: https
@@ -71,13 +64,6 @@ spec:
       manager:
         env:
           ssl: false
-        ingress:
-          enabled: true
-          httpredirect: false
-          host: cft-neuvector-${ENVIRONMENT}${CLUSTER//\"/}.hmcts.net
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "false"
       cve:
         updater:
           # If false, cve updater will not be installed
