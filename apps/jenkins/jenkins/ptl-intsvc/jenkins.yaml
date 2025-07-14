@@ -6,8 +6,6 @@ metadata:
 spec:
   values:
     controller:
-      # image version is managed in jenkins-controller-version.yaml
-      image: "hmctspublic.azurecr.io/jenkins/jenkins"
       ingress:
         hostName: build.hmcts.net
       secondaryingress:
@@ -374,6 +372,12 @@ spec:
                     name: Enforcement
                     recurse: true
                     title: Enforcement Service Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(send-letter-.*|blob-router-service|bulk-scan-.*|reform-scan-.*|fact-.*|rpts-.*)\/master
+                    name: FACT-BSP-RPTS
+                    recurse: true
+                    title: FACT BSP RPTS Dashboard
           location: |
             unclassified:
               location:
@@ -528,6 +532,3 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
-      sidecars:
-        configAutoReload:
-          image: hmctspublic.azurecr.io/imported/kiwigrid/k8s-sidecar:1.27.4

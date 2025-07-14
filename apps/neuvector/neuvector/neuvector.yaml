@@ -23,6 +23,7 @@ spec:
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
           - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
     neuvector:
+      serviceAccount: neuvector
       containerd:
         enabled: true
       resources:
@@ -37,11 +38,6 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
-        ingress:
-          path: "/"
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
         apisvc:
           annotations:
             traefik.ingress.kubernetes.io/service.serversscheme: https
@@ -52,12 +48,6 @@ spec:
       manager:
         env:
           ssl: false
-        ingress:
-          enabled: true
-          httpredirect: true
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
       cve:
         updater:
           # If false, cve updater will not be installed
