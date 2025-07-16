@@ -61,3 +61,32 @@ spec:
         kind: HelmRepository
         name: hmctspublic-oci
         namespace: flux-system
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: neuvector-controller-pod
+            patch: |
+              - op: add
+                path: /spec/template/spec/automountServiceAccountToken
+                value: false
+              - op: add
+                path: /spec/template/spec/volumes/-
+                value:
+                  name: longlived-token
+                  secret:
+                    secretName: neuvector-longlived-token
+                    defaultMode: 420
+              - op: add
+                path: /spec/template/spec/containers/0/volumeMounts/-
+                value:
+                  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                  name: longlived-token
+                  readOnly: true
+              - op: add
+                path: /spec/template/spec/initContainers/0/volumeMounts
+                value:
+                  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                    name: longlived-token
+                    readOnly: true
