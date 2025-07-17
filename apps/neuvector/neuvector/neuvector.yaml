@@ -38,6 +38,12 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
+        ingress:
+          path: "/"
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
         apisvc:
           annotations:
             traefik.ingress.kubernetes.io/service.serversscheme: https
@@ -46,6 +52,12 @@ spec:
       enforcer:
         priorityClassName: system-node-critical
       manager:
+        ingress:
+          enabled: true
+          httpredirect: false
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "false"
         env:
           ssl: false
       cve:
