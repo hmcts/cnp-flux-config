@@ -23,6 +23,7 @@ spec:
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
           - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
     neuvector:
+      serviceAccount: neuvector
       containerd:
         enabled: true
       resources:
@@ -37,11 +38,6 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
-        ingress:
-          path: "/"
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
         apisvc:
           annotations:
             traefik.ingress.kubernetes.io/service.serversscheme: https
@@ -52,12 +48,6 @@ spec:
       manager:
         env:
           ssl: false
-        ingress:
-          enabled: true
-          httpredirect: true
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
       cve:
         updater:
           # If false, cve updater will not be installed
@@ -66,8 +56,37 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.6.2
+      version: 1.6.3
       sourceRef:
         kind: HelmRepository
         name: hmctspublic-oci
         namespace: flux-system
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: neuvector-controller-pod
+            patch: |
+              - op: add
+                path: /spec/template/spec/automountServiceAccountToken
+                value: false
+              - op: add
+                path: /spec/template/spec/volumes/-
+                value:
+                  name: longlived-token
+                  secret:
+                    secretName: neuvector-longlived-token
+                    defaultMode: 420
+              - op: add
+                path: /spec/template/spec/containers/0/volumeMounts/-
+                value:
+                  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                  name: longlived-token
+                  readOnly: true
+              - op: add
+                path: /spec/template/spec/initContainers/0/volumeMounts
+                value:
+                  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                    name: longlived-token
+                    readOnly: true
