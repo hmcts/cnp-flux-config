@@ -12,11 +12,6 @@ spec:
           shareName: neuvector-data-00
         ingress:
           host: cft-neuvector00-api.prod.platform.hmcts.net
-          path: "/"
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "true"
         configmap:
           data:
             sysinitcfg.yaml: |
@@ -37,6 +32,11 @@ spec:
             samlinitcfg.yaml: |
               SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
               Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
               X509_Cert: |
                 -----BEGIN CERTIFICATE-----
                 MIICxDCCAaygAwIBAgIIbo4Kg/3lQYcwDQYJKoZIhvcNAQELBQAwIjEgMB4GA1UEAwwXQ0ZUIE5l
@@ -53,16 +53,6 @@ spec:
                 Jmar+nomPk0sWg76CI7u7fksgqRjlpp1i/suCfUkdH/uiFvQvNWF6wP3/Fh4Y49HhFvTVvtVU6sN
                 ci8sSH5nd/HKl5RZQj5OdUw9zGuvuOOAodkvPg==
                 -----END CERTIFICATE-----
-              Enable: true
-              Default_Role: reader
-              Role_Groups:
-                admin:
-                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
       manager:
         ingress:
-          enabled: true
-          httpredirect: false
           host: cft-neuvector-prod00.hmcts.net
-          annotations:
-            kubernetes.io/ingress.class: traefik
-            traefik.ingress.kubernetes.io/router.tls: "false"
