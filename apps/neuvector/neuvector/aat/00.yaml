@@ -10,11 +10,20 @@ spec:
       sleep: 30
     neuvector:
       controller:
+        azureFileShare:
+          shareName: neuvector-data-00
+        ingress:
+          host: cft-neuvector00-api.aat.platform.hmcts.net
         configmap:
           data:
             samlinitcfg.yaml: |
               SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
               Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
               X509_Cert: |
                 -----BEGIN CERTIFICATE-----
                 MIIC8DCCAdigAwIBAgIQLgv64XVst4lJgxFtyd+3JjANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
@@ -32,8 +41,6 @@ spec:
                 jgogQ3ZIGWj6wCIIhrKign4XLTMj8bmw62mdQ16OO2Tkdd0wEtYxhS1oqWy5mSVcKGPSNJrtokEr
                 zk0mvTKAfxdsoxqBdLaf
                 -----END CERTIFICATE-----
-              Enable: true
-              Default_Role: reader
-              Role_Groups:
-                admin:
-                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
+      manager:
+        ingress:
+          host: cft-neuvector-aat00.hmcts.net
