@@ -2,6 +2,15 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: perftest-manage-case-assignment
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: '^pr-534-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
 spec:
   imageRepositoryRef:
     name: manage-case-assignment
