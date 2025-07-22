@@ -2,6 +2,15 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: hmc-cft-hearing-service
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: '^pr-537-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
 spec:
   releaseName: hmc-cft-hearing-service
   values:
