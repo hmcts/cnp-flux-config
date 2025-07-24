@@ -10,9 +10,10 @@ spec:
       replicas: 2
       memoryRequests: "1.5Gi"
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/probate/back-office:prod-10e1fbb-20240619131429 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:prod-0d7eac7-20250724144416 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
-        VAR_FV2: base-0
+        # Does what it says on the tin - if this changes then all envs should redeploy
+        CHANGE_TO_REDEPLOY_ALL_ENVS: abcd
   chart:
     spec:
       chart: ./stable/probate-back-office

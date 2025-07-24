@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1145-b63f378-20240617170455 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-63c62dd-20250722100009 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
@@ -41,12 +41,15 @@ spec:
         COS_URL: http://prl-cos-demo.service.core-compute-demo.internal
         REDIS_HOST: prl-citizen-frontend-redis-demo.redis.cache.windows.net
         REASONABLE_ADJUSTMENTS: https://cui-ra.demo.platform.hmcts.net
+        FACT_URL: http://fact-api-demo.service.core-compute-demo.internal
+        EQUALITY_URL: https://pcq.demo.platform.hmcts.net
         LAUNCH_DARKLY_OFFLINE_MODE: false
         C100_REBUILD_FLAG: true
         TESTING_SUPPORT_FLAG: true
         ENABLE_RA_COMPONENT: true
         ENABLE_CASE_TRAIN_TRACK: true
         ENABLE_PCQ_COMPONENT: true
+        ALLOWED_COURTS: Swansea Civil Justice Centre,Kingston-upon-Hull Combined Court Centre,Grimsby Combined Court Centre,Chelmsford Justice Centre,Chelmsford Magistrates' Court and Family Court,Wolverhampton Combined Court Centre
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

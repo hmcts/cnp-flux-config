@@ -6,9 +6,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/submit-service:pr-806-0018303-20240603092359 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-9fc0d90-20250724101708 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
       environment:
-        VAR_FV2: Demo-1
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: 20250528
       keyVaults:
         probate:
           secrets:
@@ -18,3 +19,7 @@ spec:
               alias: azure.application-insights.instrumentation-key
             - name: app-insights-connection-string
               alias: app-insights-connection-string
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key

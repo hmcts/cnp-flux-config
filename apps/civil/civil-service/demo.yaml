@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:pr-4940-17cf999-20240618110225 #{"$imagepolicy": "flux-system:demo-civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:pr-6605-92e85f7-20250724122704 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -17,12 +17,14 @@ spec:
         POLLING_EVENT_EMITTER_ENABLED: true
         STITCHING_API_ENABLED: true
         HMC_HEARINGS_SUBSCRIPTION_ENABLED: true
-        TEMP_VAR: 3
-        REFERENCE_DATABASE_MIGRATION: false
+        TEMP_VAR: 4
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
         CUI_URL_RESPOND_TO_CLAIM: https://moneyclaims.demo.platform.hmcts.net/first-contact/start
         OCMC_CLIENT_URL: https://moneyclaims1.demo.platform.hmcts.net
         FEIGN_CLIENT_CONFIG_DEFAULT_URL: http://camunda-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/engine-rest/
+        ROLE_ASSIGNMENT_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
+        ROLE_INITIALISATION_ENABLED: true
+        COURT_LOCATION_WA_DMN_ENABLED: true
       keyVaults:
         civil:
           resourceGroup: civil
@@ -83,3 +85,7 @@ spec:
               alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
             - name: mediation-json-notification-recipient
               alias: mediation.emails.jsonRecipient
+            - name: ccd-shared-servicebus-connection-string
+              alias: CCD_EVENTS_TOPIC_CONNECTION_STRING
+            - name: hmc-servicebus-connection-string
+              alias: HMC_HEARINGS_TOPIC_CONNECTION_STRING

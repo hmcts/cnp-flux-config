@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-hearing-actual-task
+  namespace: private-law
+spec:
+  releaseName: prl-cron-hearing-actual-task
+  values:
+    job:
+      image: hmctspublic.azurecr.io/prl/cos:prod-03e274e-20250723081313 #{"$imagepolicy": "flux-system:prl-cos"}
+      environment:
+        TASK_NAME: UpdateHearingActualTask
+        HEARING_AWAY_DAYS: 18
+        VAR: trigger1
+        FEATURE_EXAMPLE: true
+        APP_ENV: "prod"
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-prod.service.core-compute-prod.internal
+        PRL_DGS_API_URL: http://prl-dgs-prod.service.core-compute-prod.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
+        XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
+        CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
+        DOCMOSIS_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net
+        PRD_API_BASEURL: http://rd-professional-api-prod.service.core-compute-prod.internal
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        PAY_URL: http://payment-api-prod.service.core-compute-prod.internal
+        FEE_REGISTER_API_URL: http://fees-register-api-prod.service.core-compute-prod.internal
+        FACT_API: http://fact-api-prod.service.core-compute-prod.internal
+        LOCATION_REF_API: http://rd-location-ref-api-prod.service.core-compute-prod.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
+        REFDATA_API_URL: http://rd-commondata-api-prod.service.core-compute-prod.internal
+      schedule: 0 14 * * *
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

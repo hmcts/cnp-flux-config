@@ -5,10 +5,21 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-0f6a1cf-20240610101141 #{"$imagepolicy": "flux-system:perftest-ccpay-refunds-api"}
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-929ad71-20250723191438 #{"$imagepolicy": "flux-system:perftest-ccpay-refunds-api"}
       environment:
-        S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,ccd_gw
+        S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,xui_webapp,ccd_gw,ccpay_gw
         PAYMENT_API_URL: "http://payment-api-perftest.service.core-compute-perftest.internal"
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
         REFUND_STATUS_UPDATE_PATH: "/refunds-api/refund"
-        DUMMY_VARIABLE: false
+        DUMMY_VARIABLE: true

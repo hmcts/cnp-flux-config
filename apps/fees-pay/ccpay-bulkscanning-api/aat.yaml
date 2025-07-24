@@ -6,5 +6,17 @@ spec:
   releaseName: ccpay-bulkscanning-api
   values:
     java:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       environment:
-        DUMMY_RESTART_VAR: true
+        DUMMY_RESTART_VAR: false
+        S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,bulk_scan_payment_processor,api_gw,probate_frontend,divorce_frontend,ccd_gw,xui_webapp,ccpay_gw

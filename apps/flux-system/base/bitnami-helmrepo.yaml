@@ -1,0 +1,18 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: bitnami-postgresql
+  namespace: flux-system
+spec:
+  url: https://github.com/bitnami/charts
+  interval: 10m
+  ref:
+    branch: main
+  provider: github
+  secretRef:
+    name: github-app-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/bitnami/postgresql/

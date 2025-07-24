@@ -8,11 +8,17 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/sya:prod-2e1c332-20240619112927 #{"$imagepolicy": "flux-system:et-sya"}
+      image: hmctspublic.azurecr.io/et/sya:prod-7237e9b-20250724100643 #{"$imagepolicy": "flux-system:et-sya"}
       memoryLimits: "1024Mi"
-      memoryRequests: "600Mi"
-      cpuLimits: "1500m"
+      memoryRequests: "512Mi"
+      cpuLimits: "1000m"
       cpuRequests: "100m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
   chart:
     spec:
       chart: ./stable/et-sya

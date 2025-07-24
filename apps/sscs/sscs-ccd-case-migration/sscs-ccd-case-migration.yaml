@@ -8,7 +8,7 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-a1b71f6-20240523223340 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-f8c863e-20250724142323 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       keyVaults:
         sscs:
           secrets:
@@ -20,6 +20,34 @@ spec:
               alias: IDAM_PASS
             - name: sscs-s2s-secret
               alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-data-string-wa-fields-removal
+              alias: WA_FIELDS_ENCODED_DATA_STRING
+            - name: encoded-data-string-completed-hearings-outcomes
+              alias: COMPLETED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
+            - name: encoded-data-string-non-listed-hearings-outcomes
+              alias: NON_LISTED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
+            - name: encoded-data-string-multiple-hearings-outcomes
+              alias: MULTIPLE_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
+            - name: encoded-data-string-hmcts-dwp-state-migration
+              alias: HMCTS_DWP_STATE_ENCODED_DATA_STRING
+            - name: encoded-data-string-case-outcome-gaps-migration
+              alias: CASE_OUTCOME_GAPS_ENCODED_DATA_STRING
+            - name: encoded-string-update-listing-reqs-amend-reason
+              alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
+            - name: encoded-string-processing-venue
+              alias: VENUE_MIGRATION_ENCODED_STRING
+            - name: encoded-string-default-panel-composition
+              alias: DEFAULT_PANEL_COMPOSITION_ENCODED_STRING
+            - name: encoded-string-adjournment-flag
+              alias: ADJOURNMENT_FLAG_MIGRATION_ENCODED_STRING
+            - name: encoded-string-clear-pcm-migration
+              alias: PANEL_MEMBER_COMPOSITION_MIGRATION_ENCODED_STRING
       environment:
         MIGRATION_WA_ENABLED: false
   chart:

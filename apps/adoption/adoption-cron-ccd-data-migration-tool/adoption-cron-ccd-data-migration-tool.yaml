@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adoption-cron-ccd-data-migration-tool
+spec:
+  releaseName: adoption-cron-ccd-data-migration-tool
+  values:
+    global:
+      jobKind: CronJob
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:prod-91e485c-20250721144246 #{"$imagepolicy": "flux-system:adoption-cron-ccd-data-migration-tool"}
+      schedule: "05 20 31 02 *"
+      environment:
+        MIGRATION_ID: ADOP-2555
+        USE_CASE_ID_MAPPING: true
+        ENABLED: false
+        UPDATE: rollback
+        IDAM_REDIRECT_URL: https://apply-to-adopt-a-child-placed-in-your-care.service.gov.uk/receiver
+        IDAM_CLIENT_ID: adoption-web
+        IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        JRD_BASE_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100
+        RETRY_FAILURES: true
+      keyVaults:
+        adoption:
+          secrets:
+            - name: idam-system-user-name
+              alias: IDAM_USERNAME
+            - name: idam-system-user-password
+              alias: IDAM_PASSWORD
+            - name: idam-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: s2s-secret-cos-api
+              alias: DATA_STORE_IDAM_KEY
+            - name: migration-tool-case-id-list-mapping
+              alias: CASE_ID_LIST_MAPPING
+            - name: app-insight-connection-key
+              alias: app-insight-connection-key
+  chart:
+    spec:
+      chart: ./stable/adoption-cron-ccd-data-migration-tool
+      version: 0.0.17
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system

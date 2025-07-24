@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-iron-mountain-extract
+spec:
+  releaseName: probate-cron-iron-mountain-extract
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3214-65b4f3c-20250721114827 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "30 13 * * *"
+      cpuRequests: "250m"
+      cpuLimits: "1000m"
+      memoryRequests: "512Mi"
+      memoryLimits: "2048Mi"
+      environment:
+        TRIG: trig-1
+      ADHOC_JOB_DATE: "2025-05-29"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo

@@ -12,26 +12,39 @@ spec:
       readinessTimeout: 15
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/dgs:prod-db01f39-20240619145133 #{"$imagepolicy": "flux-system:prl-dgs"}
+      image: hmctspublic.azurecr.io/prl/dgs:prod-d534df1-20250721143128 #{"$imagepolicy": "flux-system:prl-dgs"}
       environment:
         FEATURE_EXAMPLE: true
       keyVaults:
         prl:
           resourceGroup: prl
           secrets:
-            - microservicekey-prl-dgs-api
-            - docmosis-api-key
-            - launchDarkly-sdk-key
-            - AppInsightsInstrumentationKey
-            - prl-cos-idam-client-secret
-            - test-genericpassword
-            - idam-solicitor-username
-            - idam-solicitor-password
-            - system-update-user-username
-            - system-update-user-password
-            - app-insights-connection-string
+            - name: microservicekey-prl-dgs-api
+              alias: AUTH_PROVIDER_SERVICE_CLIENT_KEY
+            - name: docmosis-api-key
+              alias: DOCMOSIS_SERVICE_ACCESS_KEY
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: AppInsightsInstrumentationKey
+              alias: APP_INSIGHTS_INSTRUMENTATION_KEY
+            - name: prl-cos-idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: test-genericpassword
+              alias: PRL_GENERIC_PASSWORD
+            - name: idam-solicitor-username
+              alias: IDAM_SOLICITOR_USERNAME
+            - name: idam-solicitor-password
+              alias: IDAM_SOLICITOR_PASSWORD
+            - name: system-update-user-username
+              alias: SYSTEM_UPDATE_USER_USERNAME
+            - name: system-update-user-password
+              alias: PRL_SYSTEM_UPDATE_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
     global:
       environment: perftest
+      DOCMOSIS_SERVICE_DEV_MODE_FLAG: false
+      DOCMOSIS_SERVICE_BASE_URL: "https://docmosis.perftest.platform.hmcts.net"
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
       enableKeyVaults: true
   chart:

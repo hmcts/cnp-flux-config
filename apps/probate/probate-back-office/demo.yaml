@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-2589-7ff4fb7-20240619134232 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3214-65b4f3c-20250721114827 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         PROBATE_POSTGRESQL_USER: pgadmin
@@ -18,7 +18,10 @@ spec:
         IDAM_SERVICE_HOST: https://idam-api.demo.platform.hmcts.net
         BACK_OFFICE_BASEURL: http://probate-back-office-demo.service.core-compute-demo.internal
         ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
-        VAR_FV2: Demo-1
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: 20250528
+        MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details/<CASE_ID>
+        FRONTEND_URL: https://probate.demo.platform.hmcts.net/get-case/<CASE_ID>?probateType=<CASE_TYPE>
       keyVaults:
         probate:
           secrets:
@@ -42,6 +45,8 @@ spec:
               alias: smeeAndFordEmail
             - name: hmrcEmail
               alias: hmrcEmail
+            - name: sealedAndCertifiedEmail
+              alias: sealedAndCertifiedEmail
             - name: ftpSignature
               alias: ftp.client.signature
             - name: ftpEnv

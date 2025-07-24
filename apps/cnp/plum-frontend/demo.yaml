@@ -4,10 +4,16 @@ kind: HelmRelease
 metadata:
   name: plum-frontend
 spec:
+  chart:
+    spec:
+      chart: ./stable/plum-frontend
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
   values:
     nodejs:
       # Testing spot instances
       replicas: 4
       ingressHost: plum.demo.platform.hmcts.net
-      spotInstances:
-        enabled: true

@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adoption-cron-submit-application-to-court-alerts
+spec:
+  releaseName: adoption-cron-submit-application-to-court-alerts
+  values:
+    job:
+      schedule: 30 2 * * *
+      environment:
+        VAR: trigger1
+        NOTIFY_TEMPLATE_SIGN_IN_ADOPTION_URL: https://apply-to-adopt-a-child-placed-in-your-care.service.gov.uk/
+        IDAM_API_REDIRECT_URL: https://apply-to-adopt-a-child-placed-in-your-care.service.gov.uk/receiver
+        IDAM_API_BASEURL: https://idam-api.platform.hmcts.net
+        LA_PORTAL_BASEURL: https://apply-to-adopt-a-child-placed-in-your-care.service.gov.uk/la-portal/kba-case-ref
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

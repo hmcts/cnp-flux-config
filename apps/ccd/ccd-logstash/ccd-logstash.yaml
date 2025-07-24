@@ -21,7 +21,7 @@ spec:
           name: logstash-secret
     extraEnvs:
       - name: DUMMY_RESTART_VAR
-        value: "true5"
+        value: "true8"
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctspublic.azurecr.io/curl:7.70.0
@@ -70,8 +70,9 @@ spec:
                         "probatej" => "PROBATE"
                         "ethosj" => "EMPLOYMENT"
                         "sscsj" => "SSCS"
+                        "civilj" => "CIVIL"
                       }
-            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING case_data.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING case_data.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
             clean_run => false
             schedule => "* * * * * *"
           }

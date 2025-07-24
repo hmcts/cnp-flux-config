@@ -7,7 +7,7 @@ spec:
   releaseName: idam-web-public
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-d0938e8-20240524121508
+      image: hmctspublic.azurecr.io/idam/web-public:prod-3980b92-20250717104129
       replicas: 2
       cpuRequests: '60m'
       cpuLimits: '1500m'
@@ -27,12 +27,12 @@ spec:
         FEATURES_GOOGLE_TAG_MANAGER: false
         FEDERATED_SSO: true
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/c6874728-71e6-41fe-a9e1-2e8c36776ad8/
-        trigger_deploy: 202311271605
+        trigger_deploy: 20241125
   chart:
     spec:
-      chart: idam-web-public
-      version: 0.4.0
+      chart: ./stable/idam-web-public
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m

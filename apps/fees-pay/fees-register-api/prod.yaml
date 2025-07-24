@@ -7,7 +7,17 @@ spec:
   values:
     java:
       replicas: 2
-      image: hmctspublic.azurecr.io/fees-register/api:prod-568a3aa-20240618094824 #{"$imagepolicy": "flux-system:fees-register-api"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
+      image: hmctspublic.azurecr.io/fees-register/api:prod-abffc66-20250626132706 #{"$imagepolicy": "flux-system:fees-register-api"}
       environment:
         DUMMY_RESTART_VAR: false
         IDAM_CLIENT_BASE_URL: https://idam-api.platform.hmcts.net

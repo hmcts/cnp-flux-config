@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-syr
+spec:
+  releaseName: et-syr
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/et/syr:prod-0461208-20250724100921 #{"$imagepolicy": "flux-system:et-syr"}
+      memoryLimits: "1024Mi"
+      memoryRequests: "512Mi"
+      cpuLimits: "1000m"
+      cpuRequests: "50m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
+  chart:
+    spec:
+      chart: ./stable/et-syr
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

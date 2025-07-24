@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sptribs-cron-clear-inactive-dss-draft-cases
+spec:
+  releaseName: sptribs-cron-clear-inactive-dss-draft-cases
+  values:
+    job:
+      schedule: "0 9 * * *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: aat

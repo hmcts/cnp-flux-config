@@ -6,14 +6,15 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:prod-07bccec-20240613142947 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:pr-1829-2bff298-20250722104334 #{"$imagepolicy": "flux-system:demo-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
-        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,bar_api,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications"
+        DUMMY_RESTART_VAR: true
+        TRUSTED_S2S_SERVICE_NAMES: "refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,probate_backend,iac,nfdiv_case_api,civil_service,paymentoutcome_web,prl_cos_api,adoption_web,civil_general_applications,ccpay_gw"
         RETURNURL_ALLOWED_HOSTNAMES: hmcts.net,gov.uk
+        PCI_PAL_CALLBACK_URL: https://cft-mtls-api-mgmt-appgw.demo.platform.hmcts.net/telephony-api/telephony/callback
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
-        GOV_PAY_OPERATIONAL_SERVICES: "ccd_gw,api_gw,xui_webapp"
+        GOV_PAY_OPERATIONAL_SERVICES: "ccd_gw,api_gw,xui_webapp,ccpay_gw"
         PBA_CONFIG1_SERVICE_NAMES: dummy
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
@@ -24,6 +25,14 @@ spec:
         PBA_SMC_PAYMENTS_EMAIL_FROM: "no-reply@mail-payment-nonprod.platform.hmcts.net"
         PBA_SMC_PAYMENTS_EMAIL_MESSAGE: "Hi, <br/><br/>Please find attached Payment by Account reconciliation report. <br/><br/>Regards, <br/>Fees & Payments Team <br/><br/>"
         PBA_SMC_PAYMENTS_EMAIL_SUBJECT: "CNP:PBA Specified Money Claims Reconciliation Report"
+        DUPLICATE_PAYMENTS_REPORT_SCHEDULER_ENABLED: "true"
+        DUPLICATE_PAYMENTS_EMAIL_FROM: "no-reply@mail-payment-nonprod.platform.hmcts.net"
+        DUPLICATE_PAYMENTS_EMAIL_MESSAGE: "Hi, <br/><br/>Please find attached Potential Duplicate Payments report. <br/><br/>Regards, <br/>Fees & Payments Team <br/><br/>"
+        DUPLICATE_PAYMENTS_EMAIL_SUBJECT: "CNP:Potential Duplicate Payments Report"
+        DUPLICATE_SERVICE_REQUEST_REPORT_SCHEDULER_ENABLED: "true"
+        DUPLICATE_SERVICE_REQUEST_EMAIL_FROM: "no-reply@mail-payment-nonprod.platform.hmcts.net"
+        DUPLICATE_SERVICE_REQUEST_EMAIL_SUBJECT: "CNP:Service Request Report"
+        DUPLICATE_SERVICE_REQUEST_EMAIL_MESSAGE: "Hi <br/><br/>Please find attached today's Duplicate Service Request report. <br/><br/>Regards <br/><br/>Payments team <br/><br/>"
       keyVaults:
         "ccpay":
           resourceGroup: ccpay
@@ -44,6 +53,8 @@ spec:
               alias: GOV_PAY_AUTH_KEY_REFERENCE
             - name: gov-pay-keys-cmc
               alias: gov.pay.auth.key.cmc
+            - name: gov-pay-keys-cmc
+              alias: gov.pay.auth.key.civil_service
             - name: gov-pay-keys-cmc-claim-store
               alias: gov.pay.auth.key.cmc_claim_store
             - name: gov-pay-keys-divorce
@@ -82,8 +93,6 @@ spec:
               alias: azure.application-insights.instrumentation-key
             - name: card-payments-email-to
               alias: card.payments.email.to
-            - name: bar-payments-email-to
-              alias: bar.payments.email.to
             - name: pba-cmc-payments-email-to
               alias: pba.cmc.payments.email.to
             - name: pba-probate-payments-email-to
@@ -130,9 +139,35 @@ spec:
               alias: pci-pal.antenna.iac.flow.id
             - name: pci-pal-antenna-strategic-flow-id
               alias: pci-pal.antenna.strategic.flow.id
+            - name: pci-pal-kerv-tenant-name
+              alias: pci-pal.kerv.tenant.name
+            - name: pci-pal-kerv-client-id
+              alias: pci-pal.kerv.client.id
+            - name: pci-pal-kerv-client-secret
+              alias: pci-pal.kerv.client.secret
+            - name: pci-pal-kerv-get-tokens-url
+              alias: pci-pal.kerv.get.tokens.url
+            - name: pci-pal-kerv-launch-url
+              alias: pci-pal.kerv.launch.url
+            - name: pci-pal-kerv-view-id-url
+              alias: pci-pal.kerv.view.id.url
+            - name: pci-pal-kerv-probate-flow-id
+              alias: pci-pal.kerv.probate.flow.id
+            - name: pci-pal-kerv-divorce-flow-id
+              alias: pci-pal.kerv.divorce.flow.id
+            - name: pci-pal-kerv-prl-flow-id
+              alias: pci-pal.kerv.prl.flow.id
+            - name: pci-pal-kerv-iac-flow-id
+              alias: pci-pal.kerv.iac.flow.id
+            - name: pci-pal-kerv-strategic-flow-id
+              alias: pci-pal.kerv.strategic.flow.id
             - name: spring-mail-password
               alias: spring.mail.password
             - name: ccpay-payment-status-connection-string
               alias: ccpay-payment-status-connection-string
             - name: pba-smc-payments-email-to
               alias: pba.smc.payments.email.to
+            - name: duplicate-payments-email-to
+              alias: duplicate.payments.email.to
+            - name: service-request-email-to
+              alias: service.request.email.to

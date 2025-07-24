@@ -7,7 +7,11 @@ spec:
   values:
     nodejs:
       ingressHost: benefit-appeal.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:pr-1482-65b196b-20240619145540 #{"$imagepolicy": "flux-system:demo-sscs-tribunals-frontend"}
+      registerAdditionalDns:
+        enabled: true
+        prefix: infected
+        primaryIngressHost: blood-appeal.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/sscs/tribunals-frontend:prod-abc1810-20250723185539 #{"$imagepolicy": "flux-system:sscs-tribunals-frontend"}
       environment:
         CONTACT_US_WEBCHAT_ENABLED: "true"
         FT_ALLOW_UC_HEARING_OPTIONS: "true"
@@ -19,5 +23,4 @@ spec:
         ALLOW_JSA_ENABLED: "true"
         WEBCHAT_URL: "webchat.pp.ctsc.hmcts.net"
         WEBCHAT_CLIENT_URL: "webchat-client.pp.ctsc.hmcts.net"
-        TEST_PROPERTY: "false"
-        DUMMY_PROPERTY: true
+        IBC_NI_POSTCODES_FEATURE: true

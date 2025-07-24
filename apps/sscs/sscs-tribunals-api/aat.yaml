@@ -6,8 +6,8 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/sscs/tribunals-api:prod-6947d9b-20250724125203 #{"$imagepolicy": "flux-system:sscs-tribunals-api"}
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/tribunals-api:pr-3838-fb10730-20240613152349
       environment:
         CREATE_CCD_ENDPOINT: true
         UPLOAD_AUDIO_VIDEO_EVIDENCE_FEATURE: true
@@ -21,13 +21,12 @@ spec:
         DUMMY_PROPERTY: true
         POST_HEARINGS_FEATURE: true
         POST_HEARINGS_B_FEATURE: true
-        WORK_ALLOCATION_FEATURE: true
+        WORK_ALLOCATION_FEATURE: false
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-aat.service.core-compute-aat.internal
         GAPS_SWITCHOVER_FEATURE: true
         CASE_ACCESS_MANAGEMENT_FEATURE: true
         SCHEDULE_LISTING_FEATURE: true
         ADJOURNMENT_FEATURE: true
-        CITIZEN_LOGIN_SERVICE_V2: true
         ELINKS_V2_FEATURE_ENABLED: true
         ELASTIC_SEARCH_FEATURE: true
         WLU_EMAIL_TO: sscs-tests@HMCTS.NET
@@ -39,7 +38,27 @@ spec:
         LOG_SELECTED_ENVIRONMENT_VARIABLES: true
         DELETED_REDACTED_DOC_ENABLED: true
         UPLOAD_HEARING_FILTER_ENABLED: true
-        HEARING_RECORDING_REQUEST_CASE_UPDATE_V2_ENABLED: true
-        TRIGGER_EVENT_V2_ENABLED: true
         TESTING_SUPPORT_ENABLED: true
-        HANDLE_CCD_CALLBACKMAP_V2: false
+        AMQP_PREFETCH_OVERRIDE: true
+        JOB_SCHEDULER_DB_USERNAME: pgadmin
+        JOB_SCHEDULER_DB_NAME: notification
+        JOB_SCHEDULER_DB_HOST: sscs-tya-notif-postgres-v15-db-aat.postgres.database.azure.com
+        SSCS_TRACK_YOUR_APPEAL_LINK: http://sscs-cor.aat.platform.hmcts.net/sign-in?tya=appeal_id
+        MYA_LINK: http://sscs-cor.aat.platform.hmcts.net/sign-in?tya=appeal_id
+        MYA_EVIDENCE_LINK: http://sscs-cor.aat.platform.hmcts.net/support-evidence
+        ONLINE_HEARING_LINK: http://sscs-cor.aat.platform.hmcts.net
+        SSCS_MANAGE_EMAILS_LINK: http://sscs-cor.aat.platform.hmcts.net/manage-email-notifications/mac
+        HOURS_START_TIME: 0
+        HOURS_END_TIME: 21
+        COVID_19_NOTIFICATION_FEATURE: false
+        TEST_RECIPIENTS_POSTCODE: "CF24 0AB"
+        TRIBUNALS_HEARINGS_LISTENING_ENABLED: true
+        HMC_HEARINGS_LISTENING_ENABLED: true
+        ADJOURNMENT_ENABLED: true
+        HMC_DEPLOYMENT_FILTER_ENABLED: false
+        TRIBUNAL_INTERNAL_DOCUMENTS_ENABLED: true
+        AMQP_RECONNECT_ON_EXCEPTION: true
+        DEFAULT_PANEL_COMPOSITION_ENABLED: false
+        IBC_NI_POSTCODES_FEATURE: true
+        HEARING_DURATION_ENABLED: true
+        # HMC_DEPLOYMENT_ID: "deployment-sscs-tribunals-api-aat"

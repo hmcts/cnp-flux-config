@@ -6,13 +6,14 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/civil/service:prod-bd53ea4-20240619093914 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctspublic.azurecr.io/civil/service:prod-0379cce-20250724140904 #{"$imagepolicy": "flux-system:civil-service"}
+      replicas: 4
+      autoscaling:
+        maxReplicas: 8
       environment:
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
-        REFERENCE_DATABASE_MIGRATION: true
         SPRING_FLYWAY_TABLE: schema_version
-        SPRING_FLYWAY_BASELINE_ON_MIGRATE: true
         POLLING_EVENT_EMITTER_ENABLED: false
         SERVICE_REQUEST_UPDATE: http://civil-service-perftest.service.core-compute-perftest.internal/service-request-update
         ASYNC_HANDLER_CORE_POOL_SIZE: 50

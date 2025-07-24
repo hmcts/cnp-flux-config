@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adoption-cron-ccd-data-migration-tool
+spec:
+  releaseName: adoption-cron-ccd-data-migration-tool
+  values:
+    job:
+      image: hmctspublic.azurecr.io/adoption/cron-ccd-data-migration-tool:prod-91e485c-20250721144246 #{"$imagepolicy": "flux-system:demo-adoption-cron-ccd-data-migration-tool"}
+      cpuRequests: "1000m"
+      cpuLimits: "2500m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
+      schedule: "05 20 31 02 *"
+      environment:
+        MIGRATION_ID: ADOP-log
+        ENABLED: false
+        UPDATE: rollback
+        IDAM_REDIRECT_URL: https://adoption-web.demo.platform.hmcts.net/receiver
+        IDAM_CLIENT_ID: adoption-web
+        IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_QUERY_SIZE: 100

@@ -6,6 +6,7 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/civil/service:prod-0379cce-20250724140904 #{"$imagepolicy": "flux-system:civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -38,7 +39,7 @@ spec:
               alias: CMC_DB_USERNAME
             - name: cmc-db-host-v15
               alias: CMC_DB_HOST
-            - name: gov-notify-guest-list-api-key
+            - name: gov-notify-pretends-api-key
               alias: GOV_NOTIFY_API_KEY
             - name: sendgrid-api-key
               alias: SENDGRID_API_KEY
@@ -73,3 +74,5 @@ spec:
         POLLING_EVENT_EMITTER_ENABLED: true
         OCMC_CLIENT_URL: https://moneyclaims.aat.platform.hmcts.net
         CIVIL_AAT_FLUX_TRIGGER: trigger1
+        CASE_FLAGS_LOGGING_ENABLED: false
+        HMC_HEARINGS_SUBSCRIPTION_ENABLED: true

@@ -6,10 +6,11 @@ spec:
   values:
     java:
       memoryRequests: "3072Mi"
-      image: hmctspublic.azurecr.io/em/stitching:prod-8f059d1-20240619083654 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      cpuRequests: "1500m"
+      memoryLimits: "6144Mi"
+      cpuLimits: "3000m"
+      image: hmctspublic.azurecr.io/em/stitching:prod-04bbc75-20250724122756 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       environment:
-        TEST_VAR: refresh
+        TEST_VAR: refresh2
         CALLBACK_MAX_ATTEMPTS: 5
         DOCUMENT_TASK_MILLISECONDS: 5000
-      spotInstances:
-        enabled: true

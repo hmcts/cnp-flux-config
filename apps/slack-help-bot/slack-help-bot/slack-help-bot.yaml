@@ -7,15 +7,15 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-cc5256a-20240618162351 #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctspublic.azurecr.io/rpe/slack-help-bot:prod-e063e22-20250723094133Z #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
-      SLACK_REPORT_CHANNEL: platops-help
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
+      SLACK_REPORT_CHANNEL_CRIME_ID: C07KMBUFMA5
       JIRA_START_TRANSITION_ID: 181
       JIRA_DONE_TRANSITION_ID: 201
       JIRA_PROJECT: DTSPO
-      JIRA_ISSUE_TYPE_ID: 17100
-      JIRA_ISSUE_TYPE_NAME: "BAU Task"
+      JIRA_ISSUE_TYPE_ID: 18400
+      JIRA_ISSUE_TYPE_NAME: "Support"
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -24,12 +24,14 @@ spec:
           - slack-app-token
           - jira-username
           - jira-api-token
-          - app-insights-instrumentation-key
+          - app-insights-connection-string
+    autoscaling:
+      enabled: false
   chart:
     spec:
       chart: nodejs
-      version: 3.0.0
+      version: 3.1.1
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system

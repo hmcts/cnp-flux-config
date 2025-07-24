@@ -3,6 +3,9 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/gotk-components.yaml
-- aks-sops-aadpodidentity.yaml
+- ../../workload-identity
+- aso-controller-settings-patch.yaml
+- ../../docker-regcreds/ithc
 patches:
-- path: ../../base/patches/kustomize-controller-patch.yaml
+- path: ../../serviceaccount/ithc.yaml
+- path: ../../base/patches/workload-identity-deployment-patch.yaml

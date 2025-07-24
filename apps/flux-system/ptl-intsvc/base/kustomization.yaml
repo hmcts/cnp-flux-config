@@ -6,8 +6,12 @@ resources:
 - ./gotk-components.yaml
 - ../../automation
 - ../../base/image-update-automation.yaml
-- aks-sops-aadpodidentity.yaml
+- ../workload-identity
+- ../../automation/workload-identity-automation
 
 patches:
-- path: ../../base/patches/kustomize-controller-patch.yaml
 - path: ../../base/patches/image-automation-components-patch.yaml
+- path: ../../serviceaccount/ptl-intsvc.yaml
+- path: ../../base/patches/workload-identity-deployment-patch.yaml
+- path: ../../serviceaccount/ptl-intsvc-automation.yaml
+- path: ../../base/patches/workload-identity-deployment-automation.yaml

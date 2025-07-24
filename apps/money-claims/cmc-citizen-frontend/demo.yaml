@@ -6,9 +6,10 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-15eca35-20240501171719 #{"$imagepolicy": "flux-system:demo-cmc-citizen-frontend"}
+      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-f65c279-20241216111409 #{"$imagepolicy": "flux-system:demo-cmc-citizen-frontend"}
       ingressHost: moneyclaims1.demo.platform.hmcts.net
       environment:
+        DUMMY_RESTART_VAR: true
         GA_TRACKING_ID: UA-97111056-1
         FEATURE_TESTING_SUPPORT: true
         FEATURE_RETURN_ERROR_TO_USER: true
@@ -16,3 +17,8 @@ spec:
         DRAFT_STORE_URL: http://draft-store-service-demo.service.core-compute-demo.internal
         PAY_RETURN_URL: https://moneyclaims1.demo.platform.hmcts.net
         CUI_URL: https://moneyclaims.demo.platform.hmcts.net
+        CIVIL_CITIZEN_URL: https://moneyclaims.demo.platform.hmcts.net
+        CIVIL_CITIZEN_UI_REDIRECT: true
+        CUI_DASHBOARD_REDIRECT: true
+        CUI_SIGN_OUT_REDIRECT: true
+        CUI_DASHBOARD_URL: https://moneyclaims.demo.platform.hmcts.net/dashboard
