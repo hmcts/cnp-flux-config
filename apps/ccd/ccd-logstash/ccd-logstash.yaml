@@ -72,7 +72,7 @@ spec:
                         "sscsj" => "SSCS"
                         "civilj" => "CIVIL"
                       }
-            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING case_data.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING case_data.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data, version"
             clean_run => false
             schedule => "* * * * * *"
           }
@@ -192,6 +192,11 @@ spec:
                 document_type => "_doc"
                 document_id => "%{id}"
                 timeout => 60
+                # External versioning configuration
+                version => "%{version}"
+                version_type => "external"
+                # Handle version conflicts gracefully
+                retry_on_conflict => 0
             }
         }
       dead_letter_indexing_pipeline.conf: |
