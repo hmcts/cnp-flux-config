@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-cron-wa-task-for-expired-bfactions
+spec:
+  releaseName: et-cron-wa-task-for-expired-bfactions
+  values:
+    job:
+      image: hmctspublic.azurecr.io/et/cos:prod-af13fed-20250801152504 #{"$imagepolicy": "flux-system:et-cos"}
+      environment:
+        TASK_NAME: WaTaskCreationCronForExpiredBfActions
+      schedule: 0/30 * * * *
+  chart:
+    spec:
+      chart: et-bf-cron
+      version: 0.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system

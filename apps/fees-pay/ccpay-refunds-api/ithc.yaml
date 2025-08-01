@@ -5,10 +5,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-f034d58-20250416141048 #{"$imagepolicy": "flux-system:ithc-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-161832d-20250731134057 #{"$imagepolicy": "flux-system:ithc-ccpay-refunds-api"}
       environment:
-        S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,cmc,api_gw,ccd_gw
+        S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,api_gw,ccd_gw,xui_webapp,ccpay_gw
         PAYMENT_API_URL: http://payment-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
         REFUND_STATUS_UPDATE_PATH: "/refunds-api/refund"
-        DUMMY_VARIABLE: false
+        DUMMY_VARIABLE: true

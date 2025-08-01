@@ -10,8 +10,16 @@ spec:
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
+      memoryRequests: 1024Mi
+      cpuRequests: 2500m
+      memoryLimits: 2048Mi
+      cpuLimits: 2500m
+      devcpuRequests: 500m
+      devmemoryRequests: 1Gi
+      devcpuLimits: 2
+      devmemoryLimits: 2G
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-61a76f9-20250416132502 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
+      image: hmctspublic.azurecr.io/civil/citizen-ui:prod-2326bac-20250801132947 #{"$imagepolicy": "flux-system:perftest-civil-citizen-ui"}
       keyVaults:
         civil-cui:
           resourceGroup: civil-citizen-ui
@@ -27,4 +35,5 @@ spec:
             - name: launch-darkly-sdk-key-non-prod
               alias: LAUNCH_DARKLY_SDK_KEY
       environment:
+        DUMMY_RESTART_VAR: true
         CIVIL_GENERAL_APPLICATIONS_URL: http://civil-general-applications-perftest.service.core-compute-perftest.internal

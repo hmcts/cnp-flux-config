@@ -9,11 +9,9 @@ spec:
     neuvector:
       controller:
         azureFileShare:
-          secretName: nv-storage-secret
           shareName: neuvector-data-00
         ingress:
-          host: cft-neuvector00-api.platform.hmcts.net
-          enabled: false
+          host: cft-neuvector00-api.prod.platform.hmcts.net
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -21,41 +19,25 @@ spec:
               Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
               X509_Cert: |
                 -----BEGIN CERTIFICATE-----
-                MIIC8DCCAdigAwIBAgIQVQBM0oJ0XqxN4DnKURX8EDANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
-                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0yMzA0MTgxMTQ2
-                MjhaFw0yNjA0MTgxMTQ2MjFaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
-                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/C96M3V8zFE
-                kJwQJGH3w4sYNGgozHrxeVOzTGeh7LDkOSUOSERjpDMlq5iJpnLzFYNxNEsXmgYGSZu/iZ8yUgrW
-                sfR/YBjBVQoktne/tp+uuFdsl4pwdHWVU/2Pcf/9gqbhvxtjq3PHaSeTcjNvIkriKdwgwE0E7M2N
-                PzmO38fv99kvJFHFlsW6T1oXLIGcrz+gVgx4l1vdSKE7Opq6F6HcKxpBduvIzIJxmoj8g5dzpR37
-                Ihuj86J+H0QCFrUj3rNL0FQjK+5JFECu7UCxbw/gL1zpB5IrJ04/hXyrLyH4bf34rE1zqoL/g16F
-                6Rnpa1My0oFr742GETv8GPsSAQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBO6wZ4GKPD6MdsO9+3
-                pMoC+PNkwH9b9VCPWTyWAxFBlkmLGTlVxBG5V6pk4QAqF9KbvVEEZhCjMwRRuiDub6qgvw+FKREj
-                3r2m3zAr70UyJZL1VfTvDGBnyAXKFlABJVvzQXkMi4uwA+vyexZk+PF3eSxkTgDceYfvixFemrRp
-                msUxdSNQl5PHUu2xymu1tpIXIuTf2L4OU8/RU/ZNJdMji0yGNzVjU0mhS58/0pV7dwIuR2SzH7Ke
-                Oj+7o9TNk3oTR2NqibuSu7L74wVAmiVIYiPbba3GRVomvLt/GBY4f/dCeRRVdrUid7sDJDw+5Yhl
-                5sGIT8sLHBqnZjfTfXne
+                MIICxDCCAaygAwIBAgIIbo4Kg/3lQYcwDQYJKoZIhvcNAQELBQAwIjEgMB4GA1UEAwwXQ0ZUIE5l
+                dXZlY3RvciAtIFByb2QgMDAwHhcNMjUwNzAzMTU1MjU3WhcNMjYwNzAzMTYwMjU3WjAiMSAwHgYD
+                VQQDDBdDRlQgTmV1dmVjdG9yIC0gUHJvZCAwMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+                ggEBAJLLeggProB7dQsGHB+yuxNIUUfahaVdqkwXekFNCN6friENy2QTHQHBDvipXIKfPHScJCP7
+                O/Yj174viQWUoW/yLvNbc38XmezpT2t9hIozu64ecdyjU60Po3h1kpwpHDp7rkC2EBjtO9F0EI7Q
+                YydZQnvZxuVCcFE3uHpzNBEsoKeOKr0w6d2mGoe97jWQ8vUHJ4jjcxIc0lVr/A7uWcU/LCtrKjr6
+                OHsdOnsy8mPTdKFwCI4MV78zqoFPpR1vRQlv2Id6x+V1AjRB8TZI7wkN11bfQlKQbLsKaJRBW1DF
+                msWU9CRFl5A5ihbnezT5n0Uur4ObyMWxCw3z68vIKP8CAwEAATANBgkqhkiG9w0BAQsFAAOCAQEA
+                IibkH3hNoCTmd1M8k0QcZNmtIRYTrKVf/zk/6XKtyWdz3Ox2rgni43VLcWO4HXp6wyI6FzNfERlV
+                Ydz551nTf1aj7XcnjVvvaF0zvUE+bJWcvaXwv9jLXex+U43yVqbmIR6AdYu7MVgy3CUFV3GOKUpv
+                d5KascOnYGywB+yCONmhn7LP1sukRgvpZwLahVZlTV5EwtX5Td6oK3OLABnnb5shXkncgzLDVqOZ
+                Jmar+nomPk0sWg76CI7u7fksgqRjlpp1i/suCfUkdH/uiFvQvNWF6wP3/Fh4Y49HhFvTVvtVU6sN
+                ci8sSH5nd/HKl5RZQj5OdUw9zGuvuOOAodkvPg==
                 -----END CERTIFICATE-----
               Enable: true
               Default_Role: reader
               Role_Groups:
                 admin:
                   - e7ea2042-4ced-45dd-8ae3-e051c6551789
-            sysinitcfg.yaml: |
-              New_Service_Policy_Mode: Discover
-              Syslog_ip: fluentbit-log
-              Syslog_IP_Proto: 6
-              Syslog_Port: 5140
-              Syslog_Level: Warning
-              Syslog_status: true
-              Syslog_in_json: true
-              Scan_Config:
-                Auto_Scan: true
-              Syslog_Categories:
-                - event
-                - security-event
-                - audit
-              Cluster_Name: prod00
       manager:
         ingress:
-          host: cft-neuvector00.platform.hmcts.net
+          host: cft-neuvector-prod00.hmcts.net

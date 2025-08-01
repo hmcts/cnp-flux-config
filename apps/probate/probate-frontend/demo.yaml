@@ -7,9 +7,61 @@ spec:
   values:
     nodejs:
       ingressHost: probate.demo.platform.hmcts.net
-      image: hmctspublic.azurecr.io/probate/frontend:prod-ffb8fef-20250416120051 #{"$imagepolicy": "flux-system:demo-probate-frontend"}
+      image: hmctspublic.azurecr.io/probate/frontend:prod-487894b-20250801085942 #{"$imagepolicy": "flux-system:demo-probate-frontend"}
       environment:
         # Does what it says on the tin - if this changes then demo should redeploy
-        CHANGE_TO_REDEPLOY_DEMO: abc
+        CHANGE_TO_REDEPLOY_DEMO: 20250528
         DYNATRACE_URL: https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/27a3075f1661d271_complete.js
         EXCEPTED_ESTATE_DATE_OF_DEATH: "2022-01-01"
+      keyVaults:
+        probate:
+          resourceGroup: probate
+          secrets:
+            - name: frontend-redis-access-key
+              alias: frontend-redis-access-key
+            - name: idam-s2s-secret
+              alias: idam-s2s-secret
+            - name: ccidam-idam-api-secrets-probate
+              alias: ccidam-idam-api-secrets-probate
+            - name: postcode-service-url
+              alias: postcode-service-url
+            - name: postcode-service-token2
+              alias: postcode-service-token2
+            - name: probate-survey
+              alias: probate-survey
+            - name: probate-survey-end
+              alias: probate-survey-end
+            - name: probate-service-id
+              alias: probate-service-id
+            - name: probate-site-id
+              alias: probate-site-id
+            - name: payCaseWorkerUser
+              alias: payCaseWorkerUser
+            - name: payCaseWorkerPass
+              alias: payCaseWorkerPass
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: launchdarkly-key
+              alias: launchdarkly-key
+            - name: launchdarklyUserkeyFrontend
+              alias: launchdarklyUserkeyFrontend
+            - name: pcq-token-key
+              alias: pcq-token-key
+            - name: webchat-avaya-url
+              alias: webchat-avaya-url
+            - name: webchat-avaya-client-url
+              alias: webchat-avaya-client-url
+            - name: webchat-avaya-service
+              alias: webchat-avaya-service
+            - name: webchat-kerv-deployment-en
+              alias: webchat-kerv-deployment-en
+            - name: webchat-kerv-deployment-cy
+              alias: webchat-kerv-deployment-cy
+            - name: webchat-kerv-genesys-base-url
+              alias: webchat-kerv-genesys-base-url
+            - name: webchat-kerv-environment
+              alias: webchat-kerv-environment
+            - name: webchat-kerv-kerv-base-url
+              alias: webchat-kerv-kerv-base-url
+            - name: webchat-kerv-api-key
+              alias: webchat-kerv-api-key
