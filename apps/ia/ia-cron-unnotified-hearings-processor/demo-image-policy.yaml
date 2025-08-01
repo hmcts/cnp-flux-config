@@ -2,14 +2,6 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: demo-ia-cron-unnotified-hearings-processor
-  annotations:
-    hmcts.github.com/prod-automated: disabled
 spec:
-  filterTags:
-    pattern: '^pr-498-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
-  policy:
-    alphabetical:
-      order: asc
   imageRepositoryRef:
     name: ia-cron-unnotified-hearings-processor
