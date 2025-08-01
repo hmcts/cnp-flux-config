@@ -1,0 +1,35 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dynatrace-injection-monitor-clusterrolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: dynatrace-injection-monitor-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: dynatrace-injection-monitor-sa
+    namespace: monitoring
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dynatrace-injection-monitor-clusterrole
+rules:
+  - apiGroups: ['']
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+  - apiGroups: ['']
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "patch"]
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynatrace-injection-monitor-sa
+  namespace: monitoring

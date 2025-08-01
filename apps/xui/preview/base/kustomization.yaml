@@ -3,9 +3,15 @@ kind: Kustomization
 resources:
   - ../../../base
   - ../../../base/workload-identity
+  - ../../../base/docker-registry/dev
   - ../../identity/identity.yaml
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
+  - ../sops-secrets
 namespace: xui
 patches:
+  - path: ../aso/xui-postgres.yaml
   - path: ../../identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
 sortOptions:
