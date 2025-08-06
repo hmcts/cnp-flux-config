@@ -23,6 +23,7 @@ spec:
           - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
           - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
     neuvector:
+      serviceAccount: neuvector
       containerd:
         enabled: true
       resources:
@@ -37,16 +38,44 @@ spec:
         azureFileShare:
           enabled: true
           secretName: nv-storage-secret
+        ingress:
+          path: "/"
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "true"
         apisvc:
           annotations:
             traefik.ingress.kubernetes.io/service.serversscheme: https
         configmap:
           enabled: true
+          data:
+            sysinitcfg.yaml: |
+              New_Service_Policy_Mode: Discover
+              Syslog_ip: fluentbit-log
+              Syslog_IP_Proto: 6
+              Syslog_Port: 5140
+              Syslog_Level: Warning
+              Syslog_status: true
+              Syslog_in_json: true
+              Scan_Config:
+                Auto_Scan: true
+              Syslog_Categories:
+                - event
+                - security-event
+                - audit
+              Cluster_Name: ${NV_CLUSTER_NAME}
       enforcer:
         priorityClassName: system-node-critical
       manager:
         env:
           ssl: false
+        ingress:
+          enabled: true
+          httpredirect: false
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.tls: "false"
       cve:
         updater:
           # If false, cve updater will not be installed
@@ -60,3 +89,32 @@ spec:
         kind: HelmRepository
         name: hmctspublic-oci
         namespace: flux-system
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: neuvector-controller-pod
+            patch: |
+              - op: add
+                path: /spec/template/spec/automountServiceAccountToken
+                value: false
+              - op: add
+                path: /spec/template/spec/volumes/-
+                value:
+                  name: longlived-token
+                  secret:
+                    secretName: neuvector-longlived-token
+                    defaultMode: 420
+              - op: add
+                path: /spec/template/spec/containers/0/volumeMounts/-
+                value:
+                  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                  name: longlived-token
+                  readOnly: true
+              - op: add
+                path: /spec/template/spec/initContainers/0/volumeMounts
+                value:
+                  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                    name: longlived-token
+                    readOnly: true

@@ -16,12 +16,16 @@ spec:
     ingressSessionAffinity:
       enabled: true
     envFromSecret: docmosis-secret
-    image: hmctsprivate.azurecr.io/docmosis:prod-9005b90-863381 #{"$imagepolicy": "flux-system:docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:prod-a4eb53e-879529 #{"$imagepolicy": "flux-system:docmosis"}
     java:
       replicas: 2
       autoscaling:
         enabled: true
         maxReplicas: 10
+        cpu:
+          averageUtilization: 50
+        memory:
+          averageUtilization: 50
       memoryRequests: "3Gi"
       memoryLimits: "4Gi"
       cpuRequests: "2000m"

@@ -7,7 +7,59 @@ spec:
   values:
     nodejs:
       enableOAuth: true
-      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-997d487-20250709092525 #{"$imagepolicy": "flux-system:demo-probate-caveats-fe"}
+      image: hmctspublic.azurecr.io/probate/caveats-fe:prod-9a77bf6-20250805075015 #{"$imagepolicy": "flux-system:demo-probate-caveats-fe"}
       environment:
         # Does what it says on the tin - if this changes then demo should redeploy
         CHANGE_TO_REDEPLOY_DEMO: 20250528
+      keyVaults:
+        probate:
+          resourceGroup: probate
+          secrets:
+            - name: caveats-fe-redis-access-key
+              alias: caveats-fe-redis-access-key
+            - name: idam-s2s-secret
+              alias: idam-s2s-secret
+            - name: ccidam-idam-api-secrets-probate
+              alias: ccidam-idam-api-secrets-probate
+            - name: postcode-service-url
+              alias: postcode-service-url
+            - name: postcode-service-token2
+              alias: postcode-service-token2
+            - name: probate-survey
+              alias: probate-survey
+            - name: probate-survey-end
+              alias: probate-survey-end
+            - name: probate-service-id
+              alias: probate-service-id
+            - name: probate-site-id
+              alias: probate-site-id
+            - name: caveat-user-name
+              alias: caveat-user-name
+            - name: caveat-user-password
+              alias: caveat-user-password
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: launchdarkly-key
+              alias: launchdarkly-key
+            - name: launchdarklyUserkeyCaveatFrontend
+              alias: launchdarklyUserkeyCaveatFrontend
+            - name: pcq-token-key
+              alias: pcq-token-key
+            - name: webchat-avaya-url
+              alias: webchat-avaya-url
+            - name: webchat-avaya-client-url
+              alias: webchat-avaya-client-url
+            - name: webchat-avaya-service
+              alias: webchat-avaya-service
+            - name: webchat-kerv-deployment-en
+              alias: webchat-kerv-deployment-en
+            - name: webchat-kerv-deployment-cy
+              alias: webchat-kerv-deployment-cy
+            - name: webchat-kerv-genesys-base-url
+              alias: webchat-kerv-genesys-base-url
+            - name: webchat-kerv-environment
+              alias: webchat-kerv-environment
+            - name: webchat-kerv-kerv-base-url
+              alias: webchat-kerv-kerv-base-url
+            - name: webchat-kerv-api-key
+              alias: webchat-kerv-api-key
