@@ -7,6 +7,10 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/et/cos:prod-ef1ba74-20250806110815 #{"$imagepolicy": "flux-system:et-cos"}
+      memoryLimits: "3072Mi"
+      memoryRequests: "1536Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "200m"
       environment:
         TASK_NAME: WaTaskCreationCronForExpiredBfActions
       schedule: 0/30 * * * *
