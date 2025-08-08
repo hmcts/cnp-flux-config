@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-data-extracts
+spec:
+  releaseName: probate-cron-data-extracts
+  values:
+    job:
+      schedule: "0 2 31 2 *"
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/probate/back-office:prod-8f742e2-20250805122921 #{"$imagepolicy": "flux-system:probate-back-office"}
+      environment:
+        TASK_NAME: DataExtractsTask
+  chart:
+    spec:
+      chart: probate-cron
+      version: 0.0.30
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system
