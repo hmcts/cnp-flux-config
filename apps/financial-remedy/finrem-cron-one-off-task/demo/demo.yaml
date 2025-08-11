@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "15 10 11 8 *"
+      schedule: "10 11 11 8 *"
       image: hmctspublic.azurecr.io/finrem/cos:prod-ec61a85-20250811095259 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -21,7 +21,7 @@ spec:
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: ManageHearingsMigrationTask
-        CRON_DRY_RUN: true
+        CRON_DRY_RUN: false
         CRON_MANAGE_HEARINGS_MIGRATION_ENABLED: true
         CRON_MANAGE_HEARINGS_MIGRATION_ROLLBACK: false
         CRON_MANAGE_HEARINGS_MIGRATION_CASE_LIST_FILENAME: "manageHearingsMigration-encrypted.csv"
