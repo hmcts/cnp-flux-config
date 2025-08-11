@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "10 11 11 8 *"
+      schedule: "45 11 11 8 *"
       image: hmctspublic.azurecr.io/finrem/cos:prod-2d6729c-20250811110744 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -23,9 +23,9 @@ spec:
         TASK_NAME: ManageHearingsMigrationTask
         CRON_DRY_RUN: false
         CRON_MANAGE_HEARINGS_MIGRATION_ENABLED: true
-        CRON_MANAGE_HEARINGS_MIGRATION_ROLLBACK: false
+        CRON_MANAGE_HEARINGS_MIGRATION_ROLLBACK: true
         CRON_MANAGE_HEARINGS_MIGRATION_CASE_LIST_FILENAME: "manageHearingsMigration-encrypted.csv"
-        CRON_MANAGE_HEARINGS_MIGRATION_VERSION: "v1"
+        CRON_MANAGE_HEARINGS_MIGRATION_VERSION: "v1rollback"
     global:
       jobKind: CronJob
       enableKeyVaults: true
