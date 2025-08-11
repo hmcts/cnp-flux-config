@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-cron-wa-task-for-expired-bfactions
+spec:
+  releaseName: et-cron-wa-task-for-expired-bfactions
+  values:
+    job:
+      image: hmctspublic.azurecr.io/et/cos:pr-2706-b2c06f5-20250811103558 #{"$imagepolicy": "flux-system:demo-et-cron-wa-task-for-expired-bfactions"}
+      suspend: false
+      schedule: "0,30 * * * *"
+      disableActiveClusterCheck: false
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      environment: demo

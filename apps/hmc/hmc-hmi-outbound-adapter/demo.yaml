@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-c8cc762-20250701103230 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}
+      image: hmctspublic.azurecr.io/hmc/hmi-outbound-adapter:prod-6fd6dca-20250806081243 #{"$imagepolicy": "flux-system:demo-hmc-hmi-outbound-adapter"}
       keyVaults:
         hmc:
           secrets:
@@ -31,6 +31,8 @@ spec:
               alias: HMC_SERVICE_BUS_OUTBOUND_CONNECTION_STRING
             - name: hmc-servicebus-connection-string
               alias: HMC_SERVICE_BUS_INBOUND_CONNECTION_STRING
+            - name: hmc-servicebus-connection-string
+              alias: HMC_SERVICE_BUS_CONNECTION_STRING
             - name: fh-get-token-url
               alias: FH_GET_TOKEN_URL
       environment:
@@ -41,3 +43,4 @@ spec:
         HMI_BASE_URL: https://sds-api-mgmt.test.platform.hmcts.net/hmi
         HMC_SERVICE_BUS_OUTBOUND_QUEUE: hmc-to-hmi-demo-temp
         HMC_SERVICE_BUS_INBOUND_QUEUE: hmc-from-hmi-demo-temp
+        HMC_SERVICE_BUS_TOPIC: hmc-to-cft-demo

@@ -13,7 +13,7 @@ spec:
         enabled: true
         minReplicas: 2
         maxReplicas: 7
-      image: hmctspublic.azurecr.io/dm/store:prod-acb08e0-20250714123859 #{"$imagepolicy": "flux-system:perftest-dm-store"}
+      image: hmctspublic.azurecr.io/dm/store:prod-345c0ab-20250811093057 #{"$imagepolicy": "flux-system:perftest-dm-store"}
       environment:
         SPRING_DATASOURCE_HOST: dm-store-postgres-db-v15-perftest.postgres.database.azure.com
         SPRING_DATASOURCE_USERNAME: pgadmin
@@ -26,3 +26,6 @@ spec:
         CASE_DOCUMENTS_DELETION_JOB_SCHEDULE: '0 0 31 2 *' # is a mechanism to not run the job at all (31st feb is a nonfiring date)
         CASE_DOCUMENTS_DELETION_LIMIT: 50000
         ENABLE_CASE_DOCUMENTS_DELETION: 'false'
+        UPLOAD_BLOCK_SIZE: 8
+        UPLOAD_MAX_CONCURRENCY: 10
+        MAX_SINGLE_UPLOAD_SIZE: 100
