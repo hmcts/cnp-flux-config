@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lau-eud-backend-int
+spec:
+  releaseName: lau-eud-backend-int
+  values:
+    java:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/lau/eud-backend:latest #{"$imagepolicy": "flux-system:lau-case-backend"}
+      ingressHost: lau-eud-backend-int-demo.service.core-compute-demo.internal
+  chart:
+    spec:
+      chart: ./stable/lau-eud-backend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
