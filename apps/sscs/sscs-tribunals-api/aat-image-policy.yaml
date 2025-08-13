@@ -1,10 +1,12 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
+  annotations:
+    hmcts.github.com/prod-automated: disabled
   name: aat-sscs-tribunals-api
 spec:
   filterTags:
-    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
+    pattern: '^pr-4838-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:

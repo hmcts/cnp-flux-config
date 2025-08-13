@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-data-extracts
+spec:
+  releaseName: probate-cron-data-extracts
+  values:
+    job:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3287-b69e3c0-20250812120706 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0 10 31 2 *"
+      environment:
+        TASK_NAME: DataExtractsTask
+        MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net
+        FRONTEND_URL: https://probate.demo.platform.hmcts.net
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
