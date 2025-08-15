@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lau-eud-backend
+spec:
+  releaseName: lau-eud-backend
+  values:
+    java:
+      replicas: 1
+      memoryRequests: "2048Mi"
+      cpuRequests: "100m"
+      memoryLimits: "4096Mi"
+      cpuLimits: "1500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 3
+        cpu:
+          enabled: true
+          averageUtilization: 90
+        memory:
+          enabled: true
+          averageUtilization: 80
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/lau/eud-backend:prod-7f3f7c0-20250811073206 #{"$imagepolicy": "flux-system:lau-eud-backend"}
+  chart:
+    spec:
+      chart: ./stable/lau-eud-backend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
