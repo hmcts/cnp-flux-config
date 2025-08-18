@@ -4,6 +4,15 @@ metadata:
   name: traefik2
   namespace: admin
 spec:
+  chart:
+    spec:
+      chart: traefik
+      # update the crd version in traefik-crds when updating this
+      version: 37.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: admin
   values:
     service:
       spec:
@@ -13,13 +22,6 @@ spec:
         useWorkloadIdentity: "true"
     serviceAccount:
       name: admin
-    additionalArguments:
-      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=90"
-      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=90"
-      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=90"
-      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=90"
-      - "--entryPoints.web.forwardedHeaders.insecure=true"
-      - "--entryPoints.websecure.forwardedHeaders.insecure=true"
     ingressRoute:
       dashboard:
         enabled: true

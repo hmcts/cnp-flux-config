@@ -10,8 +10,8 @@ spec:
       suspend: false
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-5784705-20250805113213 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "*/10 * 27 5 *"
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-106-2c10f52-20250807171233 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "30 11 13 08 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -32,6 +32,8 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
             - name: encoded-string-update-listing-reqs-amend-reason
               alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
+            - name: encoded-string-final-decision-outcome-migration
+              alias: FINAL_DECISION_OUTCOME_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
@@ -40,8 +42,9 @@ spec:
         ELASTIC_ENABLED: true
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
-        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: true
+        UPDATE_LISTING_REQS_MISSING_AMEND_REASON: false
         DUMMY: true
+        FINAL_DECISION_OUTCOME_MIGRATION_ENABLED: true
     global:
       environment: demo
       enableKeyVaults: true
