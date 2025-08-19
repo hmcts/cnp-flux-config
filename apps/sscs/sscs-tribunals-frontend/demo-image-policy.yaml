@@ -1,7 +1,15 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
+  annotations:
+    hmcts.github.com/prod-automated: disabled
   name: demo-sscs-tribunals-frontend
 spec:
+  filterTags:
+    pattern: '^pr-1839-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+    policy:
+      alphabetical:
+        order: asc
   imageRepositoryRef:
     name: sscs-tribunals-frontend
