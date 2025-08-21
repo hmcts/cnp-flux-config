@@ -6,6 +6,12 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/ia/case-notifications-api:pr-1385-29ee893-20250820153017 #{"$imagepolicy": "flux-system:demo-ia-case-notifications-api"}
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: ia-det-prison-email-mappings
+              alias: IA_DET_PRISON_EMAIL_MAPPINGS
       environment:
         DOCMOSIS_ENDPOINT: https://docmosis.demo.platform.hmcts.net
         RESTART_PODS: "Yes"
