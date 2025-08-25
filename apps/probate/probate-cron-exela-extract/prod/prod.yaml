@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-cron-exela-extract
+spec:
+  releaseName: probate-cron-exela-extract
+  values:
+    job:
+      environment:
+        CCD_GATEWAY_HOST: https://manage-case.platform.hmcts.net
+        IDAM_SERVICE_HOST: https://idam-api.platform.hmcts.net
+        PRINTSERVICE_HOST: https://return-case-doc.ccd.platform.hmcts.net
+        TASK_NAME: ExelaExtractTask
+      schedule: "10 2 * * *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod
