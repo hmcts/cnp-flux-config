@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "0 0 9 5 *"
+      schedule: "0 10 26 8 *"
       environment:
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
         SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
@@ -18,11 +18,13 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: AmendGeneralEmailTask
-        CRON_AMEND_GENERAL_EMAIL_ENABLED: false
-        CRON_AMEND_GENERAL_EMAIL_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_AMEND_GENERAL_EMAIL_BATCH_SIZE: 100
-        CRON_AMEND_GENERAL_EMAIL_CASE_LIST_FILENAME: "caserefs-demo-encrypted.csv"
+        CRON_BATCHSIZE: 20000
+        TASK_NAME: ManageHearingsMigrationTask
+        CRON_DRY_RUN: true
+        CRON_MANAGE_HEARINGS_MIGRATION_ENABLED: true
+        CRON_MANAGE_HEARINGS_MIGRATION_ROLLBACK: false
+        CRON_MANAGE_HEARINGS_MIGRATION_CASE_LIST_FILENAME: "manageHearingsMigration-encrypted.csv"
+        CRON_MANAGE_HEARINGS_MIGRATION_VERSION: "v1dryRun"
     global:
       jobKind: CronJob
       enableKeyVaults: true
