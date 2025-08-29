@@ -9,11 +9,9 @@ spec:
     neuvector:
       controller:
         azureFileShare:
-          secretName: nv-storage-secret
           shareName: neuvector-data-00
         ingress:
           host: cft-neuvector00-api.perftest.platform.hmcts.net
-          enabled: false
         configmap:
           data:
             samlinitcfg.yaml: |
@@ -21,41 +19,25 @@ spec:
               Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
               X509_Cert: |
                 -----BEGIN CERTIFICATE-----
-                MIIC8DCCAdigAwIBAgIQMf8xEYJKqr5B17miV0UjeTANBgkqhkiG9w0BAQsFADA0MTIwMAYDVQQD
-                EylNaWNyb3NvZnQgQXp1cmUgRmVkZXJhdGVkIFNTTyBDZXJ0aWZpY2F0ZTAeFw0yMzA0MTgxMTQy
-                MjlaFw0yNjA0MTgxMTQyMTZaMDQxMjAwBgNVBAMTKU1pY3Jvc29mdCBBenVyZSBGZWRlcmF0ZWQg
-                U1NPIENlcnRpZmljYXRlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyRPjiftVRKX+
-                mbJMWYm1EwSe6aztPuJMBBxKQtX7r+BeS9lb4qKdoAbxud2RLEspFJjXd2vX+AQXYkH4C54+TSbu
-                yEeGCOXLwyqwz67kIvk4XJ3oE/hPw3TgRDohcElUxprjnOC45GdFZeEvIDREQ/8x6d+pwP21xw7s
-                sPs63fLLjAxVeFvJ6tVbN/3hk/j1PFAYDhu9KPtPuUGRv7qVlZEoeEuCEcQGH3gi3DoyqFckQC5a
-                uUFdWF+HptX4wJLjKZOWVC0aE9jEEpzLQ7mpZ6MDb/spneLaD8uqG0Izdp7PMA5uX53ukJCKF/70
-                5u6I+Vu4FgW6V6LdTIFVE++5eQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCAnlSfm2s+BHvL4Fut
-                8EPZHaT7EMyP9L6pWsyjC7QWpifyX4yybCQ4GyBpxhtwgwSuVgyC3g66ERNTxaMk0AZYNL97F6XA
-                +zScZPZ9wixPEC+EAqgsvIqwmiZAK20DQ+K6LfLBCyMYU7yOWE5SnIc7CdFsJdR0ckjvkbfBelaO
-                yltfmjfXFOD7f6dCKnRT7S3kATySErNhiH3CExgtKgK8MLK2RdQ7tbECNrgK+ac6KScmoIrBGtAa
-                b1s/dsr3DHNBuD5iY/c/VEpqUAglgy4yp8MTXYq8XDtiXrhysj0oKmi2yizMZP3y31Qs5VbtrEnB
-                VNfNmdTc91wwBG1MQvVt
+                MIICzDCCAbSgAwIBAgIIXWjzzuHZoh0wDQYJKoZIhvcNAQELBQAwJjEkMCIGA1UEAwwbQ0ZUIE5l
+                dXZlY3RvciAtIFBlcmZ0ZXN0IDAwMB4XDTI1MDcwMzE1NTIxNloXDTI2MDcwMzE2MDIxNlowJjEk
+                MCIGA1UEAwwbQ0ZUIE5ldXZlY3RvciAtIFBlcmZ0ZXN0IDAwMIIBIjANBgkqhkiG9w0BAQEFAAOC
+                AQ8AMIIBCgKCAQEAxeB4nN5vxlsDFWmsbavOi/tpqszqxrsmfFleu+f3fIvvFnM0n4nyompY0CMZ
+                QtP7n44QdxeNsKiJTcn/ovZ+bFc81/4N0EvMQhMtfL1ut4PY4zn9e6EhXEOxFH6dUhrAV8hQe+ue
+                P8LNBY7M6cAcE8b7gg20qPoliH8mIBZi0WF5V+1uq3D/gcLPHMObPp+zVt2xev1CqtmknAfq4WBb
+                7bi6oHrh86JxEHoLONuuExS/Ci8uaZ9DgkJ9jAbgA3/3M/cKyu5JOtYSNatsyvDTt318jRdZIrdR
+                eb+GjHl0CfI2NuS5Ocmq7yiUjq7WU18jympQgmoA3tvP6Xt1sv5cUQIDAQABMA0GCSqGSIb3DQEB
+                CwUAA4IBAQCicXcFLED/VDuGXSA0ZEmOeYOaPunWNTLlh2WyAFeKD4blchtPEKrqZp4CvWzKHn3i
+                tAYBmD/4vEmZCOD2qNNkGOSWQHmktoAKTGqi1QlGRD8gDqd5QBhv/BKCmMFxbSZITeOfJxX2+DKS
+                K6RT1BlJhqjesT3KD1lq+9fK0p9Fq5iZtKIE029I0cwU5ZHGmL7aXlc4chsiNfAsqKtfLYLJOoX3
+                7NWBCAasFx1uHrAhh+vxO23grwf/3DfmJvRrkhO3vC45NXHxIy+rmM45pKDp/HHX6y+u0Yfz9y+y
+                HUYELGjmN7l+Z0X2aOrZbkyOJ3RlW4Z8olONCs91hziJYrUF
                 -----END CERTIFICATE-----
               Enable: true
               Default_Role: reader
               Role_Groups:
                 admin:
                   - e7ea2042-4ced-45dd-8ae3-e051c6551789
-            sysinitcfg.yaml: |
-              New_Service_Policy_Mode: Discover
-              Syslog_ip: fluentbit-log
-              Syslog_IP_Proto: 6
-              Syslog_Port: 5140
-              Syslog_Level: Warning
-              Syslog_status: true
-              Syslog_in_json: true
-              Scan_Config:
-                Auto_Scan: true
-              Syslog_Categories:
-                - event
-                - security-event
-                - audit
-              Cluster_Name: perftest00
       manager:
         ingress:
-          host: cft-neuvector00.perftest.platform.hmcts.net
+          host: cft-neuvector-perftest00.hmcts.net
