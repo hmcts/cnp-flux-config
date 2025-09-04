@@ -6,10 +6,16 @@ metadata:
 spec:
   values:
     java:
-      memoryRequests: "1280Mi"
-      memoryLimits: "2048Mi"
-      cpuRequests: "250m"
-      cpuLimits: "1500m"
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
       environment:
         FEATURE_PBA_CASE_TYPE: false
         SECURE_DOC_ENABLED: true
