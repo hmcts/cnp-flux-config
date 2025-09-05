@@ -81,10 +81,10 @@ Below section covers how the repo is set up to handle multiple environments and 
 - Flux installation from Cluster creation pipeline applies
     1. [Flux components](../apps/flux-system/base/gotk-components.yaml) - creates CRDs and installs core flux components
     2. [Flux git repo CRD](../apps/flux-system/base/flux-config-gitrepo.yaml) - source controller config to download/update flux repo periodically.
-    3. [Git Credentials](../apps/flux-system/sbox/base/git-credentials.yaml) which source controller uses to authenticate to Github
-    4. [All config in flux-system base](../apps/flux-system/base/kustomization.yaml) which includes `hmctspublic` HelmRepo CRD, `hmcts-charts` Github Repo CRDs.
-    5. [Flux kustomization for flux-system namespace](../apps/flux-system/base/kustomize.yaml) which is patched to [env/cluster specific kustomize.yaml](../apps/flux-system/sbox/00/kustomize.yaml)
+    3. [All config in flux-system base](../apps/flux-system/base/kustomization.yaml) which includes `hmctspublic` HelmRepo CRD, `hmcts-charts` Github Repo CRDs.
+    4. [Flux kustomization for flux-system namespace](../apps/flux-system/base/kustomize.yaml) which is patched to [env/cluster specific kustomize.yaml](../apps/flux-system/sbox/00/kustomize.yaml)
     
+- Flux is [bootstrapped](https://github.com/hmcts/aks-cft-deploy/blob/main/bootstrap/scripts/install-flux.sh#L130) and authenticates to GitHub repositories using dedicated [GitHub App](../apps/flux-system/base/flux-config-gitrepo.yaml#14) secret
 - Flux kustomization for flux-system namespace patched above [Env/Cluster specific kustomize.yaml](../apps/flux-system/sbox/00/kustomize.yaml) will point to the path at which flux should look at. (Example  `./clusters/sbox/00`)
 - Kustomize controller installs everything included in [Cluster Overlay](../clusters/sbox/00/kustomization.yaml) which inherits [Env Base Kustomization](../clusters/sbox/base/kustomization.yaml)
 - This will create Flux Kustomizations for all namespaces that are included in that cluster. It also sets the defaults for all these using [kustomize.yaml](../apps/base/kustomize.yaml)

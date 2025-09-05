@@ -16,21 +16,25 @@ spec:
     ingressSessionAffinity:
       enabled: true
     envFromSecret: docmosis-secret
-    image: hmctsprivate.azurecr.io/docmosis:prod-59e7232-832629 #{"$imagepolicy": "flux-system:docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:prod-3742d16-899530 #{"$imagepolicy": "flux-system:docmosis"}
     java:
       replicas: 2
       autoscaling:
         enabled: true
-        maxReplicas: 5
+        maxReplicas: 10
+        cpu:
+          averageUtilization: 50
+        memory:
+          averageUtilization: 50
       memoryRequests: "3Gi"
       memoryLimits: "4Gi"
-      cpuRequests: "1000m"
-      cpuLimits: "2000m"
+      cpuRequests: "2000m"
+      cpuLimits: "3000m"
   chart:
     spec:
       chart: base
       version: 1.2.0
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctspublic-oci
         namespace: flux-system
