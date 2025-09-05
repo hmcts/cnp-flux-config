@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: neuvector
+  namespace: neuvector
+spec:
+  values:
+    neuvector:
+      controller:
+        azureFileShare:
+          shareName: neuvector-data-00
+        ingress:
+          host: cft-neuvector00-api.ithc.platform.hmcts.net
+        configmap:
+          data:
+            samlinitcfg.yaml: |
+              SSO_URL: https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/saml2
+              Issuer: https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/
+              X509_Cert: |
+                -----BEGIN CERTIFICATE-----
+                MIICxDCCAaygAwIBAgIIe/WFZ6TydDkwDQYJKoZIhvcNAQELBQAwIjEgMB4GA1UEAwwXQ0ZUIE5l
+                dXZlY3RvciAtIElUSEMgMDAwHhcNMjUwNzAzMTU1MTQzWhcNMjYwNzAzMTYwMTQzWjAiMSAwHgYD
+                VQQDDBdDRlQgTmV1dmVjdG9yIC0gSVRIQyAwMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+                ggEBAIZYqcP43XcUwDMhL2pyh1KowiqpM4fpmSI5jUpOEDM0ZFTpnPxPJQFSdoezYw2ajTVFkt54
+                kEuEyHxIWlgyp/57UvwZOFWYGHV/6BhIlfuAb0nmecF2o8cLbVZ316qIBquMT6VFZRHju+zYCG6O
+                EtC9AjqbmhvbXOnJlJEVXcFzfIk/8c7H1l8UZXooa4tEMNPqlY2e4yNHk+iZzYYr82x92ZxWk0bM
+                OqRuhysr1lQCuKj34qcAswHr/JZwXwBUrT5lskM2gxogWvTVc8pt0Sz1JNdNRnpDE05aDFi5Kg+k
+                HKgx72CAETFQqqMF9NMuzi5IuigNLB9VmTJqTYRSGV8CAwEAATANBgkqhkiG9w0BAQsFAAOCAQEA
+                TClK97nYBsejZrlZ6uTUnZArpGatLS3E5qvCG64fCUiFrwz4Oz1pApb16h28TpOkgdOB8xp6vnl/
+                m7mtfkQ+3KQleULR4Ohp+D4VPudr8fIRW7lXN7YpOBqv4HzG8UeZMNKtoWIVXo+wt8eTl2zRHlkJ
+                ChHkbKqqNHVwcgkHF8vmKdJR3A4i1nqslf7qOIT+3A6EwHxib+kRETDqxrYuochyaOuowCoxTuez
+                6i93buPVOX46iZ7r22BJ79K056wWQhHOPZI17wPM7mjmEOfsQaqDPYj+Qu2xY+WLYg9JkdS0xvx3
+                kJgZHgIwOtWzsSwQiJBUaXuyn8DGqT8hkKe5jw==
+                -----END CERTIFICATE-----
+              Enable: true
+              Default_Role: reader
+              Role_Groups:
+                admin:
+                  - e7ea2042-4ced-45dd-8ae3-e051c6551789
+      manager:
+        ingress:
+          host: cft-neuvector-ithc00.hmcts.net

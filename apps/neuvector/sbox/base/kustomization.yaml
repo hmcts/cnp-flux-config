@@ -1,8 +1,18 @@
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+# resources:
+#   - ../../../base
+#   - ../../../base/workload-identity
+#   - ../../identity/identity.yaml
+# patches:
+#   - path: ../../serviceaccount/sbox.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base
-  - ../../../base/workload-identity
-  - ../../identity/identity.yaml
+  - ../../base
+  - fluentbit-log.yaml
+  - nv-storage-secret.yaml
+
 patches:
+  - path: ../../neuvector/sbox/sbox.yaml
   - path: ../../serviceaccount/sbox.yaml
