@@ -6,14 +6,16 @@ spec:
   releaseName: et-reconfiguration-cron
   values:
     job:
-      suspend: true
-      schedule: "0 1 * * *"
+      suspend: false
+      schedule: "0 14 * * *"
       environment:
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
         S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
         SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
         CCD_GATEWAY_BASE_URL: https://manage-case.platform.hmcts.net
         CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        CRON_CASE_TYPE_ID: ET_EnglandWales
+        CRON_RECONFIGURATION_CASE_IDS: 1726751817992752,1718699489622910,1743449170116254,1714414452993270,1738063434980632,1724832440160132,1727442120826197
     global:
       jobKind: CronJob
       enableKeyVaults: true
