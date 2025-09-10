@@ -65,10 +65,11 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:pr-3096-7622bbe-20250724141715 #{"$imagepolicy": "flux-system:demo-prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-123411d-20250910113618 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         FEATURE_EXAMPLE: false
-        DUMMY_ENV: true
+        DUMMY_ENV: false
+        DUMMY_PROPERTY: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-demo.service.core-compute-demo.internal/oauth2/callback
@@ -91,6 +92,7 @@ spec:
         SEND_LETTER_URL: http://rpe-send-letter-service-demo.service.core-compute-demo.internal
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
         APP_ENV: "demo"
+        BARRISTER_FEATURE_ENABLED: true
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
