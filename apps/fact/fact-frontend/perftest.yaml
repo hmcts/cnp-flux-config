@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fact-frontend
+spec:
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/fact/frontend:pr-880-8817e6b-20250911085801
+      keyVaults:
+        fact:
+          secrets:
+            - AppInsightsInstrumentationKey-ai
+      autoscaling:
+        enabled: false
