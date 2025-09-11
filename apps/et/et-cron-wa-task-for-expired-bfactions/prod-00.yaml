@@ -6,15 +6,15 @@ spec:
   releaseName: et-cron-wa-task-for-expired-bfactions
   values:
     job:
-      suspend: true
-      disableActiveClusterCheck: false
-      schedule: "0,30 * * * *"
+      suspend: false
+      schedule: "0 0 * * *"
       environment:
-        IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
         S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
         SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
         CCD_GATEWAY_BASE_URL: https://manage-case.platform.hmcts.net
         CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        CRON_CASE_TYPE_ID: ET_EnglandWales
     global:
       jobKind: CronJob
       enableKeyVaults: true
