@@ -2,3 +2,24 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-api
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/fact/api:pr-903-42b60f4-20250911124458
+      keyVaults:
+        fact:
+          secrets:
+            - name: api-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: api-POSTGRES-PASS
+              alias: POSTGRES_PASSWORD
+            - name: api-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
+            - name: api-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: mapit-key
+              alias: MAPIT_KEY
+            - name: launchdarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: app-insights-connection-string-ai
+              alias: APP_INSIGHTS_CONNECTION_STRING
