@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sptribs-logstash
+spec:
+  releaseName: ccd-logstash-sptribs
+  values:
+    logstashPipeline:
+      01_input.conf: |
+        input  {
+          jdbc {
+            jdbc_connection_string => "${SPTRIBS_DB_URL}"
+            jdbc_user => "${SPTRIBS_DB_USER}"
+            jdbc_password => "${SPTRIBS_DB_PASSWORD}"
+            jdbc_validate_connection => true
+            jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+            jdbc_driver_class => "org.postgresql.Driver"
+            jdbc_default_timezone => "UTC"
+            statement => "
+              WITH updated AS (
+                DELETE FROM ccd.es_queue
+                WHERE id IN (SELECT id FROM ccd.es_queue LIMIT 100)
+                RETURNING id
+              )
+              SELECT
+                cd.id,
+                cd.reference,
+                cd.case_version,
+                cd.case_type_id,
+                cd.created_date,
+                ce.created_date AS last_modified,
+                cd.jurisdiction,
+                cd.last_state_modified_date,
+                cd.state,
+                cd.security_classification::text,
+                ce.data::TEXT AS json_data,
+                '{}' as json_data_classification,
+                cd.supplementary_data::TEXT AS json_supplementary_data
+              FROM updated
+              JOIN ccd.case_event ce USING(id)
+              JOIN ccd.case_data cd ON cd.id = ce.case_data_id
+            "
+            clean_run => false
+            schedule => "* * * * * *"
+          }
+        }
