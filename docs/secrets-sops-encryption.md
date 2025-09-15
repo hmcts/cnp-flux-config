@@ -109,3 +109,73 @@ echo $MY_SECRET | base64 -d
 extraArgs:
   slack-hook-url: https://hooks.slack.com/services/11111111111111111111/22222222222222
 ```
+
+## Extract, Update and Re-encrypt Existing SOPS Secrets:
+
+If you need to update an existing encrypted secret, follow these steps:
+
+### Step 1: Extract the current base64 encoded values
+
+First, you need to get the current key version from Azure Key Vault:
+```
+az keyvault key show --vault-name dcdcftappssboxkv --name sops-key --query "key.kid"
+```
+
+Extract the base64 encoded values.yaml content from the encrypted secret:
+```
+sops --decrypt prometheus-values.enc.yaml | yq '.data."values.yaml"' | base64 -d > /tmp/current-values.yaml
+```
+
+### Step 2: Edit the values
+
+Edit the extracted values file with your preferred editor:
+```
+code /tmp/current-values.yaml
+# or vim, nano, etc.
+```
+
+Example of editing the slack webhook URL:
+```
+extraArgs:
+  slack-hook-url: https://hooks.slack.com/services/NEW_WEBHOOK_URL_HERE
+```
+
+### Step 3: Re-encode and update the secret
+
+Decrypt the original encrypted file temporarily:
+```
+sops --decrypt prometheus-values.enc.yaml > /tmp/temp-secret.yaml
+```
+
+Update the values.yaml field in the temporary file with the new base64 content:
+```
+yq eval ".data.\"values.yaml\" = \"$(base64 -i /tmp/current-values.yaml)\"" -i /tmp/temp-secret.yaml
+```
+
+### Step 4: Re-encrypt the updated secret
+
+Re-encrypt the file using the current key version (replace the version number with the one from Step 1):
+```
+sops --encrypt --azure-kv https://dcdcftappssboxkv.vault.azure.net/keys/sops-key/4dfa9dd4b0444f03bd64e2128e347537 --encrypted-regex "^(data|stringData)$" --in-place /tmp/temp-secret.yaml
+```
+
+Copy the re-encrypted content back to your original file:
+```
+cp /tmp/temp-secret.yaml prometheus-values.enc.yaml
+```
+
+### Step 5: Clean up temporary files
+
+Remove the temporary files:
+```
+rm /tmp/current-values.yaml /tmp/temp-secret.yaml
+```
+
+### Alternative: Direct SOPS editing
+
+For simpler updates, you can also edit the encrypted file directly with SOPS (this will handle decryption/encryption automatically):
+```
+sops prometheus-values.enc.yaml
+```
+
+Note: When using direct SOPS editing, the values.yaml field will still be base64 encoded. You'll need to manually decode/encode the content within that field.
