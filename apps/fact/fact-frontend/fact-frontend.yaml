@@ -10,13 +10,6 @@ spec:
       replicas: 2
       useInterpodAntiAffinity: true
       image: hmctspublic.azurecr.io/fact/frontend:prod-0690d59-20250915161627 #{"$imagepolicy": "flux-system:fact-frontend"}
-      environment:
-        VAR_TA: trigger13
-      keyVaults:
-        fact:
-          resourceGroup: fact
-          secrets:
-            - AppInsightsInstrumentationKey
   chart:
     spec:
       chart: ./stable/fact-frontend
