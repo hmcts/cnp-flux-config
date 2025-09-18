@@ -1,0 +1,30 @@
+# Service Principal Role and RoleBinding for managing Jobs, Pods, and HelmReleases
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: sp-deploy-role
+  namespace: ${NAMESPACE}
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+- apiGroups: ["helm.toolkit.fluxcd.io"]
+  resources: ["helmreleases"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sp-deploy-rolebinding
+  namespace: ${NAMESPACE}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sp-deploy-role
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: "ab2a5eb5-d42a-423f-b12e-3b5cca105868"
