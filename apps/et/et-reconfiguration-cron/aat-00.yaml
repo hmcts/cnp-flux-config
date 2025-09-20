@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-reconfiguration-cron
+spec:
+  releaseName: et-reconfiguration-cron
+  values:
+    job:
+      environment:
+        CRON_CASE_TYPE_ID: ET_EnglandWales
+        CRON_RECONFIGURATION_CASE_IDS: 1757095788681057,1757095787717449,1757090803384670,1756387188902139,1756405236455395,1756394012463742,1756405043278469
+      suspend: true
+      schedule: "0 17 * * *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      environment: aat

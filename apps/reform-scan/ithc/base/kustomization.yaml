@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../../base/slack-provider/ithc
+  - ../../../base/docker-registry/ithc
+namespace: reform-scan
+patches:
+  - path: ../../identity/ithc.yaml
+  - path: ../../reform-scan-notification-service/ithc.yaml
+  - path: ../../reform-scan-blob-router/ithc.yaml
+  - path: ../../serviceaccount/ithc.yaml
