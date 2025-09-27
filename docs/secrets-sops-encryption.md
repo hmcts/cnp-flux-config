@@ -109,3 +109,157 @@ echo $MY_SECRET | base64 -d
 extraArgs:
   slack-hook-url: https://hooks.slack.com/services/11111111111111111111/22222222222222
 ```
+# How to Edit SOPS-Encrypted Files with Azure Key Vault
+
+This guide shows how to edit SOPS-encrypted files while preserving the Azure Key Vault configuration.
+
+## Prerequisites
+
+- SOPS installed (`brew install sops`)
+- yq installed (`brew install yq`)
+- Azure CLI authenticated with access to the Key Vault
+- Proper permissions to the Azure Key Vault and SOPS key
+
+## Steps to Edit Encrypted Values
+
+### Step 1: Extract the current values for editing
+
+```bash
+sops --decrypt <your-secret-file>.yaml | yq '.data."<data-key>"' | base64 -d > values-to-edit.yaml
+```
+
+**Example:**
+```bash
+sops --decrypt backstage-values.yaml | yq '.data."values.yaml"' | base64 -d > values-to-edit.yaml
+```
+
+This command:
+- Decrypts the SOPS file
+- Extracts the specified data field (e.g., `values.yaml`)
+- Decodes the base64 content
+- Saves it to `values-to-edit.yaml` for editing
+
+### Step 2: Edit the values file
+
+Open and edit the extracted values:
+
+```bash
+# Use your preferred editor
+nano values-to-edit.yaml
+# OR
+code values-to-edit.yaml
+# OR
+vim values-to-edit.yaml
+```
+
+Make your changes to the YAML content (secrets, configuration, etc.).
+
+### Step 3: Create updated version with new values
+
+```bash
+sops --decrypt <your-secret-file>.yaml > temp-decrypted.yaml
+NEW_BASE64=$(base64 -i values-to-edit.yaml)
+yq ".data.\"<data-key>\" = \"$NEW_BASE64\"" temp-decrypted.yaml > temp-updated.yaml
+```
+
+**Example:**
+```bash
+sops --decrypt backstage-values.yaml > temp-decrypted.yaml
+NEW_BASE64=$(base64 -i values-to-edit.yaml)
+yq ".data.\"values.yaml\" = \"$NEW_BASE64\"" temp-decrypted.yaml > temp-updated.yaml
+```
+
+This:
+- Creates a decrypted copy of the original file
+- Encodes your edited values back to base64
+- Updates the decrypted file with the new base64 content
+
+### Step 4: Get the Azure Key Vault configuration from the original file
+
+First, extract the Azure Key Vault configuration from your original SOPS file:
+
+```bash
+# Get the vault URL, key name, and key version from the original file
+VAULT_URL=$(grep -A 5 "azure_kv:" <your-secret-file>.yaml | grep "vault_url:" | awk '{print $3}')
+KEY_NAME=$(grep -A 5 "azure_kv:" <your-secret-file>.yaml | grep "name:" | awk '{print $2}')
+KEY_VERSION=$(grep -A 5 "azure_kv:" <your-secret-file>.yaml | grep "version:" | awk '{print $2}')
+
+echo "Vault URL: $VAULT_URL"
+echo "Key Name: $KEY_NAME" 
+echo "Key Version: $KEY_VERSION"
+```
+
+**Example:**
+```bash
+VAULT_URL=$(grep -A 5 "azure_kv:" backstage-values.yaml | grep "vault_url:" | awk '{print $3}')
+KEY_NAME=$(grep -A 5 "azure_kv:" backstage-values.yaml | grep "name:" | awk '{print $2}')
+KEY_VERSION=$(grep -A 5 "azure_kv:" backstage-values.yaml | grep "version:" | awk '{print $2}')
+```
+
+### Step 5: Encrypt with the original Azure Key Vault configuration
+
+```bash
+sops --encrypt --azure-kv ${VAULT_URL}/keys/${KEY_NAME}/${KEY_VERSION} --encrypted-regex "^(data|stringData)$" --in-place temp-updated.yaml
+```
+
+**Important:** This step uses the exact Azure Key Vault URL and key version from the original file. Different environments use different Key Vaults, so always extract these values from the original file. (e.g `dtscftptlsbox`, `dcdftappssboxkv`, etc.)
+
+### Step 6: Replace the original file and verify
+
+```bash
+cp temp-updated.yaml <your-secret-file>.yaml
+```
+
+**Example:**
+```bash
+cp temp-updated.yaml backstage-values.yaml
+```
+
+### Step 7: Verify Azure Key Vault configuration is preserved
+
+```bash
+grep -A 5 "azure_kv:" <your-secret-file>.yaml
+```
+
+You should see output similar to:
+```yaml
+    azure_kv:
+        - vault_url: https://dtscftptlsbox.vault.azure.net
+          name: sops-key
+          version: b8a4ffea7a5041318ec2d7623a298d0c
+```
+
+**Note:** The vault URL will vary by environment and the specific Key Vault configured for that environment. (e.g., `dtscftptlsbox`, `dcdftappssboxkv`, etc)
+
+### Step 8: Clean up temporary files
+
+```bash
+rm temp-decrypted.yaml temp-updated.yaml values-to-edit.yaml
+```
+
+## Key Points
+
+1. **Always extract the Azure Key Vault configuration** from the original file since different environments use different Key Vaults
+2. **Use the exact key version** from the original file (found in the `azure_kv` section) 
+3. **Include the `--encrypted-regex` flag** to encrypt only the data fields
+4. **Verify the Azure KV config is preserved** before committing changes
+5. **Replace placeholders** with your actual file names and data keys:
+   - `<your-secret-file>.yaml` → your actual secret file name
+   - `<data-key>` → your actual data key (e.g., `values.yaml`, `config.yaml`, etc.)
+
+## Alternative: Direct SOPS Editing
+
+For simple edits, you can also use:
+
+```bash
+sops <your-secret-file>.yaml
+```
+
+This opens the file directly in your editor with automatic decryption/encryption, but you'll need to manually decode/encode the base64 values within the editor.
+
+## Troubleshooting
+
+- If the `azure_kv` section becomes empty (`azure_kv: []`), you forgot to specify the `--azure-kv` parameter in step 5
+- If you get authentication errors, ensure you're logged into Azure CLI and have access to the Key Vault
+- If the key version is different, check the original file's SOPS metadata for the correct version
+- Replace all placeholder values (`<your-secret-file>`, `<data-key>`) with your actual file and key names

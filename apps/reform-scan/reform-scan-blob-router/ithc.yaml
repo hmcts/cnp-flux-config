@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: reform-scan-blob-router
+spec:
+  values:
+    java:
+      environment:
+        TASK_SCAN_DELAY: 300000
+        CREATE_RECONCILIATION_SUMMARY_REPORT_ENABLED: "false"
+        CREATE_RECONCILIATION_DETAILED_REPORT_ENABLED: "false"
+        SEND_RECONCILIATION_REPORT_MAIL_ENABLED: "false"
+        SMTP_HOST: smtp.office365.com
+        STORAGE_URL: https://reformscan.ithc.platform.hmcts.net
+        STORAGE_BULKSCAN_URL: https://bulkscanithc.blob.core.windows.net
+        SCHEDULING_TASK_SCAN_ENABLED: true
+        PRIVATELAW_ENABLED: true
+        PAYMENTS_ENABLED_PRIVATELAW: true
