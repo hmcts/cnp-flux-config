@@ -1,5 +1,5 @@
 # cnp-flux-config
-Flux v2 config for CFT AKS clusters
+Flux v2 config for CFT AKS clusters. Test Thomas
 
 ## Repo Structure
 
