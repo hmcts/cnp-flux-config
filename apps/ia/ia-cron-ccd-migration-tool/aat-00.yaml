@@ -6,25 +6,27 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "45 10 3 4 *"
+      schedule: "20 16 26 9 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "false"
+        MIGRATION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 40000
+        MIGRATION_NUMBER_OF_CASES: 1000
         MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
         MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
         MIGRATION_NUMBER_OF_THREADS: 20
         AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
+        MIGRATION_CASE_ID: 1747669923886145,1747302311402586,1747666452544210,1747670290688783,1747666501366631
         MIGRATE_IS_ARIA_MIGRATED: "false"
         MIGRATE_APPEAL_STARTED_TTL_SET: "false"
         MIGRATE_APPLICATION_STARTED_TTL_SET: "false"
         MIGRATE_APPLICATION_STARTED_BY_LR_TTL_SET: "false"
         FUNCTION_ENABLED: "true"
-        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "true"
+        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "false"
+        MIGRATION_HU_EA_EU_APPEALS_IN_PENDING_PAYMENT: "true"
