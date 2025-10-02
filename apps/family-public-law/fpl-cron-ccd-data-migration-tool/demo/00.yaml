@@ -7,10 +7,12 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:pr-286-d93e68f-20250529082619 #{"$imagepolicy": "flux-system:demo-fpl-cron-ccd-data-migration-tool"}
-      schedule: "00 13 19 05 *"
+      schedule: "05 13 02 10 *"
       environment:
         ENABLED: true
         MIGRATION_ID: DFPL-log
-        USE_CASE_ID_MAPPING: true
+        USE_CASE_ID_MAPPING: false
         DEFAULT_THREAD_DELAY: 10
-        DEFAULT_THREAD_LIMIT: 1
+        DEFAULT_THREAD_LIMIT: 2
+        BATCH_MODE: true
+        BATCH_SIZE: 200
