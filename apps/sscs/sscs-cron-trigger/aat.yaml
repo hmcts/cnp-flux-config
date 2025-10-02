@@ -7,13 +7,32 @@ spec:
   values:
     job:
       suspend: false
-      schedule: "05 14 * * *"
+      schedule: "00 15 * * *"
       image: hmctspublic.azurecr.io/sscs/cron-trigger:prod-21e2fac-20251002133806 #{"$imagepolicy": "flux-system:sscs-cron-trigger"}
       aadIdentityName: sscs
       environment:
         IDAM_API_URL: "https://idam-api.aat.platform.hmcts.net"
         IDAM_S2S_AUTH: "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
         CORE_CASE_DATA_API_URL: "http://ccd-data-store-api-aat.service.core-compute-aat.internal"
+      keyVaults:
+        sscs:
+          secrets:
+            - name: idam-oauth-user
+              alias: IDAM_OAUTH2_CLIENT_ID
+            - name: idam-redirect
+              alias: IDAM_OAUTH2_REDIRECT_URL
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: idam-sscs-oauth2-client-secret
+              alias: IDAM_OAUTH2_CLIENT_SECRET
+            - name: sscs-s2s-secret
+              alias: IDAM_S2S_AUTH_TOTP_SECRET
+            - name: s2s-micro
+              alias: IDAM_S2S_AUTH_MICROSERVICE
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
     global:
       environment: aat
       jobKind: CronJob
