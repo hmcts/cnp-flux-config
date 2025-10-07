@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tfplan-viewer
+  namespace: tfplan-viewer
+spec:
+  releaseName: tfplan-viewer
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/rpe/tfplan-viewer:prod-a2720614-1759795389 #{"$imagepolicy": "flux-system:tfplan-viewer"}
+    ingressHost: tfplan-viewer.platform.hmcts.net
+    disableTraefikTls: false
+    environment:
+      USE_MANAGED_IDENTITY: true
+  chart:
+    spec:
+      chart: nodejs
+      version: 3.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system
