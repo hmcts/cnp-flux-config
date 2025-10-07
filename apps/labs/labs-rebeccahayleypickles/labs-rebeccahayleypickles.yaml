@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-rebeccahayleypickles
+  namespace: labs
+spec:
+  releaseName: labs-rebeccahayleypickles
+  chart:
+    spec:
+      chart: ./stable/labs-rebeccahayleypickles
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/rebeccahayleypickles:latest # {"$imagepolicy": "flux-system:labs-rebeccahayleypickles"}
+      disableTraefikTls: true
