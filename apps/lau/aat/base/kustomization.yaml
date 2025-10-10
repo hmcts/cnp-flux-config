@@ -3,11 +3,14 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
+  - ../../../rbac/db-query-job-role.yaml
   - ../../../base/slack-provider/aat
   - ../../../base/docker-registry/aat
+  - ../../lau-eud-backend/lau-eud-backend.yaml
 namespace: lau
 patches:
   - path: ../../lau-idam-backend/aat.yaml
   - path: ../../lau-case-backend/aat.yaml
+  - path: ../../lau-eud-backend/aat.yaml
   - path: ../../lau-frontend/aat.yaml
   - path: ../../serviceaccount/aat.yaml
