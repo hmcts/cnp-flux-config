@@ -7,7 +7,12 @@ spec:
   releaseName: div-cfs
   values:
     java:
-      replicas: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 4
+      cpuRequests: "250m"
+      memoryRequests: "1536Mi"
       memoryLimits: "2Gi"
       cpuLimits: "2500m"
       readinessDelay: 45

@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-acro-upload
+  namespace: private-law
+spec:
+  releaseName: prl-cron-acro-upload
+  values:
+    job:
+      suspend: true
+      ingressClass: traefik-private
+      environment:
+        APP_ENV: "ithc"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: ithc
