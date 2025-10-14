@@ -7,7 +7,7 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:pr-230-0999175-20251014125932 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
-      schedule: "40 08 14 10 *"
+      schedule: "50 14 14 10 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
@@ -18,7 +18,7 @@ spec:
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 2
+        MIGRATION_NUMBER_OF_CASES: 10
         MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
         MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
         MIGRATION_NUMBER_OF_THREADS: 20
@@ -35,3 +35,5 @@ spec:
         RESTART_PODS: "Yes"
         ROOT_LOGGING_LEVEL: "WARN"
         ES_QUERY_FETCH_CASE_REFERENCE_ONLY: "true"
+        MIGRATION_PAGE_SIZE: 3
+        MIGRATION_SEARCH_CASE_REFERENCES_FROM: "1623840445960143"
