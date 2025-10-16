@@ -1,19 +1,9 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
-  name: sample-kustomize
-  namespace: flux-system
+  name: test-helmrelease
 spec:
-  patches:
-    - patch: |-
-        apiVersion: helm.toolkit.fluxcd.io/v2
-        kind: HelmRelease
-        metadata:
-          name: test-helmrelease
-        spec:
-          values:
-            java:
-              environment:
-                JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -javaagent:/opt/app/applicationinsights-agent-3.5.4.jar
-      target:
-        kind: HelmRelease
+  values:
+    java:
+      environment:
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -javaagent:/opt/app/applicationinsights-agent-3.5.4.jar
