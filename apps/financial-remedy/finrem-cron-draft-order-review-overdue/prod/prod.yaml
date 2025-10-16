@@ -9,7 +9,10 @@ spec:
       image: hmctspublic.azurecr.io/finrem/cos:prod-373d216-20251016083056 #{"$imagepolicy": "flux-system:finrem-cos"}
       schedule: "0 2 * * *"
       useInterpodAntiAffinity: true
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
       environment:
+        JAVA_OPTS: -Xmx1536m
         TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: true
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000
