@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-marketplace-api
+  namespace: labs
+spec:
+  releaseName: labs-marketplace-api
+  chart:
+    spec:
+      chart: ./stable/labs-marketplace-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/marketplace-api:prod-82538f1-20251013160654 # {"$imagepolicy": "flux-system:labs-marketplace-api"}
+      disableTraefikTls: true
