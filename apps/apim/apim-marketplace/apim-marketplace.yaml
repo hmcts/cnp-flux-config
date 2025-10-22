@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: apim-marketplace
+spec:
+  releaseName: apim-marketplace
+  values:
+    java:
+      image: hmctspublic.azurecr.io/apim/marketplace:pr-7-9ce1992-20251022090743
+  chart:
+    spec:
+      chart: ./stable/apim-marketplace
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+
