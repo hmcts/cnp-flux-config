@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apim
+  namespace: flux-system
+spec:
+  path: ./apps/apim/${ENVIRONMENT}/${CLUSTER}
+  postBuild:
+    substitute:
+      NAMESPACE: "apim"
+      TEAM_NOTIFICATION_CHANNEL: "ccd-master-builds"
+      TEAM_AAD_GROUP_ID: need-a-guid-in-here
+      WI_NAME: apim
