@@ -24,7 +24,7 @@ EXCLUSIONS_LIST=(
     .*preview.*
     .*staging.*
     .*dev.*
-    .*aat.*
+    .*apps/ccd/ccd-data-store-api/aat.yaml.*
     .*demo.*
     .*ithc.*
     .*toffee.*
