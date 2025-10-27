@@ -2,6 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sptribs-logstash
+  namespace: sptribs
 spec:
   releaseName: sptribs-logstash
   values:
@@ -56,7 +57,7 @@ spec:
       01_input.conf: |
               input  {
                 jdbc {
-                  jdbc_connection_string => "jdbc:postgresql://sptribs-preview.postgres.database.azure.com:5432/pr-${CHANGE_ID}-sptribs?sslmode=require"
+                  jdbc_connection_string => "${JDBC_URL}"
                   jdbc_user => "hmcts"
                   jdbc_password_filepath => "/etc/logstash/secrets/PASSWORD"
                   jdbc_validate_connection => true
