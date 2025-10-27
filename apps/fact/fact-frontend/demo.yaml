@@ -5,5 +5,15 @@ metadata:
 spec:
   values:
     nodejs:
+      image: hmctspublic.azurecr.io/fact/frontend:pr-912
+      imagePullPolicy: Always
       autoscaling:
         enabled: false
+      keyVaults:
+        fact:
+          resourceGroup: fact
+          secrets:
+            - AppInsightsInstrumentationKey-ai
+            - poc-client-app-reg-id
+            - poc-service-app-reg-id
+            - poc-client-app-secret
