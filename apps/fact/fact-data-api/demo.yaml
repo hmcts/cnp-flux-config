@@ -2,3 +2,31 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-data-api
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/fact/data-api:pr-48
+      imagePullPolicy: Always
+      keyVaults:
+        fact-kv:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: data-api-POSTGRES-DATABASE
+              alias: DB_NAME
+            - name: data-api-POSTGRES-PASS
+              alias: DB_PASSWORD
+            - name: data-api-POSTGRES-PORT
+              alias: DB_PORT
+            - name: data-api-POSTGRES-USER
+              alias: DB_USER
+            - name: data-api-POSTGRES-HOST
+              alias: DB_HOST
+            - name: poc-service-app-reg-id
+              alias: POC_SERVICE_APP_ID
+            - name: poc-service-app-reg-id
+              alias: AZURE_APP_ID
+            - name: poc-client-app-reg-id
+              alias: POC_CLIENT_APP_ID
+            - name: poc-client-app-secret
+              alias: POC_CLIENT_SECRET

@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pofcc-slack-help-bot
+  namespace: slack-help-bot
+spec:
+  releaseName: pofcc-slack-help-bot
+  values:
+    replicas: 1
+    image: hmctspublic.azurecr.io/pofcc/slack-help-bot:prod-a94f01f-20251024124128 #{"$imagepolicy": "flux-system:pofcc-slack-help-bot"}
+    environment:
+      SLACK_REPORT_CHANNEL: pofcc-onboarding-support
+      SLACK_REPORT_CHANNEL_ID: C09LE7XVCMV
+      JIRA_PROJECT: POFCC
+      JIRA_ISSUE_TYPE_ID: 18400
+      JIRA_ISSUE_TYPE_NAME: "Support"
+      JIRA_START_TRANSITION_ID: 21
+      JIRA_DONE_TRANSITION_ID: 41
+      DUMMY_VAR: 1
+    keyVaults:
+      cftptl-intsvc:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - pofcc-slack-bot-token
+          - pofcc-slack-app-token
+          - jira-username
+          - jira-api-token
+  chart:
+    spec:
+      chart: nodejs
+      version: 3.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system

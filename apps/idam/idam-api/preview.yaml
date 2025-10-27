@@ -8,13 +8,13 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-f3d38f7-20251020162410 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-99452ae-20251027125735 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
         TESTING_SUPPORT_ENABLED: true
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
-        TESTINGSUPPORTAPI_ENABLED: true
+        TESTINGSUPPORTAPI_ENABLED: false
         TESTINGSUPPORTAPI_URL: http://idam-testing-support-api
         IDAM_SPI_FORGEROCK_AM_ROOT: https://forgerock-am.service.core-compute-idam-preview.internal:8443/openam
         IDAM_SPI_FORGEROCK_AM_TOPLEVELHOST: forgerock-am.service.core-compute-idam-preview.internal:8443
@@ -57,6 +57,7 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_V2_ENABLED: true
         FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: true
         FEATUREFLAGS_INSIGHT_OIDC_ENABLED: true
         FEATUREFLAGS_OIDC_AUTHORIZE_INCLUDE_ISSUER_ENABLED: false
