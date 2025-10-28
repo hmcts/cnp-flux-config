@@ -2,6 +2,14 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: demo-cmc-claim-store
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   imageRepositoryRef:
     name: cmc-claim-store
+  filterTags:
+    pattern: '^pr-3346-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
