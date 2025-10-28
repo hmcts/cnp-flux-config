@@ -1,12 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ccd-case-disposer
+  name: ccd-case-disposer-v2
 spec:
   values:
     job:
-      image: hmctspublic.azurecr.io/ccd/case-disposer:pr-937
-      schedule: "40 12 28 10 *"
+      image: hmctspublic.azurecr.io/ccd/case-disposer:pr-937-42785ff-20251027155801
+      schedule: "30 12 28 10 *"
       environment:
         ELASTIC_SEARCH_ENABLED: true
         DATA_STORE_DB_PORT: 5432
@@ -21,4 +21,4 @@ spec:
         DELETE_CASE_TYPES:
         SIMULATED_CASE_TYPES:
         CCD_DISPOSER_REQUEST_LIMIT: "110000"
-        CASE_COLLECTOR_VERSION: 1
+        CASE_COLLECTOR_VERSION: 2
