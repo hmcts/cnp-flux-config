@@ -2,14 +2,6 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: demo-prl-cron-hwf-citizen-update-state
-  annotations:
-    hmcts.github.com/prod-automated: disabled
 spec:
   imageRepositoryRef:
     name: prl-cos
-  filterTags:
-    pattern: '^pr-3341-[a-f0-9]+-(?P<ts>[0-9]+)'
-    extract: '$ts'
-  policy:
-    alphabetical:
-      order: asc
