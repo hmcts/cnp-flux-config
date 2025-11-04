@@ -6,7 +6,48 @@ spec:
   values:
     java:
       image: hmctspublic.azurecr.io/sptribs/case-api:pr-2189-e28e685-20251103111331
+      keyVaults:
+        sptribs:
+          secrets:
+            - name: app-insights-instrumentation-key
+            - name: app-insights-connection-string
+            - name: uk-gov-notify-api-key
+              alias: UK_GOV_NOTIFY_API_KEY_1
+            - name: s2s-case-api-secret
+              alias: S2S_SECRET
+            - name: idam-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: launchdarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: idam-systemupdate-username
+              alias: IDAM_SYSTEM_UPDATE_USERNAME
+            - name: idam-systemupdate-password
+              alias: IDAM_SYSTEM_UPDATE_PASSWORD
+            - name: ccd-case-events-sendonly-connection-string
+              alias: AZURE_SERVICE_BUS_CONNECTION_STRING
+            - name: sptribs-POSTGRES-HOST
+              alias: DB_HOST
+            - name: sptribs-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: sptribs-POSTGRES-PORT
+              alias: DB_PORT
+            - name: sptribs-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: sptribs-POSTGRES-DATABASE
+              alias: DB_NAME
+            - name: sptribs-POSTGRES-DATABASE
+              alias: POSTGRES_NAME
+            - name: sptribs-POSTGRES-USER
+              alias: DB_USER_NAME
+            - name: sptribs-POSTGRES-USER
+              alias: POSTGRES_USERNAME
+            - name: sptribs-POSTGRES-PASS
+              alias: DB_PASSWORD
+            - name: sptribs-POSTGRES-PASS
+              alias: POSTGRES_PASSWORD
       environment:
         S2S_AUTHORISED_SERVICES: ccd_definition,ccd_data,xui_webapp,sptribs_case_api,ccd_gw,sptribs_frontend,sptribs_dss_update_case_web
         WA_FEATURE_ENABLED: true
         JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -javaagent:/opt/app/applicationinsights-agent-3.7.6.jar -Dfile.encoding=UTF-8
+        DB_OPTIONS: "?sslmode=require"
+        POSTGRES_CONNECTION_OPTIONS: "?sslmode=require"
