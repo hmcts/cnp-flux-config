@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-case-disposer-v2
+spec:
+  values:
+    job:
+      image: hmctspublic.azurecr.io/ccd/case-disposer:pr-937-42785ff-20251027155801
+      schedule: "00 15 03 11 *"
+      environment:
+        ELASTIC_SEARCH_ENABLED: true
+        DATA_STORE_DB_PORT: 5432
+        DATA_STORE_DB_OPTIONS: "?sslmode=require"
+        DATA_STORE_DB_HOST: "ccd-data-store-api-postgres-db-v15-demo.postgres.database.azure.com"
+        IDAM_S2S_URL: "http://rpe-service-auth-provider-demo.service.core-compute-demo.internal"
+        IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
+        ROLE_ASSIGNMENT_HOST: "http://am-role-assignment-service-demo.service.core-compute-demo.internal"
+        DOCUMENT_STORE_HOST: "http://dm-store-demo.service.core-compute-demo.internal"
+        DEFINITION_STORE_HOST: "http://ccd-definition-store-api-demo.service.core-compute-demo.internal"
+        LOG_AND_AUDIT_HOST: "http://lau-case-backend-demo.service.core-compute-demo.internal"
+        DELETE_CASE_TYPES:
+        SIMULATED_CASE_TYPES:
+        CCD_DISPOSER_REQUEST_LIMIT: "110000"
+        CASE_COLLECTOR_VERSION: 2
