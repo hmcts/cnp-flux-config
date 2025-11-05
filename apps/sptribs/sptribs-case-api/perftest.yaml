@@ -5,7 +5,8 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/sptribs/case-api:prod-bf96bb5-20251103111211 #{"$imagepolicy": "flux-system:perftest-sptribs-case-api"}
+      image: hmctspublic.azurecr.io/sptribs/case-api:pr-2189-e28e685-20251103111331 #{"$imagepolicy": "flux-system:perftest-sptribs-case-api"}
       environment:
         S2S_AUTHORISED_SERVICES: ccd_definition,ccd_data,xui_webapp,sptribs_case_api,ccd_gw,sptribs_frontend,sptribs_dss_update_case_web
         WA_FEATURE_ENABLED: true
+        JAVA_TOOL_OPTIONS: -XX:InitialRAMPercentage=30.0 -XX:MaxRAMPercentage=65.0 -XX:MinRAMPercentage=30.0 -javaagent:/opt/app/applicationinsights-agent-3.7.6.jar -Dfile.encoding=UTF-8

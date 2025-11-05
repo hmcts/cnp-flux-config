@@ -6,7 +6,7 @@ spec:
   releaseName: ccd-data-store-api
   values:
     java:
-      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-2a8d1b0-20251103130238 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
+      image: hmctspublic.azurecr.io/ccd/data-store-api:prod-239d1cb-20251103152632 #{"$imagepolicy": "flux-system:demo-ccd-data-store-api"}
       replicas: 4
       autoscaling:
         enabled: true
@@ -18,8 +18,6 @@ spec:
       cpuLimits: "4"
       memoryRequests: "4096Mi"
       cpuRequests: "2"
-      pdb:
-        enabled: false
       environment:
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         CCD_DOCUMENT_URL_PATTERN: ^https?://(((?:api-gateway\.preprod\.dm\.reform\.hmcts\.net|dm-store-demo\.service\.core-compute-demo\.internal(?::\d+)?)\/documents\/[A-Za-z0-9-]+(?:\/binary)?)|(em-hrs-api-demo\.service\.core-compute-demo\.internal(?::\d+)?\/hearing-recordings\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\/((segments\/[0-9]+)|(file/\S+))))
