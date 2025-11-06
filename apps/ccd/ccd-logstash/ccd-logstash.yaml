@@ -73,7 +73,8 @@ spec:
                         "civilj" => "CIVIL"
                         "fplj" => "PUBLICLAW"
                       }
-            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :fplj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            # Skip case pointers (empty data + state)
+            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :fplj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj AND NOT (data = '{}'::jsonb AND state = '') RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
             clean_run => false
             schedule => "* * * * * *"
           }
