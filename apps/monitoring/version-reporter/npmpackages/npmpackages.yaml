@@ -1,12 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: version-reporter-service-renovate
+  name: version-reporter-service-npmpackages
   namespace: monitoring
   labels:
-    app: version-reporter-service-renovate
+    app: version-reporter-service-npmpackages
 spec:
-  releaseName: version-reporter-service-renovate
+  releaseName: version-reporter-service-npmpackages
   chart:
     spec:
       chart: job
@@ -28,12 +28,12 @@ spec:
     backoffLimit: 3
     restartPolicy: Never
     kind: CronJob
-    image: hmctspublic.azurecr.io/version-reporter-service/renovate:prod-b97f308-20240724133620 #{"$imagepolicy": "flux-system:version-reporter-renovate"}
+    image: hmctspublic.azurecr.io/version-reporter-service/npmpackages:prod-4ef5d52-20251107093559 #{"$imagepolicy": "flux-system:version-reporter-npmpackages"}
     imagePullPolicy: Always
     environment:
       MAX_DAYS_AWAY: 3
       MAX_REPOS: 300
-      COSMOS_DB_CONTAINER: renovate
+      COSMOS_DB_CONTAINER: npmpackages
       VAULT_NAME: version-reporter-ptl
     keyVaults:
       version-reporter-ptl:
