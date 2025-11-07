@@ -11,3 +11,11 @@ spec:
       memoryRequests: "1Gi"
     global:
       jobKind: CronJob
+  chart:
+    spec:
+      chart: ./stable/dtsse-dashboard-ingestion
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
