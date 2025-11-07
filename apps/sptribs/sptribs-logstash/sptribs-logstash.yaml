@@ -1,0 +1,278 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sptribs-logstash
+  namespace: sptribs
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+spec:
+  interval: 1m
+  releaseName: sptribs-logstash
+  values:
+    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
+    imageTag: "7.16.1"
+    imagePullPolicy: "IfNotPresent"
+    logstashJavaOpts: "-Xms4g -Xmx7680m"
+    resources:
+      requests:
+        cpu: "2000m"
+        memory: "4Gi"
+      limits:
+        cpu: "4000m"
+        memory: "8Gi"
+    envFrom:
+      - secretRef:
+          name: logstash-secret
+    extraEnvs:
+      - name: DUMMY_RESTART_VAR
+        value: "true11"
+    extraInitContainers: |
+      - name: download-postgres-jdbc
+        image: hmctspublic.azurecr.io/curl:7.70.0
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.3.3.jar', '-o', '/logstash-lib/postgresql.jar']
+        volumeMounts:
+        - name: logstash-lib
+          mountPath: /logstash-lib
+    extraVolumes: |
+      - name: logstash-lib
+        emptyDir: {}
+    extraVolumeMounts: |
+      - name: logstash-lib
+        mountPath: /usr/share/logstash/ccd
+    logstashConfig:
+      logstash.yml: |
+        http.host: 0.0.0.0
+        xpack.monitoring.enabled: true
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        queue.type: persisted
+        dead_letter_queue.enable: true
+      pipelines.yml: |
+        - pipeline.id: main
+          path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
+          pipeline.workers: 4
+          pipeline.batch.size: 500
+          queue.type: persisted
+        - pipeline.id: index-dead-letter-to-es
+          path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
+          pipeline.workers: 1
+          dead_letter_queue.enable: false
+    logstashPipeline:
+      01_input.conf: |
+              input  {
+                jdbc {
+                  jdbc_connection_string => "${SPTRIBS_DB_URL}"
+                  jdbc_user => "${SPTRIBS_DB_USER}"
+                  jdbc_password => "${SPTRIBS_DB_PASS}"
+                  jdbc_validate_connection => true
+                  jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+                  jdbc_driver_class => "org.postgresql.Driver"
+                  jdbc_default_timezone => "UTC"
+                  statement => "
+                    WITH next_batch AS (
+                      SELECT reference, case_revision
+                      FROM ccd.es_queue
+                      ORDER BY enqueued_at
+                      LIMIT 1000
+                      FOR UPDATE SKIP LOCKED
+                    ),
+                    deleted AS (
+                      DELETE FROM ccd.es_queue q
+                      USING next_batch nb
+                      WHERE q.reference = nb.reference
+                        AND q.case_revision = nb.case_revision
+                      RETURNING q.reference, q.case_revision
+                    )
+                    SELECT
+                      cd.id AS case_data_id,
+                      cd.reference,
+                      ce.id AS event_id,
+                      cd.case_type_id,
+                      cd.created_date,
+                      ce.created_date AS last_modified,
+                      cd.jurisdiction,
+                      cd.last_state_modified_date,
+                      cd.state,
+                      cd.security_classification::TEXT,
+                      ce.data::TEXT AS json_data,
+                      '{}' AS json_data_classification,
+                      cd.supplementary_data::TEXT AS json_supplementary_data,
+                      cd.case_revision
+                    FROM deleted d
+                    JOIN ccd.case_data cd ON cd.reference = d.reference
+                    JOIN LATERAL (
+                      SELECT ce.*
+                      FROM ccd.case_event ce
+                      WHERE ce.case_data_id = cd.id
+                      ORDER BY ce.id DESC
+                      LIMIT 1
+                    ) ce ON TRUE
+                    WHERE cd.case_revision = d.case_revision
+                  "
+                  clean_run => false
+                  schedule => "* * * * * *"
+                }
+              }
+      02_filter.conf: |
+        filter{
+          json{
+             	source => "json_data"
+             	target => "data"
+             	remove_field => ["json_data"]
+             }
+
+             json{
+                  source => "json_supplementary_data"
+                  target => "supplementary_data"
+                  remove_field => ["json_supplementary_data"]
+             }
+
+             json{
+                  source => "json_data_classification"
+                  target => "data_classification"
+                  remove_field => ["json_data_classification"]
+             }
+
+             if [data][SearchCriteria] {
+                 clone {
+                     clones => ["SearchCriteria"]
+                 }
+             }
+
+             if [type] == "SearchCriteria" {
+                 if [data][SearchCriteria] {
+                     mutate {
+                        rename => {"[data][SearchCriteria]" => "[data_new][SearchCriteria]" }
+                     }
+                 }
+                 if [data][caseManagementLocation] {
+                     mutate {
+                        rename => {"[data][caseManagementLocation]" => "[data_new][caseManagementLocation]" }
+                     }
+                 }
+                 if [data][CaseAccessCategory] {
+                    mutate {
+                       rename => {"[data][CaseAccessCategory]" => "[data_new][CaseAccessCategory]" }
+                    }
+                 }
+                 if [data][caseNameHmctsInternal] {
+                     mutate {
+                        rename => {"[data][caseNameHmctsInternal]" => "[data_new][caseNameHmctsInternal]" }
+                     }
+                 }
+                 if [data][caseManagementCategory] {
+                     mutate {
+                        rename => {"[data][caseManagementCategory]" => "[data_new][caseManagementCategory]" }
+                     }
+                 }
+                 if [supplementary_data][HMCTSServiceId] {
+                     mutate {
+                        rename => {"[supplementary_data][HMCTSServiceId]" => "[supplementary_data_new][HMCTSServiceId]" }
+                     }
+                 }
+                 if [data_classification][SearchCriteria] {
+                     mutate {
+                        rename => {"[data_classification][SearchCriteria]" => "[data_classification_new][SearchCriteria]" }
+                     }
+                 }
+                 if [data_classification][CaseAccessCategory] {
+                    mutate {
+                         rename => {"[data_classification][CaseAccessCategory]" => "[data_classification_new][CaseAccessCategory]" }
+                    }
+                 }
+                 if [data_classification][caseManagementLocation] {
+                    mutate {
+                       rename => {"[data_classification][caseManagementLocation]" => "[data_classification_new][caseManagementLocation]" }
+                    }
+                 }
+                 if [data_classification][caseNameHmctsInternal] {
+                     mutate {
+                        rename => {"[data_classification][caseNameHmctsInternal]" => "[data_classification_new][caseNameHmctsInternal]" }
+                     }
+                 }
+
+                 if [data_classification][caseManagementCategory] {
+                     mutate {
+                        rename => {"[data_classification][caseManagementCategory]" => "[data_classification_new][caseManagementCategory]" }
+                     }
+                 }
+                 mutate { remove_field =>[ "data" ,"supplementary_data", "data_classification", "last_state_modified_date", "type","last_modified", "created_date" ] }
+
+                 mutate {
+                         rename => { "[data_new]" => "data" }
+                         rename => { "[supplementary_data_new]"  => "supplementary_data" }
+                         rename => { "[data_classification_new]"  => "data_classification" }
+                 }
+
+                 mutate {
+                    add_field => { "index_id" => "global_search" }
+                 }
+                 mutate {
+                    lowercase => [ "index_id" ]
+                 }
+             } else {
+                 mutate {
+                     add_field => { "index_id" => "%{case_type_id}_cases" }
+               	}
+              mutate {
+          	    lowercase => [ "index_id" ]
+              }
+             }
+        }
+      03_output.conf: |
+        output {
+            elasticsearch {
+                hosts => ["${ES_HOSTS}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{case_data_id}"
+                timeout => 60
+            }
+        }
+      dead_letter_indexing_pipeline.conf: |
+        input {
+          dead_letter_queue {
+            path => "${LOGSTASH_HOME}/data/dead_letter_queue"
+            commit_offsets => true
+            pipeline_id => "main"
+          }
+        }
+
+        filter {
+          # capture the entire event, and write it to a new field; we'll call that field `failed_case`
+          ruby {
+            code => "event.set('failed_case', event.to_json())"
+          }
+
+          # prune every field off the event except for the one we've just created. Note that this does not prune event metadata.
+          prune {
+            whitelist_names => [ "^failed_case$" ]
+          }
+
+          ruby {
+            code => "event.set('timestamp', event.get('[@metadata][dead_letter_queue][entry_time]'))"
+          }
+
+          # pull useful information out of the event metadata provided by the dead letter queue, and add it to the new event.
+          mutate {
+            add_field => {
+              "reason" => "%{[@metadata][dead_letter_queue][reason]}"
+            }
+          }
+        }
+
+        output {
+          elasticsearch {
+            hosts => ["${ES_HOSTS}"]
+            sniffing => false
+            index => ".logstash_dead_letter"
+          }
+        }
+  chart:
+    spec:
+      chart: logstash
+      version: 8.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+        namespace: sptribs

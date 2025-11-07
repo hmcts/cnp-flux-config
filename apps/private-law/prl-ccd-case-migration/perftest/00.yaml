@@ -6,12 +6,12 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-208-3950e92-20251028153336 #{"$imagepolicy": "flux-system:perftest-prl-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-223-6ac41b9-20251031084511 #{"$imagepolicy": "flux-system:perftest-prl-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
-      schedule: "30 13 24 10 *"
+      schedule: "45 17 06 11 *"
       environment:
         IDAM_REDIRECT_URL: https://prl-cos-perftest.service.core-compute-perftest.internal/oauth2/callback
         IDAM_S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
@@ -19,11 +19,9 @@ spec:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
         MIGRATION_ENABLED: true
         MIGRATION_CASE_IDS: ""
-        MIGRATION_QUERY_TYPE: "IN_STATE"
-        MIGRATION_IN_STATE_STATE_TO_INCLUDE: "AWAITING_SUBMISSION_TO_HMCTS"
         MIGRATION_QUERY_SIZE: 100
-        MIGRATION_CASE_LIMIT: 2000
-        MIGRATION_STEP_CLASSES: "RetainAndDisposeMigrationStep"
+        MIGRATION_CASE_LIMIT: 100
+        MIGRATION_STEP_CLASSES: "DfjAreaMigrationStep"
       keyVaults:
         prl:
           secrets:
