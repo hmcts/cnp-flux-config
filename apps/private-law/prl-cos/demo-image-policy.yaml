@@ -2,14 +2,6 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: demo-prl-cos
-  annotations:
-    hmcts.github.com/prod-automated: disabled
 spec:
   imageRepositoryRef:
     name: prl-cos
-  filterTags:
-    pattern: "^pr-3338-[a-f0-9]+-(?P<ts>[0-9]+)"
-    extract: "$ts"
-  policy:
-    alphabetical:
-      order: asc
