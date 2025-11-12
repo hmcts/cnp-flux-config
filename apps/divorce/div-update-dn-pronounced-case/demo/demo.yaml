@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: div-update-dn-pronounced-case-task
+spec:
+  releaseName: div-update-dn-pronounced-case-task
+  values:
+    job:
+      schedule: "0 */3 * * *"
+      image: hmctspublic.azurecr.io/div/cos:prod-3b0af1b-20251023103129 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      environment:
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-demo.service.core-compute-demo.internal"
+        IDAM_API_BASEURL: "http://idam-api-demo.service.core-compute-demo.internal"
+        CCD_DATA_STORE_API_BASEURL: "http://ccd-data-store-api-demo.service.core-compute-demo.internal"
+        SCHEDULER_MAKE_CASES_ELIGIBLE_DA_ENABLED: true
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
+
