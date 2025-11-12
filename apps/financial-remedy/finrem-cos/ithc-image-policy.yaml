@@ -3,7 +3,13 @@ kind: ImagePolicy
 metadata:
   name: ithc-finrem-cos
   annotations:
-    hmcts.github.com/prod-automated: enabled
+    hmcts.github.com/prod-automated: disabled
 spec:
+  filterTags:
+    pattern: '^pr-2673-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: finrem-cos
