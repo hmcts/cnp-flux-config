@@ -9,6 +9,15 @@ spec:
       schedule: "0,10,20,30,40,50 * * * *"
       cpuRequests: "250m"
       memoryRequests: "1Gi"
+      keyVaults:
+        dtsse:
+          secrets:
+            - name: AppInsightsConnectionString
+              alias: APPLICATIONINSIGHTS_CONNECTION_STRING
+            - github-token
+            - db-url
+            - cosmos-key
+            - cosmos-db-name
     global:
       jobKind: CronJob
   chart:
