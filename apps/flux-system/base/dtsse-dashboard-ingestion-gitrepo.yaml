@@ -1,0 +1,18 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: dtsse-dashboard-ingestion-dev  # Custom name for your test
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/hmcts/dtsse-dashboard-ingestion
+  ref:
+    branch: DTSPO-27880-update-ingestion-job
+  provider: github
+  secretRef:
+    name: github-app-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory only
+    !/charts/
