@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-case-disposer-v2
+spec:
+  values:
+    job:
+      schedule: "30 22 * * *"
+      memoryRequests: "1024Mi"
+      cpuRequests: "1000m"
+      memoryLimits: "2048Mi"
+      cpuLimits: "2000m"
+      environment:
+        ELASTIC_SEARCH_ENABLED: true
+        DATA_STORE_DB_PORT: 5432
+        DATA_STORE_DB_OPTIONS: "?sslmode=require"
+        DATA_STORE_DB_HOST: "ccd-data-store-api-postgres-db-v15-prod.postgres.database.azure.com"
+        IDAM_S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        ROLE_ASSIGNMENT_HOST: "http://am-role-assignment-service-prod.service.core-compute-prod.internal"
+        DOCUMENT_STORE_HOST: "http://dm-store-prod.service.core-compute-prod.internal"
+        DEFINITION_STORE_HOST: "http://ccd-definition-store-api-prod.service.core-compute-prod.internal"
+        LOG_AND_AUDIT_HOST: "http://lau-case-backend-prod.service.core-compute-prod.internal"
+        DELETE_CASE_TYPES:
+        SIMULATED_CASE_TYPES: "MoneyClaimCase, A58, CARE_SUPERVISION_EPO, ET_EnglandWales, ET_Scotland, GrantOfRepresentation, Caveat, Asylum, Bail, PRLAPPS"
+        CCD_DISPOSER_REQUEST_LIMIT: "110000"
+        CCD_DISPOSER_CUT_OFF_TIME: "04:00"
+        CASE_COLLECTOR_VERSION: 2

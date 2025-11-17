@@ -7,6 +7,7 @@ spec:
   values:
     nodejs:
       ingressHost: nfdiv.demo.platform.hmcts.net
+      image: hmctspublic.azurecr.io/nfdiv/frontend:pr-4408 #{"$imagepolicy" "flux-system:demo-nfdiv-frontend"}
       environment:
         WEBCHAT_AVAYA_URL: webchat.pp.ctsc.hmcts.net
         WEBCHAT_AVAYA_CLIENT_URL: webchat-client.pp.ctsc.hmcts.net
@@ -17,7 +18,6 @@ spec:
         GENESYS_BASE_URL: https://apps.euw2.pure.cloud
         GENESYS_ENVIRONMENT: prod-euw2
         GENESYS_KERV_BASE_URL: https://api-preprod.hmcts.hs-cx.com/web-availability
-        USE_GENESYS: true
       autoscaling:
         enabled: true
         maxReplicas: 8
