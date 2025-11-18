@@ -9,13 +9,13 @@ Note: You need to [install yq](https://mikefarah.gitbook.io/yq/) for these scrip
 
 ## Namespace
 
-All the applications owned by a team are deployed to a single namespace (usually team name, e.g. probate).
+All the applications owned by a team are deployed to a single namespace (usually team name, e.g. probate). namespace is sometimes called product.
 
 ### Create a namespace manifest
 
 - Run [add-namespace.sh](../bin/v2/add-namespace.sh) with your namespace and team build notices slack channel.
    ```bash
-    ./bin/v2/add-namespace.sh <your namespace> <team slack channel> <team AD Group ID>
+    ./bin/v2/add-namespace.sh --product <your namespace> --team-aad-group-id <team AD Group ID>
    ```
    
 ### Add namespace kustomization to an environment
@@ -39,8 +39,7 @@ All the applications owned by a team are deployed to a single namespace (usually
 
  ```bash
     ./bin/workload-identity/add-wl-identity.sh --namespace <your namespace> --mi-name <mi name>
-    #examples
-    ./bin/workload-identity/add-wl-identity.sh --namespace ccd
+    # example
     ./bin/workload-identity/add-wl-identity.sh --namespace rpe --mi-name rpe-shared
    ```
 - In cases where you need to access other application key vaults (like in preview), your [Managed Identity should be added to the respective vault](https://github.com/hmcts/ccd-shared-infrastructure/pull/178/files) in specific environment.
