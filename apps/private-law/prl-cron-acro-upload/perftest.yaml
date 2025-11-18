@@ -7,9 +7,14 @@ spec:
   releaseName: prl-cron-acro-upload
   values:
     job:
-      suspend: true
+      image: hmctspublic.azurecr.io/prl/cos:pr-3322-bb7ba9d-20251103112914 #{"$imagepolicy": "flux-system:demo-prl-cron-acro-upload"}
+      cpuRequests: "2000m"
+      cpuLimits: "4000m"
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
       environment:
         APP_ENV: "perftest"
+        ACRO_CRONJOB_ENABLED: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
