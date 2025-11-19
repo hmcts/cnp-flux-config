@@ -1,12 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: div-update-dn-pronounced-case-task
+  name: div-update-dn-pronounced-case
 spec:
-  releaseName: div-update-dn-pronounced-case-task
+  releaseName: div-update-dn-pronounced-case
   values:
     job:
-      schedule: "0 */3 * * *"
+      schedule: "0 12 19 11 *"
       image: hmctspublic.azurecr.io/div/cos:prod-3b0af1b-20251023103129 #{"$imagepolicy": "flux-system:demo-div-cos"}
       environment:
         CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
@@ -35,7 +35,7 @@ spec:
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
         SPRING_MAIL_USERNAME: apikey
-        CRON_MAKE_CASES_ELIGIBLE_FOR_DA_TASK_ENABLED: false
+        CRON_MAKE_CASES_ELIGIBLE_FOR_DA_TASK_ENABLED: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
