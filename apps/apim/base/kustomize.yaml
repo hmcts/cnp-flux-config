@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apim
+  namespace: flux-system
+spec:
+  path: ./apps/apim/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "apim"
+      WI_NAME: "apim"
+      TEAM_NOTIFICATION_CHANNEL: "api-marketplace-tech"
+      TEAM_AAD_GROUP_ID: "c338c04d-aeb8-44fb-8d66-d9cd01fc89fc"
