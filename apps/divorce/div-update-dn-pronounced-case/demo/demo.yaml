@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: div-update-dn-pronounced-case
+spec:
+  releaseName: div-update-dn-pronounced-case
+  values:
+    job:
+      schedule: "0 12 19 11 *"
+      image: hmctspublic.azurecr.io/div/cos:prod-3b0af1b-20251023103129 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      environment:
+        CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        PAYMENT_API_BASEURL: "http://payment-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        PRD_API_BASEURL: "http://rd-professional-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        SEND_LETTER_SERIVCE_BASEURL: "http://rpe-send-letter-service-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        IDAM_API_REDIRECT_URL: "https://div-pfe-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/authenticated"
+        IDAM_API_XUI_REDIRECT_URL: "https://manage-case.{{ .Values.global.environment }}.platform.hmcts.net/oauth2/callback"
+        CASE_FORMATTER_SERVICE_API_BASEURL: "http://div-cfs-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        CASE_VALIDATION_SERVICE_API_BASEURL: "http://div-vs-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        DOCUMENT_GENERATOR_SERVICE_API_BASEURL: "http://div-dgs-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        FEES_AND_PAYMENTS_SERVICE_API_BASEURL: "http://div-fps-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        PRD_SERVICE_API_BASEURL: "http://rd-professional-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        ACA_SERVICE_API_BASEURL: "http://aac-manage-case-assignment-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        CCD_DATA_STORE_API_BASEURL: "http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+        SERVICE_AUTH_MICROSERVICE: "divorce_frontend"
+        MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "30000"
+        FEATURE_DN_REFUSAL: "true"
+        FEATURE_RESP_SOLICITOR_DETAILS: true
+        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
+        SPRING_MAIL_HOST: smtp.sendgrid.net
+        SPRING_MAIL_PORT: 587
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_SSL_TRUST: smtp.sendgrid.net
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+        SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+        SPRING_MAIL_USERNAME: apikey
+        CRON_MAKE_CASES_ELIGIBLE_FOR_DA_TASK_ENABLED: true
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: demo
