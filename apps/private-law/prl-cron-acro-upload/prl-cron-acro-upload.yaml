@@ -1,0 +1,84 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-acro-upload
+  namespace: private-law
+spec:
+  releaseName: prl-cron-acro-upload
+  values:
+    job:
+      keyVaults:
+        prl:
+          secrets:
+            - name: prl-cos-idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: microservicekey-prl-cos-api
+              alias: IDAM_S2S_AUTH_TOTP_SECRET
+            - name: system-update-user-username
+              alias: SYSTEM_UPDATE_USER_USERNAME
+            - name: system-update-user-password
+              alias: PRL_SYSTEM_UPDATE_PASSWORD
+            - name: notification-client-api-key
+              alias: UK_GOV_NOTIFY_API_KEY
+            - name: test-genericpassword
+              alias: PRL_GENERIC_PASSWORD
+            - name: launchDarkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: send-grid-api-key
+              alias: SEND_GRID_API_KEY
+            - name: rpa-notify-to-email
+              alias: RPA_NOTIFY_TO_EMAIL
+            - name: rpa-notify-from-email
+              alias: RPA_NOTIFY_FROM_EMAIL
+            - name: AppInsightsInstrumentationKey
+              alias: APP_INSIGHTS_INSTRUMENTATION_KEY
+            - name: southampton-court-email-address
+              alias: SOUTHAMPTON_COURT_EMAIL_ADDRESS
+            - name: idam-solicitor-username
+              alias: IDAM_SOLICITOR_USERNAME
+            - name: idam-solicitor-password
+              alias: IDAM_SOLICITOR_PASSWORD
+            - name: filtered-court-ids
+              alias: COURT_IDS_TO_FILTER
+            - name: da-filtered-court-ids
+              alias: DA_COURT_IDS_TO_FILTER
+            - name: ca-default-court-epimms-id
+              alias: CA_DEFAULT_COURT_EPIMMS_ID
+            - name: postcode-lookup-token
+              alias: POST_CODE_LOOKUP_KEY
+            - name: prl-rd-api-system-username
+              alias: PRL_IDAM_REFDATA_USERNAME
+            - name: prl-rd-api-system-user-password
+              alias: PRL_IDAM_REFDATA_PASSWORD
+            - name: welsh-court-mapping
+              alias: WELSH_COURT_MAPPING
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: acro-zip-password
+              alias: ACRO_ZIP_PASSWORD
+            - name: acro-sftp-host
+              alias: ACRO_SFTP_HOST
+            - name: acro-sftp-user
+              alias: ACRO_SFTP_USER
+            - name: acro-sftp-user-password
+              alias: ACRO_SFTP_USER_PASSWORD
+      image: hmctspublic.azurecr.io/prl/cos:prod-9ea2256-20251119232842 #{"$imagepolicy": "flux-system:prl-cos"}
+      environment:
+        TASK_NAME: BaisDocumentUploadTask
+        VAR: trigger1
+        FEATURE_EXAMPLE: true
+        APP_ENV: "prod"
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
+        CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
+        ACRO_CRONJOB_ENABLED: false
+      schedule: "00 21 * * *"
+  chart:
+    spec:
+      chart: prl-cron
+      version: 0.0.18
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system

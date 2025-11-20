@@ -7,7 +7,12 @@ spec:
   releaseName: div-cfs
   values:
     java:
-      replicas: 2
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 4
+      cpuRequests: "250m"
+      memoryRequests: "1536Mi"
       memoryLimits: "2Gi"
       cpuLimits: "2500m"
       readinessDelay: 45
@@ -17,7 +22,7 @@ spec:
       startupPeriod: 120
       startupFailureThreshold: 3
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cfs:prod-ec8c615-20250623073029 #{"$imagepolicy": "flux-system:div-cfs"}
+      image: hmctspublic.azurecr.io/div/cfs:prod-c56775e-20251027090428 #{"$imagepolicy": "flux-system:div-cfs"}
       environment:
         VAR_FV2: trig5
   chart:

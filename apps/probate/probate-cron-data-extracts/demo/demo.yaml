@@ -6,12 +6,79 @@ spec:
   releaseName: probate-cron-data-extracts
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-c49dd13-20250904092428 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "0 10 31 2 *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3462-f679388-20251117095057 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "32 13 31 2 *"
       environment:
-        TASK_NAME: DataExtractsTask
+        TASK_NAME: DataExtractTask
         MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net
         FRONTEND_URL: https://probate.demo.platform.hmcts.net
+      keyVaults:
+        probate:
+          secrets:
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: probatemandb-POSTGRES-PASS
+              alias: spring.datasource.password
+            - name: s2s-probate-backend
+              alias: idam.s2s-auth.totp_secret
+            - name: probate-bo-govNotifyApiKey
+              alias: notifications.govNotifyApiKey
+            - name: authTokenEmail
+              alias: auth.provider.client.email
+            - name: authTokenPassword
+              alias: auth.provider.client.password
+            - name: excelaEmail
+              alias: excelaEmail
+            - name: smeeAndFordEmail
+              alias: smeeAndFordEmail
+            - name: ftpSignature
+              alias: ftp.client.signature
+            - name: ftpEnv
+              alias: ftp.client.environment
+            - name: probate-bo-grantSignatureKey
+              alias: pdf.service.grantSignatureSecretKey
+            - name: probate-bo-grantSignatureFile
+              alias: pdf.service.grantSignatureEncryptedFile
+            - name: pdfServiceBaseUrl
+              alias: docmosis.service.uri
+            - name: pdfServiceAccessKey
+              alias: docmosis.service.accessKey
+            - name: pdfServiceHealthUrl
+              alias: docmosis.service.health.uri
+            - name: idam-secret-probate
+              alias: auth.provider.client.secret
+            - name: idamRedirectUrl
+              alias: auth.provider.client.redirect
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
+            - name: levPublicCertificate
+              alias: lev.ssl.publicCertificate
+            - name: levPrivateKey
+              alias: lev.ssl.privateKey
+            - name: levAccessTokenUri
+              alias: lev.bearertoken.accessTokenUri
+            - name: levClientId
+              alias: lev.bearertoken.clientId
+            - name: levClientSecret
+              alias: lev.bearertoken.clientSecret
+            - name: levUsername
+              alias: lev.bearertoken.username
+            - name: levPassword
+              alias: lev.bearertoken.password
+            - name: levDeathUrl
+              alias: lev.death.url
+            - name: schedulerCaseWorkerUser
+              alias: SCHEDULER_CASEWORKER_USERNAME
+            - name: schedulerCaseWorkerPass
+              alias: SCHEDULER_CASEWORKER_PASSWORD
+            - name: probate-storage-account-primary-connection-string
+              alias: PROBATE_STORAGE_ACCOUNT_PRIMARY_CONNECTION_STRING
+            - name: probate-storage-account-nfi-primary-connection-string
+              alias: PROBATE_STORAGE_ACCOUNT_NFI_PRIMARY_CONNECTION_STRING
     global:
       jobKind: CronJob
       enableKeyVaults: true

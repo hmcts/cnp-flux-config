@@ -6,7 +6,7 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/ccd/case-disposer:pr-729
-      schedule: "00 23 * * *"
+      schedule: "30 15 20 10 *"
       memoryRequests: "1024Mi"
       cpuRequests: "1000m"
       memoryLimits: "2048Mi"
@@ -23,6 +23,7 @@ spec:
         DOCUMENT_STORE_HOST: "http://dm-store-perftest.service.core-compute-perftest.internal"
         DEFINITION_STORE_HOST: "http://ccd-definition-store-api-perftest.service.core-compute-perftest.internal"
         LOG_AND_AUDIT_HOST: "http://lau-case-backend-perftest.service.core-compute-perftest.internal"
-        DELETE_CASE_TYPES:
+        DELETE_CASE_TYPES: "PRLAPPS"
         SIMULATED_CASE_TYPES:
         CCD_DISPOSER_REQUEST_LIMIT: "110000"
+        CASE_COLLECTOR_VERSION: 1

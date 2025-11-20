@@ -1,0 +1,38 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: db-query-job-role
+  namespace: ${NAMESPACE}
+rules:
+- apiGroups: [""]
+  resources: ["pods", "configmaps"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+- apiGroups: ["helm.fluxcd.io", "helm.toolkit.fluxcd.io"]
+  resources: ["helmreleases"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+- apiGroups: ["secrets-store.csi.x-k8s.io"]
+  resources: ["secretproviderclasses"]
+  verbs: ["create", "get", "list", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list", "create"]
+- apiGroups: [""]
+  resources: ["serviceaccounts"]
+  verbs: ["get", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: db-query-job-rolebinding
+  namespace: ${NAMESPACE}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: db-query-job-role
+subjects:
+- kind: User
+  apiGroup: rbac.authorization.k8s.io
+  name: "7c002cbc-f807-4866-9b0f-499f6dd5953d" # ObjectID for DTS Auto DB Query app registration

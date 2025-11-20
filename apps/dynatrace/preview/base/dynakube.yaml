@@ -1,4 +1,4 @@
-apiVersion: dynatrace.com/v1beta2
+apiVersion: dynatrace.com/v1beta5
 kind: DynaKube
 metadata:
   name: dynakube
@@ -7,5 +7,7 @@ spec:
   apiUrl: https://yrk32651.live.dynatrace.com/api
   oneAgent:
     cloudNativeFullStack:
+      annotations:
+        cluster-autoscaler.kubernetes.io/enable-ds-eviction: "false"
       args:
         - --set-host-group=PREVIEW_CFT

@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "00 23 21 8 *"
+      schedule: "30 14 03 11 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -26,12 +26,9 @@ spec:
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
         CRON_BATCHSIZE: 20000
-        TASK_NAME: ManageHearingsMigrationTask
-        CRON_DRY_RUN: true
-        CRON_MANAGE_HEARINGS_MIGRATION_ENABLED: true
-        CRON_MANAGE_HEARINGS_MIGRATION_ROLLBACK: false
-        CRON_MANAGE_HEARINGS_MIGRATION_CASE_LIST_FILENAME: "manageHearingsMigration-encrypted.csv"
-        CRON_MANAGE_HEARINGS_MIGRATION_VERSION: "v1dryRun"
+        TASK_NAME: SetConsentOrderFRCNameTask
+        CRON_UPDATE_CONSENT_ORDER_FRC_NAME_ENABLED: true
+        CRON_UPDATE_CONSENT_ORDER_FRC_NAME_CASE_LIST_FILENAME: "updateConsentOrderFRCName-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true

@@ -6,17 +6,34 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      schedule: "15 11 3 4 *"
+      schedule: "50 09 17 10 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "false"
-        MIGRATE_LEGACY_CASE_FLAGS: "true"
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        MIGRATION_ENABLED: "true"
+        MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 5
-        FUNCTION_ENABLED: "true"
-        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "true"
+        MIGRATION_NUMBER_OF_CASES: 175000
+        MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
+        MIGRATE_BAIL_REF_DATA_LOCATION_FLAG: "false"
+        MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
+        MIGRATION_NUMBER_OF_THREADS: 20
+        RD_COMMON_DATA_LOCAL: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
+        IDAM_S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        AM_ROLE_ASSIGNMENT_API_BASE_URL: http://am-role-assignment-service-perftest.service.core-compute-perftest.internal
+        SERVICE_ID: BFA1
+        LOCATION_REF_DATA_URL: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
+        # MIGRATION_CASE_ID: 1713484614704346,1713517303266554,1713883671667991,1739970873279236,1713485210193222,1749466153401994,1713485522682334,1742984946420128,1713486929364591,1720483186414467
+        MIGRATE_IS_ARIA_MIGRATED: "false"
+        MIGRATE_APPEAL_STARTED_TTL_SET: "false"
+        MIGRATE_APPLICATION_STARTED_TTL_SET: "false"
+        MIGRATE_APPLICATION_STARTED_BY_LR_TTL_SET: "false"
+        FUNCTION_ENABLED: "false"
+        ASSIGN_CASE_ALLOCATOR_ROLE_TO_SYSTEM_USER: "false"
+        MIGRATION_PA_APPEALS_IN_PENDING_PAYMENT: "false"
+        MIGRATION_VIRTUAL_REGION_LOCATION_IN_EXISTING_APPEALS: "true"

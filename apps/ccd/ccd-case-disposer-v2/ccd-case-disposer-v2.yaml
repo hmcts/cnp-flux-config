@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-case-disposer-v2
+spec:
+  releaseName: ccd-case-disposer-v2
+  values:
+    job:
+      useInterpodAntiAffinity: true
+      image: hmctspublic.azurecr.io/ccd/case-disposer:prod-45f2880-20251114113120 #{"$imagepolicy": "flux-system:ccd-case-disposer"}
+  chart:
+    spec:
+      chart: ./stable/ccd-case-disposer
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

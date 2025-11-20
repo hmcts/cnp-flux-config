@@ -8,13 +8,13 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-c8f502f-20250903152505 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-7405cdd-20251106124303 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "15,45 20-23,0-4 * * *"
+      schedule: "15 20 * * *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -66,11 +66,9 @@ spec:
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-prod.service.core-compute-prod.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
         ARCHIVE_OLD_DRAFTS_ENABLED: true
-        DEFAULT_PANEL_COMPOSITION_ENABLED: true
-        ULR_USE_PRE_FETCHED_CASE_LIST: false
         CASE_MIGRATION_MAX_RETRIES: 5
-        MIGRATION_QUERY_SIZE: 300
-        MIGRATION_CASE_LIMIT: 50
+        MIGRATION_QUERY_SIZE: 10000
+        MIGRATION_CASE_LIMIT: 1000
         JAVA_OPTS: -Xmx4G
     global:
       environment: prod

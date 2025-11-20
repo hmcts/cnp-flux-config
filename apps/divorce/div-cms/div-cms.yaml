@@ -8,15 +8,19 @@ spec:
   values:
     java:
       replicas: 2
-      memoryRequests: "1Gi"
-      cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
-      cpuLimits: "2500m"
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 4
+      memoryRequests: '1536Mi'
+      memoryLimits: '2048Mi'
+      cpuRequests: '250m'
+      cpuLimits: '1500m'
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/div/cms:prod-a83a535-20250625070754 #{"$imagepolicy": "flux-system:div-cms"}
+      image: hmctspublic.azurecr.io/div/cms:prod-47fd6f9-20251022113741 #{"$imagepolicy": "flux-system:div-cms"}
       environment:
         MANAGEMENT_ENDPOINT_HEALTH_CACHE_TIMETOLIVE: "4000"
         DOCUMENTATION_SWAGGER_ENABLED: "false"

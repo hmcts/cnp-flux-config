@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: version-reporter-service-npmpackages
+  namespace: monitoring
+  labels:
+    app: version-reporter-service-npmpackages
+spec:
+  releaseName: version-reporter-service-npmpackages
+  chart:
+    spec:
+      chart: job
+      sourceRef:
+        kind: GitRepository
+        name: chart-job
+        namespace: flux-system
+      interval: 1m
+  interval: 5m
+  values:
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+    schedule: "0 7 1-5 * *" # Once per day at 7am, Monday to Friday
+    concurrencyPolicy: "Forbid"
+    failedJobsHistoryLimit: 5
+    startingDeadlineSeconds: 300
+    successfulJobsHistoryLimit: 5
+    ttlSecondsAfterFinished: 3600
+    backoffLimit: 3
+    restartPolicy: Never
+    kind: CronJob
+    image: hmctspublic.azurecr.io/version-reporter-service/npmpackages:prod-ff22cdf-20251118125745 #{"$imagepolicy": "flux-system:version-reporter-npmpackages"}
+    imagePullPolicy: Always
+    environment:
+      MAX_DAYS_AWAY: 3
+      MAX_REPOS: 3000
+      COSMOS_DB_CONTAINER: npmpackages
+      VAULT_NAME: version-reporter-ptl
+    keyVaults:
+      version-reporter-ptl:
+        excludeEnvironmentSuffix: true
+        secrets:
+          - name: cosmos-key
+            alias: COSMOS_KEY
+          - name: cosmos-endpoint
+            alias: COSMOS_DB_URI
+          - name: cosmos-db-name
+            alias: COSMOS_DB_NAME
+          - name: githubToken
+            alias: GH_TOKEN
+    nodeSelector:
+      agentpool: cronjob
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs

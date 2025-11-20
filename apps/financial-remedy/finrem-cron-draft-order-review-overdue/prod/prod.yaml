@@ -6,10 +6,13 @@ spec:
   releaseName: finrem-cron-draft-order-review-overdue
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-7d6acf6-20250904091516 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctspublic.azurecr.io/finrem/cos:prod-0dddb09-20251120094041 #{"$imagepolicy": "flux-system:finrem-cos"}
       schedule: "0 2 * * *"
       useInterpodAntiAffinity: true
+      memoryRequests: "1024Mi"
+      memoryLimits: "2048Mi"
       environment:
+        JAVA_OPTS: -Xmx1536m
         TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_ENABLED: true
         CRON_DRAFT_ORDER_REVIEW_OVERDUE_NOTIFICATION_SENT_BATCH_SIZE: 2000

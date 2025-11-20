@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-acro-upload
+  namespace: private-law
+spec:
+  releaseName: prl-cron-acro-upload
+  values:
+    job:
+      suspend: true
+      environment:
+        TASK_NAME: BaisDocumentUploadTask
+        VAR: trigger1
+        FEATURE_EXAMPLE: true
+        APP_ENV: "prod"
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        CCD_CASE_DOCS_AM_API: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-prod.service.core-compute-prod.internal
+        PRL_DGS_API_URL: http://prl-dgs-prod.service.core-compute-prod.internal
+        SEND_LETTER_URL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
+        XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
+        CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
+        PAY_URL: http://payment-api-prod.service.core-compute-prod.internal
+      schedule: "0 0 31 2 *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

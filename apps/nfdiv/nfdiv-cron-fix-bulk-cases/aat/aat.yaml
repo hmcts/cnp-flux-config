@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-fix-bulk-cases
+spec:
+  releaseName: nfdiv-cron-fix-bulk-cases
+  values:
+    job:
+      disableActiveClusterCheck: false
+      schedule: "0 12 13 10 *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: aat

@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ethos-migration
+  namespace: ethos
+spec:
+  values:
+    job:
+      suspend: true
+      schedule: "00 15 5 3 *"
+      environment:
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        IDAM_OIDC_URL: https://idam-web-public.perftest.platform.hmcts.net
+        OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/hmcts
+        IDAM_S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        IDAM_CLIENT_REDIRECT_URI: https://ecm-consumer-perftest.service.core-compute-perftest.internal/oauth2redirect
+        MIGRATION_ROLLBACK: false
+        MIGRATION_QUERY_SIZE: 10000
+        MIGRATION_CASETYPE: Bristol
+        DEFAULT_THREAD_LIMIT: 15
+    global:
+      environment: perftest
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

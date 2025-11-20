@@ -8,12 +8,12 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-c8f502f-20250903152505 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-7405cdd-20251106124303 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "30 15 3 9 *"
+      schedule: "45 11 18 9 *"
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
@@ -22,7 +22,4 @@ spec:
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: "50"
         JAVA_OPTS: -Xmx4G
-        ARCHIVE_OLD_DRAFTS_ENABLED: false
-        DEFAULT_PANEL_COMPOSITION_ENABLED: true
-        ULR_USE_PRE_FETCHED_CASE_LIST: true
-        FINAL_DECISION_OUTCOME_MIGRATION_ENABLED: true
+        ARCHIVE_OLD_DRAFTS_ENABLED: true

@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dtsse-dashboard-ingestion
+spec:
+  releaseName: dtsse-dashboard-ingestion
+  values:
+    job:
+      schedule: "0,10,20,30,40,50 * * * *"
+      cpuRequests: "250m"
+      memoryRequests: "1Gi"
+      keyVaults:
+        dtsse:
+          secrets:
+            - name: AppInsightsConnectionString
+              alias: APPLICATIONINSIGHTS_CONNECTION_STRING
+            - github-token
+            - db-url
+            - cosmos-key
+            - cosmos-db-name
+    global:
+      jobKind: CronJob
+  chart:
+    spec:
+      chart: ./charts/dtsse-dashboard-ingestion
+      sourceRef:
+        kind: GitRepository
+        name: dtsse-dashboard-ingestion-dev
+        namespace: flux-system
+      interval: 1m

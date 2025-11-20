@@ -7,12 +7,14 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-a18ddd9-20250822104114
+      image: hmctspublic.azurecr.io/idam/api:prod-0afdd99-20251113151154
       ingressHost: idam-api.aat.platform.hmcts.net
       environment:
         SERVER_MAX_HTTP_REQUEST_HEADER_SIZE: 20KB
         TESTING_SUPPORT_ENABLED: true
         TESTING_SUPPORT_PATCHSERVICE_ENABLED: false
+        TESTINGSUPPORTAPI_ENABLED: true
+        TESTINGSUPPORTAPI_URL: http://idam-testing-support-api
         ENDPOINTS_INFO_ENABLED: true
         STRATEGIC_ADMIN_URL: https://idam-user-dashboard.aat.platform.hmcts.net
         STRATEGIC_FRONTEND_URL: https://idam-web-public.aat.platform.hmcts.net
@@ -55,6 +57,7 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_ARCHIVAL_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
+        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_V2_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true

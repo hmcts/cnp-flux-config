@@ -6,13 +6,13 @@ spec:
   releaseName: ccpay-payment-api
   values:
     java:
-      image: hmctspublic.azurecr.io/payment/api:prod-f9a0515-20250903124407 #{"$imagepolicy": "flux-system:ithc-ccpay-payment-app"}
+      image: hmctspublic.azurecr.io/payment/api:prod-d287cd5-20251111090148 #{"$imagepolicy": "flux-system:ithc-ccpay-payment-app"}
       imagePullPolicy: Always
       environment:
         DUMMY_RESTART_VAR: false
         CASE_PAYMENT_ORDERS_API_URL: http://cpo-case-payment-orders-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         RD_LOCATION_BASE_URL: http://rd-location-ref-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-        TRUSTED_S2S_SERVICE_NAMES: "adoption_web,refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,civil_service,probate_backend,nfdiv_case_api,prl_cos_api,refunds_api,civil_general_applications,notifications_service,paymentoutcome_web,ccpay_gw"
+        TRUSTED_S2S_SERVICE_NAMES: "adoption_web,refunds_api,cmc,cmc_claim_store,probate_frontend,divorce_frontend,ccd_gw,api_gw,finrem_payment_service,finrem_case_orchestration,ccpay_bubble,jui_webapp,xui_webapp,fpl_case_service,iac,civil_service,probate_backend,nfdiv_case_api,prl_cos_api,refunds_api,civil_general_applications,notifications_service,paymentoutcome_web,ccpay_gw,pcs_api"
         PBA_CONFIG1_SERVICE_NAMES: dummy
         IAC_SERVICE_API_URL: http://ia-case-access-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         REFUND_API_URL: http://ccpay-refunds-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal

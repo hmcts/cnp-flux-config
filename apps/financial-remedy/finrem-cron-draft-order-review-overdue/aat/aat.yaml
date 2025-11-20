@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-draft-order-review-overdue
   values:
     job:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-7d6acf6-20250904091516 #{"$imagepolicy": "flux-system:finrem-cos"}
-      schedule: "30 1 26 11 *"
+      image: hmctspublic.azurecr.io/finrem/cos:prod-0dddb09-20251120094041 #{"$imagepolicy": "flux-system:finrem-cos"}
+      schedule: "0 1 16 10 *"
       useInterpodAntiAffinity: true
       environment:
         TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
@@ -19,7 +19,7 @@ spec:
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
-        SECURE_DOC_ENABLED: true
+        SECURE_DOC_ENABLED: false
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
         SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
