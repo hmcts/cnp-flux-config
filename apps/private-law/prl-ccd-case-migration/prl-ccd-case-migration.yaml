@@ -15,22 +15,22 @@ spec:
         MIGRATION_ENABLED: false
         MIGRATION_CASE_IDS: "123456"
         IDAM_API_URL: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
-          IDAM_S2S_URL: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-          IDAM_REDIRECT_URL: https://div-pfe-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/authenticated
-          CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
-          keyVaults:
-            prl:
-              secrets:
-                - name: app-insights-connection-string
-                  alias: app-insights-connection-string
-                - name: prl-cos-idam-client-secret
-                  alias: IDAM_CLIENT_SECRET
-                - name: system-update-user-username
-                  alias: SYSTEM_UPDATE_USER_USERNAME
-                - name: system-update-user-password
-                  alias: PRL_SYSTEM_UPDATE_PASSWORD
-                - name: microservicekey-prl-cos-api
-                  alias: IDAM_S2S_AUTH_TOTP_SECRET
+        IDAM_S2S_URL: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        IDAM_REDIRECT_URL: https://div-pfe-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/authenticated
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        keyVaults:
+          prl:
+            secrets:
+              - name: app-insights-connection-string
+                alias: app-insights-connection-string
+              - name: prl-cos-idam-client-secret
+                alias: IDAM_CLIENT_SECRET
+              - name: system-update-user-username
+                alias: SYSTEM_UPDATE_USER_USERNAME
+              - name: system-update-user-password
+                alias: PRL_SYSTEM_UPDATE_PASSWORD
+              - name: microservicekey-prl-cos-api
+                alias: IDAM_S2S_AUTH_TOTP_SECRET
   chart:
     spec:
       chart: ./stable/prl-ccd-case-migration
