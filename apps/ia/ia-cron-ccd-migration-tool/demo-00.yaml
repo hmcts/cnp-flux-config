@@ -6,8 +6,8 @@ spec:
   releaseName: ia-cron-ccd-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-29ae91c-20251119174645 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
-      schedule: "45 12 12 11 *"
+      image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:prod-0f65a9d-20251115132327 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
+      schedule: "25 10 20 11 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
@@ -18,7 +18,7 @@ spec:
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
-        MIGRATION_NUMBER_OF_CASES: 50000
+        MIGRATION_NUMBER_OF_CASES: 5
         MIGRATE_APPELLANT_INTERPRETER_LANGUAGES_CASE: "false"
         MIGRATE_APPEALS_REF_DATA_LOCATION_FLAG: "false"
         MIGRATION_NUMBER_OF_THREADS: 20
@@ -32,9 +32,10 @@ spec:
         MIGRATION_PA_APPEALS_IN_PENDING_PAYMENT: "false"
         MIGRATION_VIRTUAL_REGION_LOCATION_IN_EXISTING_APPEALS: "false"
         MIGRATION_VIRTUAL_REGION_LOCATION_IN_EXISTING_APPEALS_ROLLBACK: "false"
+        MIGRATE_ENDED_TTL_SET: "true"
         RESTART_PODS: "Yes"
         ROOT_LOGGING_LEVEL: "WARN"
         ES_QUERY_FETCH_CASE_REFERENCE_ONLY: "false"
         MIGRATION_PAGE_SIZE: 400
         MIGRATION_SEARCH_CASE_REFERENCES_START_FROM: ""
-        MIGRATE_APPELLANT_IN_DETENTION: "true"
+        MIGRATE_APPELLANT_IN_DETENTION: "false"
