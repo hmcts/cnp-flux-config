@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plum-frontend-tlse2e
+spec:
+  chart:
+    spec:
+      chart: ./stable/plum-frontend
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+  values:
+    nodejs:
+      ingressHost: plum-tlse2e.sandbox.platform.hmcts.net
+      replicas: 2
+      autoscaling:
+        minReplicas: 1
