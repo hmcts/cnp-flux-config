@@ -6,8 +6,8 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      schedule: "15 21 3 11 *"
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-7c00b8a-20251110160555 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
+      schedule: "10 19 20 11 *"
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-120491a-20251120121810 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
       keyVaults:
         prl:
           secrets:
@@ -28,9 +28,7 @@ spec:
         ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-prod.service.core-compute-prod.internal
         MIGRATION_ENABLED: true
         MIGRATION_CASE_IDS: ""
-        MIGRATION_QUERY_TYPE: "IN_STATE"
-        MIGRATION_IN_STATE_STATE_TO_INCLUDE: "AWAITING_SUBMISSION_TO_HMCTS"
         MIGRATION_QUERY_SIZE: 100
-        MIGRATION_CASE_LIMIT: 2000
-        MIGRATION_STEP_CLASSES: "RetainAndDisposeMigrationStep"
+        MIGRATION_CASE_LIMIT: 5000
+        MIGRATION_STEP_CLASSES: "DfjAreaMigrationStep"
         MIGRATION_STEP_ROLLBACK: false
