@@ -6,3 +6,14 @@ spec:
   releaseName: ccd-logstash-fpl
   values:
     replicas: 1
+    logstashConfig:
+      pipelines.yml: |
+        - pipeline.id: main
+          path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
+          pipeline.workers: 2
+          pipeline.batch.size: 250
+          queue.type: persisted
+        - pipeline.id: index-dead-letter-to-es
+          path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
+          pipeline.workers: 1
+          dead_letter_queue.enable: false
