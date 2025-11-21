@@ -6,3 +6,10 @@ spec:
   releaseName: ccd-logstash-fpl
   values:
     replicas: 1
+    logstashConfig:
+      pipelines.yml: |
+        - pipeline.id: main
+          path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
+          pipeline.workers: 2
+          pipeline.batch.size: 250
+          queue.type: persisted
