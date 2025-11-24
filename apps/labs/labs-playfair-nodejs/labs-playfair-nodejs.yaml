@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-playfair-nodejs
+  namespace: labs
+spec:
+  releaseName: labs-playfair-nodejs
+  chart:
+    spec:
+      chart: ./stable/labs-playfair-nodejs
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    nodejs:
+      image: hmctssandbox.azurecr.io/labs/playfair-nodejs:latest # {"$imagepolicy": "flux-system:labs-playfair-nodejs"}
+      disableTraefikTls: true
