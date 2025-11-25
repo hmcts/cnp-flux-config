@@ -6,7 +6,7 @@ spec:
   releaseName: div-update-dn-pronounced-case
   values:
     job:
-      schedule: "0 14 19 11 *"
+      schedule: "15 11 25 11 *"
       image: hmctspublic.azurecr.io/div/cos:prod-3b0af1b-20251023103129 #{"$imagepolicy": "flux-system:demo-div-cos"}
       environment:
         CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
@@ -36,6 +36,7 @@ spec:
         SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
         SPRING_MAIL_USERNAME: apikey
         CRON_MAKE_CASES_ELIGIBLE_FOR_DA_TASK_ENABLED: true
+        TASK_NAME: MakeCasesEligibleForDATask
     global:
       jobKind: CronJob
       enableKeyVaults: true
