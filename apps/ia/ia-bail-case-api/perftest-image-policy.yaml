@@ -2,6 +2,14 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
   name: perftest-ia-bail-case-api
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
+  filterTags:
+    pattern: '^pr-565-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: ia-bail-case-api

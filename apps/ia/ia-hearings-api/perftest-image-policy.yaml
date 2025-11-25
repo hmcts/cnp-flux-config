@@ -1,15 +1,15 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: perftest-ia-case-notifications-api
+  name: perftest-ia-hearings-api
   annotations:
     hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: '^pr-1546-[a-f0-9]+-(?P<ts>[0-9]+)'
+    pattern: '^pr-513-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
       order: asc
   imageRepositoryRef:
-    name: ia-case-notifications-api
+    name: ia-hearings-api
