@@ -4,6 +4,7 @@ metadata:
   name: civil-service
   namespace: civil
 spec:
+  timeout: 10m
   values:
     java:
       image: hmctspublic.azurecr.io/civil/service:prod-c2d00a4-20251126103703 #{"$imagepolicy": "flux-system:civil-service"}
@@ -19,3 +20,4 @@ spec:
         ASYNC_HANDLER_CORE_POOL_SIZE: 50
         ASYNC_HANDLER_MAX_POOL_SIZE: 100
         ASYNC_HANDLER_QUEUE_CAPACITY: 1500
+        FLYWAY_LOCK_RETRY_COUNT: -1
