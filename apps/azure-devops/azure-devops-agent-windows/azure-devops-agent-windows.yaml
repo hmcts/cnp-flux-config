@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: azure-devops-agent-windows
+  namespace: azure-devops
+spec:
+  releaseName: azure-devops-agent-windows
+  values:
+    scaleType: Job
+    image: hmctspublic.azurecr.io/azure-devops-agent-windows:pr-45-817e7cd0-1764159985
+    runAsRoot: true
+    tolerations:
+      - key: kubernetes.io/os
+        operator: Equal
+        value: windows
+        effect: NoSchedule
+    nodeSelector:
+      kubernetes.io/os: windows
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - jenkins-master
+            topologyKey: "kubernetes.io/hostname"
+    environment:
+      AZP_URL: https://dev.azure.com/hmcts
+      CMD_ARGS: "--once"
+      AZP_POOL: hmcts-cft-ptlsbox-windows
+    job:
+      activeDeadlineSeconds: 10800
+    memoryRequests: 512Mi
+    cpuRequests: 25m
+    memoryLimits: 3Gi
+    cpuLimits: 2
+    maxReplicaCount: 3
+    successfulJobsHistoryLimit: 5
+    failedJobsHistoryLimit: 5
+  chart:
+    spec:
+      chart: function
+      version: 2.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic
+        namespace: flux-system
