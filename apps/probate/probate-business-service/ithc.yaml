@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-business-service
+  namespace: probate
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/probate/business-service:prod-51f6fa0-20251125131746 #{"$imagepolicy": "flux-system:ithc-probate-business-service"}
+      environment:
+        # Does what it says on the tin - if this changes then ithc should redeploy
+        CHANGE_TO_REDEPLOY_ITHC: 20250528
+      keyVaults:
+        probate:
+          secrets:
+            - name: probate-notify-invite-apikey
+              alias: services.notify.apiKey
+            - name: s2s-probate-backend
+              alias: services.auth.provider.totp_secret
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string

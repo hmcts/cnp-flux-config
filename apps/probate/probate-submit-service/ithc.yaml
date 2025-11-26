@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: probate-submit-service
+  namespace: probate
+spec:
+  values:
+    java:
+      image: hmctspublic.azurecr.io/probate/submit-service:prod-b4bcfe3-20251125135711 #{"$imagepolicy": "flux-system:ithc-probate-submit-service"}
+      environment:
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_ITHC: 20250528
+      keyVaults:
+        probate:
+          secrets:
+            - name: s2s-probate-backend
+              alias: S2S_AUTH_TOTP_SECRET
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: launchdarkly-key
+              alias: ld.sdk_key
+            - name: launchdarklyUserkeyBackend
+              alias: ld.user.key
