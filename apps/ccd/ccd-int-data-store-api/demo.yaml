@@ -6,6 +6,33 @@ spec:
   releaseName: ccd-int-data-store-api
   values:
     java:
+      keyVaults:
+        ccd:
+          secrets:
+            - name: data-store-api-POSTGRES-USER-V15
+              alias: DATA_STORE_DB_USERNAME
+            - name: data-store-api-POSTGRES-PASS-V15
+              alias: DATA_STORE_DB_PASSWORD
+            - name: data-store-api-draft-key
+              alias: CCD_DRAFT_ENCRYPTION_KEY
+            - name: ccd-data-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: ccd-int-demo-ELASTIC-SEARCH-URL
+              alias: ELASTIC_SEARCH_HOSTS
+            - name: ccd-ELASTIC-SEARCH-INT-DATA-NODES-URL
+              alias: ELASTIC_SEARCH_DATA_NODES_HOSTS
+            - name: ccd-ELASTIC-SEARCH-PASSWORD
+              alias: ELASTIC_SEARCH_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-data-store-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: idam-data-store-system-user-username
+              alias: IDAM_DATA_STORE_SYSTEM_USER_USERNAME
+            - name: idam-data-store-system-user-password
+              alias: IDAM_DATA_STORE_SYSTEM_USER_PASSWORD
+            - name: data-store-api-TOKEN-SECRET
+              alias: DATA_STORE_TOKEN_SECRET
       image: hmctspublic.azurecr.io/ccd/data-store-api:prod-2c2852b-20251125144948 #{"$imagepolicy": "flux-system:ccd-int-data-store-api"}
       replicas: 2
       autoscaling:
