@@ -31,4 +31,10 @@ patches:
   - path: ../../ccd-case-disposer/ithc.yaml
   - path: ../../ccd-case-disposer-v2/ithc.yaml
   - path: ../../ccd-next-hearing-date-updater/ithc/ithc.yaml
-  - path: ../../ccd-logstash/ithc.yaml
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-logstash
+      namespace: ccd
+    path: ../../ccd-logstash/ithc.yaml
