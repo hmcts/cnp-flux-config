@@ -17,11 +17,7 @@ spec:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
       messageTemplate: |
-        {{ range $resource, $changes := .Changed.Objects -}}
-        {{- range $_, $change := $changes }}
-        - {{ $change.OldValue }} -> {{ $change.NewValue }}
-        {{ end -}}
-        {{ end -}}
+        {{- $sep := "" -}}{{- range $resource, $changes := .Changed.Objects -}}{{- range $_, $change := $changes -}}{{- print $sep $change.NewValue -}}{{- $sep = ", " -}}{{- end -}}{{- end -}}
     push:
       branch: master
   update:
