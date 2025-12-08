@@ -5,11 +5,12 @@ metadata:
 spec:
   chart:
     spec:
-      chart: ./stable/plum-frontend
+      chart: plum-frontend
+      version: 0.1.28
       interval: 1m
       sourceRef:
-        kind: GitRepository
-        name: hmcts-charts
+        kind: HelmRepository
+        name: hmctssbox-oci
         namespace: flux-system
   values:
     nodejs:
@@ -17,3 +18,4 @@ spec:
       replicas: 2
       autoscaling:
         minReplicas: 1
+      image: hmctssbox.azurecr.io/plum/frontend:prod-8f18b4f-20251001145416
