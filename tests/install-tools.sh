@@ -18,7 +18,7 @@ install_kustomize() {
     echo "Downloading kustomize..."
     curl -s -H "Authorization: token $AUTH_TOKEN" "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
     chmod +x install_kustomize.sh
-    ./install_kustomize.sh ${KUSTOMIZE_VERSION}
+    ./install_kustomize.sh
 }
 
 check_rate_limit() {
