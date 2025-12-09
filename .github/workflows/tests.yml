@@ -62,8 +62,7 @@ jobs:
           max_attempts: 5
           shell: bash
           command: |
-            # FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
-            FLUX_VERSION=2.7.3
+            FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
             curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
       - name: Install kubeconform
         env:
