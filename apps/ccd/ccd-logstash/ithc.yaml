@@ -3,15 +3,10 @@ kind: HelmRelease
 metadata:
   name: ccd-logstash
   namespace: ccd
-  labels:
-    logstashSelector: ccd-logstash-ithc
 spec:
   releaseName: ccd-logstash
   values:
-    replicas: 2
-    extraEnvs:
-      - name: TEST_VAR
-        value: "HelloWorldNew"
+    replicas: 1
     logstashPipeline:
       01_input.conf: |
         input  {
