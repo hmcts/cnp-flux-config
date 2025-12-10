@@ -9,8 +9,8 @@ spec:
       pipelines.yml: |
         - pipeline.id: main
           path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
-          pipeline.workers: 2
-          pipeline.batch.size: 250
+          pipeline.workers: 1
+          pipeline.batch.size: 100
           queue.type: persisted
         - pipeline.id: index-dead-letter-to-es
           path.config: "/usr/share/logstash/pipeline/dead_letter_indexing_pipeline.conf"
@@ -30,7 +30,7 @@ spec:
             parameters => {
                         "jurisdiction" => "PUBLICLAW"
                           }
-            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction = :jurisdiction RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            statement => "UPDATE case_data SET marked_by_logstash = true WHERE id IN (SELECT id FROM case_data WHERE marked_by_logstash = false AND jurisdiction = :jurisdiction LIMIT 1000) RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
             clean_run => false
             schedule => "* * * * * *"
           }
