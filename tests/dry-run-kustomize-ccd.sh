@@ -15,25 +15,31 @@ CURRENT_DIRECTORY=$(pwd)
 kubeconform_config=("-summary" "-n" "12" "-schema-location" "default" "-schema-location" "/tmp/schemas/$ENVIRONMENT/$CLUSTER/")
 
 split_files() {
-    local file_dir="$1"
+    local source_dir="$1"
     local file_name="$2"
+    local destination_dir="${3:-$source_dir}"
 
-    cd "$file_dir"
-    yq -s '.kind + "-" + .metadata.name' "$file_name"
-    rm -rf "$file_name"
-    cd "$CURRENT_DIRECTORY"
+    mkdir -p "$destination_dir"
+
+    (
+        cd "$destination_dir"
+        yq -s '.kind + "-" + .metadata.name' "$source_dir/$file_name"
+    )
+    rm -rf "$source_dir/$file_name"
 }
 
 if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     TMP_DIR="/tmp/ccd/$ENVIRONMENT/$CLUSTER/"
-    mkdir -p "$TMP_DIR"
+    CLUSTER_DIR="${TMP_DIR}cluster"
+    CCD_OUTPUT_DIR="${TMP_DIR}ccd-manifests"
+    mkdir -p "$TMP_DIR" "$CLUSTER_DIR" "$CCD_OUTPUT_DIR"
 
     yq ". *= load(\"apps/flux-system/${ENVIRONMENT}/${CLUSTER}/kustomize.yaml\")" apps/flux-system/base/kustomize.yaml > "${TMP_DIR}/kustomize.yaml"
 
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
-    split_files "$TMP_DIR" "${CLUSTER}.yaml"
+    split_files "$TMP_DIR" "${CLUSTER}.yaml" "$CLUSTER_DIR"
 
-    for NAMESPACE_KUSTOMIZATION in $(find "$TMP_DIR" -type f -iname "Kustomization-*"); do
+    for NAMESPACE_KUSTOMIZATION in $(find "$CLUSTER_DIR" -type f -iname "Kustomization-*"); do
         NAMESPACE_KUSTOMIZATION_PATH=$(yq '.spec.path' "$NAMESPACE_KUSTOMIZATION")
         NAMESPACE_KUSTOMIZATION_NAME=$(yq '.metadata.name' "$NAMESPACE_KUSTOMIZATION")
 
@@ -42,8 +48,12 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
         fi
 
         flux build kustomization "$NAMESPACE_KUSTOMIZATION_NAME" --path "$NAMESPACE_KUSTOMIZATION_PATH" --kustomization-file "$NAMESPACE_KUSTOMIZATION" --dry-run > "$TMP_DIR/${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
-        split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
+        split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml" "$CCD_OUTPUT_DIR"
     done
 
-    kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
+    if compgen -G "${CCD_OUTPUT_DIR}/*" > /dev/null; then
+        kubeconform "${kubeconform_config[@]}" "$CCD_OUTPUT_DIR"
+    else
+        echo "No CCD manifests generated; skipping kubeconform."
+    fi
 fi
