@@ -60,6 +60,14 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
     mkdir -p "$SCHEMAS_DIR"
 
+    if compgen -G "${CLUSTER_DIR}/CustomResourceDefinition-*" > /dev/null; then
+        mv "${CLUSTER_DIR}"/CustomResourceDefinition-* "$SCHEMAS_DIR"
+    fi
+
+    if compgen -G "${CCD_OUTPUT_DIR}/CustomResourceDefinition-*" > /dev/null; then
+        mv "${CCD_OUTPUT_DIR}"/CustomResourceDefinition-* "$SCHEMAS_DIR"
+    fi
+
     # Generate schemas for CRDs used by CCD HelmReleases.
     ./kustomize build --load-restrictor LoadRestrictionsNone apps/admin/traefik-crds > ${TMP_DIR}CustomResourceDefinition-traefik.yaml
     ./kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
