@@ -5,6 +5,8 @@ VERSION=v4.30.8
 BINARY=yq_linux_amd64
 MAX_RETRIES=1
 WAIT_TIME=30
+DEFAULT_KUSTOMIZE_VERSION=5.7.1
+KUSTOMIZE_VERSION="${KUSTOMIZE_VERSION:-${DEFAULT_KUSTOMIZE_VERSION}}"
 
 # Function to download and install yq
 install_yq() {
@@ -18,7 +20,7 @@ install_kustomize() {
     echo "Downloading kustomize..."
     curl -s -H "Authorization: token $AUTH_TOKEN" "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" -o install_kustomize.sh
     chmod +x install_kustomize.sh
-    ./install_kustomize.sh
+    ./install_kustomize.sh ${KUSTOMIZE_VERSION}
 }
 
 check_rate_limit() {

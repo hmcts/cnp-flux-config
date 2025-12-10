@@ -45,7 +45,9 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
         NAMESPACE_KUSTOMIZATION_PATH=$(yq '.spec.path' "$NAMESPACE_KUSTOMIZATION")
         NAMESPACE_KUSTOMIZATION_NAME=$(yq '.metadata.name' "$NAMESPACE_KUSTOMIZATION")
         if [[ "$NAMESPACE_KUSTOMIZATION_NAME" == "ccd" || "$NAMESPACE_KUSTOMIZATION_PATH" == *"/apps/ccd/"* ]]; then
-            echo "Skipping flux build for Kustomization '$NAMESPACE_KUSTOMIZATION_NAME' (path: $NAMESPACE_KUSTOMIZATION_PATH)"
+            echo "Using kustomize build for Kustomization '$NAMESPACE_KUSTOMIZATION_NAME' (path: $NAMESPACE_KUSTOMIZATION_PATH)"
+            ./kustomize build --load-restrictor LoadRestrictionsNone "$NAMESPACE_KUSTOMIZATION_PATH" > "$TMP_DIR/${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
+            split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
             continue
         fi
         flux build kustomization "$NAMESPACE_KUSTOMIZATION_NAME" --path "$NAMESPACE_KUSTOMIZATION_PATH" --kustomization-file "$NAMESPACE_KUSTOMIZATION" --dry-run > "$TMP_DIR/${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
