@@ -7,15 +7,15 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/ia/cron-ccd-migration-tool:pr-248-ff9b0c7-20251210171324 #{"$imagepolicy": "flux-system:demo-ia-cron-ccd-migration-tool"}
-      schedule: "55 17 10 12 *"
+      schedule: "02 18 10 12 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "2048Mi"
       environment:
         TRIG: trig-2
-        MIGRATION_ENABLED: "true"
-        FUNCTION_ENABLED: "false"
+        MIGRATION_ENABLED: "false"
+        FUNCTION_ENABLED: "true"
         MIGRATE_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CLEAR_LEGACY_CASE_FLAGS: "false"
         MIGRATE_CASE_FLAGS_INTERNAL: "false"
@@ -38,13 +38,13 @@ spec:
         ROOT_LOGGING_LEVEL: "WARN"
         MIGRATION_PAGE_SIZE: 400
         MIGRATE_APPELLANT_IN_DETENTION: "false"
-        MIGRATION_CASE_ID_FROM_FILE_ENABLED: "true"
-        MIGRATION_CHANGE_HEARING_CENTRE_TO_VIRTUAL_REGION: "true"
+        MIGRATION_CASE_ID_FROM_FILE_ENABLED: "false"
+        MIGRATION_CHANGE_HEARING_CENTRE_TO_VIRTUAL_REGION: "false"
         MIGRATION_CHANGE_HEARING_CENTRE_TO_VIRTUAL_REGION_ROLLBACK: "false"
         MIGRATION_REMOVE_CASE_MANAGER_ROLE_FROM_VR_CASES: "false"
         MIGRATE_APPELLANT_IN_DETENTION_ROLLBACK: "false"
         MIGRATE_APPLICATION_ENDED_TTL_SET: "false"
-        MIGRATION_REMOVE_CASE_MANAGER_ROLE_FROM_VR_CASES_ROLLBACK: "false"
+        MIGRATION_REMOVE_CASE_MANAGER_ROLE_FROM_VR_CASES_ROLLBACK: "true"
         VR_CASES_REMOVE_CASE_MANAGER_ROLE_USER1_IDAM_ID: "e4138cd3-58f2-4aa3-b1d7-bf6a32fa3908"
         VR_CASES_REMOVE_CASE_MANAGER_ROLE_USER2_IDAM_ID: "0c25d105-2699-498c-a9d5-90f602b5cd37"
         VR_CASES_ASSIGNED_TO_USER1: "1759236852532911,1752158843478177"
