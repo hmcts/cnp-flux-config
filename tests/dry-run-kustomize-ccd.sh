@@ -12,9 +12,10 @@ set -ex
 ENVIRONMENT=$1
 CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
+SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
 ASO_RESOURCE_URL=$(yq eval '.resources[0]' apps/azureserviceoperator-system/aso/kustomization.yaml)
 ASO_VERSION=$(echo "$ASO_RESOURCE_URL" | cut -d'/' -f8)
-kubeconform_config=("-summary" "-n" "12" "-schema-location" "default" "-schema-location" "/tmp/schemas/$ENVIRONMENT/$CLUSTER/")
+kubeconform_config=("-summary" "-n" "12" "-schema-location" "default" "-schema-location" "file://${SCHEMAS_DIR}/{{ .ResourceKind }}-{{ .ResourceGroup }}-{{ .ResourceVersion }}.json")
 ASO_URL="https://github.com/Azure/azure-service-operator/releases/download/"$ASO_VERSION"/azureserviceoperator_customresourcedefinitions_"$ASO_VERSION".yaml"
 CSI_URL="https://raw.githubusercontent.com/kubernetes-sigs/secrets-store-csi-driver/master/deploy/secrets-store.csi.x-k8s.io_secretproviderclasses.yaml"
 
@@ -57,7 +58,6 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
         split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml" "$CCD_OUTPUT_DIR"
     done
 
-    SCHEMAS_DIR="/tmp/schemas/$ENVIRONMENT/$CLUSTER/master-standalone-strict"
     mkdir -p "$SCHEMAS_DIR"
 
     if compgen -G "${CLUSTER_DIR}/CustomResourceDefinition-*" > /dev/null; then
