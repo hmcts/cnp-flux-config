@@ -75,3 +75,14 @@ jobs:
           chmod +x /usr/local/bin/kubeconform
       - name: Dry run and kubeconform ${{ matrix.environment }}-${{ matrix.cluster }}
         run: ./tests/dry-run-kustomize.sh ${{ matrix.environment }} ${{ matrix.cluster }}
+      - name: Install Flux CLI - Older version
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 2
+          max_attempts: 5
+          shell: bash
+          command: |
+            FLUX_VERSION=2.7.4
+            curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
+      - name: Dry run and kubeconform CCD ${{ matrix.environment }}-${{ matrix.cluster }}
+        run: ./tests/dry-run-kustomize-ccd.sh ${{ matrix.environment }} ${{ matrix.cluster }}
