@@ -32,10 +32,9 @@ spec:
     image: hmctspublic.azurecr.io/version-reporter-service/npmpackages:prod-ba7af88-20251210151946 #{"$imagepolicy": "flux-system:version-reporter-npmpackages"}
     imagePullPolicy: Always
     environment:
-      MAX_DAYS_AWAY: 3
-      MAX_REPOS: 3000
       COSMOS_DB_CONTAINER: npmpackages
       VAULT_NAME: version-reporter-ptl
+      PARALLELISM: 8
     keyVaults:
       version-reporter-ptl:
         excludeEnvironmentSuffix: true
