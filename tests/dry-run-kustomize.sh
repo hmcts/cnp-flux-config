@@ -70,3 +70,4 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
 
     kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
 fi
+
