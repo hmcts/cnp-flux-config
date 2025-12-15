@@ -35,6 +35,7 @@ resources:
   - ../../rpe/automation
   - ../../slack-help-bot/automation
   - ../../response/automation
+  - ../../tfplan-viewer/automation
   - ../../sscs/automation
   - ../../wa/automation
   - ../../xui/automation
@@ -45,6 +46,7 @@ resources:
   - ../../private-law/automation
   - ../../ts/automation
   - ../../dtsse/automation
+  - ../../dtsse-richui/automation
   - ../../sptribs/automation
   - ../../azure-devops/automation
   - ../../cui/automation
@@ -57,11 +59,12 @@ resources:
   - ../../help-with-fees/automation
   - ../../pcs/automation
   - ../../enforcement/automation
+  - ../../rota/automation
 patches:
   - path: hmctspublic-image-repo.yaml
     target:
       kind: ImageRepository
-      annotationSelector: hmcts.github.com/image-registry != hmctsprivate,hmcts.github.com/image-registry != hmctssandbox
+      annotationSelector: hmcts.github.com/image-registry != hmctsprivate,hmcts.github.com/image-registry != hmctssandbox,hmcts.github.com/image-registry != hmctssbox
   - path: hmctsprivate-image-repo.yaml
     target:
       kind: ImageRepository
@@ -70,6 +73,10 @@ patches:
     target:
       kind: ImageRepository
       annotationSelector: hmcts.github.com/image-registry == hmctssandbox
+  - path: hmctssbox-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry == hmctssbox
   - path: prod-image-policy.yaml
     target:
       kind: ImagePolicy

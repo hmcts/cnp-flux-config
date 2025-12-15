@@ -6,8 +6,8 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      schedule: "00 12 16 07 *"
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-0fad28e-20250908131011 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
+      schedule: "10 19 20 11 *"
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:prod-120491a-20251120121810 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
       keyVaults:
         prl:
           secrets:
@@ -24,7 +24,11 @@ spec:
             - name: migration-data
               alias: MIGRATION_DATA
       environment:
-        MIGRATION_ENABLED: true
-        MIGRATION_CASE_IDS: "1749221642154013"
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-prod.service.core-compute-prod.internal
+        MIGRATION_ENABLED: true
+        MIGRATION_CASE_IDS: ""
+        MIGRATION_QUERY_SIZE: 100
+        MIGRATION_CASE_LIMIT: 5000
+        MIGRATION_STEP_CLASSES: "DfjAreaMigrationStep"
+        MIGRATION_STEP_ROLLBACK: false

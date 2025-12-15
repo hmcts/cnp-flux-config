@@ -53,9 +53,9 @@ spec:
                       - key: PTL_AKS_RESOURCE_GROUP
                         value: cft-ptl-00-rg
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-00-aks
+                        value: cft-aat-01-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-00-rg
+                        value: cft-aat-01-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-01-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -146,7 +146,7 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api)\/master
+                      ^HMCTS.*\/(sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api|sscs-task-configuration|sscs-post-deployment-ft-tests|sscs-cron-trigger)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -170,7 +170,7 @@ spec:
                     title: PROBATE Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(div-case-data-formatter|div-case-maintenance-service|div-case-orchestration-service|div-ccd-definitions|div-decree-absolute-frontend|div-decree-nisi-frontend|div-document-generator-client|div-evidence-management-client-api|div-fees-and-payments-service|div-respondent-frontend)\/master
+                      ^HMCTS_d_to_i\/div-.+\/master
                     name: DIV
                     recurse: true
                     title: Divorce Dashboard
@@ -212,7 +212,7 @@ spec:
                     title: CTSC
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(ecm-shared-infrastructure|ecm-consumer)\/master
+                      ^HMCTS.*\/(ecm-shared-infrastructure|ecm-consumer|ethos-repl-docmosis-service)\/master
                     name: ETHOS
                     recurse: true
                     title: ETHOS
@@ -378,6 +378,12 @@ spec:
                     name: FACT-BSP-RPTS
                     recurse: true
                     title: FACT BSP RPTS Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/(rota-.*)\/master
+                    name: ROTA
+                    recurse: true
+                    title: Magistrates Rota Dashboard
           location: |
             unclassified:
               location:

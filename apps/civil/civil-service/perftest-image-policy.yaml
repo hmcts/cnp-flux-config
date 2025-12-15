@@ -1,4 +1,4 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: perftest-civil-service
@@ -6,7 +6,7 @@ metadata:
     hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: 'prod-6b14d08-20240812113112'
+    pattern: '^pr-7169-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:

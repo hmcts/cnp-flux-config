@@ -56,7 +56,13 @@ spec:
               alias: app-insights-connection-string
             - name: acro-zip-password
               alias: ACRO_ZIP_PASSWORD
-      image: hmctspublic.azurecr.io/prl/cos:prod-6545a10-20250917091224 #{"$imagepolicy": "flux-system:prl-cos"}
+            - name: acro-sftp-host
+              alias: ACRO_SFTP_HOST
+            - name: acro-sftp-user
+              alias: ACRO_SFTP_USER
+            - name: acro-sftp-user-password
+              alias: ACRO_SFTP_USER_PASSWORD
+      image: hmctspublic.azurecr.io/prl/cos:prod-4dc24e9-20251211122836 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: BaisDocumentUploadTask
         VAR: trigger1
@@ -67,7 +73,7 @@ spec:
         XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
         CITIZEN_URL: www.apply-to-court-about-child-arrangements-c100.service.gov.uk
         ACRO_CRONJOB_ENABLED: false
-      schedule: "*/30 * * * *"
+      schedule: "00 21 * * *"
   chart:
     spec:
       chart: prl-cron
