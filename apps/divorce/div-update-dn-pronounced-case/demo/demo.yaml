@@ -6,8 +6,8 @@ spec:
   releaseName: div-update-dn-pronounced-case
   values:
     job:
-      schedule: "45 13 27 11 *"
-      image: hmctspublic.azurecr.io/div/cos:prod-bf0d4b8-20251201091117 #{"$imagepolicy": "flux-system:demo-div-cos"}
+      schedule: "25 11 03 12 *"
+      image: hmctspublic.azurecr.io/div/cos:prod-a40761e-20251203094216 #{"$imagepolicy": "flux-system:demo-div-cos"}
       environment:
         CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
         PAYMENT_API_BASEURL: "http://payment-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
@@ -40,6 +40,7 @@ spec:
         TASK_NAME: MakeCasesEligibleForDATask
         SCHEDULER_MAKE_CASES_ELIGIBLE_DA_ENABLED: false
         SCHEDULER_ENABLED: false
+        CRON_MAKE_CASES_ELIGIBLE_FOR_DA_USE_SYNC_WORKFLOW: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
