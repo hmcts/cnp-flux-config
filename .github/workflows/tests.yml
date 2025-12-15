@@ -31,7 +31,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [sbox, sbox-intsvc, preview, ptl-intsvc, ithc, perftest, demo, aat, prod]
+        environment:
+          [
+            sbox,
+            sbox-intsvc,
+            preview,
+            ptl-intsvc,
+            ithc,
+            perftest,
+            demo,
+            aat,
+            prod,
+          ]
         cluster: ["00", "01"]
         exclude:
           - environment: sbox-intsvc
@@ -51,7 +62,10 @@ jobs:
           max_attempts: 5
           shell: bash
           command: |
-            FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
+            # FLUX_VERSION=$(yq eval 'select(.kind=="Namespace") | .metadata.labels."app.kubernetes.io/version"' apps/flux-system/base/gotk-components.yaml | sed 's/v//')
+            # Workaround for upstream bug affecting Flux v2.7.4+ - https://github.com/kubernetes-sigs/kustomize/issues/6031
+            # Will revisit in a month or so
+            FLUX_VERSION=2.7.3
             curl -s https://fluxcd.io/install.sh | sudo FLUX_VERSION=${FLUX_VERSION} bash
       - name: Install kubeconform
         env:
