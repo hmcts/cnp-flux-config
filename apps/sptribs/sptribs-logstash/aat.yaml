@@ -7,3 +7,17 @@ spec:
   releaseName: sptribs-logstash
   values:
     replicas: 1
+    logstashPipeline:
+      03_output.conf: |
+        output {
+            elasticsearch {
+                hosts => ["${ES_HOSTS}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{case_data_id}"
+                version => "%{event_id}"
+                version_type => "external_gte"
+                timeout => 60
+            }
+        }
