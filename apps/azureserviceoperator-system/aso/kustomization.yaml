@@ -22,3 +22,9 @@ patches:
   - target:
       kind: Deployment
     path: resource_requests_patch.yaml
+  - target:
+      kind: Deployment
+      name: azureserviceoperator-controller-manager
+    patch: |-
+      - op: remove
+        path: /spec/strategy/rollingUpdate
