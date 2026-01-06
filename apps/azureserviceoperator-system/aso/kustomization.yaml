@@ -26,5 +26,10 @@ patches:
       kind: Deployment
       name: azureserviceoperator-controller-manager
     patch: |-
-      - op: remove
-        path: /spec/strategy/rollingUpdate
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: azureserviceoperator-controller-manager
+      spec:
+        strategy:
+          rollingUpdate: null
