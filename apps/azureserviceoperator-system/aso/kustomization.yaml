@@ -18,21 +18,16 @@ patches:
       kind: Deployment
   - target:
       kind: Deployment
+      name: azureserviceoperator-controller-manager
+    patch: |-
+      - op: remove
+        path: /spec/strategy
+      - op: replace
+        path: /spec/replicas
+        value: 1
+  - target:
+      kind: Deployment
     path: toleration_replicas_patch.yaml
   - target:
       kind: Deployment
     path: resource_requests_patch.yaml
-  - target:
-      kind: Deployment
-      name: azureserviceoperator-controller-manager
-    patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: azureserviceoperator-controller-manager
-      spec:
-        strategy:
-          type: RollingUpdate
-          rollingUpdate:
-            maxUnavailable: 25%
-            maxSurge: 25%
