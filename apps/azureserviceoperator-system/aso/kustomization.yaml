@@ -22,3 +22,17 @@ patches:
   - target:
       kind: Deployment
     path: resource_requests_patch.yaml
+  - target:
+      kind: Deployment
+      name: azureserviceoperator-controller-manager
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: azureserviceoperator-controller-manager
+      spec:
+        strategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 25%
+            maxSurge: 25%
