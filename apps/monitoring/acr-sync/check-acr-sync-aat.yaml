@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: check-acr-sync
+  namespace: monitoring
+  labels:
+    app: check-acr-sync
+spec:
+  releaseName: check-acr-sync
+  values:
+    image: hmctspublic.azurecr.io/check-acr-sync:db32  # {"$imagepolicy": "flux-system:acr-sync"}
