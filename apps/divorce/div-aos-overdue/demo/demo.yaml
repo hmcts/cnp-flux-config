@@ -1,12 +1,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: div-update-dn-pronounced-case
+  name: div-aos-overdue
 spec:
-  releaseName: div-update-dn-pronounced-case
+  releaseName: div-aos-overdue
   values:
     job:
-      schedule: "25 10 07 01 *"
+      schedule: "0 11 07 01 *"
       image: hmctspublic.azurecr.io/div/cos:prod-9123e3c-20260106124840 #{"$imagepolicy": "flux-system:demo-div-cos"}
       environment:
         CASE_MAINTENANCE_SERVICE_API_BASEURL: "http://div-cms-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
