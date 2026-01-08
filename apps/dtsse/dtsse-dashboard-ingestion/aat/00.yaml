@@ -6,7 +6,7 @@ spec:
   releaseName: dtsse-dashboard-ingestion
   values:
     job:
-      schedule: "0,10,20,30,40,50 * * * *"
+      schedule: "0 * * * *"
       cpuRequests: "250m"
       memoryRequests: "1Gi"
       keyVaults:
@@ -18,13 +18,14 @@ spec:
             - db-url
             - cosmos-key
             - cosmos-db-name
+            - jenkins-databases
     global:
       jobKind: CronJob
   chart:
     spec:
-      chart: ./charts/dtsse-dashboard-ingestion
+      chart: ./stable/dtsse-dashboard-ingestion
       sourceRef:
         kind: GitRepository
-        name: dtsse-dashboard-ingestion-dev
+        name: hmcts-charts
         namespace: flux-system
-      interval: 1m
+  interval: 1m

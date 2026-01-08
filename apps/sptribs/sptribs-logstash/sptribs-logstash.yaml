@@ -25,7 +25,7 @@ spec:
           name: logstash-secret
     extraEnvs:
       - name: DUMMY_RESTART_VAR
-        value: "true11"
+        value: "true12"
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctspublic.azurecr.io/curl:7.70.0
@@ -72,7 +72,7 @@ spec:
                       SELECT reference, case_revision
                       FROM ccd.es_queue
                       ORDER BY enqueued_at
-                      LIMIT 1000
+                      LIMIT 100
                       FOR UPDATE SKIP LOCKED
                     ),
                     deleted AS (
@@ -226,6 +226,8 @@ spec:
                 index => "%{[index_id]}"
                 document_type => "_doc"
                 document_id => "%{case_data_id}"
+                version => "%{event_id}"
+                version_type => "external_gte"
                 timeout => 60
             }
         }

@@ -6,13 +6,14 @@ metadata:
 spec:
   values:
     java:
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3376-b9aa795-20260102091827 #{"$imagepolicy": "flux-system:ithc-probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://gateway-ccd.ithc.platform.hmcts.net
         PROBATE_POSTGRESQL_USER: pgadmin
         PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-flexible-db-ithc.postgres.database.azure.com
         PROBATE_POSTGRESQL_PORT: 5432
         # Does what it says on the tin - if this changes then ithc should redeploy
-        CHANGE_TO_REDEPLOY_ITHC: 20250528
+        CHANGE_TO_REDEPLOY_ITHC: 20251215
       keyVaults:
         probate:
           secrets:

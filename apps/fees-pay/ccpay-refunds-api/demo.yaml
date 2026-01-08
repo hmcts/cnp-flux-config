@@ -5,9 +5,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ccpay/refunds-api:prod-4b5793c-20251024210306 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
+      image: hmctspublic.azurecr.io/ccpay/refunds-api:pr-961-2730127-20260108111327 #{"$imagepolicy": "flux-system:demo-ccpay-refunds-api"}
       environment:
-        DUMMY_VARIABLE: false
+        DUMMY_VARIABLE: true
         IAC_SERVICE_API_URL: "http://ia-case-access-api-demo.service.core-compute-demo.internal"
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
         S2S_AUTHORISED_SERVICES: payment_app,ccpay_bubble,api_gw,ccd_gw,xui_webapp,ccpay_gw,pcs_api
+        TEST_URL_PAYMENT: "http://payment-api-demo.service.core-compute-demo.internal"
+        BULKSCAN_API_URL: "http://ccpay-bulkscanning-api-demo.service.core-compute-demo.internal"

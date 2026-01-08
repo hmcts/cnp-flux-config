@@ -1,11 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../base/gotk-components.yaml
-- ../../workload-identity
-- aso-controller-settings-patch.yaml
-- ../../docker-regcreds/sbox
+  - ../../base
+  - ../../base/gotk-components.yaml
+  - ../../workload-identity
+  - aso-controller-settings-patch.yaml
+  - ../../docker-regcreds/sbox
 patches:
-- path: ../../serviceaccount/sbox.yaml
-- path: ../../base/patches/workload-identity-deployment-patch.yaml
+  - path: ../../serviceaccount/sbox.yaml
+  - path: ../../serviceaccount/sbox-source-controller.yaml
+  - path: ../../base/patches/workload-identity-deployment-patch.yaml
+  - path: ../../base/patches/workload-identity-source-controller-patch.yaml

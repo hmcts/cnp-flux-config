@@ -1,7 +1,13 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: perftest-civil-citizen-ui
 spec:
+  filterTags:
+    pattern: '^pr-7051-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
   imageRepositoryRef:
     name: civil-citizen-ui
