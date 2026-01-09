@@ -4,3 +4,11 @@ resources:
   - ../../aso/
   - ../../cert-manager
   - aso-controller-settings.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: azureserviceoperator-controller-manager
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
