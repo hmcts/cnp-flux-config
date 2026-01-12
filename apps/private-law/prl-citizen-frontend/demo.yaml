@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1990-2a79280-20260109092813 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-1990-2a79280-20260109092813 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
@@ -30,6 +30,7 @@ spec:
             - redis-access-key
             - prl-pcq-token-key
       environment:
+        DUMMY_VAR: true
         NODE_ENV: demo
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
