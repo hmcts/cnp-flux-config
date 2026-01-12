@@ -12,6 +12,7 @@ EXCLUSIONS_LIST=(
     apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
     apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml
     apps/probate/*
+    apps/monitoring/acr-sync/check-acr-sync-aat.yaml
     apps/monitoring/acr-sync/check-acr-sync.yaml
     apps/private-law/prl-citizen-frontend/aat.yaml
     apps/sscs/sscs-tribunals-frontend/*
@@ -38,7 +39,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     ##############################################################################################################
     # This section compiles a list of files that contains `imagepolicy` and stores them in an array IMAGE_POLICIES
     # Only files that follow these rules will be added to the array:
-    # - Contains the `imagepolicy` string 
+    # - Contains the `imagepolicy` string
     # - Is NOT in the exclusions list
     # - Is not HelmRelease type document
     ##############################################################################################################
@@ -65,7 +66,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     [ $? -eq 0 ] || (echo "Kustomize build has failed" && exit 1)
 
     ##############################################################################################################
-    # This section loops over each file in the IMAGE_POLICIES array and compares the file with the documents added 
+    # This section loops over each file in the IMAGE_POLICIES array and compares the file with the documents added
     # to the temporary file imagepolicies_list.yaml
     # If a document is found in the temporary file with the matching name of a policy it is then checked to see
     # if its pattern value matches the specified Prod regex.
@@ -99,7 +100,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     printf "\n\n########## All Image Policy documents checked and passing ########## \n\n"
 
     ##############################################################################################################
-    # This section will scan the PTL cluster to find all ImagePolicy configs that are kind == ImagePolicy AND 
+    # This section will scan the PTL cluster to find all ImagePolicy configs that are kind == ImagePolicy AND
     # do not contain the override annotation: hmcts.github.com/prod-automated = disabled OR annotations are null
     # add them to temporary yaml file.
     # Only scans `clusters/ptl/base` because thats where Image Policies are found, scanning other clusters will
@@ -109,7 +110,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     [ $? -eq 0 ] || (echo "Kustomize build has failed" && exit 1)
 
     ##############################################################################################################
-    # This section uses the kustomize output to capture names of each document found and stores them in an array 
+    # This section uses the kustomize output to capture names of each document found and stores them in an array
     # POLICY_NAMES
     # Only files that follow these rules will be added to the array:
     # - is kind == ImagePolicy
@@ -146,7 +147,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     # This section loops over each POLICY in POLICY_NAMES and then loops over each file in POLICY_FILES
     # For each FILE it checks if the file has a name that matches the POLICY and if so, takes the yaml content and
     # stores this in MATCH variable.
-    # If MATCH variable is not empty it then checks the key `.spec.filterTags.pattern` matches the expected 
+    # If MATCH variable is not empty it then checks the key `.spec.filterTags.pattern` matches the expected
     # regex `"^prod-[a-f0-9]+-(?P<ts>[0-9]+)"`.
     # If no match log the policy name, file and regex found then exit the script
     ##############################################################################################################
@@ -173,7 +174,7 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     ##############################################################################################################
     # This section compiles a list of files that contains `image:` and stores them in an array HELMRELEASES
     # Only files that follow these rules will be added to the array:
-    # - Contains the `image:` string 
+    # - Contains the `image:` string
     # - Is HelmRelease type document
     ##############################################################################################################
     HELMRELEASES=()
@@ -195,9 +196,9 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     ##############################################################################################################
 
     for RELEASE in "${HELMRELEASES[@]}"; do
-    
+
         IMAGE_TAG_FOUND=$(yq eval 'select(.spec.values.image) or (.spec.values.*.image) != null' $RELEASE)
-        
+
         if [ "$IMAGE_TAG_FOUND" != "" ]
         then
             TAG=$(grep -o "image:.*" $RELEASE | cut -d ':' -f3 | cut -d ' ' -f1  | tr -d \')

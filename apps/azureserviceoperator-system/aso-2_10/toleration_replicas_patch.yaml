@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azureserviceoperator-controller-manager
+spec:
+  replicas: 2
+  template:
+    spec:
+      tolerations:
+        - effect: NoSchedule
+          key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
