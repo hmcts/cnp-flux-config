@@ -1,0 +1,14 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: dtsse-dashboard-ingestion-aat
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: '^pr-757$'
+  policy:
+    alphabetical:
+      order: asc
+  imageRepositoryRef:
+    name: dtsse-dashboard-ingestion
