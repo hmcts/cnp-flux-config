@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: xui-case-activity-api
+spec:
+  releaseName: xui-case-activity-api
+  values:
+    nodejs:
+      java:
+      image: hmctspublic.azurecr.io/xui/case-activity-api:prod-9298697-20260114184735 #{"$imagepolicy": "flux-system:demo-rpx-case-activity-api"}
+      environment:
+        DUMMY_VAR_TO_REDEPLOY: 2
