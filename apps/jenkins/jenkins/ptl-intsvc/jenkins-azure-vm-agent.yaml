@@ -33,7 +33,12 @@ spec:
                 cp /opt/jenkinsssh_id_rsa /home/jenkinsssh/.ssh/id_rsa
                 chown jenkinsssh:jenkinsssh /home/jenkinsssh/.ssh/id_rsa
                 chmod 0600 /home/jenkinsssh/.ssh/id_rsa
-                mkdir /opt/jenkins/.gradle && echo 'org.gradle.daemon=false' > /opt/jenkins/.gradle/gradle.properties
+                
+                mkdir /opt/jenkins/.gradle
+                cat > /opt/jenkins/.gradle/gradle.properties<<EOF
+                org.gradle.daemon=true
+                org.gradle.jvmargs=-Xmx1g -XX:MaxMetaspaceSize=512m
+                EOF
                 cat > /etc/security/limits.d/30-jenkins.conf<<EOF
                 jenkinsssh soft nofile 40960
                 jenkinsssh hard nofile 40960
