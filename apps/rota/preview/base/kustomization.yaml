@@ -3,6 +3,11 @@ kind: Kustomization
 resources:
   - ../../../base
   - ../../../base/workload-identity
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
+  - ../sops-secrets
 namespace: rota
 patches:
+  - path: ../aso/rota-postgres.yaml
   - path: ../../serviceaccount/aat.yaml
