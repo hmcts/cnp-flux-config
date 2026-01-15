@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: azure-devops-agent-windows
+  namespace: azure-devops
+spec:
+  values:
+    environment:
+      AZP_POOL: hmcts-cft-ptlsbox-windows
+    triggerAuth:
+      enabled: true
+      create: true
+      triggerPodIdentityProvider: "azure-workload"
+      triggerPodIdentityIdentityId: "0816daac-1bdf-4af8-a8d9-35147c91ec97" # keda-cftsbox-intsvc-mi
+    triggers:
+      - type: azure-pipelines
+        poolID: "58"
+        organizationURLFromEnv: "AZP_URL"
+        personalAccessTokenFromEnv: "AZP_TOKEN"

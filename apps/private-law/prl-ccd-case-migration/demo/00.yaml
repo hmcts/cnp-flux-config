@@ -6,16 +6,28 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-185-b21c12a-20250529100643 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
-      schedule: "0 15 16 5 *"
+      image: hmctspublic.azurecr.io/prl/ccd-case-migration:pr-223-b0d82d2-20251120101727 #{"$imagepolicy": "flux-system:demo-prl-ccd-case-migration"}
+      schedule: "00 14 07 11 *"
       environment:
         IDAM_REDIRECT_URL: https://prl-cos-demo.service.core-compute-demo.internal/oauth2/callback
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         MIGRATION_ENABLED: true
-        MIGRATION_QUERY_SIZE: 100
-        MIGRATION_CASE_LIMIT: 1200
         MIGRATION_CASE_IDS: ""
-        MIGRATION_QUERY_TYPE: NOT_IN_STATES
-        DUMMY_ENV_VAR: dummy
+        MIGRATION_QUERY_SIZE: 100
+        MIGRATION_CASE_LIMIT: 6000
+        MIGRATION_STEP_CLASSES: "DfjAreaMigrationStep"
+      keyVaults:
+        prl:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: prl-cos-idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: system-update-user-username
+              alias: SYSTEM_UPDATE_USER_USERNAME
+            - name: system-update-user-password
+              alias: PRL_SYSTEM_UPDATE_PASSWORD
+            - name: microservicekey-prl-cos-api
+              alias: IDAM_S2S_AUTH_TOTP_SECRET

@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-fix-bulk-cases
+spec:
+  releaseName: nfdiv-cron-fix-bulk-cases
+  values:
+    job:
+      disableActiveClusterCheck: false
+      schedule: "30 17 14 10 *"
+      environment:
+        IDAM_API_BASEURL: "https://idam-api.platform.hmcts.net"
+        S2S_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
+        SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
+        DOC_ASSEMBLY_URL: "http://dg-docassembly-prod.service.core-compute-prod.internal"
+        CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        FEE_API_URL: http://fees-register-api-prod.service.core-compute-prod.internal
+        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DISSOLUTION_URL: https://www.end-civil-partnership.service.gov.uk/applicant2
+        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DIVORCE_URL: https://www.apply-divorce.service.gov.uk/applicant2
+        NOTIFY_TEMPLATE_SIGN_IN_DISSOLUTION_URL: https://www.end-civil-partnership.service.gov.uk/
+        NOTIFY_TEMPLATE_SIGN_IN_DIVORCE_URL: https://www.apply-divorce.service.gov.uk/
+        PRD_API_BASEURL: http://rd-professional-api-prod.service.core-compute-prod.internal
+        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-prod.service.core-compute-prod.internal
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod

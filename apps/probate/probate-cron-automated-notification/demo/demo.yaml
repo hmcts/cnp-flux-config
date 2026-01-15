@@ -6,13 +6,12 @@ spec:
   releaseName: probate-cron-automated-notification
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:pr-3367-1e37360-20250925082837
-      schedule: "15 9 31 2 *"
+      image: hmctspublic.azurecr.io/probate/back-office:pr-3553-e3e0472-20260114162159 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "10 14 12 01 *"
       environment:
         TASK_NAME: SendNotificationsTask
         MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net
         FRONTEND_URL: https://probate.demo.platform.hmcts.net
-        ADHOC_JOB_DATE: "2025-10-25"
     global:
       jobKind: CronJob
       enableKeyVaults: true
