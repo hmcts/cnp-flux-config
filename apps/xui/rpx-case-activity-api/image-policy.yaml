@@ -4,7 +4,11 @@ metadata:
   name: rpx-case-activity-api
 spec:
   filterTags:
-    pattern: ^prod-[a-f0-9]+-(?P<ts>[0-9]+)
+    # Accept either:
+    # - prod-<hex>-<timestamp>
+    # - pr-<number>-<hex>-<timestamp>
+    # and capture the trailing timestamp as the named group 'ts'
+    pattern: "^(?:prod-[a-f0-9]+-|pr-[0-9]+-[a-f0-9]+-)(?P<ts>[0-9]+)$"
     extract: $ts
   policy:
     numerical:
