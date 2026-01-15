@@ -1,7 +1,13 @@
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
-  name: xui-case-activity-api
+  name: rpx-case-activity-api
 spec:
+  filterTags:
+    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc
   imageRepositoryRef:
-    name: xui-case-activity-api
+    name: rpx-case-activity-api
