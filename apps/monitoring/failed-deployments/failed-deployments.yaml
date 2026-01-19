@@ -1,40 +1,46 @@
-apiVersion: batch/v1
-kind: CronJob
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: failed-deployments
   namespace: monitoring
   labels:
     app: failed-deployments
 spec:
-  schedule: "0 9 * * 1-5"
-  concurrencyPolicy: "Forbid"
-  failedJobsHistoryLimit: 3
-  startingDeadlineSeconds: 300
-  jobTemplate:
+  releaseName: failed-deployments
+  chart:
     spec:
-      backoffLimit: 3
-      template:
-        spec:
-          restartPolicy: Never
-          serviceAccountName: failed-deployments-sa
-          containers:
-            - name: failed-deployments
-              image: hmctspublic.azurecr.io/failed-deployments:prod-1d92423-20260119114956Z #{"$imagepolicy": "flux-system:failed-deployments"}
-              imagePullPolicy: Always
-              env:
-                - name: CLUSTER_NAME
-                  value: "cft-${CLUSTER_FULL_NAME}-aks"
-                - name: COSMOS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: helm-base-versions #Use's same secrets as helm-chart-base-version
-                      key: cosmos-key
-                - name: SLACK_WEBHOOK
-                  valueFrom:
-                    secretKeyRef:
-                      name: helm-base-versions #Use's same secrets as helm-chart-base-version
-                      key: slack-webhook
-                - name: ARTIFACT_URL
-                  value: "http://source-controller.flux-system.svc.cluster.local."
-                - name: API_SERVER_URL
-                  value: "https://kubernetes.default.svc.cluster.local"
+      chart: job
+      sourceRef:
+        kind: GitRepository
+        name: chart-job
+        namespace: flux-system
+      interval: 1m
+  interval: 5m
+  values:
+    schedule: "0 9 * * 1-5" # interval 9:00am Monday to Friday
+    disableActiveClusterCheck: true
+    concurrencyPolicy: "Forbid"
+    failedJobsHistoryLimit: 3
+    startingDeadlineSeconds: 300
+    successfulJobsHistoryLimit: 3
+    backoffLimit: 3
+    restartPolicy: Never
+    runAsRoot: true
+    kind: CronJob
+    image: hmctspublic.azurecr.io/failed-deployments:prod-1d92423-20260119114956Z #{"$imagepolicy": "flux-system:failed-deployments"}
+    imagePullPolicy: Always
+    environment:
+      CLUSTER_NAME: "cft-${CLUSTER_FULL_NAME}-aks"
+      ARTIFACT_URL: "http://source-controller.flux-system.svc.cluster.local."
+      API_SERVER_URL: "https://kubernetes.default.svc.cluster.local"
+    secrets:
+      SLACK_WEBHOOK:
+        secretRef: helm-base-versions
+        key: slack-webhook
+    nodeSelector:
+      agentpool: linux
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs
