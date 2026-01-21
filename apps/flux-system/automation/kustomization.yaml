@@ -84,4 +84,8 @@ patches:
   - path: prod-image-policy.yaml
     target:
       kind: ImagePolicy
-      annotationSelector: hmcts.github.com/prod-automated != disabled
+      annotationSelector: hmcts.github.com/prod-automated != disabled,hmcts.github.com/image-policy-type != numerical
+  - path: prod-numerical-image-policy.yaml
+    target:
+      kind: ImagePolicy
+      annotationSelector: hmcts.github.com/prod-automated != disabled,hmcts.github.com/image-policy-type == numerical
