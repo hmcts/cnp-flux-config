@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: finrem-citizen-ui
+  namespace: financial-remedy
+spec:
+  releaseName: finrem-citizen-ui
+  values:
+    nodejs:
+      environment:
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+    global:
+      environment: aat
+      enableKeyVaults: true
