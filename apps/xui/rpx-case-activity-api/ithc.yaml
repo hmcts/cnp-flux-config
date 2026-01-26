@@ -1,11 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: help-with-fees-staffapp
+  name: xui-case-activity-api
 spec:
+  releaseName: xui-case-activity-api
   values:
-    base:
+    nodejs:
+      replicas: 4
       pdb:
         enabled: false
       environment:
-        TRIG: v3
+        REDIS_ACTIVITY_TTL: 15
