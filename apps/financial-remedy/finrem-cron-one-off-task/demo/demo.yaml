@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "10 15 27 01 *"
+      schedule: "45 15 27 01 *"
       image: hmctspublic.azurecr.io/finrem/cos:pr-2774-1e978da-20260127133349 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -21,7 +21,7 @@ spec:
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: FindCasesWithMissingDocsTask
-        CRON_DRY_RUN: false
+        CRON_DRY_RUN: true
         FIND_CASES_WITH_MISSING_DOCS_ENABLED: true
         FIND_CASES_WITH_MISSING_DOCS_FILENAME: "findCasesWithMissingDocs-encrypted.csv"
     global:
