@@ -2,3 +2,10 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-admin-frontend
+spec:
+  values:
+    nodejs:
+      image: hmctspublic.azurecr.io/fact/admin-frontend:pr-29
+      imagePullPolicy: Always
+      autoscaling:
+        enabled: false
