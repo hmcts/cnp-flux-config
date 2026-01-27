@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "05 12 16 9 *"
+      schedule: "26 14 27 01 *"
       image: hmctspublic.azurecr.io/finrem/cos:prod-2db6674-20260127080027 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -20,12 +20,10 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
-        TASK_NAME: ManageHearingsMigrationTask
+        TASK_NAME: FindCasesWithMissingDocsTask
         CRON_DRY_RUN: false
-        CRON_MANAGE_HEARINGS_MIGRATION_ENABLED: true
-        CRON_MANAGE_HEARINGS_MIGRATION_ROLLBACK: false
-        CRON_MANAGE_HEARINGS_MIGRATION_CASE_LIST_FILENAME: "manageHearingsMigration-encrypted.csv"
-        CRON_MANAGE_HEARINGS_MIGRATION_VERSION: "v1DemoRun1609v2"
+        FIND_CASES_WITH_MISSING_DOCS_ENABLED: true
+        FIND_CASES_WITH_MISSING_DOCS_FILENAME: "findCasesWithMissingDocs-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
