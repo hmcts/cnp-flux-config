@@ -2,12 +2,3 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-public-frontend
-spec:
-  values:
-    nodejs:
-      image: hmctspublic.azurecr.io/fact/public-frontend:pr-20
-      imagePullPolicy: Always
-      autoscaling:
-        enabled: false
-      environment:
-        DYNATRACE_JSTAG_KEY: '{{ .Values.global.environment }}'
