@@ -6,6 +6,7 @@ metadata:
 spec:
   releaseName: ccd-logstash
   values:
+    imageTag: "9.1.2"
     replicas: 1
     logstashPipeline:
       01_input.conf: |
@@ -33,3 +34,12 @@ spec:
             schedule => "* * * * * *"
           }
         }
+
+  chart:
+    spec:
+      chart: logstash
+      version: 9.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+        namespace: ccd
