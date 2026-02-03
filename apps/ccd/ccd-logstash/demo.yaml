@@ -1,14 +1,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ccd-logstash-probateman
+  name: ccd-logstash
   namespace: ccd
 spec:
-  releaseName: ccd-logstash-probateman
+  releaseName: ccd-logstash
   values:
-    replicas: 0
     image: "hmctspublic.azurecr.io/imported/elastic/logstash"
     imageTag: "9.2.4"
+    replicas: 0
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctspublic.azurecr.io/curl:7.70.0
