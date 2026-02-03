@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ccd-logstash-probate
+  namespace: ccd
+spec:
+  releaseName: ccd-logstash-probate
+  values:
+    replicas: 0
+    image: "hmctspublic.azurecr.io/imported/elastic/logstash"
+    imageTag: "9.2.4"
+    extraInitContainers: |
+      - name: download-postgres-jdbc
+        image: hmctspublic.azurecr.io/curl:7.70.0
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
+        volumeMounts:
+        - name: logstash-lib
+          mountPath: /logstash-lib
+    logstashConfig:
+      logstash.yml: |
+        api.http.host: 0.0.0.0
+        xpack.monitoring.enabled: false
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        queue.type: persisted
+        dead_letter_queue.enable: true
