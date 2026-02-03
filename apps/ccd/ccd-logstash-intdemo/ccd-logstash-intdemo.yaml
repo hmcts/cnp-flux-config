@@ -8,8 +8,8 @@ spec:
   releaseName: ccd-logstash-intdemo
   values:
     replicas: 1
-    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
-    imageTag: "9.1.2"
+    image: "hmctspublic.azurecr.io/imported/elastic/logstash"
+    imageTag: "9.2.4"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
@@ -28,7 +28,7 @@ spec:
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctspublic.azurecr.io/curl:7.70.0
-        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.3.3.jar', '-o', '/logstash-lib/postgresql.jar']
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
@@ -40,8 +40,8 @@ spec:
         mountPath: /usr/share/logstash/ccd
     logstashConfig:
       logstash.yml: |
-        http.host: 0.0.0.0
-        xpack.monitoring.enabled: true
+        api.http.host: 0.0.0.0
+        xpack.monitoring.enabled: false
         xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
         queue.type: persisted
         dead_letter_queue.enable: true
@@ -239,7 +239,7 @@ spec:
   chart:
     spec:
       chart: logstash
-      version: 9.1.2
+      version: 8.5.1
       sourceRef:
         kind: HelmRepository
         name: elastic
