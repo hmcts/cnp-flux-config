@@ -2,10 +2,12 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: docmosis
+  annotations:
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
   values:
     ingressHost: docmosis.perftest.platform.hmcts.net
-    image: hmctsprivate.azurecr.io/docmosis:perftest-2fff592-1010067 #{"$imagepolicy": "flux-system:perftest-docmosis"}
+    image: hmctsprivate.azurecr.io/docmosis:perftest-f06c735-1016337 #{"$imagepolicy": "flux-system:perftest-docmosis"}
     java:
       memoryRequests: "4Gi"
       memoryLimits: "5Gi"
