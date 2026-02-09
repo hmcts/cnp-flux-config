@@ -8,12 +8,12 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-05cd39e-20260129130210 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-127-27ba29e-20260130151858 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "20 14 29 1 *"
+      schedule: "10 11 9 2 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -34,6 +34,8 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
             - name: encoded-string-ready-to-list
               alias: READY_TO_LIST_MIGRATION_ENCODED_STRING
+            - name: encoded-string-venue-hearing
+              alias: VENUE_HEARING_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
@@ -42,5 +44,6 @@ spec:
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: "50"
         JAVA_OPTS: -Xmx4G
-        ARCHIVE_OLD_DRAFTS_ENABLED: true
-        READY_TO_LIST_MIGRATION_ENABLED: true
+        ARCHIVE_OLD_DRAFTS_ENABLED: false
+        READY_TO_LIST_MIGRATION_ENABLED: false
+        VENUE_HEARING_MIGRATION_ENABLED: true
