@@ -23,3 +23,74 @@ spec:
         xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
         queue.type: persisted
         dead_letter_queue.enable: true
+        pipeline.ecs_compatibility: disabled
+    logstashPipeline:
+      02_filter.conf: |
+        filter{
+          json{
+            source => "json_data"
+            target => "data"
+            remove_field => ["json_data"]
+          }
+          json{
+            source => "json_data_classification"
+            target => "data_classification"
+            remove_field => ["json_data_classification"]
+          }
+          mutate {
+            add_field => {
+              "probate_number_classification" => "PUBLIC"
+              "deceased_forenames_classification" => "PUBLIC"
+              "deceased_surname_classification" => "PUBLIC"
+              "date_of_death_classification" => "PUBLIC"
+              "date_of_death2_classification" => "PUBLIC"
+              "date_of_birth_classification" => "PUBLIC"
+              "alias_names_classification" => "PUBLIC"
+              "record_id_classification" => "PUBLIC"
+              "imported_to_ccd_classification" => "PUBLIC"
+              "legacy_case_type_classification" => "PUBLIC"
+              "ccd_case_no_classification" => "PUBLIC"
+              "legacyId_classification" => "PUBLIC"
+              "security_classification" => "PUBLIC"
+              "state" => "ReadOnly"
+              "case_type_id" => "Legacy"
+              "jurisdiction" => "PROBATE"
+            }
+            remove_field => ["src"]
+          }
+          mutate {
+            rename => { "probate_number" => "[data][probate_number]" }
+            rename => { "deceased_forenames" => "[data][deceasedForenames]" }
+            rename => { "deceased_surname" => "[data][deceasedSurname]" }
+            rename => { "date_of_death" => "[data][deceasedDateOfDeath]" }
+            rename => { "date_of_death2" => "[data][deceasedDateOfDeath2]" }
+            rename => { "date_of_birth" => "[data][deceasedDateOfBirth]" }
+            rename => { "alias_names" => "[data][alias_names]" }
+            rename => { "record_id" => "[data][record_id]" }
+            rename => { "imported_to_ccd" => "[data][imported_to_ccd]" }
+            rename => { "legacy_case_type" => "[data][legacy_case_type]" }
+            rename => { "ccd_case_no" => "[data][ccdCaseId]" }
+            rename => { "legacyId" => "[data][legacyId]" }
+            rename => { "probate_number_classification" => "[data_classification][probate_number]"}
+            rename => { "deceased_forenames_classification" => "[data_classification][deceasedForenames]"}
+            rename => { "deceased_surname_classification" => "[data_classification][deceasedSurname]"}
+            rename => { "date_of_death_classification" => "[data_classification][deceasedDateOfDeath]"}
+            rename => { "date_of_death2_classification" => "[data_classification][deceasedDateOfDeath2]"}
+            rename => { "date_of_birth_classification" => "[data_classification][deceasedDateOfBirth]"}
+            rename => { "alias_names_classification" => "[data_classification][alias_names]"}
+            rename => { "record_id_classification" => "[data_classification][record_id]"}
+            rename => { "imported_to_ccd_classification" => "[data_classification][imported_to_ccd]"}
+            rename => { "legacy_case_type_classification" => "[data_classification][legacy_case_type]" }
+            rename => { "ccd_case_no_classification" => "[data_classification][ccdCaseId]" }
+            rename => { "legacyId_classification" => "[data_classification][legacyId]" }
+          }
+          mutate {
+            add_field => { "[data][legacyId]" => "%{id}"}
+          }
+          mutate {
+            add_field => { "index_id" => "%{case_type_id}_cases" }
+          }
+          mutate {
+            lowercase => [ "index_id" ]
+          }
+        }
