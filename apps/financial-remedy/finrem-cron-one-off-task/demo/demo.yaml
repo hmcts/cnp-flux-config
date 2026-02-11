@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "30 10 11 02 *"
+      schedule: "15 10 11 02 *"
       image: hmctspublic.azurecr.io/finrem/cos:pr-2806-0b13da7-20260210192934 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -21,7 +21,7 @@ spec:
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: AmendNoteTask
-        CRON_DRY_RUN: true
+        CRON_DRY_RUN: false
         CRON_AMEND_NOTE_TASK_ENABLED: true
         CRON_AMEND_NOTE_TASK_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
     global:
