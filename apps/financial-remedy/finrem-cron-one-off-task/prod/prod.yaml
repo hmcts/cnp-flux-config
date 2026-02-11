@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "30 07 5 2 *"
+      schedule: "30 14 11 02 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -26,10 +26,10 @@ spec:
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
         CRON_BATCHSIZE: 200
-        TASK_NAME: FindCasesWithMissingDocsTask
-        CRON_DRY_RUN: true
-        FIND_CASES_WITH_MISSING_DOCS_ENABLED: true
-        FIND_CASES_WITH_MISSING_DOCS_FILENAME: "findCasesWithMissingDocs-encrypted.csv"
+        TASK_NAME: AmendNoteTask
+        CRON_DRY_RUN: false
+        CRON_AMEND_NOTE_TASK_ENABLED: true
+        CRON_AMEND_NOTE_TASK_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
