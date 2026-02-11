@@ -8,7 +8,7 @@ spec:
   values:
     job:
       image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-127-27ba29e-20260130151858 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "55 16 10 02 *"
+      schedule: "50 12 11 02 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -27,8 +27,8 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_USER
             - name: idam-sscs-systemupdate-password
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
-            - name: encoded-string-venue-hearing
-              alias: VENUE_HEARING_ENCODED_STRING
+            - name: encoded-string-processing-venue
+              alias: VENUE_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
@@ -37,7 +37,7 @@ spec:
         ELASTIC_ENABLED: true
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
-        VENUE_HEARING_MIGRATION_ENABLED: true
+        VENUE_MIGRATION_ENABLED: true
     global:
       environment: demo
       enableKeyVaults: true
