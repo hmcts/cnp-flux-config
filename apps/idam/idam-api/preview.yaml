@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctspublic.azurecr.io/idam/api:preview-3a6ea14-20260210095433 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctspublic.azurecr.io/idam/api:preview-ec9da4b-20260211131402 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -61,6 +61,8 @@ spec:
         FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: true
         FEATUREFLAGS_INSIGHT_OIDC_ENABLED: true
         FEATUREFLAGS_OIDC_AUTHORIZE_INCLUDE_ISSUER_ENABLED: true
+        MANAGEMENT_HEALTH_DATABASERELAXED_ENABLED: true
+        MANAGEMENT_HEALTH_DB_ENABLED: false
         SPRING_JMS_SERVICEBUS_ENABLED: false
         SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-preview.servicebus.windows.net/
         SPRING_JMS_SERVICEBUS_TOPICCLIENTID: 1c4f0704-a29e-403d-b719-b90c34ef14c9
