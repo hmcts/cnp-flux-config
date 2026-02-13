@@ -222,9 +222,9 @@ spec:
         output {
             elasticsearch {
                 hosts => ["${ES_HOSTS}"]
+                manage_template => false
                 sniffing => false
                 index => "%{[index_id]}"
-                document_type => "_doc"
                 document_id => "%{case_data_id}"
                 version => "%{event_id}"
                 version_type => "external_gte"
@@ -266,6 +266,7 @@ spec:
         output {
           elasticsearch {
             hosts => ["${ES_HOSTS}"]
+            manage_template => false
             sniffing => false
             index => ".logstash_dead_letter"
           }
