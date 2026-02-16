@@ -44,6 +44,8 @@ spec:
                 CLUSTER_NAME: "cft-${ENVIRONMENT}-${CLUSTER}-aks"
       target:
         kind: HelmRelease
+        # Allow this patch to be disabled on individual HelmReleases such as Traefik app - its schema disallows these additional values like java,nodejs,job
+        annotationSelector: hmcts.github.com/kustomize-defaults != disabled
   postBuild:
     substitute:
       ENVIRONMENT: "${ENVIRONMENT}"
