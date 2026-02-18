@@ -30,6 +30,9 @@ spec:
                 title: 'Demo-01 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "null"
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-extra-values
   chart:
     spec:
       chart: kube-prometheus-stack
