@@ -175,10 +175,6 @@ spec:
                         resourceRequestMemory: "2Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                        envVars:
-                        - envVar:
-                            key: DOCKER_HOST
-                            value: tcp://localhost:2375
                       - image: "hmctspublic.azurecr.io/jenkins/k8s-agent:latest"
                         livenessProbe:
                           failureThreshold: 3
@@ -193,10 +189,6 @@ spec:
                         resourceRequestMemory: "1Gi"
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
-                        envVars:
-                        - envVar:
-                            key: DOCKER_HOST
-                            value: tcp://localhost:2375
                       hostNetwork: false
                       idleMinutes: 10
                       idleMinutesStr: "10"
@@ -255,19 +247,6 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
-                          - name: dind
-                            image: docker:29.2.1-dind
-                            securityContext:
-                              privileged: true
-                              runAsUser: 0
-                            args: "--tls=false"
-                            volumeMounts:
-                              - name: hostPathVolume
-                                mountPath: /var/run/docker.sock
-                            envVars:
-                            - envVar:
-                                key: DOCKER_TLS_CERTDIR
-                                value: ""
                       yamlMergeStrategy: "merge"
                       yamls:
                       - |-
@@ -304,16 +283,3 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
-                          - name: dind
-                            image: docker:29.2.1-dind
-                            securityContext:
-                              privileged: true
-                              runAsUser: 0
-                            args: "--tls=false"
-                            volumeMounts:
-                              - name: hostPathVolume
-                                mountPath: /var/run/docker.sock
-                            envVars:
-                            - envVar:
-                                key: DOCKER_TLS_CERTDIR
-                                value: ""
