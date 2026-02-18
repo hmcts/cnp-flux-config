@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "55 15 16 2 *"
+      schedule: "00 18 18 2 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -25,11 +25,10 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        CRON_BATCHSIZE: 200
-        TASK_NAME: ResendPaperHearingNotificationsTask
+        TASK_NAME: removeVacatedHearing
         CRON_DRY_RUN: false
-        CRON_RESEND_PAPER_HEARING_NOTIFICATIONS_ENABLED: true
-        CRON_RESEND_PAPER_HEARING_NOTIFICATIONS_FILENAME: "resendPaperHearingNotifications-encrypted.csv"
+        CRON_REMOVE_VACATED_HEARING_TASK_ENABLED: true
+        CRON_REMOVE_VACATED_HEARING_CASE_LIST_FILE_NAME: "caserefs-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
