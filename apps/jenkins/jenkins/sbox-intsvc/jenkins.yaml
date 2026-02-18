@@ -176,8 +176,8 @@ spec:
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
                         env:
-                          name: DOCKER_HOST
-                          value: tcp://localhost:2375
+                          - name: DOCKER_HOST
+                            value: tcp://localhost:2375
                       - image: "hmctspublic.azurecr.io/jenkins/k8s-agent:latest"
                         livenessProbe:
                           failureThreshold: 3
@@ -193,8 +193,8 @@ spec:
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
                         env:
-                          name: DOCKER_HOST
-                          value: tcp://localhost:2375
+                          - name: DOCKER_HOST
+                            value: tcp://localhost:2375
                       - name: dind
                         image: docker:29.2.1-dind
                         securityContext:
