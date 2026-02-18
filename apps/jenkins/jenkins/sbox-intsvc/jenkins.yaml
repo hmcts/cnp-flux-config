@@ -197,19 +197,6 @@ spec:
                         - envVar:
                             key: DOCKER_HOST
                             value: tcp://localhost:2375
-                      - name: dind
-                        image: docker:29.2.1-dind
-                        securityContext:
-                          privileged: true
-                          runAsUser: 0
-                        args: "--tls=false"
-                        volumeMounts:
-                          - name: hostPathVolume
-                            mountPath: /var/run/docker.sock
-                        envVars:
-                        - envVar:
-                            key: DOCKER_TLS_CERTDIR
-                            value: ""
                       hostNetwork: false
                       idleMinutes: 10
                       idleMinutesStr: "10"
@@ -268,6 +255,19 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
+                          - name: dind
+                            image: docker:29.2.1-dind
+                            securityContext:
+                              privileged: true
+                              runAsUser: 0
+                            args: "--tls=false"
+                            volumeMounts:
+                              - name: hostPathVolume
+                                mountPath: /var/run/docker.sock
+                            envVars:
+                            - envVar:
+                                key: DOCKER_TLS_CERTDIR
+                                value: ""
                       yamlMergeStrategy: "merge"
                       yamls:
                       - |-
@@ -304,3 +304,16 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
+                          - name: dind
+                            image: docker:29.2.1-dind
+                            securityContext:
+                              privileged: true
+                              runAsUser: 0
+                            args: "--tls=false"
+                            volumeMounts:
+                              - name: hostPathVolume
+                                mountPath: /var/run/docker.sock
+                            envVars:
+                            - envVar:
+                                key: DOCKER_TLS_CERTDIR
+                                value: ""
