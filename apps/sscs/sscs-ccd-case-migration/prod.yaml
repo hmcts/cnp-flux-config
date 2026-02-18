@@ -14,7 +14,7 @@ spec:
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
       restartPolicy: Never
-      schedule: "30 21 * * *"
+      schedule: "45 21 * * *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -47,8 +47,6 @@ spec:
               alias: MULTIPLE_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
             - name: encoded-string-update-listing-reqs-amend-reason
               alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
-            - name: encoded-string-processing-venue
-              alias: VENUE_MIGRATION_ENCODED_STRING
             - name: encoded-string-adjournment-flag
               alias: ADJOURNMENT_FLAG_MIGRATION_ENCODED_STRING
             - name: encoded-string-clear-pcm-migration
@@ -59,6 +57,8 @@ spec:
               alias: DEFAULT_PANEL_COMPOSITION_ENCODED_STRING
             - name: encoded-string-final-decision-outcome-migration
               alias: FINAL_DECISION_OUTCOME_MIGRATION_ENCODED_STRING
+            - name: encoded-string-venue-hearing
+              alias: VENUE_HEARING_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -70,7 +70,7 @@ spec:
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: 1000
         JAVA_OPTS: -Xmx4G
-        VENUE_MIGRATION_ENABLED: true
+        VENUE_HEARING_MIGRATION_ENABLED: true
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
