@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "45 11 18 02 *"
+      schedule: "15 12 18 02 *"
       image: hmctspublic.azurecr.io/finrem/cos:pr-2809-fc37a4a-20260218111431 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -21,7 +21,7 @@ spec:
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
         TASK_NAME: removeVacatedHearing
-        CRON_DRY_RUN: true
+        CRON_DRY_RUN: false
         CRON_REMOVE_VACATED_HEARING_TASK_ENABLED: true
         CRON_REMOVE_VACATED_HEARING_CASE_LIST_FILE_NAME: "caserefs-encrypted.csv"
     global:
