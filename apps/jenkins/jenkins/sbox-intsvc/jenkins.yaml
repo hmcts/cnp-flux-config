@@ -175,9 +175,10 @@ spec:
                         resourceRequestMemory: "2Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                        env:
-                          - name: DOCKER_HOST
-                            value: tcp://localhost:2375
+                        envVars:
+                          envVar:
+                            - key: DOCKER_HOST
+                              value: tcp://localhost:2375
                       - image: "hmctspublic.azurecr.io/jenkins/k8s-agent:latest"
                         livenessProbe:
                           failureThreshold: 3
@@ -192,9 +193,10 @@ spec:
                         resourceRequestMemory: "1Gi"
                         ttyEnabled: false
                         workingDir: "/home/jenkins/agent"
-                        env:
-                          - name: DOCKER_HOST
-                            value: tcp://localhost:2375
+                        envVars:
+                          envVar:
+                            - key: DOCKER_HOST
+                              value: tcp://localhost:2375
                       - name: dind
                         image: docker:29.2.1-dind
                         securityContext:
@@ -205,9 +207,10 @@ spec:
                         volumeMounts:
                           - name: hostPathVolume
                             mountPath: /var/run/docker.sock
-                        env:
-                          - name: DOCKER_TLS_CERTDIR
-                            value: ""
+                        envVars:
+                          envVar:
+                            - key: DOCKER_TLS_CERTDIR
+                              value: ""
                       hostNetwork: false
                       idleMinutes: 10
                       idleMinutesStr: "10"
