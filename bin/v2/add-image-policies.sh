@@ -5,7 +5,7 @@ NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
 REGISTRY=$4
-ACR=${REGISTRY:-hmctspublic}
+ACR=${REGISTRY:-hmctsprod}
 APPS_DIR="../../apps/"
 COMPONENT_DIR="${APPS_DIR}/${NAMESPACE}/${PRODUCT}-${COMPONENT}"
 
@@ -39,33 +39,12 @@ spec:
 EOF
 ) > "${COMPONENT_DIR}/image-policy.yaml"
 
-if [[ ${ACR} == "hmctspublic" ]]
+if [[ ${ACR} == "hmctssandbox" ]]
 then
-(
-cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageRepository
-metadata:
-  name: ${PRODUCT}-${COMPONENT}
-spec:
-  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
-EOF
-) > "${COMPONENT_DIR}/image-repo.yaml"
-elif [[ ${ACR} == "hmctssandbox" ]]
-then
-(
-cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageRepository
-metadata:
-  name: ${PRODUCT}-${COMPONENT}
-  annotations:
-    hmcts.github.com/image-registry: hmctssandbox
-spec:
-  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
-EOF
-) > "${COMPONENT_DIR}/image-repo.yaml"
-elif [[ ${ACR} == "hmctsprivate" ]]
+  ACR="hmctssbox"
+fi
+
+if [[ ${ACR} == "hmctsprod" || ${ACR} == "hmctssbox" ]]
 then
 (
 cat <<EOF
@@ -74,11 +53,14 @@ kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
   annotations:
-    hmcts.github.com/image-registry: hmctsprivate
+    hmcts.github.com/image-registry: ${ACR}
 spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "${COMPONENT_DIR}/image-repo.yaml"
+else
+  echo "Unsupported registry '${ACR}'. Supported values: hmctsprod, hmctssbox (or hmctssandbox)."
+  exit 1
 fi
 
 
