@@ -24,6 +24,11 @@ spec:
           memory: "22Gi"
       JCasC:
         configScripts:
+          misc-jenkins-settings: |
+            jenkins:
+              crumbIssuer:
+                standard:
+                  excludeClientIPFromCrumb: false
           welcome-message: |
             jenkins:
               systemMessage: >-
@@ -53,9 +58,9 @@ spec:
                       - key: PTL_AKS_RESOURCE_GROUP
                         value: cft-ptl-00-rg
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
                         value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
@@ -328,7 +333,7 @@ spec:
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui)\/master
+                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui|div-petitioner-frontend|div-respondent-frontend|div-decree-nisi-frontend|div-decree-absolute-frontend|div-case-orchestration-service|div-case-data-formatter|div-case-maintenance-service|div-document-generator-client|div-evidence-management-client-api|div-fees-and-payments-service|div-ccd-definitions)\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard
