@@ -19,12 +19,12 @@ spec:
         receivers:
           - name: "slack_alerting"
             slack_configs:
-              - channel: prometheus-alerting-prod
+              - channel: prometheus-alerting-prod-cft
                 title: 'CFTPTL - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "slack_critical"
             slack_configs:
-              - channel: prometheus-critical-prod
+              - channel: prometheus-critical-prod-cft
                 title: 'CFTPTL - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "null"
@@ -198,4 +198,4 @@ spec:
           access: proxy
   valuesFrom:
     - kind: Secret
-      name: prometheus-values
+      name: prometheus-extra-values
