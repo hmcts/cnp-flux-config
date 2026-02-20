@@ -43,6 +43,8 @@ echo "" | tee -a "$LOG_FILE"
 
 # Counters
 files_changed=0
+image_repo_annotation_fixed=0
+image_repo_annotation_added=0
 
 # Find all YAML/YML and disabled variants with old ACR references
 echo "Finding files with old ACR references..." | tee -a "$LOG_FILE"
@@ -55,41 +57,95 @@ files_to_process=$(grep -rl -E "(hmctspublic|hmctsprivate)\.azurecr\.io" . \
 
 if [ -z "$files_to_process" ]; then
     echo -e "${YELLOW}No files found with old ACR references.${NC}" | tee -a "$LOG_FILE"
-    exit 0
+else
+    # Process each file
+    for file in $files_to_process; do
+        echo "Processing: $file" | tee -a "$LOG_FILE"
+
+        file_had_changes=false
+
+        # Update hmctspublic -> hmctsprod (skip lines with imagepolicy comment anywhere on the line)
+        sed -i.bak1 -e '/hmctspublic\.azurecr\.io/{/\$imagepolicy/!s/hmctspublic\.azurecr\.io/hmctsprod.azurecr.io/g;}' "$file"
+        if ! cmp -s "$file" "$file.bak1"; then
+            file_had_changes=true
+            echo "  ✓ Updated hmctspublic -> hmctsprod" | tee -a "$LOG_FILE"
+        fi
+        rm -f "$file.bak1"
+
+        # Update hmctsprivate -> hmctsprod (skip lines with imagepolicy comment anywhere on the line)
+        sed -i.bak2 -e '/hmctsprivate\.azurecr\.io/{/\$imagepolicy/!s/hmctsprivate\.azurecr\.io/hmctsprod.azurecr.io/g;}' "$file"
+        if ! cmp -s "$file" "$file.bak2"; then
+            file_had_changes=true
+            echo "  ✓ Updated hmctsprivate -> hmctsprod" | tee -a "$LOG_FILE"
+        fi
+        rm -f "$file.bak2"
+
+        if [ "$file_had_changes" = true ]; then
+            ((files_changed++))
+        else
+            echo "  - Skipped (all automated or no changes)" | tee -a "$LOG_FILE"
+        fi
+    done
 fi
 
-# Process each file
-for file in $files_to_process; do
-    echo "Processing: $file" | tee -a "$LOG_FILE"
+echo "" | tee -a "$LOG_FILE"
+echo "Updating ImageRepository annotations for hmctsprod image references..." | tee -a "$LOG_FILE"
 
-    file_had_changes=false
+image_repo_files=$(grep -rl "kind:[[:space:]]*ImageRepository" . \
+    --include="*.yaml" \
+    --include="*.yml" \
+    --exclude-dir=".git" 2>/dev/null || true)
 
-    # Update hmctspublic -> hmctsprod (skip lines with imagepolicy comment anywhere on the line)
-    sed -i.bak1 -e '/hmctspublic\.azurecr\.io/{/\$imagepolicy/!s/hmctspublic\.azurecr\.io/hmctsprod.azurecr.io/g;}' "$file"
-    if ! cmp -s "$file" "$file.bak1"; then
-        file_had_changes=true
-        echo "  ✓ Updated hmctspublic -> hmctsprod" | tee -a "$LOG_FILE"
+for file in $image_repo_files; do
+    # Only update ImageRepository files that currently reference hmctsprod
+    if ! grep -q "^[[:space:]]*image:[[:space:]]*hmctsprod\.azurecr\.io/" "$file"; then
+        continue
     fi
-    rm -f "$file.bak1"
 
-    # Update hmctsprivate -> hmctsprod (skip lines with imagepolicy comment anywhere on the line)
-    sed -i.bak2 -e '/hmctsprivate\.azurecr\.io/{/\$imagepolicy/!s/hmctsprivate\.azurecr\.io/hmctsprod.azurecr.io/g;}' "$file"
-    if ! cmp -s "$file" "$file.bak2"; then
-        file_had_changes=true
-        echo "  ✓ Updated hmctsprivate -> hmctsprod" | tee -a "$LOG_FILE"
+    # If annotation exists, ensure it points to hmctsprod
+    if grep -q "hmcts.github.com/image-registry:" "$file"; then
+        sed -i.bak3 -E 's#(hmcts\.github\.com/image-registry:[[:space:]]*).*$#\1hmctsprod#' "$file"
+        if ! cmp -s "$file" "$file.bak3"; then
+            ((image_repo_annotation_fixed++))
+            echo "  ✓ Fixed annotation to hmctsprod: $file" | tee -a "$LOG_FILE"
+        fi
+        rm -f "$file.bak3"
+        continue
     fi
-    rm -f "$file.bak2"
 
-    if [ "$file_had_changes" = true ]; then
-        ((files_changed++))
+    # If annotation is missing, add it under metadata after name
+    awk '
+    BEGIN { in_metadata=0; inserted=0 }
+    {
+      print
+      if ($0 ~ /^metadata:[[:space:]]*$/) {
+        in_metadata=1
+      } else if (in_metadata && $0 ~ /^spec:[[:space:]]*$/) {
+        in_metadata=0
+      }
+
+      if (in_metadata && inserted==0 && $0 ~ /^[[:space:]]*name:[[:space:]]*/) {
+        print "  annotations:"
+        print "    hmcts.github.com/image-registry: hmctsprod"
+        inserted=1
+      }
+    }
+    ' "$file" > "$file.tmp"
+
+    if ! cmp -s "$file" "$file.tmp"; then
+        mv "$file.tmp" "$file"
+        ((image_repo_annotation_added++))
+        echo "  ✓ Added annotation hmctsprod: $file" | tee -a "$LOG_FILE"
     else
-        echo "  - Skipped (all automated or no changes)" | tee -a "$LOG_FILE"
+        rm -f "$file.tmp"
     fi
 done
 
 echo "" | tee -a "$LOG_FILE"
 echo -e "${GREEN}=== Summary ===${NC}" | tee -a "$LOG_FILE"
 echo "Files changed: $files_changed" | tee -a "$LOG_FILE"
+echo "ImageRepository annotation fixes: $image_repo_annotation_fixed" | tee -a "$LOG_FILE"
+echo "ImageRepository annotation additions: $image_repo_annotation_added" | tee -a "$LOG_FILE"
 echo "" | tee -a "$LOG_FILE"
 echo "Next steps:" | tee -a "$LOG_FILE"
 echo "1. Review changes with: git diff" | tee -a "$LOG_FILE"
@@ -98,9 +154,9 @@ echo "3. Commit all updates in one commit" | tee -a "$LOG_FILE"
 echo "" | tee -a "$LOG_FILE"
 echo "Log saved to: $LOG_FILE" | tee -a "$LOG_FILE"
 
-if [ $files_changed -eq 0 ]; then
+if [ $files_changed -eq 0 ] && [ $image_repo_annotation_fixed -eq 0 ] && [ $image_repo_annotation_added -eq 0 ]; then
     echo -e "${YELLOW}No files were modified.${NC}"
     exit 0
 fi
 
-echo -e "${GREEN}Done! Updated $files_changed files with non-automated image references.${NC}"
+echo -e "${GREEN}Done! Updated non-automated image refs and ImageRepository annotations.${NC}"
