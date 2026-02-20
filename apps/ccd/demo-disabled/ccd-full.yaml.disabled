@@ -39,14 +39,14 @@ spec:
       dummy: true
     ccd-admin-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/admin-web:prod-358bf5d6
+        image: hmctsprod.azurecr.io/ccd/admin-web:prod-358bf5d6
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
     ccd-api-gateway-web:
       nodejs:
-        image: hmctspublic.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
+        image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-eaf075ee
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         environment:
           PROXY_CASE_ACTIVITY: http://ccd-full-ccd-case-activity-api
@@ -66,7 +66,7 @@ spec:
         enabled: true
     ccd-definition-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/definition-store-api:prod-396d9e70
+        image: hmctsprod.azurecr.io/ccd/definition-store-api:prod-396d9e70
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -76,12 +76,12 @@ spec:
           AZURE_STORAGE_DEFINITION_UPLOAD_ENABLED: true
     ccd-data-store-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/data-store-api:prod-a4a655ea
+        image: hmctsprod.azurecr.io/ccd/data-store-api:prod-a4a655ea
         environment:
           CCD_DM_DOMAIN: https?://.*dm-store.*
     ccd-user-profile-api:
       java:
-        image: hmctspublic.azurecr.io/ccd/user-profile-api:prod-5e9bc0de
+        image: hmctsprod.azurecr.io/ccd/user-profile-api:prod-5e9bc0de
     ccd-user-profile-importer:
       users:
         - auto.test.cnp@gmail.com|AUTOTEST1|AAT|TODO

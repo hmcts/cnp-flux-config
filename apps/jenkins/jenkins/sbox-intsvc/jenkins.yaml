@@ -8,7 +8,7 @@ spec:
     checkDeprecation: false
     controller:
       image:
-        registry: hmctspublic.azurecr.io
+        registry: hmctsprod.azurecr.io
         repository: jenkins/jenkins
         tag: 2.551-1053
       javaOpts: >-
@@ -161,7 +161,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:latest"
+                        image: "hmctsprod.azurecr.io/jenkins/k8s-agent:latest"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -175,7 +175,7 @@ spec:
                         resourceRequestMemory: "2Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/k8s-agent:latest"
+                      - image: "hmctsprod.azurecr.io/jenkins/k8s-agent:latest"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -225,7 +225,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/k8s-agent:latest
+                            image: hmctsprod.azurecr.io/jenkins/k8s-agent:latest
                             command:
                               - /bin/sh
                               - -c
@@ -261,7 +261,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/k8s-agent:latest
+                            image: hmctsprod.azurecr.io/jenkins/k8s-agent:latest
                             command:
                               - /bin/sh
                               - -c
