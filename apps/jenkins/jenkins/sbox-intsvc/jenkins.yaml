@@ -159,7 +159,9 @@ spec:
                     - activeDeadlineSeconds: 3600
                       activeDeadlineSecondsStr: "3600"
                       containers:
-                      - args: "/bin/sh -c cat"
+                      - name: "inbound-agent"
+                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00005"
+                        args: "/bin/sh -c cat"
                         command: "/tini --"
                         envVars:
                         - envVar:
@@ -171,14 +173,12 @@ spec:
                         - envVar:
                             key: "DOCKER_CERT_PATH"
                             value: "/docker-certs/client"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00005"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
                           periodSeconds: 15
                           successThreshold: 1
                           timeoutSeconds: 5
-                        name: "inbound-agent"
                         resourceLimitCpu: "3000m"
                         resourceLimitMemory: "8Gi"
                         resourceRequestCpu: "1000m"
@@ -187,7 +187,9 @@ spec:
                         runAsUser: "1000"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - command: "jenkins-agent"
+                      - name: "jnlp"
+                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00005"
+                        command: "jenkins-agent"
                         envVars:
                         - envVar:
                             key: "DOCKER_HOST"
@@ -198,14 +200,12 @@ spec:
                         - envVar:
                             key: "DOCKER_CERT_PATH"
                             value: "/docker-certs/client"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00005"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
                           periodSeconds: 15
                           successThreshold: 1
                           timeoutSeconds: 5
-                        name: "jnlp"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
                         resourceRequestCpu: "500m"
@@ -213,18 +213,18 @@ spec:
                         runAsGroup: "1000"
                         runAsUser: "1000"
                         workingDir: "/home/jenkins/agent"
-                      - envVars:
+                      - name: "dind"
+                        image: "docker:dind"
+                        envVars:
                         - envVar:
                             key: "DOCKER_TLS_CERTDIR"
                             value: "/certs"
-                        image: "docker:dind"
                         livenessProbe:
                           failureThreshold: 0
                           initialDelaySeconds: 0
                           periodSeconds: 0
                           successThreshold: 0
                           timeoutSeconds: 0
-                        name: "dind"
                         privileged: true
                         runAsUser: "0"
                         workingDir: "/home/jenkins/agent"
