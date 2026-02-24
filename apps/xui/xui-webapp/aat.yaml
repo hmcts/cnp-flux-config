@@ -6,11 +6,15 @@ spec:
   values:
     nodejs:
       replicas: 6
+      autoscaling:
+        enabled: false
       memoryLimits: "2048Mi"
       memoryRequests: "768Mi"
       cpuLimits: "2000m"
       cpuRequests: "500m"
-      readinessTimeout: 5
+      livenessTimeout: 10
+      readinessTimeout: 10
+      livenessFailureThreshold: 5
       ingressHost: manage-case.aat.platform.hmcts.net
       environment:
         DUMMY_VAR_FOR_RESTART: 0
