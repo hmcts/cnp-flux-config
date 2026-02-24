@@ -263,7 +263,7 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           - name: jnlp
                             volumeMounts:
@@ -273,7 +273,7 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           initContainers:
                           - name: init-agent
@@ -300,22 +300,16 @@ spec:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
                           volumes:
-                          - hostPathVolume:
-                              hostPath: "/tmp/jenkins-agent"
-                              mountPath: "/tmp/jenkins-agent"
-                              readOnly: false
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/home/jenkins/.ssh"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/opt/jenkins"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-storage"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-certs"
+                          - name: volume-0
+                              path: /tmp/jenkins-agent
+                          - name: volume-1
+                              emptyDir:
+                          - name: volume-2
+                              emptyDir:
+                          - name: volume-3
+                              emptyDir:
+                          - name: volume-4
+                              emptyDir:
                       yamlMergeStrategy: "merge"
                       yamls:
                       - |-
@@ -343,7 +337,7 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           - name: jnlp
                             volumeMounts:
@@ -353,7 +347,7 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           initContainers:
                           - name: init-agent
@@ -380,19 +374,13 @@ spec:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
                           volumes:
-                          - hostPathVolume:
-                              hostPath: "/tmp/jenkins-agent"
-                              mountPath: "/tmp/jenkins-agent"
-                              readOnly: false
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/home/jenkins/.ssh"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/opt/jenkins"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-storage"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-certs"
+                          - name: volume-0
+                              path: /tmp/jenkins-agent
+                          - name: volume-1
+                              emptyDir:
+                          - name: volume-2
+                              emptyDir:
+                          - name: volume-3
+                              emptyDir:
+                          - name: volume-4
+                              emptyDir:
