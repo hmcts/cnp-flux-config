@@ -160,7 +160,7 @@ spec:
                       activeDeadlineSecondsStr: "3600"
                       containers:
                       - name: "inbound-agent"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00005"
+                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00010"
                         args: "/bin/sh -c cat"
                         command: "/tini --"
                         envVars:
@@ -188,7 +188,7 @@ spec:
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
                       - name: "jnlp"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00005"
+                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00010"
                         command: "jenkins-agent"
                         envVars:
                         - envVar:
@@ -238,23 +238,6 @@ spec:
                       podRetention: "never"
                       serviceAccount: "jenkins"
                       supplementalGroups: "118"
-                      volumes:
-                      - hostPathVolume:
-                          hostPath: "/tmp/jenkins-agent"
-                          mountPath: "/tmp/jenkins-agent"
-                          readOnly: false
-                      - emptyDirVolume:
-                          memory: false
-                          mountPath: "/home/jenkins/.ssh"
-                      - emptyDirVolume:
-                          memory: false
-                          mountPath: "/opt/jenkins"
-                      - emptyDirVolume:
-                          memory: false
-                          mountPath: "docker-storage"
-                      - emptyDirVolume:
-                          memory: false
-                          mountPath: "docker-certs"
                       yaml: |-
                         metadata:
                           labels:
@@ -268,20 +251,40 @@ spec:
                           containers:
                           - name: dind
                             volumeMounts:
-                              - mountPath: /certs
-                                name: volume-4
                               - mountPath: /var/lib/docker
                                 name: volume-3
+                              - mountPath: /certs
+                                name: volume-4
+                          - name: inbound-agent
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-0
+                              - mountPath: /home/jenkins/.ssh
+                                name: volume-1
+                              - mountPath: /opt/jenkins
+                                name: volume-2
+                              - mountPath: /docker-certs/client
+                                name: volume-4
+                          - name: jnlp
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-0
+                              - mountPath: /home/jenkins/.ssh
+                                name: volume-1
+                              - mountPath: /opt/jenkins
+                                name: volume-2
+                              - mountPath: /docker-certs/client
+                                name: volume-4
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/k8s-agent:00005
+                            image: hmctspublic.azurecr.io/jenkins/k8s-agent:00010
                             command:
                               - /bin/sh
                               - -c
                               - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
                             volumeMounts:
                               - mountPath: /tmp/jenkins-agent
-                                name: volume-2
+                                name: volume-0
                             securityContext:
                               runAsUser: 0
                               runAsGroup: 0
@@ -296,6 +299,23 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
+                          volumes:
+                          - hostPathVolume:
+                              hostPath: "/tmp/jenkins-agent"
+                              mountPath: "/tmp/jenkins-agent"
+                              readOnly: false
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "/home/jenkins/.ssh"
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "/opt/jenkins"
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "docker-storage"
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "docker-certs"
                       yamlMergeStrategy: "merge"
                       yamls:
                       - |-
@@ -311,10 +331,30 @@ spec:
                           containers:
                           - name: dind
                             volumeMounts:
-                              - mountPath: /certs
-                                name: volume-4
                               - mountPath: /var/lib/docker
                                 name: volume-3
+                              - mountPath: /certs
+                                name: volume-4
+                          - name: inbound-agent
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-0
+                              - mountPath: /home/jenkins/.ssh
+                                name: volume-1
+                              - mountPath: /opt/jenkins
+                                name: volume-2
+                              - mountPath: /docker-certs/client
+                                name: volume-4
+                          - name: jnlp
+                            volumeMounts:
+                              - mountPath: /tmp/jenkins-agent
+                                name: volume-0
+                              - mountPath: /home/jenkins/.ssh
+                                name: volume-1
+                              - mountPath: /opt/jenkins
+                                name: volume-2
+                              - mountPath: /docker-certs/client
+                                name: volume-4
                           initContainers:
                           - name: init-agent
                             image: hmctspublic.azurecr.io/jenkins/k8s-agent:latest
@@ -324,7 +364,7 @@ spec:
                               - "chown 0:118 /tmp/jenkins-agent && chmod g+rwx /tmp/jenkins-agent"
                             volumeMounts:
                               - mountPath: /tmp/jenkins-agent
-                                name: volume-2
+                                name: volume-0
                             securityContext:
                               runAsUser: 0
                               runAsGroup: 0
@@ -339,3 +379,20 @@ spec:
                                         values:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
+                          volumes:
+                          - hostPathVolume:
+                              hostPath: "/tmp/jenkins-agent"
+                              mountPath: "/tmp/jenkins-agent"
+                              readOnly: false
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "/home/jenkins/.ssh"
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "/opt/jenkins"
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "docker-storage"
+                          - emptyDirVolume:
+                              memory: false
+                              mountPath: "docker-certs"
