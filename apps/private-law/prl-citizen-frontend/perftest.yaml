@@ -3,10 +3,12 @@ kind: HelmRelease
 metadata:
   name: prl-citizen-frontend
   namespace: private-law
+  annotations:
+    hmcts.github.com/java-tool-options-patch: enabled
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-69faa80-20260216104853 #{"$imagepolicy": "flux-system:perftest-prl-citizen-frontend"}
+      image: hmctspublic.azurecr.io/prl/citizen-frontend:pr-2039-6ab2aa3-20260223152209 #{"$imagepolicy": "flux-system:perftest-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
