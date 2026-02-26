@@ -30,7 +30,19 @@ spec:
       ingress:
         hosts:
           - alertmanager-00.sandbox.platform.hmcts.net
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 81.6.3
+      config:
+        receivers:
+          - name: "slack_alerting"
+            slack_configs:
+              - channel: prometheus-alerting-nonprod-cft
+                title: 'SBOX-00 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "slack_critical"
+            slack_configs:
+              - channel: prometheus-critical-nonprod-cft
+                title: 'SBOX-00 - {{ template "slack.default.title" . }}'
+                text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+          - name: "null"
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-extra-values
