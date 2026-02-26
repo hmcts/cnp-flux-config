@@ -11,7 +11,7 @@ spec:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
       image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-eedc911-20260224164053 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "15 15 25 02 *"
+      schedule: "55 15 26 02 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -34,6 +34,8 @@ spec:
               alias: UPDATE_LISTING_REQS_MISSING_AMEND_REASON_ENCODED_STRING
             - name: encoded-string-processing-venue
               alias: VENUE_MIGRATION_ENCODED_STRING
+            - name: encoded-string-venue-hearing
+              alias: VENUE_HEARING_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
@@ -45,6 +47,7 @@ spec:
         UPDATE_LISTING_REQS_MISSING_AMEND_REASON: false
         DUMMY: true
         VENUE_MIGRATION_ENABLED: false
+        VENUE_HEARING_MIGRATION_ENABLED: true
     global:
       environment: demo
       enableKeyVaults: true
