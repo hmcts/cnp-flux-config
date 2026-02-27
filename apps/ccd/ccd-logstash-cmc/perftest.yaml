@@ -6,7 +6,16 @@ metadata:
 spec:
   releaseName: ccd-logstash-cmc
   values:
-    replicas: 0
+    replicas: 1
+    imageTag: "9.2.4"
+    logstashConfig:
+      logstash.yml: |
+        api.http.host: 0.0.0.0
+        xpack.monitoring.enabled: false
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        queue.type: persisted
+        dead_letter_queue.enable: true
+        pipeline.ecs_compatibility: disabled
     logstashPipeline:
       01_input.conf: |
         input {
