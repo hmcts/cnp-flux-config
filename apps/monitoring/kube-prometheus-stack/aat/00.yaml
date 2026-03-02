@@ -19,12 +19,12 @@ spec:
         receivers:
           - name: "slack_alerting"
             slack_configs:
-              - channel: prometheus-alerting
+              - channel: prometheus-alerting-nonprod-cft
                 title: 'AAT-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "slack_critical"
             slack_configs:
-              - channel: prometheus-critical
+              - channel: prometheus-critical-nonprod-cft
                 title: 'AAT-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "null"
@@ -54,7 +54,6 @@ spec:
           type: camptocamp-prometheus-alertmanager-datasource
           url: http://alertmanager-01.aat.platform.hmcts.net
           access: proxy
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 81.6.3
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-extra-values

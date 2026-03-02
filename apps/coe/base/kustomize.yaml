@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: coe
+  namespace: flux-system
+spec:
+  path: ./apps/coe/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "coe"
+      WI_NAME: "coe"
+      TEAM_NOTIFICATION_CHANNEL: "coe-slack-channel"
+      TEAM_AAD_GROUP_ID: "c2c7af6e-4427-45c2-8ca8-03b8ebe2d11f"

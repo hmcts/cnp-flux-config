@@ -7,10 +7,10 @@ spec:
   values:
     job:
       environment:
-        TASK_NAME: SystemNotifyJointApplicantCanSwitchToSoleTask
+        TASK_NAME: SystemRejectCasesWithPaymentOverdueTask
         CCD_SEARCH_MAX_RESULTS: 50
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/nfdiv/case-api:pr-4592-ed0dde9-20260218104513 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctspublic.azurecr.io/nfdiv/case-api:prod-01065c5-20260227102544 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
     keyVaults:
       nfdiv:
         secrets:
@@ -26,7 +26,7 @@ spec:
             alias: IDAM_SYSTEM_UPDATE_USERNAME
           - name: idam-systemupdate-password
             alias: IDAM_SYSTEM_UPDATE_PASSWORD
-    schedule: 0/10 * * * *
+    schedule: 0/40 * * * *
   chart:
     spec:
       chart: nfdiv-cron

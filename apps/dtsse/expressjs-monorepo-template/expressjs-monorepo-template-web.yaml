@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: expressjs-monorepo-template-web
+spec:
+  releaseName: expressjs-monorepo-template-web
+  interval: 5m
+  values:
+    nodejs:
+      releaseNameOverride: expressjs-monorepo-template-web
+      image: hmctspublic.azurecr.io/dtsse/expressjs-monorepo-template-web:prod-e623bd1-20260226172435 # {"$imagepolicy": "flux-system:expressjs-monorepo-template-web"}
+  chart:
+    spec:
+      chart: expressjs-monorepo-template-web
+      version: ">=0.0.1-0"
+      sourceRef:
+        kind: HelmRepository
+        name: hmctspublic-oci
+        namespace: flux-system
+      interval: 1m
