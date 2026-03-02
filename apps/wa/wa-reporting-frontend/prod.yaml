@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: wa-reporting-frontend
+spec:
+  values:
+    nodejs:
+      replicas: 0
+      ingressHost: wa-live-reporting.platform.hmcts.net
+      environment:
+        IDAM_PUBLIC_URL: https://hmcts-access.platform.hmcts.net
+        MANAGE_CASE_BASE_URL: https://manage-case.platform.hmcts.net
+        WA_BASE_URL: https://wa-live-reporting.platform.hmcts.net

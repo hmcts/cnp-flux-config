@@ -8,6 +8,7 @@ EXCLUSIONS_LIST=(
     apps/ccd/ccd-int/ccd-int.yaml.disabled
     apps/docmosis/docmosis/docmosis.yaml
     apps/docmosis/docmosis/aat.yaml
+    apps/civil/civil-service/aat.yaml
     apps/flux-system/ptl-intsvc/base/gotk-components.yaml
     apps/probate/probate-cron-make-dormant-cases/probate-cron-make-dormant-cases.yaml
     apps/probate/probate-cron-reactivate-dormant-cases/probate-cron-reactivate-dormant-cases.yaml

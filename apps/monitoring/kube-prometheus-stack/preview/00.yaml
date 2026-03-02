@@ -15,7 +15,6 @@ spec:
       ingress:
         hosts:
           - alertmanager-00.dev.platform.hmcts.net
-  chart:
-    spec:
-      chart: kube-prometheus-stack
-      version: 81.6.3
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-extra-values
