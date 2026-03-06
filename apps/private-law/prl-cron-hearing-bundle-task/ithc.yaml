@@ -2,12 +2,13 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cron-hearing-bundle-task
+  namespace: private-law
 spec:
   releaseName: prl-cron-hearing-bundle-task
   values:
     job:
       ingressClass: traefik-private
-      image: hmctspublic.azurecr.io/prl/cos:prod-76bf995-20241216170533 #{"$imagepolicy": "flux-system:ithc-prl-cron-hearing-bundle-task"}
+      image: hmctspublic.azurecr.io/prl/cos:prod-76bf995-20241216170533 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: PrepareHearingBundleTask
         FEATURE_EXAMPLE: true
