@@ -5,22 +5,5 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/fact/public-frontend:pr-111
-      imagePullPolicy: Always
       autoscaling:
         enabled: false
-      keyVaults:
-        fact-kv:
-          secrets:
-            - name: app-insights-connection-string
-              alias: APP_INSIGHTS_CONNECTION_STRING
-            - name: session-secret
-              alias: SESSION_SECRET
-            - name: public-frontend-app-reg-id
-              alias: FRONTEND_APP_REG_ID
-            - name: api-app-reg-id
-              alias: API_APP_REG_ID
-      environment:
-        DYNATRACE_JSTAG_KEY: '{{ .Values.global.environment }}'
-        SESSION_COOKIE_SAME_SITE: 'lax'
-        DATA_API_URL: 'https://fact-data-api.{{ .Values.global.environment }}.platform.hmcts.net'
