@@ -8,12 +8,14 @@ spec:
     job:
       applicationPort: 8095
       image: hmctspublic.azurecr.io/em/hrs-api:pr-2927-b9eae3b-20260309135155 #{"$imagepolicy": "flux-system:demo-em-hrs-api"}
-      schedule: "20 16 * * *"
+      schedule: "*/10 * * * *"
       environment:
         TASK_NAME: UpdateTtlTask
         UPDATE_TTL_BATCH_SIZE: 10
         UPDATE_TTL_THREAD_LIMIT: 2
         UPDATE_TTL_NO_OF_ITERATIONS: 4
         DEFAULT_TTL: P20Y
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
+        CVP_STORAGE_CONTAINER_NAME: recordings
     global:
       environment: demo
