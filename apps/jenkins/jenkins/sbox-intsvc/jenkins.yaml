@@ -8,9 +8,9 @@ spec:
     checkDeprecation: false
     controller:
       image:
-        registry: hmctspublic.azurecr.io
+        registry: hmctsprod.azurecr.io
         repository: jenkins/jenkins
-        tag: 2.551-1053
+        tag: 2.553-1063
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
@@ -160,7 +160,7 @@ spec:
                       activeDeadlineSecondsStr: "3600"
                       containers:
                       - name: "inbound-agent"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00010"
+                        image: "hmctsprod.azurecr.io/jenkins/k8s-agent:00010"
                         args: "/bin/sh -c cat"
                         command: "/tini --"
                         envVars:
@@ -188,7 +188,7 @@ spec:
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
                       - name: "jnlp"
-                        image: "hmctspublic.azurecr.io/jenkins/k8s-agent:00010"
+                        image: "hmctsprod.azurecr.io/jenkins/k8s-agent:00010"
                         command: "jenkins-agent"
                         envVars:
                         - envVar:
@@ -263,7 +263,7 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           - name: jnlp
                             volumeMounts:
@@ -273,11 +273,11 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/k8s-agent:00010
+                            image: hmctsprod.azurecr.io/jenkins/k8s-agent:00010
                             command:
                               - /bin/sh
                               - -c
@@ -300,22 +300,16 @@ spec:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
                           volumes:
-                          - hostPathVolume:
-                              hostPath: "/tmp/jenkins-agent"
-                              mountPath: "/tmp/jenkins-agent"
-                              readOnly: false
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/home/jenkins/.ssh"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/opt/jenkins"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-storage"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-certs"
+                          - name: volume-0
+                            path: /tmp/jenkins-agent
+                          - name: volume-1
+                            emptyDir:
+                          - name: volume-2
+                            emptyDir:
+                          - name: volume-3
+                            emptyDir:
+                          - name: volume-4
+                            emptyDir:
                       yamlMergeStrategy: "merge"
                       yamls:
                       - |-
@@ -343,7 +337,7 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           - name: jnlp
                             volumeMounts:
@@ -353,11 +347,11 @@ spec:
                                 name: volume-1
                               - mountPath: /opt/jenkins
                                 name: volume-2
-                              - mountPath: /docker-certs/client
+                              - mountPath: /docker-certs
                                 name: volume-4
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/k8s-agent:latest
+                            image: hmctsprod.azurecr.io/jenkins/k8s-agent:latest
                             command:
                               - /bin/sh
                               - -c
@@ -380,19 +374,13 @@ spec:
                                           - jenkins-master
                                   topologyKey: "kubernetes.io/hostname"
                           volumes:
-                          - hostPathVolume:
-                              hostPath: "/tmp/jenkins-agent"
-                              mountPath: "/tmp/jenkins-agent"
-                              readOnly: false
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/home/jenkins/.ssh"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "/opt/jenkins"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-storage"
-                          - emptyDirVolume:
-                              memory: false
-                              mountPath: "docker-certs"
+                          - name: volume-0
+                            path: /tmp/jenkins-agent
+                          - name: volume-1
+                            emptyDir:
+                          - name: volume-2
+                            emptyDir:
+                          - name: volume-3
+                            emptyDir:
+                          - name: volume-4
+                            emptyDir:
