@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/timed-event-service:prod-4bb5c02-20260128111242 #{"$imagepolicy": "flux-system:ia-timed-event-service"}
+      image: hmctsprod.azurecr.io/ia/timed-event-service:prod-6073e0a-20260304133134 #{"$imagepolicy": "flux-system:ia-timed-event-service"}
       keyVaults:
         ia:
           resourceGroup: ia
@@ -32,7 +32,13 @@ spec:
               alias: app-insights-connection-string
             - name: ia-config-validator-secret
               alias: IA_CONFIG_VALIDATOR_SECRET
+            - name: postgres-auth-values-tes-password
+              alias: PG_AUTH_VALUES_YAML_PASS
+            - name: ia-redis-connection-string
+              alias: IA_REDIS_CONNECTION_STRING
+            - name: ia-redis-access-key
+              alias: IA_REDIS_ACCESS_KEY
       environment:
         POSTGRES_HOST: ia-timed-event-service-postgres-db-v15-demo.postgres.database.azure.com
         POSTGRES_USERNAME: pgadmin
-        DUMMY_VAR: "Yes"
+        DUMMY_VAR: "Y"
