@@ -8,8 +8,23 @@ spec:
   values:
     nodejs:
       environment:
+        RESTART_PODS: "Yes"
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-aat.service.core-compute-aat.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+        IDAM_WEB_URL: https://hmcts-access.aat.platform.hmcts.net/login
+        IDAM_END_SESSION_URL: https://hmcts-access.aat.platform.hmcts.net/o/endSession
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
+        OAUTH_CALLBACK_URL: https://finrem-citizen-ui.aat.platform.hmcts.net/oauth2/callback
+      keyVaults:
+        financial-remedy:
+          resourceGroup: financial-remedy
+          secrets:
+            - name: finrem-citizen-ui-idam-client-secret
+              alias: FINREM_CITIZEN_UI_IDAM_CLIENT_SECRET
+            - name: session-secret
+              alias: SESSION_SECRET
+            - name: redis-connection-string
+              alias: REDIS_CONNECTION_STRING
     global:
       environment: aat
       enableKeyVaults: true
