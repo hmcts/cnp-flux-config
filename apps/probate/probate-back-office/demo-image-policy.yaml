@@ -1,4 +1,4 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: demo-probate-back-office
@@ -6,7 +6,8 @@ metadata:
     hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: '^pr-3364-[a-f0-9]+-(?P<ts>[0-9]+)'
+    # this image has a non-standard BackOffice and Caveats ccd definition.
+    pattern: '^pr-3684-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:

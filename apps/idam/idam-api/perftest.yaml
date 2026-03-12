@@ -3,10 +3,12 @@ kind: HelmRelease
 metadata:
   name: idam-api
   namespace: idam
+  annotations:
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/api:prod-06833b2-20250922090247
+      image: hmctsprod.azurecr.io/idam/api:prod-a46ae44-20260310173327
       replicas: 2
       ingressHost: idam-api.perftest.platform.hmcts.net
       environment:

@@ -7,8 +7,8 @@ spec:
   releaseName: sscs-ccd-case-migration
   values:
     job:
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:pr-106-a0dd166-20250902130157 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "15 11 13 08 *"
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-c534773-20260312122623 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "55 15 26 02 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -27,6 +27,8 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_USER
             - name: idam-sscs-systemupdate-password
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-string-processing-venue
+              alias: VENUE_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
@@ -35,6 +37,7 @@ spec:
         ELASTIC_ENABLED: true
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
+        VENUE_MIGRATION_ENABLED: false
     global:
       environment: demo
       enableKeyVaults: true

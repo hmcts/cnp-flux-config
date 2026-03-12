@@ -1,0 +1,25 @@
+# Production config isn't used as it's not deployed yet; will be added once tested in lower envs
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ethos-migration
+  namespace: ethos
+spec:
+  values:
+    job:
+      suspend: true
+      schedule: "0 0 * * *"
+      environment:
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_OIDC_URL: https://idam-web-public.platform.hmcts.net
+        OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-prod.internal:8443/openam/oauth2/hmcts
+        MIGRATION_ROLLBACK: false
+        MIGRATION_QUERY_SIZE: 25
+        MIGRATION_CASE_LIMIT: 25
+        MIGRATION_CASETYPE: Scotland
+    global:
+      environment: prod
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      jobKind: CronJob

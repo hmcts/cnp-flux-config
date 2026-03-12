@@ -3,6 +3,9 @@ kind: HelmRelease
 metadata:
   name: traefik2
   namespace: admin
+  annotations:
+    # Traefik v39.0.0+ enforces schema validation and we don't want Java tool options injected as this will violate it
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
   values:
     service:

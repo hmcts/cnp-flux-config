@@ -13,7 +13,7 @@ spec:
       name: jenkins
     controller:
       image:
-        registry: hmctspublic.azurecr.io
+        registry: hmctsprod.azurecr.io
         repository: jenkins/jenkins
       podLabels:
         azure.workload.identity/use: "true"
@@ -91,9 +91,6 @@ spec:
         configScripts:
           misc-jenkins-settings: |
             jenkins:
-              crumbIssuer:
-                standard:
-                  excludeClientIPFromCrumb: false
               markupFormatter:
                 rawHtml:
                   disableSyntaxHighlighting: false
@@ -219,6 +216,12 @@ spec:
                           id: "fortify-on-demand"
                           secret: "${fortify-on-demand}"
                           description: "Fortify - token"
+                      - usernamePassword:
+                          description: "Fortify on Demand - OAuth client credentials (client_id/client_secret)"
+                          id: "fortify-on-demand-oauth"
+                          password: "${fortify-on-demand-password}"
+                          scope: GLOBAL
+                          username: "${fortify-on-demand-username}"
                       - string:
                           scope: GLOBAL
                           id: slack-token
@@ -318,7 +321,7 @@ spec:
       sidecars:
         configAutoReload:
           image:
-            registry: hmctspublic.azurecr.io
+            registry: hmctsprod.azurecr.io
             repository: imported/kiwigrid/k8s-sidecar
             tag: 1.27.4
           # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
@@ -387,7 +390,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 5.8.65
+      version: 5.9.4
       sourceRef:
         kind: HelmRepository
         name: jenkins

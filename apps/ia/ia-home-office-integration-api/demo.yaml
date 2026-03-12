@@ -5,7 +5,38 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/home-office-integration-api:prod-cfb2044-20250910160949 #{"$imagepolicy": "flux-system:demo-ia-home-office-integration-api"}
+      image: hmctsprod.azurecr.io/ia/home-office-integration-api:pr-455-3169d8d-20260311160929 #{"$imagepolicy": "flux-system:demo-ia-home-office-integration-api"}
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: idam-client-id
+              alias: IA_IDAM_CLIENT_ID
+            - name: idam-secret
+              alias: IA_IDAM_SECRET
+            - name: s2s-secret
+              alias: IA_S2S_SECRET
+            - name: s2s-microservice
+              alias: IA_S2S_MICROSERVICE
+            - name: homeoffice-client-id
+              alias: IA_HOMEOFFICE_CLIENT_ID
+            - name: homeoffice-secret
+              alias: IA_HOMEOFFICE_SECRET
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: launch-darkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: system-username
+              alias: IA_SYSTEM_USERNAME
+            - name: system-password
+              alias: IA_SYSTEM_PASSWORD
+            - name: ia-redis-connection-string
+              alias: IA_REDIS_CONNECTION_STRING
+            - name: ia-redis-access-key
+              alias: IA_REDIS_ACCESS_KEY
       environment:
         DOCMOSIS_ENDPOINT: https://docmosis.demo.platform.hmcts.net
-        DUMMY: true
+        HOME_OFFICE_ENDPOINT: "https://cts-challenge.prp1.np.immigration-api.homeoffice.gov.uk"
+        DUMMY: "Yes"

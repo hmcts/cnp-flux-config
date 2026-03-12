@@ -19,12 +19,15 @@ spec:
         receivers:
           - name: "slack_alerting"
             slack_configs:
-              - channel: prometheus-alerting
+              - channel: prometheus-alerting-nonprod-cft
                 title: 'Perftest-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "slack_critical"
             slack_configs:
-              - channel: prometheus-critical
+              - channel: prometheus-critical-nonprod-cft
                 title: 'Perftest-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
           - name: "null"
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-extra-values
