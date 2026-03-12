@@ -6,9 +6,43 @@ spec:
   values:
     java:
       image: hmctsprod.azurecr.io/ia/bail-case-api:prod-7173c7a-20260305095729 #{"$imagepolicy": "flux-system:demo-ia-bail-case-api"}
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: docmosis-enabled
+              alias: IA_DOCMOSIS_ENABLED
+            - name: em-stitching-enabled
+              alias: IA_EM_STITCHING_ENABLED
+            - name: system-username
+              alias: IA_SYSTEM_USERNAME
+            - name: system-password
+              alias: IA_SYSTEM_PASSWORD
+            - name: idam-client-id
+              alias: IA_IDAM_CLIENT_ID
+            - name: idam-secret
+              alias: IA_IDAM_SECRET
+            - name: s2s-secret
+              alias: IA_S2S_SECRET
+            - name: s2s-microservice
+              alias: IA_S2S_MICROSERVICE
+            - name: prof-ref-data-url
+              alias: PROF_REF_DATA_URL
+            - name: launch-darkly-sdk-key
+              alias: LAUNCH_DARKLY_SDK_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: ia-config-validator-secret
+              alias: IA_CONFIG_VALIDATOR_SECRET
+            - name: ia-bail-gov-notify-key
+              alias: IA_BAIL_GOV_NOTIFY_KEY
+            - name: ia-redis-connection-string
+              alias: IA_REDIS_CONNECTION_STRING
+            - name: ia-redis-access-key
+              alias: IA_REDIS_ACCESS_KEY
       environment:
         COMMON_DATA_API: http://rd-commondata-api-demo.service.core-compute-demo.internal
         IA_HEARINGS_API_URL: http://ia-hearings-api-demo.service.core-compute-demo.internal/
         LOCATION_REF_DATA_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
-        RESTART_PODS: "YES"
+        RESTART_PODS: "Y"
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
