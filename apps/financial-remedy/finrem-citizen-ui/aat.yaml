@@ -19,8 +19,15 @@ spec:
         CCD_URL: https://ccd-data-store-api-finrem-ccd-definitions-pr-3089.preview.platform.hmcts.net
     redis:
       enabled: true
+      architecture: standalone
       auth:
         enabled: false
+      master:
+        persistence:
+          enabled: false
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: imported/bitnami/redis
     global:
       environment: aat
       enableKeyVaults: true
