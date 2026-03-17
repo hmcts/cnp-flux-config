@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-acro-upload
   values:
     job:
-      image: hmctspublic.azurecr.io/prl/cos:pr-3322-b6941b1-20260309094320 #{"$imagepolicy": "flux-system:demo-prl-cron-acro-upload"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-231dbb7-20260317140119 #{"$imagepolicy": "flux-system:prl-cos"}
       cpuRequests: "2000m"
       cpuLimits: "4000m"
       memoryRequests: "1024Mi"
@@ -40,7 +40,7 @@ spec:
         HEARING_API_BASEURL: http://fis-hmc-api-demo.service.core-compute-demo.internal
         APP_ENV: "demo"
         ACRO_CRONJOB_ENABLED: true
-      schedule: "30 10 * * *"
+      schedule: "00 18 * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true
