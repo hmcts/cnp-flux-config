@@ -24,11 +24,6 @@ spec:
           memory: "22Gi"
       JCasC:
         configScripts:
-          misc-jenkins-settings: |
-            jenkins:
-              crumbIssuer:
-                standard:
-                  excludeClientIPFromCrumb: false
           welcome-message: |
             jenkins:
               systemMessage: >-
@@ -76,13 +71,7 @@ spec:
                       - key: BUSINESS_AREA_TAG
                         value: CFT
                       - key: DUAL_ACR_PUBLISH
-                        value: "true"
-                      - key: SECONDARY_REGISTRY_NAME
-                        value: hmctsprod
-                      - key: SECONDARY_REGISTRY_RESOURCE_GROUP
-                        value: rpe-acr-prod-rg
-                      - key: SECONDARY_REGISTRY_SUBSCRIPTION
-                        value: 8999dec3-0104-4a27-94ee-6588559729d1
+                        value: "false"
           otel: |
             unclassified:
               openTelemetry:
@@ -279,7 +268,7 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(civil-service|civil-camunda-bpmn-definition|civil-ccd-definition|civil-citizen-ui|civil-wa-task-configuration|civil-general-apps-ccd-definition|civil-performance)\/master
+                      ^HMCTS.*\/(civil-service|civil-camunda-bpmn-definition|civil-ccd-definition|civil-citizen-ui|civil-wa-task-configuration|civil-performance)\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
@@ -333,13 +322,13 @@ spec:
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui|div-petitioner-frontend|div-respondent-frontend|div-decree-nisi-frontend|div-decree-absolute-frontend|div-case-orchestration-service|div-case-data-formatter|div-case-maintenance-service|div-document-generator-client|div-evidence-management-client-api|div-fees-and-payments-service|div-ccd-definitions)\/master
+                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui)\/master|^HMCTS_d_to_i\/(div-.*)\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
@@ -431,7 +420,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db8a7c"
+                        image: "hmctsprod.azurecr.io/jenkins/build-agent:db8a7c"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -445,7 +434,7 @@ spec:
                         resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db8a7c"
+                      - image: "hmctsprod.azurecr.io/jenkins/minimal-agent:db8a7c"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -494,7 +483,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            image: hmctsprod.azurecr.io/jenkins/minimal-agent:db6hu6
                             command:
                               - /bin/sh
                               - -c
@@ -529,7 +518,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            image: hmctsprod.azurecr.io/jenkins/minimal-agent:db6hu6
                             command:
                               - /bin/sh
                               - -c

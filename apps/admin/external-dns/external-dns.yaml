@@ -1,27 +1,25 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: external-dns-private
+  name: external-dns
   namespace: admin
 spec:
-  releaseName: external-dns-private
+  releaseName: external-dns
   chart:
     spec:
-      chart: external-dns
-      version: 9.0.3
+      chart: imported/k8s-sigs/external-dns-chart
+      version: 1.20.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: hmctsprod-oci
         namespace: flux-system
   interval: 1m
   values:
     provider: azure-private-dns
     annotationFilter: "external-dns.alpha.kubernetes.io/exclude notin (true)"
     image:
-      registry: hmctspublic.azurecr.io
-      repository: imported/bitnami/external-dns
-      tag: 0.18.0-debian-12-r4
-    policy: sync
+      repository: hmctsprod.azurecr.io/imported/k8s-sigs/external-dns
+      tag: v0.20.0
     serviceAccount:
       create: false
       name: admin
@@ -30,11 +28,14 @@ spec:
       azure.workload.identity/use: "true"
     sources:
       - ingress
-    azure:
-      resourceGroup: core-infra-intsvc-rg
-      tenantId: 531ff96d-0ae9-462a-8d2d-bec7c0b42082
-      subscriptionId: 1baf5470-1c3e-40d3-a6f7-74bfbce4b348
-      useWorkloadIdentityExtension: true
+    extraVolumes:
+      - name: azure-config
+        configMap:
+          name: external-dns-azure-config
+    extraVolumeMounts:
+      - name: azure-config
+        mountPath: /etc/kubernetes
+        readOnly: true
     global:
       security:
         allowInsecureImages: true

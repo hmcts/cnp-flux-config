@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/ia/case-payments-api:prod-1bc27c7-20260129090746 #{"$imagepolicy": "flux-system:demo-ia-case-payments-api"}
+      image: hmctsprod.azurecr.io/ia/case-payments-api:pr-409-d9d75ac-20260313171509 #{"$imagepolicy": "flux-system:demo-ia-case-payments-api"}
       ingressHost: ia-case-payments-api-demo.service.core-compute-demo.internal
       environment:
         IDAM_URL: "https://idam-web-public.demo.platform.hmcts.net"
@@ -15,3 +15,31 @@ spec:
         PAY_CALLBACK_URL: "http://ia-case-payments-api-demo.service.core-compute-demo.internal/service-request-update"
         PROF_REF_DATA_URL: "http://rd-professional-api-demo.service.core-compute-demo.internal"
         DUMMY: "Yes"
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: idam-client-id
+              alias: IA_IDAM_CLIENT_ID
+            - name: idam-secret
+              alias: IA_IDAM_SECRET
+            - name: idam-redirect-uri
+              alias: IA_IDAM_REDIRECT_URI
+            - name: s2s-secret
+              alias: idam.s2s-auth.totp_secret
+            - name: s2s-microservice
+              alias: IA_S2S_MICROSERVICE
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: system-username
+              alias: IA_SYSTEM_USERNAME
+            - name: system-password
+              alias: IA_SYSTEM_PASSWORD
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: ia-config-validator-secret
+              alias: IA_CONFIG_VALIDATOR_SECRET
+            - name: ia-redis-connection-string
+              alias: IA_REDIS_CONNECTION_STRING
+            - name: ia-redis-access-key
+              alias: IA_REDIS_ACCESS_KEY

@@ -5,18 +5,23 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 4
-      memoryLimits: "5Gi"
-      memoryRequests: "4Gi"
-      cpuLimits: "4000m"
+      replicas: 8
+      autoscaling:
+        enabled: false
+      memoryLimits: "2048Mi"
+      memoryRequests: "768Mi"
+      cpuLimits: "2000m"
       cpuRequests: "500m"
+      livenessTimeout: 15
+      readinessTimeout: 15
+      livenessFailureThreshold: 8
       ingressHost: manage-case.aat.platform.hmcts.net
       environment:
         DUMMY_VAR_FOR_RESTART: 0
         JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,EMPLOYMENT,CIVIL,CMC,HRS,PRIVATELAW,WA,PRL,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3,ADOPTION,BEFTA_MASTER,DISPOSER_MASTER,ST_CIC,PCS
         HEARINGS_JURISDICTIONS: SSCS,PRIVATELAW,CIVIL,IA,EMPLOYMENT,ST_CIC
         FEATURE_TERMS_AND_CONDITIONS_ENABLED: false
-        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS,ST_CIC
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS,ST_CIC,PROBATE
         SERVICES_MARKUP_API: http://em-npa-aat.service.core-compute-aat.internal
         SERVICES_IDAM_OAUTH_CALLBACK_URL: /oauth2/callback
         FEATURE_OIDC_ENABLED: true

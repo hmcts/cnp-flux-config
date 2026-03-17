@@ -5,9 +5,10 @@ metadata:
 spec:
   values:
     java:
-      image: 'hmctspublic.azurecr.io/pcq/backend:pr-1622-8b278e9-20260219135729' #{"$imagepolicy": "flux-system:demo-pcq-backend"}
+      image: 'hmctsprod.azurecr.io/pcq/backend:prod-c5afd52-20260313100543' #{"$imagepolicy": "flux-system:demo-pcq-backend"}
     job:
       schedule: "0/15 * * * *"
       environment:
+        PCQ_DISPOSER_JOB: true
         PCQ_DISPOSER_ENABLED: true
         PCQ_DISPOSER_DRY_RUN: false
