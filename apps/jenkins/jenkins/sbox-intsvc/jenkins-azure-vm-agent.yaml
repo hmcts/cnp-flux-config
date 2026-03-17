@@ -102,7 +102,7 @@ spec:
                         virtualMachineSize: "Standard_D4ds_v5"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.71"
+                          galleryImageVersion: "24.04.72"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
@@ -115,8 +115,106 @@ spec:
                         virtualMachineSize: "Standard_D4ds_v5"
                         imageReference:
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.71"
+                          galleryImageVersion: "24.04.72"
                           galleryName: "hmcts"
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-sbox"
+                        templateDesc: "Jenkins build agents for CFT sandbox environment"
+                        labels: "ubuntu-sbox"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/managed-identities-sandbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-sbox-mi
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-preview"
+                        templateDesc: "Jenkins build agents for CFT preview environment"
+                        labels: "ubuntu-preview"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-preview-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-preview-mi
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-aat"
+                        templateDesc: "Jenkins build agents for CFT AAT environment"
+                        labels: "ubuntu-aat"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-aat-mi
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-ithc"
+                        templateDesc: "Jenkins build agents for CFT ITHC environment"
+                        labels: "ubuntu-ithc"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-ithc-mi
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-perftest"
+                        templateDesc: "Jenkins build agents for CFT perftest environment"
+                        labels: "ubuntu-perftest"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-perftest-mi
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-demo"
+                        templateDesc: "Jenkins build agents for CFT demo environment"
+                        labels: "ubuntu-demo"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-demo-mi
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-builders-prod"
+                        templateDesc: "Jenkins build agents for CFT prod environment"
+                        labels: "ubuntu-prod"
+                        maxVirtualMachinesLimit: 10
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.72"
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                        uamiID: /subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourceGroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-prod-mi
                         <<: *vm_template_values_anchor
