@@ -20,6 +20,8 @@ EXCLUSIONS_LIST=(
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-tya-notif/aat.yaml
     apps/hmc/hmc-operational-reports-runner-int/hmc-operational-reports-runner-int.yaml
+    .*apps/ccd/ccd-data-store-api/aat.yaml.*
+    .*apps/ccd/ccd-definition-store-api/aat.yaml.*
     .*perftest.*
     .*sbox.*
     .*test.*
