@@ -8,14 +8,14 @@ spec:
     job:
       schedule: "0 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/finrem/cos:prod-c3e0ef4-20260316125650 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctsprod.azurecr.io/finrem/cos:prod-59f8521-20260326111829 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
         TASK_NAME: CfvMigrationTask
   chart:
     spec:
       chart: finrem-cron
-      version: 0.0.9
+      version: 0.0.11
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic-oci
+        name: hmctsprod-oci
         namespace: flux-system
