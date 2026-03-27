@@ -6,9 +6,10 @@ spec:
   values:
     job:
       image: hmctsprod.azurecr.io/wa/task-batch-service:prod-4983ad2-20260327105932 #{"$imagepolicy": "flux-system:demo-wa-task-batch-initiation"}
-      schedule: "1-59/2 * * * *"
+      schedule: "*/1 * * * *"
       environment:
         JOB_NAME: INITIATION
+        REFRESH_FLAG: ""
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
