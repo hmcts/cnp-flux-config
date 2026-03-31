@@ -6,5 +6,11 @@ spec:
   releaseName: lau-eud-backend
   values:
     java:
+      replicas: 2
+      autoscaling:
+        maxReplicas: 4
       environment:
-        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_API_URL: "https://idam-api.platform.hmcts.net"
+        DUMMY_RESTART_VAR: 1
+      spotInstances:
+        enabled: false

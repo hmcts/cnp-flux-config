@@ -7,11 +7,11 @@ spec:
   releaseName: ccd-logstash-divorce
   values:
     replicas: 1
-    image: "hmctspublic.azurecr.io/imported/elastic/logstash"
+    image: "hmctsprod.azurecr.io/imported/elastic/logstash"
     imageTag: "9.2.4"
     extraInitContainers: |
       - name: download-postgres-jdbc
-        image: hmctspublic.azurecr.io/curl:7.70.0
+        image: hmctsprod.azurecr.io/curl:7.70.0
         command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib
