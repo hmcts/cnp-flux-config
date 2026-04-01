@@ -7,10 +7,10 @@ spec:
   values:
     environment:
       AZP_POOL: hmcts-sandbox-agent-pool
-    memoryRequests: 512Mi
-    cpuRequests: 25m
-    memoryLimits: 2048Mi
-    cpuLimits: 1000m
+    memoryRequests: 1024Mi
+    cpuRequests: 250m
+    memoryLimits: 4096Mi
+    cpuLimits: 2000m
     maxReplicaCount: 5
     triggerAuth:
       enabled: true
@@ -22,6 +22,8 @@ spec:
         poolID: "14"
         organizationURLFromEnv: "AZP_URL"
         personalAccessTokenFromEnv: "AZP_TOKEN"
+    job:
+      activeDeadlineSeconds: 21600 # 6hr timeout for long-running jobs
   chart:
     spec:
       chart: function
