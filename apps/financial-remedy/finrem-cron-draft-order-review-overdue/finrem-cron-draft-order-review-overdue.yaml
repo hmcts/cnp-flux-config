@@ -8,14 +8,14 @@ spec:
     job:
       schedule: "0 * * * *"
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/finrem/cos:prod-78c529a-20260317125352 #{"$imagepolicy": "flux-system:finrem-cos"}
+      image: hmctsprod.azurecr.io/finrem/cos:prod-fc23eb8-20260331102902 #{"$imagepolicy": "flux-system:finrem-cos"}
       environment:
         TASK_NAME: DraftOrderReviewOverdueSendNotificationTask
   chart:
     spec:
       chart: finrem-cron
-      version: 0.0.9
+      version: 0.0.11
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic-oci
+        name: hmctsprod-oci
         namespace: flux-system
