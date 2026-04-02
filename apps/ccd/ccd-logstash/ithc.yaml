@@ -51,3 +51,15 @@ spec:
             schedule => "* * * * * *"
           }
         }
+      03_output.conf: |
+        output {
+            elasticsearch {
+                hosts => ["${ES_HOSTS}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{id}"
+                timeout => 60
+                manage_template => false
+            }
+        }
