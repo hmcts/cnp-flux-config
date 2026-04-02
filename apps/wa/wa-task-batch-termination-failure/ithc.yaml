@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: wa-task-batch-termination
+  name: wa-task-batch-termination-failure
 spec:
   values:
     job:
-      schedule: "2,6,10,14,18,22,26,30,34,38,42,46,50,54,58 * * * *"
+      schedule: "*/5 * * * *"
       environment:
-        JOB_NAME: TERMINATION
+        JOB_NAME: TASK_TERMINATION_FAILURES
     global:
       environment: ithc
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
