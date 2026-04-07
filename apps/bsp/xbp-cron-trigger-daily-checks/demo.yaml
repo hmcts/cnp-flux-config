@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: xbp-cron-trigger-daily-checks
+spec:
+  releaseName: xbp-cron-trigger-daily-checks
+  values:
+    job:
+      image: hmctsprod.azurecr.io/bulk-scan/cron-trigger:pr-57
+      imagePullPolicy: Always
+      # every 30 minutes between 8am and 5pm on weekdays during testing
+      schedule: "*/30 8-17 * * 1-5"
+      environment:
+        TRIGGER_ENABLED: true
