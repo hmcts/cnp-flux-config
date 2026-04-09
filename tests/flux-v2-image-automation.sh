@@ -16,6 +16,7 @@ EXCLUSIONS_LIST=(
     apps/monitoring/acr-sync/check-acr-sync-aat.yaml
     apps/monitoring/acr-sync/check-acr-sync.yaml
     apps/private-law/prl-citizen-frontend/aat.yaml
+    apps/sscs/sscs-case-loader/aat-00.yaml
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-tya-notif/aat.yaml
