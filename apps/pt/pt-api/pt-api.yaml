@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pt-api
+spec:
+  releaseName: pt-api
+  values:
+    java:
+      replicas: 2
+      image: hmctsprod.azurecr.io/pt/api:prod-0aa4e93-20260415105123 #{"$imagepolicy": "flux-system:pcs-api"}
+      environment:
+        RESTART: "true"
+  chart:
+    spec:
+      chart: ./stable/pt-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
