@@ -1,23 +1,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: neuvector-crds
-  namespace: flux-system
-spec:
-  interval: 10m
-  path: ./apps/neuvector/crds
-
----
-
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: neuvector
   namespace: flux-system
 spec:
-  path: ./apps/neuvector/${ENVIRONMENT}/${CLUSTER}
   dependsOn:
     - name: neuvector-crds
+  path: ./apps/neuvector/${ENVIRONMENT}/${CLUSTER}
   postBuild:
     substitute:
       NAMESPACE: "neuvector"
