@@ -57,7 +57,7 @@ spec:
       replicas: 2
       memoryRequests: "1536Mi"
       cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
+      memoryLimits: "6Gi"
       cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 300
@@ -65,6 +65,7 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctsprod.azurecr.io/prl/cos:prod-e92b0a0-20260416153916 #{"$imagepolicy": "flux-system:perftest-prl-cos"}
       environment:
+        JAVA_OPTS: "-Xms1g -Xmx4g"
         OS_COURT_LOOKUP_ENABLED: true
         BARRISTER_FEATURE_ENABLED: true
         FEATURE_EXAMPLE: true

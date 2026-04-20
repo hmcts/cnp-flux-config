@@ -59,7 +59,7 @@ spec:
       replicas: 2
       memoryRequests: "1536Mi"
       cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
+      memoryLimits: "6Gi"
       cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 45
@@ -67,6 +67,7 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctsprod.azurecr.io/prl/cos:prod-e92b0a0-20260416153916 # {"$imagepolicy": "flux-system:ithc-prl-cos"}
       environment:
+        JAVA_OPTS: "-Xms1g -Xmx4g"
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-ithc.service.core-compute-ithc.internal/oauth2/callback

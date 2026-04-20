@@ -59,7 +59,7 @@ spec:
       replicas: 2
       memoryRequests: "1536Mi"
       cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
+      memoryLimits: "6Gi"
       cpuLimits: "2500m"
       readinessDelay: 40
       readinessTimeout: 300
@@ -67,6 +67,7 @@ spec:
       useInterpodAntiAffinity: true
       image: hmctsprod.azurecr.io/prl/cos:pr-3548-d9411ce-20260420085442 #{"$imagepolicy": "flux-system:demo-prl-cos"}
       environment:
+        JAVA_OPTS: "-Xms1g -Xmx4g"
         FEATURE_EXAMPLE: false
         DUMMY_ENV: false
         DUMMY_PROPERTY: true
