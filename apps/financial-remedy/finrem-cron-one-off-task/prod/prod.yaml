@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "00 18 18 2 *"
+      schedule: "45 07 16 4 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -25,10 +25,10 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: removeVacatedHearing
+        TASK_NAME: SetConsentOrderFRCNameTask
         CRON_DRY_RUN: false
-        CRON_REMOVE_VACATED_HEARING_TASK_ENABLED: true
-        CRON_REMOVE_VACATED_HEARING_CASE_LIST_FILE_NAME: "caserefs-encrypted.csv"
+        CRON_UPDATE_CONSENT_ORDER_FRC_NAME_ENABLED: true
+        CRON_UPDATE_CONSENT_ORDER_FRC_NAME_CASE_LIST_FILENAME: "updateConsentOrderFRCName-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
