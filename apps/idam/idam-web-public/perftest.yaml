@@ -3,14 +3,17 @@ kind: HelmRelease
 metadata:
   name: idam-web-public
   namespace: idam
+  annotations:
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-45e4026-20251216102542
+      image: hmctsprod.azurecr.io/idam/web-public:prod-a68d329-20260413082529
       replicas: 2
       ingressHost: idam-web-public.perftest.platform.hmcts.net
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.perftest.platform.hmcts.net
+        strategic_content_security_policy_form_action: "https: http:"
         SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUERURI: http://idam-perftest-jumpbox.service.core-compute-idam-perftest.internal:9080/auth/realms/jhipster
         SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENTID: internal
         SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENTSECRET: internal

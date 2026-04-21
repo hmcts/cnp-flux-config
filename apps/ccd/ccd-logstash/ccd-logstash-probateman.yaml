@@ -5,7 +5,7 @@ metadata:
 spec:
   releaseName: ccd-logstash-probateman
   values:
-    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
+    image: "hmctsprod.azurecr.io/imported/logstash/logstash"
     imageTag: "7.16.1-probateman"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
@@ -23,7 +23,7 @@ spec:
           name: probatemandb
     extraInitContainers: |
       - name: download-postgres-jdbc
-        image: hmctspublic.azurecr.io/curl:7.70.0
+        image: hmctsprod.azurecr.io/curl:7.70.0
         command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.2.18.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib

@@ -57,16 +57,17 @@ spec:
           - name: edge-case-court-list
             alias: EDGE_CASE_COURT_LIST
       replicas: 2
-      memoryRequests: "768Mi"
+      memoryRequests: "1536Mi"
       cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
+      memoryLimits: "6144Mi"
       cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 45
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/prl/cos:prod-75d3b3c-20260106100546 # {"$imagepolicy": "flux-system:ithc-prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-fc8edff-20260421090012 # {"$imagepolicy": "flux-system:ithc-prl-cos"}
       environment:
+        JAVA_OPTS: "-Xms1g -Xmx4g"
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-ithc.service.core-compute-ithc.internal/oauth2/callback

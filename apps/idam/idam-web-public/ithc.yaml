@@ -6,11 +6,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-45e4026-20251216102542
+      image: hmctsprod.azurecr.io/idam/web-public:prod-a68d329-20260413082529
       ingressHost: idam-web-public.ithc.platform.hmcts.net
       replicas: 1
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.ithc.platform.hmcts.net
+        strategic_content_security_policy_form_action: "https: http:"
         STEP_UP_AUTHENTICATION: true
         trigger_deploy: 20/06/2023-1500
         spring.security.oauth2.client.provider.moj.issuer-uri: https://sts.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/

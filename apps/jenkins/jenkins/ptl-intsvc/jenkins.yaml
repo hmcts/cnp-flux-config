@@ -53,13 +53,13 @@ spec:
                       - key: PTL_AKS_RESOURCE_GROUP
                         value: cft-ptl-00-rg
                       - key: AAT_AKS_CLUSTER_NAME
-                        value: cft-aat-01-aks
+                        value: cft-aat-00-aks
                       - key: AAT_AKS_RESOURCE_GROUP
-                        value: cft-aat-01-rg
+                        value: cft-aat-00-rg
                       - key: PREVIEW_AKS_CLUSTER_NAME
-                        value : cft-preview-01-aks
+                        value : cft-preview-00-aks
                       - key : PREVIEW_AKS_RESOURCE_GROUP
-                        value: cft-preview-01-rg
+                        value: cft-preview-00-rg
                       - key: AKS_PTL_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
                       - key: AKS_PREVIEW_SUBSCRIPTION_NAME
@@ -70,6 +70,8 @@ spec:
                         value: dcdcftappsstgkv
                       - key: BUSINESS_AREA_TAG
                         value: CFT
+                      - key: DUAL_ACR_PUBLISH
+                        value: "false"
           otel: |
             unclassified:
               openTelemetry:
@@ -152,7 +154,7 @@ spec:
                     title: SSCS Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(ia.*|AIP-Performance)\/master
+                      ^HMCTS.*\/(ia.*|aip-performance)\/master
                     name: IA
                     recurse: true
                     title: I & A Dashboard
@@ -266,7 +268,7 @@ spec:
                     title: Evidence Management
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/civil-(?!damages|rtl|sdt).*\/master
+                      ^HMCTS.*\/(civil-service|civil-camunda-bpmn-definition|civil-ccd-definition|civil-citizen-ui|civil-wa-task-configuration|civil-performance)\/master
                     name: Civil
                     recurse: true
                     title: Civil Data Dashboard
@@ -314,19 +316,19 @@ spec:
                     title: Performance Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-wa-post-deployment-ft-tests|prl-ccd-case-migration|prl-cron|prl-e2e-tests)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-ccd-case-migration|prl-cron|prl-e2e-tests)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions)\/master
+                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui)\/master|^HMCTS_d_to_i\/(div-.*)\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-message-handler|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
@@ -384,6 +386,12 @@ spec:
                     name: ROTA
                     recurse: true
                     title: Magistrates Rota Dashboard
+                - buildMonitor:
+                    includeRegex: >-
+                      ^HMCTS.*\/pt-.*\/master
+                    name: PT
+                    recurse: true
+                    title: Property Tribunal Dashboard
           location: |
             unclassified:
               location:
@@ -418,7 +426,7 @@ spec:
                       containers:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
-                        image: "hmctspublic.azurecr.io/jenkins/build-agent:db8a7c"
+                        image: "hmctsprod.azurecr.io/jenkins/build-agent:db8a7c"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -432,7 +440,7 @@ spec:
                         resourceRequestMemory: "4Gi"
                         ttyEnabled: true
                         workingDir: "/home/jenkins/agent"
-                      - image: "hmctspublic.azurecr.io/jenkins/minimal-agent:db8a7c"
+                      - image: "hmctsprod.azurecr.io/jenkins/minimal-agent:db8a7c"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -481,7 +489,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            image: hmctsprod.azurecr.io/jenkins/minimal-agent:db6hu6
                             command:
                               - /bin/sh
                               - -c
@@ -516,7 +524,7 @@ spec:
                             fsGroup: 118
                           initContainers:
                           - name: init-agent
-                            image: hmctspublic.azurecr.io/jenkins/minimal-agent:db6hu6
+                            image: hmctsprod.azurecr.io/jenkins/minimal-agent:db6hu6
                             command:
                               - /bin/sh
                               - -c

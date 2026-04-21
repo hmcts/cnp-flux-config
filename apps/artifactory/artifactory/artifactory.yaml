@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: artifactory-oss
-      version: 107.117.19
+      version: 107.133.12
       sourceRef:
         kind: HelmRepository
         name: artifactory
@@ -29,10 +29,16 @@ spec:
           size: 128Gi
         database:
           allowNonPostgresql: true
+        # Artifactory OSS 7.125+ appears to have a bug where it tries to connect to JFConnect microservice to verify entitlements/licensing
+        # But this microservice does not exist within OSS and there is no licensing to check, this causes frontend microservice to never load
+        # So explicitly disable JFConnect to prevent this issue
+        # Bug for this has been raised: https://github.com/jfrog/charts/issues/2233
         systemYaml: |
           shared:
             database:
               allowNonPostgresql: true
+          jfconnect:
+            enabled: false
         configMapName: artifactory-oss-configmaps
       ingress:
         annotations:
