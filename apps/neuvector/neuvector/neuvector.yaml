@@ -11,17 +11,72 @@ spec:
     config:
       autoScan: true
     rules:
-      admission:
-        enable: true
-      response:
-        policies:
-          - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
-          - '{"insert":{"after":1,"rules":[{"group":null,"conditions":[],"actions":["webhook"],"event":"security-event","disable":true}]}}'
-          - '{"insert":{"after":2,"rules":[{"group":null,"conditions":[{"type":"level","value":"Error"}],"actions":["webhook"],"event":"security-event","disable":false}]}}'
-          - '{"insert":{"after":3,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Privilege.Escalation"}],"actions":["quarantine"],"event":"security-event","disable":true}]}}'
-          - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
-          - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
-          - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
+        groups: []
+        admission:
+          enable: true
+          includeDefaultRules: true
+          defaultRules: []
+          rules: []
+        network:
+          includeDefaultRules: true
+          defaultRules: []
+          rules: []
+        response:
+          policies:
+            - name: admission-control-denied
+              event: admission-control
+              conditions:
+                - type: name
+                  value: Admission.Control.Denied
+              actions:
+                - webhook
+              disable: false
+            - name: security-event-all
+              event: security-event
+              conditions: []
+              actions:
+                - webhook
+              disable: true
+            - name: security-event-error
+              event: security-event
+              conditions:
+                - type: level
+                  value: Error
+              actions:
+                - webhook
+              disable: false
+            - name: security-event-privilege-escalation
+              event: security-event
+              conditions:
+                - type: name
+                  value: Container.Privilege.Escalation
+              actions:
+                - quarantine
+              disable: true
+            - name: cve-report-high
+              event: cve-report
+              conditions:
+                - type: cve-high
+                  value: "10"
+              actions:
+                - quarantine
+              disable: true
+            - name: event-container-quarantined
+              event: event
+              conditions:
+                - type: name
+                  value: Container.Quarantined
+              actions:
+                - webhook
+              disable: false
+            - name: compliance-5-4
+              event: compliance
+              conditions:
+                - type: name
+                  value: "5.4"
+              actions:
+                - webhook
+              disable: true
     neuvector:
       serviceAccount: neuvector
       containerd:

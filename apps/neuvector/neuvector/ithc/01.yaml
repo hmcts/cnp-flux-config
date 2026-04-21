@@ -42,3 +42,42 @@ spec:
       manager:
         ingress:
           host: cft-neuvector-ithc01.hmcts.net
+      rules:
+        network:
+          includeDefaultRules: true
+          rules:
+            - apiVersion: neuvector.com/v1
+              kind: NvClusterSecurityRule
+              metadata:
+                name: idam-strict-egress
+              spec:
+                egress:
+                  - action: allow
+                    applications:
+                      - SSL
+                    name: IdamApi
+                    ports: tcp/443
+                    selector:
+                      comment: "Allow only IDAM API egress"
+                      criteria:
+                        - key: address
+                          op: =
+                          value: idam-api.platform.hmcts.net
+                      name: IdamApi
+                      original_name: ""
+                ingress: []
+                file: []
+                process: []
+                target:
+                  policymode: Protect
+                  selector:
+                    comment: "IDAM namespace only"
+                    criteria:
+                      - key: namespace
+                        op: =
+                        value: idam
+                    name: IdamPods
+                    original_name: ""
+                waf:
+                  settings: []
+                  status: true
