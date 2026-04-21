@@ -8,7 +8,7 @@ spec:
     job:
       useInterpodAntiAffinity: true
       image: hmctsprod.azurecr.io/bulk-scan/cron-trigger:prod-eb80e64-20260415181036 #{"$imagepolicy": "flux-system:send-letter-cron-trigger-daily-checks"}
-      schedule: "0 12 * * 1-5"
+      schedule: "*/12 * * * *"
       environment:
         TRIGGER_TYPE: SEND_LETTER_CHECKS
         TRIGGER_ENABLED: false
