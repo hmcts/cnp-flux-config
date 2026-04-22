@@ -11,10 +11,12 @@ spec:
       memoryRequests: "1638Mi"
       memoryLimits: "2048Mi"
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/ia/case-notifications-api:prod-782a9d3-20260417102106 #{"$imagepolicy": "flux-system:ia-case-notifications-api"}
+      image: hmctsprod.azurecr.io/ia/case-notifications-api:prod-5fd1609-20260420162133 #{"$imagepolicy": "flux-system:ia-case-notifications-api"}
       autoscaling:
         enabled: true
         maxReplicas: 6
+        memory:
+          averageUtilization: 120
   chart:
     spec:
       chart: ./stable/ia-case-notifications-api
