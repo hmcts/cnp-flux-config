@@ -4,7 +4,7 @@ Below section covers how the repo is set up to handle multiple environments and 
 
 ### Key considerations
 
-- Directory stucture is team/namespace focussed than cluster focussed so that moving teams config to different repos and managing permissions is easy.
+- Directory structure is team/namespace-focused than cluster-focused so that moving teams' config to different repos and managing permissions is easy.
 - Every namespace is a directory in [apps/](../apps/)
 - Image Automation is run only from CFTPTL cluster and related components/CRDs are installed/created only on CFTPTL.
 - Every team/namespace has a separate Flux Kustomization so that one team won't break another team's config.
@@ -12,11 +12,11 @@ Below section covers how the repo is set up to handle multiple environments and 
 
 ### Kustomization Naming
 
-- [flux-system Flux kustomization](../apps/flux-system/sbox/00/kustomize.yaml)- flux specific CRD, file named kustomize.yaml to avoid confusion with k8s kustomization.yaml files. It gives path and repo from which flux controller should apply from.
+- [flux-system Flux kustomization](../apps/flux-system/sbox/00/kustomize.yaml)- flux specific CRD, file named kustomize.yaml to avoid confusion with k8s kustomization.yaml files. It gives path and repo from which flux controller should apply.
 - [namespace flux kustomization](../apps/rpe/base/kustomize.yaml) - A Flux Kustomize file for specific namespace having the path flux should look at.
 - [Cluster Overlay](../clusters/sbox/00/kustomization.yaml) - overlay of a cluster which normally patches on top of Env Base defined next.
 - [Env Base](../clusters/sbox/base/kustomization.yaml) - A base kustomization for an environment which generally includes Flux Kustomizations for all namespaces in that cluster.
-- [namespace base kustomization](../apps/rpe/base/kustomization.yaml) - A base kustomization including manifests that are common across all environments except special cases like preview.
+- [namespace base kustomization](../apps/rpe/base/kustomization.yaml) - A base kustomization including manifests that are common across all environments except special cases like Preview.
 - [namespace env overlay]((../apps/rpe/aat/base/kustomization.yaml)) - Overlay of a namespace base kustomization with env specific patches related to that namespace.
 - [default namespace base](../apps/base/kustomization.yaml) - default manifests needed for all namespaces but templated which are set in [namespace Flux kustomization](../apps/rpe/base/kustomize.yaml)
 - [namespace automation kustomization](../apps/rpe/automation) - includes all automation CRDs for a namespace

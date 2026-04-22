@@ -9,7 +9,7 @@ spec:
       environment:
         TASK_NAME: UnNotifiedHearingsProcessor
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/hearings-api:prod-3b37e5b-20250716091655 #{"$imagepolicy": "flux-system:ia-cron-unnotified-hearings-processor"}
+      image: hmctsprod.azurecr.io/ia/hearings-api:prod-c33db0a-20260417103058 #{"$imagepolicy": "flux-system:ia-cron-unnotified-hearings-processor"}
       schedule: 0 * * * *
       memoryRequests: "768Mi"
       cpuRequests: "1000m"
@@ -47,11 +47,17 @@ spec:
             alias: HEARINGS_TOPIC_CONNECTION_STRING
           - name: hmc-servicebus-shared-access-key-tf
             alias: HMC_HEARINGS_TOPIC_ACCESS_KEY
+          - name: ia-redis-connection-string
+            alias: IA_REDIS_CONNECTION_STRING
+          - name: ia-redis-access-key
+            alias: IA_REDIS_ACCESS_KEY
+          - name: ia-redis-encryption-key
+            alias: IA_REDIS_ENCRYPTION_KEY
   chart:
     spec:
       chart: ia-cron-config
-      version: 0.0.1
+      version: 0.0.3
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic-oci
+        name: hmctsprod-oci
         namespace: flux-system

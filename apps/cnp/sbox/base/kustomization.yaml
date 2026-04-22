@@ -3,14 +3,18 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../plum-batch/plum-batch.yaml
+  - ../../plum-recipe-backend-apim-test/plum-recipe-backend-apim-test.yaml
+  - ../../plum-frontend-tlse2e/plum-frontend-tlse2e.yaml
   - test-ingress-redirect.yaml
   - descheduler-cronjob.yaml
   - descheduler-helmrepo.yaml
 namespace: cnp
 patches:
   - path: ../../plum-frontend/sbox.yaml
+  - path: ../../plum-frontend-tlse2e/sbox.yaml
   - path: ../../plum-recipe-backend/sbox.yaml
   - path: ../../plum-recipe-receiver/sbox.yaml
+  - path: ../../plum-recipe-backend-apim-test/sbox.yaml
   - path: ../../plum-batch/sbox.yaml
   - path: ../../serviceaccount/sbox.yaml
   - path: namespace.yaml

@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/prl/citizen-frontend:prod-63c62dd-20250722100009 #{"$imagepolicy": "flux-system:prl-citizen-frontend"}
+      image: hmctsprod.azurecr.io/prl/citizen-frontend:pr-1990-c161cdb-20260421090756 #{"$imagepolicy": "flux-system:demo-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
@@ -30,6 +30,7 @@ spec:
             - redis-access-key
             - prl-pcq-token-key
       environment:
+        DUMMY_VAR: true
         NODE_ENV: demo
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
@@ -49,7 +50,7 @@ spec:
         ENABLE_RA_COMPONENT: true
         ENABLE_CASE_TRAIN_TRACK: true
         ENABLE_PCQ_COMPONENT: true
-        ALLOWED_COURTS: Swansea Civil Justice Centre,Kingston-upon-Hull Combined Court Centre,Grimsby Combined Court Centre,Chelmsford Justice Centre,Chelmsford Magistrates' Court and Family Court,Wolverhampton Combined Court Centre
+        ALLOWED_COURTS: "*"
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

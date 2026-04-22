@@ -1,11 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
-- ../../base/gotk-components.yaml
-- ../../workload-identity
-- aso-controller-settings-patch.yaml
-- ../../docker-regcreds/ithc
+  - ../../base
+  - ../../base/gotk-components.yaml
+  - ../../workload-identity
+  - aso-controller-settings-patch.yaml
+  - ../../docker-regcreds/ithc
 patches:
-- path: ../../serviceaccount/ithc.yaml
-- path: ../../base/patches/workload-identity-deployment-patch.yaml
+  - path: ../../serviceaccount/ithc.yaml
+  - path: ../../serviceaccount/ithc-source-controller.yaml
+  - path: ../../base/patches/workload-identity-deployment-patch.yaml
+  - path: ../../base/patches/workload-identity-source-controller-patch.yaml
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --concurrent=10
+    target:
+      kind: Deployment
+      name: helm-controller
+      namespace: flux-system

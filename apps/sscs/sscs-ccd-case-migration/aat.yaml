@@ -8,21 +8,45 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctspublic.azurecr.io/sscs/ccd-case-migration:prod-65c93b5-20250721161643 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-72ce9db-20260409131642 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "52 12 16 07 *"
+      schedule: "50 14 9 4 *"
+      keyVaults:
+        sscs:
+          resourceGroup: sscs
+          secrets:
+            - name: idam-sscs-oauth2-client-secret
+              alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_PASS
+            - name: sscs-s2s-secret
+              alias: DATA_STORE_IDAM_KEY
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: idam-sscs-systemupdate-user
+              alias: IDAM_SSCS_SYSTEMUPDATE_USER
+            - name: idam-sscs-systemupdate-password
+              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
+            - name: encoded-string-ready-to-list
+              alias: READY_TO_LIST_MIGRATION_ENCODED_STRING
+            - name: encoded-string-processing-venue
+              alias: VENUE_MIGRATION_ENCODED_STRING
+            - name: encoded-string-add-hearing-migration
+              alias: ADD_HEARING_ENCODED_DATA_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         DUMMY_RESTART_VAR: true
         MIGRATION_QUERY_SIZE: 10000
-        MIGRATION_CASE_LIMIT: "1000"
+        MIGRATION_CASE_LIMIT: "50"
         JAVA_OPTS: -Xmx4G
         ARCHIVE_OLD_DRAFTS_ENABLED: false
-        DEFAULT_PANEL_COMPOSITION_ENABLED: false
-        ULR_USE_PRE_FETCHED_CASE_LIST: true
-        ADJOURNMENT_FLAG_MIGRATION_ENABLED: true
+        READY_TO_LIST_MIGRATION_ENABLED: false
+        VENUE_MIGRATION_ENABLED: false
+        ADD_HEARING_MIGRATION_ENABLED: true

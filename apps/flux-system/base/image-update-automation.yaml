@@ -1,4 +1,4 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
 metadata:
   name: imageautomation
@@ -16,7 +16,8 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+      messageTemplate: |
+        {{- $sep := "" -}}{{- range $resource, $changes := .Changed.Objects -}}{{- range $_, $change := $changes -}}{{- print $sep $change.NewValue -}}{{- $sep = ", " -}}{{- end -}}{{- end -}}
     push:
       branch: master
   update:

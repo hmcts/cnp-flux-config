@@ -9,13 +9,13 @@ spec:
       jobKind: CronJob
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-fa97a68-20250715161107 #{"$imagepolicy": "flux-system:fpl-cron-ccd-data-migration-tool"}
+      image: hmctsprod.azurecr.io/fpl/cron-ccd-data-migration-tool:prod-f3234e4-20260326110903 #{"$imagepolicy": "flux-system:fpl-cron-ccd-data-migration-tool"}
       schedule: "30 12 30 2 *"
       environment:
         MIGRATION_ID: DFPL-1124Rollback
         ENABLED: false
         UPDATE: migration
-        DEFAULT_THREAD_LIMIT: 25
+        DEFAULT_THREAD_LIMIT: 15
         DEFAULT_QUERY_SIZE: 100
       keyVaults:
         fpl:

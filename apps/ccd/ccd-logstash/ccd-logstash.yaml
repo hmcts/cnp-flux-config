@@ -5,7 +5,7 @@ metadata:
 spec:
   releaseName: ccd-logstash
   values:
-    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
+    image: "hmctsprod.azurecr.io/imported/logstash/logstash"
     imageTag: "7.16.1"
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
@@ -21,10 +21,10 @@ spec:
           name: logstash-secret
     extraEnvs:
       - name: DUMMY_RESTART_VAR
-        value: "true8"
+        value: "true11"
     extraInitContainers: |
       - name: download-postgres-jdbc
-        image: hmctspublic.azurecr.io/curl:7.70.0
+        image: hmctsprod.azurecr.io/curl:7.70.0
         command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.3.3.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib
@@ -71,8 +71,9 @@ spec:
                         "ethosj" => "EMPLOYMENT"
                         "sscsj" => "SSCS"
                         "civilj" => "CIVIL"
+                        "fplj" => "PUBLICLAW"
                       }
-            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            statement => "UPDATE case_data SET marked_by_logstash = true WHERE marked_by_logstash = false AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :fplj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
             clean_run => false
             schedule => "* * * * * *"
           }

@@ -1,0 +1,15 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: dynatrace-dynakube
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: dynatrace-crd
+    - name: dynatrace
+  path: ./apps/dynatrace/${ENVIRONMENT}/base/dynakube
+  postBuild:
+    substitute:
+      NAMESPACE: "dynatrace"
+      CLUSTER_FULL_NAME: "${ENVIRONMENT}-${CLUSTER}"

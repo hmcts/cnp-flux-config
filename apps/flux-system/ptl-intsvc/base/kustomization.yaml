@@ -10,8 +10,18 @@ resources:
 - ../../automation/workload-identity-automation
 
 patches:
-- path: ../../base/patches/image-automation-components-patch.yaml
 - path: ../../serviceaccount/ptl-intsvc.yaml
-- path: ../../base/patches/workload-identity-deployment-patch.yaml
 - path: ../../serviceaccount/ptl-intsvc-automation.yaml
+- path: ../../serviceaccount/ptl-intsvc-source-controller.yaml
+- path: ../../base/patches/image-automation-components-patch.yaml
+- path: ../../base/patches/workload-identity-deployment-patch.yaml
 - path: ../../base/patches/workload-identity-deployment-automation.yaml
+- path: ../../base/patches/workload-identity-source-controller-patch.yaml
+- patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --concurrent=10
+  target:
+    kind: Deployment
+    name: helm-controller
+    namespace: flux-system

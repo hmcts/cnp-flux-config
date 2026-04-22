@@ -1,0 +1,24 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: azure-devops-agent-windows
+  namespace: azure-devops
+spec:
+  values:
+    maxReplicaCount: 6
+    environment:
+      AZP_POOL: hmcts-cft-ptl-windows
+    triggerAuth:
+      enabled: true
+      create: true
+      triggerPodIdentityProvider: "azure-workload"
+      triggerPodIdentityIdentityId: "4b7dfaef-aa3c-4b0b-b5fe-af5988dc7300" # keda-cftptl-intsvc-mi
+    memoryLimits: 5Gi
+    cpuRequests: 500m
+    cpuLimits: 4
+    triggers:
+      - type: azure-pipelines
+        poolID: "59"
+        organizationURLFromEnv: "AZP_URL"
+        personalAccessTokenFromEnv: "AZP_TOKEN"
