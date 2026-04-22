@@ -7,7 +7,11 @@ spec:
   releaseName: idam-user-profile-bridge
   values:
     java:
+      replicas: 0
       ingressHost: idam-user-profile-bridge.sandbox.platform.hmcts.net
       environment:
         IDAM_API_URL: http://idam-api
         SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: http://idam-web-public/o/jwks
+        SPRING_JMS_SERVICEBUS_CONNECTIONSTRING: Endpoint=sb://idam-servicebus-sandbox.servicebus.windows.net/
+        SPRING_JMS_SERVICEBUS_TOPICCLIENTID: bf308a5c-0624-4334-8ff8-8dca9fd43783
+        SPRING_JMS_SERVICEBUS_NAMESPACE: idam-servicebus-sandbox
