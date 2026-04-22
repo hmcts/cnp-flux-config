@@ -55,17 +55,17 @@ spec:
             - name: app-insights-connection-string
               alias: app-insights-connection-string
       replicas: 2
-      memoryRequests: "768Mi"
+      memoryRequests: "1536Mi"
       cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
+      memoryLimits: "6144Mi"
       cpuLimits: "2500m"
       readinessDelay: 45
       readinessTimeout: 300
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/prl/cos:prod-b0d2113-20260320194218 #{"$imagepolicy": "flux-system:perftest-prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-3d30244-20260422074500 #{"$imagepolicy": "flux-system:perftest-prl-cos"}
       environment:
-        OS_COURT_LOOKUP_ENABLED: true
+        JAVA_OPTS: "-Xms1g -Xmx4g"
         BARRISTER_FEATURE_ENABLED: true
         FEATURE_EXAMPLE: true
         PRD_API_BASEURL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
@@ -97,6 +97,7 @@ spec:
         SEND_LETTER_URL: http://rpe-send-letter-service-perftest.service.core-compute-perftest.internal
         APP_ENV: "perftest"
         DUMMY_VAR: true
+        OS_COURT_LOOKUP_ENABLED: true
         VAR1: true
     global:
       environment: perftest

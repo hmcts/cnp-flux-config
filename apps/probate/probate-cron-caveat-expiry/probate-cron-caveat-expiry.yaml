@@ -8,14 +8,14 @@ spec:
     job:
       schedule: "0 2 31 2 *"
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/probate/back-office:prod-9c12c0f-20260323091144 #{"$imagepolicy": "flux-system:probate-back-office"}
+      image: hmctsprod.azurecr.io/probate/back-office:prod-7c9777a-20260421110230 #{"$imagepolicy": "flux-system:probate-back-office"}
       environment:
         TASK_NAME: CaveatExpiryTask
   chart:
     spec:
       chart: probate-cron
-      version: 0.0.30
+      version: 0.0.33
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic-oci
+        name: hmctsprod-oci
         namespace: flux-system
