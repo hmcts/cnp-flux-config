@@ -198,6 +198,20 @@ spec:
               egress:
                 - action: allow
                   applications:
+                    - DNS
+                  name: DNS
+                  ports: udp/53
+                  priority: 0
+                  selector:
+                    comment: ""
+                    criteria:
+                      - key: domain
+                        op: =
+                        value: kube-system
+                    name: nv.kube-dns.kube-system
+                    original_name: ""
+                - action: allow
+                  applications:
                     - HTTP
                     - SSL
                   name: ApplicationInsights
