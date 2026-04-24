@@ -2,14 +2,3 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: bp-cron-trigger-daily-checks
-spec:
-  releaseName: bp-cron-trigger-daily-checks
-  values:
-    job:
-      # pr-73 image for testing
-      image: hmctsprod.azurecr.io/bulk-scan/cron-trigger:pr-73
-      imagePullPolicy: Always
-      # mon-fri, 11:30am-4:30pm, on the half hour
-      schedule: "30 11-16 * * 1-5"
-      environment:
-        TRIGGER_ENABLED: true
