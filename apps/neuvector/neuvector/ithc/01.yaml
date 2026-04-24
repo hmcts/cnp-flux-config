@@ -41,42 +41,67 @@ spec:
       manager:
         ingress:
           host: cft-neuvector-ithc01.hmcts.net
+    groups:
+      - name: idam-subnets
+        criteria:
+          - key: address
+            op: =
+            value: 10.0.0.0/24  # TODO: replace with IDAM subnet CIDR
     rules:
       network:
-        includeDefaultRules: true
-        rules:
+        customRules:
           - apiVersion: neuvector.com/v1
             kind: NvClusterSecurityRule
             metadata:
-              name: idam-strict-egress
+              name: cp-idam
+              namespace: ""
             spec:
               egress:
                 - action: allow
                   applications:
+                    - PostgreSQL
                     - SSL
-                  name: IdamApi
-                  ports: tcp/443
+                  name: idam-postgres
+                  ports: tcp/5432
+                  priority: 0
                   selector:
-                    comment: "Allow only IDAM API egress"
-                    criteria:
-                      - key: address
-                        op: =
-                        value: idam-api.platform.hmcts.net
-                    name: IdamApi
+                    comment: ""
+                    criteria: []
+                    name: idam-subnets
                     original_name: ""
-              ingress: []
+                - action: deny
+                  applications: []
+                  name: idam-deny-external
+                  ports: any
+                  priority: 0
+                  selector:
+                    comment: ""
+                    criteria: []
+                    name: external
+                    original_name: ""
+                - action: deny
+                  applications: []
+                  name: idam-deny-internal
+                  ports: any
+                  priority: 0
+                  selector:
+                    comment: ""
+                    criteria:
+                      - key: namespace
+                        op: =
+                        value: '*'
+                    name: IdamDenyInternal
+                    original_name: ""
               file: []
+              ingress: []
               process: []
               target:
                 policymode: Protect
                 selector:
-                  comment: "IDAM namespace only"
+                  comment: ""
                   criteria:
                     - key: namespace
                       op: =
-                      value: idam
-                  name: IdamPods
+                      value: crime-idam
+                  name: cp-idam
                   original_name: ""
-              waf:
-                settings: []
-                status: true
