@@ -45,12 +45,6 @@ spec:
       manager:
         ingress:
           host: cft-neuvector-ithc01.hmcts.net
-    groups:
-      - name: idam-subnets
-        criteria:
-          - key: address
-            op: =
-            value: 10.0.0.0/24  # TODO: replace with IDAM subnet CIDR
     rules:
       network:
         customRules:
@@ -69,17 +63,18 @@ spec:
                   ports: tcp/5432
                   priority: 0
                   selector:
-                    comment: ""
-                    criteria: []
-                    name: idam-subnets
-                    original_name: ""
+                    comment: "Allow access to IDAM Postgres"
+                    criteria:
+                      - key: address
+                        op: =
+                        value: 10.0.0.0/24  # TODO: replace with IDAM subnet CIDR
                 - action: deny
                   applications: []
                   name: idam-deny-external
                   ports: any
                   priority: 0
                   selector:
-                    comment: ""
+                    comment: "Deny access to external resources"
                     criteria: []
                     name: external
                     original_name: ""
@@ -89,7 +84,7 @@ spec:
                   ports: any
                   priority: 0
                   selector:
-                    comment: ""
+                    comment: "Deny access to internal resources"
                     criteria:
                       - key: namespace
                         op: =
