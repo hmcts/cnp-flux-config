@@ -1,15 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: wa-task-batch-termination
+  name: wa-messages-set-processed-state-messages
 spec:
   values:
     job:
-      # This starts at 2 to avoid running in parallel with prod-00.yml in both clusters
-      schedule: "2-59/4 * * * *"
+      schedule: "*/30 * * * *"
       environment:
-        JOB_NAME: TERMINATION
-        RESTART_ME: ""
+        JOB_NAME: SET_STATE_TO_PROCESSED_ON_MESSAGES
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
