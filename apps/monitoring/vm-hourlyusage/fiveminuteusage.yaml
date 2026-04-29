@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vm-fiveminuteusage
+  namespace: monitoring
+  labels:
+    app: vm-fiveminuteusage
+    ignored-by-dynatrace: "true"
+spec:
+  releaseName: vm-fiveminuteusage
+  chart:
+    spec:
+      chart: job
+      sourceRef:
+        kind: GitRepository
+        name: chart-job
+        namespace: flux-system
+      interval: 1m
+  interval: 5m
+  values:
+    global:
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    schedule: "*/5 * * * *" # Every 5 Mins, everyday
+    concurrencyPolicy: "Forbid"
+    failedJobsHistoryLimit: 5
+    startingDeadlineSeconds: 300
+    successfulJobsHistoryLimit: 5
+    backoffLimit: 3
+    restartPolicy: Never
+    serviceAccountName: monitoring
+    kind: CronJob
+    image: hmctsprod.azurecr.io/version-reporter-service/hourlyusage:prod-f6a0995-20260427070820 #{"$imagepolicy": "flux-system:vm-hourlyusage"}
+    imagePullPolicy: Always
+    environment:
+      CLUSTER_NAME: cft-${ENVIRONMENT}-${CLUSTER}-aks
+      AZURE_STORAGE_CONTAINER: hmctsfiveminutedatasource
+      AZURE_STORAGE_URL: https://finopsdataptlsa.blob.core.windows.net
+    nodeSelector:
+      kubernetes.io/os: linux
+    tolerations:
+      - key: dedicated
+        effect: NoSchedule
+        operator: Equal
+        value: jobs
