@@ -7,13 +7,15 @@ spec:
   releaseName: ecm-consumer
   values:
     java:
-      replicas: 2
+      replicas: 0
       useInterpodAntiAffinity: true
       image: hmctsprod.azurecr.io/ethos/ecm-consumer:prod-bb09953-20260318105923 #{"$imagepolicy": "flux-system:ecm-consumer"}
       memoryLimits: "2560Mi"
       memoryRequests: "1700Mi"
       cpuLimits: "1500m"
       cpuRequests: "100m"
+      autoscaling:
+        enabled: false
   chart:
     spec:
       chart: ./stable/ethos-ecm-consumer

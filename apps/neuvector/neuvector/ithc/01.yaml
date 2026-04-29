@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.6.8
+      version: 1.6.10
   values:
     neuvector:
       controller:
@@ -69,9 +69,15 @@ spec:
                   ports: tcp/5432
                   priority: 0
                   selector:
-                    comment: ""
-                    criteria: []
-                    name: idam-subnets
+                    comment: "Allow IDAM Postgres subnets from IDAM Namespace"
+                    criteria:
+                      - key: address
+                        op: =
+                        value: 10.0.1.0/24  # TODO: replace with IDAM subnet CIDR
+                      - key: address
+                        op: =
+                        value: 10.0.2.0/24  # TODO: replace with IDAM subnet CIDR
+                    name: idamPostgres
                     original_name: ""
                 - action: deny
                   applications: []

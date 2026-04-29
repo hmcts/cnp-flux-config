@@ -5,68 +5,7 @@ metadata:
   name: neuvector
   namespace: neuvector
 spec:
-  chart:
-    spec:
-      chart: neuvector-azure-keyvault
-      version: 1.6.7
   values:
-    rules:
-      response:
-        policies:
-          - name: admission-control-denied
-            event: admission-control
-            conditions:
-              - type: name
-                value: Admission.Control.Denied
-            actions:
-              - webhook
-            disable: false
-          - name: security-event-all
-            event: security-event
-            conditions: []
-            actions:
-              - webhook
-            disable: true
-          - name: security-event-error
-            event: security-event
-            conditions:
-              - type: level
-                value: Error
-            actions:
-              - webhook
-            disable: false
-          - name: security-event-privilege-escalation
-            event: security-event
-            conditions:
-              - type: name
-                value: Container.Privilege.Escalation
-            actions:
-              - quarantine
-            disable: true
-          - name: cve-report-high
-            event: cve-report
-            conditions:
-              - type: cve-high
-                value: "10"
-            actions:
-              - quarantine
-            disable: true
-          - name: event-container-quarantined
-            event: event
-            conditions:
-              - type: name
-                value: Container.Quarantined
-            actions:
-              - webhook
-            disable: false
-          - name: compliance-5-4
-            event: compliance
-            conditions:
-              - type: name
-                value: "5.4"
-            actions:
-              - webhook
-            disable: true
     keyvault:
       name: cftapps
       resourcegroup: core-infra-ithc-rg
