@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: wa-messages-find-problem-messages
+  name: wa-case-event-handler-clean-up-messages
 spec:
   values:
     job:
-      schedule: "0,30 * * * *"
+      schedule: "*/15 * * * *"
       environment:
-        JOB_NAME: FIND_PROBLEM_MESSAGES
+        JOB_NAME: CLEAN_UP_MESSAGES
     global:
       environment: prod
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
