@@ -8,9 +8,9 @@ spec:
     job:
       environment:
         TASK_NAME: SystemRejectCasesWithPaymentOverdueTask
-        CCD_SEARCH_MAX_RESULTS: 49
+        CCD_SEARCH_MAX_RESULTS: 50
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/nfdiv/case-api:prod-81565b5-20260429140037 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
+      image: hmctsprod.azurecr.io/nfdiv/case-api:prod-44a41f5-20260430132541 #{"$imagepolicy": "flux-system:nfdiv-case-api"}
     keyVaults:
       nfdiv:
         secrets:
@@ -26,7 +26,7 @@ spec:
             alias: IDAM_SYSTEM_UPDATE_USERNAME
           - name: idam-systemupdate-password
             alias: IDAM_SYSTEM_UPDATE_PASSWORD
-    schedule: "0 14 * * *"
+    schedule: "0 0 * * 1,3,5"
   chart:
     spec:
       chart: nfdiv-cron
