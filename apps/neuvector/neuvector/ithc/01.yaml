@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.6.11
+      version: 1.6.12
   values:
     neuvector:
       controller:
@@ -47,11 +47,19 @@ spec:
         ingress:
           host: cft-neuvector-ithc01.hmcts.net
     groups:
-      - name: idam-subnets
+      - name: cp-idam
+        criteria:
+          - key: namespace
+            op: =
+            value: crime-idam
+      - name: cp-idam-postgres
         criteria:
           - key: address
             op: =
-            value: 10.0.0.0/24  # TODO: replace with IDAM subnet CIDR
+            value: 10.0.1.0/24  # TODO: replace with IDAM postgres subnet CIDR
+          - key: address
+            op: =
+            value: 10.0.2.0/24  # TODO: replace with IDAM postgres subnet CIDR
     rules:
       admission:
         enable: true
@@ -245,14 +253,8 @@ spec:
                 ports: tcp/5432
                 priority: 0
                 selector:
-                  criteria:
-                    - key: address
-                      op: =
-                      value: 10.0.1.0/24  # TODO: replace with IDAM subnet CIDR
-                    - key: address
-                      op: =
-                      value: 10.0.2.0/24  # TODO: replace with IDAM subnet CIDR
-                  name: idamPostgres
+                  criteria: []
+                  name: cp-idam-postgres
               - action: deny
                 applications: []
                 name: idam-deny-external
@@ -273,10 +275,7 @@ spec:
                       value: '*'
                   name: IdamDenyInternal
             target:
-              policymode: Protect
+              policymode: N/A  # NeuVector CRD controller rejects Protect/Monitor for groups with no active workloads; set mode via portal once crime-idam workloads are running
               selector:
-                criteria:
-                  - key: namespace
-                    op: =
-                    value: crime-idam
+                criteria: []
                 name: cp-idam
