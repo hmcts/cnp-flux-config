@@ -50,7 +50,10 @@ spec:
     neuvector:
       serviceAccount: neuvector
       containerd:
-        enabled: true
+        enabled: false
+      internal:
+        autoGenerateCert: true  # controller spawns cert-upgrader job on fresh install to create neuvector-internal-certs
+        autoRotateCert: false   # cert-upgrader CronJob has no schedule (suspended); keep false to prevent accidental rotation on schedule change
       resources:
         requests:
           cpu: "100m"
