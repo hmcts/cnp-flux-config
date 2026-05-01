@@ -8,6 +8,11 @@ spec:
     service:
       spec:
         loadBalancerIP: "10.11.223.250"
+    additionalArguments:
+      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=120"
+      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=120"
+      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=120"
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=120"
     deployment:
       podLabels:
         useWorkloadIdentity: "true"
