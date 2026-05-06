@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sptribs-cron-system-migrate-initial-docs
+spec:
+  releaseName: sptribs-cron-system-migrate-initial-docs
+  values:
+    job:
+      schedule: "30 10 5 * *"
+      environment:
+        INITIAL_DOCUMENTS_MIGRATION_ENABLED: true
+        INITIAL_DOCUMENTS_MIGRATION_TEST_CASE_REF: "1762354583112443,1744105148148840,1742898449101763,1760709541759159,1758705608830358,1765188009228061"
+        IDAM_API_BASEURL: https://idam-api.platform.hmcts.net
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod
