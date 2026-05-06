@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: send-letter-cron-trigger-daily-checks
+  name: missing-reports-cron-trigger-daily-checks
 spec:
-  releaseName: send-letter-cron-trigger-daily-checks
+  releaseName: missing-reports-cron-trigger-daily-checks
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/bulk-scan/cron-trigger:prod-eb80e64-20260415181036 #{"$imagepolicy": "flux-system:send-letter-cron-trigger-daily-checks"}
+      image: hmctsprod.azurecr.io/bulk-scan/cron-trigger:prod-eb80e64-20260415181036 #{"$imagepolicy": "flux-system:missing-reports-cron-trigger-daily-checks"}
       schedule: "*/12 * * * *"
       environment:
         TRIGGER_TYPE: SEND_LETTER_CHECKS
