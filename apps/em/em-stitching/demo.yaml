@@ -9,11 +9,12 @@ spec:
       cpuRequests: "1500m"
       memoryLimits: "6144Mi"
       cpuLimits: "3000m"
-      image: hmctsprod.azurecr.io/em/stitching:prod-052b165-20260429081925 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      image: hmctsprod.azurecr.io/em/stitching:pr-3238-f06b0ad-20260501152418 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       environment:
         TEST_VAR: refresh2
         CALLBACK_MAX_ATTEMPTS: 5
         DOCUMENT_TASK_MILLISECONDS: 5000
         CALLBACK_HTTP_SCHEME: http
         CALLBACK_HTTP_HOST_PORT: 80
-        CALLBACK_DOMAIN: em-ccd-orchestrator-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+        CALLBACK_DOMAINS: em-ccd-orchestrator-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal,platform.hmcts.net
+        CALLBACK_ENV: DEV

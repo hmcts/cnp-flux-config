@@ -5,15 +5,12 @@ metadata:
   name: neuvector
   namespace: neuvector
 spec:
-  chart:
-    spec:
-      chart: neuvector-azure-keyvault
-      version: 1.6.10
   values:
     neuvector:
       controller:
         azureFileShare:
-          shareName: neuvector-data-01
+          # shareName: neuvector-data-01
+          shareName: neuvector-data-01-refresh
         ingress:
           host: cft-neuvector01-api.ithc.platform.hmcts.net
         configmap:
@@ -45,73 +42,3 @@ spec:
       manager:
         ingress:
           host: cft-neuvector-ithc01.hmcts.net
-    groups:
-      - name: idam-subnets
-        criteria:
-          - key: address
-            op: =
-            value: 10.0.0.0/24  # TODO: replace with IDAM subnet CIDR
-    rules:
-      network:
-        customRules:
-          - apiVersion: neuvector.com/v1
-            kind: NvClusterSecurityRule
-            metadata:
-              name: cp-idam
-              namespace: ""
-            spec:
-              egress:
-                - action: allow
-                  applications:
-                    - PostgreSQL
-                    - SSL
-                  name: idam-postgres
-                  ports: tcp/5432
-                  priority: 0
-                  selector:
-                    comment: "Allow IDAM Postgres subnets from IDAM Namespace"
-                    criteria:
-                      - key: address
-                        op: =
-                        value: 10.0.1.0/24  # TODO: replace with IDAM subnet CIDR
-                      - key: address
-                        op: =
-                        value: 10.0.2.0/24  # TODO: replace with IDAM subnet CIDR
-                    name: idamPostgres
-                    original_name: ""
-                - action: deny
-                  applications: []
-                  name: idam-deny-external
-                  ports: any
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria: []
-                    name: external
-                    original_name: ""
-                - action: deny
-                  applications: []
-                  name: idam-deny-internal
-                  ports: any
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: namespace
-                        op: =
-                        value: '*'
-                    name: IdamDenyInternal
-                    original_name: ""
-              file: []
-              ingress: []
-              process: []
-              target:
-                policymode: Protect
-                selector:
-                  comment: ""
-                  criteria:
-                    - key: namespace
-                      op: =
-                      value: crime-idam
-                  name: cp-idam
-                  original_name: ""
