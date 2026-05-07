@@ -5,68 +5,53 @@ metadata:
   name: neuvector
   namespace: neuvector
 spec:
-  chart:
-    spec:
-      chart: neuvector-azure-keyvault
-      version: 1.6.7
   values:
+    groups:
+      customGroups:
+        - name: crime-idam-postgres
+          criteria:
+            - key: address
+              op: =
+              value: 10.0.1.0/24  # TODO: replace with IDAM postgres subnet CIDR
+            - key: address
+              op: =
+              value: 10.0.2.0/24  # TODO: replace with IDAM postgres subnet CIDR
     rules:
-      response:
-        policies:
-          - name: admission-control-denied
-            event: admission-control
-            conditions:
-              - type: name
-                value: Admission.Control.Denied
-            actions:
-              - webhook
-            disable: false
-          - name: security-event-all
-            event: security-event
-            conditions: []
-            actions:
-              - webhook
-            disable: true
-          - name: security-event-error
-            event: security-event
-            conditions:
-              - type: level
-                value: Error
-            actions:
-              - webhook
-            disable: false
-          - name: security-event-privilege-escalation
-            event: security-event
-            conditions:
-              - type: name
-                value: Container.Privilege.Escalation
-            actions:
-              - quarantine
-            disable: true
-          - name: cve-report-high
-            event: cve-report
-            conditions:
-              - type: cve-high
-                value: "10"
-            actions:
-              - quarantine
-            disable: true
-          - name: event-container-quarantined
-            event: event
-            conditions:
-              - type: name
-                value: Container.Quarantined
-            actions:
-              - webhook
-            disable: false
-          - name: compliance-5-4
-            event: compliance
-            conditions:
-              - type: name
-                value: "5.4"
-            actions:
-              - webhook
-            disable: true
+      network:
+        customRules:
+          - name: crime-idam
+            egress:
+              - action: allow
+                applications:
+                  - PostgreSQL
+                  - SSL
+                name: idam-postgres
+                ports: tcp/5432
+                priority: 0
+                selector:
+                  criteria: []
+                  name: crime-idam-postgres
+              - action: deny
+                applications: []
+                name: idam-deny-external
+                ports: any
+                priority: 0
+                selector:
+                  criteria: []
+                  name: external
+              - action: deny
+                applications: []
+                name: idam-deny-internal
+                ports: any
+                priority: 0
+                selector:
+                  criteria: []
+                  name: allnamespaces
+            target:
+              policymode: N/A  # NeuVector CRD controller rejects Protect/Monitor for groups with no active workloads; set mode via portal once crime-idam workloads are running
+              selector:
+                criteria: []
+                name: crime-idam-namespace
     keyvault:
       name: cftapps-stg
       resourcegroup: core-infra-stg-rg

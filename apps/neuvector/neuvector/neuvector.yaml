@@ -7,25 +7,53 @@ metadata:
 spec:
   releaseName: neuvector
   timeout: "900s"
+  chart:
+    spec:
+      chart: neuvector-azure-keyvault
+      version: 1.6.13
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: neuvector-controller-pod
+            patch: |
+              - op: add
+                path: /spec/template/spec/automountServiceAccountToken
+                value: false
+              - op: add
+                path: /spec/template/spec/volumes/-
+                value:
+                  name: longlived-token
+                  secret:
+                    secretName: neuvector-longlived-token
+                    defaultMode: 420
+              - op: add
+                path: /spec/template/spec/containers/0/volumeMounts/-
+                value:
+                  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                  name: longlived-token
+                  readOnly: true
+              - op: add
+                path: /spec/template/spec/initContainers/0/volumeMounts
+                value:
+                  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+                    name: longlived-token
+                    readOnly: true
   values:
     config:
       autoScan: true
-    rules:
-      admission:
-        enable: true
-      response:
-        policies:
-          - '{"insert":{"after":0,"rules":[{"group":null,"conditions":[{"type":"name","value":"Admission.Control.Denied"}],"actions":["webhook"],"event":"admission-control","disable":false}]}}'
-          - '{"insert":{"after":1,"rules":[{"group":null,"conditions":[],"actions":["webhook"],"event":"security-event","disable":true}]}}'
-          - '{"insert":{"after":2,"rules":[{"group":null,"conditions":[{"type":"level","value":"Error"}],"actions":["webhook"],"event":"security-event","disable":false}]}}'
-          - '{"insert":{"after":3,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Privilege.Escalation"}],"actions":["quarantine"],"event":"security-event","disable":true}]}}'
-          - '{"insert":{"after":4,"rules":[{"group":null,"conditions":[{"type":"cve-high","value":"10"}],"actions":["quarantine"],"event":"cve-report","disable":true}]}}'
-          - '{"insert":{"after":5,"rules":[{"group":null,"conditions":[{"type":"name","value":"Container.Quarantined"}],"actions":["webhook"],"event":"event","disable":false}]}}'
-          - '{"insert":{"after":6,"rules":[{"group":null,"conditions":[{"type":"name","value":"5.4"}],"actions":["webhook"],"event":"compliance","disable":true}]}}'
     neuvector:
       serviceAccount: neuvector
       containerd:
-        enabled: true
+        enabled: false
+      internal:
+        autoGenerateCert: true  # controller spawns cert-upgrader job on fresh install to create neuvector-internal-certs
+        autoRotateCert: false   # cert-upgrader CronJob has no schedule (suspended); keep false to prevent accidental rotation on schedule change
       resources:
         requests:
           cpu: "100m"
@@ -81,40 +109,234 @@ spec:
           # If false, cve updater will not be installed
           enabled: true
           schedule: "0 0 * * *"
-  chart:
-    spec:
-      chart: neuvector-azure-keyvault
-      version: 1.6.6
-      sourceRef:
-        kind: HelmRepository
-        name: hmctsprod-oci
-        namespace: flux-system
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Deployment
-              name: neuvector-controller-pod
-            patch: |
-              - op: add
-                path: /spec/template/spec/automountServiceAccountToken
-                value: false
-              - op: add
-                path: /spec/template/spec/volumes/-
-                value:
-                  name: longlived-token
-                  secret:
-                    secretName: neuvector-longlived-token
-                    defaultMode: 420
-              - op: add
-                path: /spec/template/spec/containers/0/volumeMounts/-
-                value:
-                  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-                  name: longlived-token
-                  readOnly: true
-              - op: add
-                path: /spec/template/spec/initContainers/0/volumeMounts
-                value:
-                  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-                    name: longlived-token
-                    readOnly: true
+    groups:
+      defaultGroups:
+        - name: allnamespaces
+          criteria:
+            - key: namespace
+              op: =
+              value: '*'
+        - name: nv.kube-dns.kube-system
+          criteria:
+            - key: domain
+              op: =
+              value: kube-system
+        - name: appinsights-endpoints
+          criteria:
+            - key: address
+              op: =
+              value: dc.services.visualstudio.com
+            - key: address
+              op: =
+              value: rt.services.visualstudio.com
+            - key: address
+              op: =
+              value: dc.applicationinsights.microsoft.com
+            - key: address
+              op: =
+              value: euw.rt.prod.applicationinsights.trafficmanager.net
+        - name: azurepostgres-endpoint
+          criteria:
+            - key: address
+              op: =
+              value: '*.postgres.database.azure.com'
+        - name: servicebus-endpoint
+          criteria:
+            - key: address
+              op: =
+              value: '*.servicebus.windows.net'
+        - name: govuknotify-api
+          criteria:
+            - key: address
+              op: =
+              value: api.notifications.service.gov.uk
+        - name: govukpay-api
+          criteria:
+            - key: address
+              op: =
+              value: publicapi.payments.service.gov.uk
+        - name: mta-reform-endpoint
+          criteria:
+            - key: address
+              op: =
+              value: mta.reform.hmcts.net
+        - name: cnp-idam-api
+          criteria:
+            - key: address
+              op: =
+              value: idam-api.platform.hmcts.net
+        - name: crime-idam-namespace
+          criteria:
+            - key: namespace
+              op: =
+              value: crime-idam
+      customGroups: []
+    rules:
+      admission:
+        enable: true
+        mode: "monitor" # one of: monitor, protect
+        defaultRules:
+          - action: allow
+            comment: Allow admin namespaces
+            criteria:
+              - name: namespace
+                op: containsAny
+                value: knode-system,monitoring,flux-system,dynatrace,azureserviceoperator-system,cert-manager,keda,admin,kured,artifactory,pact-broker
+          - action: allow
+            comment: Allow HMCTS registries
+            criteria:
+              - name: imageRegistry
+                op: containsAny
+                value: https://hmctsprod.azurecr.io,https://hmctssbox.azurecr.io/,https://hmctspublic.azurecr.io/,https://hmctsprivate.azurecr.io/,https://sdshmctspublic.azurecr.io/
+          - action: deny
+            comment: Default deny
+            criteria:
+              - name: imageRegistry
+                op: containsAny
+                value: https://localhost/,https://*.*/
+        customRules: []
+      response:
+        defaultPolicies:
+          - name: admission-control-denied
+            event: admission-control
+            conditions:
+              - type: name
+                value: Admission.Control.Denied
+            actions:
+              - webhook
+            disable: false
+          - name: security-event-all
+            event: security-event
+            conditions: []
+            actions:
+              - webhook
+            disable: true
+          - name: security-event-error
+            event: security-event
+            conditions:
+              - type: level
+                value: Error
+            actions:
+              - webhook
+            disable: true
+          - name: security-event-privilege-escalation
+            event: security-event
+            conditions:
+              - type: name
+                value: Container.Privilege.Escalation
+            actions:
+              - quarantine
+            disable: true
+          - name: cve-report-high
+            event: cve-report
+            conditions:
+              - type: cve-high
+                value: "10"
+            actions:
+              - quarantine
+            disable: true
+          - name: event-container-quarantined
+            event: event
+            conditions:
+              - type: name
+                value: Container.Quarantined
+            actions:
+              - webhook
+            disable: false
+          - name: compliance-5-4
+            event: compliance
+            conditions:
+              - type: name
+                value: "5.4"
+            actions:
+              - webhook
+            disable: true
+        customPolicies: []
+      network:
+        defaultRules:
+          - name: allpods
+            egress:
+              - action: allow
+                applications:
+                  - DNS
+                name: DNS
+                ports: udp/53
+                priority: 0
+                selector:
+                  criteria: []
+                  name: nv.kube-dns.kube-system
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: ApplicationInsights
+                ports: tcp/443
+                priority: 0
+                selector:
+                  criteria: []
+                  name: appinsights-endpoints
+              - action: allow
+                applications:
+                  - HTTP
+                  - PostgreSQL
+                  - SSL
+                name: AzurePostgreSQL
+                ports: tcp/5432
+                priority: 0
+                selector:
+                  criteria: []
+                  name: azurepostgres-endpoint
+              - action: allow
+                applications:
+                  - SSL
+                name: ServiceBus
+                ports: tcp/5671
+                priority: 0
+                selector:
+                  criteria: []
+                  name: servicebus-endpoint
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: GovUkNotify
+                ports: tcp/443
+                priority: 0
+                selector:
+                  criteria: []
+                  name: govuknotify-api
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: GovUkPay
+                ports: tcp/443
+                priority: 0
+                selector:
+                  criteria: []
+                  name: govukpay-api
+              - action: allow
+                applications:
+                  - any
+                name: MTA-Reform
+                ports: tcp/25
+                priority: 0
+                selector:
+                  criteria: []
+                  name: mta-reform-endpoint
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: CNP-IDAM
+                ports: tcp/443
+                priority: 0
+                selector:
+                  criteria: []
+                  name: cnp-idam-api
+            target:
+              policymode: N/A
+              selector:
+                criteria: []
+                name: allnamespaces
+        customRules: []
