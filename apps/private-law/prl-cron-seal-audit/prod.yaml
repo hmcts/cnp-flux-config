@@ -7,10 +7,10 @@ spec:
   releaseName: prl-cron-seal-audit
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:pr-3807-53df248-20260508134531
+      image: hmctsprod.azurecr.io/prl/cos:prod-34bd00e-20260508073612 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
-        SEAL_AUDIT_ENABLED: true
-        SEAL_AUDIT_EMAIL_ENABLED: true
+        SEAL_AUDIT_ENABLED: false
+        SEAL_AUDIT_EMAIL_ENABLED: false
         SEAL_AUDIT_SIZE: 100
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-prod.service.core-compute-prod.internal
@@ -35,7 +35,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal
         HEARING_API_BASEURL: http://fis-hmc-api-prod.service.core-compute-prod.internal
         APP_ENV: "prod"
-      schedule: 0,20,40 * * * *
+      schedule: 0 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
