@@ -3,6 +3,8 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
+  - ../../et-logstash/elastic-helmrepo.yaml
+  - ../../et-logstash/et-logstash.yaml
   - ../../et-hearings-api/et-hearings-api.yaml
   - ../../et-ccd-case-migration/et-ccd-case-migration.yaml
   - ../../../base/slack-provider/demo
@@ -11,6 +13,7 @@ namespace: et
 patches:
   - path: ../../identity/demo.yaml
   - path: ../../et-cos/demo.yaml
+  - path: ../../et-logstash/demo.yaml
   - path: ../../et-sya/demo.yaml
   - path: ../../et-sya-api/demo.yaml
   - path: ../../serviceaccount/demo.yaml

@@ -3,6 +3,8 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../et-ccd-case-migration/et-ccd-case-migration.yaml
+  - ../../et-logstash/elastic-helmrepo.yaml
+  - ../../et-logstash/et-logstash.yaml
   - ../../../base/slack-provider/prod
   - ../../../base/docker-registry/prod
   - ../../../rbac/db-query-job-role.yaml
@@ -11,6 +13,7 @@ namespace: et
 patches:
   - path: ../../identity/prod.yaml
   - path: ../../et-cos/prod.yaml
+  - path: ../../et-logstash/prod.yaml
   - path: ../../et-sya/prod.yaml
   - path: ../../et-sya-api/prod.yaml
   - path: ../../serviceaccount/prod.yaml
