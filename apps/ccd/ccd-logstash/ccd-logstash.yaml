@@ -5,8 +5,9 @@ metadata:
 spec:
   releaseName: ccd-logstash
   values:
-    image: "hmctsprod.azurecr.io/imported/logstash/logstash"
-    imageTag: "7.16.1"
+    image: "hmctsprod.azurecr.io/imported/elastic/logstash"
+    imageTag: "9.2.4"
+    replicas: 1
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
@@ -25,7 +26,7 @@ spec:
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctsprod.azurecr.io/curl:7.70.0
-        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.3.3.jar', '-o', '/logstash-lib/postgresql.jar']
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
@@ -37,11 +38,12 @@ spec:
         mountPath: /usr/share/logstash/ccd
     logstashConfig:
       logstash.yml: |
-        http.host: 0.0.0.0
-        xpack.monitoring.enabled: true
+        api.http.host: 0.0.0.0
+        xpack.monitoring.enabled: false
         xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
         queue.type: persisted
         dead_letter_queue.enable: true
+        pipeline.ecs_compatibility: disabled
       pipelines.yml: |
         - pipeline.id: main
           path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
@@ -231,7 +233,7 @@ spec:
           elasticsearch {
             hosts => ["${ES_HOSTS}"]
             sniffing => false
-            index => ".logstash_dead_letter"
+            index => "ccd-logstash-dead-letter"
           }
         }
   chart:
