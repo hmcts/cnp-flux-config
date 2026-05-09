@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: missing-reports-cron-trigger-daily-checks
+spec:
+  releaseName: missing-reports-cron-trigger-daily-checks
+  values:
+    job:
+      schedule: "0 12 * * 1-5"
+      environment:
+        TRIGGER_ENABLED: true
