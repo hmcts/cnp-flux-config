@@ -6,7 +6,7 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      schedule: "00 15 04 02 *"
+      schedule: "55 18 12 05 *"
       image: hmctsprod.azurecr.io/prl/ccd-case-migration:prod-9dfe38f-20260512091728 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
       keyVaults:
         prl:
@@ -27,8 +27,16 @@ spec:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-prod.service.core-compute-prod.internal
         MIGRATION_ENABLED: true
-        MIGRATION_CASE_IDS: "1758698714295378"
-        MIGRATION_QUERY_SIZE: 100
-        MIGRATION_CASE_LIMIT: 5000
-        MIGRATION_STEP_CLASSES: "StateChangeMigrationStep"
+        MIGRATION_CASE_IDS: "1759410358814657,1761422592075314,1751293313720245,1744549577298461,1757884531334068,1744565819457434,1744565819457434,1744591278646127,1749096713900233,1754922290680942,1742065282851256"
+        MIGRATION_QUERY_TYPE: ALL
+        MIGRATION_IN_STATE_STATE_TO_INCLUDE: "NOT_APPLICABLE"
+        MIGRATION_STEP_CLASSES: "CaseNameMigrationStep"
+        MIGRATION_QUERY_BACTHING_SIZE: 100
+        MIGRATION_CASES_PROCESSING_LIMIT: 100000
         MIGRATION_STEP_ROLLBACK: false
+        RETRY_FAILURES: true
+        CASE_MIGRATION_TIMEOUT: 7200
+        DEFAULT_THREAD_LIMIT: 20
+        DEFAULT_THREAD_DELAY: 0
+        DEFAULT_QUERY_SIZE: 100
+        BATCH_SEARCH_AFTER:
