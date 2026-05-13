@@ -2,21 +2,3 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-admin-frontend
-spec:
-  values:
-    nodejs:
-      image: 'hmctsprod.azurecr.io/fact/admin-frontend:pr-78'
-      keyVaults:
-        fact-kv:
-          secrets:
-            - name: app-insights-connection-string
-              alias: APP_INSIGHTS_CONNECTION_STRING
-            - name: admin-frontend-app-reg-id
-              alias: FRONTEND_APP_REG_ID
-            - name: bstrap-admin-frontend-client-secret
-              alias: FRONTEND_APP_REG_SECRET
-            - name: api-app-reg-id
-              alias: API_APP_REG_ID
-      environment:
-        DATA_API_URL: 'https://fact-data-api.demo.platform.hmcts.net'
-        PUBLIC_FRONTEND_URL: 'https://fact-public-frontend.demo.platform.hmcts.net'
