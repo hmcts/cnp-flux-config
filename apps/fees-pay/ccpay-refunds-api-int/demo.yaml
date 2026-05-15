@@ -6,11 +6,19 @@ spec:
   values:
     java:
       replicas: 1
-      image: hmctsprod.azurecr.io/ccpay/refunds-api:pr-1001-62eda42-20260513095610 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
+      image: hmctsprod.azurecr.io/ccpay/refunds-api:pr-1001-7dfb49c-20260515112057 #{"$imagepolicy": "flux-system:demo-int-ccpay-refunds-api"}
       environment:
-        DUMMY_VARIABLE: false
+        DUMMY_VARIABLE: true
         POSTGRES_NAME: postgresqldb2
         LIBERATA_BASE_URL: "https://lascustomerportaluat.liberata.com"
         PAYMENT_API_URL: "http://payment-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
         NOTIFICATION_API_URL: "http://ccpay-notifications-service-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
         REFUND_SERVICE_ACCOUNT_REDIRECT_URI: "http://ccpay-refunds-api-int-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal/oauth2/callback"
+      keyVaults:
+        "ccpay":
+          resourceGroup: ccpay
+          secrets:
+            - name: ccpay-liberata-user-id
+              alias: liberataUser.username
+            - name: ccpay-liberata-user-password
+              alias: liberataUser.password
