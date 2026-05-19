@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "45 12 18 02 *"
-      image: hmctsprod.azurecr.io/finrem/cos:pr-2911-40aafe7-20260508064402 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
+      schedule: "50 10 19 05 *"
+      image: hmctspublic.azurecr.io/finrem/cos:pr-2947-java-77f77c4868-6bz9c #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -20,10 +20,10 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
-        TASK_NAME: removeVacatedHearing
+        TASK_NAME: AmendGeneralApplicationTask
         CRON_DRY_RUN: false
-        CRON_REMOVE_VACATED_HEARING_TASK_ENABLED: true
-        CRON_REMOVE_VACATED_HEARING_CASE_LIST_FILE_NAME: "caserefs-encrypted.csv"
+        CRON_AMEND_GENERAL_APPLICATION_ENABLED: true
+        CRON_AMEND_GENERAL_APPLICATION_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
