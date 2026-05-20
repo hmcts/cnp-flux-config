@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: banana-backend
+spec:
+  releaseName: banana-backend
+  values:
+    java:
+      ingressHost: banana-backend-aat.service.core-compute-aat.internal
+      testsConfig:
+        environment:
+          TEST_URL: http://banana-backend-java
+          SLACK_CHANNEL: "platops-build-notices"
+          SLACK_NOTIFY_SUCCESS: "false"
