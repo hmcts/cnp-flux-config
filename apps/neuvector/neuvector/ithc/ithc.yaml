@@ -26,7 +26,6 @@ spec:
                 ports: tcp/5432
                 priority: 0
                 selector:
-                  criteria: []
                   name: crime-idam-postgres
               - action: deny
                 applications: []
@@ -34,7 +33,6 @@ spec:
                 ports: any
                 priority: 0
                 selector:
-                  criteria: []
                   name: external
               - action: deny
                 applications: []
@@ -42,12 +40,10 @@ spec:
                 ports: any
                 priority: 0
                 selector:
-                  criteria: []
                   name: allnamespaces
             target:
               policymode: N/A  # NeuVector CRD controller rejects Protect/Monitor for groups with no active workloads; set mode via portal once crime-idam workloads are running
               selector:
-                criteria: []
                 name: crime-idam-namespace
     keyvault:
       name: cftapps
