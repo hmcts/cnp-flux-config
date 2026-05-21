@@ -7,12 +7,7 @@ metadata:
 spec:
   values:
     groups:
-      customGroups:
-        - name: crime-idam-postgres
-          criteria:
-            - key: address
-              op: =
-              value: 10.11.233.0/24
+      customGroups: []
     rules:
       network:
         customRules:
@@ -27,6 +22,10 @@ spec:
                 priority: 0
                 selector:
                   name: crime-idam-postgres
+                  criteria:
+                    - key: address
+                      op: =
+                      value: 10.11.233.0/24
               - action: deny
                 applications: []
                 name: idam-deny-external
@@ -41,10 +40,18 @@ spec:
                 priority: 0
                 selector:
                   name: allnamespaces
+                  criteria:
+                    - key: namespace
+                      op: =
+                      value: '*'
             target:
               policymode: N/A  # NeuVector CRD controller rejects Protect/Monitor for groups with no active workloads; set mode via portal once crime-idam workloads are running
               selector:
                 name: crime-idam-namespace
+                criteria:
+                  - key: namespace
+                    op: =
+                    value: crime-idam
     keyvault:
       name: cftapps
       resourcegroup: core-infra-ithc-rg
