@@ -6,7 +6,14 @@ spec:
   values:
     java:
       image: hmctsprod.azurecr.io/ia/home-office-integration-api:prod-aae3780-20260522090148 #{"$imagepolicy": "flux-system:ithc-ia-home-office-integration-api"}
+      keyVaults:
+        ia:
+          resourceGroup: ia
+          secrets:
+            - name: case-api-POSTGRES-PASS-15
+              alias: SOME_PASSWORD
       environment:
         HOME_OFFICE_ENDPOINT: "https://cts-challenge.prp1.np.immigration-api.homeoffice.gov.uk"
         #HOME_OFFICE_ENDPOINT: "http://ia-home-office-mock-api-demo.service.core-compute-demo.internal"
         APP_PUBLIC_IP_ENABLED: "true"
+        POSTGRES_PASSWORD: ${SOME_PASSWORD}
