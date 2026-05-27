@@ -7,7 +7,7 @@ spec:
   releaseName: finrem-citizen-ui
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-6306e53-20260526081920 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-39c6138-20260527141126 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
       ingressHost: finrem-citizen-ui.demo.platform.hmcts.net
       environment:
         RESTART_PODS: "Yes"
@@ -19,7 +19,33 @@ spec:
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
         OAUTH_CALLBACK_URL: https://finrem-citizen-ui.demo.platform.hmcts.net/oauth2/callback
         CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        REDIS_CONNECTION_STRING: redis://finrem-citizen-ui-redis-master:6379
+      keyVaults:
+        finrem:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: AppInsightsInstrumentationKey
+            - finrem-system-update-username
+            - finrem-system-update-password
+            - finrem-citizen-ui-idam-client-secret
+            - finrem-citizen-s2s-client-secret
+            - session-secret
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+      master:
+        persistence:
+          enabled: false
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: imported/bitnami/redis
     global:
+      security:
+        allowInsecureImages: true
       environment: demo
       enableKeyVaults: true
       DUMMY_VAR: 1

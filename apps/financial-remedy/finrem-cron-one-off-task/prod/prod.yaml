@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "40 15 19 05 *"
+      schedule: "45 15 26 5 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -25,11 +25,11 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: AmendGeneralApplicationTask
+        TASK_NAME: RemoveLeadingDotFromGeneralEmailRecipientTask
         CRON_DRY_RUN: false
-        CRON_AMEND_GENERAL_APPLICATION_ENABLED: true
-        CRON_AMEND_GENERAL_APPLICATION_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_AMEND_GENERAL_APPLICATION_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+        CRON_UPDATE_GENERAL_EMAIL_RECIPIENT_ENABLED: true
+        CRON_UPDATE_GENERAL_EMAIL_RECIPIENT_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_UPDATE_GENERAL_EMAIL_RECIPIENT_CASE_LIST_FILENAME: "updateGeneralEmailRecipient-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
