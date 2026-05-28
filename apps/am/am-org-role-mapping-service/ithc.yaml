@@ -5,12 +5,17 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-95790f6-20260514150037 #{"$imagepolicy": "flux-system:ithc-am-org-role-mapping-service"}
+      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-8c7877e-20260528102353 #{"$imagepolicy": "flux-system:ithc-am-org-role-mapping-service"}
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: INFO
         DB_FEATURE_FLAG_ENABLE: possessions_wa_1_0
+        # PRD Config
+        PROFESSIONAL_REFRESH_API_ENABLED: false
+        PROFESSIONAL_SCHEDULING_ENABLED: false
+        # Refresh Job Config
         # REFRESH_JOB: LEGAL_OPERATIONS-CIVIL-NEW-0-6
         # always set 'REFRESH_JOB_ALLOW_UPDATE' to false before next refresh (i.e. only use when setting existing job to ABORTED)
         # REFRESH_JOB_ALLOW_UPDATE: false
+        # Other
         DUMMY_VAR: false

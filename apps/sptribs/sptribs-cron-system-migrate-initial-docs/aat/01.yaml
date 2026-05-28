@@ -6,10 +6,12 @@ spec:
   releaseName: sptribs-cron-system-migrate-initial-docs
   values:
     job:
-      schedule: "00 10 * * *"
+      schedule: "30 15 * * *"
       environment:
         INITIAL_DOCUMENTS_MIGRATION_ENABLED: false
-        INITIAL_DOCUMENTS_MIGRATION_TEST_CASE_REF: "1769076346950024,1770720499562048,1773142269964618,1773155126440721,1776353187470797"
+        INITIAL_DOCUMENTS_MIGRATION_TEST_CASE_REF:
+        INITIAL_DOCUMENTS_MIGRATION_SKIP_MIGRATED: true
+        INITIAL_DOCUMENTS_MIGRATION_BATCH_SIZE: 2
     global:
       jobKind: CronJob
       enableKeyVaults: true

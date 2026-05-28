@@ -7,10 +7,10 @@ spec:
   releaseName: finrem-citizen-ui
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-3f0ae4a-20260526133304 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-8202c3f-20260528104013 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
       ingressHost: finrem-citizen-ui.demo.platform.hmcts.net
       environment:
-        RESTART_PODS: "Yes"
+        RESTART_PODS: "Y"
         DUMMY_VAR: 1
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-demo.service.core-compute-demo.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
@@ -20,6 +20,8 @@ spec:
         OAUTH_CALLBACK_URL: https://finrem-citizen-ui.demo.platform.hmcts.net/oauth2/callback
         CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         REDIS_CONNECTION_STRING: redis://finrem-citizen-ui-redis-master:6379
+        OIDC_ISSUER: https://hmcts-access.demo.platform.hmcts.net/o
+        IDAM_CLIENT_ID: finrem-citizen-ui
       keyVaults:
         finrem:
           secrets:

@@ -2,11 +2,12 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cron-hwf-process-awp
+  namespace: private-law
 spec:
   releaseName: prl-cron-hwf-process-awp
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-fca10a8-20260520160716 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-e7b2357-20260527174409 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         APP_ENV: "aat"
         TASK_NAME: AwpProcessHwfPaymentTask
