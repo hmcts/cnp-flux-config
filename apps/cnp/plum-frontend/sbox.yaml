@@ -18,3 +18,9 @@ spec:
       autoscaling:
         minReplicas: 1
       image: hmctssbox.azurecr.io/plum/frontend:prod-70b5ac7-20260514111334 # {"$imagepolicy": "flux-system:plum-frontend-sbox"}
+      keyVaults:
+        plumsi:
+          secrets:
+            - name: "azure-managed-redis-connection-string"
+              alias: "redis-connection-string"  # Maps to /mnt/secrets/redis-connection-string
+            - name: appInsights-InstrumentationKey
