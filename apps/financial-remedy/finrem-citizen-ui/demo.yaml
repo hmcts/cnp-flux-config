@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: finrem-citizen-ui
+  namespace: financial-remedy
+spec:
+  releaseName: finrem-citizen-ui
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-63e52fe-20260602102253 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
+      ingressHost: finrem-citizen-ui.demo.platform.hmcts.net
+      environment:
+        RESTART_PODS: "Y"
+        DUMMY_VAR: 1
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-demo.service.core-compute-demo.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
+        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
+        IDAM_END_SESSION_URL: https://idam-web-public.demo.platform.hmcts.net/o/endSession
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
+        OAUTH_CALLBACK_URL: https://finrem-citizen-ui.demo.platform.hmcts.net/oauth2/callback
+        CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
+        REDIS_CONNECTION_STRING: redis://finrem-citizen-ui-redis-master:6379
+        OIDC_ISSUER: https://hmcts-access.demo.platform.hmcts.net/o
+        IDAM_CLIENT_ID: finrem-citizen-ui
+      keyVaults:
+        finrem:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: AppInsightsInstrumentationKey
+            - finrem-system-update-username
+            - finrem-system-update-password
+            - finrem-citizen-ui-idam-client-secret
+            - finrem-citizen-s2s-client-secret
+            - session-secret
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+      master:
+        persistence:
+          enabled: false
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: imported/bitnami/redis
+    global:
+      security:
+        allowInsecureImages: true
+      environment: demo
+      enableKeyVaults: true
+      DUMMY_VAR: 1

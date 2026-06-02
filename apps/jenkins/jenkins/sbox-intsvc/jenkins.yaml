@@ -10,7 +10,7 @@ spec:
       image:
         registry: hmctsprod.azurecr.io
         repository: jenkins/jenkins
-        tag: 2.553-1063
+        tag: 2.564-1098
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
@@ -131,6 +131,30 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftsbox-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
+          jobs: |
+            jobs:
+              - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
+              - script: >
+                  pipelineJob('Seed Job') {
+                    triggers {
+                      cron('H 8-17 * * 1-5')
+                    }
+                    definition {
+                      cpsScm {
+                        scm {
+                          git {
+                            remote {
+                              github('hmcts/cnp-jenkins-config')
+                              credentials('hmcts-jenkins-cnp')
+                            }
+                            branch('master')
+                          }
+                        }
+                        scriptPath('jobdsl/Jenkinsfile_seed')
+                        lightweight(true)
+                      }
+                    }
+                  }
           kubernetes-agent: |
             jenkins:
               clouds:

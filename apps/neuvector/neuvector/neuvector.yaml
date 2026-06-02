@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: neuvector-azure-keyvault
-      version: 1.6.7
+      version: 1.6.13
       sourceRef:
         kind: HelmRepository
         name: hmctsprod-oci
@@ -50,7 +50,10 @@ spec:
     neuvector:
       serviceAccount: neuvector
       containerd:
-        enabled: true
+        enabled: false
+      internal:
+        autoGenerateCert: true  # controller spawns cert-upgrader job on fresh install to create neuvector-internal-certs
+        autoRotateCert: false   # cert-upgrader CronJob has no schedule (suspended); keep false to prevent accidental rotation on schedule change
       resources:
         requests:
           cpu: "100m"
@@ -106,7 +109,9 @@ spec:
           # If false, cve updater will not be installed
           enabled: true
           schedule: "0 0 * * *"
-    groups: []
+    groups:
+      defaultGroups: []
+      customGroups: []
     rules:
       admission:
         enable: true
@@ -154,7 +159,7 @@ spec:
                 value: Error
             actions:
               - webhook
-            disable: false
+            disable: true
           - name: security-event-privilege-escalation
             event: security-event
             conditions:
@@ -190,151 +195,125 @@ spec:
         customPolicies: []
       network:
         defaultRules:
-          - apiVersion: neuvector.com/v1
-            kind: NvClusterSecurityRule
-            metadata:
-              name: allpods
-              namespace: ""
-            spec:
-              egress:
-                - action: allow
-                  applications:
-                    - DNS
-                  name: DNS
-                  ports: udp/53
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: domain
-                        op: =
-                        value: kube-system
-                    name: nv.kube-dns.kube-system
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - HTTP
-                    - SSL
-                  name: ApplicationInsights
-                  ports: tcp/443
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: dc.services.visualstudio.com
-                      - key: address
-                        op: =
-                        value: rt.services.visualstudio.com
-                      - key: address
-                        op: =
-                        value: dc.applicationinsights.microsoft.com
-                      - key: address
-                        op: =
-                        value: euw.rt.prod.applicationinsights.trafficmanager.net
-                    name: ApplicationInsights
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - HTTP
-                    - PostgreSQL
-                    - SSL
-                  name: AzurePostgreSQL
-                  ports: tcp/5432
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: '*.postgres.database.azure.com'
-                    name: AzurePostgreSQL
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - SSL
-                  name: ServiceBus
-                  ports: tcp/5671
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: '*.servicebus.windows.net'
-                    name: ServiceBus
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - HTTP
-                    - SSL
-                  name: GovUkNotify
-                  ports: tcp/443
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: api.notifications.service.gov.uk
-                    name: GovUkNotify
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - HTTP
-                    - SSL
-                  name: GovUkPay
-                  ports: tcp/443
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: publicapi.payments.service.gov.uk
-                    name: GovUkPay
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - any
-                  name: MTA-Reform
-                  ports: tcp/25
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: mta.reform.hmcts.net
-                    name: MTA-Reform
-                    original_name: ""
-                - action: allow
-                  applications:
-                    - HTTP
-                    - SSL
-                  name: CNP-IDAM
-                  ports: tcp/443
-                  priority: 0
-                  selector:
-                    comment: ""
-                    criteria:
-                      - key: address
-                        op: =
-                        value: idam-api.platform.hmcts.net
-                    name: CNP-IDAM
-                    original_name: ""
-              file: []
-              ingress: []
-              process: []
-              target:
-                policymode: N/A
+          - name: allpods
+            egress:
+              - action: allow
+                applications:
+                  - DNS
+                name: DNS
+                ports: udp/53
+                priority: 0
                 selector:
-                  comment: ""
+                  name: nv.kube-dns.kube-system
                   criteria:
-                    - key: namespace
+                    - key: domain
                       op: =
-                      value: '*'
-                  name: AllPods
-                  original_name: ""
+                      value: kube-system
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: ApplicationInsights
+                ports: tcp/443
+                priority: 0
+                selector:
+                  name: appinsights-endpoints
+                  criteria:
+                    - key: address
+                      op: =
+                      value: dc.services.visualstudio.com
+                    - key: address
+                      op: =
+                      value: rt.services.visualstudio.com
+                    - key: address
+                      op: =
+                      value: dc.applicationinsights.microsoft.com
+                    - key: address
+                      op: =
+                      value: euw.rt.prod.applicationinsights.trafficmanager.net
+              - action: allow
+                applications:
+                  - HTTP
+                  - PostgreSQL
+                  - SSL
+                name: AzurePostgreSQL
+                ports: tcp/5432
+                priority: 0
+                selector:
+                  name: azurepostgres-endpoint
+                  criteria:
+                    - key: address
+                      op: =
+                      value: '*.postgres.database.azure.com'
+              - action: allow
+                applications:
+                  - SSL
+                name: ServiceBus
+                ports: tcp/5671
+                priority: 0
+                selector:
+                  name: servicebus-endpoint
+                  criteria:
+                    - key: address
+                      op: =
+                      value: '*.servicebus.windows.net'
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: GovUkNotify
+                ports: tcp/443
+                priority: 0
+                selector:
+                  name: govuknotify-api
+                  criteria:
+                    - key: address
+                      op: =
+                      value: api.notifications.service.gov.uk
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: GovUkPay
+                ports: tcp/443
+                priority: 0
+                selector:
+                  name: govukpay-api
+                  criteria:
+                    - key: address
+                      op: =
+                      value: publicapi.payments.service.gov.uk
+              - action: allow
+                applications:
+                  - any
+                name: MTA-Reform
+                ports: tcp/25
+                priority: 0
+                selector:
+                  name: mta-reform-endpoint
+                  criteria:
+                    - key: address
+                      op: =
+                      value: mta.reform.hmcts.net
+              - action: allow
+                applications:
+                  - HTTP
+                  - SSL
+                name: CNP-IDAM
+                ports: tcp/443
+                priority: 0
+                selector:
+                  name: cnp-idam-api
+                  criteria:
+                    - key: address
+                      op: =
+                      value: idam-api.platform.hmcts.net
+            target:
+              policymode: N/A
+              selector:
+                name: allnamespaces
+                criteria:
+                  - key: namespace
+                    op: =
+                    value: '*'
         customRules: []

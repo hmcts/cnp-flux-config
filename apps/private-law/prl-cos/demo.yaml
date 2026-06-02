@@ -57,15 +57,15 @@ spec:
             - name: edge-case-court-list
               alias: EDGE_CASE_COURT_LIST
       replicas: 2
-      memoryRequests: "768Mi"
+      memoryRequests: "1536Mi"
       cpuRequests: "1000m"
-      memoryLimits: "3072Mi"
+      memoryLimits: "6144Mi"
       cpuLimits: "2500m"
       readinessDelay: 40
       readinessTimeout: 300
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/prl/cos:pr-3676-0862751-20260429083719 #{"$imagepolicy": "flux-system:demo-prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:pr-3862-9c781ed-20260601081511 #{"$imagepolicy": "flux-system:demo-prl-cos"}
       environment:
         FEATURE_EXAMPLE: false
         DUMMY_ENV: true
@@ -97,6 +97,10 @@ spec:
         OS_COURT_LOOKUP_ENABLED: true
         AWAITING_INFORMATION_ENABLED: true
         EXIT_AWAITING_INFORMATION_ENABLED: true
+        BUNDLE_BY_CATEGORY_ENABLED: true
+        CREATE_REQUEST_CIR_UPDATE_TASK_ENABLED: true
+        REQUEST_ORDER_TASK_C100_CADENCE: 0
+        REQUEST_ORDER_TASK_FL401_CADENCE: 0
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

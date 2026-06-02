@@ -2,10 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - ../../base/gotk-components.yaml
+  - gotk-components.yaml
   - ../../workload-identity
   - aso-controller-settings-patch.yaml
   - ../../docker-regcreds/perftest
+  - ../../../base/flux-alerts
+  - ../../../base/slack-provider/perftest/slack-token.enc.yaml
 patches:
   - path: ../../serviceaccount/perftest.yaml
   - path: ../../serviceaccount/perftest-source-controller.yaml

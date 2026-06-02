@@ -42,6 +42,8 @@ spec:
                         value: cftptl-intsvc
                       - key: JENKINS_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
+                      - key: ENVIRONMENT_AGENT_LABEL_TEMPLATE_CIVIL
+                        value: civil-{environment}
                       - key: JAVA_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: GRADLE_OPTS
@@ -166,7 +168,7 @@ spec:
                     title: Fees&Pay Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure|probate-performance)\/master
+                      ^HMCTS.*\/(probate-frontend|probate-caveats-frontend|probate-business-service|probate-submit-service|probate-back-office|probate-orchestrator-service|probate-shared-infrastructure|probate-performance|probate-wa-post-deployment-ft-tests)\/master
                     name: PROBATE
                     recurse: true
                     title: PROBATE Dashboard
@@ -322,7 +324,7 @@ spec:
                     title: Private Law
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui)\/master|^HMCTS_d_to_i\/(div-.*)\/master
+                      ^HMCTS.*\/(finrem-case-orchestration-service|finrem-ccd-definitions|finrem-citizen-ui|finrem-task-configuration)\/master|^HMCTS_d_to_i\/(div-.*)\/master
                     name: FinRem
                     recurse: true
                     title: FinRem Dashboard

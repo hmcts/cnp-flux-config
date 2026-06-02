@@ -5,10 +5,14 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/wa/workflow-api:prod-5832bf7-20260421154738 #{"$imagepolicy": "flux-system:wa-workflow-api"}
+      memoryRequests: "1Gi"
+      memoryLimits: "2Gi"
+      cpuRequests: "250m"
+      cpuLimits: "500m"
+      image: hmctsprod.azurecr.io/wa/workflow-api:prod-1102fdd-20260601102854 #{"$imagepolicy": "flux-system:wa-workflow-api"}
       # For Flexible server migration
       environment:
-        REFRESH_FLAG: "1"
+        REFRESH_FLAG: "0"
         POSTGRES_HOST: wa-workflow-api-postgres-db-flex-perftest.postgres.database.azure.com
         DB_READER_USERNAME: "DTS CFT DB Access Reader"
       keyVaults:

@@ -2,15 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-  - ../../base/gotk-components.yaml
+  - gotk-components.yaml
   - ../../workload-identity
   - aso-controller-settings-patch.yaml
   - ../../docker-regcreds/ithc
+  - ../../../base/flux-alerts
+  - ../../../base/slack-provider/ithc/slack-token.enc.yaml
 patches:
   - path: ../../serviceaccount/ithc.yaml
   - path: ../../serviceaccount/ithc-source-controller.yaml
   - path: ../../base/patches/workload-identity-deployment-patch.yaml
   - path: ../../base/patches/workload-identity-source-controller-patch.yaml
+  - path: ../../base/patches/helm-controller-size-limit-patch.yaml
   - patch: |-
       - op: add
         path: /spec/template/spec/containers/0/args/-
