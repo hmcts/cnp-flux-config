@@ -9,6 +9,9 @@ spec:
     nodejs:
       image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-5530a45-20260602142422 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
       ingressHost: finrem-citizen-ui.demo.platform.hmcts.net
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
       environment:
         RESTART_PODS: "Y"
         DUMMY_VAR: 1
