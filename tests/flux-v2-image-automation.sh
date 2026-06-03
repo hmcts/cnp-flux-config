@@ -32,6 +32,7 @@ EXCLUSIONS_LIST=(
     .*demo.*
     .*ithc.*
     .*toffee.*
+    apps/dtsse/dtsse-dashboard-ingestion/aat/00.yaml
 )
 
 EXCLUSIONS=$(IFS="|" ; echo "${EXCLUSIONS_LIST[*]}")
