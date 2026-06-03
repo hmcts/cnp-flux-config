@@ -1,0 +1,20 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: image-failures
+  namespace: flux-system
+spec:
+  providerRef:
+    name: slack
+  summary: ${CLUSTER_FULL_NAME}-aks
+  eventSeverity: error
+  eventSources:
+    - kind: ImageRepository
+      namespace: flux-system
+      name: "*"
+    - kind: ImagePolicy
+      namespace: flux-system
+      name: "*"
+    - kind: ImageUpdateAutomation
+      namespace: flux-system
+      name: "*"
