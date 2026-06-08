@@ -5,12 +5,13 @@ metadata:
 spec:
   values:
     function:
-      image: hmctsprod.azurecr.io/ccpay/callback-function:pr-196-4fa5dad-20260326103714 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
+      image: hmctsprod.azurecr.io/ccpay/callback-function:pr-204-976924a-20260605132321 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
       aadIdentityName: ccpay
       environment:
         S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
         MICROSERVICE_PAYMENT_APP: "payment_app"
         SERVICE_LOGGING_ENABLED: false
+        SERVICE_CALLBACK_URL_PATTERN: "^https?://(?:[a-z0-9-]+-(aat|prod|demo|ithc|perftest)\\.service\\.core-compute-\\1\\.internal|(?:www\\.)?(?:apply-divorce|end-civil-partnership)\\.service\\.gov\\.uk|[a-z0-9-]+\\.preview\\.platform\\.hmcts\\.net)(?:/.*)?$"
         DUMMY_RESTART_VAR: false
       keyVaults:
         "ccpay":
