@@ -6,15 +6,16 @@ spec:
   releaseName: probate-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctsprod.azurecr.io/probate/cron-ccd-data-migration-tool:prod-f12c4dd-20260525082448 #{"$imagepolicy": "flux-system:demo-cron-ccd-data-migration-tool"}
-      schedule: "25 11 27 5 *"
+      image: hmctsprod.azurecr.io/probate/cron-ccd-data-migration-tool:pr-358-aa8c727-20260605104648 #{"$imagepolicy": "flux-system:demo-cron-ccd-data-migration-tool"}
+      schedule: "30 11 8 6 *"
       environment:
         PRD_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
         TRIG: trig-2
         MIGRATION_USE_REIMPL: true
-        MIGRATION_ID: "DTSPB-5005_rollback"
+        MIGRATION_ID: "DTSPB-5586"
         USER_TOKEN_REFRESH_MARGIN_MINS: 5
         S2S_TOKEN_REFRESH_MARGIN_MINS: 5
         DTSPB_5005_ROLLBACK_DATE: "2026-05-27"
+        DTSPB_5586_ROLLBACK_DATE: "2026-06-08"
         MIGRATION_DRYRUN: false
         DTSPB_5472_ROLLBACK_DATE: "2026-05-07"
