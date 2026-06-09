@@ -3,12 +3,11 @@ kind: HelmRelease
 metadata:
   name: ccpay-callback-function
 spec:
-  rollout:
-    strategy: gradual
-    propagationPolicy: background
   values:
     failedJobsHistoryLimit: 5
     successfulJobsHistoryLimit: 5
+    rollout:
+      propagationPolicy: foreground
     function:
       image: hmctsprod.azurecr.io/ccpay/callback-function:pr-204-6680dfe-20260604160456 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
       aadIdentityName: ccpay
