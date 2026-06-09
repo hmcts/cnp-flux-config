@@ -4,6 +4,10 @@ metadata:
   name: ccpay-callback-function
 spec:
   values:
+    failedJobsHistoryLimit: 5
+    successfulJobsHistoryLimit: 5
+    rollout:
+      propagationPolicy: foreground
     function:
       image: hmctsprod.azurecr.io/ccpay/callback-function:prod-9d20f45-20260428082526 #{"$imagepolicy": "flux-system:demo-ccpay-callback-function"}
       aadIdentityName: ccpay
@@ -17,3 +21,11 @@ spec:
         "ccpay":
           secrets:
             - payment-s2s-secret
+      triggers:
+        - type: azure-servicebus
+          metadata:
+            messageCount: "1"
+      jobTargetRef:
+        template:
+          metadata:
+            annotations: {}
