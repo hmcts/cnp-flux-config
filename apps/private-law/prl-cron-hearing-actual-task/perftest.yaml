@@ -2,10 +2,11 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: prl-cron-hearing-actual-task
+  namespace: private-law
 spec:
   releaseName: prl-cron-hearing-actual-task
   values:
-    schedule: "15 16 * * *"
+    schedule: "00 11 * * *"
     job:
       image: hmctsprod.azurecr.io/prl/cos:pr-3727-d810145-20260605111107 #{"$imagepolicy": "flux-system:perftest-prl-cron-hearing-actual-task"}
       environment:
