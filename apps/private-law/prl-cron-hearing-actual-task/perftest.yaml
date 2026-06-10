@@ -9,8 +9,23 @@ spec:
     job:
       image: hmctsprod.azurecr.io/prl/cos:pr-3727-5e029e0-20260610095354 #{"$imagepolicy": "flux-system:perftest-prl-cron-hearing-actual-task"}
       environment:
+        IDAM_REDIRECT_URL: https://prl-cos-perftest.service.core-compute-perftest.internal/oauth2/callback
+        IDAM_S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        PRD_API_BASEURL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-perftest.service.core-compute-perftest.internal/oauth2/callback
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.perftest.platform.hmcts.net
+        LOCATION_REF_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
+        RD_PROFESSIONAL_API: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-perftest.service.core-compute-perftest.internal
+        REFDATA_API_URL: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
+        COMMON_DATA_API: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
         APP_ENV: "perftest"
-      schedule: "30 12 * * *"
+      schedule: "00 16 * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true
