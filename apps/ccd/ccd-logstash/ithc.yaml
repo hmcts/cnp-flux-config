@@ -7,15 +7,6 @@ spec:
   releaseName: ccd-logstash
   values:
     replicas: 1
-    extraEnvs:
-      - name: ES_HOST0
-        value: http://ccd-data-0.service.core-compute-ithc.internal:9200
-      - name: ES_HOST1
-        value: http://ccd-data-1.service.core-compute-ithc.internal:9200
-      - name: ES_HOST2
-        value: http://ccd-data-2.service.core-compute-ithc.internal:9200
-      - name: ES_HOST3
-        value: http://ccd-data-3.service.core-compute-ithc.internal:9200
     logstashConfig:
       logstash.yml: |
         api.http.host: 0.0.0.0
@@ -75,3 +66,8 @@ spec:
             index => "ccd-logstash-dead-letter"
           }
         }
+    envFrom:
+      - secretRef:
+        name: logstash-secret
+      - configMapRef:
+        name: logstash-config
