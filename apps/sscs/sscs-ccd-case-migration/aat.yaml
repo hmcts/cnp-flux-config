@@ -13,7 +13,7 @@ spec:
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "50 14 9 4 *"
+      schedule: "25 12 12 6 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -38,6 +38,8 @@ spec:
               alias: VENUE_MIGRATION_ENCODED_STRING
             - name: encoded-string-add-hearing-migration
               alias: ADD_HEARING_ENCODED_DATA_STRING
+            - name: encoded-string-awaiting-confidentiality-req
+              alias: AWAITING_CONFIDENTIALITY_REQ_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
@@ -49,4 +51,5 @@ spec:
         ARCHIVE_OLD_DRAFTS_ENABLED: false
         READY_TO_LIST_MIGRATION_ENABLED: false
         VENUE_MIGRATION_ENABLED: false
-        ADD_HEARING_MIGRATION_ENABLED: true
+        ADD_HEARING_MIGRATION_ENABLED: false
+        AWAITING_CONFIDENTIALITY_REQ_MIGRATION_ENABLED: true
