@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plum-fastapi-backend
+spec:
+  chart:
+    spec:
+      chart: ./stable/plum-fastapi-backend
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+  values:
+    python:
+      ingressHost: plum-fastapi-backend-sandbox.service.core-compute-sandbox.internal
+      image: hmctsprod.azurecr.io/plum/fastapi-backend:todochangeme # {"$imagepolicy": "flux-system:plum-fastapi-backend"}
+      environment:
+        RECIPES_SERVICE_URL: http://plum-recipe-backend-java
