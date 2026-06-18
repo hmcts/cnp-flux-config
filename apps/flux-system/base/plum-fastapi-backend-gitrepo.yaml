@@ -1,0 +1,18 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: plum-fastapi-backend
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/hmcts/cnp-plum-fastapi-backend
+  ref:
+    branch: master
+  provider: github
+  secretRef:
+    name: github-app-credentials
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/
