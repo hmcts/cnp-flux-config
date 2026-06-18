@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cath
+  namespace: flux-system
+spec:
+  path: ./apps/cath/${ENVIRONMENT}/${CLUSTER}
+  postBuild:
+    substitute:
+      NAMESPACE: "cath"
+      WI_NAME: "cath"
+      TEAM_NOTIFICATION_CHANNEL: "cath-builds"
+      TEAM_AAD_GROUP_ID: "b2a1773c-a5ae-48b5-b5fa-95b0e05eee05"
