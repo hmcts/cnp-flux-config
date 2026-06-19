@@ -15,5 +15,10 @@ spec:
     python:
       ingressHost: plum-fastapi-backend-sandbox.service.core-compute-sandbox.internal
       image: hmctssbox.azurecr.io/plum/fastapi-backend:latest # {"$imagepolicy": "flux-system:plum-fastapi-backend-sbox"}
+      keyVaults:
+        plumsi:
+          secrets:
+            - name: appinsights-connection-string
+              alias: APPLICATIONINSIGHTS_CONNECTION_STRING
       environment:
         RECIPES_SERVICE_URL: http://plum-recipe-backend-java
