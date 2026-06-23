@@ -5,18 +5,18 @@ metadata:
 spec:
   chart:
     spec:
-      chart: ./charts/plum-fastapi-backend
+      chart: ./stable/plum-frontend
       interval: 1m
       sourceRef:
         kind: GitRepository
-        name: plum-fastapi-backend
+        name: hmcts-charts
         namespace: flux-system
   values:
     global:
       enableKeyVaults: true
     python:
       ingressHost: plum-fastapi-backend-ithc.service.core-compute-ithc.internal
-      image: hmctssbox.azurecr.io/plum/fastapi-backend:latest # {"$imagepolicy": "flux-system:plum-fastapi-backend-sbox"}
+      image: hmctsprod.azurecr.io/plum/fastapi-backend:prod-817fe65-20260623092441 # {"$imagepolicy": "flux-system:plum-fastapi-backend-ithc"}
       keyVaults:
         plumsi:
           secrets:
