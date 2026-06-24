@@ -6,7 +6,7 @@ spec:
   releaseName: prl-ccd-case-migration
   values:
     job:
-      schedule: "30 13 24 06 *"
+      schedule: "30 15 24 06 *"
       image: hmctsprod.azurecr.io/prl/ccd-case-migration:prod-d5d735c-20260623091906 #{"$imagepolicy": "flux-system:prl-ccd-case-migration"}
       keyVaults:
         prl:
@@ -32,7 +32,7 @@ spec:
         MIGRATION_QUERY_TYPE: ALL
         MIGRATION_IN_STATE_STATE_TO_INCLUDE: "NOT_APPLICABLE"
         MIGRATION_STEP_CLASSES: "DeadlinkCleanupMigrationStep"
-        DEADLINK_MIGRATION_ENABLED: false
+        DEADLINK_MIGRATION_ENABLED: true
         MIGRATION_QUERY_BACTHING_SIZE: 100
         MIGRATION_CASES_PROCESSING_LIMIT: 100000
         MIGRATION_QUERY_SIZE: 100
