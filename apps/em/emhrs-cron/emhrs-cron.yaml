@@ -5,7 +5,10 @@ metadata:
 spec:
   releaseName: emhrs-cron
   values:
+    java:
+      enabled: false
     job:
+      enabled: true
       disableActiveClusterCheck: false
       image: hmctsprod.azurecr.io/em/hrs-api:prod-e2e5d09-20260626083544 #{"$imagepolicy": "flux-system:em-hrs-api"}
       environment:
@@ -18,9 +21,9 @@ spec:
         enableKeyVaults: true
   chart:
     spec:
-      chart: emhrs-cron
-      version: 0.0.2
+      chart: ./stable/em-hrs-api
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m
