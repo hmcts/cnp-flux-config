@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/civil/service:prod-eb4c187-20260615164222 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctsprod.azurecr.io/civil/service:pr-8017-2770eb3-20260629111145 #{"$imagepolicy": "flux-system:demo-civil-service"}
       environment:
         TESTING_SUPPORT_ENABLED: true
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
@@ -26,6 +26,8 @@ spec:
         ROLE_INITIALISATION_ENABLED: true
         COURT_LOCATION_WA_DMN_ENABLED: true
         IDAM_SCOPE: openid profile roles search-user
+        SCHEDULER_ACTIVE_SCHEDULERS: DefendantResponseDeadline
+        CRON_EXPRESSION_DEFENDANT_RESPONSE: 0 0/10 * * * ?
       keyVaults:
         civil:
           resourceGroup: civil
