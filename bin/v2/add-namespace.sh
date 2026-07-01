@@ -43,7 +43,7 @@ if [ "$YAML_OBJECT" == null ]; then
 fi
 
 NAMESPACE=$(echo "$YAML_OBJECT" | yq .namespace)
-SLACK_CHANNEL=$(echo "$YAML_OBJECT" | yq .slack.contact_channel)
+SLACK_CHANNEL=$(echo "$YAML_OBJECT" | yq .slack.contact_channel | sed 's/^#//')
 
 # Check these have been set
 if [ -z "${NAMESPACE}" ] || [ -z "${SLACK_CHANNEL}" ] || [ -z "${TEAM_AAD_GROUP_ID}" ]

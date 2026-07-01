@@ -6,13 +6,22 @@ spec:
   releaseName: et-cos
   values:
     java:
+      environment:
+        CREATE_UPDATES_POLL_INTERVAL: 60000
+        UPDATE_CASE_POLL_INTERVAL: 60000
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/et/cos:prod-996e577-20240618070759 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:prod-601ac56-20260630084757 #{"$imagepolicy": "flux-system:et-cos"}
       memoryLimits: "3072Mi"
-      memoryRequests: "2048Mi"
-      cpuLimits: "2000m"
-      cpuRequests: "250m"
+      memoryRequests: "1536Mi"
+      cpuLimits: "1500m"
+      cpuRequests: "200m"
+      autoscaling:
+        enabled: true
+        cpu:
+          averageUtilization: 80
+        memory:
+          averageUtilization: 120
       readinessDelay: 45
   chart:
     spec:

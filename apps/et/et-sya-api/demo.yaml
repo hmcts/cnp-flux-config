@@ -3,10 +3,14 @@ kind: HelmRelease
 metadata:
   name: et-sya-api
   namespace: et
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: et-sya-api
   values:
     java:
-      image: hmctspublic.azurecr.io/et/sya-api:prod-07ad6b9-20240619075616 #{"$imagepolicy": "flux-system:demo-et-sya-api"}
+      image: hmctsprod.azurecr.io/et/sya-api:prod-4e56387-20260526083003 #{"$imagepolicy": "flux-system:et-sya-api"}
       environment:
         EXUI_CASE_DETAILS_URL: "https://manage-case.demo.platform.hmcts.net/cases/case-details/"
+        AAC_URL: "http://aac-manage-case-assignment-demo.service.core-compute-demo.internal"
+        RESPONDENT_PORTAL_LINK: "https://et-syr.demo.platform.hmcts.net/case-details/"

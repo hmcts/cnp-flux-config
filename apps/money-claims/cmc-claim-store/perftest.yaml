@@ -3,10 +3,14 @@ kind: HelmRelease
 metadata:
   name: cmc-claim-store
   namespace: money-claims
+  annotations:
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/cmc/claim-store:prod-95f2ad4-20240516115304 #{"$imagepolicy": "flux-system:demo-cmc-claim-store"}
+      replicas: 3
+      autoscaling:
+        maxReplicas: 5
       keyVaults:
         cmc:
           resourceGroup: cmc
@@ -86,3 +90,4 @@ spec:
         MILO_CSV_SENDER: noreply@mail-money-claims-nonprod.platform.hmcts.net
         RPA_NOTIFICATIONS_BREATHINGSPACERECIPIENT: civilmoneyclaimsdemo@gmail.com
         TEMP_VARIABLE_TO_RESTART: true
+        REFERENCE_DATABASE_MIGRATION: false

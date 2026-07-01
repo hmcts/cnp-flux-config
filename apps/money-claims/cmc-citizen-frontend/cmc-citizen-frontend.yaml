@@ -8,10 +8,17 @@ spec:
   values:
     nodejs:
       replicas: 2
+      memoryRequests: "614Mi"
+      memoryLimits: "2048Mi"
+      cpuRequests: "250m"
+      cpuLimits: "1500m"
+      autoscaling:
+        enable: true
+        maxReplicas: 4
+        memory:
+          averageUtilization: 80
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/cmc/citizen-frontend:prod-15eca35-20240501171719 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
-      memoryRequests: 1Gi
-      memoryLimits: 2Gi
+      image: hmctsprod.azurecr.io/cmc/citizen-frontend:prod-cee77ac-20260609134435 #{"$imagepolicy": "flux-system:cmc-citizen-frontend"}
   chart:
     spec:
       chart: ./stable/cmc-citizen-frontend

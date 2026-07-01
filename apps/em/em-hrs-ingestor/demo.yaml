@@ -5,13 +5,10 @@ metadata:
 spec:
   values:
     job:
-      # schedule: "*/30 * * * *"
       schedule: "*/10 * * * *"
-      image: hmctspublic.azurecr.io/em/hrs-ingestor:prod-a463d55-20240618140833 #{"$imagepolicy": "flux-system:demo-em-hrs-ingestor"}
+      image: hmctsprod.azurecr.io/em/hrs-ingestor:prod-972bcce-20260701093939 #{"$imagepolicy": "flux-system:demo-em-hrs-ingestor"}
       environment:
-        VH_PROCESS_BACK_TO_DAY: 2
-        VH_PROCESS: true
-        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net
+        USE_AD_AUTH_FOR_SOURCE_BLOB_CONNECTION: true
+        CVP_STORAGE_CONTAINER_NAME: recordings
+        MAX_FILES_TO_PROCESS: 500
       # Run every 30 minutes as demo is a single cluster
-      spotInstances:
-        enabled: true

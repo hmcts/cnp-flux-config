@@ -6,7 +6,8 @@ spec:
   releaseName: ccd-admin-web
   values:
     nodejs:
-      image: hmctspublic.azurecr.io/ccd/admin-web:prod-f894002-20240617220142 #{"$imagepolicy": "flux-system:demo-ccd-admin-web"}
+      image: hmctsprod.azurecr.io/ccd/admin-web:pr-753-41a2a33-20260629084111 #{"$imagepolicy": "flux-system:demo-ccd-admin-web"}
       environment:
         ADMINWEB_ELASTIC_CASE_TYPES_URL: http://ccd-definition-store-api-demo.service.core-compute-demo.internal/elastic-support/case-types
-        DUMMY_RESTART_VAR: 1
+        ADMINWEB_REINDEX_TASKS_URL: "http://ccd-definition-store-api-demo.service.core-compute-demo.internal/elastic-support/reindex/tasks"
+        DUMMY_RESTART_VAR: 2

@@ -6,25 +6,25 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "30 * 2 5 *"
+      schedule: "40 11 05 06 *"
+      image: hmctsprod.azurecr.io/finrem/cos:pr-2972-5b1938d-20260626071733 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
+        SECURE_DOC_ENABLED: false
         FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
         PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
-        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
-        SECURE_DOC_ENABLED: false
-        CRON_APPLICATION_TYPE_ADD_ENABLED: false
-        CRON_CFV_CATEGORISATION_TASK_ENABLED: false
-        CRON_MIAM_EXEMPTIONS_UPDATE_ENABLED: false
-        TRIG: trig-6
-        TASK_NAME: MiamExemptionsUpdateTask
+        TASK_NAME: UpdateContactDetailsTask
+        CRON_DRY_RUN: false
+        CRON_UPDATE_CONTACT_DETAILS_ENABLED: false
+        CRON_UPDATE_CONTACT_DETAILS_CASE_TYPE_ID: FinancialRemedyMVP2
+        CRON_UPDATE_CONTACT_DETAILS_CASE_LIST_FILENAME: "caserefs-encrypted-demo.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true

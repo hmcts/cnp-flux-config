@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bulk-scan-payment-processor
+spec:
+  values:
+    java:
+      autoscaling:
+        enabled: false
+      replicas: 2
+      image: hmctsprod.azurecr.io/bulk-scan/payment-processor:prod-07b5fa4-20260601075401 #{"$imagepolicy": "flux-system:perftest-bulk-scan-payment-processor"}
+      environment:
+        REFRESH_PODS: "true"

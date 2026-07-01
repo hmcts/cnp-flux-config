@@ -12,12 +12,13 @@ spec:
       create: false
       name: jenkins
     controller:
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: jenkins/jenkins
       podLabels:
         azure.workload.identity/use: "true"
       # Used for label app.kubernetes.io/component
       componentName: "jenkins-controller"
-      # image version is managed in jenkins-controller-version.yaml
-      image: "hmctspublic.azurecr.io/jenkins/jenkins"
       containerSecurityContext:
         runAsUser: 0
         runAsGroup: 0
@@ -75,6 +76,8 @@ spec:
         -Dcom.cloudbees.hudson.plugins.folder.computed.FolderComputation.BACKUP_LOG_COUNT=10
         -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=40
         -Dotel.instrumentation.jenkins.web.enabled=false
+        -Dotel.instrumentation.jenkins.agent.enabled=true
+        -Dotel.instrumentation.jenkins.remoting.enabled=true
       installPlugins: false
       # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
       # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
@@ -88,9 +91,6 @@ spec:
         configScripts:
           misc-jenkins-settings: |
             jenkins:
-              crumbIssuer:
-                standard:
-                  excludeClientIPFromCrumb: false
               markupFormatter:
                 rawHtml:
                   disableSyntaxHighlighting: false
@@ -132,7 +132,6 @@ spec:
                     - "GROUP:Lockable Resources/View:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
                     - "GROUP:Overall/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
                     - "GROUP:Overall/SystemRead:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
-                    - "GROUP:Run/Replay:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
                     - "GROUP:Run/Update:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
                     - "GROUP:View/Read:DTS CFT Developers (b2a1773c-a5ae-48b5-b5fa-95b0e05eee05)"
           global-library: |
@@ -147,7 +146,7 @@ spec:
                         scm:
                           github:
                             credentialsId: hmcts-jenkins-cnp
-                            repoOwner: hmcts
+                            repoOwner: HMCTS
                             repository: cnp-jenkins-library
                   - name: 'Pipeline'
                     includeInChangesets: false
@@ -157,7 +156,17 @@ spec:
                         scm:
                           github:
                             credentialsId: hmcts-jenkins-cnp
-                            repoOwner: hmcts
+                            repoOwner: HMCTS
+                            repository: cnp-jenkins-library
+                  - name: 'Tagged'
+                    includeInChangesets: false
+                    defaultVersion: library-version-tracker
+                    retriever:
+                      modernSCM:
+                        scm:
+                          github:
+                            credentialsId: hmcts-jenkins-cnp
+                            repoOwner: HMCTS
                             repository: cnp-jenkins-library
           health: |
             unclassified:
@@ -198,10 +207,10 @@ spec:
                 - simpleBuildDiscarder:
                     discarder:
                       logRotator:
-                        artifactDaysToKeepStr: "14"
-                        artifactNumToKeepStr: "20"
-                        daysToKeepStr: "14"
-                        numToKeepStr: "20"
+                        artifactDaysToKeepStr: "7"
+                        artifactNumToKeepStr: "5"
+                        daysToKeepStr: "7"
+                        numToKeepStr: "10"
           credentials: |
             credentials:
               system:
@@ -217,6 +226,12 @@ spec:
                           id: "fortify-on-demand"
                           secret: "${fortify-on-demand}"
                           description: "Fortify - token"
+                      - usernamePassword:
+                          description: "Fortify on Demand - OAuth client credentials (client_id/client_secret)"
+                          id: "fortify-on-demand-oauth"
+                          password: "${fortify-on-demand-password}"
+                          scope: GLOBAL
+                          username: "${fortify-on-demand-username}"
                       - string:
                           scope: GLOBAL
                           id: slack-token
@@ -282,6 +297,7 @@ spec:
                           appID: "52960"
                           description: "GitHub APP Key - CNP"
                           id: "hmcts-jenkins-cnp"
+                          owner: "HMCTS"
                           privateKey: "${hmcts-jenkins-cnp-ghapp}"
                       - gitHubApp:
                           appID: "149849"
@@ -312,9 +328,33 @@ spec:
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
+              - script: >
+                  pipelineJob('Seed Job') {
+                    triggers {
+                      cron('H 8,11,14,17 * * 1-5')
+                    }
+                    definition {
+                      cpsScm {
+                        scm {
+                          git {
+                            remote {
+                              github('hmcts/cnp-jenkins-config')
+                              credentials('hmcts-jenkins-cnp')
+                            }
+                            branch('master')
+                          }
+                        }
+                        scriptPath('jobdsl/Jenkinsfile_seed')
+                        lightweight(true)
+                      }
+                    }
+                  }
       sidecars:
         configAutoReload:
-          image: kiwigrid/k8s-sidecar:1.27.4
+          image:
+            registry: hmctsprod.azurecr.io
+            repository: imported/kiwigrid/k8s-sidecar
+            tag: 1.30.9
           # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
           # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
           # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
@@ -381,7 +421,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 4.8.2
+      version: 5.9.18
       sourceRef:
         kind: HelmRepository
         name: jenkins

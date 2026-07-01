@@ -3,29 +3,15 @@ kind: HelmRelease
 metadata:
   name: traefik2
   namespace: admin
+  annotations:
+    # Traefik v39.0.0+ enforces schema validation and we don't want Java tool options injected as this will violate it
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
-  chart:
-    spec:
-      chart: traefik
-      # update the crd version in traefik-crds when updating this
-      version: 27.0.2
-      sourceRef:
-        kind: HelmRepository
-        name: traefik
-        namespace: admin
   values:
     service:
-      spec:
-        loadBalancerIP: "10.48.95.250"
+      loadBalancerIP: "10.48.95.250"
     deployment:
       podLabels:
         useWorkloadIdentity: "true"
     serviceAccount:
       name: admin
-    additionalArguments:
-      - "--entryPoints.web.transport.respondingTimeouts.writeTimeout=90"
-      - "--entryPoints.websecure.transport.respondingTimeouts.writeTimeout=90"
-      - "--entryPoints.web.transport.respondingTimeouts.readTimeout=90"
-      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=90"
-      - "--entryPoints.web.forwardedHeaders.insecure=true"
-      - "--entryPoints.websecure.forwardedHeaders.insecure=true"

@@ -2,14 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-  - registry-credential-sync/hmctspublic/kustomize.yaml
-  - registry-credential-sync/hmctsprivate/kustomize.yaml
-  - registry-credential-sync/hmctssandbox/kustomize.yaml
   - ../../aac/automation
   - ../../adoption/automation
   - ../../am/automation
   - ../../backstage/automation
-  - ../../bar/automation
   - ../../bsp/automation
   - ../../ccd/automation
   - ../../civil/automation
@@ -39,16 +35,17 @@ resources:
   - ../../rpe/automation
   - ../../slack-help-bot/automation
   - ../../response/automation
+  - ../../tfplan-viewer/automation
   - ../../sscs/automation
   - ../../wa/automation
   - ../../xui/automation
   - ../../et/automation
-  - ../../labs/automation
   - ../../camunda/automation
   - ../../fis/automation
   - ../../private-law/automation
   - ../../ts/automation
   - ../../dtsse/automation
+  - ../../dtsse-richui/automation
   - ../../sptribs/automation
   - ../../azure-devops/automation
   - ../../cui/automation
@@ -59,11 +56,21 @@ resources:
   - ../../et-pet/automation
   - ../../tax-tribunals/automation
   - ../../help-with-fees/automation
+  - ../../pcs/automation
+  - ../../cath/automation
+  - ../../enforcement/automation
+  - ../../rota/automation
+  - ../../labs/automation
+  - ../../pt/automation
 patches:
   - path: hmctspublic-image-repo.yaml
     target:
       kind: ImageRepository
-      annotationSelector: hmcts.github.com/image-registry != hmctsprivate,hmcts.github.com/image-registry != hmctssandbox
+      annotationSelector: hmcts.github.com/image-registry != hmctsprod,hmcts.github.com/image-registry != hmctsprivate,hmcts.github.com/image-registry != hmctssandbox,hmcts.github.com/image-registry != hmctssbox
+  - path: hmctsprod-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry == hmctsprod
   - path: hmctsprivate-image-repo.yaml
     target:
       kind: ImageRepository
@@ -72,7 +79,15 @@ patches:
     target:
       kind: ImageRepository
       annotationSelector: hmcts.github.com/image-registry == hmctssandbox
+  - path: hmctssbox-image-repo.yaml
+    target:
+      kind: ImageRepository
+      annotationSelector: hmcts.github.com/image-registry == hmctssbox
   - path: prod-image-policy.yaml
     target:
       kind: ImagePolicy
-      annotationSelector: hmcts.github.com/prod-automated != disabled
+      annotationSelector: hmcts.github.com/prod-automated != disabled,hmcts.github.com/image-policy-type != numerical
+  - path: prod-numerical-image-policy.yaml
+    target:
+      kind: ImagePolicy
+      annotationSelector: hmcts.github.com/prod-automated != disabled,hmcts.github.com/image-policy-type == numerical

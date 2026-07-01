@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-frontend
+spec:
+  releaseName: pcs-frontend
+  values:
+    nodejs:
+      replicas: 2
+      image: hmctsprod.azurecr.io/pcs/frontend:prod-f9163b9-20260701095138 #{"$imagepolicy": "flux-system:pcs-frontend"}
+      environment:
+        TRIGGER_VAR: 1
+  chart:
+    spec:
+      chart: ./stable/pcs-frontend
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

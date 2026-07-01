@@ -5,9 +5,9 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/dm/store:prod-aca155b-20240618165452 #{"$imagepolicy": "flux-system:demo-dm-store"}
+      image: hmctsprod.azurecr.io/dm/store:prod-64d5d01-20260625161143 #{"$imagepolicy": "flux-system:demo-dm-store"}
       environment:
         ENABLE_TTL: false
-        TEST_VAR: refresh_true
-      spotInstances:
-        enabled: true
+        UPLOAD_BLOCK_SIZE: 8
+        UPLOAD_MAX_CONCURRENCY: 10
+        MAX_SINGLE_UPLOAD_SIZE: 100

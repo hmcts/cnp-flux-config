@@ -6,11 +6,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/idam/web-public:prod-d0938e8-20240524121508
+      image: hmctsprod.azurecr.io/idam/web-public:prod-047d716-20260616152959
       replicas: 2
       ingressHost: idam-web-public.perftest.platform.hmcts.net
       environment:
         STRATEGIC_SERVICE_URL: https://idam-api.perftest.platform.hmcts.net
+        strategic_content_security_policy_form_action: "https: http:"
         SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUERURI: http://idam-perftest-jumpbox.service.core-compute-idam-perftest.internal:9080/auth/realms/jhipster
         SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENTID: internal
         SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENTSECRET: internal
@@ -21,4 +22,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      version: 0.4.0
+      chart: ./stable/idam-web-public
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

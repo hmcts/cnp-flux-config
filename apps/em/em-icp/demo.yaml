@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: em-icp
+spec:
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/em/icp:pr-1525-33c03dd-20260623124921 #{"$imagepolicy": "flux-system:demo-em-icp"}
+      environment:
+        DUMMY_VAR: 2
+        SERVICES_CCD_COMPONENT_API: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net

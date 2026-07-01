@@ -6,8 +6,21 @@ spec:
   releaseName: ccpay-bubble-frontend
   values:
     nodejs:
+      replicas: 2
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 120
+      memoryRequests: '512Mi'
+      memoryLimits: '1024Mi'
+      cpuRequests: '150m'
+      cpuLimits: '500m'
       ingressHost: paybubble.platform.hmcts.net
       environment:
         PCIPAL_ANTENNA_URL: https://paybubble.platform.hmcts.net/ccd-search
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_AUTHENTICATION_WEB_URL: https://hmcts-access.service.gov.uk
+        TELEPHONY_FEATURE: enabled
+        DYNATRACE_SCRIPT_URL: https://js-cdn.dynatrace.com/jstag/17177a07246/bf00910jpo/4aa788008b36441f_complete.js

@@ -7,8 +7,7 @@ spec:
     nodejs:
       ingressHost: manage-case.ithc.platform.hmcts.net
       environment:
-        DUMMY_VAR_FOR_RESTART: 2
-        FEATURE_JRD_E_LINKS_V2_ENABLED: true
+        DUMMY_VAR_FOR_RESTART: 1
         SERVICES_IDAM_LOGIN_URL: https://idam-web-public.ithc.platform.hmcts.net
         SERVICES_IDAM_API_URL: https://idam-api.ithc.platform.hmcts.net
         SERVICES_MARKUP_API: http://em-npa-ithc.service.core-compute-ithc.internal
@@ -22,7 +21,7 @@ spec:
         STUB: false
         SERVICES_CCD_ACTIVITY_API: http://ccd-case-activity-api-ithc.service.core-compute-ithc.internal
         HEALTH_CCD_ACTIVITY_API: http://ccd-case-activity-api-ithc.service.core-compute-ithc.internal/health
-        SERVICES_ICP_API: http://em-icp-ithc.service.core-compute-ithc.internal
+        SERVICES_ICP_API: https://em-icp.ithc.platform.hmcts.net
         SERVICES_EM_DOCASSEMBLY_API: http://dg-docassembly-ithc.service.core-compute-ithc.internal
         SERVICES_REFUNDS_API_URL: http://ccpay-refunds-api-ithc.service.core-compute-ithc.internal
         SERVICES_LOCATION_API: http://rd-location-ref-api-ithc.service.core-compute-ithc.internal
@@ -33,12 +32,14 @@ spec:
         SERVICES_PRD_COMMONDATA_API: http://rd-commondata-api-ithc.service.core-compute-ithc.internal
         SERVICES_CCD_CASE_ASSIGNMENT_API: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
         SERVICES_PRD_API: http://rd-professional-api-ithc.service.core-compute-ithc.internal
-        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,HRS,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3,PRIVATELAW,AUTOTEST1,ST_CIC,ADOPTION
-        GLOBAL_SEARCH_SERVICES: IA,CIVIL,PRIVATELAW,PUBLICLAW,SSCS,ST_CIC,EMPLOYMENT
-        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS,ST_CIC
+        JURISDICTIONS: DIVORCE,PROBATE,FR,PUBLICLAW,IA,SSCS,CMC,EMPLOYMENT,CIVIL,HRS,BEFTA_JURISDICTION_1,BEFTA_JURISDICTION_2,BEFTA_JURISDICTION_3,PRIVATELAW,AUTOTEST1,ST_CIC,ADOPTION,PCS
+        GLOBAL_SEARCH_SERVICES: IA,CIVIL,PRIVATELAW,PUBLICLAW,SSCS,ST_CIC,EMPLOYMENT,PCS
+        WA_SUPPORTED_JURISDICTIONS: IA,CIVIL,PRIVATELAW,PUBLICLAW,EMPLOYMENT,SSCS,ST_CIC,PCS
         HEARINGS_JURISDICTIONS: SSCS,PRIVATELAW,CIVIL,IA,EMPLOYMENT,ST_CIC
         SERVICES_DOCUMENTS_API_V2: http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal
         SERVICES_CASE_JUDICIAL_API: http://rd-judicial-api-ithc.service.core-compute-ithc.internal
         SERVICES_JUDICIAL_BOOKING_API_PATH: http://am-judicial-booking-service-ithc.service.core-compute-ithc.internal
         FEATURE_ACCESS_MANAGEMENT_ENABLED: true
-      image: hmctspublic.azurecr.io/xui/webapp:prod-bf6187c-20240619130559 #{"$imagepolicy": "flux-system:ithc-xui-webapp"}
+        FEATURE_LAU_SPECIFIC_CHALLENGED_ENABLED: true
+        SERVICE_REF_DATA_MAPPING: '[{"service":"IA", "serviceCodes":["BFA1"]}, {"service":"CIVIL", "serviceCodes":["AAA6", "AAA7"]}, {"service":"PRIVATELAW", "serviceCodes":["ABA5"]}, {"service":"PUBLICLAW", "serviceCodes":["ABA3"]}, {"service":"SSCS", "serviceCodes":["BBA3"]}, {"service":"ST_CIC", "serviceCodes":["BBA2"]}, {"service":"EMPLOYMENT", "serviceCodes":["BHA1"]}, {"service":"DIVORCE", "serviceCodes":["ABA1"]}, {"service":"FR", "serviceCodes":["ABA2"]}, {"service":"PROBATE", "serviceCodes":["ABA6"]}, {"service":"PCS", "serviceCodes":["AAA3"]}]'
+      image: hmctsprod.azurecr.io/xui/webapp:prod-d1a395f-20260630161528 #{"$imagepolicy": "flux-system:ithc-xui-webapp"}

@@ -18,8 +18,10 @@ spec:
     - kind: Secret
       name: "botkube-values"
   values:
+    serviceAccount:
+      name: botkube
     image:
-      tag: v1.10.0
+      tag: v1.14.0
     settings:
       clusterName: cft-${CLUSTER_FULL_NAME}-aks
       upgradeNotifier: false
@@ -46,11 +48,21 @@ spec:
               allowed:
                 verbs: ["describe", "get", "top"]
                 resources: ["events", "namespaces", "nodes", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
+          context:
+            rbac:
+              group:
+                type: Static
+                prefix: ""
+                static:
+                  values: ["botkube-plugins-default"]
     rbac:
-      rules:
-        - apiGroups: ["*"]
-          resources: ["events", "namespaces", "nodes", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
-          verbs: ["get", "watch", "list"]
+      groups:
+        botkube-plugins-default:
+          create: true
+          rules:
+            - apiGroups: ["*"]
+              resources: ["namespaces", "pods", "services", "daemonsets", "deployments", "ingresses", "replicasets", "jobs", "configmaps", "helmreleases"]
+              verbs: ["get", "watch", "list"]
     resources:
       requests:
         cpu: 100m
@@ -80,7 +92,7 @@ spec:
       'k8s-all-events':
         displayName: "Kubernetes Info"
         botkube/kubernetes:
-          enabled: true
+          enabled: false
           config:
             filters:
               objectAnnotationChecker: true

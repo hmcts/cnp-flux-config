@@ -6,14 +6,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/finrem/cos:prod-08df7a4-20231010122844 #{"$imagepolicy": "flux-system:ithc-finrem-cos"}
-      replicas: 3
+      image: hmctsprod.azurecr.io/finrem/cos:pr-2673-6d8ffd1-20251112152524 #{"$imagepolicy": "flux-system:ithc-finrem-cos"}
       autoscaling:
         enabled: true
-        maxReplicas: 4
-        targetCPUUtilizationPercentage: 80 # Default is 80% target CPU utilization
+        minReplicas: 1
+        maxReplicas: 2
       environment:
-        SECURE_DOC_ENABLED: false
+        SECURE_DOC_ENABLED: true
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_SOLICITOR_NOC: true
         FEATURE_CASEWORKER_NOC: true
@@ -22,5 +21,9 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-ithc.service.core-compute-ithc.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-ithc.service.core-compute-ithc.internal"
-        FEATURE_SEND_LETTER_RECIPIENT_CHECK: false
+        MANAGE_CASE_UI_BASE_URL: "https://manage-case.ithc.platform.hmcts.net"
         VAR_FLUX_V2: trigger3
+        EXPRESS_PILOT_ENABLED: true
+        MANAGE_HEARING_ENABLED: true
+        VACATE_HEARING_ENABLED: true
+        FINREM_WORK_ALLOCATION_ENABLED: false

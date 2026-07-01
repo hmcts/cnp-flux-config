@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: hmc-admin-ui
+spec:
+  releaseName: hmc-admin-ui
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/hmc/admin-ui:prod-e305f56-20260130160303 #{"$imagepolicy": "flux-system:demo-hmc-admin-ui"}
+      environment:

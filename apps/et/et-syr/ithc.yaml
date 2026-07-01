@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-syr
+  namespace: et
+spec:
+  releaseName: et-syr
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/et/syr:prod-4b3373a-20260701083839 #{"$imagepolicy": "flux-system:et-syr"}
+      ingressHost: et-syr.ithc.platform.hmcts.net
+      environment:
+        HMCTS_ACCESS: 'true'
+        IDAM_END_SESSION_URL: 'https://idam-web-public.ithc.platform.hmcts.net/o/endSession'

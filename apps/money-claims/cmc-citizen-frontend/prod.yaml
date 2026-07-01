@@ -6,7 +6,6 @@ metadata:
 spec:
   values:
     nodejs:
-      replicas: 4
       readinessDelay: 45
       livenessDelay: 45
       ingressHost: www1.moneyclaims.service.gov.uk
@@ -21,3 +20,13 @@ spec:
         FEATURE_WEB_CHAT: false
         PCQ_URL: https://equality-and-diversity.platform.hmcts.net
         FEATURE_PLACE_HOLDER: false
+        CUI_DASHBOARD_URL: https://www.moneyclaims.service.gov.uk/dashboard
+        CUI_URL: https://www.moneyclaims.service.gov.uk
+        FEATURE_DISABLE_PAGES: true
+        SESSION_USE_REDIS_STORE: "true"
+        SESSION_REDIS_HOST: civil-citizen-ui-draft-store-prod.redis.cache.windows.net
+        SESSION_REDIS_PORT: "6380"
+        SESSION_REDIS_TLS: "true"
+        SESSION_REDIS_KEY_PREFIX: "citizen-ui-session:"
+      spotInstances:
+        enabled: false

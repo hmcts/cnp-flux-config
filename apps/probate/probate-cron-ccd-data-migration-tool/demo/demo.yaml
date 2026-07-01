@@ -6,10 +6,17 @@ spec:
   releaseName: probate-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/cron-ccd-data-migration-tool:pr-22-a5c1837-20240509183350 #{"$imagepolicy":"flux-system:demo-probate-cron-ccd-data-migration-tool"}
-      schedule: "45 9 10 5 *"
+      image: hmctsprod.azurecr.io/probate/cron-ccd-data-migration-tool:pr-385-203f44a-20260629161611
+      schedule: "30 10 1 7 *"
       environment:
         PRD_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
         TRIG: trig-2
-        CASE_REFERENCES: '1714138970530633,17061911401059191714569689299740,1714567981903746,1714567813500173,1714036459696224,1714036455034586,1714036152010939,1712148719950226,1712148600119790,1711620846069329,1711620470584809,1711620287959723,1711620171458170,1711556830035290,1711556525106679,1711556229636229,1711555723791548,1710843093823542,1710840859731414,1710765337933813,1705501977610982'
-        ROLLBACK_CASEREFERENCES: false
+        MIGRATION_USE_REIMPL: true
+        MIGRATION_ID: "DTSPB-5130"
+        USER_TOKEN_REFRESH_MARGIN_MINS: 5
+        S2S_TOKEN_REFRESH_MARGIN_MINS: 5
+        MIGRATION_DRYRUN: false
+        DTSPB_5064_ROLLBACK_DATE: "2026-06-23"
+        DTSPB_5472_ROLLBACK_DATE: "2026-05-07"
+        DTSPB-5113_ROLLBACK_DATE: "2026-06-25"
+        DTSPB-5130_ROLLBACK_DATE: "2026-07-01"

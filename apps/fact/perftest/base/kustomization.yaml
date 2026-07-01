@@ -3,7 +3,12 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
+  - ../../../base/slack-provider/perftest
+  - ../../../base/docker-registry/perftest
 namespace: fact
 patches:
-  - path: ../../identity/perftest.yaml
   - path: ../../serviceaccount/perftest.yaml
+  - path: ../../fact-frontend/perftest.yaml
+  - path: ../../fact-data-api/perftest.yaml
+  - path: ../../fact-public-frontend/perftest.yaml
+  - path: ../../fact-admin-frontend/perftest.yaml

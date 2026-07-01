@@ -3,6 +3,11 @@ kind: Kustomization
 resources:
   - ../../base
   - prometheus-values.yaml
+  - prometheus-values.enc.yaml
   - helm-base-versions.enc.yaml
   - ../../helm-base-versions
   - ../../failed-deployments
+  - ../../version-reporter/platopsapps/platops-apps.yaml
+  - ../../version-reporter/helmcharts/helm-charts.yaml
+patches:
+  - path: ../../serviceaccount/demo.yaml

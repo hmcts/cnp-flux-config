@@ -5,8 +5,9 @@ metadata:
 spec:
   releaseName: ccd-logstash
   values:
-    image: "hmctspublic.azurecr.io/imported/logstash/logstash"
-    imageTag: "7.16.1"
+    image: "hmctsprod.azurecr.io/imported/elastic/logstash"
+    imageTag: "9.2.4"
+    replicas: 1
     imagePullPolicy: "IfNotPresent"
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
@@ -19,13 +20,15 @@ spec:
     envFrom:
       - secretRef:
           name: logstash-secret
+      - configMapRef:
+          name: logstash-config
     extraEnvs:
       - name: DUMMY_RESTART_VAR
-        value: "true5"
+        value: "true11"
     extraInitContainers: |
       - name: download-postgres-jdbc
-        image: hmctspublic.azurecr.io/curl:7.70.0
-        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.3.3.jar', '-o', '/logstash-lib/postgresql.jar']
+        image: hmctsprod.azurecr.io/curl:7.70.0
+        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
@@ -37,11 +40,12 @@ spec:
         mountPath: /usr/share/logstash/ccd
     logstashConfig:
       logstash.yml: |
-        http.host: 0.0.0.0
-        xpack.monitoring.enabled: true
-        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        api.http.host: 0.0.0.0
+        xpack.monitoring.enabled: false
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
         queue.type: persisted
         dead_letter_queue.enable: true
+        pipeline.ecs_compatibility: disabled
       pipelines.yml: |
         - pipeline.id: main
           path.config: "/usr/share/logstash/pipeline/{01_input,02_filter,03_output}.conf"
@@ -70,8 +74,11 @@ spec:
                         "probatej" => "PROBATE"
                         "ethosj" => "EMPLOYMENT"
                         "sscsj" => "SSCS"
+                        "civilj" => "CIVIL"
+                        "fplj" => "PUBLICLAW"
                       }
-            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING case_data.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :fplj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+
             clean_run => false
             schedule => "* * * * * *"
           }
@@ -185,7 +192,7 @@ spec:
       03_output.conf: |
         output {
             elasticsearch {
-                hosts => ["${ES_HOSTS}"]
+                hosts => ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
                 sniffing => false
                 index => "%{[index_id]}"
                 document_type => "_doc"
@@ -227,9 +234,9 @@ spec:
 
         output {
           elasticsearch {
-            hosts => ["${ES_HOSTS}"]
+            hosts => ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
             sniffing => false
-            index => ".logstash_dead_letter"
+            index => "ccd-logstash-dead-letter"
           }
         }
   chart:

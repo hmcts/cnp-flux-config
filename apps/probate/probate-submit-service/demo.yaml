@@ -6,15 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/submit-service:pr-806-0018303-20240603092359 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
+      image: hmctsprod.azurecr.io/probate/submit-service:prod-b82b041-20260629095214 #{"$imagepolicy": "flux-system:demo-probate-submit-service"}
       environment:
-        VAR_FV2: Demo-1
-      keyVaults:
-        probate:
-          secrets:
-            - name: s2s-probate-backend
-              alias: S2S_AUTH_TOTP_SECRET
-            - name: AppInsightsInstrumentationKey
-              alias: azure.application-insights.instrumentation-key
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
+        # Does what it says on the tin - if this changes then demo should redeploy
+        CHANGE_TO_REDEPLOY_DEMO: 20251215

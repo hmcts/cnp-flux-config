@@ -4,7 +4,7 @@ Below section covers how the repo is set up to handle multiple environments and 
 
 ### Key considerations
 
-- Directory stucture is team/namespace focussed than cluster focussed so that moving teams config to different repos and managing permissions is easy.
+- Directory structure is team/namespace-focused than cluster-focused so that moving teams' config to different repos and managing permissions is easy.
 - Every namespace is a directory in [apps/](../apps/)
 - Image Automation is run only from CFTPTL cluster and related components/CRDs are installed/created only on CFTPTL.
 - Every team/namespace has a separate Flux Kustomization so that one team won't break another team's config.
@@ -12,11 +12,11 @@ Below section covers how the repo is set up to handle multiple environments and 
 
 ### Kustomization Naming
 
-- [flux-system Flux kustomization](../apps/flux-system/sbox/00/kustomize.yaml)- flux specific CRD, file named kustomize.yaml to avoid confusion with k8s kustomization.yaml files. It gives path and repo from which flux controller should apply from.
+- [flux-system Flux kustomization](../apps/flux-system/sbox/00/kustomize.yaml)- flux specific CRD, file named kustomize.yaml to avoid confusion with k8s kustomization.yaml files. It gives path and repo from which flux controller should apply.
 - [namespace flux kustomization](../apps/rpe/base/kustomize.yaml) - A Flux Kustomize file for specific namespace having the path flux should look at.
 - [Cluster Overlay](../clusters/sbox/00/kustomization.yaml) - overlay of a cluster which normally patches on top of Env Base defined next.
 - [Env Base](../clusters/sbox/base/kustomization.yaml) - A base kustomization for an environment which generally includes Flux Kustomizations for all namespaces in that cluster.
-- [namespace base kustomization](../apps/rpe/base/kustomization.yaml) - A base kustomization including manifests that are common across all environments except special cases like preview.
+- [namespace base kustomization](../apps/rpe/base/kustomization.yaml) - A base kustomization including manifests that are common across all environments except special cases like Preview.
 - [namespace env overlay]((../apps/rpe/aat/base/kustomization.yaml)) - Overlay of a namespace base kustomization with env specific patches related to that namespace.
 - [default namespace base](../apps/base/kustomization.yaml) - default manifests needed for all namespaces but templated which are set in [namespace Flux kustomization](../apps/rpe/base/kustomize.yaml)
 - [namespace automation kustomization](../apps/rpe/automation) - includes all automation CRDs for a namespace
@@ -81,10 +81,10 @@ Below section covers how the repo is set up to handle multiple environments and 
 - Flux installation from Cluster creation pipeline applies
     1. [Flux components](../apps/flux-system/base/gotk-components.yaml) - creates CRDs and installs core flux components
     2. [Flux git repo CRD](../apps/flux-system/base/flux-config-gitrepo.yaml) - source controller config to download/update flux repo periodically.
-    3. [Git Credentials](../apps/flux-system/sbox/base/git-credentials.yaml) which source controller uses to authenticate to Github
-    4. [All config in flux-system base](../apps/flux-system/base/kustomization.yaml) which includes `hmctspublic` HelmRepo CRD, `hmcts-charts` Github Repo CRDs.
-    5. [Flux kustomization for flux-system namespace](../apps/flux-system/base/kustomize.yaml) which is patched to [env/cluster specific kustomize.yaml](../apps/flux-system/sbox/00/kustomize.yaml)
+    3. [All config in flux-system base](../apps/flux-system/base/kustomization.yaml) which includes `hmctspublic` HelmRepo CRD, `hmcts-charts` Github Repo CRDs.
+    4. [Flux kustomization for flux-system namespace](../apps/flux-system/base/kustomize.yaml) which is patched to [env/cluster specific kustomize.yaml](../apps/flux-system/sbox/00/kustomize.yaml)
     
+- Flux is [bootstrapped](https://github.com/hmcts/aks-cft-deploy/blob/main/bootstrap/scripts/install-flux.sh#L130) and authenticates to GitHub repositories using dedicated [GitHub App](../apps/flux-system/base/flux-config-gitrepo.yaml#14) secret
 - Flux kustomization for flux-system namespace patched above [Env/Cluster specific kustomize.yaml](../apps/flux-system/sbox/00/kustomize.yaml) will point to the path at which flux should look at. (Example  `./clusters/sbox/00`)
 - Kustomize controller installs everything included in [Cluster Overlay](../clusters/sbox/00/kustomization.yaml) which inherits [Env Base Kustomization](../clusters/sbox/base/kustomization.yaml)
 - This will create Flux Kustomizations for all namespaces that are included in that cluster. It also sets the defaults for all these using [kustomize.yaml](../apps/base/kustomize.yaml)

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-azurefiles
+  annotations:
+    pv.kubernetes.io/provisioned-by: file.csi.azure.com
+spec:
+  capacity:
+    storage: 1024Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  mountOptions:
+    - nconnect=4
+    - noresvport
+    - actimeo=30
+  csi:
+    driver: file.csi.azure.com
+    volumeHandle: DISKS-PTLSBOX-RG#jenkinssboxfilestorage#jenkins-data
+    volumeAttributes:
+      resourceGroup: DISKS-PTLSBOX-RG
+      storageAccount: jenkinssboxfilestorage
+      shareName: jenkins-data
+      protocol: nfs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-azurefiles
+  namespace: jenkins
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  volumeName: jenkins-azurefiles
+  resources:
+    requests:
+      storage: 1024Gi

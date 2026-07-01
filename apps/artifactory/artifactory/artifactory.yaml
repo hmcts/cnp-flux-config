@@ -1,106 +1,55 @@
----
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
   name: artifactory-oss
   namespace: artifactory
 spec:
-  serviceName: "artifactory"
-  replicas: 2
-  selector:
-    matchLabels:
-      app: artifactory-oss
-  template:
-    metadata:
-      labels:
-        app: artifactory-oss
+  timeout: 20m
+  releaseName: artifactory-oss
+  chart:
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - artifactory-oss
-                  - key: app.kubernetes.io/component
-                    operator: In
-                    values:
-                      - jenkins-master
-              topologyKey: "kubernetes.io/hostname"
-      initContainers:
-        - name: artifactory-init
-          image: hmctspublic.azurecr.io/artifactory-init:0.1.0
-          command:
-            [
-              "sh",
-              "-c",
-              "mkdir -p /var/opt/jfrog/artifactory/etc; cp artifactory.config.xml /var/opt/jfrog/artifactory/etc/artifactory.config.import.xml; chown -R 1030:1030 /var/opt/jfrog/artifactory; chmod -R 0700 /var/opt/jfrog/artifactory;",
-            ]
-          volumeMounts:
-            - mountPath: "/var/opt/jfrog/artifactory"
-              name: artifactory-data
-      containers:
-        - image: docker.bintray.io/jfrog/artifactory-oss:7.84.12
-          name: artifactory-oss
-          env:
-            - name: EXTRA_JAVA_OPTIONS
-              value: "-Xms2g -Xmx8g"
-            - name: ENABLE_MIGRATION
-              value: "y"
-          resources:
-            requests:
-              memory: "1024Mi"
-              cpu: "1000m"
-            limits:
-              memory: "8192Mi"
-              cpu: "3000m"
-          ports:
-            - containerPort: 8081
-              name: http
-          readinessProbe:
-            httpGet:
-              port: 8081
-              path: /
-              scheme: HTTP
-            initialDelaySeconds: 3
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 1
-            timeoutSeconds: 1
-          imagePullPolicy: Always
-          volumeMounts:
-            - mountPath: "/var/opt/jfrog/artifactory"
-              name: artifactory-data
-  volumeClaimTemplates:
-    - metadata:
-        name: artifactory-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: "managed-premium"
-        resources:
-          requests:
-            storage: 1000Gi
----
-#
-# Service
-#
-apiVersion: v1
-kind: Service
-metadata:
-  name: artifactory-oss
-  namespace: artifactory
-  annotations:
-    traefik.ingress.kubernetes.io/affinity: "true"
-  labels:
-    app: artifactory-oss
-spec:
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 8082
-  clusterIP: None
-  selector:
-    app: artifactory-oss
+      chart: artifactory-oss
+      version: 107.133.12
+      sourceRef:
+        kind: HelmRepository
+        name: artifactory
+        namespace: artifactory
+  interval: 1m
+  values:
+    artifactory:
+      artifactory:
+        admin:
+          secret: admin-pw
+          dataKey: bootstrap.creds
+        consoleLog: true
+        joinKeySecretName: join-key
+        masterKeySecretName: master-key
+        persistence:
+          storageClassName: managed
+          size: 128Gi
+        database:
+          allowNonPostgresql: true
+        # Artifactory OSS 7.125+ appears to have a bug where it tries to connect to JFConnect microservice to verify entitlements/licensing
+        # But this microservice does not exist within OSS and there is no licensing to check, this causes frontend microservice to never load
+        # So explicitly disable JFConnect to prevent this issue
+        # Bug for this has been raised: https://github.com/jfrog/charts/issues/2233
+        systemYaml: |
+          shared:
+            database:
+              allowNonPostgresql: true
+          jfconnect:
+            enabled: false
+          curation:
+            enabled: false
+        configMapName: artifactory-oss-configmaps
+      ingress:
+        annotations:
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        className: traefik
+        enabled: true
+      nginx:
+        enabled: false
+      postgresql:
+        enabled: false
+    postgresql:
+      enabled: false

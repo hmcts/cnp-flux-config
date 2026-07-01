@@ -5,9 +5,10 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/bulk-scan/processor:pr-3269-4cbf12e-20240614140500
+      image: hmctsprod.azurecr.io/bulk-scan/processor:pr-3524-53ecfb7-20260604113911
       environment:
         #60 days in seconds
+        IDAM_API_URL: "https://idam-web-public.demo.platform.hmcts.net"
         SAS_TOKEN_VALIDITY: "5184000"
         DELETE_REJECTED_FILES_TTL: PT1H
         CDAM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
@@ -17,6 +18,15 @@ spec:
         BULK_SCANNING_DB_NAME: bulk_scan
         BULK_SCANNING_DB_HOST: bulk-scan-processor-flexible-postgres-db-v15-{{ .Values.global.environment }}.postgres.database.azure.com
         BULK_SCANNING_DB_PORT: "5432"
+        OCR_VALIDATION_URL_SSCS: http://sscs-tribunals-api-demo.service.core-compute-demo.internal
         FLYWAY_URL: jdbc:postgresql://bulk-scan-processor-flexible-postgres-db-v15-{{ .Values.global.environment }}.postgres.database.azure.com:5432/bulk_scan?sslmode=require
         FLYWAY_USER: bulk_scanner
-        REFRESH_PODS: "yes"
+        PAYMENTS_ENABLED_PROBATE: true
+        PAYMENTS_ENABLED_DIVORCE: true
+        PAYMENTS_ENABLED_FINREM: true
+        PAYMENTS_ENABLED_BULKSCAN_SAMPLE_APP: true
+        PAYMENTS_ENABLED_BULKSCAN_AUTO_SAMPLE_APP: true
+        PAYMENTS_ENABLED_PUBLICLAW: false
+        PAYMENTS_ENABLED_NFD: true
+        PAYMENTS_ENABLED_SSCS: true
+        PAYMENTS_ENABLED_PRIVATELAW: true

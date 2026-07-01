@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fis-ds-web
+  namespace: fis
+spec:
+  values:
+    java:
+      image: hmctsprod.azurecr.io/fis/ds-web:prod-9d69a72-20260323123139 #{"$imagepolicy": "flux-system:perftest-fis-ds-web"}
+      environment:
+        FEATURE_EXAMPLE: false
+    global:
+      environment: perftest
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      enableKeyVaults: true
+  chart:
+    spec:
+      chart: ./stable/fis-ds-web
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

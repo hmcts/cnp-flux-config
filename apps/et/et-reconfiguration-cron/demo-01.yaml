@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: et-reconfiguration-cron
+spec:
+  releaseName: et-reconfiguration-cron
+  values:
+    job:
+      suspend: true
+
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      environment: demo
