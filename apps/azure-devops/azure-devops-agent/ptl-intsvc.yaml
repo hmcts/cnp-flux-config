@@ -6,6 +6,9 @@ metadata:
 spec:
   values:
     maxReplicaCount: 13
+    memoryLimits: 6144Mi # DTSPO-32997: match sbox; 4Gi insufficient for OWASP full DB load
+    job:
+      activeDeadlineSeconds: 32400 # DTSPO-32997: 9h timeout to match sbox; NVD bulk-reanalysis catch-up exceeds 3h default
     triggerAuth:
       enabled: true
       create: true
