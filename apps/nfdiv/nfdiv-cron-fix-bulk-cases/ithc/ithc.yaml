@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfdiv-cron-fix-bulk-cases
+spec:
+  releaseName: nfdiv-cron-fix-bulk-cases
+  values:
+    job:
+      disableActiveClusterCheck: false
+      schedule: "0 12 13 10 *"
+      environment:
+        NOTIFY_TEMPLATE_SIGN_IN_DIVORCE_URL: https://nfdiv-apply-for-divorce.ithc.platform.hmcts.net/
+        NOTIFY_TEMPLATE_SIGN_IN_DISSOLUTION_URL: https://nfdiv-end-civil-partnership.ithc.platform.hmcts.net/
+        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DIVORCE_URL: https://nfdiv-apply-for-divorce.ithc.platform.hmcts.net/applicant2
+        NOTIFY_TEMPLATE_APPLICANT2_SIGN_IN_DISSOLUTION_URL: https://nfdiv-end-civil-partnership.ithc.platform.hmcts.net/applicant2
+        S2S_URL: http://rpe-service-auth-provider-ithc.service.core-compute-ithc.internal
+        FEE_API_URL: http://fees-register-api-ithc.service.core-compute-ithc.internal
+        IDAM_API_BASEURL: https://idam-api.ithc.platform.hmcts.net
+        CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
+        DOC_ASSEMBLY_URL: http://dg-docassembly-ithc.service.core-compute-ithc.internal
+        PRD_API_BASEURL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
+        SEND_LETTER_SERVICE_BASEURL: http://rpe-send-letter-service-ithc.service.core-compute-ithc.internal
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: ithc

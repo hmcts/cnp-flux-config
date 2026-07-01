@@ -5,9 +5,15 @@ resources:
   - ../../../base/workload-identity
   - ../../../base/docker-registry/dev
   - ../../identity/identity.yaml
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
+  - ../aso/dtsse-postgres-config.yaml
+  - ../sops-secrets
 namespace: dtsse
 patches:
   - path: ../../identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
+  - path: ../aso/dtsse-postgres.yaml
 sortOptions:
   order: fifo

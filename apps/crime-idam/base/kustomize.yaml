@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: crime-idam
+  namespace: flux-system
+spec:
+  path: ./apps/crime-idam/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "crime-idam"
+      WI_NAME: "crime-idam"
+      TEAM_NOTIFICATION_CHANNEL: "idam-team-crime"
+      TEAM_AAD_GROUP_ID: "133b1383-c6a5-4470-8109-6fb6a1e32e8e"

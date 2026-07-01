@@ -6,16 +6,8 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/probate/business-service:prod-6b6381b-20250909111122 #{"$imagepolicy": "flux-system:demo-probate-business-service"}
+      image: hmctsprod.azurecr.io/probate/business-service:prod-dc62317-20260701100928 #{"$imagepolicy": "flux-system:demo-probate-business-service"}
       environment:
         # Does what it says on the tin - if this changes then demo should redeploy
-        CHANGE_TO_REDEPLOY_DEMO: 20250528
-      keyVaults:
-        probate:
-          secrets:
-            - name: probate-notify-invite-apikey
-              alias: services.notify.apiKey
-            - name: s2s-probate-backend
-              alias: services.auth.provider.totp_secret
-            - name: app-insights-connection-string
-              alias: app-insights-connection-string
+        CHANGE_TO_REDEPLOY_DEMO: 20251215
+        SERVICES_NOTIFY_INVITEDATA_INTESTACYLINK: https://probate.demo.platform.hmcts.net/executors/intestacy-invitation/

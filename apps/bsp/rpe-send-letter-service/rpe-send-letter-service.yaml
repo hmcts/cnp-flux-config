@@ -8,12 +8,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/rpe/send-letter-service:prod-b1514c5-20250821085323 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}
+      image: hmctsprod.azurecr.io/rpe/send-letter-service:prod-240ed96-20260630094728 #{"$imagepolicy": "flux-system:rpe-send-letter-service"}
       environment:
         TRIGGER_VAR: 1
         FILE_CLEANUP_ENABLED: "true"
         OLD_LETTER_CONTENT_CLEANUP_ENABLED: "true"
         FTP_FINGERPRINT: "SHA256:3tX3DIkqd1Loz2alHfnt+qjHocfxk0YUOZHlnf9Zgdk="
+        STALE_BUSINESS_DAYS: 7
   chart:
     spec:
       chart: ./stable/rpe-send-letter-service
