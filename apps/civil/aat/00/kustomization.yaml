@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+  # DTSCCI-5764 one-off index build — aat-00 ONLY (test env; validate here first).
+  - ../../civil-service/dashboard-notif-index-cronjob.yaml
 namespace: civil
 patches:
   - path: ../../civil-sdt/aat-00.yaml
