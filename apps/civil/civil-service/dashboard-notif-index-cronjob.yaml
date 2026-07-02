@@ -63,9 +63,11 @@ spec:
               args:
                 - |
                   set -euo pipefail
-                  export PGHOST="$(cat /mnt/secrets/civil/cmc-db-host-v15)"
-                  export PGUSER="$(cat /mnt/secrets/civil/cmc-db-username-v15)"
-                  export PGPASSWORD="$(cat /mnt/secrets/civil/cmc-db-password-v15)"
+                  # NB: SecretProviderClass civil-service-java-civil mounts each secret
+                  # under its objectAlias, so the files are CMC_DB_* not cmc-db-*-v15.
+                  export PGHOST="$(cat /mnt/secrets/civil/CMC_DB_HOST)"
+                  export PGUSER="$(cat /mnt/secrets/civil/CMC_DB_USERNAME)"
+                  export PGPASSWORD="$(cat /mnt/secrets/civil/CMC_DB_PASSWORD)"
                   export PGDATABASE=cmc PGPORT=5432 PGSSLMODE=require PGCONNECT_TIMEOUT=15
                   export PGOPTIONS="-c lock_timeout=60000"   # NOT statement_timeout (would abort a concurrent build)
                   IDX="dbs.idx_dashboard_notifications_notification_action_id"
