@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: perftest-finrem-citizen-ui
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  imageRepositoryRef:
+    name: finrem-citizen-ui
+  filterTags:
+    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
