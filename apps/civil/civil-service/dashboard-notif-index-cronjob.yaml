@@ -70,17 +70,19 @@ spec:
                   export PGPASSWORD="$(cat /mnt/secrets/civil/CMC_DB_PASSWORD)"
                   export PGDATABASE=cmc PGPORT=5432 PGSSLMODE=require PGCONNECT_TIMEOUT=15
                   export PGOPTIONS="-c lock_timeout=60000"   # NOT statement_timeout (would abort a concurrent build)
+                  # NB: shell vars are written $${VAR} so Flux postBuild.substitute
+                  # passes them through literally (it would otherwise blank ${VAR}).
                   IDX="dbs.idx_dashboard_notifications_notification_action_id"
                   echo "Checking for an INVALID leftover index..."
-                  INVALID=$(psql -tAqc "SELECT NOT indisvalid FROM pg_index WHERE indexrelid = to_regclass('${IDX}');" || true)
-                  if [ "${INVALID}" = "t" ]; then
+                  INVALID=$(psql -tAqc "SELECT NOT indisvalid FROM pg_index WHERE indexrelid = to_regclass('$${IDX}');" || true)
+                  if [ "$${INVALID}" = "t" ]; then
                     echo "Found INVALID index -> dropping"
-                    psql -v ON_ERROR_STOP=1 -c "DROP INDEX CONCURRENTLY IF EXISTS ${IDX};"
+                    psql -v ON_ERROR_STOP=1 -c "DROP INDEX CONCURRENTLY IF EXISTS $${IDX};"
                   fi
                   echo "Building index CONCURRENTLY (non-blocking)..."
                   psql -v ON_ERROR_STOP=1 -c "CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_dashboard_notifications_notification_action_id ON dbs.dashboard_notifications(notification_action_id);"
                   echo "Verifying index is valid..."
-                  psql -v ON_ERROR_STOP=1 -tAc "SELECT indisvalid FROM pg_index WHERE indexrelid = to_regclass('${IDX}');" | grep -qx "t" \
+                  psql -v ON_ERROR_STOP=1 -tAc "SELECT indisvalid FROM pg_index WHERE indexrelid = to_regclass('$${IDX}');" | grep -qx "t" \
                     && echo "OK: index valid" || { echo "FAIL: index missing or invalid"; exit 1; }
               volumeMounts:
                 - name: vault-civil
