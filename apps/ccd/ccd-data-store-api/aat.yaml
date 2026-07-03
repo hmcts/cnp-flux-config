@@ -7,7 +7,7 @@ spec:
   values:
     java:
       replicas: 6
-      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-29cd1dc-20260624085137 #{"$imagepolicy": "flux-system:aat-ccd-data-store-api"}
+      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-b13d8bc-20260702103112 #{"$imagepolicy": "flux-system:aat-ccd-data-store-api"}
       autoscaling:
         enabled: true
         minReplicas: 2
@@ -60,6 +60,13 @@ spec:
               "decentralised": {
                 "case-type-service-urls": {
                   "FT_Decentralisation": "http://ccd-test-stubs-service-aat.service.core-compute-aat.internal/"
+                  "ET_EnglandWales": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Scotland": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_EnglandWales_Listings": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Scotland_Listings": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_EnglandWales_Multiple": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Scotland_Multiple": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Admin": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
                 }
               }
             }
