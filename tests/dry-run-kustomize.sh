@@ -30,6 +30,37 @@ split_files() {
     cd "$CURRENT_DIRECTORY"
 }
 
+run_kubeconform() {
+    local attempt=1
+    local max_attempts=4
+    local retry_delay=20
+    local status
+    local output_file
+    output_file=$(mktemp)
+
+    while true; do
+        set +e
+        kubeconform "${kubeconform_config[@]}" "$TMP_DIR" 2>&1 | tee "$output_file"
+        status=${PIPESTATUS[0]}
+        set -e
+
+        if [[ "$status" -eq 0 ]]; then
+            rm -f "$output_file"
+            return 0
+        fi
+
+        if grep -q "received HTTP status 429" "$output_file" && grep -q "Invalid: 0" "$output_file" && [[ "$attempt" -lt "$max_attempts" ]]; then
+            echo "Kubeconform schema download was rate limited. Retrying attempt $((attempt + 1))/$max_attempts after ${retry_delay}s..."
+            sleep "$retry_delay"
+            attempt=$((attempt + 1))
+            retry_delay=$((retry_delay * 2))
+            continue
+        fi
+
+        rm -f "$output_file"
+        return "$status"
+    done
+}
 
 if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     TMP_DIR="/tmp/$ENVIRONMENT/$CLUSTER/"
@@ -68,5 +99,5 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     rm -rf CustomResourceDefinition-*
     cd "$CURRENT_DIRECTORY"
 
-    kubeconform "${kubeconform_config[@]}" "$TMP_DIR"
+    run_kubeconform
 fi
