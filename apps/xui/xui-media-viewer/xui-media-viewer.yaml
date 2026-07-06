@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: xui-media-viewer
+spec:
+  releaseName: xui-media-viewer
+  values:
+    nodejs:
+      replicas: 1
+      autoscaling:
+        enabled: true
+        maxReplicas: 1 # Staging pod for validating the media-viewer package before retiring em-media-viewer.
+      useInterpodAntiAffinity: true
+      image: hmctsprod.azurecr.io/xui/media-viewer:latest #{"$imagepolicy": "flux-system:xui-media-viewer"}
+      environment:
+        VAR_T3: trigger1
+  chart:
+    spec:
+      chart: ./stable/xui-media-viewer
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
