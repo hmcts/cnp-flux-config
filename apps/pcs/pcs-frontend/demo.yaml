@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-frontend
+spec:
+  values:
+    image: hmctsprod.azurecr.io/pcs/frontend:prod-09ffc31-20260706155718 #{"$imagepolicy": "flux-system:demo-pcs-frontend"}
+    nodejs:
+      environment:
+        DEMO_VAR: "1"
+
