@@ -7,11 +7,11 @@ spec:
   releaseName: prl-cron-hearing-actual-task
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:pr-3862-9c781ed-20260601081511 #{"$imagepolicy": "flux-system:demo-prl-cron-hearing-actual-task"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-4dd7187-20260707104002 #{"$imagepolicy": "flux-system:demo-prl-cron-hearing-actual-task"}
       environment:
         TASK_NAME: UpdateHearingActualTask
         HEARING_AWAY_DAYS: 18
-        VAR: trigger3
+        VAR: trigger4
         FEATURE_EXAMPLE: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
@@ -38,8 +38,7 @@ spec:
         REQUEST_ORDER_TASK_C100_CADENCE: 0
         REQUEST_ORDER_TASK_FL401_CADENCE: 0
         APP_ENV: "demo"
-        DUMMY: test
-      schedule: 0,10 * * * *
+      schedule: 0 14 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

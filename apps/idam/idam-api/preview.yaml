@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctsprod.azurecr.io/idam/api:preview-cdc9502-20260603103126 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctsprod.azurecr.io/idam/api:preview-7337633-20260707103103 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -46,6 +46,7 @@ spec:
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_INVITATION_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_IDENTITY_PROVIDER_AUTHENTICATION_ENABLED: true
+        FEATUREFLAGS_V2_API_PASSWORD_RESET_CONTROLLER_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHINGENABLED: false
         FEATUREFLAGS_EVENTPUBLISHINGENABLEDV2: true
         FEATUREFLAGS_EVENTPUBLISHING_ENABLED: true
@@ -80,6 +81,7 @@ spec:
         IDAM_SCHEDULED_PURGE-PENDING_REMOVALSCHEDULECRON: "0 */5 * * * *"
         IDAM_SCHEDULED_INVITATIONS_APPOINTMENTS_LIFESPAN: 5m
         IDAM_SCHEDULED_INVITATIONS_APPOINTMENTS_CLEANUPCRON: "0 30 11 * * TUE"
+        IDAM_SCHEDULED_PASSWORDRESETS_CLEANUP_CRON: "0 30 14 * * TUE"
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         TRIGGER_DEPLOY: 180420241651

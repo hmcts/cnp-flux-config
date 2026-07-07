@@ -3,5 +3,9 @@ kind: Kustomization
 namespace: civil
 resources:
 - ../base
+# DTSCCI-5764 one-off index build — 00 cluster ONLY (00/01 share one DB;
+# a single CronJob avoids two concurrent builds racing on the same index). Remove
+# once the index is confirmed valid in prod.
+- ../../civil-service/dashboard-notif-index-cronjob.yaml
 patches:
 - path: ../../civil-sdt/prod-00.yaml

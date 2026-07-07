@@ -3,5 +3,17 @@ kind: Kustomization
 namespace: civil
 resources:
 - ../base
+# DTSCCI-5764 one-off index build — perftest-00 ONLY (civil-service runs on 00).
+- ../../civil-service/dashboard-notif-index-cronjob.yaml
 patches:
 - path: ../../civil-sdt/perftest-00.yaml
+# DTSCCI-5764: run the index build soon in lower envs so aat/demo/perftest
+# validate before prod's 02:00 run (prod schedule is unchanged). Idempotent, so
+# the ~15-min re-runs are harmless no-ops until the cleanup PR removes the job.
+- target:
+    kind: CronJob
+    name: dashboard-notif-index-builder
+  patch: |-
+    - op: replace
+      path: /spec/schedule
+      value: "*/15 * * * *"
