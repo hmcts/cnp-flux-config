@@ -56,6 +56,8 @@ spec:
               alias: app-insights-connection-string
             - name: edge-case-court-list
               alias: EDGE_CASE_COURT_LIST
+            - name: docmosis-api-key
+              alias: DOCMOSIS_ACCESS_KEY
       replicas: 2
       memoryRequests: "1536Mi"
       cpuRequests: "1000m"
@@ -65,11 +67,11 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/prl/cos:pr-3890-4e79ff3-20260615110436 #{"$imagepolicy": "flux-system:demo-prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:pr-3965-28fdcdf-20260708175808 #{"$imagepolicy": "flux-system:demo-prl-cos"}
       environment:
         FEATURE_EXAMPLE: false
-        DUMMY_ENV: true
-        DUMMY_PROPERTY: true
+        DUMMY_ENV: false
+        DUMMY_PROPERTY: false
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-demo.service.core-compute-demo.internal/oauth2/callback

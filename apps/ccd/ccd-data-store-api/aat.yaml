@@ -7,7 +7,7 @@ spec:
   values:
     java:
       replicas: 6
-      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-e3fca30-20260615092619 #{"$imagepolicy": "flux-system:aat-ccd-data-store-api"}
+      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-991f7f4-20260709084910 #{"$imagepolicy": "flux-system:aat-ccd-data-store-api"}
       autoscaling:
         enabled: true
         minReplicas: 2
@@ -51,12 +51,22 @@ spec:
         CCD_DECENTRALISED_CASE-TYPE-SERVICE-URLS[PCS]: http://pcs-api-aat.service.core-compute-aat.internal
         CCD_DECENTRALISED_CASE-TYPE-SERVICE-URLS[PCS-STAGING]: "https://pcs-api-staging.aat.platform.hmcts.net"
         CCD_DECENTRALISED_CASE-TYPE-SERVICE-URLS[PCS-PR-]: "https://pcs-api-pr-%s.preview.platform.hmcts.net"
+        CCD_DECENTRALISED_CASE-TYPE-SERVICE-URLS[PT]: http://pt-api-aat.service.core-compute-aat.internal
+        CCD_DECENTRALISED_CASE-TYPE-SERVICE-URLS[PT-STAGING]: "https://pt-api-staging.aat.platform.hmcts.net"
+        CCD_DECENTRALISED_CASE-TYPE-SERVICE-URLS[PT-PR-]: "https://pt-api-pr-%s.preview.platform.hmcts.net"
         SPRING_APPLICATION_JSON: |
           {
             "ccd": {
               "decentralised": {
                 "case-type-service-urls": {
-                  "FT_Decentralisation": "http://ccd-test-stubs-service-aat.service.core-compute-aat.internal/"
+                  "FT_Decentralisation": "http://ccd-test-stubs-service-aat.service.core-compute-aat.internal/",
+                  "ET_EnglandWales": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Scotland": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_EnglandWales_Listings": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Scotland_Listings": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_EnglandWales_Multiple": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Scotland_Multiple": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal",
+                  "ET_Admin": "http://et-cos-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
                 }
               }
             }
