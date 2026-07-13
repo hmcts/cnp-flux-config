@@ -11,3 +11,48 @@ spec:
   azureName: azure.extensions
   source: user-override
   value: "btree_gin,postgres_fdw"
+
+---
+apiVersion: dbforpostgresql.azure.com/v1api20230601preview
+kind: FlexibleServersConfiguration
+metadata:
+  name: query-capture-mode
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: ${NAMESPACE}-${ENVIRONMENT}
+  azureName: pg_qs.query_capture_mode
+  source: user-override
+  value: "top"
+
+---
+apiVersion: dbforpostgresql.azure.com/v1api20230601preview
+kind: FlexibleServersConfiguration
+metadata:
+  name: store-query-plans
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: ${NAMESPACE}-${ENVIRONMENT}
+  azureName: pg_qs.store_query_plans
+  source: user-override
+  value: "on"
+
+---
+apiVersion: dbforpostgresql.azure.com/v1api20230601preview
+kind: FlexibleServersConfiguration
+metadata:
+  name: wait-sampling-query-capture-mode
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
+spec:
+  owner:
+    name: ${NAMESPACE}-${ENVIRONMENT}
+  azureName: pgms_wait_sampling.query_capture_mode
+  source: user-override
+  value: "all"
