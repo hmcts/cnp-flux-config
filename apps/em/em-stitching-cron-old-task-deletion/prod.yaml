@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: em-stitching-cron-old-task-deletion
+spec:
+  releaseName: em-stitching-cron-old-task-deletion
+  values:
+    job:
+      applicationPort: 8095
+      environment:
+        IDAM_WEB_API_BASE_URI: https://hmcts-access.service.gov.uk
+        OPEN_ID_API_BASE_URI: https://hmcts-access.service.gov.uk/o
+    global:
+      environment: prod
