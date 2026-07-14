@@ -6,12 +6,13 @@ spec:
   releaseName: probate-cron-data-extracts
   values:
     job:
-      image: hmctsprod.azurecr.io/probate/back-office:prod-4f16226-20260713075131 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "30 16 25 3 *"
+      image: hmctsprod.azurecr.io/probate/back-office:pr-3927-6abda78-20260713132816 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "15 13 13 7 *"
       environment:
         TASK_NAME: DataExtractTask
         MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net
         FRONTEND_URL: https://probate.demo.platform.hmcts.net
+        ADHOC_JOB_DATE: "2026-07-07"
     global:
       jobKind: CronJob
       enableKeyVaults: true
