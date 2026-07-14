@@ -11,7 +11,7 @@ spec:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
       image: hmctsprod.azurecr.io/sscs/ccd-case-migration:pr-162-fd69918-20260713113014 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "*/15 11-15 10 7 *"
+      schedule: "45 09 14 7 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -38,6 +38,8 @@ spec:
               alias: COMPLETED_HEARINGS_OUTCOMES_ENCODED_DATA_STRING
             - name: encoded-string-confidentiality-flag
               alias: CONFIDENTIALITY_FLAG_ENCODED_STRING
+            - name: encoded-string-interpreter-lang-code
+              alias: INTERPRETER_LANGUAGE_CODE_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
