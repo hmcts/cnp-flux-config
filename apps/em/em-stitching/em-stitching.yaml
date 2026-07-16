@@ -12,6 +12,7 @@ spec:
       image: hmctsprod.azurecr.io/em/stitching:prod-7a7dcac-20260716080609 #{"$imagepolicy": "flux-system:em-stitching"}
       environment:
         TEST_VAR: value2
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: "0 0 0 31 2 *" # "0 0 0 31 2 *" is a mechanism to not run the job at all (31st Feb is nonfiring)
   chart:
     spec:
       chart: ./stable/em-stitching
