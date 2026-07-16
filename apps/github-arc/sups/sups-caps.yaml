@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sups-caps
+  namespace: github-arc
+  annotations:
+    # ARC charts use a strict values schema and do not understand the shared
+    # java/nodejs/job/global default values that the cluster base patch injects.
+    hmcts.github.com/kustomize-defaults: disabled
+spec:
+  releaseName: sups-caps
+  interval: 5m
+  # The runner scale set CRDs (AutoscalingRunnerSet) are owned by the controller,
+  # so the controller release must reconcile first.
+  dependsOn:
+    - name: arc-controller
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+      remediateLastFailure: true
+  chart:
+    spec:
+      chart: gha-runner-scale-set
+      version: 0.14.2
+      sourceRef:
+        kind: HelmRepository
+        name: actions-runner-controller
+        namespace: github-arc
+  values:
+    # Repository these runners serve. Workflows target them with `runs-on: sups-caps`
+    # (the runnerScaleSetName below), NOT `runs-on: self-hosted`.
+    githubConfigUrl: "https://github.com/hmcts/SUPS-caps"
+    # Pre-created Kubernetes secret holding the GitHub App credentials
+    # (github_app_id, github_app_installation_id, github_app_private_key).
+    # Created manually in the github-arc namespace - not stored in git.
+    githubConfigSecret: github-arc-app
+    runnerScaleSetName: sups-caps
+    # Scale to zero when idle; burst up to 5 concurrent runners.
+    minRunners: 0
+    maxRunners: 5
+    # dind = Docker-in-Docker sidecar. Required because:
+    #   - release.yml runs steps inside `container: hmctspublic.azurecr.io/sups-runner`
+    #   - runner-image.yml performs `docker build` / buildx of the runner image
+    # NOTE: dind runs a privileged sidecar - the namespace must permit privileged pods.
+    containerMode:
+      type: dind

@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-request-order-task
+  namespace: private-law
+spec:
+  releaseName: prl-cron-request-order-task
+  values:
+    job:
+      image: hmctsprod.azurecr.io/prl/cos:prod-362d98e-20260716113215 #{"$imagepolicy": "flux-system:prl-cos"}
+      environment:
+        APP_ENV: "aat"
+        TASK_NAME: RequestOrderTask
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-aat.service.core-compute-aat.internal/oauth2/callback
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.aat.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
+        REFDATA_API_URL: http://rd-commondata-api-aat.service.core-compute-aat.internal
+        AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-aat.service.core-compute-aat.internal
+        REQUEST_ORDER_TASK_C100_CADENCE: 0
+        REQUEST_ORDER_TASK_FL401_CADENCE: 0
+      schedule: 0 14 * * *
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: aat

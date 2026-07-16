@@ -7,8 +7,9 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/bulk-scan/cron-trigger:prod-a79b809-20251110120108 #{"$imagepolicy": "flux-system:bp-cron-trigger-daily-checks"}
-      schedule: "*/10 * * * *"
+      image: hmctsprod.azurecr.io/bulk-scan/cron-trigger:prod-5bf904c-20260715204732 #{"$imagepolicy": "flux-system:bp-cron-trigger-daily-checks"}
+      # mon-fri, 11:30am-4:30pm, on the half hour
+      schedule: "30 11-16 * * 1-5"
       environment:
         TRIGGER_TYPE: BULK_PRINT_CHECKS
         TRIGGER_ENABLED: false

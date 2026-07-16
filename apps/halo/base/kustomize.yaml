@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: halo
+  namespace: flux-system
+spec:
+  path: ./apps/halo/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "halo"
+      WI_NAME: "halo"
+      TEAM_NOTIFICATION_CHANNEL: "halo-e2e"
+      TEAM_AAD_GROUP_ID: "aa02f2fb-78ee-4c2c-bdd8-0019e5da73f6"

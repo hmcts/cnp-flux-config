@@ -3,19 +3,15 @@ kind: HelmRelease
 metadata:
   name: traefik2
   namespace: admin
+  annotations:
+    # Traefik v39.0.0+ enforces schema validation and we don't want Java tool options injected as this will violate it
+    hmcts.github.com/java-tool-options-patch: disabled
 spec:
   values:
     service:
-      spec:
-        loadBalancerIP: "10.48.79.250"
+      loadBalancerIP: "10.48.79.250"
     deployment:
       podLabels:
         useWorkloadIdentity: "true"
     serviceAccount:
       name: admin
-    ingressRoute:
-      dashboard:
-        enabled: true
-    logs:
-      general:
-        level: DEBUG

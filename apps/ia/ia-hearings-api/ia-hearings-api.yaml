@@ -9,11 +9,13 @@ spec:
       disableTraefikTls: true
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/ia/hearings-api:prod-da15a8d-20251203103625 #{"$imagepolicy": "flux-system:ia-hearings-api"}
+      image: hmctsprod.azurecr.io/ia/hearings-api:prod-d1e229f-20260709000633 #{"$imagepolicy": "flux-system:ia-hearings-api"}
       memoryRequests: "1536Mi"
       autoscaling:
         enabled: true
         maxReplicas: 6
+        memory:
+          averageUtilization: 120
   chart:
     spec:
       chart: ./stable/ia-hearings-api

@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base
+  - ../../../base/workload-identity
+  - ../../../base/docker-registry/dev
+  - ../../../azureserviceoperator-system/resources/resource-group.yaml
+  - ../../../azureserviceoperator-system/resources/servicebus-namespace.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres.yaml
+  - ../../../azureserviceoperator-system/resources/flexibleserver-postgres-config.yaml
+  - ../sops-secrets
+namespace: pt
+patches:
+  - path: ../aso/pt-servicebus.yaml
+  - path: ../aso/pt-postgres.yaml
+  - path: ../../serviceaccount/aat.yaml

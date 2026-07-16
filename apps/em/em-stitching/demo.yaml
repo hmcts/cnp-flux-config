@@ -9,8 +9,16 @@ spec:
       cpuRequests: "1500m"
       memoryLimits: "6144Mi"
       cpuLimits: "3000m"
-      image: hmctspublic.azurecr.io/em/stitching:prod-452a7c1-20251211110645 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      image: hmctsprod.azurecr.io/em/stitching:prod-32253c6-20260716114956 #{"$imagepolicy": "flux-system:demo-em-stitching"}
       environment:
         TEST_VAR: refresh2
         CALLBACK_MAX_ATTEMPTS: 5
         DOCUMENT_TASK_MILLISECONDS: 5000
+        CALLBACK_HTTP_SCHEME: http
+        CALLBACK_HTTP_HOST_PORT: 80
+        CALLBACK_DOMAINS: em-ccd-orchestrator-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal,platform.hmcts.net
+        CALLBACK_ENV: DEV
+        IDAM_SECURITY_ALLOWED_ISSUERS_0: https://idam-web-public.demo.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_1: https://hmcts-access.demo.service.gov.uk/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_2: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: "0 0 0 31 2 *" # "0 0 0 31 2 *" is a mechanism to not run the job at all (31st Feb is nonfiring)

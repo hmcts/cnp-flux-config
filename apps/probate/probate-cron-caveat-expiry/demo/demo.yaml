@@ -6,10 +6,11 @@ spec:
   releaseName: probate-cron-caveat-expiry
   values:
     job:
-      image: hmctspublic.azurecr.io/probate/back-office:prod-49ded07-20251211115341 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
-      schedule: "40 13 31 2 *"
+      image: hmctsprod.azurecr.io/probate/back-office:prod-9f14359-20260716120814 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      schedule: "0 2 31 2 *"
       environment:
         TASK_NAME: CaveatExpiryTask
+        ADHOC_JOB_DATE: "2026-11-27"
     global:
       jobKind: CronJob
       enableKeyVaults: true

@@ -54,7 +54,9 @@ spec:
               alias: WELSH_COURT_MAPPING
             - name: app-insights-connection-string
               alias: app-insights-connection-string
-      image: hmctspublic.azurecr.io/prl/cos:prod-4dc24e9-20251211122836 #{"$imagepolicy": "flux-system:prl-cos"}
+            - name: docmosis-api-key
+              alias: DOCMOSIS_ACCESS_KEY
+      image: hmctsprod.azurecr.io/prl/cos:prod-362d98e-20260716113215 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: Fm5ReminderNotificationTask
         HEARING_AWAY_DAYS: 18
@@ -69,7 +71,7 @@ spec:
   chart:
     spec:
       chart: prl-cron
-      version: 0.0.18
+      version: 0.0.19
       sourceRef:
         kind: HelmRepository
         name: hmctspublic-oci

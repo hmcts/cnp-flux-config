@@ -16,8 +16,12 @@ spec:
           averageUtilization: 85
         memory:
           averageUtilization: 85
-      image: hmctspublic.azurecr.io/em/stitching:prod-452a7c1-20251211110645 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
+      image: hmctsprod.azurecr.io/em/stitching:prod-32253c6-20260716114956 #{"$imagepolicy": "flux-system:perftest-em-stitching"}
       environment:
         CALLBACK_MAX_ATTEMPTS: 1
         TEST_VAR: refresh
         HISTORIC_DOCUMENT_TASKS_NO_OF_RETENTION_DAYS: 180
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: "0 0 0 31 2 *" # "0 0 0 31 2 *" is a mechanism to not run the job at all (31st Feb is nonfiring)
+        IDAM_SECURITY_ALLOWED_ISSUERS_0: https://idam-web-public.perftest.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_1: https://hmcts-access.perftest.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_2: https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/realms/root/realms/hmcts

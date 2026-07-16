@@ -6,7 +6,9 @@ spec:
   releaseName: ccpay-callback-function-int
   values:
     function:
-      image: hmctspublic.azurecr.io/ccpay/callback-function:prod-4864b23-20250318110229 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
+      image: hmctsprod.azurecr.io/ccpay/callback-function:prod-5ea07f1-20260616110335 #{"$imagepolicy": "flux-system:ccpay-callback-function"}
+      failedJobsHistoryLimit: 5
+      successfulJobsHistoryLimit: 5
       environment:
         DELAY_MESSAGE_MINUTES: 30
         DUMMY_RESTART_VAR: true
@@ -19,6 +21,7 @@ spec:
           subscriptionName: serviceCallbackPremiumSubscription
           connectionFromEnv: SERVICE_CALLBACK_BUS_CONNECTION
           queueLength: 1
+          messageCount: 5
       secrets:
         APPINSIGHTS_INSTRUMENTATIONKEY:
           secretRef: ccpay-callback-function-premium-sb

@@ -19,14 +19,17 @@ spec:
         receivers:
           - name: "slack_alerting"
             slack_configs:
-              - channel: prometheus-alerting-prod
+              - channel: prometheus-alerting-prod-cft
                 title: 'Prod-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
                 send_resolved: true
           - name: "slack_critical"
             slack_configs:
-              - channel: prometheus-critical-prod
+              - channel: prometheus-critical-prod-cft
                 title: 'Prod-00 - {{ template "slack.default.title" . }}'
                 text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
                 send_resolved: true
           - name: "null"
+  valuesFrom:
+    - kind: Secret
+      name: prometheus-extra-values

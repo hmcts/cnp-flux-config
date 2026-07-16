@@ -2,6 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+  # DTSCCI-5764 one-off index build — aat-00 ONLY (test env; validate here first).
+  - ../../civil-service/dashboard-notif-index-cronjob.yaml
 namespace: civil
 patches:
   - path: ../../civil-sdt/aat-00.yaml
+  # DTSCCI-5764: run the index build soon in lower envs so aat/demo/perftest
+  # validate before prod's 02:00 run (prod schedule is unchanged). Idempotent, so
+  # the ~15-min re-runs are harmless no-ops until the cleanup PR removes the job.
+  - target:
+      kind: CronJob
+      name: dashboard-notif-index-builder
+    patch: |-
+      - op: replace
+        path: /spec/schedule
+        value: "*/15 * * * *"

@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-debolina-seal
+  namespace: labs
+spec:
+  releaseName: labs-debolina-seal
+  chart:
+    spec:
+      chart: ./stable/labs-debolina-seal
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/debolina-seal:prod-1377c2c-20260415154909 # {"$imagepolicy": "flux-system:labs-debolina-seal"}
+      disableTraefikTls: true

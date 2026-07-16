@@ -1,0 +1,100 @@
+# DTSCCI-5764 — one-off, decoupled build of the missing FK index on
+# dbs.dashboard_notifications(notification_action_id), which is causing
+# multi-minute DELETEs on notification_action (and stuck DASHBOARD_NOTIFICATION_EVENT).
+#
+# Runs CONCURRENTLY (non-blocking) at 02:00 UTC — the only window with zero slow
+# deletes across the last week. Idempotent (IF NOT EXISTS) and self-healing
+# (drops an INVALID leftover from any aborted concurrent build before rebuilding).
+#
+# Referenced from the <env>/00 kustomization of each environment (aat, demo,
+# ithc, perftest, prod) — the "00" cluster ONLY. In prod the 00/01 clusters share
+# one database, so a single build avoids a race; in the lower envs civil-service
+# runs on cluster 00. (ithc is on-demand; the CronJob deploys when ithc is next
+# reconciled.) The
+# manifest is env-agnostic: it reuses SA "civil" + SecretProviderClass
+# "civil-service-java-civil", whose cmc-db-*-v15 secret files exist identically in
+# every env (only the backing keyvault differs, which the SPC handles).
+#
+# Test in aat and demo first: once Flux deploys the CronJob, trigger an immediate
+# run rather than waiting for 02:00 —
+#   kubectl -n civil create job --from=cronjob/dashboard-notif-index-builder dnib-test
+# then check the job log for "OK: index valid".
+#
+# One-off: delete this file and all three resources entries once the index is
+# confirmed valid in prod.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dashboard-notif-index-builder
+  namespace: civil
+  labels:
+    app: civil-service
+    jira: DTSCCI-5764
+spec:
+  schedule: "0 2 * * *"            # 02:00 UTC — quiet window
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0               # do not auto-retry a killed CONCURRENTLY build
+      activeDeadlineSeconds: 1800
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          labels:
+            app: civil-service
+            azure.workload.identity/use: "true"
+        spec:
+          serviceAccountName: civil
+          restartPolicy: Never
+          nodeSelector:
+            agentpool: cronjob
+          tolerations:
+            - key: dedicated
+              effect: NoSchedule
+              operator: Equal
+              value: jobs
+          containers:
+            - name: idx
+              image: hmctsprod.azurecr.io/imported/bitnami/postgresql:16.5.0
+              command: ["/bin/bash", "-c"]
+              args:
+                - |
+                  set -euo pipefail
+                  # NB: SecretProviderClass civil-service-java-civil mounts each secret
+                  # under its objectAlias, so the files are CMC_DB_* not cmc-db-*-v15.
+                  export PGHOST="$(cat /mnt/secrets/civil/CMC_DB_HOST)"
+                  export PGUSER="$(cat /mnt/secrets/civil/CMC_DB_USERNAME)"
+                  export PGPASSWORD="$(cat /mnt/secrets/civil/CMC_DB_PASSWORD)"
+                  export PGDATABASE=cmc PGPORT=5432 PGSSLMODE=require PGCONNECT_TIMEOUT=15
+                  export PGOPTIONS="-c lock_timeout=60000"   # NOT statement_timeout (would abort a concurrent build)
+                  # NB: shell vars are written $${VAR} so Flux postBuild.substitute
+                  # passes them through literally (it would otherwise blank ${VAR}).
+                  IDX="dbs.idx_dashboard_notifications_notification_action_id"
+                  echo "Checking for an INVALID leftover index..."
+                  INVALID=$(psql -tAqc "SELECT NOT indisvalid FROM pg_index WHERE indexrelid = to_regclass('$${IDX}');" || true)
+                  if [ "$${INVALID}" = "t" ]; then
+                    echo "Found INVALID index -> dropping"
+                    psql -v ON_ERROR_STOP=1 -c "DROP INDEX CONCURRENTLY IF EXISTS $${IDX};"
+                  fi
+                  echo "Building index CONCURRENTLY (non-blocking)..."
+                  psql -v ON_ERROR_STOP=1 -c "CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_dashboard_notifications_notification_action_id ON dbs.dashboard_notifications(notification_action_id);"
+                  echo "Verifying index is valid..."
+                  psql -v ON_ERROR_STOP=1 -tAc "SELECT indisvalid FROM pg_index WHERE indexrelid = to_regclass('$${IDX}');" | grep -qx "t" \
+                    && echo "OK: index valid" || { echo "FAIL: index missing or invalid"; exit 1; }
+              volumeMounts:
+                - name: vault-civil
+                  mountPath: /mnt/secrets/civil
+                  readOnly: true
+              resources:
+                requests: { cpu: 50m, memory: 128Mi }
+                limits: { cpu: 250m, memory: 256Mi }
+          volumes:
+            - name: vault-civil
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: civil-service-java-civil

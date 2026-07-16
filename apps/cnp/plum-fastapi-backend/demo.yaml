@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plum-fastapi-backend
+spec:
+  chart:
+    spec:
+      chart: ./stable/plum-fastapi-backend
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+  values:
+    global:
+      enableKeyVaults: true
+    python:
+      ingressHost: plum-fastapi-backend-demo.service.core-compute-demo.internal
+      image: hmctsprod.azurecr.io/plum/fastapi-backend:prod-ea96712-20260715165004 # {"$imagepolicy": "flux-system:plum-fastapi-backend"}
+      keyVaults:
+        plumsi:
+          secrets:
+            - name: appinsights-connection-string
+      environment:
+        RECIPES_SERVICE_URL: http://plum-recipe-backend-java
+        APPLICATIONINSIGHTS_CONNECTION_STRING_FILE: /mnt/secrets/plumsi/appinsights-connection-string

@@ -5,10 +5,20 @@ metadata:
 spec:
   values:
     java:
+      memoryRequests: "1Gi"
+      memoryLimits: "2Gi"
+      cpuRequests: "250m"
+      cpuLimits: "500m"
       environment:
         REFRESH_FLAG: "0"
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
         NEW_MESSAGE_LIVENESS_STATE_HEALTH_CHECK: perftest
+        MESSAGE_PROCESSING_POLL_INTERVAL_MILLISECONDS: 1000
+        SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
+        SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 6000
+        SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 5
+        SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
+        SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
       keyVaults:
         wa:
           secrets:

@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prl-cron-request-order-task
+  namespace: private-law
+spec:
+  releaseName: prl-cron-request-order-task
+  values:
+    job:
+      image: hmctsprod.azurecr.io/prl/cos:pr-3727-3223605-20260625082015 #{"$imagepolicy": "flux-system:perftest-prl-cron-request-order-task"}
+      environment:
+        APP_ENV: "perftest"
+        TASK_NAME: RequestOrderTask
+        IDAM_REDIRECT_URL: https://prl-cos-perftest.service.core-compute-perftest.internal/oauth2/callback
+        IDAM_S2S_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net
+        AUTH_PROVIDER_SERVICE_CLIENT_BASEURL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        PRD_API_BASEURL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+        IDAM_CLIENT_REDIRECT_URI: https://prl-cos-perftest.service.core-compute-perftest.internal/oauth2/callback
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
+        CORE_CASE_DATA_API_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        AUTH_IDAM_CLIENT_BASEURL: https://idam-api.perftest.platform.hmcts.net
+        LOCATION_REF_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
+        RD_PROFESSIONAL_API: http://rd-professional-api-perftest.service.core-compute-perftest.internal
+        HEARING_API_BASEURL: http://fis-hmc-api-perftest.service.core-compute-perftest.internal
+        REFDATA_API_URL: http://rd-commondata-api-perftest.service.core-compute-perftest.internal
+      schedule: "00 13 * * *"
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: perftest

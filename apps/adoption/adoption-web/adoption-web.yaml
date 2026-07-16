@@ -20,8 +20,12 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctspublic.azurecr.io/adoption/web:prod-a531f72-20251204144106 #{"$imagepolicy": "flux-system:adoption-web"}
+      image: hmctsprod.azurecr.io/adoption/web:prod-83d864c-20260709084304 #{"$imagepolicy": "flux-system:adoption-web"}
       environment:
+        RATE_LIMIT_ENABLED: true
+        RATE_LIMIT_WINDOW_SECONDS: 60
+        RATE_LIMIT_MAX_REQUESTS: 6
+        EXPRESS_NUMBER_TRUST_PROXIES: 3
         SOCIAL_WORKER_SUPPORTED_DOMAINS:
           - gov.uk
           - pathfinderlegal.co.uk
@@ -205,6 +209,7 @@ spec:
         WSC_VAL: 'Wiltshire Council'
         SBCO_VAL: 'Swindon Borough Council'
         SCCO_VAL: 'Somerset County Council'
+        NSC_VAL: 'North Somerset Council'
         BCPC_VAL: 'Bournemouth, Christchurch & Poole council (BCP)'
         DCCO_VAL: 'Dorset County Council'
         LBH_VAL: 'London Borough Hillingdon'

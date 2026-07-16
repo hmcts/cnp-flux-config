@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jenkins-data-migration
+  namespace: jenkins
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jenkins
+        app.kubernetes.io/component: jenkins-data-migration
+    spec:
+      restartPolicy: Never
+      # The source PVC (jenkins) is ReadWriteOnce, so it can only be mounted on
+      # the node that currently has the disk attached. Pin this pod to the
+      # Jenkins controller's node so both can mount the disk simultaneously.
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: jenkins-controller
+              topologyKey: kubernetes.io/hostname
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+      containers:
+        - name: migrator
+          image: ubuntu:24.04
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -uo pipefail
+              apt-get update -qq && apt-get install -y -qq rsync
+              echo "=== source (managed disk) ==="
+              ls -la /source && df -h /source
+              echo "=== dest (azure files nfs) ==="
+              df -h /dest
+              echo "=== rsync start ==="
+              rsync -aH --info=stats2,progress2 /source/ /dest/
+              rc=$?
+              # rsync rc 24 = source files vanished during copy (jenkins is live); treat as ok
+              if [ "$rc" -ne 0 ] && [ "$rc" -ne 24 ]; then
+                echo "rsync failed with rc=$rc"; exit "$rc"
+              fi
+              echo "=== validation ==="
+              echo "source files: $(find /source -type f | wc -l)"
+              echo "dest   files: $(find /dest   -type f | wc -l)"
+              echo "=== done (rc=$rc) ==="
+          volumeMounts:
+            - name: source-disk
+              mountPath: /source
+              readOnly: true
+            - name: dest-share
+              mountPath: /dest
+      volumes:
+        - name: source-disk
+          persistentVolumeClaim:
+            claimName: jenkins
+            readOnly: true
+        - name: dest-share
+          persistentVolumeClaim:
+            claimName: jenkins-azurefiles
