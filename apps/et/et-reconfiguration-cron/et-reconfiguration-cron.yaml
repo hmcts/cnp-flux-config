@@ -6,12 +6,13 @@ spec:
   releaseName: et-reconfiguration-cron
   values:
     job:
-      image: hmctsprod.azurecr.io/et/cos:prod-9c747b8-20260717122201 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:prod-7923f2e-20260720084914 #{"$imagepolicy": "flux-system:et-cos"}
       memoryLimits: "3072Mi"
       memoryRequests: "1536Mi"
       cpuLimits: "1500m"
       cpuRequests: "200m"
       environment:
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false
         TASK_NAME: BatchReconfigurationTask
       schedule: 0 1 * * *
       disableActiveClusterCheck: true
