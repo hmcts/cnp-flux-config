@@ -12,24 +12,6 @@ spec:
           - prometheus-01.demo.platform.hmcts.net
       prometheusSpec:
         retention: 30d
-        # Scrape AKS managed Node Problem Detector metrics exposed on each node at port 20257.
-        # https://learn.microsoft.com/en-us/azure/aks/node-problem-detector#metrics
-        additionalScrapeConfigs:
-          - job_name: aks-node-problem-detector
-            scheme: http
-            metrics_path: /metrics
-            kubernetes_sd_configs:
-              - role: node
-            relabel_configs:
-              - source_labels: [__meta_kubernetes_node_label_kubernetes_io_os]
-                regex: linux
-                action: keep
-              - source_labels: [__meta_kubernetes_node_address_InternalIP]
-                regex: (.+)
-                target_label: __address__
-                replacement: $1:20257
-              - source_labels: [__meta_kubernetes_node_name]
-                target_label: instance
     alertmanager:
       ingress:
         ingressClassName: traefik
