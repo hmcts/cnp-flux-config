@@ -30,21 +30,21 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctsprod.azurecr.io/ccd/admin-web:prod-0cfc5d5-20260702185724 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctsprod.azurecr.io/ccd/admin-web:prod-c1bb958-20260721073512 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
     ccd-api-gateway-web:
       nodejs:
-        image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-78126c8-20260629170117 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
+        image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-d633f22-20260721063800 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
             disabled: false
     ccd-definition-store-api:
       java:
-        image: hmctsprod.azurecr.io/ccd/definition-store-api:prod-3e97a6f-20260630092514 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
+        image: hmctsprod.azurecr.io/ccd/definition-store-api:prod-aef66a3-20260714095122 #{"$imagepolicy": "flux-system:ccd-definition-store-api"}
         secrets:
           STORAGE_ACCOUNT_NAME:
             disabled: false
@@ -56,17 +56,17 @@ spec:
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-data-store-api:
       java:
-        image: hmctsprod.azurecr.io/ccd/data-store-api:prod-b13d8bc-20260702103112 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctsprod.azurecr.io/ccd/data-store-api:prod-c3c9172-20260713135506 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-user-profile-api:
       java:
-        image: hmctsprod.azurecr.io/ccd/user-profile-api:prod-ffdb5a8-20260625180117 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+        image: hmctsprod.azurecr.io/ccd/user-profile-api:prod-9fb6314-20260720155727 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctsprod.azurecr.io/dm/store:prod-1b2ef1e-20260702141622 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctsprod.azurecr.io/dm/store:prod-cab55bc-20260720153653 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctsprod.azurecr.io/ccd/user-profile-importer:db3j14
       users:

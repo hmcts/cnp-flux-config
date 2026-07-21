@@ -6,7 +6,7 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctsprod.azurecr.io/et/cos:prod-8f5751d-20260702125737 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:prod-7923f2e-20260720084914 #{"$imagepolicy": "flux-system:et-cos"}
       environment:
         MANAGE_CASE_S2S_AUTHORISED_SERVICES: xui_webapp,ccd_data,finrem_case_orchestration,divorce_frontend,iac,nfdiv_cos,fpl_case_service,prl_cos_api,et_cos,nfdiv_case_api,et_sya_api
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-perftest.service.core-compute-perftest.internal
@@ -19,3 +19,11 @@ spec:
         CRON_UPDATE_TRANSFERRED_CASE_LINKS: 0 */30 * * * ?
         EM_CCD_ORCHESTRATOR_URL: http://em-ccd-orchestrator-perftest.service.core-compute-perftest.internal
         ES_NOTIFICATIONS_PARTITION_SIZE: 2000
+        DB_QUEUE_ENABLED: true
+        CREATE_UPDATES_POLL_INTERVAL: 60000
+        UPDATE_CASE_POLL_INTERVAL: 60000
+        ET_CCD_DATA_MIGRATION_ENABLED: false
+        CCD_SDK_DECENTRALISED: true
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: true
+        ET_SERVICEBUS_SCHEDULER_ENABLED: true
+        ELASTIC_SEARCH_HOSTS: http://ccd-data-0.service.core-compute-perftest.internal:9200

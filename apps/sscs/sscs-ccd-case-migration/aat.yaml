@@ -8,12 +8,12 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-9ef342e-20260624134154 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-1cb9b26-20260720085811 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
       memoryLimits: "4096Mi"
-      schedule: "20 13 12 6 *"
+      schedule: "00 11 20 7 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -40,6 +40,8 @@ spec:
               alias: ADD_HEARING_ENCODED_DATA_STRING
             - name: encoded-string-awaiting-confidentiality-req
               alias: AWAITING_CONFIDENTIALITY_REQ_ENCODED_STRING
+            - name: encoded-string-rpc-migration
+              alias: RPC_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
@@ -52,4 +54,5 @@ spec:
         READY_TO_LIST_MIGRATION_ENABLED: false
         VENUE_MIGRATION_ENABLED: false
         ADD_HEARING_MIGRATION_ENABLED: false
-        AWAITING_CONFIDENTIALITY_REQ_MIGRATION_ENABLED: true
+        AWAITING_CONFIDENTIALITY_REQ_MIGRATION_ENABLED: false
+        RPC_MIGRATION_ENABLED: true

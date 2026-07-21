@@ -7,7 +7,7 @@ spec:
   releaseName: finrem-citizen-ui
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-1845d53-20260702115447 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-7dfc734-20260720130030 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
       ingressHost: finrem-citizen-ui.demo.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true
@@ -38,6 +38,10 @@ spec:
             - finrem-citizen-ui-idam-client-secret
             - finrem-citizen-s2s-client-secret
             - session-secret
+            - name: gov-uk-notification-key
+              alias: GOVUK_NOTIFY_API_KEY
+            - name: document-upload-email-template-id
+              alias: FINREM_CITIZEN_UI_TEMPLATE_ID
     redis:
       enabled: true
       architecture: standalone

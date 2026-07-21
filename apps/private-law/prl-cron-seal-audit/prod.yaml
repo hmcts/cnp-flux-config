@@ -7,12 +7,11 @@ spec:
   releaseName: prl-cron-seal-audit
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-c63e418-20260702150030 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-a9e1855-20260716145427 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         SEAL_AUDIT_ENABLED: true
         SEAL_AUDIT_EMAIL_ENABLED: true
-        SEAL_AUDIT_FROM_DATE: "2025-09-30"
-        SEAL_AUDIT_TO_DATE: "2026-06-04"
+        SEAL_AUDIT_FROM_DATE: "2024-04-01"
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-prod.service.core-compute-prod.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-prod.service.core-compute-prod.internal/oauth2/callback
@@ -25,7 +24,6 @@ spec:
         XUI_URL: https://manage-case.platform.hmcts.net/cases/case-details
         PAY_URL: http://payment-api-prod.service.core-compute-prod.internal
         PAY_CALLBACK_URL: http://prl-cos-prod.service.core-compute-prod.internal/service-request-update
-        PRL_DGS_API_URL: http://prl-dgs-prod.service.core-compute-prod.internal
         FEE_REGISTER_API_URL: http://fees-register-api-prod.service.core-compute-prod.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
         FACT_API: http://fact-api-prod.service.core-compute-prod.internal
@@ -36,7 +34,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal
         HEARING_API_BASEURL: http://fis-hmc-api-prod.service.core-compute-prod.internal
         APP_ENV: "prod"
-      schedule: 20 17 4 6 *
+      schedule: 0 18 * * 4
     global:
       jobKind: CronJob
       enableKeyVaults: true

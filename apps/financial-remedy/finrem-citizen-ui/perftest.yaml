@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: finrem-citizen-ui
+  namespace: financial-remedy
+spec:
+  releaseName: finrem-citizen-ui
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-7dfc734-20260720130030 #{"$imagepolicy": "flux-system:perftest-finrem-citizen-ui"}
+      ingressHost: finrem-citizen-ui.perftest.platform.hmcts.net
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      environment:
+        RESTART_PODS: "Y"
+        DUMMY_VAR: 1
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-perftest.service.core-compute-perftest.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal
+        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/login
+        IDAM_END_SESSION_URL: https://idam-web-public.perftest.platform.hmcts.net/o/endSession
+        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net/o/token
+        OAUTH_CALLBACK_URL: https://finrem-citizen-ui.perftest.platform.hmcts.net/oauth2/callback
+        CCD_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        REDIS_CONNECTION_STRING: redis://finrem-citizen-ui-redis-master:6379
+        OIDC_ISSUER: https://hmcts-access.perftest.platform.hmcts.net/o
+        IDAM_CLIENT_ID: finrem-citizen-ui
+        SESSION_STORE: redis
+      keyVaults:
+        finrem:
+          secrets:
+            - name: app-insights-connection-string
+              alias: app-insights-connection-string
+            - name: AppInsightsInstrumentationKey
+              alias: AppInsightsInstrumentationKey
+            - finrem-system-update-username
+            - finrem-system-update-password
+            - finrem-citizen-ui-idam-client-secret
+            - finrem-citizen-s2s-client-secret
+            - session-secret
+            - name: gov-uk-notification-key
+              alias: GOVUK_NOTIFY_API_KEY
+            - name: document-upload-email-template-id
+              alias: FINREM_CITIZEN_UI_TEMPLATE_ID
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+      master:
+        persistence:
+          enabled: false
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: imported/bitnami/redis
+    global:
+      security:
+        allowInsecureImages: true
+      environment: perftest
+      enableKeyVaults: true
+      DUMMY_VAR: 1

@@ -6,8 +6,12 @@ metadata:
 spec:
   values:
     nodejs:
+      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:pr-1178-8682b04-20260717131017
       environment:
         RATE_LIMITER_DISABLED: true
+        IDAM_API_URL: https://idam-web-public.demo.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/o/authorize
+        IDAM_END_SESSION_URL: 'https://idam-web-public.demo.platform.hmcts.net/o/endSession'
       ingressSessionAffinity:
         enabled: true
         sessionCookieName: sticky

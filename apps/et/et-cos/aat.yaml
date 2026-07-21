@@ -10,10 +10,14 @@ spec:
         DB_QUEUE_ENABLED: true
         CREATE_UPDATES_POLL_INTERVAL: 60000
         UPDATE_CASE_POLL_INTERVAL: 60000
-        ET_CCD_DATA_MIGRATION_ENABLED: true
+        ET_CCD_DATA_MIGRATION_ENABLED: false
+        CCD_SDK_DECENTRALISED: true
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: true
+        ET_SERVICEBUS_SCHEDULER_ENABLED: true
+        ELASTIC_SEARCH_HOSTS: http://ccd-data-0.service.core-compute-aat.internal:9200
         ET_CCD_DATA_MIGRATION_CRON: "0 */10 9-17 * * *" # every 10mins between 9am and 5pm (db lock prevents paralell running)
         ET_CCD_DATA_MIGRATION_TASK_NAME: et-ccd-data-migration
-        ET_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        ET_CCD_DATA_MIGRATION_MODE: CUTOVER
         ET_CCD_DATA_MIGRATION_CASE_TYPE_IDS: ET_EnglandWales,ET_Scotland,ET_Admin,ET_EnglandWales_Multiple,ET_Scotland_Multiple,ET_EnglandWales_Listings,ET_Scotland_Listings
         ET_CCD_DATA_MIGRATION_EVENT_BATCH_SIZE: "10000"
         ET_CCD_DATA_MIGRATION_MAX_BATCHES_PER_RUN: "1000000"
