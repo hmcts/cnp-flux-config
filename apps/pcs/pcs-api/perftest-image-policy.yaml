@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: perftest-pcs-api
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: 'prod-b43ca67-20260721095812'
+    extract: '$ts'
+  policy:
+    alphabetical:
+      order: asc
+  imageRepositoryRef:
+    name: pcs-api
