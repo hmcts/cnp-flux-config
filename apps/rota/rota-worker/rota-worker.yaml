@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rota-worker
+spec:
+  releaseName: rota-worker
+  dependsOn:
+    - name: rota-optimiser
+  values:
+    java:
+      image: hmctsprod.azurecr.io/rota/worker:prod-ca6ca58-20260723133354 # {"$imagepolicy": "flux-system:rota-worker"}
+  chart:
+    spec:
+      chart: ./stable/rota-worker
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
