@@ -9,9 +9,10 @@ spec:
       useInterpodAntiAffinity: true
       replicas: 2
       memoryLimits: "4096Mi"
-      image: hmctsprod.azurecr.io/em/stitching:prod-65102bb-20260717113136 #{"$imagepolicy": "flux-system:em-stitching"}
+      image: hmctsprod.azurecr.io/em/stitching:prod-e81349d-20260721143713 #{"$imagepolicy": "flux-system:em-stitching"}
       environment:
         TEST_VAR: value2
+        HISTORIC_DOCUMENT_TASKS_CRONJOB_SCHEDULE: "0 0 0 31 2 *" # "0 0 0 31 2 *" is a mechanism to not run the job at all (31st Feb is nonfiring)
   chart:
     spec:
       chart: ./stable/em-stitching

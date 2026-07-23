@@ -30,14 +30,14 @@ spec:
       cmcBackendUrl: "http://cmc-demo-claim-store"
     ccd-admin-web:
       nodejs:
-        image: hmctsprod.azurecr.io/ccd/admin-web:prod-6ba123a-20260716140601 #{"$imagepolicy": "flux-system:ccd-admin-web"}
+        image: hmctsprod.azurecr.io/ccd/admin-web:prod-e6100b9-20260723114133 #{"$imagepolicy": "flux-system:ccd-admin-web"}
         ingressHost: ccd-admin-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_AW_CLIENT_SECRET:
             disabled: false
     ccd-api-gateway-web:
       nodejs:
-        image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-1bd9148-20260717063016 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
+        image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-226a8e9-20260722200820 #{"$imagepolicy": "flux-system:ccd-api-gateway-web"}
         ingressHost: gateway-{{ .Release.Name }}.demo.platform.hmcts.net
         secrets:
           IDAM_OAUTH2_CLIENT_SECRET:
@@ -56,17 +56,17 @@ spec:
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-data-store-api:
       java:
-        image: hmctsprod.azurecr.io/ccd/data-store-api:prod-c3c9172-20260713135506 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+        image: hmctsprod.azurecr.io/ccd/data-store-api:prod-a191868-20260722103354 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
         environment:
           CCD_DM_DOMAIN: ^https?://(?:{{ .Release.Name }}-dm-store(?::\d+)?)
           IDAM_USER_URL: "{{ .Values.global.idamWebUrl }}"
           OIDC_ISSUER: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts
     ccd-user-profile-api:
       java:
-        image: hmctsprod.azurecr.io/ccd/user-profile-api:prod-9ee9dd3-20260716141404 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
+        image: hmctsprod.azurecr.io/ccd/user-profile-api:prod-7d6f266-20260721140003 #{"$imagepolicy": "flux-system:ccd-user-profile-api"}
     dm-store:
       java:
-        image: hmctsprod.azurecr.io/dm/store:prod-97214c1-20260717074954 #{"$imagepolicy": "flux-system:dm-store"}
+        image: hmctsprod.azurecr.io/dm/store:prod-203bf4a-20260723095552 #{"$imagepolicy": "flux-system:dm-store"}
     ccd-user-profile-importer:
       image: hmctsprod.azurecr.io/ccd/user-profile-importer:db3j14
       users:
