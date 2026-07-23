@@ -10,9 +10,7 @@ spec:
   "groups":
   - "name": "node-problem-detector"
     "rules":
-    # Node condition set by kubelet/AKS and exposed by kube-state-metrics (always present,
-    # independent of whether Node Problem Detector is the self-hosted DaemonSet or the AKS
-    # managed exporter). This is the most reliable signal for loss of node network access.
+    # Node condition from kube-state-metrics. This is a high-impact signal for node isolation.
     - "alert": "NPDNetworkUnavailable"
       "annotations":
         "message": "Node {{ $labels.node }} reports condition NetworkUnavailable=true."
@@ -21,18 +19,8 @@ spec:
       "for": "5m"
       "labels":
         "severity": "critical"
-    # Permanent node conditions from the Node Problem Detector exporter (problem_gauge == 1
-    # while the problem is active), populated by the AKS managed NPD scrape config
-    # (kube-prometheus-stack.yaml, job aks-node-problem-detector), enabled on all environments.
-    # Grouped by "instance" only, since the AKS managed node-role scrape has no "pod" label.
-    - "alert": "NPDNodeLocalDnsResolutionFailure"
-      "annotations":
-        "message": "Node Problem Detector reports local DNS resolution is failing on {{ $labels.instance }}."
-      "expr": |
-        max by (instance) (problem_gauge{type="NodeLocalDnsResolutionFailure"}) == 1
-      "for": "10m"
-      "labels":
-        "severity": "critical"
+    # Permanent node conditions from the AKS-managed Node Problem Detector exporter
+    # (problem_gauge == 1 while the problem is active).
     - "alert": "NPDReadonlyFilesystem"
       "annotations":
         "message": "Node Problem Detector reports a read-only filesystem on {{ $labels.instance }}."
@@ -49,11 +37,27 @@ spec:
       "for": "5m"
       "labels":
         "severity": "critical"
-    - "alert": "NPDCorruptDockerOverlay2"
+    - "alert": "NPDContainerRuntimeDown"
       "annotations":
-        "message": "Node Problem Detector reports corrupt Docker overlay2 storage on {{ $labels.instance }}."
+        "message": "Node Problem Detector reports container runtime is down on {{ $labels.instance }}."
       "expr": |
-        max by (instance) (problem_gauge{type="CorruptDockerOverlay2"}) == 1
+        max by (instance) (problem_gauge{type="ContainerRuntimeProblem",reason="ContainerRuntimeIsDown"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    - "alert": "NPDKubeletDown"
+      "annotations":
+        "message": "Node Problem Detector reports kubelet is down on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="KubeletProblem",reason="KubeletIsDown"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    - "alert": "NPDFilesystemCorruption"
+      "annotations":
+        "message": "Node Problem Detector reports filesystem corruption on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="FilesystemCorruptionProblem",reason="FilesystemCorruptionDetected"}) == 1
       "for": "5m"
       "labels":
         "severity": "critical"
