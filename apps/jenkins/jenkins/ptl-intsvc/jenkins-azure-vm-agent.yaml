@@ -261,8 +261,11 @@ spec:
                         labels: "ubuntu-ptl"
                         maxVirtualMachinesLimit: 10
                         retentionStrategy:
-                          azureVMCloudRetentionStrategy:
-                            idleTerminationMinutes: 5
+                          azureVMCloudPool:
+                            dynamicBufferEnabled: true
+                            bufferPercentage: 10
+                            maximumBuffer: 5
+                            poolSize: 2
                         usageMode: "EXCLUSIVE"
                         virtualMachineSize: "Standard_D4ds_v5"
                         imageReference:
