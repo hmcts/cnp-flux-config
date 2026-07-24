@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.gov.hmcts.probate.DmnDecisionTable.WA_TASK_INITIATION_PROBATE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_DE_BONIS_NON;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_DIGITAL_CASE_PROBATE;
+import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_FIAT_WILL;
 import static uk.gov.hmcts.probate.dmnutils.CamundaVerifier.mapAdditionalData;
 import static uk.gov.hmcts.probate.dmnutils.CamundaVerifier.resultsMatchUsingNameKey;
 
@@ -42,6 +43,12 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
                 "taskId", EXAMINE_DE_BONIS_NON,
                 "name", "Examine - De Bonis Non",
                 "processCategories", "case progression"
+        );
+
+        Map<String,Object> examineFiatWillTaskAttributes = Map.of(
+            "taskId", EXAMINE_FIAT_WILL,
+            "name", "Examine - Fiat Will",
+            "processCategories", "case progression"
         );
 
         Map<String, Object> additionalData = mapAdditionalData("""
@@ -125,6 +132,28 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
                   ]
                   }
                 }""");
+
+        Map<String, Object> additionalDataHandOffListFiatWill = mapAdditionalData("{\n"
+            + "  \"Data\":{\n"
+            + "  \"evidenceHandled\" : \"" + false + "\",\n"
+            + "  \"caseType\" : \"" + "gop" + "\",\n"
+            + "  \"caseHandedOffToLegacySite\" : \"" + true + "\",\n"
+            + "  \"boHandoffReasonList\" : [\n"
+            + "    {\n"
+            + "      \"id\": \"df3be732-2172-49da-80fe-cad8586e4928\",\n"
+            + "      \"value\": {\n"
+            + "        \"caseHandoffReason\": \"FiatWill\"\n"
+            + "      }\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"id\": \"df3be732-2172-49da-80fe-cad8586e4928\",\n"
+            + "      \"value\": {\n"
+            + "        \"caseHandoffReason\": \"OtherReason\"\n"
+            + "      }\n"
+            + "    }\n"
+            + "  ]\n"
+            + "  }\n"
+            + "}");
 
         Map<String, Object> additionalDataHandOffListOtherReason = mapAdditionalData("""
                 {
@@ -356,6 +385,12 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
                         List.of(examineDeBonisNonTaskAttributes)
                 ),
                 Arguments.of(
+                    "handleEvidence",
+                    "BOReadyToIssue",
+                    additionalDataHandOffListFiatWill,
+                    List.of(examineFiatWillTaskAttributes)
+                ),
+                Arguments.of(
                         "handleEvidence",
                         "BOReadyToIssue",
                         additionalDataHandOffListLegacySiteNo,
@@ -396,6 +431,12 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
                         "BOReadyToIssue",
                         additionalDataHandOffListDeBonisNon,
                         List.of(examineDeBonisNonTaskAttributes)
+                ),
+                Arguments.of(
+                    "boResolveStop",
+                    "BOReadyToIssue",
+                    additionalDataHandOffListFiatWill,
+                    List.of(examineFiatWillTaskAttributes)
                 ),
                 Arguments.of(
                         "boResolveStop",
@@ -438,6 +479,12 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
                         "BOReadyToIssue",
                         additionalDataHandOffListDeBonisNon,
                         List.of(examineDeBonisNonTaskAttributes)
+                ),
+                Arguments.of(
+                    "resolveCWEscalation",
+                    "BOReadyToIssue",
+                    additionalDataHandOffListFiatWill,
+                    List.of(examineFiatWillTaskAttributes)
                 ),
                 Arguments.of(
                         "resolveCWEscalation",
@@ -480,6 +527,12 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
                         "BOReadyToIssue",
                         additionalDataHandOffListDeBonisNon,
                         List.of(examineDeBonisNonTaskAttributes)
+                ),
+                Arguments.of(
+                    "changeState",
+                    "BOReadyToIssue",
+                    additionalDataHandOffListFiatWill,
+                    List.of(examineFiatWillTaskAttributes)
                 ),
                 Arguments.of(
                         "changeState",
@@ -526,7 +579,7 @@ class CamundaTaskWaInitiationTest extends DmnDecisionTableBaseUnitTest {
         DmnDecisionTableImpl logic = (DmnDecisionTableImpl) decision.getDecisionLogic();
         assertThat(logic.getInputs().size(), is(7));
         assertThat(logic.getOutputs().size(), is(4));
-        assertThat(logic.getRules().size(), is(11));
+        assertThat(logic.getRules().size(), is(12));
     }
 
     @ParameterizedTest(name = "event id: {0} post event state: {1} evidenceHandled: {2} caseType: {3}")

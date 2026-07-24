@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="wa-initiation-definition" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.33.1">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="wa-initiation-definition" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.48.0">
   <decision id="wa-task-initiation-probate-grantofrepresentation" name="Task initiation DMN" camunda:historyTimeToLive="P90D">
     <decisionTable id="DecisionTable_0jtevuc" hitPolicy="COLLECT">
       <input id="Input_1" label="Event Id" camunda:inputVariable="eventId">
@@ -39,7 +39,7 @@
       <input id="InputClause_0ts4kea" label="boHandoffReasonPresent" camunda:inputVariable="boHandoffReasonPresent">
         <inputExpression id="LiteralExpression_1l94sjj" typeRef="boolean">
           <text>if(additionalData != null and additionalData.Data != null and
-            additionalData.Data.boHandoffReasonList != null and 
+            additionalData.Data.boHandoffReasonList != null and
 count(list: additionalData.Data.boHandoffReasonList) &gt; 0) then
             true else false</text>
         </inputExpression>
@@ -337,6 +337,41 @@ else false</text>
           <text></text>
         </outputEntry>
         <outputEntry id="LiteralExpression_1cjuror">
+          <text>"case progression"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ai19yd">
+        <inputEntry id="UnaryTests_0vo16wg">
+          <text>"handleEvidence", "boResolveStop", "resolveCWEscalation", "changeState"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1liallg">
+          <text>"BOReadyToIssue"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rly34i">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1sc4jza">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cybzuq">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0za2oh4">
+          <text>list contains(additionalData.Data.boHandoffReasonList.value.caseHandoffReason, "FiatWill")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12kayl1">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17lzws3">
+          <text>"ExamineFiatWill"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0sevkvk">
+          <text>"Examine - Fiat Will"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10azhep">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04v65j7">
           <text>"case progression"</text>
         </outputEntry>
       </rule>
