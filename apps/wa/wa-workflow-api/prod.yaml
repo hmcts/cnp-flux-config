@@ -5,10 +5,13 @@ metadata:
 spec:
   values:
     java:
-      memoryRequests: "1Gi"
-      memoryLimits: "2Gi"
+      memoryRequests: "1.5Gi"
+      memoryLimits: "3Gi"
       cpuRequests: "250m"
       cpuLimits: "500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
       environment:
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG
         POSTGRES_HOST: wa-workflow-api-postgres-db-flex-prod.postgres.database.azure.com
