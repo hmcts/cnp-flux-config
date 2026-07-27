@@ -7,11 +7,13 @@ spec:
   releaseName: idam-hmcts-access
   values:
     nodejs:
+      image: hmctsprod.azurecr.io/idam/hmcts-access:staging-f6063c4-20260724153157
       pdb:
         enabled: false
       replicas: 1
       ingressHost: hmcts-access.sandbox.platform.hmcts.net
       disableTraefikTls: true
       environment:
+        PASSWORD_RESET_V2_ENABLED: 'true'
         STRATEGIC_SERVICE_URL: 'https://idam-api.sandbox.platform.hmcts.net'
         STRATEGIC_TESTING_URL: 'https://idam-testing-support-api.sandbox.platform.hmcts.net'
