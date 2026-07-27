@@ -28,7 +28,7 @@ public class TaskAttributeConstants {
     public static final String DECEASED_SURNAME = "deceasedSurname";
     public static final String CASE_TYPE = "caseType";
 
-    public static final String DECISION_WORK_TYPE = "decision_making_work";
+    public static final String APPLICATIONS_WORK_TYPE_PROBATE = "applications";
     public static final String ROUTINE_WORK_TYPE = "routine_work";
     public static final String HEARING_WORK_TYPE = "hearing_work";
     public static final String PRIORITY_WORK_TYPE = "priority";
@@ -53,6 +53,7 @@ public class TaskAttributeConstants {
 
     public static final String EXAMINE_DIGITAL_CASE_PROBATE = "ExamineDigitalCaseProbate";
     public static final String EXAMINE_DIGITAL_CASE_ADMON = "ExamineDigitalCaseAdmonWill";
+    public static final String EXAMINE_DIGITAL_CASE_ADMON_READY_TO_ISSUE = "ExamineDigitalCaseAdmonWillReadyToIssue";
     public static final String EXAMINE_DIGITAL_CASE_INTESTACY = "ExamineDigitalCaseIntestacy";
     public static final String EXAMINE_DE_BONIS_NON = "ExamineDeBonisNon";
     public static final String EXAMINE_FIAT_WILL = "ExamineFiatWill";
@@ -76,6 +77,8 @@ public class TaskAttributeConstants {
 
     public static final String PROCESS_REINSTATEMENT_DECISION_NOTICE_TASK = "processReinstatementDecisionNotice";
 
+    public static final String REFERENCE_VALUE = "2345011612340987";
+    public static final String REGION_VALUE = "London";
     public static final String CASE_TYPE_VALUE = "someCaseType";
     public static final String DECEASED_FORENAMES_VALUE = "someDeceasedForenames";
     public static final String DECEASED_SURNAME_VALUE = "someDeceasedSurname";
@@ -98,8 +101,22 @@ public class TaskAttributeConstants {
             + "${[CASE_REFERENCE]}/trigger/moveToCWEscalation)  "
             + "[Stop Case](/cases/case-details/"
             + "${[CASE_REFERENCE]}/trigger/boStopCaseForCasePrinted)";
+    public static final String DESCRIPTION_EXAMINE_OTHER_CASES =
+            "[Issue Grant](/cases/case-details/${[CASE_REFERENCE]}"
+                    + "/trigger/boIssueGrantForCaseMatching)  "
+                    + "[Escalate to Registrar](/cases/case-details/${[CASE_REFERENCE]}"
+                    + "/trigger/boEscalateToRegistrar)  "
+                    + "[SME Referral](/cases/case-details/${[CASE_REFERENCE]}"
+                    + "/trigger/moveToCWEscalation)  "
+                    + "[Stop Case](/cases/case-details/${[CASE_REFERENCE]}"
+                    + "/trigger/boStopCaseForCaseMatchingForExamining)";
+
+    public static final String CASE_PRINTED_STATE = "CasePrinted";
+    public static final String READY_TO_ISSUE_STATE = "BOReadyToIssue";
+    public static final String BO_CASE_CLOSED = "BOCaseClosed";
 
     public static final String PROBATE_EXAMINE_SKILL_CODE = "SKILL:ABA6:ProbateExamining";
+    public static final String ADMON_WILL_EXAMINE_SKILL_CODE = "SKILL:ABA6:AdmonExamining";
     public static final String DE_BONIS_NON_SKILL_CODE = "SKILL:ABA6:DeBonisNon";
     public static final String FIAT_WILL_SKILL_CODE = "SKILL:ABA6:FiatWill";
     public static final String INFECTED_BLOOD_COMPENSATION_AUTHORITY_SKILL_CODE
