@@ -33,7 +33,6 @@ import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_FIAT_
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.CASE_PRINTED_STATE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.READY_TO_ISSUE_STATE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_INFECTED_BLOOD_COMPENSATION_AUTHORITY;
-import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.WORK_TYPE;
 
 class CamundaTaskWaConfigurationTest extends DmnDecisionTableBaseUnitTest {
 
@@ -101,17 +100,9 @@ class CamundaTaskWaConfigurationTest extends DmnDecisionTableBaseUnitTest {
                         .isUrgent()
                         .build(),
                     "handleEvidence",
-                    ConfigurationExpectationBuilder.defaultExamineDigitalCaseProbateExpectations()
-                        .expectedValue(WORK_TYPE, APPLICATION_WORK_TYPE, true)
-                        .expectedValue(DESCRIPTION, "[Issue Grant](/cases/case-details/${[CASE_REFERENCE]}"
-                            + "/trigger/boIssueGrantForCaseMatching)  "
-                            + "[Escalate to Registrar](/cases/case-details/${[CASE_REFERENCE]}"
-                            + "/trigger/boEscalateToRegistrar)  "
-                            + "[SME Referral](/cases/case-details/${[CASE_REFERENCE]}"
-                            + "/trigger/moveToCWEscalation)  "
-                            + "[Stop Case](/cases/case-details/${[CASE_REFERENCE]}"
-                            + "/trigger/boStopCaseForCaseMatchingForExamining)", true)
-                        .build()
+                    ConfigurationExpectationBuilder.examineDigitalCaseExpectationsForConditions(
+                            Map.of("taskType", EXAMINE_INFECTED_BLOOD_COMPENSATION_AUTHORITY,
+                                    "state", READY_TO_ISSUE_STATE)).build()
                 )
         );
     }
