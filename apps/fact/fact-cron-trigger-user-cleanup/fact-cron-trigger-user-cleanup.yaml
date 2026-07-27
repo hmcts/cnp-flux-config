@@ -10,7 +10,8 @@ spec:
       image: hmctsprod.azurecr.io/fact/cron-trigger:prod-b58f24e-20260721085117 #{"$imagepolicy": "flux-system:fact-cron-trigger-user-cleanup"}
       schedule: "0 9 * * *"
       environment:
-        FACT_JOB_TYPE: USER_CLEANUP
+        TRIGGER_TYPE: USER_CLEANUP
+        TRIGGER_ENABLED: true
         FACT_DATA_API_URL: http://fact-data-api-${ENVIRONMENT}.service.core-compute-${ENVIRONMENT}.internal
   chart:
     spec:

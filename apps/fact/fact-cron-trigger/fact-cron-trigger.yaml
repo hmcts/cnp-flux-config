@@ -10,7 +10,8 @@ spec:
       image: hmctsprod.azurecr.io/fact/cron-trigger:prod-b58f24e-20260721085117 #{"$imagepolicy": "flux-system:fact-cron-trigger"}
       schedule: "*/40 * * * *"
       environment:
-        FACT_JOB_TYPE: CSV
+        TRIGGER_TYPE: CSV
+        TRIGGER_ENABLED: true
         FACT_API_URL: http://fact-api-${ENVIRONMENT}.service.core-compute-${ENVIRONMENT}.internal
   chart:
     spec:
