@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import uk.gov.hmcts.probate.config.properties.registries.RegistriesProperties;
+import uk.gov.hmcts.probate.exception.BusinessValidationException;
 import uk.gov.hmcts.probate.model.DocumentType;
 import uk.gov.hmcts.probate.model.ccd.raw.DocumentLink;
 import uk.gov.hmcts.probate.model.ccd.raw.request.CallbackRequest;
@@ -61,6 +62,8 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -262,6 +265,26 @@ class DocumentControllerUnitTest {
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
         verify(documentTransformer, times(0)).addDocument(any(), any(), any());
+    }
+
+    @Test
+    void shouldReturnValidationErrorWhenExistingDocumentIsModified() {
+        CallbackRequest callbackRequest = mock(CallbackRequest.class);
+        CaseData mockCaseData = CaseData.builder().applicationType(SOLICITOR).build();
+        CaseDetails mockCaseDetails = new CaseDetails(mockCaseData, null, 0L);
+        mockCaseDetails.setState("BOCaseStopped");
+        when(callbackRequest.getCaseDetails()).thenReturn(mockCaseDetails);
+        when(featureToggleService.usePreventUpdatingExistingUploadedDocumentsFeatureToggleOn()).thenReturn(true);
+        doThrow(new BusinessValidationException("validation error", "validation error"))
+                .when(evidenceUploadService)
+                .validateExistingUploadedDocuments(callbackRequest);
+
+        ResponseEntity<CallbackResponse> response = documentController.evidenceAdded(callbackRequest);
+
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(response.getBody().getErrors(), contains("validation error"));
+        verify(evidenceUploadService, never()).updateLastEvidenceAddedDate(mockCaseDetails);
+        verify(documentTransformer, never()).addDocument(any(), any(), any());
     }
 
     @Test
