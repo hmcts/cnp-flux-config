@@ -8,7 +8,7 @@ spec:
     job:
       image: hmctsprod.azurecr.io/et/cos:pr-3350-16d2594-20260729132249 #{"$imagepolicy": "flux-system:demo-et-reconfiguration-cron"}
       suspend: false
-      schedule: "30 16 * * *"
+      schedule: "0 16 * * *"
       environment:
         TASK_NAME: NoticeOfChangeFieldsTask
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
@@ -16,7 +16,7 @@ spec:
         SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-demo.service.core-compute-demo.internal"
         CCD_GATEWAY_BASE_URL: https://manage-case.demo.platform.hmcts.net
         CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
-        CRON_CASE_TYPE_ID: ET_EnglandWales,ET_Scotland
+        CRON_CASE_TYPE_ID: ET_EnglandWales
     global:
       jobKind: CronJob
       enableKeyVaults: true
