@@ -55,4 +55,4 @@ fi
 
 echo "==> Done"
 echo "Run tests with:"
-echo "./extract-and-test.sh"
+echo "./test.sh"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# extract-and-test.sh
+# test.sh
 # -------------------
 # Proof-of-concept for DTSPO-33474: unit testing Prometheus alerts that are
 # deployed as PrometheusRule CRDs via Flux.
