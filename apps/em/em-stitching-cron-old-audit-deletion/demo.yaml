@@ -7,6 +7,9 @@ spec:
   values:
     job:
       applicationPort: 8095
-      image: hmctsprod.azurecr.io/em/stitching:prod-305d667-20260727144114 #{"$imagepolicy": "flux-system:demo-em-stitching-cron-old-audit-deletion"}
+      image: hmctsprod.azurecr.io/em/stitching:pr-3397-36908e9-20260730084015 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      schedule: "55 15 * * *"
+      environment:
+        HISTORIC_AUDIT_NO_OF_RECORDS: 10
     global:
       environment: demo
