@@ -38,6 +38,7 @@ import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.REFERENCE_VAL
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.READY_TO_ISSUE_STATE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_DE_BONIS_NON;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_FIAT_WILL;
+import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_WINDRUSH_SCHEME;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.DESCRIPTION_EXAMINE_OTHER_CASES;
 
 
@@ -65,6 +66,7 @@ public class ConfigurationExpectationBuilder {
                 && (conditions.get("taskType").equals(EXAMINE_DE_BONIS_NON)
                 || conditions.get("taskType").equals(EXAMINE_FIAT_WILL)
                 || conditions.get("taskType").equals(EXAMINE_INFECTED_BLOOD_COMPENSATION_AUTHORITY)
+                || conditions.get("taskType").equals(EXAMINE_WINDRUSH_SCHEME)
             )) {
             builder.expectedValue(DESCRIPTION, DESCRIPTION_EXAMINE_OTHER_CASES, true);
         } else {

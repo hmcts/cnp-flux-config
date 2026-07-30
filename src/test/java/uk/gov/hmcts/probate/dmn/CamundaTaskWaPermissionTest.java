@@ -34,6 +34,8 @@ import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.INFECTED_BLOO
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.PROBATE_EXAMINE_SKILL_CODE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.ADMON_WILL_EXAMINE_SKILL_CODE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.ROLE_CATEGORY_CTSC;
+import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_WINDRUSH_SCHEME;
+import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.WINDRUSH_SCHEME_SKILL_CODE;
 import static uk.gov.hmcts.probate.dmnutils.CamundaVerifier.resultsMatchUsingNameKey;
 
 class CamundaTaskWaPermissionTest extends DmnDecisionTableBaseUnitTest {
@@ -87,7 +89,12 @@ class CamundaTaskWaPermissionTest extends DmnDecisionTableBaseUnitTest {
                     EXAMINE_INFECTED_BLOOD_COMPENSATION_AUTHORITY,
                     DUMMY_CASE_DATA,
                     getCtscExaminePermissions(INFECTED_BLOOD_COMPENSATION_AUTHORITY_SKILL_CODE)
-                )
+                ),
+                Arguments.of(
+                    EXAMINE_WINDRUSH_SCHEME,
+                    DUMMY_CASE_DATA,
+                    getCtscExaminePermissions(WINDRUSH_SCHEME_SKILL_CODE)
+            )
         );
     }
 
@@ -113,7 +120,7 @@ class CamundaTaskWaPermissionTest extends DmnDecisionTableBaseUnitTest {
         assertThat(logic.getOutputs().size(), is(7));
         assertThatOutputContainInOrder(outputColumnIds, logic.getOutputs());
         //Rules
-        assertThat(logic.getRules().size(), is(11));
+        assertThat(logic.getRules().size(), is(13));
     }
 
     @ParameterizedTest(name = "task type: {0} case data: {1}")

@@ -28,6 +28,7 @@ import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_DIGIT
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_DIGITAL_CASE_INTESTACY;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_DIGITAL_CASE_PROBATE;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.REFERENCE_VALUE;
+import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_WINDRUSH_SCHEME;
 import static uk.gov.hmcts.probate.dmnutils.CamundaVerifier.resultsMatchUsingNameKey;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.EXAMINE_FIAT_WILL;
 import static uk.gov.hmcts.probate.dmnutils.TaskAttributeConstants.CASE_PRINTED_STATE;
@@ -103,6 +104,16 @@ class CamundaTaskWaConfigurationTest extends DmnDecisionTableBaseUnitTest {
                     ConfigurationExpectationBuilder.examineDigitalCaseExpectationsForConditions(
                             Map.of("taskType", EXAMINE_INFECTED_BLOOD_COMPENSATION_AUTHORITY,
                                     "state", READY_TO_ISSUE_STATE)).build()
+                ),
+               Arguments.of(
+                   EXAMINE_WINDRUSH_SCHEME,
+                    CaseDataBuilder.defaultWaCase()
+                        .isUrgent()
+                        .build(),
+                    "handleEvidence",
+                    ConfigurationExpectationBuilder.examineDigitalCaseExpectationsForConditions(
+                        Map.of("taskType", EXAMINE_WINDRUSH_SCHEME,
+                            "state", READY_TO_ISSUE_STATE)).build()
                 )
         );
     }
