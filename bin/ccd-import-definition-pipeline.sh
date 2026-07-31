@@ -55,7 +55,7 @@ while true; do
   attempt=$((attempt + 1))
 done
 
-if [[ "${upload_http_code}" == '504' ]]; then
+if [[ "${upload_http_code}" == '504' || "${upload_http_code}" == '502' ]]; then
   for try in {1..20}
   do
     sleep 5
