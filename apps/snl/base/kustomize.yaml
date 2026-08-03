@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: snl
+  namespace: flux-system
+spec:
+  path: ./apps/snl/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "snl"
+      TEAM_NOTIFICATION_CHANNEL: "dts-schedule-and-listing-build-notices"
+      TEAM_AAD_GROUP_ID: 45966614-aa94-4de5-b524-172d9e56d55a
+      WI_NAME: snl
