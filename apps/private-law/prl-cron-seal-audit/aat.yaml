@@ -9,8 +9,8 @@ spec:
     job:
       image: hmctspublic.azurecr.io/prl/cos:prod-7b3ded2-20260520092515 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
-        SEAL_AUDIT_ENABLED: false
-        SEAL_AUDIT_EMAIL_ENABLED: false
+        SEAL_AUDIT_ENABLED: true
+        SEAL_AUDIT_EMAIL_ENABLED: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.aat.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-aat.service.core-compute-aat.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-aat.service.core-compute-aat.internal/oauth2/callback
@@ -34,7 +34,9 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
         HEARING_API_BASEURL: http://fis-hmc-api-aat.service.core-compute-aat.internal
         APP_ENV: "aat"
-      schedule: 15 9 12 5 *
+      schedule: 0 9 5 8 *
+      memoryRequests: "2048Mi"
+      memoryLimits: "4096Mi"
     global:
       jobKind: CronJob
       enableKeyVaults: true
