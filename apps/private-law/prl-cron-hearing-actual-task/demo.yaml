@@ -7,7 +7,6 @@ spec:
   releaseName: prl-cron-hearing-actual-task
   values:
     job:
-      suspend: true
       image: hmctsprod.azurecr.io/prl/cos:pr-3969-a0ff2ba-20260803133556 #{"$imagepolicy": "flux-system:demo-prl-cron-hearing-actual-task"}
       environment:
         TASK_NAME: UpdateHearingActualTask
@@ -38,7 +37,7 @@ spec:
         REQUEST_ORDER_TASK_C100_CADENCE: 0
         REQUEST_ORDER_TASK_FL401_CADENCE: 0
         APP_ENV: "demo"
-      schedule: 1/60 * * * *
+      schedule: 0 18 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
