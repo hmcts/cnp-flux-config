@@ -2,11 +2,9 @@ apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: demo-pcs-frontend
-  annotations:
-    hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: 'prod-7b2bbc6-20260720134829'
+    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
