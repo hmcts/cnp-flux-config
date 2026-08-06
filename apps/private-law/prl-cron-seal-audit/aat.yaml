@@ -3,11 +3,13 @@ kind: HelmRelease
 metadata:
   name: prl-cron-seal-audit
   namespace: private-law
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   releaseName: prl-cron-seal-audit
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-6e47734-20260804104832 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctspublic.azurecr.io/prl/cos:pr-3997-java-7dd449f644-r7zp9
       environment:
         SEAL_AUDIT_ENABLED: true
         SEAL_AUDIT_EMAIL_ENABLED: true
@@ -34,7 +36,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
         HEARING_API_BASEURL: http://fis-hmc-api-aat.service.core-compute-aat.internal
         APP_ENV: "aat"
-      schedule: 5 15 5 8 *
+      schedule: 10 17 5 8 *
       memoryRequests: "2048Mi"
       memoryLimits: "4096Mi"
     global:
