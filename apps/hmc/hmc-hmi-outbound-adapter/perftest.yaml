@@ -7,8 +7,13 @@ spec:
     java:
       replicas: 2
       autoscaling:
-        enabled: false
-      memoryRequests: '1Gi'
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 90
+      memoryRequests: "1000Mi"
+      cpuRequests: "100m"
       environment:
         # HMI/LA integration
         #HMI_BASE_URL: https://hmi-apim.demo.platform.hmcts.net/hmi

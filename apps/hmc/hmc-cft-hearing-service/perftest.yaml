@@ -9,11 +9,13 @@ spec:
       image: hmctsprod.azurecr.io/hmc/cft-hearing-service:prod-1512df6-20260806095116 #{"$imagepolicy": "flux-system:perftest-hmc-cft-hearing-service"}
       replicas: 2
       autoscaling:
-        enabled: false
-      memoryLimits: "3Gi"
-      memoryRequests: "2Gi"
-      cpuLimits: "2000m"
-      cpuRequests: "500m"
+        enabled: true
+        maxReplicas: 4
+        memory:
+          enabled: true
+          averageUtilization: 90
+      memoryRequests: "1250Mi"
+      cpuRequests: "100m"
       environment:
         HMI_BASE_URL: https://sds-api-mgmt.demo.platform.hmcts.net/hmi
         CFT_HEARING_SERVICE_S2S_AUTHORISED_SERVICES: xui_webapp,hmc_hmi_inbound_adapter,sscs,fis_hmc_api,et-hearings-api,civil_service,iac,pcs_api
