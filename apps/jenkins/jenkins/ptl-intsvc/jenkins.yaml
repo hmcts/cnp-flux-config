@@ -13,6 +13,8 @@ spec:
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
+        - name: JOB_CACHE_STORAGE_ACCOUNT
+          value: "cftjenkinscacheptl"
         - name: AZURE_KEYVAULT_URL
           value: https://cftptl-intsvc.vault.azure.net
       resources:
@@ -416,6 +418,13 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftptl-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
+          job-cache-storage: |
+            unclassified:
+              globalItemStorage:
+                storage:
+                  azure:
+                    containerName: "job-cache"
+                    credentialsId: "job-cache-storage-account"
           kubernetes-agent: |
             jenkins:
               clouds:
