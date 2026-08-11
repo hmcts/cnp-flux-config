@@ -1,0 +1,8 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dynatrace-operator
+  namespace: dynatrace
+spec:
+  # extend beyond the shared 10m in ../../dynatrace-operator-upgrade.yaml; preview upgrades have hit "context deadline exceeded"
+  timeout: 15m
