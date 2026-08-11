@@ -53,6 +53,10 @@ spec:
                     env:
                       - key: INFRA_VAULT_NAME
                         value: cftsbox-intsvc
+                      - key: JENKINS_SUBSCRIPTION_NAME
+                        value: DTS-CFTSBOX-INTSVC
+                      - key: JENKINS_SUBSCRIPTION_ID
+                        value: 1497c3d7-ab6d-4bb7-8a10-b51d03189ee3
                       - key: NONPROD_ENVIRONMENT_NAME
                         value: sandbox
                       - key: NONPROD_SUBSCRIPTION_NAME
@@ -63,8 +67,6 @@ spec:
                         value: sandbox
                       - key: PROD_SUBSCRIPTION_NAME
                         value: sandbox
-                      - key: JENKINS_SUBSCRIPTION_NAME
-                        value: DTS-CFTSBOX-INTSVC
                       - key: JAVA_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: GRADLE_OPTS
@@ -131,6 +133,13 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftsbox-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
+          job-cache-storage: |
+            unclassified:
+              globalItemStorage:
+                storage:
+                  azure:
+                    containerName: "job-cache"
+                    credentialsId: "job-cache-storage-account"
           kubernetes-agent: |
             jenkins:
               clouds:
