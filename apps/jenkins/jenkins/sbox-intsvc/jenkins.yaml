@@ -385,3 +385,27 @@ spec:
                             emptyDir:
                           - name: volume-4
                             emptyDir:
+          jobs: |
+            jobs:
+              - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/test-second-pipeline-sandbox/jobdsl/organisations-beta.groovy
+              - script: >
+                  pipelineJob('Seed Job') {
+                    triggers {
+                      cron('H 8,11,14,17 * * 1-5')
+                    }
+                    definition {
+                      cpsScm {
+                        scm {
+                          git {
+                            remote {
+                              github('hmcts/cnp-jenkins-config')
+                              credentials('hmcts-jenkins-cnp')
+                            }
+                            branch('test-second-pipeline-sandbox')
+                          }
+                        }
+                        scriptPath('jobdsl/Jenkinsfile_seed')
+                        lightweight(true)
+                      }
+                    }
+                  }
