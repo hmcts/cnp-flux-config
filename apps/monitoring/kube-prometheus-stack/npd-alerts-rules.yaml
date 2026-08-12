@@ -1,0 +1,88 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: kube-prometheus-stack
+    release: kube-prometheus-stack
+  name: prometheus-node-problem-detector-rules
+  namespace: monitoring
+spec:
+  "groups":
+  - "name": "node-problem-detector"
+    "rules":
+    # Node condition from kube-state-metrics. This is a high-impact signal for node isolation.
+    - "alert": "NPDNetworkUnavailable"
+      "annotations":
+        "message": "Node {{ $labels.node }} reports condition NetworkUnavailable=true."
+      "expr": |
+        max by (node) (kube_node_status_condition{condition="NetworkUnavailable",status="true"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    # Permanent node conditions from the AKS-managed Node Problem Detector exporter
+    # (problem_gauge == 1 while the problem is active).
+    - "alert": "NPDReadonlyFilesystem"
+      "annotations":
+        "message": "Node Problem Detector reports a read-only filesystem on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="ReadonlyFilesystem"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    - "alert": "NPDKernelDeadlock"
+      "annotations":
+        "message": "Node Problem Detector reports a kernel deadlock on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="KernelDeadlock"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    - "alert": "NPDContainerRuntimeDown"
+      "annotations":
+        "message": "Node Problem Detector reports container runtime is down on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="ContainerRuntimeProblem",reason="ContainerRuntimeIsDown"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    - "alert": "NPDKubeletDown"
+      "annotations":
+        "message": "Node Problem Detector reports kubelet is down on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="KubeletProblem",reason="KubeletIsDown"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    - "alert": "NPDFilesystemCorruption"
+      "annotations":
+        "message": "Node Problem Detector reports filesystem corruption on {{ $labels.instance }}."
+      "expr": |
+        max by (instance) (problem_gauge{type="FilesystemCorruptionProblem",reason="FilesystemCorruptionDetected"}) == 1
+      "for": "5m"
+      "labels":
+        "severity": "critical"
+    # Temporary node events (problem_counter increments as events occur).
+    - "alert": "NPDFrequentUnregisterNetDevice"
+      "annotations":
+        "message": "Node Problem Detector reports {{ $value }} UnregisterNetDevice kernel events in 15m on {{ $labels.instance }}."
+      "expr": |
+        sum by (instance) (increase(problem_counter{reason="UnregisterNetDevice"}[15m])) > 3
+      "for": "5m"
+      "labels":
+        "severity": "warning"
+    - "alert": "NPDFrequentOOMKilling"
+      "annotations":
+        "message": "Node Problem Detector reports {{ $value }} OOMKilling kernel events in 15m on {{ $labels.instance }}."
+      "expr": |
+        sum by (instance) (increase(problem_counter{reason="OOMKilling"}[15m])) > 5
+      "for": "5m"
+      "labels":
+        "severity": "warning"
+    - "alert": "NPDKernelOops"
+      "annotations":
+        "message": "Node Problem Detector reports {{ $value }} KernelOops kernel events in 15m on {{ $labels.instance }}."
+      "expr": |
+        sum by (instance) (increase(problem_counter{reason="KernelOops"}[15m])) > 0
+      "for": "5m"
+      "labels":
+        "severity": "warning"

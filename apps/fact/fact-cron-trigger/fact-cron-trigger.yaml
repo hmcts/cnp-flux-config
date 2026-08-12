@@ -7,8 +7,12 @@ spec:
   values:
     job:
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/fact/cron-trigger:prod-0495c19-20260415175932 #{"$imagepolicy": "flux-system:fact-cron-trigger"}
-      schedule: "*/40 * * * *"
+      image: hmctsprod.azurecr.io/fact/cron-trigger:prod-6a930df-20260810122240 #{"$imagepolicy": "flux-system:fact-cron-trigger"}
+      schedule: "0 9 * * 1-5"
+      environment:
+        TRIGGER_TYPE: CSV
+        TRIGGER_ENABLED: true
+        FACT_API_URL: http://fact-api-${ENVIRONMENT}.service.core-compute-${ENVIRONMENT}.internal
   chart:
     spec:
       chart: ./stable/fact-cron-trigger

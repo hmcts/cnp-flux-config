@@ -8,7 +8,7 @@ spec:
   values:
     java:
       disableTraefikTls: false
-      image: hmctsprod.azurecr.io/idam/api:preview-20f3ff7-20260702065529 #{"$imagepolicy": "flux-system:preview-idam-api"}
+      image: hmctsprod.azurecr.io/idam/api:preview-11c90c5-20260804122409 #{"$imagepolicy": "flux-system:preview-idam-api"}
       ingressHost: idam-api.preview.platform.hmcts.net
       replicas: 2
       environment:
@@ -29,18 +29,23 @@ spec:
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-preview.internal
         STRATEGIC_ADMIN_URL: https://idam-user-dashboard.preview.platform.hmcts.net
         STRATEGIC_FRONTEND_URL: https://idam-web-public.preview.platform.hmcts.net
+        STRATEGIC_FRONTEND_FORGOTPASSWORDRESETPATH: /change-password
         STRATEGIC_API_URL: https://idam-api.preview.platform.hmcts.net
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
         STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
+        STRATEGIC_OPERATION_REPORTER: console-and-insight
         IDAM_RATELIMIT_PASSWORDGRANT_ENABLED: false
         IDAM_S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
         LOG_AND_AUDIT_IDAM_URL: http://lau-idam-backend-aat.service.core-compute-aat.internal
         LOG_AND_AUDIT_IDAM_ENABLED: true
         FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
         FEATUREFLAGS_PULLREQUESTREWRITEENABLED: true
+        FEATUREFLAGS_APISENDSACTIVATIONEMAILS: true
+        FEATUREFLAGS_APIV2SENDSACTIVATIONEMAILS: false
+        FEATUREFLAGS_USEV2REGISTRATIONEMAILS: false
         FEATUREFLAGS_V2_API_ROLES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_SERVICES_CONTROLLER_ENABLED: true
         FEATUREFLAGS_V2_API_USERS_CONTROLLER_ENABLED: true

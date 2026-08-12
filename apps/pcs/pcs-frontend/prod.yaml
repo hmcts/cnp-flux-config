@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-frontend
+spec:
+  values:
+    nodejs:
+      ingressHost: pcs.platform.hmcts.net
+      environment:
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        PCQ_URL: https://equality-and-diversity.platform.hmcts.net
+        REDIRECTS_MANAGE_CASE_RETURN_URL: https://manage-case.platform.hmcts.net/cases/case-details/PCS/PCS
+        PAYMENT_RETURN_URL: https://pcs.platform.hmcts.net/payment/return
+        OIDC_REDIRECT_URI: https://pcs.platform.hmcts.net/oauth2/callback
+        OIDC_ISSUER: https://hmcts-access.service.gov.uk/o

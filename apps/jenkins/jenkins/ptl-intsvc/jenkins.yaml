@@ -13,15 +13,17 @@ spec:
       containerEnv:
         - name: ENVIRONMENT
           value: "prod"
+        - name: JOB_CACHE_STORAGE_ACCOUNT
+          value: "cftjenkinsafactptl"
         - name: AZURE_KEYVAULT_URL
           value: https://cftptl-intsvc.vault.azure.net
       resources:
         requests:
           cpu: "4"
-          memory: "22Gi"
+          memory: "28Gi"
         limits:
           cpu: "6"
-          memory: "22Gi"
+          memory: "28Gi"
       JCasC:
         configScripts:
           welcome-message: |
@@ -42,6 +44,8 @@ spec:
                         value: cftptl-intsvc
                       - key: JENKINS_SUBSCRIPTION_NAME
                         value: DTS-CFTPTL-INTSVC
+                      - key: JENKINS_SUBSCRIPTION_ID
+                        value: 1baf5470-1c3e-40d3-a6f7-74bfbce4b348
                       - key: ENVIRONMENT_AGENT_LABEL_TEMPLATE_CIVIL
                         value: civil-{environment}
                       - key: ENVIRONMENT_AGENT_LABEL_XUI_PTL
@@ -124,13 +128,13 @@ spec:
                     title: BSP
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(rpx-xui.+|em-icp-api|em-media-viewer|em-showcase)\/master
+                      ^HMCTS.*\/(rpx-xui.+|em-icp-api)\/master
                     name: XUI
                     recurse: true
                     title: ExUI Apps Master Builds
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(rpx-xui.+|em-icp-api|em-media-viewer|em-showcase)\/(.*PR-.*)
+                      ^HMCTS.*\/(rpx-xui.+|em-icp-api)\/(.*PR-.*)
                     name: XUI-PR
                     recurse: true
                     title: ExUI Apps PR Builds
@@ -154,7 +158,7 @@ spec:
                     title: CDM Develop Builds Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api|sscs-task-configuration|sscs-post-deployment-ft-tests|sscs-cron-trigger)\/master
+                      ^HMCTS.*\/(sscs-case-loader|sscs-cor-frontend|sscs-shared-infrastructure|sscs-submit-your-appeal|sscs-tribunals-case-api|sscs-task-configuration|sscs-post-deployment-ft-tests|sscs-cron-trigger|sscs-ccd-case-migration)\/master
                     name: SSCS
                     recurse: true
                     title: SSCS Dashboard
@@ -328,7 +332,7 @@ spec:
                     title: Performance Test Orchestrator Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-dgs-api|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-ccd-case-migration|prl-cron|prl-e2e-tests)\/master
+                      ^HMCTS.*\/(prl-cos-api|prl-ccd-definitions|prl-citizen-frontend|prl-shared-infrastructure|prl-wa-task-configuration|prl-ccd-case-migration|prl-cron|prl-e2e-tests)\/master
                     name: PRL
                     recurse: true
                     title: Private Law
@@ -340,7 +344,7 @@ spec:
                     title: FinRem Dashboard
                 - buildMonitor:
                     includeRegex: >-
-                      ^HMCTS.*\/(et-ccd-callbacks|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api|et-xui-e2e-tests)\/master
+                      ^HMCTS.*\/(et-ccd-callbacks|et-shared-infrastructure|et-sya-frontend|et-syr-frontend|et-sya-api)\/master
                     name: ET
                     recurse: true
                     title: Employment Tribunals
@@ -414,6 +418,13 @@ spec:
               azureKeyVault:
                 keyVaultURL: https://cftptl-intsvc.vault.azure.net
                 credentialID: jenkins-managed-identity
+          job-cache-storage: |
+            unclassified:
+              globalItemStorage:
+                storage:
+                  azure:
+                    containerName: "job-cache"
+                    credentialsId: "job-cache-storage-account"
           kubernetes-agent: |
             jenkins:
               clouds:

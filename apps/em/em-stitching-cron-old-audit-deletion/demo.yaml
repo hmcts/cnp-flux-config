@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: em-stitching-cron-old-audit-deletion
+spec:
+  releaseName: em-stitching-cron-old-audit-deletion
+  values:
+    job:
+      applicationPort: 8095
+      image: hmctsprod.azurecr.io/em/stitching:prod-53704f2-20260812080855 #{"$imagepolicy": "flux-system:demo-em-stitching"}
+      schedule: "*/15 17,18 * * *"
+      environment:
+        HISTORIC_AUDIT_NO_OF_RECORDS: 1000
+    global:
+      environment: demo

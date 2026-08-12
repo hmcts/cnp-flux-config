@@ -56,12 +56,12 @@ spec:
               alias: app-insights-connection-string
             - name: seal-audit-email-to
               alias: SEAL_AUDIT_EMAIL_TO
-      image: hmctsprod.azurecr.io/prl/cos:prod-0e6cae5-20260702094730 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-6b34707-20260810123744 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: SealAuditTask
         SEAL_AUDIT_ENABLED: false
         SEAL_AUDIT_EMAIL_ENABLED: false
-        SEAL_AUDIT_SIZE: 100
+        SEAL_AUDIT_SIZE: 30
         APP_ENV: "prod"
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         AUTH_IDAM_CLIENT_BASEURL: https://idam-api.platform.hmcts.net
@@ -71,8 +71,8 @@ spec:
   chart:
     spec:
       chart: prl-cron
-      version: 0.0.17
+      version: 0.0.20
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic-oci
+        name: hmctsprod-oci
         namespace: flux-system

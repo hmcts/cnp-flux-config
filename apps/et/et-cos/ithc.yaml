@@ -6,9 +6,13 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctsprod.azurecr.io/et/cos:pr-3203-4cb4732-20260625071730 #{"$imagepolicy": "flux-system:ithc-et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:pr-3256-c316fdb-20260806125753 #{"$imagepolicy": "flux-system:ithc-et-cos"}
       environment:
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         AAC_URL: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
         EXUI_CASE_DETAILS_URL: "https://manage-case.ithc.platform.hmcts.net/cases/case-details/"
         CITIZEN_CASE_DETAILS_URL: "https://et-sya.ithc.platform.hmcts.net/citizen-hub/"
+        CREATE_UPDATES_POLL_INTERVAL: 5000
+        UPDATE_CASE_POLL_INTERVAL: 5000
+        UPDATE_CASE_BATCH_SIZE: 50
+        UPDATE_CASE_THREADS: 20

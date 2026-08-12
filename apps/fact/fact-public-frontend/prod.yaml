@@ -2,3 +2,10 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: fact-public-frontend
+spec:
+  values:
+    nodejs:
+      ingressHost: new.find-court-tribunal.service.gov.uk
+      environment:
+        DATA_API_URL: https://fact-data-api.platform.hmcts.net
+        DEPLOY: 1
