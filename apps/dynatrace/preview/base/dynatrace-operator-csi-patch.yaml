@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dynatrace-operator
+  namespace: dynatrace
+spec:
+  values:
+    csidriver:
+      updateStrategy:
+        rollingUpdate:
+          maxUnavailable: 5
