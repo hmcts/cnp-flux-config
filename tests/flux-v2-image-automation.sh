@@ -9,6 +9,7 @@ EXCLUSIONS_LIST=(
     apps/docmosis/docmosis/docmosis.yaml
     apps/docmosis/docmosis/aat.yaml
     apps/civil/civil-service/aat.yaml
+    apps/civil/civil-citizen-ui/aat.yaml
     apps/sptribs/sptribs-case-api/aat.yaml
     apps/sptribs/sptribs-cron-migrate-case-documents-to-doc-table/sptribs-cron-migrate-case-documents-to-doc-table.yaml
     apps/flux-system/ptl-intsvc/base/gotk-components.yaml
