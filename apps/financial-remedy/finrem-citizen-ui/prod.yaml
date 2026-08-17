@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: finrem-citizen-ui
+  namespace: financial-remedy
+spec:
+  releaseName: finrem-citizen-ui
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-a2d524f-20260807134107 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
+      ingressHost: finrem-citizen-ui.prod.platform.hmcts.net
+      ingressSessionAffinity:
+        enabled: true
+        sessionCookieName: sticky
+      environment:
+        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-prod.service.core-compute-prod.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
+        IDAM_WEB_URL: https://idam-web-public.platform.hmcts.net/login
+        IDAM_END_SESSION_URL: https://idam-web-public.platform.hmcts.net/o/endSession
+        IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token
+        OAUTH_CALLBACK_URL: https://finrem-citizen-ui.prod.platform.hmcts.net/oauth2/callback
+        CCD_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
+        OIDC_ISSUER: https://hmcts-access.prod.platform.hmcts.net/o
+        IDAM_CLIENT_ID: finrem-citizen-ui
+        SESSION_STORE: redis
+      keyVaults:
+        finrem:
+          secrets:
+            - app-insights-connection-string
+            - finrem-system-update-username
+            - finrem-system-update-password
+            - finrem-citizen-ui-idam-client-secret
+            - finrem-citizen-s2s-client-secret
+            - session-secret
+            - finrem-citizen-ui-redis-connection-string
+            - name: gov-uk-notification-key
+              alias: GOVUK_NOTIFY_API_KEY
+            - name: document-upload-email-template-id
+              alias: FINREM_CITIZEN_UI_TEMPLATE_ID
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+      master:
+        persistence:
+          enabled: false
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: imported/bitnami/redis
+    global:
+      environment: prod
+      enableKeyVaults: true
