@@ -9,6 +9,7 @@ spec:
     job:
       image: hmctsprod.azurecr.io/prl/cos:pr-3997-5adfb39-20260817154437 #{"$imagepolicy": "flux-system:aat-prl-cron-seal-audit"}
       environment:
+        SEAL_AUDIT_FROM_DATE: 2026-01-01
         SEAL_AUDIT_ENABLED: true
         SEAL_AUDIT_EMAIL_ENABLED: true
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.aat.platform.hmcts.net
@@ -34,7 +35,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
         HEARING_API_BASEURL: http://fis-hmc-api-aat.service.core-compute-aat.internal
         APP_ENV: "aat"
-      schedule: 0 11 13 8 *
+      schedule: 20 13 18 8 *
       memoryRequests: "2048Mi"
       memoryLimits: "4096Mi"
     global:
