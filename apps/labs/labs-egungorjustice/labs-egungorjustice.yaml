@@ -1,0 +1,20 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: labs-egungorjustice
+  namespace: labs
+spec:
+  releaseName: labs-egungorjustice
+  chart:
+    spec:
+      chart: ./stable/labs-egungorjustice
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    java:
+      image: hmctssandbox.azurecr.io/labs/egungorjustice:latest # {"$imagepolicy": "flux-system:labs-egungorjustice"}
+      disableTraefikTls: true
