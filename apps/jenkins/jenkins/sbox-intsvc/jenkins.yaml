@@ -7,10 +7,6 @@ spec:
   values:
     checkDeprecation: false
     controller:
-      image:
-        registry: hmctsprod.azurecr.io
-        repository: jenkins/jenkins
-        tag: 2.564-1098
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
@@ -123,6 +119,7 @@ spec:
                 observabilityBackends:
                   - dynatrace:
                       url: "https://yrk32651.live.dynatrace.com/"
+                      dashboardId: "398c42e3-91dd-46f6-8812-88e9f4412d4e"
           location: |
             unclassified:
               location:
@@ -387,27 +384,3 @@ spec:
                             emptyDir:
                           - name: volume-4
                             emptyDir:
-          jobs: |
-            jobs:
-              - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/test-second-pipeline-sandbox/jobdsl/organisations-beta.groovy
-              - script: >
-                  pipelineJob('Seed Job') {
-                    triggers {
-                      cron('H 8,11,14,17 * * 1-5')
-                    }
-                    definition {
-                      cpsScm {
-                        scm {
-                          git {
-                            remote {
-                              github('hmcts/cnp-jenkins-config')
-                              credentials('hmcts-jenkins-cnp')
-                            }
-                            branch('test-second-pipeline-sandbox')
-                          }
-                        }
-                        scriptPath('jobdsl/Jenkinsfile_seed')
-                        lightweight(true)
-                      }
-                    }
-                  }
