@@ -9,6 +9,7 @@ EXCLUSIONS_LIST=(
     apps/docmosis/docmosis/docmosis.yaml
     apps/docmosis/docmosis/aat.yaml
     apps/civil/civil-service/aat.yaml
+    apps/civil/civil-citizen-ui/aat.yaml
     apps/sptribs/sptribs-case-api/aat.yaml
     apps/sptribs/sptribs-cron-migrate-case-documents-to-doc-table/sptribs-cron-migrate-case-documents-to-doc-table.yaml
     apps/flux-system/ptl-intsvc/base/gotk-components.yaml
@@ -18,6 +19,7 @@ EXCLUSIONS_LIST=(
     apps/monitoring/acr-sync/check-acr-sync-aat.yaml
     apps/monitoring/acr-sync/check-acr-sync.yaml
     apps/private-law/prl-citizen-frontend/aat.yaml
+    apps/private-law/prl-cron-seal-audit/aat.yaml
     apps/sscs/sscs-case-loader/aat-00.yaml
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml

@@ -7,10 +7,6 @@ spec:
   values:
     checkDeprecation: false
     controller:
-      image:
-        registry: hmctsprod.azurecr.io
-        repository: jenkins/jenkins
-        tag: 2.564-1098
       javaOpts: >-
         -XX:InitialRAMPercentage=30.0
         -XX:MaxRAMPercentage=60.0
@@ -53,6 +49,10 @@ spec:
                     env:
                       - key: INFRA_VAULT_NAME
                         value: cftsbox-intsvc
+                      - key: JENKINS_SUBSCRIPTION_NAME
+                        value: DTS-CFTSBOX-INTSVC
+                      - key: JENKINS_SUBSCRIPTION_ID
+                        value: 1497c3d7-ab6d-4bb7-8a10-b51d03189ee3
                       - key: NONPROD_ENVIRONMENT_NAME
                         value: sandbox
                       - key: NONPROD_SUBSCRIPTION_NAME
@@ -63,8 +63,6 @@ spec:
                         value: sandbox
                       - key: PROD_SUBSCRIPTION_NAME
                         value: sandbox
-                      - key: JENKINS_SUBSCRIPTION_NAME
-                        value: DTS-CFTSBOX-INTSVC
                       - key: JAVA_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: GRADLE_OPTS
@@ -121,6 +119,7 @@ spec:
                 observabilityBackends:
                   - dynatrace:
                       url: "https://yrk32651.live.dynatrace.com/"
+                      dashboardId: "398c42e3-91dd-46f6-8812-88e9f4412d4e"
           location: |
             unclassified:
               location:

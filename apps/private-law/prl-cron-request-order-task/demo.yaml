@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-request-order-task
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:pr-3950-b059be0-20260803131938 #{"$imagepolicy": "flux-system:demo-prl-cron-request-order-task"}
+      image: hmctsprod.azurecr.io/prl/cos:pr-3950-4eec09f-20260818102506 #{"$imagepolicy": "flux-system:demo-prl-cron-request-order-task"}
       environment:
         APP_ENV: "demo"
         TASK_NAME: RequestOrderTask
@@ -21,7 +21,9 @@ spec:
         REFDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
         HEARING_API_BASEURL: http://fis-hmc-api-demo.service.core-compute-demo.internal
-      schedule: 3/15 * * * *
+        REQUEST_ORDER_TASK_C100_CADENCE: 0
+        REQUEST_ORDER_TASK_FL401_CADENCE: 0
+      schedule: 15 18 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

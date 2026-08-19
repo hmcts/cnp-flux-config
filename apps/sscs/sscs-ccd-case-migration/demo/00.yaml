@@ -10,8 +10,8 @@ spec:
       suspend: false
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:pr-171-5aad450-20260729134639 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "40 12 3 8 *"
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-7ebb92d-20260817090832 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "00 09 5 8 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -40,6 +40,8 @@ spec:
               alias: CONFIDENTIALITY_FLAG_ENCODED_STRING
             - name: encoded-string-interpreter-lang-code
               alias: INTERPRETER_LANGUAGE_CODE_MIGRATION_ENCODED_STRING
+            - name: encoded-string-sent-to-dwp-migration
+              alias: SENT_TO_DWP_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
@@ -49,7 +51,6 @@ spec:
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
         DUMMY: true
-        CONFIDENTIALITY_FLAG_MIGRATION_ENABLED: true
     global:
       environment: demo
       enableKeyVaults: true
