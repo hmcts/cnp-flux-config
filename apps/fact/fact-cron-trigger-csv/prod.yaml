@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fact-cron-trigger-csv
+spec:
+  releaseName: fact-cron-trigger-csv
+  values:
+    job:
+      schedule: "0 9 * * 1-5"
+      environment:
+        FACT_DATA_API_URL: https://fact-data-api.platform.hmcts.net
