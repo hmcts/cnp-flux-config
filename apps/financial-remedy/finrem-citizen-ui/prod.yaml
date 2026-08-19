@@ -12,7 +12,7 @@ spec:
         enabled: true
         sessionCookieName: sticky
       environment:
-        RESTART_MANUALLY: 2
+        RESTART_MANUALLY: 3
         DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-prod.service.core-compute-prod.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
         IDAM_WEB_URL: https://idam-web-public.platform.hmcts.net/login
@@ -38,16 +38,7 @@ spec:
             - name: document-upload-email-template-id
               alias: FINREM_CITIZEN_UI_TEMPLATE_ID
     redis:
-      enabled: true
-      architecture: standalone
-      auth:
-        enabled: false
-      master:
-        persistence:
-          enabled: false
-      image:
-        registry: hmctsprod.azurecr.io
-        repository: imported/bitnami/redis
+      enabled: false
     global:
       environment: prod
       enableKeyVaults: true
