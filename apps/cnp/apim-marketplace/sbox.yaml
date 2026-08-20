@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: apim-marketplace
+spec:
+  values:
+    java:
+      ingressHost: apim-marketplace-sandbox.service.core-compute-sandbox.internal
+      keyVaults: {}
+      environment:
+        APPLICATIONINSIGHTS_ENABLED: "false"
+        APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
+        SPRING_AUTOCONFIGURE_EXCLUDE: >-
+          org.springframework.boot.flyway.autoconfigure.FlywayAutoConfiguration,
+          org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration,
+          org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
