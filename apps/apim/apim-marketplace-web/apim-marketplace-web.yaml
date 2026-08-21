@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: apim-marketplace-web
+spec:
+  releaseName: apim-marketplace-web
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/apim/marketplace-web:prod-0000000-00000000000000 #{"$imagepolicy": "flux-system:apim-marketplace-web"}
+  chart:
+    spec:
+      chart: ./stable/apim-marketplace-web
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
