@@ -6,22 +6,21 @@ spec:
   releaseName: probate-cron-ccd-data-migration-tool
   values:
     job:
-      image: hmctsprod.azurecr.io/probate/cron-ccd-data-migration-tool:prod-c84c779-20260727141104
+      image: hmctsprod.azurecr.io/probate/cron-ccd-data-migration-tool:prod-fd702f8-20260824085830
       schedule: "30 15 31 2 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
-      memoryLimits: "2048Mi"
+      memoryLimits: "3072Mi"
       environment:
         TRIG: trig-2
         DEFAULT_THREAD_LIMIT: 25
         MIGRATION_USE_REIMPL: true
-        MIGRATION_DRYRUN: false
+        MIGRATION_DRYRUN: true
         USER_TOKEN_REFRESH_MARGIN_MINS: 5
         S2S_TOKEN_REFRESH_MARGIN_MINS: 5
+        MIGRATION_INITIAL_RUN: true
+        MIGRATION_INITIAL_SIZE: 20
         MIGRATION_ID: DTSPB-5539
-#        CASE_REFERENCES:
         DTSPB_5539_CASE_TYPES: GrantOfRepresentation,Caveat,WillLodgement,StandingSearch
         DTSPB_5539_HMCTS_ID: ABA6
-        DTSPB_5539_INITIAL_RUN: false
-        DTSPB_5539_INITIAL_SIZE: 10
