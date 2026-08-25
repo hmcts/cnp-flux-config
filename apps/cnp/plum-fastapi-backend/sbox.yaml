@@ -19,11 +19,16 @@ spec:
           secrets:
             - name: apim-subscription-cnp-plum-fastapi
             - name: apim-subscription-cnp-plum-frontend
+            # TEMPORARY (DTSPO-34159): points this app at the crumble BYO-AI product so
+            # the gateway routes it to the team-owned account instead of shared Foundry.
+            # Revert this block, AI_GATEWAY_MODEL and AI_GATEWAY_SUBSCRIPTION_KEY_FILE
+            # once the BYO path is confirmed.
+            - name: apim-subscription-crumble-chat
       environment:
         RECIPES_SERVICE_URL: http://plum-recipe-backend-java
         APPLICATIONINSIGHTS_CONNECTION_STRING_FILE: /mnt/secrets/plumsi/appinsights-connection-string
-        AI_GATEWAY_URL: https://ai-gateway.sandbox.platform.hmcts.net/ai/platform/foundry/models/v1/chat/completions
+        AI_GATEWAY_URL: https://ai-gateway.sandbox.platform.hmcts.net/ai/platform/v1/chat/completions
         AI_GATEWAY_SCOPE: api://b3bfa0f5-faa5-4d10-bba0-e284144aea89/.default
-        AI_GATEWAY_MODEL: gpt-5.5
-        AI_GATEWAY_SUBSCRIPTION_KEY_FILE: /mnt/secrets/sps-ai-kv-sbox/apim-subscription-cnp-plum-fastapi
+        AI_GATEWAY_MODEL: gpt-4o
+        AI_GATEWAY_SUBSCRIPTION_KEY_FILE: /mnt/secrets/sps-ai-kv-sbox/apim-subscription-crumble-chat
         AI_GATEWAY_SUBSCRIPTION_KEY_FRONTEND_FILE: /mnt/secrets/sps-ai-kv-sbox/apim-subscription-cnp-plum-frontend
