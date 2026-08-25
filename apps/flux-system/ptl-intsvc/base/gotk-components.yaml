@@ -373,17 +373,17 @@ spec:
                   description: |-
                     CertSecretRef can be given the name of a Secret containing
                     either or both of
-                    
+
                     - a PEM-encoded client certificate (`tls.crt`) and private
                     key (`tls.key`);
                     - a PEM-encoded CA certificate (`ca.crt`)
-                    
+
                     and whichever are supplied, will be used for connecting to the
                     bucket. The client cert and key are useful if you are
                     authenticating with a certificate; the CA cert is useful if
                     you are using a self-signed server certificate. The Secret must
                     be of type `Opaque` or `kubernetes.io/tls`.
-                    
+
                     This field is only supported for the `generic` provider.
                   properties:
                     name:
@@ -466,24 +466,24 @@ spec:
                     STS specifies the required configuration to use a Security Token
                     Service for fetching temporary credentials to authenticate in a
                     Bucket provider.
-                    
+
                     This field is only supported for the `aws` and `generic` providers.
                   properties:
                     certSecretRef:
                       description: |-
                         CertSecretRef can be given the name of a Secret containing
                         either or both of
-                        
+
                         - a PEM-encoded client certificate (`tls.crt`) and private
                         key (`tls.key`);
                         - a PEM-encoded CA certificate (`ca.crt`)
-                        
+
                         and whichever are supplied, will be used for connecting to the
                         STS endpoint. The client cert and key are useful if you are
                         authenticating with a certificate; the CA cert is useful if
                         you are using a self-signed server certificate. The Secret must
                         be of type `Opaque` or `kubernetes.io/tls`.
-                        
+
                         This field is only supported for the `ldap` provider.
                       properties:
                         name:
@@ -1035,14 +1035,14 @@ spec:
                     commit:
                       description: |-
                         Commit SHA to check out, takes precedence over all reference fields.
-                        
+
                         This can be combined with Branch to shallow clone the branch, in which
                         the commit is expected to exist.
                       type: string
                     name:
                       description: |-
                         Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
-                        
+
                         It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                         Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                       type: string
@@ -1107,7 +1107,7 @@ spec:
                       default: HEAD
                       description: |-
                         Mode specifies which Git object(s) should be verified.
-                        
+
                         The variants "head" and "HEAD" both imply the same thing, i.e. verify
                         the commit that the HEAD of the Git repository points to. The variant
                         "head" solely exists to ensure backwards compatibility.
@@ -1829,17 +1829,17 @@ spec:
                   description: |-
                     CertSecretRef can be given the name of a Secret containing
                     either or both of
-                    
+
                     - a PEM-encoded client certificate (`tls.crt`) and private
                     key (`tls.key`);
                     - a PEM-encoded CA certificate (`ca.crt`)
-                    
+
                     and whichever are supplied, will be used for connecting to the
                     registry. The client cert and key are useful if you are
                     authenticating with a certificate; the CA cert is useful if
                     you are using a self-signed server certificate. The Secret must
                     be of type `Opaque` or `kubernetes.io/tls`.
-                    
+
                     It takes precedence over the values specified in the Secret referred
                     to by `.spec.secretRef`.
                   properties:
@@ -2125,11 +2125,11 @@ spec:
                   description: |-
                     CertSecretRef can be given the name of a Secret containing
                     either or both of
-                    
+
                     - a PEM-encoded client certificate (`tls.crt`) and private
                     key (`tls.key`);
                     - a PEM-encoded CA certificate (`ca.crt`)
-                    
+
                     and whichever are supplied, will be used for connecting to the
                     registry. The client cert and key are useful if you are
                     authenticating with a certificate; the CA cert is useful if
@@ -2894,7 +2894,7 @@ spec:
                       description: |-
                         ConfigMapRef holds an optional name of a ConfigMap that contains
                         the following keys:
-                        
+
                         - `provider`: the provider to use. One of `aws`, `azure`, `gcp`, or
                            `generic`. Required.
                         - `cluster`: the fully qualified resource name of the Kubernetes
@@ -2919,7 +2919,7 @@ spec:
                            ServiceAccount in the same namespace that should be used
                            for authentication. If not specified, the controller
                            ServiceAccount will be used.
-                        
+
                         Mutually exclusive with SecretRef.
                       properties:
                         name:
@@ -3838,14 +3838,14 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Create` and if omitted
                         CRDs are installed but not updated.
-                        
+
                         Skip: do neither install nor replace (update) any CRDs.
-                        
+
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
+
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
+
                         By default, CRDs are applied (installed) during Helm install action.
                         With this option users can opt in to CRD replace existing CRDs on Helm
                         install actions, which is not (yet) natively supported by Helm.
@@ -3927,7 +3927,7 @@ spec:
                       description: |-
                         SkipCRDs tells the Helm install action to not install any CRDs. By default,
                         CRDs are installed if not already present.
-                        
+
                         Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                       type: boolean
                     strategy:
@@ -3981,7 +3981,7 @@ spec:
                       description: |-
                         ConfigMapRef holds an optional name of a ConfigMap that contains
                         the following keys:
-                        
+
                         - `provider`: the provider to use. One of `aws`, `azure`, `gcp`, or
                            `generic`. Required.
                         - `cluster`: the fully qualified resource name of the Kubernetes
@@ -4006,7 +4006,7 @@ spec:
                            ServiceAccount in the same namespace that should be used
                            for authentication. If not specified, the controller
                            ServiceAccount will be used.
-                        
+
                         Mutually exclusive with SecretRef.
                       properties:
                         name:
@@ -4055,12 +4055,12 @@ spec:
                     client for this release. When enabled, the client will be reused for the
                     duration of the reconciliation, instead of being created and destroyed
                     for each (step of a) Helm action.
-                    
+
                     This can improve performance, but may cause issues with some Helm charts
                     that for example do create Custom Resource Definitions during installation
                     outside Helm's CRD lifecycle hooks, which are then not observed to be
                     available by e.g. post-install hooks.
-                    
+
                     If not set, it defaults to true.
                   type: boolean
                 postRenderers:
@@ -4206,7 +4206,7 @@ spec:
                     recreate:
                       description: |-
                         Recreate performs pod restarts for any managed workloads.
-                        
+
                         Deprecated: This behavior was deprecated in Helm 3:
                           - Deprecation: https://github.com/helm/helm/pull/6463
                           - Removal: https://github.com/helm/helm/pull/31023
@@ -4359,14 +4359,14 @@ spec:
                         to the CRD upgrade policy provided here. Valid values are `Skip`,
                         `Create` or `CreateReplace`. Default is `Skip` and if omitted
                         CRDs are neither installed nor upgraded.
-                        
+
                         Skip: do neither install nor replace (update) any CRDs.
-                        
+
                         Create: new CRDs are created, existing CRDs are neither updated nor deleted.
-                        
+
                         CreateReplace: new CRDs are created, existing CRDs are updated (replaced)
                         but not deleted.
-                        
+
                         By default, CRDs are not applied during Helm upgrade action. With this
                         option users can opt-in to CRD upgrade, which is not (yet) natively supported by Helm.
                         https://helm.sh/docs/chart_best_practices/custom_resource_definitions.
@@ -4827,7 +4827,7 @@ spec:
                   description: |-
                     LastAttemptedValuesChecksum is the SHA1 checksum for the values of the last
                     reconciliation attempt.
-                    
+
                     Deprecated: Use LastAttemptedConfigDigest instead.
                   type: string
                 lastHandledForceAt:
@@ -4850,7 +4850,7 @@ spec:
                 lastReleaseRevision:
                   description: |-
                     LastReleaseRevision is the revision of the last successful Helm release.
-                    
+
                     Deprecated: Use History instead.
                   type: integer
                 observedCommonMetadataDigest:
@@ -5454,7 +5454,7 @@ spec:
                   description: |-
                     CertSecretRef specifies the Secret containing
                     a PEM-encoded CA certificate (in the `ca.crt` key).
-                    
+
                     Note: Support for the `caFile` key has
                     been deprecated.
                   properties:
@@ -5655,12 +5655,12 @@ spec:
                   description: |-
                     CertSecretRef specifies the Secret containing TLS certificates
                     for secure communication.
-                    
+
                     Supported configurations:
                     - CA-only: Server authentication (provide ca.crt only)
                     - mTLS: Mutual authentication (provide ca.crt + tls.crt + tls.key)
                     - Client-only: Client authentication with system CA (provide tls.crt + tls.key only)
-                    
+
                     Legacy keys "caFile", "certFile", "keyFile" are supported but deprecated. Use "ca.crt", "tls.crt", "tls.key" instead.
                   properties:
                     name:
@@ -5724,16 +5724,16 @@ spec:
                     ServiceAccountName is the name of the Kubernetes ServiceAccount used to
                     authenticate with cloud provider services through workload identity.
                     This enables multi-tenant authentication without storing static credentials.
-                    
+
                     Supported provider types: azureeventhub, azuredevops, googlepubsub
-                    
+
                     When specified, the controller will:
                     1. Create an OIDC token for the specified ServiceAccount
                     2. Exchange it for cloud provider credentials via STS
                     3. Use the obtained credentials for API authentication
-                    
+
                     When unspecified, controller-level authentication is used (single-tenant).
-                    
+
                     An error is thrown if static credentials are also defined in SecretRef.
                     This field requires the ObjectLevelWorkloadIdentity feature gate to be enabled.
                   type: string
@@ -6506,15 +6506,15 @@ spec:
                   default: Never
                   description: |-
                     DigestReflectionPolicy governs the setting of the `.status.latestRef.digest` field.
-                    
+
                     Never: The digest field will always be set to the empty string.
-                    
+
                     IfNotPresent: The digest field will be set to the digest of the elected
                     latest image if the field is empty and the image did not change.
-                    
+
                     Always: The digest field will always be set to the digest of the elected
                     latest image.
-                    
+
                     Default: Never.
                   enum:
                     - Always
@@ -6558,7 +6558,7 @@ spec:
                     Interval is the length of time to wait between
                     refreshing the digest of the latest tag when the
                     reflection policy is set to "Always".
-                    
+
                     Defaults to 10m.
                   pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m|h))+$
                   type: string
@@ -6791,15 +6791,15 @@ spec:
                   default: Never
                   description: |-
                     DigestReflectionPolicy governs the setting of the `.status.latestRef.digest` field.
-                    
+
                     Never: The digest field will always be set to the empty string.
-                    
+
                     IfNotPresent: The digest field will be set to the digest of the elected
                     latest image if the field is empty and the image did not change.
-                    
+
                     Always: The digest field will always be set to the digest of the elected
                     latest image.
-                    
+
                     Default: Never.
                   enum:
                     - Always
@@ -6843,7 +6843,7 @@ spec:
                     Interval is the length of time to wait between
                     refreshing the digest of the latest tag when the
                     reflection policy is set to "Always".
-                    
+
                     Defaults to 10m.
                   pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m|h))+$
                   type: string
@@ -7129,17 +7129,17 @@ spec:
                   description: |-
                     CertSecretRef can be given the name of a Secret containing
                     either or both of
-                    
+
                     - a PEM-encoded client certificate (`tls.crt`) and private
                     key (`tls.key`);
                     - a PEM-encoded CA certificate (`ca.crt`)
-                    
+
                     and whichever are supplied, will be used for connecting to the
                     registry. The client cert and key are useful if you are
                     authenticating with a certificate; the CA cert is useful if
                     you are using a self-signed server certificate. The Secret must
                     be of type `Opaque` or `kubernetes.io/tls`.
-                    
+
                     Note: Support for the `caFile`, `certFile` and `keyFile` keys has
                     been deprecated.
                   properties:
@@ -7424,17 +7424,17 @@ spec:
                   description: |-
                     CertSecretRef can be given the name of a Secret containing
                     either or both of
-                    
+
                     - a PEM-encoded client certificate (`tls.crt`) and private
                     key (`tls.key`);
                     - a PEM-encoded CA certificate (`ca.crt`)
-                    
+
                     and whichever are supplied, will be used for connecting to the
                     registry. The client cert and key are useful if you are
                     authenticating with a certificate; the CA cert is useful if
                     you are using a self-signed server certificate. The Secret must
                     be of type `Opaque` or `kubernetes.io/tls`.
-                    
+
                     Note: Support for the `caFile`, `certFile` and `keyFile` keys has
                     been deprecated.
                   properties:
@@ -7835,14 +7835,14 @@ spec:
                             commit:
                               description: |-
                                 Commit SHA to check out, takes precedence over all reference fields.
-                                
+
                                 This can be combined with Branch to shallow clone the branch, in which
                                 the commit is expected to exist.
                               type: string
                             name:
                               description: |-
                                 Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
-                                
+
                                 It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                                 Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                               type: string
@@ -8239,14 +8239,14 @@ spec:
                             commit:
                               description: |-
                                 Commit SHA to check out, takes precedence over all reference fields.
-                                
+
                                 This can be combined with Branch to shallow clone the branch, in which
                                 the commit is expected to exist.
                               type: string
                             name:
                               description: |-
                                 Name of the reference to check out; takes precedence over Branch, Tag and SemVer.
-                                
+
                                 It must be a valid Git reference: https://git-scm.com/docs/git-check-ref-format#_description
                                 Examples: "refs/heads/main", "refs/tags/v0.1.0", "refs/pull/420/head", "refs/merge-requests/1/head"
                               type: string
