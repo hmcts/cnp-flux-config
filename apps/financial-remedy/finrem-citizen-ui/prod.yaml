@@ -13,32 +13,12 @@ spec:
         sessionCookieName: sticky
       environment:
         RESTART_MANUALLY: 4
-        DOCUMENT_MANAGEMENT_STORE_URL: http://dm-store-prod.service.core-compute-prod.internal
-        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
+        CASE_DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
         IDAM_WEB_URL: https://hmcts-access.service.gov.uk/o/authorize
-        IDAM_END_SESSION_URL: https://hmcts-access.service.gov.uk/o/endSession
         IDAM_API_URL: https://idam-api.platform.hmcts.net/o/token
         OAUTH_CALLBACK_URL: https://finrem-citizen-ui.prod.platform.hmcts.net/oauth2/callback
         CCD_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         OIDC_ISSUER: https://hmcts-access.service.gov.uk/o
-        IDAM_CLIENT_ID: finrem-citizen-ui
-        SESSION_STORE: redis
-      keyVaults:
-        finrem:
-          secrets:
-            - app-insights-connection-string
-            - finrem-system-update-username
-            - finrem-system-update-password
-            - finrem-citizen-ui-idam-client-secret
-            - finrem-citizen-s2s-client-secret
-            - session-secret
-            - finrem-citizen-ui-redis-connection-string
-            - name: gov-uk-notification-key
-              alias: GOVUK_NOTIFY_API_KEY
-            - name: document-upload-email-template-id
-              alias: FINREM_CITIZEN_UI_TEMPLATE_ID
-    redis:
-      enabled: false
     global:
       environment: prod
       enableKeyVaults: true
