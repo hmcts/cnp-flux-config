@@ -7,7 +7,7 @@ spec:
   values:
     job:
       image: hmctsprod.azurecr.io/probate/cron-ccd-data-migration-tool:prod-c84c779-20260727141104
-      schedule: "50 9 4 8 *"
+      schedule: "50 9 31 2 *"
       environment:
         TRIG: trig-2
         DEFAULT_THREAD_LIMIT: 25
@@ -16,8 +16,7 @@ spec:
         USER_TOKEN_REFRESH_MARGIN_MINS: 5
         S2S_TOKEN_REFRESH_MARGIN_MINS: 5
         MIGRATION_ID: DTSPB-5539
-#        CASE_REFERENCES:
+        MIGRATION_INITIAL_RUN: true
+        MIGRATION_INITIAL_SIZE: 20
         DTSPB_5539_CASE_TYPES: GrantOfRepresentation,Caveat,WillLodgement,StandingSearch
         DTSPB_5539_HMCTS_ID: ABA6
-        DTSPB_5539_INITIAL_RUN: true
-        DTSPB_5539_INITIAL_SIZE: 10

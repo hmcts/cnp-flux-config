@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctsprod.azurecr.io/idam/api:preview-4331f55-20260819123430
+      image: hmctsprod.azurecr.io/idam/api:preview-d7f38b5-20260824163606
       ingressHost: idam-api.sandbox.platform.hmcts.net
       disableTraefikTls: true
       replicas: 1
@@ -35,10 +35,13 @@ spec:
         SSL_TRUST_DNS_1: C=None,ST=None,L=None,OU=None,O=OpenDJ Self-Signed Certificate,CN=openidm-localhost
         SSL_TRUST_HOSTNAMES_0: forgerock-idm.service.core-compute-idam-sandbox.internal
         SSL_TRUST_HOSTNAMES_1: forgerock-am.service.core-compute-idam-sandbox.internal
-        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_ENABLED: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_ENABLED: true
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTENAME: groups
         STRATEGIC_SSO_PROVIDERS_EJUDICIARY_REQUIREDATTRIBUTES_0_ATTRIBUTEVALUE: 17deab22-1b83-4778-9cdb-38d46bc30ed4
-        STRATEGIC_SSO_PROVIDERS_MOJ_ENABLED: false
+        STRATEGIC_SSO_PROVIDERS_EJUDICIARY_USERINFOENDPOINT: https://login.windows.net/723e4557-2f17-43ed-9e71-f1beb253e546/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_MOJ_ENABLED: true
+        STRATEGIC_SSO_PROVIDERS_MOJ_USERINFOENDPOINT: https://login.windows.net/34c125c9-c7f3-486f-a78c-cf762c718831/openid/userinfo
+        STRATEGIC_SSO_PROVIDERS_MOJ_ACCOUNTNOTFOUNDSTRATEGY: ONBOARD
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_0: idam\.sso
         IDAM_REGISTRATION_APPOINTDOMAINREGEX_1: ejudiciary\.net
         FEATUREFLAGS_ADDEMAILTONOTIFYREFERENCE: true
@@ -56,6 +59,7 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
         FEATUREFLAGS_USEV2REGISTRATIONEMAILS: true
+        FEATUREFLAGS_V2_API_IDENTITY_PROVIDER_AUTHENTICATION_ENABLED: true
         FEATUREFLAGS_V2_API_PASSWORD_RESET_CONTROLLER_ENABLED: true
         FEATUREFLAGS_FORGEROCK_SELF_SERVICE_API_ENABLED: false
         STRATEGIC_PULLREQUESTREWRITE_CLIENTS_0: ALL
