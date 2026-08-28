@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-frontend
+spec:
+  values:
+    nodejs:
+      # Point sessions at the new Azure Managed Redis instance. The instance is
+      # provisioned alongside the old Azure Cache for Redis one, so rolling back
+      # is a matter of reverting this patch.
+      #
+      # The whole secrets list has to be restated: helm replaces lists rather
+      # than merging them, so anything left out here would stop being mounted.
+      keyVaults:
+        pcs:
+          secrets:
+            - name: azure-managed-redis-connection-string
+              alias: redis-connection-string # mounts at /mnt/secrets/pcs/redis-connection-string
+            - pcs-session-secret
+            - app-insights-connection-string
+            - pcs-frontend-s2s-secret
+            - pcs-frontend-idam-secret
+            - pcs-os-client-lookup-key
+            - pcs-pcq-token-key
