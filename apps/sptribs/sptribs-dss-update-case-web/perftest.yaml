@@ -6,13 +6,14 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:pr-1178-cd976b6-20260709102831
+      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:prod-9182f37-20260820204616
       ingressSessionAffinity:
         enabled: true
         sessionCookieName: sticky
       environment:
         IDAM_API_URL: https://idam-web-public.perftest.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/o/authorize
+        IDAM_END_SESSION_URL: https://idam-web-public.perftest.platform.hmcts.net/o/endSession
         DUMMY_ENV_VAR: false
     global:
       environment: perftest

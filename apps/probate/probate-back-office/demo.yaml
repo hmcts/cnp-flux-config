@@ -6,12 +6,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/probate/back-office:pr-3911-5efbe2d-20260709132847 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
+      image: hmctsprod.azurecr.io/probate/back-office:pr-3933-7e29b0a-20260828164335 #{"$imagepolicy": "flux-system:demo-probate-back-office"}
       environment:
         CCD_GATEWAY_HOST: https://manage-case.demo.platform.hmcts.net
         PROBATE_POSTGRESQL_USER: pgadmin
         PROBATE_POSTGRESQL_HOSTNAME: probatemandb-postgres-flexible-db-demo.postgres.database.azure.com
         PROBATE_POSTGRESQL_PORT: 5432
+        DUMMY_VAR: 2
         EXCEPTED_ESTATE_DATE_OF_DEATH: "2022-01-01"
         BLOB_STORAGE_SMEEANDFORD_FEATURE_ENABLED: true
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
@@ -22,3 +23,4 @@ spec:
         CHANGE_TO_REDEPLOY_DEMO: 20260521
         MANAGE_CASE_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details/<CASE_ID>
         FRONTEND_URL: https://probate.demo.platform.hmcts.net/get-case/<CASE_ID>?probateType=<CASE_TYPE>
+        PROBATE_GS_ENABLED: true

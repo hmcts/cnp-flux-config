@@ -1,0 +1,53 @@
+apiVersion: dynatrace.com/v1beta6
+kind: DynaKube
+metadata:
+  name: dynakube
+  namespace: dynatrace
+  annotations:
+    feature.dynatrace.com/automatic-kubernetes-api-monitoring: "true"
+    feature.dynatrace.com/automatic-kubernetes-api-monitoring-cluster-name: "cft-${CLUSTER_FULL_NAME}-aks"
+spec:
+  apiUrl: https://ENVIRONMENTID.live.dynatrace.com/api
+  dynatraceApiRequestThreshold: 7
+  networkZone: azure.cft
+  metadataEnrichment:
+    enabled: true
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - mi
+            - mailrelay2
+            - monitoring
+  oneAgent:
+    cloudNativeFullStack:
+      priorityClassName: system-node-critical
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        - effect: NoSchedule
+          key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+  activeGate:
+    capabilities:
+      - routing
+      - kubernetes-monitoring
+      - metrics-ingest
+      - dynatrace-api
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1.5Gi
+  # spec.templates.otelCollector.replicas is defined in the v1beta6 CRD schema as type: integer; if not specified will fail the type check
+  templates:
+    otelCollector:
+      replicas: 0 # 0=disabled

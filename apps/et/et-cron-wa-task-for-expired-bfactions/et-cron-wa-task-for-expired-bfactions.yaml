@@ -6,12 +6,13 @@ spec:
   releaseName: et-cron-wa-task-for-expired-bfactions
   values:
     job:
-      image: hmctsprod.azurecr.io/et/cos:prod-57ce1c5-20260708140627 #{"$imagepolicy": "flux-system:et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:prod-339834d-20260826152540 #{"$imagepolicy": "flux-system:et-cos"}
       memoryLimits: "3072Mi"
       memoryRequests: "1536Mi"
       cpuLimits: "1500m"
       cpuRequests: "200m"
       environment:
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false
         TASK_NAME: WaTaskCreationCronForExpiredBfActions
         TRIGGER_RESTART: 1
       schedule: 0/30 * * * *
@@ -19,7 +20,7 @@ spec:
   chart:
     spec:
       chart: et-cron
-      version: 1.0.5
+      version: 1.0.7
       sourceRef:
         kind: HelmRepository
         name: hmctsprod-oci

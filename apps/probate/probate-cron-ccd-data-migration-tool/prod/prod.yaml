@@ -6,20 +6,19 @@ spec:
   releaseName: probate-cron-ccd-data-migration-tool
   values:
     job:
-      schedule: "30 09 7 7 *"
+      schedule: "15 20 31 2 *"
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
-      memoryLimits: "2048Mi"
+      memoryLimits: "3072Mi"
       environment:
         TRIG: trig-2
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         PRD_API_URL: http://rd-professional-api-prod.service.core-compute-prod.internal
         MIGRATION_USE_REIMPL: true
-        MIGRATION_ID: "DTSPB-5064"
+        MIGRATION_ID: "DTSPB-5113"
         USER_TOKEN_REFRESH_MARGIN_MINS: 5
         S2S_TOKEN_REFRESH_MARGIN_MINS: 5
-        DTSPB_5005_ROLLBACK_DATE: "2026-05-27"
-        DTSPB_5064_ROLLBACK_DATE: "2026-07-07"
-        DTSPB_5586_ROLLBACK_DATE: "2026-06-23"
         MIGRATION_DRYRUN: false
+        MIGRATION_INITIAL_RUN: false
+        MIGRATION_INITIAL_SIZE: 10

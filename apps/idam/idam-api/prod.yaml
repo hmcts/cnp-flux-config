@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: idam-api
+  namespace: idam
+spec:
+  releaseName: idam-api
+  values:
+    java:
+      image: hmctsprod.azurecr.io/idam/api:prod-185c4f6-20260827120404 # {"$imagepolicy": "flux-system:idam-api"}
+      environment:
+        LOGGING_LEVEL_LOGAUDIT: INFO
