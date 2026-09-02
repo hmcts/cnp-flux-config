@@ -1,14 +1,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: xui-icp-api
+  name: xui-icp
 spec:
-  releaseName: xui-icp-api
+  releaseName: xui-icp
   values:
     nodejs:
       replicas: 0
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/xui/icp-api:prod-0000000-19700101000000 # {"$imagepolicy": "flux-system:xui-icp-api"}
+      image: hmctsprod.azurecr.io/xui/icp:prod-0000000-19700101000000 # {"$imagepolicy": "flux-system:xui-icp"}
   chart:
     spec:
       chart: ./stable/xui-icp
