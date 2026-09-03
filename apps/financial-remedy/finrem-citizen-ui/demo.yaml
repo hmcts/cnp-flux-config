@@ -21,6 +21,17 @@ spec:
         CCD_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         REDIS_CONNECTION_STRING: redis://finrem-citizen-ui-redis-master:6379
         OIDC_ISSUER: https://hmcts-access.demo.platform.hmcts.net/o
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+      master:
+        persistence:
+          enabled: false
+      image:
+        registry: hmctsprod.azurecr.io
+        repository: imported/bitnami/redis
     global:
       security:
         allowInsecureImages: true
