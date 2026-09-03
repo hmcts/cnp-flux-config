@@ -8,7 +8,7 @@ spec:
     java:
       memoryRequests: '4Gi'
     job:
-      schedule: "15 11 08 06 *"
+      schedule: "00 14 03 09 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
@@ -25,11 +25,11 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: UpdateContactDetailsTask
+        TASK_NAME: RemoveDuplicateDocumentsTask
         CRON_DRY_RUN: false
-        CRON_UPDATE_CONTACT_DETAILS_ENABLED: true
-        CRON_UPDATE_CONTACT_DETAILS_CASE_TYPE_ID: FinancialRemedyMVP2
-        CRON_UPDATE_CONTACT_DETAILS_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+        CRON_REMOVE_DUPLICATE_DOCUMENTS_ENABLED: true
+        CRON_REMOVE_DUPLICATE_DOCUMENTS_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_REMOVE_DUPLICATE_DOCUMENTS_CASE_LIST_FILENAME: "removeDuplicateDocuments-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
