@@ -4,5 +4,21 @@ metadata:
   name: apim-marketplace-web
 spec:
   values:
+    global:
+      enableKeyVaults: true
     nodejs:
+      replicas: 1
       ingressHost: apim-marketplace-web.sandbox.platform.hmcts.net
+      workloadClientID: "775648eb-07db-4354-90f6-f0bca549341b"
+      keyVaults:
+        apim-sbox:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: marketplace-web-redis-host
+              alias: REDIS_HOST
+            - name: marketplace-web-redis-port
+              alias: REDIS_PORT
+            - name: marketplace-web-redis-access-key
+              alias: REDIS_KEY
+            - name: marketplace-web-session-secret
+              alias: SESSION_SECRET
