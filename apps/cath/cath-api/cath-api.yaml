@@ -5,6 +5,13 @@ metadata:
 spec:
   releaseName: cath-api
   interval: 5m
+  install:
+    remediation:
+      retries: 3
+    upgrade:
+      remediation:
+        strategy: uninstall
+        retries: 3
   values:
     nodejs:
       releaseNameOverride: cath-api
@@ -12,7 +19,7 @@ spec:
   chart:
     spec:
       chart: cath-api
-      version: ">=0.0.1-0"
+      version: ">=0.1.0-0"
       sourceRef:
         kind: HelmRepository
         name: hmctsprod-oci
