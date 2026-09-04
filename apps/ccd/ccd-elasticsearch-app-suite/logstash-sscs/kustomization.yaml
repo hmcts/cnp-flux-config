@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../ccd-logstash-sscs
+patches:
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-logstash-sscs
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ccd-elasticsearch-app-logstash-sscs
+      - op: replace
+        path: /spec/releaseName
+        value: ccd-elasticsearch-app-logstash-sscs
+      - op: replace
+        path: /spec/values/logstashPipeline/01_input.conf
+        value: |
+          input {
+            jdbc {
+              jdbc_connection_string => "${DATA_STORE_URL}"
+              jdbc_user => "${DATA_STORE_USER}"
+              jdbc_password => "${DATA_STORE_PASS}"
+              jdbc_validate_connection => true
+              jdbc_validation_timeout => "1"
+              jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+              jdbc_driver_class => "org.postgresql.Driver"
+              jdbc_default_timezone => "UTC"
+              jdbc_paging_enabled => true
+              jdbc_page_size => 5000
+              use_column_value => true
+              tracking_column => "last_modified"
+              tracking_column_type => "timestamp"
+              last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-last-run"
+              statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT AS json_data, data_classification::TEXT AS json_data_classification, reference, security_classification, supplementary_data::TEXT AS json_supplementary_data FROM case_data WHERE last_modified >= :sql_last_value AND jurisdiction = 'SSCS' ORDER BY last_modified, id"
+              clean_run => false
+              schedule => "* * * * * *"
+            }
+          }
