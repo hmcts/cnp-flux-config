@@ -9,11 +9,13 @@ spec:
     nodejs:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/idam/hmcts-access:prod-ca57967-20260812091006 #{"$imagepolicy": "flux-system:idam-hmcts-access"}
+      image: hmctsprod.azurecr.io/idam/hmcts-access:prod-af4e835-20260828083935 #{"$imagepolicy": "flux-system:idam-hmcts-access"}
       memoryRequests: "1536Mi"
       memoryLimits: "3072Mi"
       cpuRequests: "500m"
       cpuLimits: "1500m"
+      environment:
+        PASSWORD_RESET_V2_ENABLED: true
   chart:
     spec:
       chart: ./stable/idam-hmcts-access

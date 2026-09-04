@@ -7,6 +7,7 @@ spec:
   values:
     nodejs:
       ingressHost: nfdiv.demo.platform.hmcts.net
+      image: hmctsprod.azurecr.io/nfdiv/frontend:pr-4971-4e0590a-20260902085026 #{"$imagepolicy": "flux-system:demo-nfdiv-frontend"}
       environment:
         IDAM_WEB_BASE_URL: https://idam-web-public.demo.platform.hmcts.net
         IDAM_API_BASE_URL: https://idam-api.demo.platform.hmcts.net
@@ -21,5 +22,6 @@ spec:
         GENESYS_KERV_BASE_URL: https://api-preprod.hmcts.hs-cx.com/web-availability
       autoscaling:
         enabled: true
-        maxReplicas: 8
+        minReplicas: 1
+        maxReplicas: 2
         targetCPUUtilizationPercentage: 80

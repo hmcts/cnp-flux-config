@@ -20,6 +20,7 @@ EXCLUSIONS_LIST=(
     apps/monitoring/acr-sync/check-acr-sync.yaml
     apps/private-law/prl-citizen-frontend/aat.yaml
     apps/private-law/prl-cron-seal-audit/aat.yaml
+    apps/dtsse/dtsse-dashboard-ingestion/aat/00.yaml
     apps/sscs/sscs-case-loader/aat-00.yaml
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml
@@ -227,4 +228,3 @@ for FILE_LOCATION in $(echo ${FILE_LOCATIONS}); do
     printf "\n\n ########## Helm Release documents checked and passing ########## \n\n"
 
 done
-
