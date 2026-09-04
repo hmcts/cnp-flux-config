@@ -5,10 +5,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/sptribs/case-api:pr-2511-17ebdc3-20260902084717 #{"$imagepolicy": "flux-system:demo-sptribs-case-api"}
+      image: hmctsprod.azurecr.io/sptribs/case-api:prod-d4c5cff-20260902152605 #{"$imagepolicy": "flux-system:demo-sptribs-case-api"}
       environment:
         S2S_AUTHORISED_SERVICES: ccd_definition,ccd_data,xui_webapp,sptribs_case_api,ccd_gw,sptribs_frontend,sptribs_dss_update_case_web
         WA_FEATURE_ENABLED: true
+        CITIZEN_DASHBOARD_ENABLED: true
+        SPTRIBS_FRONTEND_URL: "https://sptribs-frontend.demo.platform.hmcts.net"
         PSEUDO_VAR: 1
         TASK_MONITOR_API_URL: http://wa-task-monitor-demo.service.core-compute-demo.internal
         TASK_MANAGEMENT_API_URL: http://wa-task-management-api-demo.service.core-compute-demo.internal
