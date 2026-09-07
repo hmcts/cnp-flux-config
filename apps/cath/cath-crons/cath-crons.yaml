@@ -5,6 +5,13 @@ metadata:
 spec:
   releaseName: cath-crons
   interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      strategy: uninstall
+      retries: 3
   values:
     job:
       releaseNameOverride: cath-crons
@@ -13,7 +20,7 @@ spec:
   chart:
     spec:
       chart: cath-crons
-      version: ">=0.0.1-0"
+      version: ">=0.1.0-0"
       sourceRef:
         kind: HelmRepository
         name: hmctsprod-oci
