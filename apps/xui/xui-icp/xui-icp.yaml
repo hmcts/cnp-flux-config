@@ -6,12 +6,21 @@ spec:
   releaseName: xui-icp
   values:
     nodejs:
-      replicas: 0
+      replicas: 2
+      DUMMY_VAR: 1
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/xui/icp:prod-0000000-19700101000000 # {"$imagepolicy": "flux-system:xui-icp"}
+      image: hmctsprod.azurecr.io/xui/icp-api:prod-0000000-19700101000000 # {"$imagepolicy": "flux-system:xui-icp"}
+      startupDelay: 15
+      startupPeriod: 15
+      startupTimeout: 5
+      livenessPeriod: 20
+      readinessPeriod: 20
+      environment:
+        SLACK_CHANNEL: "xui-pipeline"
+        SLACK_NOTIFY_SUCCESS: "true"
   chart:
     spec:
-      chart: ./stable/xui-icp
+      chart: ./stable/xui-icp-api
       sourceRef:
         kind: GitRepository
         name: hmcts-charts
