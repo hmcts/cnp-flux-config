@@ -5,14 +5,21 @@ metadata:
 spec:
   releaseName: cath-web
   interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      strategy: uninstall
+      retries: 3
   values:
     nodejs:
       releaseNameOverride: cath-web
-      image: hmctsprod.azurecr.io/cath/cath-web:prod-0000000-00000000000000 # {"$imagepolicy": "flux-system:cath-web"}
+      image: hmctsprod.azurecr.io/cath/cath-web:prod-abaea02-20260908112142 # {"$imagepolicy": "flux-system:cath-web"}
   chart:
     spec:
       chart: cath-web
-      version: ">=0.0.1-0"
+      version: ">=0.1.0-0"
       sourceRef:
         kind: HelmRepository
         name: hmctsprod-oci

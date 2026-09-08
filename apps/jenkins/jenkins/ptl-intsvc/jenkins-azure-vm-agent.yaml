@@ -104,7 +104,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-daily"
                         templateDesc: "Jenkins build agents for HMCTS daily builds"
@@ -120,7 +120,23 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
+                        <<: *vm_template_values_anchor
+                      - templateName: "cnp-jenkins-ubuntu-nightly"
+                        templateDesc: "Jenkins build agents for HMCTS nightly builds"
+                        labels: "nightly"
+                        maxVirtualMachinesLimit: 40
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-civil"
                         templateDesc: "Jenkins build agents for Civil builds"
@@ -136,7 +152,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-xui"
                         templateDesc: "Jenkins build agents for xui builds"
@@ -152,7 +168,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                       - templateName: "cnp-jenkins-ubuntu-preview"
                         templateDesc: "Jenkins build agents for CFT preview environment"
@@ -168,7 +184,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-preview-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-preview-mi
                       - templateName: "cnp-jenkins-ubuntu-aat"
@@ -185,7 +201,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-aat-mi
                       - templateName: "cnp-jenkins-ubuntu-ithc"
@@ -202,7 +218,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-ithc-mi
                       - templateName: "cnp-jenkins-ubuntu-perftest"
@@ -219,7 +235,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-perftest-mi
                       - templateName: "cnp-jenkins-ubuntu-demo"
@@ -236,7 +252,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-demo-mi
                       - templateName: "cnp-jenkins-ubuntu-prod"
@@ -253,7 +269,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourceGroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-prod-mi
                       - templateName: "cnp-jenkins-ubuntu-ptl"
@@ -274,7 +290,96 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
+                        <<: *vm_template_values_anchor
+                        uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
+                      - templateName: "cnp-jenkins-ubuntu-aat-nightly"
+                        templateDesc: "Jenkins nightly build agents for CFT AAT environment"
+                        labels: "ubuntu-aat nightly"
+                        maxVirtualMachinesLimit: 20
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.110"
+                        <<: *vm_template_values_anchor
+                        uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-aat-mi
+                      - templateName: "cnp-jenkins-ubuntu-ithc-nightly"
+                        templateDesc: "Jenkins nightly build agents for CFT ITHC environment"
+                        labels: "ubuntu-ithc nightly"
+                        maxVirtualMachinesLimit: 10
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.110"
+                        <<: *vm_template_values_anchor
+                        uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-ithc-mi
+                      - templateName: "cnp-jenkins-ubuntu-perftest-nightly"
+                        templateDesc: "Jenkins nightly build agents for CFT perftest environment"
+                        labels: "ubuntu-perftest nightly"
+                        maxVirtualMachinesLimit: 10
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.110"
+                        <<: *vm_template_values_anchor
+                        uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-perftest-mi
+                      - templateName: "cnp-jenkins-ubuntu-demo-nightly"
+                        templateDesc: "Jenkins nightly build agents for CFT demo environment"
+                        labels: "ubuntu-demo nightly"
+                        maxVirtualMachinesLimit: 10
+                        retentionStrategy:
+                          azureVMCloudRetentionStrategy:
+                            idleTerminationMinutes: 5
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.110"
+                        <<: *vm_template_values_anchor
+                        uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-demo-mi
+                      - templateName: "cnp-jenkins-ubuntu-ptl-nightly"
+                        templateDesc: "Jenkins nightly build agents for CFT ptl environment"
+                        labels: "ubuntu-ptl nightly"
+                        maxVirtualMachinesLimit: 20
+                        retentionStrategy:
+                          azureVMCloudPool:
+                            retentionInHours: 1
+                            dynamicBufferEnabled: true
+                            bufferPercentage: 10
+                            maximumBuffer: 5
+                            poolSize: 2
+                        usageMode: "EXCLUSIVE"
+                        virtualMachineSize: "Standard_D4ds_v5"
+                        imageReference:
+                          galleryName: "hmcts"
+                          galleryResourceGroup: "hmcts-image-gallery-rg"
+                          gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
+                          galleryImageDefinition: "jenkins-ubuntu-v2"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-preview"
@@ -291,7 +396,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-preview-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-preview-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-aat"
@@ -308,7 +413,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-aat-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-demo"
@@ -325,7 +430,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-demo-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-ithc"
@@ -342,7 +447,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-ithc-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-perftest"
@@ -359,7 +464,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-perftest-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-prod"
@@ -376,7 +481,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourceGroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-prod-mi
                       - templateName: "cnp-jenkins-ubuntu-civil-ptl"
@@ -393,7 +498,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/managed-identities-cftptl-intsvc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-cftptl-intsvc-mi
                       - templateName: "cnp-jenkins-ubuntu-xui-preview"
@@ -410,7 +515,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-preview-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-preview-mi
                       - templateName: "cnp-jenkins-ubuntu-xui-aat"
@@ -427,7 +532,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-aat-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-aat-mi
                       - templateName: "cnp-jenkins-ubuntu-xui-demo"
@@ -444,7 +549,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/1c4f0704-a29e-403d-b719-b90c34ef14c9/resourceGroups/managed-identities-demo-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-demo-mi
                       - templateName: "cnp-jenkins-ubuntu-xui-ithc"
@@ -461,7 +566,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-ithc-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-ithc-mi
                       - templateName: "cnp-jenkins-ubuntu-xui-perftest"
@@ -478,7 +583,7 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/7a4e3bd5-ae3a-4d0c-b441-2188fee3ff1c/resourceGroups/managed-identities-perftest-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-perftest-mi
                       - templateName: "cnp-jenkins-ubuntu-xui-prod"
@@ -495,6 +600,6 @@ spec:
                           galleryResourceGroup: "hmcts-image-gallery-rg"
                           gallerySubscriptionId: "2b1afc19-5ca9-4796-a56f-574a58670244"
                           galleryImageDefinition: "jenkins-ubuntu-v2"
-                          galleryImageVersion: "24.04.106"
+                          galleryImageVersion: "24.04.110"
                         <<: *vm_template_values_anchor
                         uamiID: /subscriptions/8999dec3-0104-4a27-94ee-6588559729d1/resourceGroups/managed-identities-prod-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/jenkins-prod-mi
