@@ -6,15 +6,16 @@ spec:
   releaseName: dtsse-github-metrics
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-0317579-20260908095023 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
+      image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-efc6ea2-20260909132935 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
     job:
-      image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-0317579-20260908095023 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
+      image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-efc6ea2-20260909132935 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
+    orgJob:
+      image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-efc6ea2-20260909132935 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
   chart:
     spec:
-      chart: dtsse-github-metrics
-      version: ">=0.0.2"
+      chart: ./stable/dtsse-github-metrics
       sourceRef:
-        kind: HelmRepository
-        name: hmctsprod-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
       interval: 1m
