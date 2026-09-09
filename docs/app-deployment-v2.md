@@ -58,7 +58,19 @@ All application deployments are managed with `HelmRelease`.
 ### Add a new application
 
 - Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
-- Add a `HelmRelease` manifest in `apps/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/apps/rpe/draft-store-service/draft-store-service.yaml)
+- Add a `HelmRelease` manifest in `apps/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/apps/rpe/draft-store-service/draft-store-service.yaml). [add-helm-release.sh](../bin/v2/add-helm-release.sh) will generate a starting point, but it targets `sbox` and writes a `hmctssandbox` image reference you will need to change.
+- **Your chart comes from the [hmcts-charts](https://github.com/hmcts/hmcts-charts) repository, not from an ACR.** Jenkins publishes it to `stable/<application-name>` there whenever a master build produces a chart version that is not published yet, and flux polls that repository every minute — so no chart version is pinned and a chart change deploys on its own. This is what the vast majority of releases in this repo do.
+    ```yaml
+      chart:
+        spec:
+          chart: ./stable/<application-name>
+          sourceRef:
+            kind: GitRepository
+            name: hmcts-charts
+            namespace: flux-system
+          interval: 1m
+    ```
+- **Do not point `sourceRef` at an OCI `HelmRepository` (`hmctsprod-oci`, `hmctspublic-oci`) with a `version:` range.** A range against an OCI registry is only resolved when source-controller restarts, so a newly published chart is never picked up while the `HelmChart` carries on reporting `Ready` on the old one. If your chart is published *only* to an ACR — which happens when your pipeline is not the standard Jenkins one — pin an exact `version:` and bump it when you publish, as the other OCI-sourced releases here do.
 - Run [add-image-policies.sh](../bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
 
  ```bash
