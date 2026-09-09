@@ -9,12 +9,13 @@ spec:
       image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-ab0ad6f-20260909124330 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
     job:
       image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-ab0ad6f-20260909124330 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
+    orgJob:
+      image: hmctsprod.azurecr.io/dtsse/github-metrics:prod-ab0ad6f-20260909124330 #{"$imagepolicy": "flux-system:dtsse-github-metrics"}
   chart:
     spec:
-      chart: dtsse-github-metrics
-      version: ">=0.0.2"
+      chart: ./stable/dtsse-github-metrics
       sourceRef:
-        kind: HelmRepository
-        name: hmctsprod-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
       interval: 1m
