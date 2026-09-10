@@ -9,7 +9,9 @@ spec:
       image: hmctsprod.azurecr.io/et/cos:pr-3196-4de8fd7-20260909160906 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
         CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "10000"
         CCD_DATA_MIGRATION_SOURCE_JURISDICTION: EMPLOYMENT
+        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 90m
         ET_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
         ET_CCD_DATA_MIGRATION_ENABLED: true
         ET_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
