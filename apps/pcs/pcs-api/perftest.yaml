@@ -5,7 +5,12 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/pcs/api:prod-8bdf300-20260824143320 #{"$imagepolicy": "flux-system:perftest-pcs-api"}
+      cpuRequests: "500m"
+      cpuLimits: "1500m"
+      memoryRequests: "2048Mi"
+      memoryLimits: "2560Mi"
+      image: hmctsprod.azurecr.io/pcs/api:prod-9c65b42-20260909171010 #{"$imagepolicy": "flux-system:perftest-pcs-api"}
       environment:
         HASH_PINS_ENABLED: "false"
         ENABLE_TESTING_SUPPORT: "true"
+        PCS_FRONTEND_URL: "https://pcs.perftest.platform.hmcts.net"
