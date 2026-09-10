@@ -8,6 +8,7 @@ spec:
     java:
       image: hmctsprod.azurecr.io/et/cos:pr-3395-2aca4ff-20260909113735 #{"$imagepolicy": "flux-system:ithc-et-cos"}
       environment:
+        CCD_DATA_MIGRATION_SOURCE_JURISDICTION: EMPLOYMENT
         ET_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
         ET_CCD_DATA_MIGRATION_ENABLED: true
         ET_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
