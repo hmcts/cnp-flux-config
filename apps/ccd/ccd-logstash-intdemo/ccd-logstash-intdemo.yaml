@@ -25,6 +25,8 @@ spec:
     extraEnvs:
       - name: DUMMY_RESTART_VAR
         value: "true8"
+      - name: LOGSTASH_QUEUE_CLAIM_TIMEOUT
+        value: "5 minutes"
     extraInitContainers: |
       - name: download-postgres-jdbc
         image: hmctsprod.azurecr.io/curl:7.70.0
@@ -76,8 +78,9 @@ spec:
                         "sscsj" => "SSCS"
                         "civilj" => "CIVIL"
                         "fplj" => "PUBLICLAW"
+                        "claim_timeout" => "${LOGSTASH_QUEUE_CLAIM_TIMEOUT}"
                       }
-            statement => "DELETE FROM case_data_logstash_queue USING case_data WHERE case_data_logstash_queue.case_data_id = case_data.id  AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :fplj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj RETURNING case_data.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data, version"
+            statement => "WITH candidates AS (SELECT q.id FROM case_data_logstash_queue q JOIN case_data cd ON q.case_data_id = cd.id WHERE q.case_data_id = cd.id  AND jurisdiction != :divorcej AND jurisdiction != :civilj AND jurisdiction != :fplj AND jurisdiction != :cmcj AND jurisdiction != :probatej AND jurisdiction != :sscsj AND jurisdiction != :ethosj AND (q.claimed_at IS NULL OR q.claimed_at < clock_timestamp() - CAST(:claim_timeout AS interval)) ORDER BY q.id FOR UPDATE SKIP LOCKED LIMIT 1000), claimed AS (UPDATE case_data_logstash_queue q SET claim_token = md5(random()::text || clock_timestamp()::text), claimed_at = clock_timestamp() FROM candidates c WHERE q.id = c.id RETURNING q.id AS logstash_queue_id, q.case_data_id, q.claim_token) SELECT claimed.logstash_queue_id, claimed.claim_token, cd.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data, version FROM claimed JOIN case_data cd ON claimed.case_data_id = cd.id"
             clean_run => false
             schedule => "* * * * * *"
           }
