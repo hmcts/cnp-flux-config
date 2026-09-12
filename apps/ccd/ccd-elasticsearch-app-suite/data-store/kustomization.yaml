@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../ccd-data-store-api/ccd-data-store-api.yaml
+patches:
+  - path: ../../ccd-data-store-api/ithc.yaml
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-data-store-api
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ccd-elasticsearch-app-data-store-api
+      - op: replace
+        path: /spec/releaseName
+        value: ccd-elasticsearch-app-data-store-api
+      - op: add
+        path: /spec/values/java/ingressHost
+        value: ccd-elasticsearch-app-data-store-api-ithc.service.core-compute-ithc.internal
+      - op: add
+        path: /spec/values/java/environment/DEFINITION_STORE_HOST
+        value: http://ccd-elasticsearch-app-definition-store-api-ithc.service.core-compute-ithc.internal
+      - op: add
+        path: /spec/values/java/keyVaults
+        value:
+          ccd:
+            secrets:
+              - name: data-store-api-POSTGRES-USER-V15
+                alias: DATA_STORE_DB_USERNAME
+              - name: data-store-api-POSTGRES-PASS-V15
+                alias: DATA_STORE_DB_PASSWORD
+              - name: data-store-api-draft-key
+                alias: CCD_DRAFT_ENCRYPTION_KEY
+              - name: ccd-data-s2s-secret
+                alias: DATA_STORE_IDAM_KEY
+              - name: ccd-ELASTICSEARCH-APP-URL
+                alias: ELASTIC_SEARCH_HOSTS
+              - name: ccd-ELASTICSEARCH-APP-DATA-NODES-URL
+                alias: ELASTIC_SEARCH_DATA_NODES_HOSTS
+              - name: app-insights-connection-string
+                alias: app-insights-connection-string
+              - name: idam-data-store-client-secret
+                alias: IDAM_OAUTH2_DATA_STORE_CLIENT_SECRET
+              - name: idam-data-store-system-user-username
+                alias: IDAM_DATA_STORE_SYSTEM_USER_USERNAME
+              - name: idam-data-store-system-user-password
+                alias: IDAM_DATA_STORE_SYSTEM_USER_PASSWORD
+              - name: data-store-api-TOKEN-SECRET
+                alias: DATA_STORE_TOKEN_SECRET
