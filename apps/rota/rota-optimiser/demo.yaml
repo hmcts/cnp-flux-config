@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rota-optimiser
+spec:
+  values:
+    queueMetrics:
+      enabled: true
+    java:
+      startupPath: /livez
+      livenessPath: /livez
+      readinessPath: /readyz
+      environment:
+        MANAGEMENT_SERVER_PORT: 4551
+        MANAGEMENT_ENDPOINT_HEALTH_PROBES_ADD_ADDITIONAL_PATHS: true
+        MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health,info,prometheus,queuedjobs
