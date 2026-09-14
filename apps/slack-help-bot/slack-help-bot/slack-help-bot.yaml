@@ -7,15 +7,18 @@ spec:
   releaseName: slack-help-bot
   values:
     replicas: 1
-    image: hmctsprod.azurecr.io/rpe/slack-help-bot:prod-c69c1c1-20260904113944 #{"$imagepolicy": "flux-system:slack-help-bot"}
+    image: hmctsprod.azurecr.io/rpe/slack-help-bot:prod-5f91193-20260914091630 #{"$imagepolicy": "flux-system:slack-help-bot"}
     environment:
       SLACK_REPORT_CHANNEL_ID: C8SR5CAMU
       SLACK_REPORT_CHANNEL_CRIME_ID: C07KMBUFMA5
       JIRA_START_TRANSITION_ID: 181
       JIRA_DONE_TRANSITION_ID: 201
       JIRA_PROJECT: DTSPO
-      JIRA_ISSUE_TYPE_ID: 18400
+      JIRA_ISSUE_TYPE_ID: 10016
+      JIRA_TASK_ISSUE_TYPE_ID: 10002
+      JIRA_SUPPORT_ISSUE_TYPE_ID: 10016
       JIRA_ISSUE_TYPE_NAME: "Support"
+      JIRA_BROWSE_URL: https://hmcts.atlassian.net/
     keyVaults:
       cftptl-intsvc:
         excludeEnvironmentSuffix: true
@@ -24,6 +27,7 @@ spec:
           - slack-app-token
           - jira-username
           - jira-api-token
+          - jira-cloud-id
           - app-insights-connection-string
     autoscaling:
       enabled: false

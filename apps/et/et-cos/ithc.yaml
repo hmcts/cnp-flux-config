@@ -6,8 +6,15 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctsprod.azurecr.io/et/cos:pr-3395-e4a82fb-20260811111956 #{"$imagepolicy": "flux-system:ithc-et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:pr-3395-cb53c16-20260910140218 #{"$imagepolicy": "flux-system:ithc-et-cos"}
       environment:
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: true
+        CCD_DATA_MIGRATION_SOURCE_JURISDICTION: EMPLOYMENT
+        ET_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
+        ET_CCD_DATA_MIGRATION_ENABLED: false
+        ET_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        ET_SERVICEBUS_SCHEDULER_ENABLED: true
+        ELASTIC_SEARCH_HOSTS: http://ccd-data-0.service.core-compute-ithc.internal:9200
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-ithc.service.core-compute-ithc.internal
         AAC_URL: http://aac-manage-case-assignment-ithc.service.core-compute-ithc.internal
         EXUI_CASE_DETAILS_URL: "https://manage-case.ithc.platform.hmcts.net/cases/case-details/"
@@ -16,4 +23,5 @@ spec:
         UPDATE_CASE_POLL_INTERVAL: 5000
         UPDATE_CASE_BATCH_SIZE: 50
         UPDATE_CASE_THREADS: 20
-        EMPLOYMENT_RIGHTS_ACT_ERA_START_DATE: 2026-09-01
+        EMPLOYMENT_RIGHTS_ACT_ERA_START_DATE: "2026-09-01"
+        ACAS_BASE_URL: https://api-dev-acas-01.azure-api.net/ECCLDev

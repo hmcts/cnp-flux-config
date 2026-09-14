@@ -34,7 +34,7 @@ The above script will do the following:
 - Create the ImagePolicy and ImageRepository config
 - Create the HelmRelease resource to deploy your app
 - Add the image-policy and image-repo file references to the labs automation kustomization file so flux can automate image updates
-- Add a reference to the HelmRelease file the sbox kustomization cluster so the resources are
+- Add an entry for the HelmRelease file in the sbox base kustomization so the HelmRelease resources can be created in the cluster
 
 Once the script has been executed, you will need to create a new branch, add and commit the new config and then push the changes to GitHub.
 

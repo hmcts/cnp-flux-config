@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: xui-icp
+spec:
+  values:
+    nodejs:
+      ingressHost: xui-icp.platform.hmcts.net
+      environment:
+        IDAM_API_BASE_URL: https://idam-api.platform.hmcts.net
+        IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
+        ICP_WS_URL: wss://xui-icp-webpubsub.platform.hmcts.net/client/hubs/Hub
+      spotInstances:
+        enabled: false
