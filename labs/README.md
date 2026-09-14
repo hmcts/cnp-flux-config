@@ -50,7 +50,7 @@ More information on flux v2, its components and custom resources can be found on
 
 There are two container registries where your application image may end up:
 - **hmctspublic** where majority of images are uploaded
-- **hmctssandbox** where sandbox application images should be uploaded
+- **hmctssbox** where sandbox application images should be uploaded
 
 The reason for this is that there will most likely be two separate Jenkins pipelines for your application once you create your repo (e.g. NodeJS) defined in two separate Jenkins instances both of which scan for new repos:
 
@@ -58,11 +58,11 @@ The reason for this is that there will most likely be two separate Jenkins pipel
 - [Sandbox Jenkins](https://sandbox-build.hmcts.net/) ([defined under sbox-intsvc](https://github.com/hmcts/cnp-flux-config/blob/master/apps/jenkins/jenkins/sbox-intsvc/jenkins.yaml))
 
 
-The lab script mentioned above will generate configuration with the ACR set to **hmctssandbox** - this is where Flux will look for your image.
+The lab script mentioned above will generate configuration with the ACR set to **hmctssbox** - this is where Flux will look for your image.
 
 If your build is executed by the PTL Jenkins then this may cause issues because pipelines in this Jenkins will upload images into the **hmctspublic** ACR (you can see this if you open the respective ACR in Azure portal and search for your image).
 
-Once you merge your Flux config and notice that you container is in error state with status **"ImageError"** or **"ImagePullBackOff"** then most likely your image is missing from the **hmctssandbox** ACR. 
+Once you merge your Flux config and notice that you container is in error state with status **"ImageError"** or **"ImagePullBackOff"** then most likely your image is missing from the **hmctssbox** ACR. 
 
 You can check the status of your containers by running:
 
