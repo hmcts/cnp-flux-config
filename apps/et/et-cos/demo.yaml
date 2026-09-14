@@ -6,9 +6,19 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctsprod.azurecr.io/et/cos:pr-3230-4d4df07-20260824100200 #{"$imagepolicy": "flux-system:demo-et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:pr-3196-dd3eab2-20260913132501 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "10000"
+        CCD_DATA_MIGRATION_SOURCE_JURISDICTION: EMPLOYMENT
+        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 90m
+        ET_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
+        ET_CCD_DATA_MIGRATION_ENABLED: true
+        ET_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        ET_SERVICEBUS_SCHEDULER_ENABLED: false
+        ELASTIC_SEARCH_HOSTS: http://ccd-data-0.service.core-compute-demo.internal:9200
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
+        RD_COMMONDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
         AAC_URL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
         EXUI_CASE_DETAILS_URL: "https://manage-case.demo.platform.hmcts.net/cases/case-details/"
         CITIZEN_CASE_DETAILS_URL: "https://et-sya.demo.platform.hmcts.net/citizen-hub/"
