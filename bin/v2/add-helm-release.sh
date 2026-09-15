@@ -60,7 +60,7 @@ spec:
       interval: 1m
   values:
     ${LANGUAGE}:
-      image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:${TAG} # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
+      image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}:${TAG} # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
       disableTraefikTls: true
 EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"
