@@ -2,3 +2,31 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wa-reporting-frontend
+spec:
+  values:
+    nodejs:
+      keyVaults:
+        wa:
+          secrets:
+            - app-insights-connection-string
+            - name: azure-managed-redis-host
+              alias: wa-reporting-redis-host
+            - name: azure-managed-redis-port
+              alias: wa-reporting-redis-port
+            - name: azure-managed-redis-access-key
+              alias: wa-reporting-redis-access-key
+            - wa-reporting-frontend-client-secret
+            - wa-reporting-frontend-session-secret
+            - wa-reporting-frontend-s2s-secret
+            - name: cft-task-POSTGRES-USER-FLEXIBLE-REPLICA
+              alias: tm-db-user
+            - name: cft-task-POSTGRES-PASS-FLEXIBLE-REPLICA
+              alias: tm-db-password
+            - name: rd-caseworker-ref-api-POSTGRES-USER
+              alias: crd-db-user
+            - name: rd-caseworker-ref-api-POSTGRES-PASS
+              alias: crd-db-password
+            - name: rd-location-ref-api-POSTGRES-USER
+              alias: lrd-db-user
+            - name: rd-location-ref-api-POSTGRES-PASS
+              alias: lrd-db-password
