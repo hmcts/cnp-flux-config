@@ -9,12 +9,6 @@ spec:
       image: hmctsprod.azurecr.io/et/cos:pr-3196-3e75b17-20260914121830 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
         CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: true
-        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "10000"
-        CCD_DATA_MIGRATION_SOURCE_JURISDICTION: EMPLOYMENT
-        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 90m
-        ET_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
-        ET_CCD_DATA_MIGRATION_ENABLED: false
-        ET_CCD_DATA_MIGRATION_MODE: CUTOVER
         ET_SERVICEBUS_SCHEDULER_ENABLED: true
         ELASTIC_SEARCH_HOSTS: http://ccd-data-0.service.core-compute-demo.internal:9200
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
