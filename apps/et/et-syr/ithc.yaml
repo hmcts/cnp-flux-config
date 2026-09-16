@@ -9,7 +9,21 @@ spec:
     nodejs:
       image: hmctsprod.azurecr.io/et/syr:pr-964-282ab9b-20260820152234 #{"$imagepolicy": "flux-system:ithc-et-syr"}
       ingressHost: et-syr.ithc.platform.hmcts.net
+      # RET-6592: dual-write sessions to Azure Managed Redis, reads still served by et-session-storage-ithc
+      keyVaults:
+        et:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - idam-secret
+            - et-redis-access-key
+            - et-managed-redis-access-key
+            - et-session-secret
+            - os-places-token
+            - pcq-token-key
+            - launch-darkly-sdk-key
+            - s2s-secret-syr
       environment:
         HMCTS_ACCESS: 'true'
         IDAM_END_SESSION_URL: 'https://idam-web-public.ithc.platform.hmcts.net/o/endSession'
         ET3_LEGACY_URL: https://et-pet-et3.ithc.platform.hmcts.net/users/sign_up
+        REDIS_SECONDARY_HOST: 'et-managed-redis-ithc.uksouth.redis.azure.net'
