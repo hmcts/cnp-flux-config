@@ -6,7 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "40 11 05 06 *"
+      schedule: "00 11 * * *"
       image: hmctsprod.azurecr.io/finrem/cos:pr-2966-d1d9968-20260916124655 #{"$imagepolicy": "flux-system:demo-finrem-cos"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
@@ -25,7 +25,7 @@ spec:
         CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: true
         CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 50
         CRON_SUPPLEMENTARY_DATA_UPDATE: true
-        CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
     global:
       jobKind: CronJob
       enableKeyVaults: true
