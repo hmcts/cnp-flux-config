@@ -133,6 +133,11 @@ spec:
                         rename => {"[data][caseManagementCategory]" => "[data_new][caseManagementCategory]" }
                      }
                  }
+                 if [data][nextHearingDetails] {
+                     mutate {
+                        rename => {"[data][nextHearingDetails]" => "[data_new][nextHearingDetails]" }
+                     }
+                 }
                  if [supplementary_data][HMCTSServiceId] {
                      mutate {
                         rename => {"[supplementary_data][HMCTSServiceId]" => "[supplementary_data_new][HMCTSServiceId]" }
@@ -162,6 +167,11 @@ spec:
                  if [data_classification][caseManagementCategory] {
                      mutate {
                         rename => {"[data_classification][caseManagementCategory]" => "[data_classification_new][caseManagementCategory]" }
+                     }
+                 }
+                 if [data_classification][nextHearingDetails] {
+                     mutate {
+                        rename => {"[data_classification][nextHearingDetails]" => "[data_classification_new][nextHearingDetails]" }
                      }
                  }
                  mutate { remove_field =>[ "data" ,"supplementary_data", "data_classification", "last_state_modified_date", "type","last_modified", "created_date" ] }
