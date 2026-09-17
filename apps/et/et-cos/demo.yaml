@@ -6,7 +6,7 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctsprod.azurecr.io/et/cos:pr-3196-c7bfc41-20260916153033 #{"$imagepolicy": "flux-system:demo-et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:pr-3196-301b628-20260917094008 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
         CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: true
         ET_SERVICEBUS_SCHEDULER_ENABLED: true
@@ -18,6 +18,7 @@ spec:
         CITIZEN_CASE_DETAILS_URL: "https://et-sya.demo.platform.hmcts.net/citizen-hub/"
         RESPONDENT_PORTAL_LINK: "https://et-syr.demo.platform.hmcts.net/case-details/"
         BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal/
+        WA_TASK_MANAGEMENT_API_URL: http://wa-task-management-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
         RESTART_MANUALLY: 1
         CRON_BFACTION_TASK: 0 */2 * * * ?
         CRON_UPDATE_TRANSFERRED_CASE_LINKS: 0 */30 * * * ?
