@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-request-order-task
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-c1d2212-20260915100918 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-6e53026-20260915172902 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         APP_ENV: "prod"
         TASK_NAME: RequestOrderTask
@@ -20,8 +20,10 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
         REFDATA_API_URL: http://rd-commondata-api-prod.service.core-compute-prod.internal
-      schedule: 0 14 * * *
-      suspend: true
+        REQUEST_ORDER_TASK_C100_CADENCE: 5
+        REQUEST_ORDER_TASK_FL401_CADENCE: 2
+        REQUEST_ORDER_TASK_CADENCE_MULTIPLIER: 1
+      schedule: 15 19 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true

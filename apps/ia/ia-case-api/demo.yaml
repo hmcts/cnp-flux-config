@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/ia/case-api:pr-3029-6359d4e-20260914123614 #{"$imagepolicy": "flux-system:demo-ia-case-api"}
+      image: hmctsprod.azurecr.io/ia/case-api:pr-3412-17d9d71-20260916160007 #{"$imagepolicy": "flux-system:demo-ia-case-api"}
       environment:
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
         IA_TIMED_EVENT_SERVICE_ENABLED: "true"
@@ -23,7 +23,7 @@ spec:
         SAVE_NOTIFICATIONS_TO_DATA_EVENT_ENABLED: true
         SAVE_NOTIFICATIONS_DATA_SCHEDULE_HOUR: 18
         SAVE_NOTIFICATIONS_DATA_SCHEDULE_MAX_MINUTES: 5
-        HOME_OFFICE_VALIDATION_ENABLED: "false"
+        HOME_OFFICE_VALIDATION_ENABLED: "true"
         STATUTORY_TIMEFRAME_LIVE_DATE: "2025-01-01"
       keyVaults:
         ia:
@@ -75,5 +75,7 @@ spec:
               alias: IA_REDIS_CONNECTION_STRING
             - name: ia-redis-access-key
               alias: IA_REDIS_ACCESS_KEY
+            - name: home-office-serialised-encryption-key
+              alias: IA_HOME_OFFICE_INTEGRATION_ENCRYPTION_KEY
             - name: ia-redis-encryption-key
               alias: IA_REDIS_ENCRYPTION_KEY

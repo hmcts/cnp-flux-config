@@ -65,6 +65,20 @@ spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "${COMPONENT_DIR}/image-repo.yaml"
+elif [[ ${ACR} == "hmctssbox" ]]
+then
+(
+cat <<EOF
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: ${PRODUCT}-${COMPONENT}
+  annotations:
+    hmcts.github.com/image-registry: hmctssbox
+spec:
+  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
+EOF
+) > "${COMPONENT_DIR}/image-repo.yaml"
 elif [[ ${ACR} == "hmctsprivate" ]]
 then
 (

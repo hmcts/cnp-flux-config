@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-hearing-actual-task
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-c1d2212-20260915100918 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-6e53026-20260915172902 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         APP_ENV: "aat"
         TASK_NAME: UpdateHearingActualTask
@@ -35,9 +35,10 @@ spec:
         SEND_LETTER_URL: http://rpe-send-letter-service-aat.service.core-compute-aat.internal
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-aat.service.core-compute-aat.internal
         HEARING_API_BASEURL: http://fis-hmc-api-aat.service.core-compute-aat.internal
-        REQUEST_ORDER_TASK_C100_CADENCE: 0
-        REQUEST_ORDER_TASK_FL401_CADENCE: 0
-      schedule: 0 14 * * *
+        REQUEST_ORDER_TASK_C100_CADENCE: 5
+        REQUEST_ORDER_TASK_FL401_CADENCE: 2
+        REQUEST_ORDER_TASK_CADENCE_MULTIPLIER: 1
+      schedule: 0 16 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
