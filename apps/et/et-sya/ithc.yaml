@@ -9,21 +9,7 @@ spec:
     nodejs:
       image: hmctsprod.azurecr.io/et/sya:pr-2603-393961d-20260917073430 #{"$imagepolicy": "flux-system:ithc-et-sya"}
       ingressHost: et-sya.ithc.platform.hmcts.net
-      keyVaults:
-        et:
-          secrets:
-            - app-insights-connection-string
-            - idam-secret
-            - et-redis-access-key
-            - et-managed-redis-access-key
-            - et-session-secret
-            - os-places-token
-            - pcq-token-key
-            - launch-darkly-sdk-key
-            - csrf-token-secret
-            - s2s-secret-sya
       environment:
         ET_SYA_API_HOST: 'http://et-cos-ithc.service.core-compute-ithc.internal'
         TRIGGER_RESTART: 0
         HMCTS_ACCESS: 'true'
-        REDIS_SECONDARY_HOST: 'et-managed-redis-ithc.uksouth.redis.azure.net'
