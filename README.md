@@ -41,10 +41,11 @@ As Flux in PTL makes use of optional GOTK image automation components, we genera
 
 Both files are maintained by Renovate after generation.
  
-## Logstash queue claim timeout
+## Logstash queue processing
 
-`LOGSTASH_QUEUE_CLAIM_TIMEOUT` controls how long a Logstash queue row remains
-claimed before it becomes eligible for retry. The default is `5 minutes`.
-Use PostgreSQL interval syntax, such as `15 minutes` or `1 hour`. Set the
-timeout longer than the maximum expected indexing duration to avoid duplicate
-processing, and apply changes consistently across all Logstash agents.
+CCD Logstash agents use a bounded plain-delete queue poll. A selected queue
+row is deleted before its Elasticsearch write, so delivery is at-most-once.
+Recover an Elasticsearch or pod failure by inserting only the affected case
+IDs back into `case_data_logstash_queue`; do not reset `marked_by_logstash` or
+configure a claim timeout. See the CCD-4262 queue-processing runbook in
+`ccd-data-store-api` for the recovery query and release evidence required.
