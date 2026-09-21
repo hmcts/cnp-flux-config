@@ -2,5 +2,65 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ccd
 resources:
-  - legacy
   - ../../ccd-elasticsearch-app-suite
+  - ../../base
+  - ../../ccd-next-hearing-date-updater/ccd-next-hearing-date-updater.yaml
+  - ../../../rbac/nonprod-role.yaml
+  - logstash-secret.yaml
+  - logstash-config.yaml
+  - probatemandb.yaml
+  - ../../message-publisher/message-publisher.yaml
+  - ../../ccd-case-disposer/ccd-case-disposer.yaml
+  - ../../ccd-case-disposer-v2/ccd-case-disposer-v2.yaml
+  - ../../../base/slack-provider/ithc
+  - ../../../base/docker-registry/ithc
+patches:
+  - path: ../../identity/ithc.yaml
+  - path: ../../ccd-logstash-civil/ithc.yaml
+    target:
+      name: ccd-logstash-civil
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-fpl/ithc.yaml
+    target:
+      name: ccd-logstash-fpl
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-indexer/ithc.yaml
+  - path: ../../ccd-logstash-cmc/ithc.yaml
+    target:
+      name: ccd-logstash-cmc
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-divorce/ithc.yaml
+    target:
+      name: ccd-logstash-divorce
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-ethos/ithc.yaml
+    target:
+      name: ccd-logstash-ethos
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-probate/ithc.yaml
+    target:
+      name: ccd-logstash-probate
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-probateman/ithc.yaml
+    target:
+      name: ccd-logstash-probateman
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-logstash-sscs/ithc.yaml
+    target:
+      name: ccd-logstash-sscs
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-definition-store-api/ithc.yaml
+    target:
+      name: ccd-definition-store-api
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-user-profile-api/ithc.yaml
+  - path: ../../ccd-data-store-api/ithc.yaml
+    target:
+      name: ccd-data-store-api
+      labelSelector: "!ccd-elasticsearch-app-suite"
+  - path: ../../ccd-case-document-am-api/ithc.yaml
+  - path: ../../ccd-api-gateway-web/ithc.yaml
+  - path: ../../serviceaccount/ithc.yaml
+  - path: ../../ccd-case-disposer/ithc.yaml
+  - path: ../../ccd-case-disposer-v2/ithc.yaml
+  - path: ../../ccd-next-hearing-date-updater/ithc/ithc.yaml
