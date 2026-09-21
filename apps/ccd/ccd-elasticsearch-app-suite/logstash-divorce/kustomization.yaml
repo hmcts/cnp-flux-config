@@ -35,7 +35,7 @@ patches:
               tracking_column_type => "timestamp"
               last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-last-run"
               statement => "SELECT id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT AS json_data, data_classification::TEXT AS json_data_classification, reference, security_classification, supplementary_data::TEXT AS json_supplementary_data FROM case_data WHERE last_modified >= :sql_last_value AND jurisdiction = 'DIVORCE' ORDER BY last_modified, id"
-              clean_run => false
+              clean_run => true
               schedule => "* * * * * *"
             }
           }
