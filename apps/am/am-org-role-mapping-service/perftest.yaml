@@ -5,17 +5,26 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-597e27c-20260827152440 #{"$imagepolicy": "flux-system:perftest-am-org-role-mapping-service"}
+      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-8502f5a-20260917162629 #{"$imagepolicy": "flux-system:perftest-am-org-role-mapping-service"}
       environment:
         AM_INFO: false
         APPLICATION_LOGGING_LEVEL: INFO
         TESTING_SUPPORT_ENABLED: true
-        DB_FEATURE_FLAG_ENABLE: possessions_wa_1_0
+        DB_FEATURE_FLAG_ENABLE: iac_wa_1_8
         # PRD Config
         PROFESSIONAL_REFRESH_API_ENABLED: true
-        PROFESSIONAL_SCHEDULING_ENABLED: false
+        PROFESSIONAL_SCHEDULING_ENABLED: true
+        # PRM Schedules
+        CRON_PRM_P1_FIND_CASE_DEFINITION_CHANGES: "0 00 10 20 09 *"
+        CRON_PRM_P2_ORGS_STALE_PROFILES: "0 15 10 20 09 *"
+        CRON_PRM_P3_ORG_CHANGES: "0 00 09 31 02 *"
+        CRON_PRM_P4_USERS_STALE_ORGS: "0 35 10 20 09 *"
+        CRON_PRM_P5_USER_CHANGES: "0 00 09 31 02 *"
+        CRON_PRM_P6_USER_REFRESH: "0 15 11 20 09 *"
+        CRON_PRM_REFRESH_CLEANUP_ORG: "0 00 09 31 02 *"
+        CRON_PRM_REFRESH_CLEANUP_USER: "0 00 09 31 02 *"
         # Refresh Job Config
-        # REFRESH_JOB: LEGAL_OPERATIONS-ST_CIC-NEW-0-113
+        REFRESH_JOB: LEGAL_OPERATIONS-IA-NEW-0-146
         # always set 'REFRESH_JOB_ALLOW_UPDATE' to false before next refresh (i.e. only use when setting existing job to ABORTED)
         # REFRESH_JOB_ALLOW_UPDATE: false
         # REFRESH_BULK_ASSIGNMENT_INCLUDE_BOOKINGS: true
