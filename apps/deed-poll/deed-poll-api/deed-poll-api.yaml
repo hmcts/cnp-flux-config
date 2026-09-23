@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: deed-poll-api
+spec:
+  releaseName: deed-poll-api
+  interval: 1m
+  values:
+    java:
+      image: hmctsprod.azurecr.io/deed-poll/api:prod-1e322e1-20260923061451 # {"$imagepolicy": "flux-system:deed-poll-api"}
+  chart:
+    spec:
+      chart: ./stable/deed-poll-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
