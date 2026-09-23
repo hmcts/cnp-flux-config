@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cath-web
+spec:
+  releaseName: cath-web
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/cath/cath-web:prod-32db3ef-20260923131130 # {"$imagepolicy": "flux-system:perftest-cath-web"}
+      environment:
+        ENABLE_TEST_SUPPORT: "true"

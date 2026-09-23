@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cath
+resources:
+  - ../../base
+  - ../../../rbac/nonprod-role.yaml
+  - ../../../rbac/db-query-job-role.yaml
+  - ../../cath-web/cath-web.yaml
+  - ../../cath-api/cath-api.yaml
+  - ../../cath-crons/cath-crons.yaml
+  - ../../cath-postgres/cath-postgres.yaml
+  - ../../../base/slack-provider/demo
+  - ../../../base/docker-registry/demo
+patches:
+  - path: ../../identity/demo.yaml
+  - path: ../../serviceaccount/demo.yaml
+  - path: ../../cath-web/demo.yaml
+  - path: ../../cath-api/demo.yaml
+  - path: ../../cath-crons/demo.yaml
+  - path: ../../cath-postgres/demo.yaml
