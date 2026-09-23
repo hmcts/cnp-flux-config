@@ -14,17 +14,15 @@ spec:
           secrets:
             - AppInsightsInstrumentationKey
             - idam-secret
-            - et-redis-access-key
-            - et-managed-redis-access-key
+            - name: et-managed-redis-access-key
+              alias: et-redis-access-key
             - et-session-secret
             - os-places-token
             - pcq-token-key
             - launch-darkly-sdk-key
             - s2s-secret-syr
       environment:
+        REDIS_HOST: 'et-managed-redis-perftest.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
         HMCTS_ACCESS: 'true'
         ET3_LEGACY_URL: https://et-pet-et3.perftest.platform.hmcts.net/users/sign_up
-        REDIS_DUAL_WRITE_ENABLED: 'true'
-        REDIS_SECONDARY_HOST: 'et-managed-redis-perftest.uksouth.redis.azure.net'
-        REDIS_SECONDARY_PORT: '10000'
-        REDIS_READ_FROM: 'secondary'
