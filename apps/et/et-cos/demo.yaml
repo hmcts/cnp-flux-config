@@ -6,14 +6,18 @@ spec:
   releaseName: et-cos
   values:
     java:
-      image: hmctsprod.azurecr.io/et/cos:pr-3196-6c6c1e2-20260817085907 #{"$imagepolicy": "flux-system:demo-et-cos"}
+      image: hmctsprod.azurecr.io/et/cos:pr-3196-1902736-20260922145843 #{"$imagepolicy": "flux-system:demo-et-cos"}
       environment:
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: true
+        ET_SERVICEBUS_SCHEDULER_ENABLED: true
+        ELASTIC_SEARCH_HOSTS: http://ccd-data-0.service.core-compute-demo.internal:9200
         RD_PROFESSIONAL_API_URL: http://rd-professional-api-demo.service.core-compute-demo.internal
+        RD_COMMONDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
         AAC_URL: http://aac-manage-case-assignment-demo.service.core-compute-demo.internal
         EXUI_CASE_DETAILS_URL: "https://manage-case.demo.platform.hmcts.net/cases/case-details/"
         CITIZEN_CASE_DETAILS_URL: "https://et-sya.demo.platform.hmcts.net/citizen-hub/"
         RESPONDENT_PORTAL_LINK: "https://et-syr.demo.platform.hmcts.net/case-details/"
         BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal/
-        RESTART_MANUALLY: 3
+        RESTART_MANUALLY: 1
         CRON_BFACTION_TASK: 0 */2 * * * ?
         CRON_UPDATE_TRANSFERRED_CASE_LINKS: 0 */30 * * * ?
