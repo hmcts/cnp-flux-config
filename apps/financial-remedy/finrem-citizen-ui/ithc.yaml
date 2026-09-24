@@ -7,7 +7,7 @@ spec:
   releaseName: finrem-citizen-ui
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-1681e28-20260918095542 #{"$imagepolicy": "flux-system:ithc-finrem-citizen-ui"}
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-6dfb458-20260924073130 #{"$imagepolicy": "flux-system:ithc-finrem-citizen-ui"}
       ingressHost: finrem-citizen-ui.ithc.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true
@@ -21,17 +21,6 @@ spec:
         OAUTH_CALLBACK_URL: https://finrem-citizen-ui.ithc.platform.hmcts.net/oauth2/callback
         CCD_URL: http://ccd-data-store-api-ithc.service.core-compute-ithc.internal
         OIDC_ISSUER: https://hmcts-access.ithc.platform.hmcts.net/o
-    redis:
-      enabled: true
-      architecture: standalone
-      auth:
-        enabled: false
-      master:
-        persistence:
-          enabled: false
-      image:
-        registry: hmctsprod.azurecr.io
-        repository: imported/bitnami/redis
     global:
       security:
         allowInsecureImages: true
