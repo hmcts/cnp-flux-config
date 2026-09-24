@@ -49,3 +49,38 @@ Recover an Elasticsearch or pod failure by inserting only the affected case
 IDs back into `case_data_logstash_queue`; do not reset `marked_by_logstash` or
 configure a claim timeout. See the CCD-4262 queue-processing runbook in
 `ccd-data-store-api` for the recovery query and release evidence required.
+
+### CCD queue version cutover (CCD-4262)
+
+Deploy data-store migration `V20260923_0000` before starting the queue-based
+pipelines. It widens queue IDs and their sequence to bigint, raises the sequence
+above 10^10 (or a higher existing sequence/queue ID), and assigns fresh IDs to
+queued rows. Raising only the sequence would leave the backlog unsafe.
+
+Before deployment, establish that legacy Elasticsearch versions are below
+10^10 in every destination case index and `global_search`. Stop/drain old
+Logstash consumers, apply data-store migrations, verify bigint and the backlog
+IDs, then deploy/start flux immediately. Do not overlap internal-version and
+external-version writers. Search is temporarily stale while consumers are
+stopped; writes accumulate in the queue. Check queue drainage and supplementary
+data in both relevant destinations after starting consumers.
+
+Monitor output warnings as well as the DLQ: 409s are normally logged and dropped.
+Rejecting an older event after a newer success is expected; conflicts with legacy
+internal versions require correcting the baseline and requeuing affected cases.
+`retry_on_conflict` does not retry these index actions and has been removed.
+
+Coalescing remains enabled. Its unique constraint can make case writes wait for
+a poll transaction; the observed 10 ms is not a bound. Validate and monitor write
+latency under representative load. Delete-before-delivery remains at-most-once.
+
+For rollback, stop consumers and preserve the queue. Reverting flux alone does
+not restore the old marker trigger. Prefer fixing forward; restoring marker
+processing requires restoring database behaviour and reconciling cutover writes.
+Never rewind the queue sequence. Follow the full data-store release runbook in
+`docs/CCD-7841-release.md`, including lock/backlog planning and recovery.
+
+The old marker trigger is dropped by data-store migration `V20240617_4775`,
+before the bigint migration, during the stopped-consumer window. This is not a
+post-cutover cleanup step. Only removal of the `marked_by_logstash` column is
+deferred to CCD-4790 after all consumers have migrated.
