@@ -5,7 +5,12 @@ metadata:
 spec:
   values:
     keda:
-      enabled: false
+      enabled: true
+      maxReplicaCount: 1
+      activeDeadlineSeconds: 86400
     java:
+      replicas: 0
+      pdb:
+        enabled: false
       environment:
         WORKER_ENABLED: true
