@@ -7,14 +7,3 @@ spec:
   releaseName: ccd-logstash
   values:
     replicas: 1
-    securityContext:
-      allowPrivilegeEscalation: false
-    extraInitContainers: |
-      - name: download-postgres-jdbc
-        image: hmctsprod.azurecr.io/curl:7.70.0
-        command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
-        securityContext:
-          allowPrivilegeEscalation: false
-        volumeMounts:
-        - name: logstash-lib
-          mountPath: /logstash-lib
