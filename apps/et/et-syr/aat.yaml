@@ -8,8 +8,20 @@ spec:
   values:
     nodejs:
       ingressHost: et-syr.aat.platform.hmcts.net
+      keyVaults:
+        et:
+          secrets:
+            - AppInsightsInstrumentationKey
+            - idam-secret
+            - name: et-managed-redis-access-key
+              alias: et-redis-access-key
+            - et-session-secret
+            - os-places-token
+            - pcq-token-key
+            - launch-darkly-sdk-key
+            - s2s-secret-syr
       environment:
+        REDIS_HOST: 'et-managed-redis-aat.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
         HMCTS_ACCESS: 'true'
         ET3_LEGACY_URL: https://et-pet-et3.aat.platform.hmcts.net/users/sign_up
-        REDIS_DUAL_WRITE_ENABLED: 'true'
-        REDIS_READ_FROM: 'secondary'

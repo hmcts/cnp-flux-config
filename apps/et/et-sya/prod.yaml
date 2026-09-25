@@ -9,7 +9,22 @@ spec:
     nodejs:
       replicas: 3
       ingressHost: 'www.claim-employment-tribunals.service.gov.uk'
+      keyVaults:
+        et:
+          secrets:
+            - app-insights-connection-string
+            - idam-secret
+            - name: et-managed-redis-access-key
+              alias: et-redis-access-key
+            - et-session-secret
+            - os-places-token
+            - pcq-token-key
+            - launch-darkly-sdk-key
+            - csrf-token-secret
+            - s2s-secret-sya
       environment:
+        REDIS_HOST: 'et-managed-redis-prod.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
         RESTART_MANUALLY: 4
         PCQ_URL: 'https://equality-and-diversity.platform.hmcts.net/service-endpoint'
         PCQ_HEALTH_URL: 'https://equality-and-diversity.platform.hmcts.net/health'
@@ -44,5 +59,3 @@ spec:
         ET_SYA_API_HOST: 'http://et-cos-prod.service.core-compute-prod.internal'
         HMCTS_ACCESS: 'true'
         IDAM_WEB_URL_HMCTS_ACCESS: 'https://hmcts-access.service.gov.uk/o/authorize'
-        REDIS_DUAL_WRITE_ENABLED: 'true'
-        REDIS_READ_FROM: 'secondary'

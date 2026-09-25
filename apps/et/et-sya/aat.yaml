@@ -8,9 +8,22 @@ spec:
   values:
     nodejs:
       ingressHost: et-sya.aat.platform.hmcts.net
+      keyVaults:
+        et:
+          secrets:
+            - app-insights-connection-string
+            - idam-secret
+            - name: et-managed-redis-access-key
+              alias: et-redis-access-key
+            - et-session-secret
+            - os-places-token
+            - pcq-token-key
+            - launch-darkly-sdk-key
+            - csrf-token-secret
+            - s2s-secret-sya
       environment:
+        REDIS_HOST: 'et-managed-redis-aat.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
         ET_SYA_API_HOST: 'http://et-cos-aat.service.core-compute-aat.internal'
         TRIGGER_RESTART: 0
         HMCTS_ACCESS: 'true'
-        REDIS_DUAL_WRITE_ENABLED: 'true'
-        REDIS_READ_FROM: 'secondary'
