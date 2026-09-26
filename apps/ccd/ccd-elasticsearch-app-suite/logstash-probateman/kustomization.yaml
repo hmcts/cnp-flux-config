@@ -1,0 +1,115 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../ccd-logstash-probateman
+patches:
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-logstash-probateman
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ccd-elasticsearch-app-logstash-probateman
+      - op: replace
+        path: /spec/releaseName
+        value: ccd-elasticsearch-app-logstash-probateman
+      - op: replace
+        path: /spec/values/logstashPipeline/01_input.conf
+        value: |
+          input  {
+            jdbc {
+              jdbc_connection_string => "${DB_URL}"
+              jdbc_user => "${DB_USER}"
+              jdbc_password => "${DB_PWD}"
+              jdbc_validate_connection => true
+              jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+              jdbc_driver_class => "org.postgresql.Driver"
+              jdbc_page_size => "20000"
+              jdbc_default_timezone => "UTC"
+              use_column_value => true
+              tracking_column => last_modified
+              tracking_column_type => "timestamp"
+              statement => "SELECT 'CAVEAT' as legacy_case_type, id, caveat_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from caveats_flat where (last_modified > :sql_last_value)"
+              clean_run => true
+              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              schedule => "* * * * * *"
+            }
+          }
+          input  {
+            jdbc {
+              jdbc_connection_string => "${DB_URL}"
+              jdbc_user => "${DB_USER}"
+              jdbc_password => "${DB_PWD}"
+              jdbc_validate_connection => true
+              jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+              jdbc_driver_class => "org.postgresql.Driver"
+              jdbc_page_size => "20000"
+              jdbc_default_timezone => "UTC"
+              use_column_value => true
+              tracking_column => last_modified
+              tracking_column_type => "timestamp"
+              statement => "SELECT 'STANDING SEARCH' as legacy_case_type, id, ss_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from standing_searches_flat where (last_modified > :sql_last_value)"
+              clean_run => true
+              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              schedule => "* * * * * *"
+            }
+          }
+          input  {
+            jdbc {
+              jdbc_connection_string => "${DB_URL}"
+              jdbc_user => "${DB_USER}"
+              jdbc_password => "${DB_PWD}"
+              jdbc_validate_connection => true
+              jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+              jdbc_driver_class => "org.postgresql.Driver"
+              jdbc_page_size => "20000"
+              jdbc_default_timezone => "UTC"
+              use_column_value => true
+              tracking_column => last_modified
+              tracking_column_type => "timestamp"
+              statement => "select 'WILL' as legacy_case_type, id, rk_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from wills_flat where (last_modified > :sql_last_value)"
+              clean_run => true
+              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              schedule => "* * * * * *"
+            }
+          }
+          input  {
+            jdbc {
+              jdbc_connection_string => "${DB_URL}"
+              jdbc_user => "${DB_USER}"
+              jdbc_password => "${DB_PWD}"
+              jdbc_validate_connection => true
+              jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+              jdbc_driver_class => "org.postgresql.Driver"
+              jdbc_page_size => "20000"
+              jdbc_default_timezone => "UTC"
+              use_column_value => true
+              tracking_column => last_modified
+              tracking_column_type => "timestamp"
+              statement => "select 'LEGACY APPLICATION' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_flat where (last_modified > :sql_last_value)"
+              clean_run => true
+              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              schedule => "* * * * * *"
+            }
+          }
+          input  {
+            jdbc {
+              jdbc_connection_string => "${DB_URL}"
+              jdbc_user => "${DB_USER}"
+              jdbc_password => "${DB_PWD}"
+              jdbc_validate_connection => true
+              jdbc_driver_library => "/usr/share/logstash/ccd/postgresql.jar"
+              jdbc_driver_class => "org.postgresql.Driver"
+              jdbc_page_size => "20000"
+              jdbc_default_timezone => "UTC"
+              use_column_value => true
+              tracking_column => last_modified
+              tracking_column_type => "timestamp"
+              statement => "select 'LEGACY GRANT' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_derived_flat where (last_modified > :sql_last_value)"
+              clean_run => true
+              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              schedule => "* * * * * *"
+            }
+          }
