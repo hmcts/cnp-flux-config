@@ -32,8 +32,8 @@ patches:
               tracking_column => last_modified
               tracking_column_type => "timestamp"
               statement => "SELECT 'CAVEAT' as legacy_case_type, id, caveat_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from caveats_flat where (last_modified > :sql_last_value)"
-              clean_run => true
-              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              clean_run => false
+              last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-probateman-caveats-last-run"
               schedule => "* * * * * *"
             }
           }
@@ -51,8 +51,8 @@ patches:
               tracking_column => last_modified
               tracking_column_type => "timestamp"
               statement => "SELECT 'STANDING SEARCH' as legacy_case_type, id, ss_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from standing_searches_flat where (last_modified > :sql_last_value)"
-              clean_run => true
-              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              clean_run => false
+              last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-probateman-standing-searches-last-run"
               schedule => "* * * * * *"
             }
           }
@@ -70,8 +70,8 @@ patches:
               tracking_column => last_modified
               tracking_column_type => "timestamp"
               statement => "select 'WILL' as legacy_case_type, id, rk_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from wills_flat where (last_modified > :sql_last_value)"
-              clean_run => true
-              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              clean_run => false
+              last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-probateman-wills-last-run"
               schedule => "* * * * * *"
             }
           }
@@ -89,8 +89,8 @@ patches:
               tracking_column => last_modified
               tracking_column_type => "timestamp"
               statement => "select 'LEGACY APPLICATION' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_flat where (last_modified > :sql_last_value)"
-              clean_run => true
-              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              clean_run => false
+              last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-probateman-legacy-applications-last-run"
               schedule => "* * * * * *"
             }
           }
@@ -108,8 +108,8 @@ patches:
               tracking_column => last_modified
               tracking_column_type => "timestamp"
               statement => "select 'LEGACY GRANT' as legacy_case_type, id, probate_number as record_id, probate_number, deceased_forenames,deceased_surname, alias_names, date_of_death1 as date_of_death, date_of_death2, date_of_birth, last_modified, dnm_ind as imported_to_ccd, ccd_case_no from grant_applications_derived_flat where (last_modified > :sql_last_value)"
-              clean_run => true
-              last_run_metadata_path => "/usr/share/logstash/data/.logstash_jdbc_last_run"
+              clean_run => false
+              last_run_metadata_path => "/usr/share/logstash/data/ccd-elasticsearch-app-probateman-legacy-grants-last-run"
               schedule => "* * * * * *"
             }
           }
