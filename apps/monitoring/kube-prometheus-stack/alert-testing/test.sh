@@ -22,7 +22,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/tests.yaml"
 GEN_DIR="${SCRIPT_DIR}/.generated"
-PROMTOOL_IMAGE="${PROMTOOL_IMAGE:-prom/prometheus:latest}"
+PROMTOOL_IMAGE="${PROMTOOL_IMAGE:-prom/prometheus:v3.15.0}"
 
 command -v yq >/dev/null       || { echo "ERROR: yq not found on PATH" >&2; exit 1; }
 
