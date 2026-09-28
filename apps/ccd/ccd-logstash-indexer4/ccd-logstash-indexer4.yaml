@@ -22,3 +22,15 @@ spec:
             clean_run => false
           }
         }
+      # Preserve bulk indexing output: these queries do not supply queue versions.
+      03_output.conf: |
+        output {
+            elasticsearch {
+                hosts => ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
+                sniffing => false
+                index => "%{[index_id]}"
+                document_type => "_doc"
+                document_id => "%{id}"
+                timeout => 60
+            }
+        }
