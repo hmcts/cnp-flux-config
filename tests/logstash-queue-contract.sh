@@ -49,3 +49,14 @@ for file in apps/ccd/ccd-logstash/ccd-logstash.yaml \
     }
   done
 done
+
+# Bulk indexers must override the shared queue-version output.
+for file in apps/ccd/ccd-logstash-indexer*/ccd-logstash-indexer*.yaml; do
+  output="$(sed -n '/03_output.conf: |/,$p' "$file")"
+  [[ "$output" == *'document_id => "%{id}"'* ]] || {
+    echo "$file must provide its own bulk indexing output." >&2; exit 1;
+  }
+  if [[ "$output" == *'version =>'* || "$output" == *'version_type =>'* ]]; then
+    echo "$file must not require queue versions absent from its bulk query." >&2; exit 1;
+  fi
+done

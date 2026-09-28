@@ -58,12 +58,15 @@ above 10^10 (or a higher existing sequence/queue ID), and assigns fresh IDs to
 queued rows. Raising only the sequence would leave the backlog unsafe.
 
 Before deployment, establish that legacy Elasticsearch versions are below
-10^10 in every destination case index and `global_search`. Stop/drain old
+10^10 in every destination case index and `global_search`. Pause all case-writing
+API traffic and background jobs, and let in-flight writes finish. Stop/drain old
 Logstash consumers, apply data-store migrations, verify bigint and the backlog
 IDs, then deploy/start flux immediately. Do not overlap internal-version and
 external-version writers. Search is temporarily stale while consumers are
-stopped; writes accumulate in the queue. Check queue drainage and supplementary
-data in both relevant destinations after starting consumers.
+stopped. Check queue drainage and supplementary data in both relevant
+destinations after starting consumers. Resume case writes and background jobs
+only after migration and indexing checks pass; keep writes paused if migration
+fails until database readiness is verified.
 
 Monitor output warnings as well as the DLQ: 409s are normally logged and dropped.
 Rejecting an older event after a newer success is expected; conflicts with legacy
