@@ -26,7 +26,7 @@ This will take a bit longer than normal to install but future commits should tak
 
 This hook will also run as a github action to ensure bypass has not occurred.
 
-See [tests](.github/workflows/tests.yml#L29)
+See [sops-secrets](.github/workflows/sops-secrets.yml)
 
 ### SOPs
 
