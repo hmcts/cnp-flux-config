@@ -42,8 +42,16 @@ done
 
 for file in apps/ccd/ccd-logstash/ccd-logstash.yaml \
     apps/ccd/ccd-logstash-intdemo/ccd-logstash-intdemo.yaml; do
+  rename='rename => { "version" => "[@metadata][queue_version]" }'
+  filter="$(sed -n '/02_filter.conf: |/,/03_output.conf: |/p' "$file")"
+  [[ "$filter" == *"$rename"* ]] || {
+    echo "$file must move the queue version into metadata." >&2; exit 1;
+  }
+  [[ "$(printf '%s' "$filter" | sed '/clone {/,$d')" == *"$rename"* ]] || {
+    echo "$file must move the queue version before cloning." >&2; exit 1;
+  }
   output="$(rg -A 8 'document_id => "%\{id\}"' "$file")"
-  for required in 'document_id => "%{id}"' 'version => "%{version}"' 'version_type => "external"'; do
+  for required in 'document_id => "%{id}"' 'version => "%{[@metadata][queue_version]}"' 'version_type => "external"'; do
     [[ "$output" == *"$required"* ]] || {
       echo "$file is missing Elasticsearch external-version output: $required" >&2; exit 1;
     }

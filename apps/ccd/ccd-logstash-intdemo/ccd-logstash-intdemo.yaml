@@ -84,6 +84,9 @@ spec:
         }
       02_filter.conf: |
         filter{
+          mutate {
+            rename => { "version" => "[@metadata][queue_version]" }
+          }
           json{
              	source => "json_data"
              	target => "data"
@@ -198,7 +201,7 @@ spec:
                 document_id => "%{id}"
                 timeout => 60
                 # External versioning configuration
-                version => "%{version}"
+                version => "%{[@metadata][queue_version]}"
                 version_type => "external"
             }
         }
