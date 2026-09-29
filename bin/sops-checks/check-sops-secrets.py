@@ -6,21 +6,21 @@ import sys
 
 import yaml
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOPS_VALUE = re.compile(r"^ENC\[AES256_GCM,data:.*,iv:.*,tag:.*,type:\w+\]$")
 DATA_KEYS = ("data", "stringData")
-# Repo paths (folder or file prefixes) whose Secrets are intentionally unencrypted.
-EXCLUDED_PATHS = (
-    "apps/azureserviceoperator-system/",
-    "apps/flux-system/aat/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/demo/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/ithc/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/perftest/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/preview/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/prod/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/sbox-intsvc/base/aso-controller-settings-patch.yaml",
-    "apps/flux-system/sbox/base/aso-controller-settings-patch.yaml",
-)
+# Loaded from alongside the script so CI uses master's copy, not the PR's.
+EXCLUSIONS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "check-sops-secrets-exclusions.yaml")
+
+
+def load_excluded_paths():
+    with open(EXCLUSIONS_FILE, encoding="utf-8") as f:
+        paths = (yaml.safe_load(f) or {}).get("excluded_paths") or []
+    if not isinstance(paths, list) or not all(isinstance(p, str) and p for p in paths):
+        sys.exit(f"ERROR: 'excluded_paths' in {EXCLUSIONS_FILE} must be a list of non-empty strings")
+    return tuple(paths)
+
+
+EXCLUDED_PATHS = load_excluded_paths()
 
 
 class Loader(yaml.SafeLoader):
@@ -33,7 +33,8 @@ Loader.add_constructor("tag:yaml.org,2002:value", Loader.construct_scalar)
 
 def check_file(path):
     errors = []
-    if os.path.relpath(path, REPO_ROOT).replace(os.sep, "/").startswith(EXCLUDED_PATHS):
+    # Paths are resolved relative to the working directory, which must be the repo root.
+    if os.path.relpath(path).replace(os.sep, "/").startswith(EXCLUDED_PATHS):
         return errors
     try:
         with open(path, encoding="utf-8") as f:

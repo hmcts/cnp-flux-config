@@ -26,17 +26,6 @@ jobs:
         run: ./tests/lint-yaml.sh
       - name: Fluxv2 Image Automation
         run: ./tests/flux-v2-image-automation.sh
-  sops_secrets:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Install pre-commit
-        run: pip install pre-commit
-      - name: Check Kubernetes Secrets are SOPS encrypted
-        run: pre-commit run check-sops-secrets --all-files --show-diff-on-failure
   schema:
     runs-on: ubuntu-latest
     strategy:
