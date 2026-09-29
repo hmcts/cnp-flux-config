@@ -76,7 +76,7 @@ EOF
 fi
 
 
-if [ ! -f "${APPS_DIR}/${NAMESPACE}/base/kustomization.yaml" ]
+if [ ! -f "${APPS_DIR}/${NAMESPACE}/base/kustomize.yaml" ]
 then
     echo "Creating ${NAMESPACE}"
     mkdir -p ${APPS_DIR}/${NAMESPACE}
