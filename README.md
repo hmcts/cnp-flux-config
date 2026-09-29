@@ -14,6 +14,20 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
  [Sops setup](docs/secrets-sops-encryption.md)
 
+## Preventing commit of secrets
+
+A pre-commit hook has been provided in the repo via `.pre-commit-config.yaml`
+
+To install it, run `brew install pre-commit` and then `pre-commit install` on macOS or Linux (with homebrew).
+
+On the first commit after installing, `pyyaml` will be downloaded and installed to parse the yaml files in the repo.
+
+This will take a bit longer than normal to install but future commits should take place at the normal speed.
+
+This hook will also run as a github action to ensure bypass has not occurred.
+
+See [sops-secrets](.github/workflows/sops-secrets.yml)
+
 ### SOPs
 
 Sops fails linting by default as we require 2 spaces while it uses 4 spaces.
