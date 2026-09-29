@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dtsse-agent-hub
+spec:
+  releaseName: dtsse-agent-hub
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/dtsse/agent-hub:prod-0000000-00000000000000 #{"$imagepolicy": "flux-system:dtsse-agent-hub"}
+  chart:
+    spec:
+      chart: ./stable/dtsse-agent-hub
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
