@@ -48,7 +48,6 @@ spec:
 EOF
 ) > "${COMPONENT_DIR}/image-policy.yaml"
 
-# apps/flux-system/automation/kustomization.yaml patches each ImageRepository by this annotation; no annotation means hmctspublic
 if [[ ${ACR} == "hmctspublic" ]]
 then
 (
