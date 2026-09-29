@@ -15,9 +15,15 @@ spec:
           - target:
               kind: Deployment
             patch: |
-              - op: add
-                path: /spec/template/metadata/annotations/azure.workload.identity~1inject-proxy-sidecar
-                value: "true"
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: docmosis-base
+              spec:
+                template:
+                  metadata:
+                    annotations:
+                      azure.workload.identity/inject-proxy-sidecar: "true"
   chart:
     spec:
       chart: base
