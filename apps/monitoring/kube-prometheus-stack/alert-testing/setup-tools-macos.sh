@@ -11,7 +11,7 @@ fi
 echo "==> Installing yq"
 brew list yq >/dev/null 2>&1 || brew install yq
 
-PROMTOOL_IMAGE="${PROMTOOL_IMAGE:-prom/prometheus:latest}"
+PROMTOOL_IMAGE="${PROMTOOL_IMAGE:-prom/prometheus:v3.15.0}"
 
 echo "==> Installing promtool (preferred: Homebrew package)"
 if ! command -v promtool >/dev/null 2>&1; then
