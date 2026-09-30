@@ -59,7 +59,7 @@ All application deployments are managed with `HelmRelease`.
 
 - Standard naming convention for your application (`<application-name>`) is `<product>-<component>`. 
 - Add a `HelmRelease` manifest in `apps/<your-namespace>/<application-name>/<application-name>.yaml`. [See example](/apps/rpe/draft-store-service/draft-store-service.yaml)
-- Run [add-image-policies.sh](../bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional which defaults to **hmctspublic**.
+- Run [add-image-policies.sh](../bin/v2/add-image-policies.sh) with your namespace, product,component and registry. Registry argument is optional and defaults to **hmctsprod**. The other accepted values are `hmctspublic`, `hmctssandbox`, `hmctssbox` and `hmctsprivate`.
 
  ```bash
     ./bin/v2/add-image-policies.sh <your namespace> <product> <component> <registry>
@@ -76,9 +76,9 @@ All application deployments are managed with `HelmRelease`.
       releaseName: <component-name>
       values:
         java:
-          image: hmctspublic.azurecr.io/<product>/<component>:<latest prod tag>   #{"$imagepolicy": "flux-system:<component-name>"}
+          image: hmctsprod.azurecr.io/<product>/<component>:<latest prod tag>   #{"$imagepolicy": "flux-system:<component-name>"}
           #Example below
-          #image: hmctspublic.azurecr.io/draft-store/service:prod-c7a879d-20210807222025   #{"$imagepolicy": "flux-system:draft-store-service"}
+          #image: hmctsprod.azurecr.io/draft-store/service:prod-c7a879d-20210807222025   #{"$imagepolicy": "flux-system:draft-store-service"}
     ```
 
 ### Add application to all environments
@@ -113,15 +113,15 @@ metadata:
 spec:
   values:
     java:
-      image: hmctspublic.azurecr.io/<product>/<component>:<latest pr-123-tag>   #{"$imagepolicy": "flux-system:<env>-<component-name>"}
+      image: hmctsprod.azurecr.io/<product>/<component>:<latest pr-123-tag>   #{"$imagepolicy": "flux-system:<env>-<component-name>"}
       #Example below
-      #image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
+      #image: hmctsprod.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
 ```
 
 - Create an image policy like below (or update an existing environment image policy) with your pr number (pr-332 taken as example) along side your HelmRelease file.
 
 ```yaml
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: <env>-<component-name>
@@ -144,10 +144,10 @@ spec:
 - If an [environment using a non prod image](#Deploy-non-prod-image-to-an-environment) requires changing to use the prod image, update the HelmRelease patch to change the image policy marker to the default as in the example below
 ```yaml
 #From:
-image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
+image: hmctsprod.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:demo-draft-store-service"}
 
 #To:
-image: hmctspublic.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:draft-store-service"}
+image: hmctsprod.azurecr.io/draft-store/service:pr-123-20210807222025   #{"$imagepolicy": "flux-system:draft-store-service"}
 ```
 - Alternatively, delete the HelmRelease patch if it does not contain any required patches and  
   - Delete the existing environment image policy file `<component-name>/<env>-image-policy.yaml` 
