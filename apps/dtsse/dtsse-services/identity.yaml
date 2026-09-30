@@ -1,0 +1,40 @@
+# dtsse-services-<env>-mi is created by the dtsse-services Terraform, so ASO only references it.
+apiVersion: managedidentity.azure.com/v1api20181130
+kind: UserAssignedIdentity
+metadata:
+  name: dtsse-services-${WI_ENVIRONMENT}-mi
+  namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: skip
+spec:
+  location: uksouth
+  owner:
+    name: managed-identities-${WI_ENVIRONMENT}-rg
+---
+# Only the dtsse-services service account can use dtsse-services-<env>-mi.
+apiVersion: managedidentity.azure.com/v1api20220131preview
+kind: FederatedIdentityCredential
+metadata:
+  name: dtsse-services-${WI_CLUSTER}-fic
+  namespace: ${NAMESPACE}
+spec:
+  owner:
+    name: dtsse-services-${WI_ENVIRONMENT}-mi
+  audiences:
+    - api://AzureADTokenExchange
+  issuer: ${ISSUER_URL}
+  subject: system:serviceaccount:${NAMESPACE}:dtsse-services
+---
+# The chart mounts Key Vault secrets with the namespace identity, so it must also trust the dtsse-services service account.
+apiVersion: managedidentity.azure.com/v1api20220131preview
+kind: FederatedIdentityCredential
+metadata:
+  name: ${WI_NAME}-dtsse-services-${WI_CLUSTER}-fic
+  namespace: ${NAMESPACE}
+spec:
+  owner:
+    name: ${WI_NAME}-${WI_ENVIRONMENT}-mi
+  audiences:
+    - api://AzureADTokenExchange
+  issuer: ${ISSUER_URL}
+  subject: system:serviceaccount:${NAMESPACE}:dtsse-services

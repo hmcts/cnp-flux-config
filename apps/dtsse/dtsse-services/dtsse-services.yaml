@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dtsse-services
+spec:
+  releaseName: dtsse-services
+  interval: 1m
+  values:
+    java:
+      image: hmctsprod.azurecr.io/dtsse/services:prod-0a0bfd7-20260930111652 #{"$imagepolicy": "flux-system:dtsse-services"}
+      saEnabled: false
+      customServiceAccountName: dtsse-services
+  chart:
+    spec:
+      chart: ./stable/dtsse-services
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
