@@ -1,4 +1,4 @@
-# dtsse-services-<env>-mi is created by the dtsse-services Terraform, so ASO only references it.
+# The identity is created by the dtsse-services Terraform. The second credential lets the chart read Key Vault.
 apiVersion: managedidentity.azure.com/v1api20181130
 kind: UserAssignedIdentity
 metadata:
@@ -11,7 +11,6 @@ spec:
   owner:
     name: managed-identities-${WI_ENVIRONMENT}-rg
 ---
-# Only the dtsse-services service account can use dtsse-services-<env>-mi.
 apiVersion: managedidentity.azure.com/v1api20220131preview
 kind: FederatedIdentityCredential
 metadata:
@@ -25,7 +24,6 @@ spec:
   issuer: ${ISSUER_URL}
   subject: system:serviceaccount:${NAMESPACE}:dtsse-services
 ---
-# The chart mounts Key Vault secrets with the namespace identity, so it must also trust the dtsse-services service account.
 apiVersion: managedidentity.azure.com/v1api20220131preview
 kind: FederatedIdentityCredential
 metadata:
