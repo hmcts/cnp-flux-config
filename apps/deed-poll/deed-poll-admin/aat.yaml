@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: deed-poll-admin
+spec:
+  values:
+    nodejs:
+      environment:
+        # Flux does not apply the Jenkins values.aat.template.yaml opt-in.
+        PERSONA_SWITCHER_ENABLED: "true"
