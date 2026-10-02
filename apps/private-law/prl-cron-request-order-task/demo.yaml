@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-request-order-task
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-4b69807-20260925150751 #{"$imagepolicy": "flux-system:demo-prl-cron-request-order-task"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-7da4886-20261001104227 #{"$imagepolicy": "flux-system:demo-prl-cron-request-order-task"}
       environment:
         APP_ENV: "demo"
         TASK_NAME: RequestOrderTask
@@ -35,8 +35,9 @@ spec:
         REQUEST_ORDER_TASK_C100_CADENCE: 1
         REQUEST_ORDER_TASK_FL401_CADENCE: 1
         REQUEST_ORDER_TASK_CADENCE_MULTIPLIER: 5
+        REQUEST_ORDER_TASK_RELEASE_DATE: "2026-09-15"
         DUMMY: true
-      schedule: "15 17 * * *"
+      schedule: "30 15 * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true

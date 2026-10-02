@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: aat-civil-citizen-ui-postgresql
+  annotations:
+    hmcts.github.com/prod-automated: disabled
+spec:
+  filterTags:
+    pattern: '^17\.5\.0-debian-12-r(?P<revision>[0-9]+)$'
+    extract: '$revision'
+  policy:
+    numerical:
+      order: asc
+  imageRepositoryRef:
+    name: aat-civil-citizen-ui-postgresql

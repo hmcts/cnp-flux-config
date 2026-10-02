@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "00 12 * * *"
-      image: hmctsprod.azurecr.io/finrem/cos:pr-3090-79d53c8-20260925124933 #{"$imagepolicy": "flux-system:demo-finrem-cron-one-off-task"}
+      schedule: "00 15 * * *"
+      image: hmctsprod.azurecr.io/finrem/cos:pr-3090-52c14aa-20260930120601 #{"$imagepolicy": "flux-system:demo-finrem-cron-one-off-task"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -15,6 +15,7 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
         SECURE_DOC_ENABLED: false
+        IDAM_OIDC_URL: "https://idam-web-public.demo.platform.hmcts.net"
         FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
         PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
@@ -26,6 +27,7 @@ spec:
         CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 50
         CRON_SUPPLEMENTARY_DATA_UPDATE: true
         CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
+        GLOBAL_SEARCH_ENABLED: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
