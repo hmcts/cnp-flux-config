@@ -9,6 +9,8 @@ spec:
     imageTag: "9.2.4"
     replicas: 1
     imagePullPolicy: "IfNotPresent"
+    securityContext:
+      allowPrivilegeEscalation: false
     logstashJavaOpts: "-Xms4g -Xmx8g"
     resources:
       requests:
@@ -29,6 +31,8 @@ spec:
       - name: download-postgres-jdbc
         image: hmctsprod.azurecr.io/curl:7.70.0
         command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
+        securityContext:
+          allowPrivilegeEscalation: false
         volumeMounts:
         - name: logstash-lib
           mountPath: /logstash-lib
