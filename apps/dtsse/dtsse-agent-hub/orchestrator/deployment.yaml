@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dtsse-agent-hub-orchestrator
+  namespace: ${NAMESPACE}
+  labels:
+    app.kubernetes.io/name: dtsse-agent-hub-orchestrator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dtsse-agent-hub-orchestrator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: dtsse-agent-hub-orchestrator
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: dtsse-agent-hub-orchestrator
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: orchestrator
+          image: hmctsprod.azurecr.io/dtsse/agent-hub:prod-85fe320-20261005092051 #{"$imagepolicy": "flux-system:dtsse-agent-hub"}
+          command: ["node", "dist/cli/orchestrator.js"]
+          env:
+            - name: ORCHESTRATOR_CLUSTER
+              value: cft-${ENVIRONMENT}-${CLUSTER}
+            - name: VIRTUAL_AGENT_IMAGE
+              value: hmctsprod.azurecr.io/cft-workspace/devcontainer@sha256:61fa0e0a34b59099694652e4de6820ab739b97cf73c6d3fc4b76d05f52884f3c
+            - name: VIRTUAL_AGENT_SERVICE_ACCOUNT
+              value: dtsse-agent-hub-virtual-agent
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: http
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: http
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
