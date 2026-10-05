@@ -5,14 +5,14 @@ NAMESPACE=$1
 PRODUCT=$2
 COMPONENT=$3
 REGISTRY=$4
-ACR=${REGISTRY:-hmctspublic}
+ACR=${REGISTRY:-hmctsprod}
 APPS_DIR="../../apps/"
 COMPONENT_DIR="${APPS_DIR}/${NAMESPACE}/${PRODUCT}-${COMPONENT}"
 
 cd "$(dirname "$0")"
 
 function usage() {
-  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> '
+  echo 'usage: ./add-image-policies.sh <namespace> <product> <component> [hmctsprod|hmctspublic|hmctssandbox|hmctssbox|hmctsprivate]'
 }
 
 if [ -z "${NAMESPACE}" ] || [ -z "${PRODUCT}" ] || [ -z "${COMPONENT}" ]
@@ -21,7 +21,16 @@ then
   exit 1
 fi
 
-# Create component dir if it doesn't exist
+case "${ACR}" in
+  hmctsprod|hmctspublic|hmctssandbox|hmctssbox|hmctsprivate) ;;
+  *)
+    echo "Unknown registry: ${ACR}"
+    usage
+    exit 1
+    ;;
+esac
+
+# Create component dir if it doesn't exist
 if [ ! -d "${COMPONENT_DIR}" ]; then
   echo "Creating ${PRODUCT}-${COMPONENT} directory"
   mkdir -p ${COMPONENT_DIR}
@@ -29,7 +38,7 @@ fi
 
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: ${PRODUCT}-${COMPONENT}
@@ -43,7 +52,7 @@ if [[ ${ACR} == "hmctspublic" ]]
 then
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
@@ -51,44 +60,15 @@ spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
 ) > "${COMPONENT_DIR}/image-repo.yaml"
-elif [[ ${ACR} == "hmctssandbox" ]]
-then
+else
 (
 cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
   name: ${PRODUCT}-${COMPONENT}
   annotations:
-    hmcts.github.com/image-registry: hmctssandbox
-spec:
-  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
-EOF
-) > "${COMPONENT_DIR}/image-repo.yaml"
-elif [[ ${ACR} == "hmctssbox" ]]
-then
-(
-cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageRepository
-metadata:
-  name: ${PRODUCT}-${COMPONENT}
-  annotations:
-    hmcts.github.com/image-registry: hmctssbox
-spec:
-  image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
-EOF
-) > "${COMPONENT_DIR}/image-repo.yaml"
-elif [[ ${ACR} == "hmctsprivate" ]]
-then
-(
-cat <<EOF
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageRepository
-metadata:
-  name: ${PRODUCT}-${COMPONENT}
-  annotations:
-    hmcts.github.com/image-registry: hmctsprivate
+    hmcts.github.com/image-registry: ${ACR}
 spec:
   image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}
 EOF
@@ -105,7 +85,7 @@ then
 fi
 
 if [ ! -d "${APPS_DIR}/${NAMESPACE}/automation" ]; then
-  
+
   echo "Creating automation directory for ${NAMESPACE}"
   mkdir ${APPS_DIR}/${NAMESPACE}/automation
   (
@@ -119,5 +99,12 @@ FILE_PATH="../../${NAMESPACE}/automation" yq eval -i '.resources += [env(FILE_PA
 
 fi
 
-FILE_PATH="../${PRODUCT}-${COMPONENT}/image-repo.yaml" yq eval -i '.resources += [env(FILE_PATH)]' ${APPS_DIR}/${NAMESPACE}/automation/kustomization.yaml
-FILE_PATH="../${PRODUCT}-${COMPONENT}/image-policy.yaml" yq eval -i '.resources += [env(FILE_PATH)]' ${APPS_DIR}/${NAMESPACE}/automation/kustomization.yaml
+for FILE in image-repo.yaml image-policy.yaml
+do
+  export FILE_PATH="../${PRODUCT}-${COMPONENT}/${FILE}"
+  if [[ $(yq eval '.resources[] | ( . == env(FILE_PATH))' ${APPS_DIR}/${NAMESPACE}/automation/kustomization.yaml) =~ "true" ]]; then
+    echo "Reference to ${FILE_PATH} already exists, ignoring.."
+  else
+    yq eval -i '.resources += [env(FILE_PATH)]' ${APPS_DIR}/${NAMESPACE}/automation/kustomization.yaml
+  fi
+done

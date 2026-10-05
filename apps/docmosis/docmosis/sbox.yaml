@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     ingressHost: docmosis.sandbox.platform.hmcts.net
-    image: hmctsprod.azurecr.io/docmosis:sandbox-2295672-1226567 #{"$imagepolicy": "flux-system:sandbox-docmosis"}
+    image: hmctsprod.azurecr.io/docmosis:sandbox-5d0b3a9-1230839 #{"$imagepolicy": "flux-system:sandbox-docmosis"}
     environment:
       DOCMOSIS_RENDER_USEURL: https://docmosis.sandbox.platform.hmcts.net
       DOCMOSIS_TORNADO_RENDER_USEURL: https://docmosis.sandbox.platform.hmcts.net
@@ -15,9 +15,15 @@ spec:
           - target:
               kind: Deployment
             patch: |
-              - op: add
-                path: /spec/template/metadata/annotations/azure.workload.identity~1inject-proxy-sidecar
-                value: "true"
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: docmosis-base
+              spec:
+                template:
+                  metadata:
+                    annotations:
+                      azure.workload.identity/inject-proxy-sidecar: "true"
   chart:
     spec:
       chart: base
