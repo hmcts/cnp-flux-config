@@ -12,11 +12,13 @@ Please see [Repo setup](docs/repo-setup.md) for details on how this repo is orga
 
 ## Encrypting Secrets With Sops
 
- [Sops setup](docs/secrets-sops-encryption.md)
+Secrets can be stored in this repository but they must be encrypted using the SOPS tool.
+
+[Click here for info on how to setup SOPS](docs/secrets-sops-encryption.md).
 
 ## Preventing commit of secrets
 
-A pre-commit hook has been provided in the repo via `.pre-commit-config.yaml`
+To prevent unencrypted secrets being committed to this repository, a pre-commit hook has been provided via `.pre-commit-config.yaml`
 
 To install it, run `brew install pre-commit` and then `pre-commit install` on macOS or Linux (with homebrew).
 
@@ -26,7 +28,7 @@ This will take a bit longer than normal to install but future commits should tak
 
 This hook will also run as a github action to ensure bypass has not occurred.
 
-See [sops-secrets](.github/workflows/sops-secrets.yml)
+The action can be found at [sops-secrets](.github/workflows/sops-secrets.yml)
 
 ### SOPs
 
