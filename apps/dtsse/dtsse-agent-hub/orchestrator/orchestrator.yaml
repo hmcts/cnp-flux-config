@@ -1,10 +1,43 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dtsse-agent-hub-orchestrator
+  namespace: ${NAMESPACE}
+  annotations:
+    azure.workload.identity/client-id: "ORCHESTRATOR_CLIENT_ID"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dtsse-agent-hub-orchestrator
+  namespace: ${NAMESPACE}
+rules:
+  - apiGroups: ["apps"]
+    resources: ["statefulsets"]
+    verbs: ["get", "list", "create", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dtsse-agent-hub-orchestrator
+  namespace: ${NAMESPACE}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: dtsse-agent-hub-orchestrator
+subjects:
+  - kind: ServiceAccount
+    name: dtsse-agent-hub-orchestrator
+    namespace: ${NAMESPACE}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dtsse-agent-hub-orchestrator
   namespace: ${NAMESPACE}
-  labels:
-    app.kubernetes.io/name: dtsse-agent-hub-orchestrator
 spec:
   replicas: 1
   strategy:
@@ -21,7 +54,6 @@ spec:
       serviceAccountName: dtsse-agent-hub-orchestrator
       securityContext:
         runAsUser: 1000
-        runAsGroup: 1000
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
@@ -34,22 +66,11 @@ spec:
               value: cft-${ENVIRONMENT}-${CLUSTER}
             - name: VIRTUAL_AGENT_IMAGE
               value: hmctsprod.azurecr.io/cft-workspace/devcontainer@sha256:61fa0e0a34b59099694652e4de6820ab739b97cf73c6d3fc4b76d05f52884f3c
-            - name: VIRTUAL_AGENT_SERVICE_ACCOUNT
-              value: dtsse-agent-hub-virtual-agent
-          ports:
-            - name: http
-              containerPort: 8080
           livenessProbe:
             httpGet:
               path: /health/liveness
-              port: http
+              port: 8080
             periodSeconds: 30
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /health/readiness
-              port: http
-            periodSeconds: 10
           resources:
             requests:
               cpu: 50m
