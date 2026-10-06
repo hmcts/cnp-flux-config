@@ -8,7 +8,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/prl/citizen-frontend:prod-c6397a5-20260929124723 #{"$imagepolicy": "flux-system:perftest-prl-citizen-frontend"}
+      image: hmctsprod.azurecr.io/prl/citizen-frontend:pr-2330-0a61976-20261002135823 #{"$imagepolicy": "flux-system:perftest-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       readinessDelay: 45
@@ -34,7 +34,8 @@ spec:
       environment:
         NODE_ENV: perftest
         IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net/o/token
-        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/login
+        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/o/authorize
+        IDAM_END_SESSION_URL: https://idam-web-public.perftest.platform.hmcts.net/o/endSession
         REFORM_SERVICE_NAME: prl-citizen-frontend
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-perftest.service.core-compute-perftest.internal
