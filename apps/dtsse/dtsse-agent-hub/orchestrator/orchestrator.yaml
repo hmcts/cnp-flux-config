@@ -18,6 +18,12 @@ rules:
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "create", "patch", "delete"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "create", "patch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -65,7 +71,9 @@ spec:
             - name: ORCHESTRATOR_CLUSTER
               value: cft-${CLUSTER_FULL_NAME}
             - name: VIRTUAL_AGENT_IMAGE
-              value: hmctsprod.azurecr.io/cft-workspace/devcontainer@sha256:61fa0e0a34b59099694652e4de6820ab739b97cf73c6d3fc4b76d05f52884f3c
+              value: hmctsprod.azurecr.io/cft-workspace/devcontainer@sha256:61fa0e0a34b59099694652e4de6820ab739b97cf73c6d3fc4b76d05f52884f3c #{"$imagepolicy": "flux-system:dtsse-agent-hub-virtual-agent"}
+            - name: VIRTUAL_AGENT_HOST_ALIASES
+              value: build.hmcts.net=10.10.73.250
           livenessProbe:
             httpGet:
               path: /health/liveness
