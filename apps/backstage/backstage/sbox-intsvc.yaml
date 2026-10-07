@@ -4,10 +4,38 @@ metadata:
   name: backstage
   namespace: backstage
 spec:
+  # Temporary DTSPO-34601 sandbox validation; remove this probe after testing.
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              group: apps
+              version: v1
+              kind: Deployment
+              name: backstage
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: backstage
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: backstage
+                        readinessProbe:
+                          httpGet:
+                            path: /health/catalog
+                            port: 7007
+                          periodSeconds: 10
+                          timeoutSeconds: 5
+                          failureThreshold: 3
   values:
     ingress:
       host: backstage-sandbox.hmcts.net
     backend:
+      # Pin the PR build for this test; the sandbox image policy normally selects prod tags.
+      image: hmctsprod.azurecr.io/backstage-portal/backend:pr-78-d8875623-1791354425
       db:
         user: pgadmin
         host: hmcts-backstage-ptlsbox.postgres.database.azure.com
