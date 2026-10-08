@@ -33,6 +33,38 @@ spec:
           value: https://cftsbox-intsvc.vault.azure.net
       JCasC:
         configScripts:
+          jobs: |
+            jobs:
+              - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/seed-jobs-split/jobdsl/organisations-beta.groovy
+              - script: |
+                  ['A-C': '8,11,14,17', 'D-I': '9,12,15,18', 'J-Z': '10,13,16,19'].each { group, hours ->
+                    pipelineJob('Seed Job ' + group) {
+                      parameters {
+                        stringParam('ORG_GROUP', group, 'Organisation group to seed')
+                      }
+                      properties {
+                        disableConcurrentBuilds()
+                      }
+                      triggers {
+                        cron('0 ' + hours + ' * * 1-5')
+                      }
+                      definition {
+                        cpsScm {
+                          scm {
+                            git {
+                              remote {
+                                github('hmcts/cnp-jenkins-config')
+                                credentials('hmcts-jenkins-cnp')
+                              }
+                              branch('seed-jobs-split')
+                            }
+                          }
+                          scriptPath('jobdsl/Jenkinsfile_seed')
+                          lightweight(true)
+                        }
+                      }
+                    }
+                  }
           welcome-message: |
             jenkins:
               systemMessage: >-
@@ -384,11 +416,3 @@ spec:
                             emptyDir:
                           - name: volume-4
                             emptyDir:
-  chart:
-    spec:
-      chart: jenkins
-      version: 5.9.64
-      sourceRef:
-        kind: HelmRepository
-        name: jenkins
-        namespace: jenkins

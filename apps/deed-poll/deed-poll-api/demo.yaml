@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: deed-poll-api
+spec:
+  values:
+    java:
+      image: hmctsprod.azurecr.io/deed-poll/api:prod-27f3f36-20261002140425
+      environment:
+        IDAM_API_ISSUER_URL: https://hmcts-access.demo.platform.hmcts.net/o
+        IDAM_API_AUDIENCES: deed-poll-admin
+        # CCD/CDAM onboarding is separate from the initial admin/API deployment.
+        CCD_LINKING_SWEEP_ENABLED: "false"
+        DOCUMENT_STORE: filesystem
