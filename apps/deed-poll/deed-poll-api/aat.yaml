@@ -5,8 +5,6 @@ metadata:
 spec:
   values:
     java:
-      # Apply deed-poll-infra's AAT api-s2s-secret copy before merging this overlay.
-      # Helm replaces the secrets list, so retain the chart's existing database/telemetry entries.
       keyVaults:
         deed-poll:
           secrets:
@@ -29,8 +27,5 @@ spec:
         CCD_DATA_STORE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
         DOCUMENT_URL_BASE: http://dm-store-aat.service.core-compute-aat.internal
-        # The endpoints and key alone do not establish onboarding. Keep both activation switches off
-        # until the identifiers, system identity, CCD definition/routing and CDAM permissions are ready.
-        # Existing filesystem documents also need inventory/migration before switching the backend.
         CCD_LINKING_SWEEP_ENABLED: "false"
         DOCUMENT_STORE: filesystem
