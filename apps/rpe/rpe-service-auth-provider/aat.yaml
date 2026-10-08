@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rpe-service-auth-provider
+spec:
+  values:
+    java:
+      keyVaults:
+        # Add an AAT-only mount; leave the chart's shared s2s secret list intact.
+        s2s-aat:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: microservicekey-deed-poll-api
+              alias: microserviceKeys.deed_poll_api
+            - name: microservicekey-deed-poll-web
+              alias: microserviceKeys.deed_poll_web
+      environment:
+        # Retain the standard keys and also load the two AAT-only registrations.
+        SPRING_CONFIG_IMPORT: "optional:configtree:/mnt/secrets/s2s/,configtree:/mnt/secrets/s2s-aat/"
