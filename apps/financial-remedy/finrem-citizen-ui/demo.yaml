@@ -7,14 +7,15 @@ spec:
   releaseName: finrem-citizen-ui
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-e3961ff-20260925125507 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
+      image: hmctsprod.azurecr.io/finrem/citizen-ui:prod-a71780a-20261008070312 #{"$imagepolicy": "flux-system:demo-finrem-citizen-ui"}
       ingressHost: finrem-citizen-ui.demo.platform.hmcts.net
       ingressSessionAffinity:
         enabled: true
         sessionCookieName: sticky
       environment:
         RESTART_MANUALLY: 0
-        DYNATRACE_ENABLED: "true"
+        DYNATRACE_ENABLED: true
+        GOOGLE_ANALYTICS_TRACKING_ENABLED: true
         CASE_DOCUMENT_MANAGEMENT_URL: http://ccd-case-document-am-api-demo.service.core-compute-demo.internal
         IDAM_WEB_URL: https://hmcts-access.demo.platform.hmcts.net/o/authorize
         IDAM_TOKEN_URL: https://idam-api.demo.platform.hmcts.net/o/token

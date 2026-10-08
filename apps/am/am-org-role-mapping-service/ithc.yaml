@@ -5,7 +5,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-c777584-20260925142602 #{"$imagepolicy": "flux-system:ithc-am-org-role-mapping-service"}
+      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-438bc5b-20261007142416 #{"$imagepolicy": "flux-system:ithc-am-org-role-mapping-service"}
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: INFO
@@ -16,7 +16,7 @@ spec:
         PROFESSIONAL_SCHEDULING_ENABLED: true
         # PRM Schedules
         # PRM-1
-        CRON_PRM_P1_FIND_CASE_DEFINITION_CHANGES: "0 00 8 * * MON-FRI"
+        CRON_PRM_P1_FIND_CASE_DEFINITION_CHANGES: "0 00 8-17 * * MON-FRI"
         CRON_PRM_P1_LOCK_AT_LEAST_FOR: "PT1M"
         CRON_PRM_P1_LOCK_AT_MOST_FOR: "PT5M"
         # PRM-2
@@ -49,3 +49,7 @@ spec:
         # REFRESH_JOB_ALLOW_UPDATE: false
         # Other
         DUMMY_VAR: false
+        JWT_ISSUER_VALIDATION_ENABLED: true
+        IDAM_SECURITY_ALLOWED_ISSUERS_0: https://idam-web-public.ithc.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_1: https://hmcts-access.ithc.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_2: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/realms/root/realms/hmcts
