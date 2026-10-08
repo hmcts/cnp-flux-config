@@ -8,6 +8,13 @@ spec:
     nodejs:
       replicas: 2
       image: hmctsprod.azurecr.io/pt/frontend:prod-8a18e89-20261008090549 #{"$imagepolicy": "flux-system:pt-frontend"}
+      autoscaling:
+        enabled: true
+        maxReplicas: 4
+      memoryRequests: "1Gi"
+      memoryLimits: "2Gi"
+      cpuRequests: "500m"
+      cpuLimits: "1000m"
       environment:
         VAR_TA: 1
   chart:
