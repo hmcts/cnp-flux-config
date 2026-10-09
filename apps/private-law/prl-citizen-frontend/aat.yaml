@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/prl/citizen-frontend:prod-48fb9dc-20261001171755 #{"$imagepolicy": "flux-system:aat-prl-citizen-frontend"}
+      image: hmctsprod.azurecr.io/prl/citizen-frontend:pr-2330-2ff5f5f-20261009080321 #{"$imagepolicy": "flux-system:aat-prl-citizen-frontend"}
       cpuLimits: "1000m"
       cpuRequests: "500m"
       replicas: 2
@@ -33,7 +33,8 @@ spec:
       environment:
         NODE_ENV: aat
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net/o/token
-        IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/login
+        IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/o/authorize
+        IDAM_END_SESSION_URL: https://idam-web-public.aat.platform.hmcts.net/o/endSession
         REFORM_SERVICE_NAME: prl-citizen-frontend
         REFORM_TEAM: prl
         SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
