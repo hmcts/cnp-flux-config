@@ -1,0 +1,106 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ccd
+labels:
+  - pairs:
+      ccd-elasticsearch-app-suite: "true"
+resources:
+  - data-store
+  - definition-store
+  - logstash-config.yaml
+  - logstash-main
+  - logstash-civil
+  - logstash-fpl
+  - logstash-cmc
+  - logstash-divorce
+  - logstash-ethos
+  - logstash-probate
+  - logstash-probateman
+  - logstash-sscs
+patches:
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-elasticsearch-app-logstash.*
+    patch: |-
+      - op: replace
+        path: /spec/values/envFrom
+        value:
+          - secretRef:
+              name: logstash-secret
+          - configMapRef:
+              name: ccd-elasticsearch-app-logstash-config
+      - op: add
+        path: /spec/values/persistence
+        value:
+          enabled: true
+      - op: add
+        path: /spec/values/volumeClaimTemplate
+        value:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+      - op: replace
+        path: /spec/values/extraInitContainers
+        value: |
+          - name: download-postgres-jdbc
+            image: hmctsprod.azurecr.io/curl:7.70.0
+            command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
+            volumeMounts:
+              - name: logstash-lib
+                mountPath: /logstash-lib
+          - name: seed-jdbc-checkpoint
+            image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+            command:
+              - /bin/sh
+              - -ec
+              - |
+                path=/usr/share/logstash/data/ccd-elasticsearch-app-last-run
+                if [ ! -e "$path" ]; then
+                  printf '%s\n' '--- 2026-09-28T14:50:47Z' > "$path"
+                fi
+            volumeMounts:
+              - name: '{{ include "logstash.fullname" . }}'
+                mountPath: /usr/share/logstash/data
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-elasticsearch-app-logstash-probateman
+    patch: |-
+      - op: replace
+        path: /spec/values/envFrom
+        value:
+          - secretRef:
+              name: logstash-secret
+          - secretRef:
+              name: probatemandb
+          - configMapRef:
+              name: ccd-elasticsearch-app-logstash-config
+      - op: replace
+        path: /spec/values/extraInitContainers
+        value: |
+          - name: download-postgres-jdbc
+            image: hmctsprod.azurecr.io/curl:7.70.0
+            command: ['curl', '-L', 'https://jdbc.postgresql.org/download/postgresql-42.7.9.jar', '-o', '/logstash-lib/postgresql.jar']
+            volumeMounts:
+              - name: logstash-lib
+                mountPath: /logstash-lib
+          - name: seed-jdbc-checkpoints
+            image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+            command:
+              - /bin/sh
+              - -ec
+              - |
+                for source in caveats standing-searches wills legacy-applications legacy-grants; do
+                  path="/usr/share/logstash/data/ccd-elasticsearch-app-probateman-${source}-last-run"
+                  if [ ! -e "$path" ]; then
+                    printf '%s\n' '--- 2026-09-28T14:50:47Z' > "$path"
+                  fi
+                done
+            volumeMounts:
+              - name: '{{ include "logstash.fullname" . }}'
+                mountPath: /usr/share/logstash/data
