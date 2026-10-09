@@ -5,11 +5,11 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-a6d0654-20260930103421 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
+      image: hmctsprod.azurecr.io/am/org-role-mapping-service:prod-438bc5b-20261007142416 #{"$imagepolicy": "flux-system:demo-am-org-role-mapping-service"}
       environment:
         AM_INFO: true
         APPLICATION_LOGGING_LEVEL: INFO
-        DB_FEATURE_FLAG_ENABLE: probate_wa_1_0
+        DB_FEATURE_FLAG_ENABLE: fr_wa_1_0
         TESTING_SUPPORT_ENABLED: false
         # PRD Config
         PROFESSIONAL_REFRESH_API_ENABLED: true
@@ -44,8 +44,12 @@ spec:
         # PRM-Cleanup User
         CRON_PRM_REFRESH_CLEANUP_USER: "-"
         # Refresh Job Config
-        REFRESH_JOB: LEGAL_OPERATIONS-PROBATE-NEW-0-82
+        REFRESH_JOB: LEGAL_OPERATIONS-DIVORCE-NEW-0-83
         # always set 'REFRESH_JOB_ALLOW_UPDATE' to false before next refresh (i.e. only use when setting existing job to ABORTED)
         # REFRESH_JOB_ALLOW_UPDATE: false
         # Other
         DUMMY_VAR: true
+        JWT_ISSUER_VALIDATION_ENABLED: true
+        IDAM_SECURITY_ALLOWED_ISSUERS_0: https://idam-web-public.demo.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_1: https://hmcts-access.demo.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_2: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts

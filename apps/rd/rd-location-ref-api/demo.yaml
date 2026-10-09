@@ -5,9 +5,13 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/rd/location-ref-api:prod-65c960e-20260930145548 #{"$imagepolicy": "flux-system:demo-rd-location-ref-api"}
+      image: hmctsprod.azurecr.io/rd/location-ref-api:prod-39ed5b0-20261006150938 #{"$imagepolicy": "flux-system:demo-rd-location-ref-api"}
       environment:
         DUMMY_VAR: false
         LRD_S2S_AUTHORISED_SERVICES: rd_location_ref_api,payment_app,rd_caseworker_ref_api,ccd_data,xui_webapp,prl_cos_api,sscs,sscs_bulkscan,adoption_web,rd_judicial_api,civil_service,civil_general_applications,sptribs_case_api,fis_hmc_api,iac,et_cos,civil_rtl_export,pcs_api,probate_backend,finrem_case_orchestration,finrem_citizen_ui,pt_api
         DELETE_ORG: true
         ACTIVE_ORG_EXT: true
+        JWT_ISSUER_VALIDATION_ENABLED: true
+        IDAM_SECURITY_ALLOWED_ISSUERS_0: https://idam-web-public.demo.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_1: https://hmcts-access.demo.platform.hmcts.net/o
+        IDAM_SECURITY_ALLOWED_ISSUERS_2: https://forgerock-am.service.core-compute-idam-demo.internal:8443/openam/oauth2/realms/root/realms/hmcts

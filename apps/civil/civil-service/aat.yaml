@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/civil/service:prod-e52a67f-20260930133540 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctsprod.azurecr.io/civil/service:prod-306bb98-20261008131954 #{"$imagepolicy": "flux-system:civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -78,3 +78,9 @@ spec:
         HMC_HEARINGS_SUBSCRIPTION_ENABLED: true
         DOCSTORE_DOC_REMOVAL_ENABLED: true
         IDAM_SCOPE: openid profile roles search-user
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false # keep off until cutover so preloaded cases are never indexed
+        CIVIL_CCD_DATA_MIGRATION_ENABLED: true
+        CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        CIVIL_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
+        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m

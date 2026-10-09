@@ -7,7 +7,7 @@ spec:
   values:
     job:
       schedule: "35 08 02 10 *"
-      image: hmctsprod.azurecr.io/finrem/cos:pr-3090-52c14aa-20260930120601 #{"$imagepolicy": "flux-system:perftest-finrem-cron-one-off-task"}
+      image: hmctsprod.azurecr.io/finrem/cos:pr-3090-6cdb11a-20261008104950 #{"$imagepolicy": "flux-system:perftest-finrem-cron-one-off-task"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -21,6 +21,7 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-perftest.service.core-compute-perftest.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-perftest.service.core-compute-perftest.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-perftest.service.core-compute-perftest.internal"
+        CRON_WAIT_TIME_MINS: 1
         TASK_NAME: GlobalSearchMigrationTask
         CRON_DRY_RUN: false
         CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: true
