@@ -3,5 +3,10 @@ kind: FlexibleServer
 metadata:
   name: ${NAMESPACE}-${ENVIRONMENT}
   namespace: ${NAMESPACE}
+  annotations:
+    serviceoperator.azure.com/reconcile-policy: detach-on-delete
 spec:
-  version: "14"
+  version: "15"
+  sku:
+    name: Standard_D4ds_v5
+    tier: GeneralPurpose
