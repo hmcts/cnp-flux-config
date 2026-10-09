@@ -21,7 +21,7 @@ spec:
             parameters => {
                         "jurisdiction" => "PUBLICLAW"
                           }
-            statement => "UPDATE case_data SET marked_by_logstash = true WHERE id IN (SELECT id FROM case_data WHERE marked_by_logstash = false AND jurisdiction = :jurisdiction LIMIT 1000) RETURNING id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
+            statement => "WITH candidates AS (SELECT q.id FROM case_data_logstash_queue q JOIN case_data cd ON q.case_data_id = cd.id WHERE jurisdiction = :jurisdiction ORDER BY q.id FOR UPDATE OF q SKIP LOCKED LIMIT 1000) DELETE FROM case_data_logstash_queue q USING candidates c, case_data cd WHERE q.id = c.id AND q.case_data_id = cd.id RETURNING q.id AS version, cd.id, created_date, last_modified, jurisdiction, case_type_id, state, last_state_modified_date, data::TEXT as json_data, data_classification::TEXT as json_data_classification, reference, security_classification, supplementary_data::TEXT as json_supplementary_data"
             clean_run => false
             schedule => "* * * * * *"
           }
