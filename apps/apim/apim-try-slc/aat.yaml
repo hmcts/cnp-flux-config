@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: apim-try-slc
+spec:
+  values:
+    java:
+      ingressHost: apim-try-slc.aat.platform.hmcts.net
+      keyVaults:
+        apim:
+          secrets:
+            - name: try-slc-DEMO-SIGNING-KEY-JWK
+              alias: DEMO_SIGNING_KEY_JWK
+            - name: try-slc-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: try-slc-POSTGRES-PASS
+              alias: POSTGRES_PASS
+            - name: try-slc-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: try-slc-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: try-slc-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
