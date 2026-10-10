@@ -34,7 +34,6 @@ metadata:
   name: ${NAMESPACE}-${ENVIRONMENT}
   namespace: ${NAMESPACE}
 spec:
-  version: "16"
   sku:
     name: Standard_D2ds_v5
     tier: GeneralPurpose
