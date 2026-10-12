@@ -5,6 +5,27 @@ metadata:
 spec:
   values:
     java:
+      keyVaults:
+        deed-poll:
+          secrets:
+            - name: app-insights-connection-string
+            - name: postgres-host
+              alias: DB_HOST
+            - name: postgres-port
+              alias: DB_PORT
+            - name: postgres-user
+              alias: DB_USER_NAME
+            - name: postgres-password
+              alias: DB_PASSWORD
+            - name: api-s2s-secret
+              alias: DEED_POLL_API_S2S_SECRET
       environment:
         IDAM_API_ISSUER_URL: https://hmcts-access.aat.platform.hmcts.net/o
         IDAM_API_AUDIENCES: deed-poll-admin
+        IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
+        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+        CCD_DATA_STORE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
+        DOCUMENT_URL_BASE: http://dm-store-aat.service.core-compute-aat.internal
+        CCD_LINKING_SWEEP_ENABLED: "false"
+        DOCUMENT_STORE: filesystem
