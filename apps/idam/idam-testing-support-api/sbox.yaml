@@ -7,6 +7,39 @@ spec:
   releaseName: idam-testing-support-api
   values:
     java:
+      keyVaults:
+        "idam-idam":
+          resourceGroup: idam-idam
+          excludeEnvironmentSuffix: false
+          secrets:
+            - name: AppInsightsConnectionString
+              alias: app-insights-connection-string
+            - name: idam-testing-support-api-POSTGRES-HOST-SECRET
+              alias: DATASOURCE_HOST
+            - name: idam-testing-support-api-POSTGRES-PORT-SECRET
+              alias: DATASOURCE_PORT
+            - name: idam-testing-support-api-POSTGRES-DATABASE-SECRET
+              alias: DATASOURCE_DATABASE
+            - name: idam-testing-support-api-POSTGRES-USER-SECRET
+              alias: spring.datasource.username
+            - name: idam-testing-support-api-POSTGRES-PASS-SECRET
+              alias: spring.datasource.password
+            - name: notify-api-key
+              alias: notify.key
+            - name: idam-testing-support-api-client-secret
+              alias: spring.security.oauth2.client.registration.idam-testing-support-api.client-secret
+            - name: idam-testing-support-api-client-secret
+              alias: spring.security.oauth2.client.registration.rd-userprofile-api.client-secret
+            - name: idam-user-profile-bridge-rd-system-username
+              alias: idam.legacy.password-grant.service-account.email-address
+            - name: idam-user-profile-bridge-rd-system-password
+              alias: idam.legacy.password-grant.service-account.password
+            - name: managed-redis-hostname
+              alias: spring.data.redis.host
+            - name: managed-redis-key
+              alias: spring.data.redis.password
+            - name: managed-redis-port
+              alias: spring.data.redis.port
       ingressHost: idam-testing-support-api.sandbox.platform.hmcts.net
       environment:
         IDAM_API_URL: https://idam-api.sandbox.platform.hmcts.net

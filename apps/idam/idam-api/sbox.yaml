@@ -7,6 +7,41 @@ spec:
   releaseName: idam-api
   values:
     java:
+      keyVaults:
+        "idam-idam":
+          resourceGroup: idam-idam
+          excludeEnvironmentSuffix: false
+          secrets:
+            - name: AppInsightsConnectionString
+              alias: app-insights-connection-string
+            - name: web-admin-client-secret
+              alias: security.oauth2.client.clientSecret
+            - name: notify-api-key
+              alias: notify.key
+            - name: am-password
+              alias: idam.spi.forgerock.am.password
+            - name: pin-user-pass
+              alias: idam.spi.forgerock.idm.pin.defaultPassword
+            - name: idam-api-POSTGRES-HOST
+              alias: DATASOURCE_HOST
+            - name: idam-api-POSTGRES-PORT
+              alias: DATASOURCE_PORT
+            - name: idam-api-POSTGRES-DATABASE
+              alias: DATASOURCE_DATABASE
+            - name: idam-api-POSTGRES-USER
+              alias: spring.datasource.username
+            - name: idam-api-POSTGRES-PASS
+              alias: spring.datasource.password
+            - name: idap-api-s2s-client-secret
+              alias: IDAM_API_S2S_CLIENT_SECRET
+            - name: AppInsightsInstrumentationKey
+              alias: azure.application-insights.instrumentation-key
+            - name: managed-redis-hostname
+              alias: spring.data.redis.host
+            - name: managed-redis-key
+              alias: spring.data.redis.password
+            - name: managed-redis-port
+              alias: spring.data.redis.port
       ingressHost: idam-api.sandbox.platform.hmcts.net
       disableTraefikTls: true
       replicas: 1
