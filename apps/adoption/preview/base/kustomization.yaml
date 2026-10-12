@@ -19,5 +19,14 @@ patches:
   - path: ../../../am/identity/aat.yaml
   - path: ../../serviceaccount/aat.yaml
   - path: ../aso/adoption-postgres.yaml
+  - target:
+      group: dbforpostgresql.azure.com
+      version: v1api20230601preview
+      kind: FlexibleServer
+      name: '\$\{NAMESPACE\}-\$\{ENVIRONMENT\}'
+    patch: |-
+      - op: replace
+        path: /apiVersion
+        value: dbforpostgresql.azure.com/v20250801
 sortOptions:
   order: fifo
