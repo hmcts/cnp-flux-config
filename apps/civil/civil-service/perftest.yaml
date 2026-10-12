@@ -25,7 +25,7 @@ spec:
         CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false # keep off until cutover so preloaded cases are never indexed
         CIVIL_CCD_DATA_MIGRATION_ENABLED: true
         CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
-        CIVIL_CCD_DATA_MIGRATION_CRON: "0 */10 0-6,17-23 * * *" # every 10mins 17:00-06:50 UTC, inside 17:00-08:45 UK time in both GMT and BST, away from perf test runs
-        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 10m # default 2h would carry a 06:50 run into the working day
+        CIVIL_CCD_DATA_MIGRATION_CRON: "0 0-40/10 0-7,16-23 * * *" # pods run in UTC: first run 17:00 BST, last run 08:40 BST, away from perf test runs (no :50 runs, as one cron can't stop at 07:40 UTC otherwise)
+        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 10m # default 2h would carry the 08:40 BST run into the working day
         CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
         CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m
