@@ -22,7 +22,7 @@ EXCLUSIONS_LIST=(
     apps/private-law/prl-cron-seal-audit/aat.yaml
     apps/dtsse/dtsse-dashboard-ingestion/aat/00.yaml
     apps/sscs/sscs-case-loader/aat-00.yaml
-    apps/sscs/sscs-ccd-case-migration/aat-00.yaml
+    apps/sscs/sscs-ccd-case-migration/aat/00.yaml
     apps/sscs/sscs-tribunals-frontend/*
     apps/sscs/sscs-tribunals-api/aat.yaml
     apps/sscs/sscs-cor-frontend/aat.yaml
