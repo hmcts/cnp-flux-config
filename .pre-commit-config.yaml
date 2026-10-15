@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-sops-secrets
+        name: Check Kubernetes Secrets are SOPS encrypted
+        entry: bin/sops-checks/check-sops-secrets.py
+        language: python
+        additional_dependencies: [pyyaml]
+        types: [yaml]
