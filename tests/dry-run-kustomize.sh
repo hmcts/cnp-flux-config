@@ -41,9 +41,13 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     flux build kustomization flux-system --path "./clusters/${ENVIRONMENT}/${CLUSTER}" --kustomization-file "$TMP_DIR/kustomize.yaml" --dry-run > "$TMP_DIR/${CLUSTER}.yaml"
     split_files "$TMP_DIR" "${CLUSTER}.yaml"
 
+    TRAEFIK_CRDS_PATH=""
     for NAMESPACE_KUSTOMIZATION in $(find "$TMP_DIR" -type f -iname "Kustomization-*"); do
         NAMESPACE_KUSTOMIZATION_PATH=$(yq '.spec.path' "$NAMESPACE_KUSTOMIZATION")
         NAMESPACE_KUSTOMIZATION_NAME=$(yq '.metadata.name' "$NAMESPACE_KUSTOMIZATION")
+        if [[ "$NAMESPACE_KUSTOMIZATION_NAME" == "traefik-crd" ]]; then
+            TRAEFIK_CRDS_PATH="$NAMESPACE_KUSTOMIZATION_PATH"
+        fi
         flux build kustomization "$NAMESPACE_KUSTOMIZATION_NAME" --path "$NAMESPACE_KUSTOMIZATION_PATH" --kustomization-file "$NAMESPACE_KUSTOMIZATION" --dry-run > "$TMP_DIR/${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
         split_files "$TMP_DIR" "${NAMESPACE_KUSTOMIZATION_NAME}-output.yaml"
     done
@@ -52,7 +56,8 @@ if [[ -d "clusters/$ENVIRONMENT/$CLUSTER" ]]; then
     mkdir -p "$SCHEMAS_DIR"
 
     #hack to get traefik and prometheus CRDs as flux build kustomization is ignoring remote bases.
-    kustomize build --load-restrictor LoadRestrictionsNone apps/admin/traefik-crds > ${TMP_DIR}CustomResourceDefinition-treafik.yaml
+    [[ -n "$TRAEFIK_CRDS_PATH" && -d "$TRAEFIK_CRDS_PATH" ]]
+    kustomize build --load-restrictor LoadRestrictionsNone "$TRAEFIK_CRDS_PATH" > ${TMP_DIR}CustomResourceDefinition-treafik.yaml
     kustomize build --load-restrictor LoadRestrictionsNone apps/monitoring/kube-prometheus-stack-crds > ${TMP_DIR}CustomResourceDefinition-kube-prometheus-stack.yaml
     kustomize build --load-restrictor LoadRestrictionsNone apps/dynatrace/dynatrace-crds > ${TMP_DIR}CustomResourceDefinition-dynatrace.yaml
 
