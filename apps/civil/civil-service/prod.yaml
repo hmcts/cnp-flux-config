@@ -32,5 +32,12 @@ spec:
         CACHE_BOUNCE_VAR: 1
         DUMMY_VAR: 3
         MIGRATION_BATCHSIZE: 5000
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false # keep off until cutover so preloaded cases are never indexed
+        CIVIL_CCD_DATA_MIGRATION_ENABLED: true
+        CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        CIVIL_CCD_DATA_MIGRATION_CRON: "0 0-40/10 0-5,19-23 * * *" # pods run in UTC: 19:00-05:40 UTC (20:00-06:40 BST, 19:00-05:40 GMT), out of service hours
+        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 10m # default 2h would carry the last run (05:40 UTC) into the morning
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
+        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m
       spotInstances:
         enabled: false
