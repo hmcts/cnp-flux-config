@@ -6,6 +6,13 @@ metadata:
 spec:
   values:
     controller:
+      nodeSelector:
+        kubernetes.azure.com/agentpool: jenkins
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: jenkins
+          effect: NoSchedule
       ingress:
         hostName: build.hmcts.net
       secondaryingress:
@@ -20,10 +27,10 @@ spec:
       resources:
         requests:
           cpu: "4"
-          memory: "28Gi"
+          memory: "32Gi"
         limits:
           cpu: "6"
-          memory: "28Gi"
+          memory: "32Gi"
       JCasC:
         configScripts:
           welcome-message: |
