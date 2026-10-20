@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "00 15 * * *"
-      image: hmctsprod.azurecr.io/finrem/cos:pr-3090-d698829-20261013081256 #{"$imagepolicy": "flux-system:demo-finrem-cron-one-off-task"}
+      schedule: "20 8-18 * * *"
+      image: hmctsprod.azurecr.io/finrem/cos:prod-48dfbdc-20261020151642 #{"$imagepolicy": "flux-system:demo-finrem-cron-one-off-task"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -21,10 +21,11 @@ spec:
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
+        CRON_WAIT_TIME_MINS: 0
         TASK_NAME: GlobalSearchMigrationTask
         CRON_DRY_RUN: false
         CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: true
-        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 50
+        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 500
         CRON_SUPPLEMENTARY_DATA_UPDATE: true
         CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
         GLOBAL_SEARCH_ENABLED: true
