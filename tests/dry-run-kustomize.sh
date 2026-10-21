@@ -12,7 +12,11 @@ set -ex
 ENVIRONMENT=$1
 CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
-ASO_RESOURCE_URL=$(yq eval '.resources[0]' apps/azureserviceoperator-system/aso/kustomization.yaml)
+ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso/kustomization.yaml"
+if [[ "$ENVIRONMENT" == "sbox" ]]; then
+    ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
+fi
+ASO_RESOURCE_URL=$(yq eval '.resources[0]' "$ASO_KUSTOMIZATION")
 ASO_VERSION=$(echo "$ASO_RESOURCE_URL" | cut -d'/' -f8)
 kubeconform_config=("-strict" "-summary" "-n" "12" "-schema-location" "default" "-schema-location" "/tmp/schemas/$ENVIRONMENT/$CLUSTER/")
 ASO_URL="https://github.com/Azure/azure-service-operator/releases/download/"$ASO_VERSION"/azureserviceoperator_customresourcedefinitions_"$ASO_VERSION".yaml"
