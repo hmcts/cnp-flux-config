@@ -16,6 +16,9 @@ ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso/kustomization.yaml"
 if [[ "$ENVIRONMENT" == "sbox" || "$ENVIRONMENT" == "preview" ]]; then
     ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
 fi
+if [[ "$ENVIRONMENT" == "perftest" ]]; then
+    ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
+fi
 ASO_RESOURCE_URL=$(yq eval '.resources[0]' "$ASO_KUSTOMIZATION")
 ASO_VERSION=$(echo "$ASO_RESOURCE_URL" | cut -d'/' -f8)
 kubeconform_config=("-strict" "-summary" "-n" "12" "-schema-location" "default" "-schema-location" "/tmp/schemas/$ENVIRONMENT/$CLUSTER/")
