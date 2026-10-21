@@ -13,7 +13,7 @@ ENVIRONMENT=$1
 CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
 ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso/kustomization.yaml"
-if [[ "$ENVIRONMENT" == "sbox" || "$ENVIRONMENT" == "preview" ]]; then
+if [[ "$ENVIRONMENT" == "sbox" || "$ENVIRONMENT" == "preview" || "$ENVIRONMENT" == "ptl-intsvc" || "$ENVIRONMENT" == "sbox-intsvc" ]]; then
     ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
 fi
 if [[ "$ENVIRONMENT" == "perftest" ]]; then
