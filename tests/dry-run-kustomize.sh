@@ -13,7 +13,7 @@ ENVIRONMENT=$1
 CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
 ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso/kustomization.yaml"
-if [[ "$ENVIRONMENT" == "sbox" ]]; then
+if [[ "$ENVIRONMENT" == "sbox" || "$ENVIRONMENT" == "preview" ]]; then
     ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
 fi
 ASO_RESOURCE_URL=$(yq eval '.resources[0]' "$ASO_KUSTOMIZATION")
