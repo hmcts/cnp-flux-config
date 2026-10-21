@@ -31,10 +31,8 @@ patches:
         name: azureserviceoperator-controller-manager
       spec:
         strategy:
-          type: RollingUpdate
-          rollingUpdate:
-            maxUnavailable: 1
-            maxSurge: 0
+          type: Recreate
+          rollingUpdate: null
   - target:
       kind: Deployment
     path: toleration_replicas_patch.yaml
