@@ -49,5 +49,9 @@ spec:
         # Step 3: link one record per case-list request, oldest first, while the first links are checked.
         CCD_LINKING_SWEEP_ENABLED: "true"
         CCD_LINKING_SWEEP_MAX_RECORDS: "1"
-        DOCUMENT_STORE: filesystem
+        # AAT test documents must survive API pod replacement and be shared across replicas.
+        # Existing Local test documents must be re-uploaded; this does not migrate their files.
+        DOCUMENT_STORE: cdam
+        # 100 MiB AAT capacity for durable generated-deed preparation; owned staging stays off.
+        DOCUMENT_STAGING_MAX_TOTAL_BYTES: "104857600"
         DOCUMENT_STAGING_ENABLED: "false"
