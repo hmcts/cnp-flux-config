@@ -14,7 +14,7 @@ CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
 ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso/kustomization.yaml"
 case "$ENVIRONMENT" in
-    sbox|preview|sbox-intsvc|ptl-intsvc|perftest)
+    sbox|preview|sbox-intsvc|ptl-intsvc|perftest|demo|ithc|aat)
         ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
         ;;
 esac
