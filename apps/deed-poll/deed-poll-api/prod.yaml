@@ -5,10 +5,9 @@ metadata:
 spec:
   values:
     java:
-      # deed-poll-infra creates the prod API identity secrets (#38); its prod apply must have run before this is merged.
-      # notify-api-key is deliberately absent: there is no prod Notify service yet, NOTIFY_API_KEY defaults to
-      # empty, and with no key nothing can be sent. Mounting it would fail the pod on a missing secret.
-      # Helm replaces this list: retain all six secrets from the API chart.
+      # The chart's list less notify-api-key: there is no prod Notify service yet, so the vault has no key, and a
+      # mounted secret that is missing fails the pod. NOTIFY_API_KEY stays empty and nothing can be sent. Helm
+      # replaces this list, so it restates every other secret the chart mounts.
       keyVaults:
         deed-poll:
           secrets:
@@ -30,22 +29,8 @@ spec:
             - name: api-s2s-secret
               alias: DEED_POLL_API_S2S_SECRET
       environment:
+        # Prod's IDAM hosts carry no environment segment, so the chart's {env} pattern is wrong here.
         IDAM_API_ISSUER_URL: https://hmcts-access.service.gov.uk/o
-        # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the
-        # discovered hmcts-access one. Keys still come only from IDAM_API_ISSUER_URL's discovery (deed-poll-api#108).
-        IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam/oauth2/realms/root/realms/hmcts
-        IDAM_API_AUDIENCES: deed-poll-admin,deed-poll-api
         IDAM_API_URL: https://idam-api.platform.hmcts.net
-        IDAM_CLIENT_ID: deed-poll-api
-        IDAM_CLIENT_REDIRECT_URI: http://deed-poll-api-prod.service.core-compute-prod.internal/receiver
-        IDAM_S2S_AUTH_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
-        CCD_JURISDICTION_ID: DEEDPOLL
-        CCD_CASE_TYPE_ID: DEEDPOLL
-        CCD_SYSTEM_ROLE: deed-poll-system-update
-        CCD_DATA_STORE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
-        CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-prod.service.core-compute-prod.internal
-        DOCUMENT_URL_BASE: http://dm-store-prod.service.core-compute-prod.internal
-        # Off until the DEEDPOLL definition is imported into prod CCD at go-live (dark deployment until then).
-        CCD_LINKING_SWEEP_ENABLED: "false"
-        DOCUMENT_STORE: filesystem
-        DOCUMENT_STAGING_ENABLED: "false"
+        # ForgeRock's internal issuer, carried by password-grant tokens; its host differs per environment.
+        IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam/oauth2/realms/root/realms/hmcts
