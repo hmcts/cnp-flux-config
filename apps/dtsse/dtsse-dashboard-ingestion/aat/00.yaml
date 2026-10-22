@@ -12,5 +12,15 @@ spec:
       image: hmctsprod.azurecr.io/dtsse/dashboard-ingestion:staging-f80563b-20261022125137 #{"$imagepolicy": "flux-system:aat-dtsse-dashboard-ingestion"}
       environment:
         GITHUB_APP_RATE_LIMITS_ENABLED: "true"
+      keyVaults:
+        dtsse:
+          secrets:
+            - name: AppInsightsConnectionString
+              alias: APPLICATIONINSIGHTS_CONNECTION_STRING
+            - github-token
+            - db-url
+            - cosmos-key
+            - cosmos-db-name
+            - jenkins-databases
     global:
       jobKind: CronJob
