@@ -33,6 +33,16 @@ patches:
         strategy:
           type: Recreate
           rollingUpdate: null
+        template:
+          spec:
+            topologySpreadConstraints:
+              - maxSkew: 1
+                topologyKey: kubernetes.io/hostname
+                whenUnsatisfiable: DoNotSchedule
+                nodeTaintsPolicy: Honor
+                labelSelector:
+                  matchLabels:
+                    control-plane: controller-manager
   - target:
       kind: Deployment
     path: toleration_replicas_patch.yaml
