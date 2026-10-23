@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../deed-poll-api/deed-poll-api.yaml
+  - ../../deed-poll-admin/deed-poll-admin.yaml
+namespace: deed-poll
+patches:
+  - path: ../../serviceaccount/prod.yaml
+  - path: ../../deed-poll-api/prod.yaml
+  - path: ../../deed-poll-admin/prod.yaml

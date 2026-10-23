@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: deed-poll-api
+spec:
+  values:
+    java:
+      # The chart's list less notify-api-key: there is no prod Notify service yet, so the vault has no key, and a
+      # mounted secret that is missing fails the pod. NOTIFY_API_KEY stays empty and nothing can be sent. Helm
+      # replaces this list, so it restates every other secret the chart mounts.
+      keyVaults:
+        deed-poll:
+          secrets:
+            - name: app-insights-connection-string
+            - name: postgres-host
+              alias: DB_HOST
+            - name: postgres-port
+              alias: DB_PORT
+            - name: postgres-user
+              alias: DB_USER_NAME
+            - name: postgres-password
+              alias: DB_PASSWORD
+            - name: api-idam-client-secret
+              alias: IDAM_CLIENT_SECRET
+            - name: api-idam-system-username
+              alias: DEED_POLL_SYSTEM_USERNAME
+            - name: api-idam-system-password
+              alias: DEED_POLL_SYSTEM_PASSWORD
+            - name: api-s2s-secret
+              alias: DEED_POLL_API_S2S_SECRET
+      environment:
+        # Prod's IDAM hosts carry no environment segment, so the chart's {env} pattern is wrong here.
+        IDAM_API_ISSUER_URL: https://hmcts-access.service.gov.uk/o
+        IDAM_API_URL: https://idam-api.platform.hmcts.net
+        # ForgeRock's internal issuer, carried by password-grant tokens; its host differs per environment.
+        IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam/oauth2/realms/root/realms/hmcts
