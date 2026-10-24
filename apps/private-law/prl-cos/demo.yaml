@@ -8,6 +8,15 @@ spec:
   values:
     java:
       keyVaults:
+        central-app-reg-kv:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: tenant-id
+              alias: FACT_V2_TENANT_ID
+            - name: prl-cos-api-non-prod-app-id
+              alias: FACT_V2_CLIENT_ID
+            - name: prl-cos-api-non-prod-secret
+              alias: FACT_V2_CLIENT_SECRET
         prl:
           secrets:
             - name: prl-cos-idam-client-secret
@@ -87,6 +96,9 @@ spec:
         FEE_REGISTER_API_URL: http://fees-register-api-demo.service.core-compute-demo.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app,ds_ui
         FACT_API: http://fact-api-demo.service.core-compute-demo.internal
+        FACT_V2_ENABLED: true
+        FACT_V2_API_URL: https://cft-api-mgmt.demo.platform.hmcts.net/fact
+        FACT_V2_SCOPE: api://6e2a7c9e-0634-4846-8a8e-0af598d905b0/.default
         LOCATION_REF_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
         REFDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
