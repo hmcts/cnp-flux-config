@@ -38,10 +38,8 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_PUBLISHER: azure
         FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_ENABLED: true
-        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_ARCHIVAL_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: true
-        FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_DETAILS_V1_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_ROLES_V1_ENABLED: true
         FEATUREFLAGS_NOTIFYONUSEREMAILUPDATED: true
@@ -64,10 +62,9 @@ spec:
       enableKeyVaults: true
   chart:
     spec:
-      chart: idam-api
-      version: "0.8.4"
+      chart: ./stable/idam-api
       sourceRef:
-        kind: HelmRepository
-        name: hmctsprod-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
       interval: 1m

@@ -7,7 +7,7 @@ spec:
   releaseName: idam-api
   values:
     java:
-      image: hmctsprod.azurecr.io/idam/api:prod-be59df9-20261014105219 # {"$imagepolicy": "flux-system:idam-api"}
+      image: hmctsprod.azurecr.io/idam/api:prod-547c2f3-20261023191607 # {"$imagepolicy": "flux-system:idam-api"}
       replicas: 2
       cpuRequests: '160m'
       cpuLimits: '1500m'
@@ -56,7 +56,7 @@ spec:
         FEATUREFLAGS_EVENTPUBLISHING_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_PUBLISHER: azure
         FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_ENABLED: true
-        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: false
+        FEATUREFLAGS_EVENTPUBLISHING_USER_ACTIVATIONS_SSO_ENABLED: true
         FEATUREFLAGS_EVENTPUBLISHING_USER_ARCHIVAL_ENABLED: false
         FEATUREFLAGS_EVENTPUBLISHING_USER_CREATION_V2_ENABLED: false
         FEATUREFLAGS_EVENTPUBLISHING_USER_UPDATE_V2_ENABLED: true
@@ -82,10 +82,9 @@ spec:
         STRATEGIC_SSO_PROVIDERS_MOJ_ACCOUNTNOTFOUNDSTRATEGY: ONBOARD
   chart:
     spec:
-      chart: idam-api
-      version: "0.8.4"
+      chart: ./stable/idam-api
       sourceRef:
-        kind: HelmRepository
-        name: hmctsprod-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
       interval: 1m
