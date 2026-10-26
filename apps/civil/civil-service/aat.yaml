@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/civil/service:prod-4ec6a53-20261023065651 #{"$imagepolicy": "flux-system:civil-service"}
+      image: hmctsprod.azurecr.io/civil/service:prod-41bac4c-20261026094328 #{"$imagepolicy": "flux-system:civil-service"}
       keyVaults:
         civil:
           resourceGroup: civil
@@ -84,3 +84,4 @@ spec:
         CIVIL_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # every 10mins, 24/7 (db lock prevents parallel running)
         CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
         CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m
+        SCHEDULER_ACTIVE_SCHEDULERS: JudgementBuffer
