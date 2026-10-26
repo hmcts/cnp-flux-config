@@ -13,3 +13,10 @@ spec:
         # Step 3: link one record per case-list request, oldest first, while the first links are checked.
         CCD_LINKING_SWEEP_ENABLED: "true"
         CCD_LINKING_SWEEP_MAX_RECORDS: "1"
+        # Pen-test documents in CDAM, as in AAT, so they survive pod replacement and are shared across replicas. CDAM
+        # refuses an upload for a record with no CCD case, so each record takes uploads only once the sweep above
+        # has linked it. No documents were seeded, so no filesystem files are stranded.
+        DOCUMENT_STORE: cdam
+        # 100 MiB for durable generated-deed preparation, as in AAT; owned staging stays off.
+        DOCUMENT_STAGING_MAX_TOTAL_BYTES: "104857600"
+        DOCUMENT_STAGING_ENABLED: "false"
