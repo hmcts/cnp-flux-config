@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     java:
-      image: hmctsprod.azurecr.io/ia/case-api:prod-382fc59-20261013103007 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
+      image: hmctsprod.azurecr.io/ia/case-api:prod-d299330-20261022110955 #{"$imagepolicy": "flux-system:ithc-ia-case-api"}
       aadIdentityName: ia
       environment:
         IA_HOME_OFFICE_INTEGRATION_ENABLED: "true"
@@ -17,5 +17,6 @@ spec:
         IA_HEARINGS_API_URL: http://ia-hearings-api-ithc.service.core-compute-ithc.internal/
         LOCATION_REF_DATA_URL: http://rd-location-ref-api-ithc.service.core-compute-ithc.internal
         RESTART_PODS: "Yes"
-        HOME_OFFICE_VALIDATION_ENABLED: "true"
-        STATUTORY_TIMEFRAME_LIVE_DATE: "2026-05-01"
+        HOME_OFFICE_VALIDATION_ENABLED: "false"
+        HOME_OFFICE_MOCK_TURN_OFF_FOR_TEST: "true" # Set this environment variable to false if you want to test something using the mock HO validation API
+        STATUTORY_TIMEFRAME_LIVE_DATE: "2025-01-01"

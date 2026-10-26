@@ -31,6 +31,9 @@ spec:
               alias: DEED_POLL_API_S2S_SECRET
       environment:
         IDAM_API_ISSUER_URL: https://hmcts-access.aat.platform.hmcts.net/o
+        # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the
+        # discovered hmcts-access one. Keys still come only from IDAM_API_ISSUER_URL's discovery (deed-poll-api#108).
+        IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-aat2.internal:8443/openam/oauth2/realms/root/realms/hmcts
         IDAM_API_AUDIENCES: deed-poll-admin,deed-poll-api
         IDAM_API_URL: https://idam-api.aat.platform.hmcts.net
         IDAM_CLIENT_ID: deed-poll-api
@@ -42,7 +45,13 @@ spec:
         CCD_DATA_STORE_URL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
         CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
         DOCUMENT_URL_BASE: http://dm-store-aat.service.core-compute-aat.internal
-        # Registration precedes the controlled CCD/CDAM smoke and existing-file migration.
-        CCD_LINKING_SWEEP_ENABLED: "false"
-        DOCUMENT_STORE: filesystem
+        # CCD-SMOKE steps 1-2 passed 2026-10-16 (DEEDPOLL v1 imported; system user and /ccd-persistence verified).
+        # Step 3: link one record per case-list request, oldest first, while the first links are checked.
+        CCD_LINKING_SWEEP_ENABLED: "true"
+        CCD_LINKING_SWEEP_MAX_RECORDS: "1"
+        # AAT test documents must survive API pod replacement and be shared across replicas.
+        # Existing Local test documents must be re-uploaded; this does not migrate their files.
+        DOCUMENT_STORE: cdam
+        # 100 MiB AAT capacity for durable generated-deed preparation; owned staging stays off.
+        DOCUMENT_STAGING_MAX_TOTAL_BYTES: "104857600"
         DOCUMENT_STAGING_ENABLED: "false"

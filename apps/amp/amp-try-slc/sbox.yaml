@@ -8,6 +8,15 @@ spec:
       enableKeyVaults: true
     java:
       ingressHost: amp-try-slc.sandbox.platform.hmcts.net
+      environment:
+        # Entra, because this is the tenant the Marketplace issues consumer credentials in.
+        AUTH_KEY_SOURCE: "ENTRA"
+        AUTH_TENANT_ID: "d44f885c-4fac-47bf-afde-d7d861ec4d7b"
+        # try-slc's own resource app, amp-api-try-slc. Must equal the audience the APIM policy
+        # pins in apim/sbox.tfvars - if the two drift, one layer accepts a token the other
+        # refuses and both answer 401.
+        AUTH_AUDIENCE: "c4c8974c-2800-4fe6-964f-dcd4c0820507"
+        AUTH_ISSUER: "https://login.microsoftonline.com/d44f885c-4fac-47bf-afde-d7d861ec4d7b/v2.0"
       keyVaults:
         amp-try-slc-sbox:
           excludeEnvironmentSuffix: true
