@@ -9,3 +9,7 @@ spec:
         # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the
         # discovered hmcts-access one, and its host differs per environment. Everything else comes from the chart.
         IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        # CCD-SMOKE steps 1-2 passed in ITHC 2026-10-22/23 (DEEDPOLL imported by api ithc #4; system user verified).
+        # Step 3: link one record per case-list request, oldest first, while the first links are checked.
+        CCD_LINKING_SWEEP_ENABLED: "true"
+        CCD_LINKING_SWEEP_MAX_RECORDS: "1"
