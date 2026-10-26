@@ -13,9 +13,14 @@ ENVIRONMENT=$1
 CLUSTER=$2
 CURRENT_DIRECTORY=$(pwd)
 ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso/kustomization.yaml"
-if [[ "$ENVIRONMENT" == "sbox" ]]; then
-    ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
-fi
+#comment out the below case statement if you are trying to upgrade ASO+Cert Manager to a newer version. The ASO version is hardcoded in the kustomization.yaml file for the above environments.
+#  If you want to upgrade, you will need to update the kustomization.yaml file with the new ASO version and comment out the below case statement.
+#case "$ENVIRONMENT" in
+#    sbox|preview|sbox-intsvc|ptl-intsvc|perftest|demo|ithc|aat)
+#        ASO_KUSTOMIZATION="apps/azureserviceoperator-system/aso-v2.21.1/kustomization.yaml"
+#        ;;
+#esac
+
 ASO_RESOURCE_URL=$(yq eval '.resources[0]' "$ASO_KUSTOMIZATION")
 ASO_VERSION=$(echo "$ASO_RESOURCE_URL" | cut -d'/' -f8)
 kubeconform_config=("-strict" "-summary" "-n" "12" "-schema-location" "default" "-schema-location" "/tmp/schemas/$ENVIRONMENT/$CLUSTER/")
