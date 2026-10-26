@@ -7,7 +7,7 @@ spec:
   values:
     job:
       suspend: false
-      schedule: "0 22 22 10 *"
+      schedule: "0 22 26 10 *"
       environment:
         TASK_NAME: ResetEraFlagTask
         IDAM_API_URL: "https://idam-api.platform.hmcts.net"
@@ -15,10 +15,11 @@ spec:
         SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-prod.service.core-compute-prod.internal"
         CCD_GATEWAY_BASE_URL: https://manage-case.platform.hmcts.net
         CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
-        CRON_CASE_TYPE_ID: ET_Scotland
+        CRON_CASE_TYPE_ID: ET_EnglandWales,ET_Scotland
         CRON_CLEAR_CASE_TTL_MAX_CASES_TO_PROCESS: 10000
         CRON_CLEAR_CASE_TTL_MAX_CASES_PER_SEARCH: 5000
         CRON_CLEAR_CASE_TTL_DRY_RUN: true
+        CRON_MAX_PER_SEARCH: 1000
     global:
       jobKind: CronJob
       enableKeyVaults: true
