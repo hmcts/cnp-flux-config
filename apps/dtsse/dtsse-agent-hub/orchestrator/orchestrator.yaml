@@ -73,9 +73,6 @@ spec:
             - name: VIRTUAL_AGENT_IMAGE
               value: hmctsprod.azurecr.io/dtsse/virtual-agent:prod-f797cfb-20261027190327@sha256:f9c7554fa09dde06c37928738a1a58dbb2876388c6e3d4b84fb348f10abf2baa #{"$imagepolicy": "flux-system:dtsse-agent-hub-virtual-agent"}
             - name: VIRTUAL_AGENT_HOST_ALIASES
-              # The AI Gateway entry is a stopgap: cft-preview-vnet is not linked to the
-              # staging.platform.hmcts.net private DNS zone, so the name does not resolve
-              # here. Drop it once hmcts/azure-private-dns#1107 has applied.
               value: build.hmcts.net=10.10.73.250,ai-gateway.staging.platform.hmcts.net=10.181.20.4
           livenessProbe:
             httpGet:
