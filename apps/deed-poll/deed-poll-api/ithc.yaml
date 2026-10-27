@@ -3,8 +3,20 @@ kind: HelmRelease
 metadata:
   name: deed-poll-api
 spec:
+  # Frozen for the ITHC pen test: image and chart pinned to the build verified on 2026-10-26 (DOCX preview, CDAM,
+  # 32 document types), so nothing reaches ITHC from master. Remove these pins, and the admin patch, when the test
+  # ends. A GitRepository source ignores `version`, so the chart comes from the OCI repository, where it does not.
+  chart:
+    spec:
+      chart: deed-poll-api
+      version: 0.0.28
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
   values:
     java:
+      image: hmctsprod.azurecr.io/deed-poll/api:prod-64e0f86-20261026182543
       environment:
         # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the
         # discovered hmcts-access one, and its host differs per environment. Everything else comes from the chart.
