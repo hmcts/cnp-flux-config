@@ -135,6 +135,7 @@ async function main() {
   ]));
   assert.equal(deployments.length, 1);
   const pod = deployments[0].spec.template.spec;
+  assert.equal(pod.serviceAccountName, 'money-claims', 'MailHog must use the existing namespace service account');
   assert.equal(pod.containers.length, 1);
   const mailhog = pod.containers[0];
   assert.equal(mailhog.name, 'mailhog');
