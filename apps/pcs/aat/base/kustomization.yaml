@@ -5,8 +5,13 @@ resources:
   - ../../../rbac/nonprod-role.yaml
   - ../../../rbac/db-query-job-role.yaml
   - ../../pcs-api/pcs-api.yaml
+  - ../../pcs-bundle-worker/pcs-bundle-worker.yaml
   - ../../pcs-frontend/pcs-frontend.yaml
 namespace: pcs
 patches:
+  # Also patches pcs-bundle-worker so it runs with the same image and settings as pcs-api.
   - path: ../../pcs-api/aat.yaml
+    target:
+      kind: HelmRelease
+      name: pcs-api|pcs-bundle-worker
   - path: ../../serviceaccount/aat.yaml

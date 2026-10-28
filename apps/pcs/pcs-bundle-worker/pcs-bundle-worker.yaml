@@ -1,0 +1,27 @@
+# A second release of the pcs-api chart and image that renders case bundles off the API pods.
+# Each environment's pcs-api overlay is applied to this release too (see the kustomization
+# patches), so the two stay on the same image and environment settings.
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-bundle-worker
+spec:
+  releaseName: pcs-bundle-worker
+  values:
+    java:
+      replicas: 1
+      # No ingress: the worker takes jobs from the database, not requests.
+      ingressHost: ""
+      image: hmctsprod.azurecr.io/pcs/api:prod-6f82274-20261027095359 #{"$imagepolicy": "flux-system:pcs-api"}
+      environment:
+        CASE_BUNDLE_WORKER_ENABLED: "true"
+        # Recurring and one-off db-scheduler tasks stay on the pcs-api pods.
+        DB_SCHEDULER_EXECUTOR_ENABLED: "false"
+  chart:
+    spec:
+      chart: ./stable/pcs-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
