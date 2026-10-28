@@ -9,6 +9,10 @@ spec:
     nodejs:
       ingressHost: amp-marketplace-web.sandbox.platform.hmcts.net
       workloadClientID: "fb098a2c-bb71-46e0-b9f6-46f388f6c970"
+      environment:
+        # The sandbox egress firewall resets connections to hmcts.github.io, so the default
+        # Pages feed never loads. Read the same file from raw.githubusercontent.com instead.
+        CATALOGUE_URL: "https://raw.githubusercontent.com/hmcts/amp-catalog/main/docs/apis.json"
       keyVaults:
         amp-marketplace-sbox:
           excludeEnvironmentSuffix: true
