@@ -3,9 +3,32 @@ kind: HelmRelease
 metadata:
   name: deed-poll-api
 spec:
+  # Frozen for the ITHC pen test: image and chart pinned to the build verified on 2026-10-26 (DOCX preview, CDAM,
+  # 32 document types), so nothing reaches ITHC from master. Remove these pins, and the admin patch, when the test
+  # ends. A GitRepository source ignores `version`, so the chart comes from the OCI repository, where it does not.
+  chart:
+    spec:
+      chart: deed-poll-api
+      version: 0.0.28
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
   values:
     java:
+      image: hmctsprod.azurecr.io/deed-poll/api:prod-64e0f86-20261026182543
       environment:
         # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the
         # discovered hmcts-access one, and its host differs per environment. Everything else comes from the chart.
         IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-ithc.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        # CCD-SMOKE steps 1-2 passed in ITHC 2026-10-22/23 (DEEDPOLL imported by api ithc #4; system user verified).
+        # Step 3: link one record per case-list request, oldest first, while the first links are checked.
+        CCD_LINKING_SWEEP_ENABLED: "true"
+        CCD_LINKING_SWEEP_MAX_RECORDS: "1"
+        # Pen-test documents in CDAM, as in AAT, so they survive pod replacement and are shared across replicas. CDAM
+        # refuses an upload for a record with no CCD case, so each record takes uploads only once the sweep above
+        # has linked it. No documents were seeded, so no filesystem files are stranded.
+        DOCUMENT_STORE: cdam
+        # 100 MiB for durable generated-deed preparation, as in AAT; owned staging stays off.
+        DOCUMENT_STAGING_MAX_TOTAL_BYTES: "104857600"
+        DOCUMENT_STAGING_ENABLED: "false"

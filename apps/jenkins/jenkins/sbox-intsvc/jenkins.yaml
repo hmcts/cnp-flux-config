@@ -7,7 +7,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 5.9.64
+      version: 5.10.0
       sourceRef:
         kind: HelmRepository
         name: jenkins
@@ -30,6 +30,9 @@ spec:
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=11
         -Dotel.instrumentation.jenkins.web.enabled=false
+      containerSecurityContext:
+        capabilities:
+          drop: []
       ingress:
         hostName: sandbox-build.hmcts.net
       secondaryingress:
@@ -97,7 +100,7 @@ spec:
                               github('hmcts/cnp-jenkins-config')
                               credentials('hmcts-jenkins-cnp')
                             }
-                            branch('github-rate-limits')
+                            branch('master')
                           }
                         }
                         scriptPath('jobdsl/Jenkinsfile_github_app_rate_limits')
