@@ -4,3 +4,12 @@ resources:
   - ../../base
   - ../backstage/backstage.yaml
   - ../backstage/backstage-helmrepo.yaml
+
+patches:
+  - path: backstage-serviceaccount-patch.yaml
+    target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: backstage
+      namespace: backstage

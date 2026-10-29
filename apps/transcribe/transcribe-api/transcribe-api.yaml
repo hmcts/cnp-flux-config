@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: transcribe-api
+spec:
+  releaseName: transcribe-api
+  interval: 1m
+  values:
+    # Background pollers (python -m transcribe_api.worker), same image as the API.
+    # The chart runs it only on the active cron cluster.
+    worker:
+      image: hmctsprod.azurecr.io/transcribe/api:prod-fe70e9b-20261029132545 # {"$imagepolicy": "flux-system:transcribe-api"}
+    python:
+      image: hmctsprod.azurecr.io/transcribe/api:prod-fe70e9b-20261029132545 # {"$imagepolicy": "flux-system:transcribe-api"}
+  chart:
+    spec:
+      chart: ./stable/transcribe-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

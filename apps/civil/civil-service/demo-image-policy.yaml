@@ -6,7 +6,11 @@ metadata:
     hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: '^pr-8353-[a-f0-9]+-(?P<ts>[0-9]+)'
+    # Demo runs the CCD data preload (CIVIL_CCD_DATA_MIGRATION_* in demo.yaml).
+    # Only point this at a PR built on CCD SDK 7.13.0 or later, i.e. rebased
+    # onto civil-service master from 2026-10-12. PRs on SDK 7.9.0/7.10.0 skip
+    # new events silently. If unsure, set CIVIL_CCD_DATA_MIGRATION_ENABLED: false.
+    pattern: '^pr-8459-[a-f0-9]+-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
