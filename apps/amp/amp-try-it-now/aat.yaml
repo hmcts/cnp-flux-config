@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-try-it-now
+spec:
+  values:
+    java:
+      ingressHost: amp-try-it-now.aat.platform.hmcts.net
+      environment:
+        # Self-issued. Sandbox is the only environment verifying real Entra tokens.
+        AUTH_KEY_SOURCE: "SELF_ISSUED"
+      keyVaults:
+        amp-try-it-now-aat:
+          secrets:
+            - name: try-it-now-DEMO-SIGNING-KEY-JWK
+              alias: DEMO_SIGNING_KEY_JWK
+            - name: try-it-now-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: try-it-now-POSTGRES-PASS
+              alias: POSTGRES_PASS
+            - name: try-it-now-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: try-it-now-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: try-it-now-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
