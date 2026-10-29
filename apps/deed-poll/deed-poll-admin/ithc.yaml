@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: deed-poll-admin
+spec:
+  # Frozen for the ITHC pen test, with the api (see deed-poll-api/ithc.yaml): image and chart pinned to the build
+  # verified on 2026-10-26, chart from the OCI repository because a GitRepository source ignores `version`.
+  # Remove this patch, and its kustomization entry, when the test ends.
+  chart:
+    spec:
+      chart: deed-poll-admin
+      version: 0.0.4
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/deed-poll/admin:prod-4554c22-20261026182251

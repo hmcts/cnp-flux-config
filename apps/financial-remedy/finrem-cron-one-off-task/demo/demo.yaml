@@ -6,8 +6,8 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "00 12 * * *"
-      image: hmctsprod.azurecr.io/finrem/cos:pr-3090-549c69e-20260924153116 #{"$imagepolicy": "flux-system:demo-finrem-cron-one-off-task"}
+      schedule: "20 8-18 * * *"
+      image: hmctsprod.azurecr.io/finrem/cos:prod-61dd6ef-20261027103036 #{"$imagepolicy": "flux-system:demo-finrem-cron-one-off-task"}
       environment:
         FEATURE_PBA_CASE_TYPE: true
         FEATURE_USE_USER_TOKEN: true
@@ -15,17 +15,20 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_CFV_ENABLED: true
         SECURE_DOC_ENABLED: false
+        IDAM_OIDC_URL: "https://idam-web-public.demo.platform.hmcts.net"
         FEES_API_URL: "http://fees-register-api-demo.service.core-compute-demo.internal"
         PAYMENT_API_URL: "http://payment-api-demo.service.core-compute-demo.internal"
         DOCUMENT_MANAGEMENT_STORE_URL: "http://dm-store-demo.service.core-compute-demo.internal"
         SEND_LETTER_SERVICE_BASEURL: "http://rpe-send-letter-service-demo.service.core-compute-demo.internal"
         CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-demo.service.core-compute-demo.internal"
+        CRON_WAIT_TIME_MINS: 0
         TASK_NAME: GlobalSearchMigrationTask
         CRON_DRY_RUN: false
         CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: true
-        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 50
+        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 500
         CRON_SUPPLEMENTARY_DATA_UPDATE: true
         CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
+        GLOBAL_SEARCH_ENABLED: true
     global:
       jobKind: CronJob
       enableKeyVaults: true
