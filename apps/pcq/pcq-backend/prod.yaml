@@ -3,6 +3,15 @@ kind: HelmRelease
 metadata:
   name: pcq-backend
 spec:
+  containers:
+    - name: pcq-backend-java
+      readinessProbe:
+        httpGet:
+          path: /health/readiness
+          port: 4550
+        initialDelaySeconds: 10
+        periodSeconds: 5
+
   values:
     java:
       replicas: 2
