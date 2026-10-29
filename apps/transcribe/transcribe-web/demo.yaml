@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: transcribe-web
+spec:
+  dependsOn:
+    - name: transcribe-api
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/transcribe/web:pr-25-4882810-20261029102959 # {"$imagepolicy": "flux-system:demo-transcribe-web"}
+      replicas: 1
+      autoscaling:
+        enabled: false
+      ingressHost: benchnotes.demo.platform.hmcts.net
+      environment:
+        APP_URL: https://benchnotes.demo.platform.hmcts.net
+        NEXT_PUBLIC_API_URL: https://benchnotes.demo.platform.hmcts.net
+        AZURE_AD_CLIENT_ID: 00000000-0000-0000-0000-000000000000
+        AUTH_ACCESS_ROLES: Judge,LegalTextManager,SystemAdministrator,Normal
