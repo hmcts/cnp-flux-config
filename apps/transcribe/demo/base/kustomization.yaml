@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../transcribe-api/transcribe-api.yaml
+  - ../../transcribe-web/transcribe-web.yaml
+  - ../../../rbac/nonprod-role.yaml
+namespace: transcribe
+patches:
+  - path: ../../serviceaccount/demo.yaml
+  - path: ../../transcribe-api/demo.yaml
+  - path: ../../transcribe-web/demo.yaml

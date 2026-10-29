@@ -9,8 +9,8 @@ spec:
     job:
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-bb9ce42-20260921134154 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "00 09 5 8 *"
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-29f8ce6-20261020140931 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "15 15 13 10 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -41,15 +41,19 @@ spec:
               alias: INTERPRETER_LANGUAGE_CODE_MIGRATION_ENCODED_STRING
             - name: encoded-string-sent-to-dwp-migration
               alias: SENT_TO_DWP_MIGRATION_ENCODED_STRING
+            - name: encoded-string-ready-to-list
+              alias: READY_TO_LIST_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-demo.service.core-compute-demo.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-demo.service.core-compute-demo.internal
+        IDAM_OIDC_URL: https://idam-web-public.demo.platform.hmcts.net
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-demo.service.core-compute-demo.internal
         ELASTIC_ENABLED: true
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
         DUMMY: true
+        READY_TO_LIST_MIGRATION_ENABLED: true
     global:
       environment: demo
       enableKeyVaults: true

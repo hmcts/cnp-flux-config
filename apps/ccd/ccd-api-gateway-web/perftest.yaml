@@ -7,9 +7,12 @@ spec:
   values:
     nodejs:
       replicas: 16
+      image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-aa19ace-20261029130616 #{"$imagepolicy": "flux-system:perftest-ccd-api-gateway-web"}
       autoscaling:
         enabled: false
       environment:
         CORS_ORIGIN_WHITELIST: "https://manage-case.perftest.platform.hmcts.net"
+        IDAM_WEB_PUBLIC_URL: https://idam-web-public.perftest.platform.hmcts.net
+        IDAM_HMCTS_ACCESS_URL: https://hmcts-access.perftest.platform.hmcts.net
         UV_THREADPOOL_SIZE: 128
         DUMMY_VAR: 0

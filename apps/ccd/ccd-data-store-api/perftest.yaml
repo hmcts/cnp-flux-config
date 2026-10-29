@@ -7,7 +7,7 @@ spec:
   values:
     java:
       replicas: 12
-      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-4115bfb-20260924090319 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
+      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-7f0fcda-20261028142332 #{"$imagepolicy": "flux-system:perftest-ccd-data-store-api"}
       autoscaling:
         enabled: false
         minReplicas: 4
@@ -34,13 +34,14 @@ spec:
         HTTP_CLIENT_MAX_CLIENT_PER_ROUTE: 40
         DATA_STORE_DB_MAX_POOL_SIZE: 50
         IDAM_USER_URL: https://idam-web-public.perftest.platform.hmcts.net
+        IDAM_API_URL_BASE: https://idam-web-public.perftest.platform.hmcts.net
+        OIDC_ALLOWED_ISSUERS: "https://idam-web-public.perftest.platform.hmcts.net/o,https://hmcts-access.perftest.platform.hmcts.net/o,https://forgerock-am.service.core-compute-idam-perftest.internal:8443/openam/oauth2/realms/root/realms/hmcts"
         CCD_MULTIPARTY_LOG_LEVEL: DEBUG
         LOG_AND_AUDIT_CASE_ENABLED: true
         REQUEST_SCOPE_CACHED_CASE_TYPES: GrantOfRepresentation
         REQUEST_SCOPE_CACHED_CASE_TYPES_FROM_HOUR: 0
         REQUEST_SCOPE_CACHED_CASE_TYPES_TILL_HOUR: 24
         ROLE_ASSIGNMENT_PAGINATION_ENABLED: true
-        ENABLE_CASE_GROUP_ACCESS_FILTERING: true
         ROLE_ASSIGNMENT_PAGE_SIZE: 500
         HTTP_CLIENT_READ_TIMEOUT: 29000
         FEIGN_CLIENT_READ_TIMEOUT: 29000
