@@ -24,6 +24,8 @@ spec:
     envFrom:
       - secretRef:
           name: logstash-secret-intdemo
+      - configMapRef:
+          name: logstash-config-intdemo
     extraEnvs:
       - name: DUMMY_RESTART_VAR
         value: "true8"
@@ -46,7 +48,7 @@ spec:
       logstash.yml: |
         api.http.host: 0.0.0.0
         xpack.monitoring.enabled: false
-        xpack.monitoring.elasticsearch.hosts: ["${ES_HOSTS}"]
+        xpack.monitoring.elasticsearch.hosts: ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
         queue.type: persisted
         dead_letter_queue.enable: true
         pipeline.ecs_compatibility: disabled
@@ -194,7 +196,7 @@ spec:
       03_output.conf: |
         output {
             elasticsearch {
-                hosts => ["${ES_HOSTS}"]
+                hosts => ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
                 sniffing => false
                 index => "%{[index_id]}"
                 document_type => "_doc"
@@ -236,7 +238,7 @@ spec:
 
         output {
           elasticsearch {
-            hosts => ["${ES_HOSTS}"]
+            hosts => ["${ES_HOST0}", "${ES_HOST1}", "${ES_HOST2}", "${ES_HOST3}"]
             sniffing => false
             index => "ccd-logstash-dead-letter"
           }
