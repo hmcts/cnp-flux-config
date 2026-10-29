@@ -7,4 +7,8 @@ spec:
   values:
     nodejs:
       replicas: 2
-      image: hmctsprod.azurecr.io/xui/icp-api:pr-70-a399111-20260915124009 # {"$imagepolicy": "flux-system:demo-xui-icp"}
+      image: hmctsprod.azurecr.io/xui/icp-api:pr-83-f83f685-20261026174052 # {"$imagepolicy": "flux-system:demo-xui-icp"}
+      environment:
+        DUMMY_VAR: 2
+        SERVICES_CCD_COMPONENT_API: https://gateway-ccd.{{ .Values.global.environment }}.platform.hmcts.net
+        ICP_ALLOWED_ORIGIN: https://manage-case.{{ .Values.global.environment }}.platform.hmcts.net

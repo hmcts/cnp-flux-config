@@ -5,10 +5,12 @@ metadata:
 spec:
   releaseName: finrem-cron-one-off-task
   values:
-    java:
-      memoryRequests: '4Gi'
     job:
-      schedule: "30 13 03 09 *"
+      schedule: "35 22 28 10 *"
+      cpuRequests: '500m'
+      cpuLimits: '2500m'
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
@@ -25,12 +27,14 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
-        CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: RemoveDuplicateDocumentsTask
+        CRON_WAIT_TIME_MINS: 0
         CRON_DRY_RUN: false
-        CRON_REMOVE_DUPLICATE_DOCUMENTS_ENABLED: true
-        CRON_REMOVE_DUPLICATE_DOCUMENTS_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_REMOVE_DUPLICATE_DOCUMENTS_CASE_LIST_FILENAME: "removeDuplicateDocuments-encrypted.csv"
+        TASK_NAME: GlobalSearchMigrationTask
+        CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: true
+        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 500
+        CRON_SUPPLEMENTARY_DATA_UPDATE: true
+        CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
+        GLOBAL_SEARCH_ENABLED: true
     global:
       jobKind: CronJob
       enableKeyVaults: true

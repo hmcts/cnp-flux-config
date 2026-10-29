@@ -8,6 +8,15 @@ spec:
   values:
     java:
       keyVaults:
+        central-app-reg-kv:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: tenant-id
+              alias: FACT_V2_TENANT_ID
+            - name: prl-cos-api-non-prod-app-id
+              alias: FACT_V2_CLIENT_ID
+            - name: prl-cos-api-non-prod-secret
+              alias: FACT_V2_CLIENT_SECRET
         prl:
           secrets:
             - name: prl-cos-idam-client-secret
@@ -65,7 +74,7 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/prl/cos:prod-5fd108b-20260924155259 #{"$imagepolicy": "flux-system:perftest-prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-ac7ac41-20261029113136 #{"$imagepolicy": "flux-system:perftest-prl-cos"}
       environment:
         JAVA_OPTS: "-Xms1g -Xmx4g"
         BARRISTER_FEATURE_ENABLED: true
@@ -85,6 +94,9 @@ spec:
         FEE_REGISTER_API_URL: http://fees-register-api-perftest.service.core-compute-perftest.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,payment_app,ccd_data
         FACT_API: http://fact-api-perftest.service.core-compute-perftest.internal
+        FACT_V2_ENABLED: true
+        FACT_V2_API_URL: https://cft-api-mgmt.perftest.platform.hmcts.net/fact
+        FACT_V2_SCOPE: api://6e2a7c9e-0634-4846-8a8e-0af598d905b0/.default
         LOCATION_REF_API: http://rd-location-ref-api-perftest.service.core-compute-perftest.internal
         RD_PROFESSIONAL_API: http://rd-professional-api-perftest.service.core-compute-perftest.internal
         ACA_SERVICE_API_BASEURL: http://aac-manage-case-assignment-perftest.service.core-compute-perftest.internal
