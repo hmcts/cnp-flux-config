@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-try-slc
+spec:
+  values:
+    global:
+      enableKeyVaults: true
+    java:
+      ingressHost: amp-try-slc.sandbox.platform.hmcts.net
+      environment:
+        # Entra, because this is the tenant the Marketplace issues consumer credentials in.
+        AUTH_KEY_SOURCE: "ENTRA"
+        AUTH_TENANT_ID: "d44f885c-4fac-47bf-afde-d7d861ec4d7b"
+        # try-slc's own resource app, amp-api-try-slc. Must equal the audience the APIM policy
+        # pins in apim/sbox.tfvars - if the two drift, one layer accepts a token the other
+        # refuses and both answer 401.
+        AUTH_AUDIENCE: "c4c8974c-2800-4fe6-964f-dcd4c0820507"
+        AUTH_ISSUER: "https://login.microsoftonline.com/d44f885c-4fac-47bf-afde-d7d861ec4d7b/v2.0"
+      keyVaults:
+        amp-try-slc-sbox:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: try-slc-DEMO-SIGNING-KEY-JWK
+              alias: DEMO_SIGNING_KEY_JWK
+            - name: try-slc-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: try-slc-POSTGRES-PASS
+              alias: POSTGRES_PASS
+            - name: try-slc-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: try-slc-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: try-slc-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE

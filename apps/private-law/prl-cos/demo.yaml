@@ -8,6 +8,15 @@ spec:
   values:
     java:
       keyVaults:
+        central-app-reg-kv:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: tenant-id
+              alias: FACT_V2_TENANT_ID
+            - name: prl-cos-api-non-prod-app-id
+              alias: FACT_V2_CLIENT_ID
+            - name: prl-cos-api-non-prod-secret
+              alias: FACT_V2_CLIENT_SECRET
         prl:
           secrets:
             - name: prl-cos-idam-client-secret
@@ -56,6 +65,8 @@ spec:
               alias: app-insights-connection-string
             - name: edge-case-court-list
               alias: EDGE_CASE_COURT_LIST
+            - name: docmosis-api-key
+              alias: DOCMOSIS_ACCESS_KEY
       replicas: 2
       memoryRequests: "1536Mi"
       cpuRequests: "1000m"
@@ -65,11 +76,11 @@ spec:
       readinessTimeout: 300
       readinessPeriod: 10
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/prl/cos:pr-3890-b28dfca-20260615090104 #{"$imagepolicy": "flux-system:demo-prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:pr-4098-e3a0b64-20261026105551 #{"$imagepolicy": "flux-system:demo-prl-cos"}
       environment:
         FEATURE_EXAMPLE: false
-        DUMMY_ENV: true
-        DUMMY_PROPERTY: true
+        DUMMY_ENV: false
+        DUMMY_PROPERTY: false
         DOCMOSIS_SERVICE_BASE_URL: https://docmosis.demo.platform.hmcts.net
         PRD_API_BASEURL: http://rd-professional-api-demo.service.core-compute-demo.internal
         IDAM_CLIENT_REDIRECT_URI: https://prl-cos-demo.service.core-compute-demo.internal/oauth2/callback
@@ -82,10 +93,12 @@ spec:
         XUI_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details
         PAY_URL: http://payment-api-demo.service.core-compute-demo.internal
         PAY_CALLBACK_URL: http://prl-cos-demo.service.core-compute-demo.internal/service-request-update
-        PRL_DGS_API_URL: http://prl-dgs-demo.service.core-compute-demo.internal
         FEE_REGISTER_API_URL: http://fees-register-api-demo.service.core-compute-demo.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app,ds_ui
         FACT_API: http://fact-api-demo.service.core-compute-demo.internal
+        FACT_V2_ENABLED: true
+        FACT_V2_API_URL: https://cft-api-mgmt.demo.platform.hmcts.net/fact
+        FACT_V2_SCOPE: api://6e2a7c9e-0634-4846-8a8e-0af598d905b0/.default
         LOCATION_REF_API: http://rd-location-ref-api-demo.service.core-compute-demo.internal
         BUNDLE_URL: http://em-ccd-orchestrator-demo.service.core-compute-demo.internal
         REFDATA_API_URL: http://rd-commondata-api-demo.service.core-compute-demo.internal
@@ -99,8 +112,8 @@ spec:
         EXIT_AWAITING_INFORMATION_ENABLED: true
         BUNDLE_BY_CATEGORY_ENABLED: true
         CREATE_REQUEST_CIR_UPDATE_TASK_ENABLED: true
-        REQUEST_ORDER_TASK_C100_CADENCE: 0
-        REQUEST_ORDER_TASK_FL401_CADENCE: 0
+        REQUEST_ORDER_TASK_C100_CADENCE: 3
+        REQUEST_ORDER_TASK_FL401_CADENCE: 1
     global:
       environment: demo
       tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"

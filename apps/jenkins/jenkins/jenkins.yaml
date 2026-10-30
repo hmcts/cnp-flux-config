@@ -7,6 +7,8 @@ metadata:
     kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   releaseName: jenkins
+  driftDetection:
+    mode: enabled
   values:
     serviceAccount:
       create: false
@@ -207,10 +209,10 @@ spec:
                 - simpleBuildDiscarder:
                     discarder:
                       logRotator:
-                        artifactDaysToKeepStr: "14"
-                        artifactNumToKeepStr: "20"
-                        daysToKeepStr: "14"
-                        numToKeepStr: "20"
+                        artifactDaysToKeepStr: "7"
+                        artifactNumToKeepStr: "5"
+                        daysToKeepStr: "7"
+                        numToKeepStr: "10"
           credentials: |
             credentials:
               system:
@@ -266,6 +268,13 @@ spec:
                           password: "${jenkins-build-logs-key}"
                           scope: GLOBAL
                           username: "mgmtbuildlogstoresandbox"
+                      - azureStorageAccount:
+                          blobEndpointURL: "https://blob.core.windows.net/"
+                          description: "Storage account for Jenkins job caches"
+                          id: "job-cache-storage-account"
+                          scope: GLOBAL
+                          storageAccountName: "${JOB_CACHE_STORAGE_ACCOUNT:-mgmtbuildlogstoresandbox}"
+                          storageKey: "${jenkins-job-cache-key:-${jenkins-build-logs-key}}"
                       - sauce:
                           apiKey: "${sauce-access-key}"
                           description: "Sauce Labs Reform Key"
@@ -328,7 +337,7 @@ spec:
           jobs: |
             jobs:
               - url: https://raw.githubusercontent.com/hmcts/cnp-jenkins-config/master/jobdsl/organisations-beta.groovy
-              - script: >
+              - script: |
                   pipelineJob('Seed Job') {
                     triggers {
                       cron('H 8,11,14,17 * * 1-5')
@@ -421,7 +430,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 5.9.18
+      version: 5.9.64
       sourceRef:
         kind: HelmRepository
         name: jenkins

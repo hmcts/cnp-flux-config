@@ -1,0 +1,174 @@
+# promtool unit test for Node Problem Detector alerts defined in
+#   ../npd-alerts-rules.yaml
+#
+# Run with:  ./test.sh
+#
+# The `rule_files` path below is the EXTRACTED native rules file that
+# test.sh generates from the PrometheusRule CRD. promtool cannot
+# read the CRD directly, so we point at the extracted artifact.
+rule_files:
+  - ../npd-alerts-rules.yaml
+
+# evaluation_interval controls how often promtool evaluates the rules against
+# the synthetic series below.
+evaluation_interval: 1m
+
+tests:
+  # ---------------------------------------------------------------------------
+  # Case 1: NPDNetworkUnavailable SHOULD fire after 5m.
+  # ---------------------------------------------------------------------------
+  - interval: 1m
+    input_series:
+      - series: 'kube_node_status_condition{node="aks-nodepool1-12345678-vmss000001", condition="NetworkUnavailable", status="true"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDNetworkUnavailable
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              node: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node aks-nodepool1-12345678-vmss000001 reports condition NetworkUnavailable=true.'
+
+  # ---------------------------------------------------------------------------
+  # Case 2: NPDNetworkUnavailable SHOULD NOT fire when condition is false.
+  # ---------------------------------------------------------------------------
+  - interval: 1m
+    input_series:
+      - series: 'kube_node_status_condition{node="aks-nodepool1-12345678-vmss000001", condition="NetworkUnavailable", status="true"}'
+        values: '0 0 0 0 0 0 0 0'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDNetworkUnavailable
+        exp_alerts: []
+
+  # ---------------------------------------------------------------------------
+  # Case 3: `for: 5m` is respected (pending at 3m, not firing yet).
+  # ---------------------------------------------------------------------------
+  - interval: 1m
+    input_series:
+      - series: 'problem_gauge{instance="aks-nodepool1-12345678-vmss000001", type="ContainerRuntimeProblem", reason="ContainerRuntimeIsDown"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: NPDContainerRuntimeDown
+        exp_alerts: []
+
+  # ---------------------------------------------------------------------------
+  # Case 4: Permanent NPD gauge alerts SHOULD fire.
+  # ---------------------------------------------------------------------------
+  - interval: 1m
+    input_series:
+      - series: 'problem_gauge{instance="aks-nodepool1-12345678-vmss000001", type="ReadonlyFilesystem"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDReadonlyFilesystem
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports a read-only filesystem on aks-nodepool1-12345678-vmss000001.'
+
+  - interval: 1m
+    input_series:
+      - series: 'problem_gauge{instance="aks-nodepool1-12345678-vmss000001", type="KernelDeadlock"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDKernelDeadlock
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports a kernel deadlock on aks-nodepool1-12345678-vmss000001.'
+
+  - interval: 1m
+    input_series:
+      - series: 'problem_gauge{instance="aks-nodepool1-12345678-vmss000001", type="ContainerRuntimeProblem", reason="ContainerRuntimeIsDown"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDContainerRuntimeDown
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports container runtime is down on aks-nodepool1-12345678-vmss000001.'
+
+  - interval: 1m
+    input_series:
+      - series: 'problem_gauge{instance="aks-nodepool1-12345678-vmss000001", type="KubeletProblem", reason="KubeletIsDown"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDKubeletDown
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports kubelet is down on aks-nodepool1-12345678-vmss000001.'
+
+  - interval: 1m
+    input_series:
+      - series: 'problem_gauge{instance="aks-nodepool1-12345678-vmss000001", type="FilesystemCorruptionProblem", reason="FilesystemCorruptionDetected"}'
+        values: '1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: NPDFilesystemCorruption
+        exp_alerts:
+          - exp_labels:
+              severity: critical
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports filesystem corruption on aks-nodepool1-12345678-vmss000001.'
+
+  # ---------------------------------------------------------------------------
+  # Case 5: Temporary-event alerts (problem_counter increase over 15m) SHOULD fire.
+  # ---------------------------------------------------------------------------
+  - interval: 1m
+    input_series:
+      - series: 'problem_counter{instance="aks-nodepool1-12345678-vmss000001", reason="UnregisterNetDevice"}'
+        values: '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25'
+    alert_rule_test:
+      - eval_time: 24m
+        alertname: NPDFrequentUnregisterNetDevice
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports 15 UnregisterNetDevice kernel events in 15m on aks-nodepool1-12345678-vmss000001.'
+
+  - interval: 1m
+    input_series:
+      - series: 'problem_counter{instance="aks-nodepool1-12345678-vmss000001", reason="OOMKilling"}'
+        values: '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25'
+    alert_rule_test:
+      - eval_time: 24m
+        alertname: NPDFrequentOOMKilling
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports 15 OOMKilling kernel events in 15m on aks-nodepool1-12345678-vmss000001.'
+
+  - interval: 1m
+    input_series:
+      - series: 'problem_counter{instance="aks-nodepool1-12345678-vmss000001", reason="KernelOops"}'
+        values: '0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25'
+    alert_rule_test:
+      - eval_time: 24m
+        alertname: NPDKernelOops
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              instance: aks-nodepool1-12345678-vmss000001
+            exp_annotations:
+              message: 'Node Problem Detector reports 15 KernelOops kernel events in 15m on aks-nodepool1-12345678-vmss000001.'

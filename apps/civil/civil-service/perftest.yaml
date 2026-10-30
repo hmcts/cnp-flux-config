@@ -7,10 +7,12 @@ spec:
   timeout: 10m
   values:
     java:
-      image: hmctsprod.azurecr.io/civil/service:pr-7867-d23bed9-20260611153124 #{"$imagepolicy": "flux-system:perftest-civil-service"}
+      image: hmctsprod.azurecr.io/civil/service:prod-2b7ec29-20261029183045 #{"$imagepolicy": "flux-system:perftest-civil-service"}
       replicas: 4
       autoscaling:
         maxReplicas: 8
+      memoryRequests: "3072Mi"
+      memoryLimits: "4096Mi"
       environment:
         TESTING_SUPPORT_ENABLED: true
         DOCUMENT_MANAGEMENT_SECURED: true
@@ -21,4 +23,11 @@ spec:
         ASYNC_HANDLER_MAX_POOL_SIZE: 100
         ASYNC_HANDLER_QUEUE_CAPACITY: 1500
         FLYWAY_LOCK_RETRY_COUNT: 1800
-        FLUX_DEPLOY_TEMP_VAR: 2
+        FLUX_DEPLOY_TEMP_VAR: 3
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false # keep off until cutover so preloaded cases are never indexed
+        CIVIL_CCD_DATA_MIGRATION_ENABLED: true
+        CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        CIVIL_CCD_DATA_MIGRATION_CRON: "0 0-40/10 0-7,16-23 * * *" # pods run in UTC: first run 17:00 BST, last run 08:40 BST, away from perf test runs (no :50 runs, as one cron can't stop at 07:40 UTC otherwise)
+        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 10m # default 2h would carry the 08:40 BST run into the working day
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
+        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m

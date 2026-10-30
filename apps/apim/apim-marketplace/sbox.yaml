@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: apim-marketplace
+spec:
+  values:
+    global:
+      enableKeyVaults: true
+    java:
+      ingressHost: apim-marketplace.sandbox.platform.hmcts.net
+      workloadClientID: "775648eb-07db-4354-90f6-f0bca549341b"
+      environment:
+        APPLICATIONINSIGHTS_ENABLED: "false"
+        APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
+        AZURE_TENANT_ID: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+        APIM_SUBSCRIPTION_ID: "bd2864ed-4f3e-45ed-9c6a-8d179674bab1" # DTS-SPS-SBOX
+        APIM_RESOURCE_GROUP: "rg-sps-platform-sbox"
+        APIM_SERVICE_NAME: "sps-api-mgmt-sbox"
+        ENTRA_RESOURCE_APP_ID_SLC: "c4c8974c-2800-4fe6-964f-dcd4c0820507"
+      keyVaults:
+        apim-sbox:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: marketplace-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: marketplace-POSTGRES-PASS
+              alias: POSTGRES_PASS
+            - name: marketplace-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: marketplace-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: marketplace-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
+            - name: marketplace-NOTIFY-API-KEY
+              alias: NOTIFY_API_KEY
+        # Entra onboarding credentials (amp-client-onboarding), managed and rotated by hmcts/external-entra-id
+        kvspsextidsbox:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-app-amp-client-onboarding-client-id
+              alias: ENTRA_ONBOARDING_CLIENT_ID
+            - name: entra-app-amp-client-onboarding-secret
+              alias: ENTRA_ONBOARDING_CLIENT_SECRET
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID

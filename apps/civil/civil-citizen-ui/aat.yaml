@@ -11,6 +11,20 @@ spec:
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/civil/citizen-ui:prod-a6b88ac-20260611165743 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
+      image: hmctsprod.azurecr.io/civil/citizen-ui:prod-84e04ce-20261029143654 #{"$imagepolicy": "flux-system:civil-citizen-ui"}
       environment:
         TEMP_VAR: 1
+        IDAM_API_URL: https://idam-web-public.aat.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.aat.platform.hmcts.net/o/authorize
+    aac-manage-case-assignment:
+      java:
+        image: hmctsprod.azurecr.io/aac/manage-case-assignment:prod-2d381c9-20260925091953 #{"$imagepolicy": "flux-system:aat-civil-citizen-ui-aac-manage-case-assignment"}
+    xui-webapp:
+      nodejs:
+        image: hmctsprod.azurecr.io/xui/webapp:prod-6d1eabf-20261029172750 #{"$imagepolicy": "flux-system:aat-civil-citizen-ui-xui-webapp"}
+    ccd-api-gateway-web:
+      nodejs:
+        image: hmctsprod.azurecr.io/ccd/api-gateway-web:prod-13ccb6b-20261029163142 #{"$imagepolicy": "flux-system:aat-civil-citizen-ui-ccd-api-gateway-web"}
+    postgresql:
+      image:
+        tag: 17.5.0-debian-12-r20 #{"$imagepolicy": "flux-system:aat-civil-citizen-ui-postgresql:tag"}

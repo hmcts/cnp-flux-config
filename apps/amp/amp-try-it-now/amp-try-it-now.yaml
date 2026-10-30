@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-try-it-now
+spec:
+  releaseName: amp-try-it-now
+  values:
+    java:
+      # Seeded with a prod-SHAPED tag whose timestamp is all zeros, not :latest.
+      #
+      # tests/flux-v2-image-automation.sh validates this string against
+      # prod-[a-f0-9]+-(?P<ts>[0-9]+), which :latest can never match. A real prod tag cannot exist
+      # yet either: it is written by sectionPromoteBuildToStage, which runs AFTER the deploy this
+      # file enables. A zeroed timestamp satisfies the shape check and loses to every real tag, so
+      # image automation rewrites this line on the first prod push and it self-heals.
+      image: hmctsprod.azurecr.io/amp/try-it-now:prod-af8eaf7-20261030085629 #{"$imagepolicy": "flux-system:amp-try-it-now"}
+  chart:
+    spec:
+      chart: ./stable/amp-try-it-now
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

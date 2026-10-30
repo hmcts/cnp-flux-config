@@ -10,10 +10,14 @@ COMPONENT_DIR="${NAMESPACE_DIR}/${PRODUCT}-${COMPONENT}"
 LANGUAGE=${5}
 ENVIRONMENT=${6}
 
-TAG=$(az acr manifest list-metadata https://${ACR}.azurecr.io/${NAMESPACE}/${COMPONENT} | jq -r '.[].tags[] | select(contains("prod"))')
+# Prefer the newest production tag that looks like the expected release format:
+# prod-<hexsha>-<timestamp>. We explicitly reject bare "prod" and "latest" because
+# Flux pipeline checks only allow real image tags that include the commit SHA.
+TAG=$(az acr repository show-tags -n "${ACR}" --repository "${NAMESPACE}/${COMPONENT}" --orderby time_desc -o tsv 2>/dev/null | grep -E -m 1 '^prod-[A-Fa-f0-9]+-[0-9]+$' || true)
 
 if [ -z "${TAG}" ]; then
-  TAG="latest"
+  echo "No production image tag matching prod-<sha>-<timestamp> found for ${ACR}.azurecr.io/${NAMESPACE}/${COMPONENT}." >&2
+  exit 1
 fi
 
 cd "$(dirname "$0")"
@@ -60,7 +64,7 @@ spec:
       interval: 1m
   values:
     ${LANGUAGE}:
-      image: hmctssandbox.azurecr.io/${PRODUCT}/${COMPONENT}:${TAG} # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
+      image: ${ACR}.azurecr.io/${PRODUCT}/${COMPONENT}:${TAG} # {"\$imagepolicy": "flux-system:${PRODUCT}-${COMPONENT}"}
       disableTraefikTls: true
 EOF
 ) > "${COMPONENT_DIR}/${PRODUCT}-${COMPONENT}.yaml"

@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: snl-ui
+spec:
+  releaseName: snl-ui
+  values:
+    nodejs:
+      environment:
+        IDAM_CLIENT_ID: snl-ui
+        IDAM_SCOPE: openid profile roles
+        IDAM_CLIENT_AUTH_METHOD: client_secret_post
+        SESSION_SECURE_FLAG: true
+        IDAM_ISSUER_URL: https://hmcts-access.aat.platform.hmcts.net/o
+        IDAM_BASE_URL: https://snl-ui.aat.platform.hmcts.net

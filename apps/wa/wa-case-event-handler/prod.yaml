@@ -3,9 +3,18 @@ kind: HelmRelease
 metadata:
   name: wa-case-event-handler
 spec:
+  timeout: 10m
   values:
     java:
+      memoryRequests: "1.5Gi"
+      memoryLimits: "3Gi"
+      cpuRequests: "250m"
+      cpuLimits: "500m"
+      autoscaling:
+        enabled: true
+        maxReplicas: 6
       environment:
+        REFRESH_FLAG: "1"
         AZURE_SERVICE_BUS_FEATURE_TOGGLE: true
         AZURE_SERVICE_BUS_DLQ_FEATURE_TOGGLE: true
         LOGGING_LEVEL_UK_GOV_HMCTS: DEBUG

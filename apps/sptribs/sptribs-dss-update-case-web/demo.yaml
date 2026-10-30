@@ -6,8 +6,12 @@ metadata:
 spec:
   values:
     nodejs:
+      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:prod-a3086fb-20261029121123 #{"$imagepolicy": "flux-system:demo-sptribs-dss-update-case-web"}
       environment:
         RATE_LIMITER_DISABLED: true
+        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
+        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
+        IDAM_END_SESSION_URL: https://idam-web-public.demo.platform.hmcts.net/o/endSession
       ingressSessionAffinity:
         enabled: true
         sessionCookieName: sticky

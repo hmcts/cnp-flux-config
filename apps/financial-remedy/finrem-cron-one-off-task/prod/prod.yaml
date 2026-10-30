@@ -5,12 +5,15 @@ metadata:
 spec:
   releaseName: finrem-cron-one-off-task
   values:
-    java:
-      memoryRequests: '4Gi'
     job:
-      schedule: "15 11 08 06 *"
+      schedule: "35 22 28 10 *"
+      cpuRequests: '500m'
+      cpuLimits: '2500m'
+      memoryRequests: '1024Mi'
+      memoryLimits: '2048Mi'
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
+        IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
         IDAM_API_REDIRECT_URL: https://www.financial-remedy.reform.hmcts.net/oauth2/callback
         CTSC_EMAIL: contactFinancialRemedy@justice.gov.uk
         ASSIGNED_TO_JUDGE_DEFAULT_EMAIL: newApplication@justice.gov.uk
@@ -24,12 +27,14 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
-        CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: UpdateContactDetailsTask
+        CRON_WAIT_TIME_MINS: 0
         CRON_DRY_RUN: false
-        CRON_UPDATE_CONTACT_DETAILS_ENABLED: true
-        CRON_UPDATE_CONTACT_DETAILS_CASE_TYPE_ID: FinancialRemedyMVP2
-        CRON_UPDATE_CONTACT_DETAILS_CASE_LIST_FILENAME: "caserefs-encrypted.csv"
+        TASK_NAME: GlobalSearchMigrationTask
+        CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: true
+        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 500
+        CRON_SUPPLEMENTARY_DATA_UPDATE: true
+        CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
+        GLOBAL_SEARCH_ENABLED: true
     global:
       jobKind: CronJob
       enableKeyVaults: true

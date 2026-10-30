@@ -8,13 +8,13 @@ spec:
     java:
       replicas: 2
       useInterpodAntiAffinity: true
-      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-ede656e-20260610095620 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
+      image: hmctsprod.azurecr.io/ccd/data-store-api:prod-7f0fcda-20261028142332 #{"$imagepolicy": "flux-system:ccd-data-store-api"}
       environment:
         CCD_MULTIPARTY_FIX_ENABLED: true
         CCD_MULTIPARTY_CASE_TYPES: "*"
         CCD_MULTIPARTY_EVENTS: "*"
         CCD_MULTIPARTY_LOG_LEVEL: INFO
-        ENABLE_CASE_GROUP_ACCESS_FILTERING: false
+        VALIDATION_DYNAMIC_LIST_CODE_MAX_LENGTH: 200
   chart:
     spec:
       chart: ./stable/ccd-data-store-api

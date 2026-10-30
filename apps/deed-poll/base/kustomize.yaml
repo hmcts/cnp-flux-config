@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: deed-poll
+  namespace: flux-system
+spec:
+  path: ./apps/deed-poll/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "deed-poll"
+      WI_NAME: "deed-poll"
+      TEAM_NOTIFICATION_CHANNEL: "adoption-tech"
+      TEAM_AAD_GROUP_ID: "446b9d16-60ae-41c0-8678-8430cbbd1c27"

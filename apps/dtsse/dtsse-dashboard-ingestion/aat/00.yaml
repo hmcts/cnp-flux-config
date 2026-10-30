@@ -6,25 +6,21 @@ spec:
   releaseName: dtsse-dashboard-ingestion
   values:
     job:
+      schedule: "0,10,20,30,40,50 * * * *"
       cpuRequests: "250m"
       memoryRequests: "1Gi"
+      image: hmctsprod.azurecr.io/dtsse/dashboard-ingestion:staging-42fb425-20261023054430 #{"$imagepolicy": "flux-system:aat-dtsse-dashboard-ingestion"}
+      environment:
+        GITHUB_APP_RATE_LIMITS_ENABLED: "true"
       keyVaults:
         dtsse:
           secrets:
             - name: AppInsightsConnectionString
               alias: APPLICATIONINSIGHTS_CONNECTION_STRING
-            - github-token
-            - db-url
-            - cosmos-key
-            - cosmos-db-name
-            - jenkins-databases
+            - name: github-token
+            - name: db-url
+            - name: cosmos-key
+            - name: cosmos-db-name
+            - name: jenkins-databases
     global:
       jobKind: CronJob
-  chart:
-    spec:
-      chart: ./stable/dtsse-dashboard-ingestion
-      sourceRef:
-        kind: GitRepository
-        name: hmcts-charts
-        namespace: flux-system
-  interval: 1m

@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rota-worker
+spec:
+  values:
+    keda:
+      enabled: true
+      maxReplicaCount: 1
+      activeDeadlineSeconds: 86400
+    java:
+      replicas: 0
+      pdb:
+        enabled: false
+      environment:
+        WORKER_ENABLED: true

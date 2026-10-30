@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-fm5-reminder
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:pr-3890-b28dfca-20260615090104 #{"$imagepolicy": "flux-system:demo-prl-cron-fm5-reminder"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-ac7ac41-20261029113136 #{"$imagepolicy": "flux-system:demo-prl-cron-fm5-reminder"}
       environment:
         TASK_NAME: Fm5ReminderNotificationTask
         HEARING_AWAY_DAYS: 2
@@ -25,7 +25,6 @@ spec:
         XUI_URL: https://manage-case.demo.platform.hmcts.net/cases/case-details
         PAY_URL: http://payment-api-demo.service.core-compute-demo.internal
         PAY_CALLBACK_URL: http://prl-cos-demo.service.core-compute-demo.internal/service-request-update
-        PRL_DGS_API_URL: http://prl-dgs-demo.service.core-compute-demo.internal
         FEE_REGISTER_API_URL: http://fees-register-api-demo.service.core-compute-demo.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
         FACT_API: http://fact-api-demo.service.core-compute-demo.internal
@@ -36,7 +35,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-demo.service.core-compute-demo.internal
         HEARING_API_BASEURL: http://fis-hmc-api-demo.service.core-compute-demo.internal
         APP_ENV: "demo"
-      schedule: 0,30 * * * *
+      schedule: 0/5 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
