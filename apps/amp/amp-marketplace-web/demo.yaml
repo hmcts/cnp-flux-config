@@ -6,3 +6,25 @@ spec:
   values:
     nodejs:
       ingressHost: amp-marketplace-web.demo.platform.hmcts.net
+      workloadClientID: "93a8757c-08f3-450c-85c3-79e703114da2"
+      keyVaults:
+        amp-marketplace:
+          secrets:
+            - name: marketplace-web-redis-host
+              alias: REDIS_HOST
+            - name: marketplace-web-redis-port
+              alias: REDIS_PORT
+            - name: marketplace-web-redis-access-key
+              alias: REDIS_KEY
+            - name: marketplace-web-session-secret
+              alias: SESSION_SECRET
+        # Entra sign-in credentials, managed and rotated by hmcts/external-entra-id
+        kvspsextidaat:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-app-web-api-marketplace-client-id
+              alias: ENTRA_CLIENT_ID
+            - name: entra-app-web-api-marketplace-secret
+              alias: ENTRA_CLIENT_SECRET
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID
