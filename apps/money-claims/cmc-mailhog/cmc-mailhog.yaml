@@ -40,13 +40,15 @@ spec:
       labels:
         app: mailhog
     spec:
-      serviceAccountName: mailhog
+      serviceAccountName: money-claims
       securityContext:
         runAsUser: 1000
       containers:
         - name: mailhog
           image: "mailhog/mailhog:v1.0.1"
           imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: MH_HOSTNAME
               valueFrom:
