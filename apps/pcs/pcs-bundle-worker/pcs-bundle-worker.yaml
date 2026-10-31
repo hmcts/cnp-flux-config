@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-bundle-worker
+spec:
+  releaseName: pcs-bundle-worker
+  values:
+    java:
+      replicas: 1
+      ingressHost: ""
+      image: hmctsprod.azurecr.io/pcs/api:prod-6f82274-20261027095359 #{"$imagepolicy": "flux-system:pcs-api"}
+      environment:
+        CASE_BUNDLE_ENABLED: "true"
+        CASE_BUNDLE_WORKER_ENABLED: "true"
+        DB_SCHEDULER_EXECUTOR_ENABLED: "false"
+  chart:
+    spec:
+      chart: ./stable/pcs-api
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m

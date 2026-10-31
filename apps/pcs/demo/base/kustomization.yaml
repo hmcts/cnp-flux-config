@@ -4,9 +4,13 @@ resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
   - ../../pcs-api/pcs-api.yaml
+  - ../../pcs-bundle-worker/pcs-bundle-worker.yaml
   - ../../pcs-frontend/pcs-frontend.yaml
 namespace: pcs
 patches:
   - path: ../../pcs-api/demo.yaml
+    target:
+      kind: HelmRelease
+      name: pcs-api|pcs-bundle-worker
   - path: ../../serviceaccount/demo.yaml
   - path: ../../pcs-frontend/demo.yaml
