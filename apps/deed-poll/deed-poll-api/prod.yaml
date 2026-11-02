@@ -11,7 +11,7 @@ spec:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         # ForgeRock's internal issuer, carried by password-grant tokens; its host differs per environment.
         IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam/oauth2/realms/root/realms/hmcts
-        # CCD linking backfill after the Dataverse migration (~500 records): ten links per case-list request, about
-        # 15 s at AAT's 1.5 s per link, inside the 30 s gateway. Back to one per request once none is left unlinked.
+        # Steady state after the migration backfill: link each new record on the next case-list request, so it can
+        # take documents (CDAM refuses an upload for a record with no CCD case).
         CCD_LINKING_SWEEP_ENABLED: "true"
-        CCD_LINKING_SWEEP_MAX_RECORDS: "10"
+        CCD_LINKING_SWEEP_MAX_RECORDS: "1"
