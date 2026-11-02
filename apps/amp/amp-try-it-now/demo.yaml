@@ -11,22 +11,12 @@ spec:
       environment:
         APPLICATIONINSIGHTS_ENABLED: "false"
         APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
-        # SELF_ISSUED for now, which is also the chart default - stated here rather than inherited so
-        # the realm this environment runs in is readable from this file alone.
-        #
-        # ENTRA is where demo is going, and it is waiting on external-entra-id#43: that PR registers
-        # amp-api-try-slc and amp-api-try-rcc in the demo directory (which is external-entra-id's
-        # `stg` tenant, db827888-77df-4707-b3d9-24a3dfe32889). ApiRegistry.resolveAudience reads one
-        # AUTH_AUDIENCE_<CODE> per registered API and FAILS STARTUP if any is blank, so the two
-        # audiences have to arrive together with the client ids that PR creates. There is deliberately
-        # no placeholder here: a blank or wrong audience would accept a token minted for another
-        # resource, and the service refuses to start rather than widen trust.
+        # ENTRA waits on external-entra-id#43, which registers the two resource apps in the demo
+        # directory. Both AUTH_AUDIENCE_* must arrive together with it: a blank one fails startup.
         AUTH_KEY_SOURCE: "SELF_ISSUED"
-      # No DEMO_SIGNING_KEY_JWK: the demo vault holds only the Postgres secrets, and mounting a
-      # secret that does not exist fails the CSI mount and never starts the pod. DemoKeys generates
-      # an ephemeral key instead and logs a warning, which is sound at replicas: 1 - the cost is that
-      # tokens minted before a restart stop verifying after it. Mount one here if demo ever needs
-      # tokens to survive a restart, after adding the secret to the vault.
+      # No DEMO_SIGNING_KEY_JWK - not in this vault, and mounting a secret that does not exist
+      # fails the CSI mount. DemoKeys generates an ephemeral key instead, so tokens do not survive
+      # a restart.
       keyVaults:
         amp-try-it-now:
           secrets:
