@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: transcribe-api
+spec:
+  values:
+    python:
+      image: hmctsprod.azurecr.io/transcribe/api:pr-45-d61b376-20261029102957 # {"$imagepolicy": "flux-system:demo-transcribe-api"}
+      replicas: 1
+      autoscaling:
+        enabled: false
+      environment:
+        APP_URL: https://benchnotes.demo.platform.hmcts.net
+        AZURE_AD_CLIENT_ID: 0de5ef19-d7f3-4d56-8803-d5bab46eb6d0
+        AUTH_ACCESS_ROLES: Judge,LegalTextManager,SystemAdministrator,Normal
+    worker:
+      image: hmctsprod.azurecr.io/transcribe/api:pr-45-d61b376-20261029102957 # {"$imagepolicy": "flux-system:demo-transcribe-api"}
+      environment:
+        APP_URL: https://benchnotes.demo.platform.hmcts.net
+        AZURE_AD_CLIENT_ID: 0de5ef19-d7f3-4d56-8803-d5bab46eb6d0

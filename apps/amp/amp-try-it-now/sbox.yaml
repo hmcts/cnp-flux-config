@@ -11,16 +11,27 @@ spec:
       environment:
         APPLICATIONINSIGHTS_ENABLED: "false"
         APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
-        # SELF_ISSUED for the first deploy, and this is a real constraint rather than a shortcut.
+        # ENTRA. The constraint that held this at SELF_ISSUED was that rcc had no resource app;
+        # external-entra-id#36 created amp-api-try-rcc and that is no longer true.
         #
-        # Under ENTRA the registry resolves a per-API audience from AUTH_AUDIENCE_<CODE> and FAILS
-        # STARTUP if any registered API has none - a blank audience would accept a token minted for
-        # any resource. slc has one (amp-api-try-slc, c4c8974c-...); rcc has no Try It Now resource
-        # app yet, so ENTRA would crash-loop the pod.
+        # BOTH audiences have to be here together. ApiRegistry.resolveAudience reads one
+        # AUTH_AUDIENCE_<CODE> per registered API and FAILS STARTUP if any is blank, rather than
+        # accept a token minted for any resource - so setting one and not the other crash-loops the
+        # pod instead of half-working.
         #
-        # To move sandbox to ENTRA: register amp-api-try-rcc in external-entra-id, then set
-        # AUTH_KEY_SOURCE, AUTH_TENANT_ID, AUTH_ISSUER and one AUTH_AUDIENCE_<CODE> per API.
-        AUTH_KEY_SOURCE: "SELF_ISSUED"
+        # AUTH_ISSUER and AUTH_JWKS_URI are deliberately absent: AuthProperties derives both from
+        # the tenant, and derives them from login.microsoftonline.com rather than ciamlogin.com. The
+        # same directory answers on both with a different iss, and a CIAM token is then refused in a
+        # way that reads like a bad token.
+        #
+        # The gateway must flip after this, never before: apim/sbox.tfvars in amp-try-it-now turns
+        # on validate-jwt, and doing that first rejects the self-issued tokens this pod is still
+        # minting. This way round, Entra tokens pass the gateway unvalidated and the pod validates
+        # them, so there is no window where sandbox is broken.
+        AUTH_KEY_SOURCE: "ENTRA"
+        AUTH_TENANT_ID: "d44f885c-4fac-47bf-afde-d7d861ec4d7b"
+        AUTH_AUDIENCE_SLC: "c4c8974c-2800-4fe6-964f-dcd4c0820507"
+        AUTH_AUDIENCE_RCC: "97c20454-55c1-45b0-88cd-268db572f615"
       keyVaults:
         amp-try-it-now-sbox:
           excludeEnvironmentSuffix: true

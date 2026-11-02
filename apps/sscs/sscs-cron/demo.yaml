@@ -7,6 +7,10 @@ spec:
   values:
     global:
       jobKind: CronJob
+      enableKeyVaults: true
     job:
-      schedule: "0/15 * 17 4 *"
-      image: hmctsprod.azurecr.io/sscs/tribunals-api:prod-b9b8a1a-20261027145249 #{"$imagepolicy": "flux-system:demo-sscs-cron"}
+      enabled: true
+      schedule: "0/5 09-13 02 11 *"
+      image: hmctsprod.azurecr.io/sscs/tribunals-api:prod-247e321-20261030102758 #{"$imagepolicy": "flux-system:demo-sscs-cron"}
+      environment:
+        TASK_NAME: MigrateCasesTask

@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: transcribe-web
+spec:
+  dependsOn:
+    - name: transcribe-api
+  values:
+    nodejs:
+      replicas: 2
+      ingressHost: benchnotes.platform.hmcts.net
+      environment:
+        APP_URL: https://benchnotes.platform.hmcts.net
+        NEXT_PUBLIC_API_URL: https://benchnotes.platform.hmcts.net
+        AZURE_AD_CLIENT_ID: 52db7e57-2640-46cf-a881-288f740b21bc
+        AUTH_ACCESS_ROLES: Judge,LegalTextManager,SystemAdministrator,Normal
