@@ -191,6 +191,14 @@ apps/transcribe/ @hmcts/ai-enablement
 apps/**/kustomization.yaml @hmcts/platform-operations
 apps/**/kustomize.yaml @hmcts/platform-operations
 
+# API Marketplace self-serves its own environment overlays: changing what amp runs in sbox,
+# preview, aat or demo, and the image automation that goes with it. apps/amp/base stays with
+# platform-operations, because that is the file that decides which components exist at all and
+# it feeds every environment at once.
+apps/amp/**/kustomization.yaml @hmcts/api-marketplace
+apps/amp/base/kustomization.yaml @hmcts/platform-operations
+apps/amp/base/kustomize.yaml @hmcts/platform-operations
+
 ## Labs - everyone
 apps/labs/
 
