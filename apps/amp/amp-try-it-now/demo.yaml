@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-try-it-now
+spec:
+  values:
+    global:
+      enableKeyVaults: true
+    java:
+      ingressHost: amp-try-it-now.demo.platform.hmcts.net
+      environment:
+        APPLICATIONINSIGHTS_ENABLED: "false"
+        APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
+        # ENTRA waits on external-entra-id#43, which registers the two resource apps in the demo
+        # directory. Both AUTH_AUDIENCE_* must arrive together with it: a blank one fails startup.
+        AUTH_KEY_SOURCE: "SELF_ISSUED"
+      # No DEMO_SIGNING_KEY_JWK - not in this vault, and mounting a secret that does not exist
+      # fails the CSI mount. DemoKeys generates an ephemeral key instead, so tokens do not survive
+      # a restart.
+      keyVaults:
+        amp-try-it-now:
+          secrets:
+            - name: try-it-now-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: try-it-now-POSTGRES-PASS
+              alias: POSTGRES_PASS
+            - name: try-it-now-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: try-it-now-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: try-it-now-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
