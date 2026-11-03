@@ -11,12 +11,14 @@ spec:
       environment:
         APPLICATIONINSIGHTS_ENABLED: "false"
         APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
-        # ENTRA waits on external-entra-id#43, which registers the two resource apps in the demo
-        # directory. Both AUTH_AUDIENCE_* must arrive together with it: a blank one fails startup.
-        AUTH_KEY_SOURCE: "SELF_ISSUED"
-      # No DEMO_SIGNING_KEY_JWK - not in this vault, and mounting a secret that does not exist
-      # fails the CSI mount. DemoKeys generates an ephemeral key instead, so tokens do not survive
-      # a restart.
+        # Both audiences have to be set together: ApiRegistry reads one AUTH_AUDIENCE_<CODE> per
+        # registered API and fails startup on a blank one rather than widen what it trusts.
+        # AUTH_ISSUER and AUTH_JWKS_URI are deliberately absent - AuthProperties derives both from
+        # the tenant, on login.microsoftonline.com rather than ciamlogin.com.
+        AUTH_KEY_SOURCE: "ENTRA"
+        AUTH_TENANT_ID: "db827888-77df-4707-b3d9-24a3dfe32889"
+        AUTH_AUDIENCE_SLC: "02b04e09-4f7b-4724-963b-a4c10a6825f2"
+        AUTH_AUDIENCE_RCC: "640c325d-5a0e-48ce-a616-710d0785f2cb"
       keyVaults:
         amp-try-it-now:
           secrets:
