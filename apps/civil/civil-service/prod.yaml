@@ -37,7 +37,7 @@ spec:
         CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
         CIVIL_CCD_DATA_MIGRATION_CRON: "0 0-30/10 0-4,22-23 * * *" # pods run in UTC: starts 22:00-04:30 UTC (no :40/:50 starts), so with the 2h cap the last run ends by ~06:30 UTC
         CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 2h # one run holds the lock and later triggers skip until it finishes; runs resume from the stored high-water mark
-        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "10000" # as ET prod, which went 1M -> 500k -> 50k -> 10k; wide windows time out in the dense Civil id range
         CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m
       spotInstances:
         enabled: false
