@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pcs-frontend
+spec:
+  values:
+    nodejs:
+      keyVaults:
+        pcs:
+          secrets:
+            - name: azure-managed-redis-connection-string
+              alias: redis-connection-string 
+            - pcs-session-secret
+            - app-insights-connection-string
+            - pcs-frontend-s2s-secret
+            - pcs-frontend-idam-secret
+            - pcs-os-client-lookup-key
+            - pcs-pcq-token-key
