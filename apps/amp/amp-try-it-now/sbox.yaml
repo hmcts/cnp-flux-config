@@ -14,7 +14,7 @@ spec:
         # ENTRA. The constraint that held this at SELF_ISSUED was that rcc had no resource app;
         # external-entra-id#36 created amp-api-try-rcc and that is no longer true.
         #
-        # BOTH audiences have to be here together. ApiRegistry.resolveAudience reads one
+        # EVERY audience has to be here together. ApiRegistry.resolveAudience reads one
         # AUTH_AUDIENCE_<CODE> per registered API and FAILS STARTUP if any is blank, rather than
         # accept a token minted for any resource - so setting one and not the other crash-loops the
         # pod instead of half-working.
@@ -32,6 +32,7 @@ spec:
         AUTH_TENANT_ID: "d44f885c-4fac-47bf-afde-d7d861ec4d7b"
         AUTH_AUDIENCE_SLC: "c4c8974c-2800-4fe6-964f-dcd4c0820507"
         AUTH_AUDIENCE_RCC: "97c20454-55c1-45b0-88cd-268db572f615"
+        AUTH_AUDIENCE_PCD: "00ea2b95-8c57-487c-b878-c68ff591f38d"
       keyVaults:
         amp-try-it-now-sbox:
           excludeEnvironmentSuffix: true
