@@ -11,3 +11,8 @@ spec:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         # ForgeRock's internal issuer, carried by password-grant tokens; its host differs per environment.
         IDAM_API_ADDITIONAL_ISSUERS: https://forgerock-am.service.core-compute-idam-prod2.internal:8443/openam/oauth2/realms/root/realms/hmcts
+        # CCD linking backfill after the Power App migration (298 cases loaded 2026-11-06): ten links per case-list
+        # request, about 15 s at AAT's 1.5 s per link, inside the 30 s gateway. Back to one per request once none is
+        # left unlinked (a follow-up PR).
+        CCD_LINKING_SWEEP_ENABLED: "true"
+        CCD_LINKING_SWEEP_MAX_RECORDS: "10"
