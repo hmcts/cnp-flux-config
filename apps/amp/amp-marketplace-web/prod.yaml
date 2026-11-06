@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-marketplace-web
+spec:
+  values:
+    global:
+      enableKeyVaults: true
+    nodejs:
+      ingressHost: amp-marketplace-web.platform.hmcts.net
+      workloadClientID: "15737775-923e-4090-9819-6d9180d303fb"
+      keyVaults:
+        amp-marketplace:
+          secrets:
+            - name: marketplace-web-redis-host
+              alias: REDIS_HOST
+            - name: marketplace-web-redis-port
+              alias: REDIS_PORT
+            - name: marketplace-web-redis-access-key
+              alias: REDIS_KEY
+            - name: marketplace-web-session-secret
+              alias: SESSION_SECRET
+      # Entra sign-in credentials are deliberately absent, as above: demo reads them from
+      # kvspsextidaat and prod has no equivalent yet.
