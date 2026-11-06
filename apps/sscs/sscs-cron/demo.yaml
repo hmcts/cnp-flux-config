@@ -9,28 +9,6 @@ spec:
       jobKind: CronJob
       enableKeyVaults: true
     job:
-      enabled: true
-      schedule: "20 11 03 11 *"
-      image: hmctsprod.azurecr.io/sscs/tribunals-api:pr-5517-87ad180-20261102132352 #{"$imagepolicy": "flux-system:demo-sscs-cron"}
-      environment:
-        TASK_NAME: ResendHearingBookedTask
-      keyVaults:
-        sscs:
-          resourceGroup: sscs
-          secrets:
-            - name: idam-sscs-oauth2-client-secret
-              alias: IDAM_OAUTH2_CLIENT_SECRET
-            - name: idam-sscs-systemupdate-user
-              alias: IDAM_SSCS_SYSTEMUPDATE_USER
-            - name: idam-sscs-systemupdate-password
-              alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
-            - name: sscs-s2s-secret
-              alias: IDAM_S2S_AUTH_TOTP_SECRET
-            - name: idam-oauth-user
-              alias: IDAM_OAUTH2_CLIENT_ID
-            - name: idam-redirect
-              alias: IDAM_OAUTH2_REDIRECT_URL
-            - name: s2s-micro
-              alias: IDAM_S2S_AUTH_MICROSERVICE
-            - name: resend-hearing-booked-references
-              alias: RESEND_HEARING_BOOKED_REFERENCES
+      enabled: false
+      schedule: "35 12 03 11 *"
+      image: hmctsprod.azurecr.io/sscs/tribunals-api:prod-fc3902e-20261104142405 #{"$imagepolicy": "flux-system:demo-sscs-cron"}

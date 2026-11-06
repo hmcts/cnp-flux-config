@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-try-it-now
+spec:
+  values:
+    global:
+      enableKeyVaults: true
+    java:
+      ingressHost: amp-try-it-now.platform.hmcts.net
+      workloadClientID: "15737775-923e-4090-9819-6d9180d303fb"
+      environment:
+        APPLICATIONINSIGHTS_ENABLED: "false"
+        APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
+        # SELF_ISSUED mints its own tokens, which is how demo runs but is not what production
+        # should serve. Switching to ENTRA needs the two prod resource apps registered first, and
+        # both AUTH_AUDIENCE_* set together - a blank one fails startup rather than falling back.
+        AUTH_KEY_SOURCE: "SELF_ISSUED"
+      keyVaults:
+        amp-try-it-now:
+          secrets:
+            - name: try-it-now-POSTGRES-USER
+              alias: POSTGRES_USER
+            - name: try-it-now-POSTGRES-PASS
+              alias: POSTGRES_PASS
+            - name: try-it-now-POSTGRES-HOST
+              alias: POSTGRES_HOST
+            - name: try-it-now-POSTGRES-PORT
+              alias: POSTGRES_PORT
+            - name: try-it-now-POSTGRES-DATABASE
+              alias: POSTGRES_DATABASE
