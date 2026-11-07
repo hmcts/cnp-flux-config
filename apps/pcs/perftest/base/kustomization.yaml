@@ -5,8 +5,12 @@ resources:
   - ../../../rbac/nonprod-role.yaml
   - ../../pcs-frontend/pcs-frontend.yaml
   - ../../pcs-api/pcs-api.yaml
+  - ../../pcs-bundle-worker/pcs-bundle-worker.yaml
 namespace: pcs
 patches:
   - path: ../../pcs-api/perftest.yaml
+    target:
+      kind: HelmRelease
+      name: pcs-api|pcs-bundle-worker
   - path: ../../pcs-frontend/perftest.yaml
   - path: ../../serviceaccount/perftest.yaml
