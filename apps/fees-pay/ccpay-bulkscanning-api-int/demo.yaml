@@ -9,6 +9,9 @@ spec:
       image: hmctsprod.azurecr.io/ccpay/bulkscanning-api:pr-628-8c69ab6-20261103145021 #{"$imagepolicy": "flux-system:demo-int-ccpay-bulkscanning-api"}
       imagePullPolicy: Always
       environment:
-        DUMMY_RESTART_VAR: false
+        DUMMY_RESTART_VAR: true
         IDAM_API_URL: "https://idam-api.demo.platform.hmcts.net"
         POSTGRES_NAME: postgresqldb2
+
+        # only needed until bulkscan change merged to master
+        OIDC_AUDIENCE_LIST: paybubble,cmc_citizen,ccd_gateway,payment_api
