@@ -6,5 +6,6 @@ spec:
   releaseName: cath-postgres
   values:
     nodejs:
-      # Prod hosts carry no environment segment.
-      ingressHost: cath-postgres.platform.hmcts.net
+      # No ingress in prod. This pod only migrates and seeds the database; its port
+      # also serves Prisma Studio, an unauthenticated database UI.
+      ingressHost: ""
