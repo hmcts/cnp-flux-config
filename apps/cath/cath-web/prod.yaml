@@ -6,10 +6,11 @@ spec:
   releaseName: cath-web
   values:
     nodejs:
-      # Prod hosts carry no environment segment.
-      ingressHost: cath-web.platform.hmcts.net
-      additionalIngressHosts:
-        - cath.platform.hmcts.net
+      # Prod hosts carry no environment segment. The chart's cath-web/cath split
+      # exists because the non-prod pipeline creates an A record for its ingress
+      # host; Flux doesn't, so prod serves the Front Door host directly.
+      ingressHost: cath.platform.hmcts.net
+      additionalIngressHosts: []
       environment:
         ENABLE_TEST_SUPPORT: "false"
         # Sign-in redirect URIs are registered against this host.
