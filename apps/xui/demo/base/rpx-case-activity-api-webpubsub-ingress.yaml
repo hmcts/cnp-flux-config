@@ -1,0 +1,26 @@
+# Azure Web PubSub callback only; preserve the existing internal application ingress.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rpx-case-activity-api-webpubsub
+  namespace: xui
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: rpx-case-activity-api.demo.platform.hmcts.net
+      http:
+        paths:
+          - path: /api/webpubsub/hubs/hub/
+            pathType: Prefix
+            backend:
+              service:
+                name: xui-case-activity-api-nodejs
+                port:
+                  number: 80
+          - path: /health/liveness
+            pathType: Exact
+            backend:
+              service:
+                name: xui-case-activity-api-nodejs
+                port:
+                  number: 80
