@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cath-api
+spec:
+  releaseName: cath-api
+  values:
+    nodejs:
+      # Prod hosts carry no environment segment.
+      ingressHost: cath-api.platform.hmcts.net
+      environment:
+        ENABLE_TEST_SUPPORT: "false"

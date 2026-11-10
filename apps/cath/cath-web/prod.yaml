@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cath-web
+spec:
+  releaseName: cath-web
+  values:
+    nodejs:
+      # Prod hosts carry no environment segment.
+      ingressHost: cath-web.platform.hmcts.net
+      additionalIngressHosts:
+        - cath.platform.hmcts.net
+      environment:
+        ENABLE_TEST_SUPPORT: "false"
+        # Sign-in redirect URIs are registered against this host.
+        BASE_URL: https://cath.platform.hmcts.net
+        CATH_SERVICE_URL: https://cath.platform.hmcts.net
+        B2C_CUSTOM_DOMAIN: sign-in.court-tribunal-hearings.service.gov.uk
+        B2C_CUSTOM_DOMAIN_PATH: court-tribunal-hearings.service.gov.uk
+        CRIME_IDAM_BASE_URL: https://login.cjscp.org.uk
