@@ -24,6 +24,10 @@ patches:
       kind: HelmRelease
       name: ccd-elasticsearch-app-logstash.*
     patch: |-
+      - op: add
+        path: /spec/values/rbac
+        value:
+          serviceAccountName: ccd
       - op: replace
         path: /spec/values/envFrom
         value:
