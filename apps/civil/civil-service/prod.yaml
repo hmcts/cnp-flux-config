@@ -35,9 +35,10 @@ spec:
         CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false # keep off until cutover so preloaded cases are never indexed
         CIVIL_CCD_DATA_MIGRATION_ENABLED: true
         CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
-        CIVIL_CCD_DATA_MIGRATION_CRON: "0 0-40/10 0-5,22-23 * * *" # pods run in UTC: 22:00-05:40 UTC (22:00-05:40 GMT, 23:00-06:40 BST), out of service hours
-        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 10m # default 2h would carry the last run (05:40 UTC) into the morning
-        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "100000" # dense Civil windows exceed the 10m statement timeout at 1M
+        CIVIL_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # TEMPORARY 24/7 run until Monday 2026-11-09, then revert to nightly: starts every 10 min all day; with the 2h cap that is back-to-back runs
+        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 2h # one run holds the lock and later triggers skip until it finishes; runs resume from the stored high-water mark
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "10000" # as ET prod, which went 1M -> 500k -> 50k -> 10k; wide windows time out in the dense Civil id range
+        CCD_DATA_MIGRATION_MAX_BATCHES_PER_RUN: "1000000" # as ET prod; the SDK default of 100 ends each run after ~10 minutes, so the 2h cap never applies
         CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m
       spotInstances:
         enabled: false
