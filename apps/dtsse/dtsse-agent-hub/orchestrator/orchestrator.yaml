@@ -65,13 +65,13 @@ spec:
           type: RuntimeDefault
       containers:
         - name: orchestrator
-          image: hmctsprod.azurecr.io/dtsse/agent-hub:prod-0849ad2-20261106074837 #{"$imagepolicy": "flux-system:dtsse-agent-hub"}
+          image: hmctsprod.azurecr.io/dtsse/agent-hub:prod-eed6bee-20261109071344 #{"$imagepolicy": "flux-system:dtsse-agent-hub"}
           command: ["node", "dist/cli/orchestrator.js"]
           env:
             - name: ORCHESTRATOR_CLUSTER
               value: cft-${CLUSTER_FULL_NAME}
             - name: VIRTUAL_AGENT_IMAGE
-              value: hmctsprod.azurecr.io/dtsse/virtual-agent:prod-3857615-20261105141743@sha256:06c6bcb6d02f88583284ba61e2290ac2dc31c91fa75897e4021b9300455c0904 #{"$imagepolicy": "flux-system:dtsse-agent-hub-virtual-agent"}
+              value: hmctsprod.azurecr.io/dtsse/virtual-agent:prod-c2d6967-20261106120649@sha256:a742cc46680f5e06d2cd703e5983b690646d2abd7f6babd075fcad2de6e0586f #{"$imagepolicy": "flux-system:dtsse-agent-hub-virtual-agent"}
             - name: VIRTUAL_AGENT_HOST_ALIASES
               value: build.hmcts.net=10.10.73.250
           livenessProbe:
