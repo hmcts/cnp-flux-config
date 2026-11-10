@@ -2,9 +2,13 @@ apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: perftest-civil-service
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: '^pr-8498-[a-f0-9]+-(?P<ts>[0-9]+)'
+    # DTSCCI-6615 perf test sweep: pinned to one PR 8438 commit so later pushes to the PR
+    # cannot change the image between runs. Revert to master tracking when the sweep ends.
+    pattern: '^pr-8438-bf603e6-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:

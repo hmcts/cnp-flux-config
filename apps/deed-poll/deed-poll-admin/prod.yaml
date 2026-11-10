@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: deed-poll-admin
+spec:
+  values:
+    nodejs:
+      # Prod hosts carry no environment segment, so the chart's `deed-poll-admin.{env}.platform.hmcts.net` and
+      # `hmcts-access.{env}.platform.hmcts.net` defaults are wrong here. The persona switcher stays off: it is
+      # enabled only by the aat and preview templates.
+      ingressHost: deed-poll-admin.platform.hmcts.net
+      environment:
+        IDAM_ISSUER_URL: https://hmcts-access.service.gov.uk/o
+        IDAM_REDIRECT_URI: https://deed-poll-admin.platform.hmcts.net/oauth2/callback
