@@ -25,6 +25,10 @@ patches:
       name: ccd-elasticsearch-app-logstash.*
     patch: |-
       - op: add
+        path: /metadata/annotations
+        value:
+          kustomize.toolkit.fluxcd.io/substitute: disabled
+      - op: add
         path: /spec/values/rbac
         value:
           serviceAccountName: ccd
