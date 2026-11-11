@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cath-web
+spec:
+  releaseName: cath-web
+  values:
+    nodejs:
+      # Prod hosts carry no environment segment. The chart's cath-web/cath split
+      # exists because the non-prod pipeline creates an A record for its ingress
+      # host; Flux doesn't, so prod serves the Front Door host directly.
+      ingressHost: cath.platform.hmcts.net
+      environment:
+        ENABLE_TEST_SUPPORT: "false"
+        # Sign-in redirect URIs are registered against this host.
+        BASE_URL: https://cath.platform.hmcts.net
+        CATH_SERVICE_URL: https://cath.platform.hmcts.net
+        B2C_CUSTOM_DOMAIN: sign-in.court-tribunal-hearings.service.gov.uk
+        B2C_CUSTOM_DOMAIN_PATH: court-tribunal-hearings.service.gov.uk
+        CRIME_IDAM_BASE_URL: https://login.cjscp.org.uk
+        CFT_IDAM_URL: https://hmcts-access.service.gov.uk
+        # Links in media emails; CaTH's own pages build the B2C redirect from config.
+        MEDIA_SIGN_IN_LINK: https://cath.platform.hmcts.net/b2c-login
+        MEDIA_PASSWORD_RESET_LINK: https://cath.platform.hmcts.net/b2c-forgot-password

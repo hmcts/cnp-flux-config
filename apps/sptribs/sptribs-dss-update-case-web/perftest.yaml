@@ -6,7 +6,7 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:prod-f635ca2-20261109090335 #{"$imagepolicy": "flux-system:perftest-sptribs-dss-update-case-web"}
+      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:prod-d666b3d-20261111105836 #{"$imagepolicy": "flux-system:perftest-sptribs-dss-update-case-web"}
       ingressSessionAffinity:
         enabled: true
         sessionCookieName: sticky
@@ -15,6 +15,19 @@ spec:
         IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/o/authorize
         IDAM_END_SESSION_URL: https://idam-web-public.perftest.platform.hmcts.net/o/endSession
         DUMMY_ENV_VAR: false
+        REDIS_HOST: 'sptribs-frontend-perftest.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
+      keyVaults:
+        sptribs:
+          secrets:
+            - name: redis-new
+              alias: redis-access-key
+            - app-insights-instrumentation-key
+            - idam-systemupdate-username
+            - idam-systemupdate-password
+            - idam-dss-update-ui-secret
+            - s2s-case-api-secret
+            - sptribs-dss-update-case-dynatrace-url
     global:
       environment: perftest
       enableKeyVaults: true

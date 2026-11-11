@@ -8,7 +8,7 @@ spec:
   values:
     job:
       suspend: false
-      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-c3c2bd9-20261104143917 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-4ee2aac-20261111141232 #{"$imagepolicy": "flux-system:sscs-ccd-case-migration"}
       cpuRequests: "1000m"
       cpuLimits: "2500m"
       memoryRequests: "1024Mi"
@@ -35,6 +35,8 @@ spec:
               alias: IDAM_SSCS_SYSTEMUPDATE_PASSWORD
             - name: encoded-string-sent-to-dwp-migration
               alias: SENT_TO_DWP_MIGRATION_ENCODED_STRING
+            - name: encoded-string-processing-venue
+              alias: VENUE_MIGRATION_ENCODED_STRING
       environment:
         CCD_DATA_STORE_API_BASE_URL: http://ccd-data-store-api-prod.service.core-compute-prod.internal
         IDAM_S2S_URL: http://rpe-service-auth-provider-prod.service.core-compute-prod.internal
@@ -43,6 +45,7 @@ spec:
         RD_LOCATION_REF_API_URL: http://rd-location-ref-api-prod.service.core-compute-prod.internal
         JUDICIAL_REF_API_URL: http://rd-judicial-api-prod.service.core-compute-prod.internal
         ARCHIVE_OLD_DRAFTS_ENABLED: true
+        VENUE_MIGRATION_ENABLED: true
         CASE_MIGRATION_MAX_RETRIES: 5
         MIGRATION_QUERY_SIZE: 10000
         MIGRATION_CASE_LIMIT: 2200

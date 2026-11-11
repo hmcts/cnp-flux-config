@@ -6,11 +6,7 @@ spec:
   releaseName: finrem-cron-one-off-task
   values:
     job:
-      schedule: "35 22 28 10 *"
-      cpuRequests: '500m'
-      cpuLimits: '2500m'
-      memoryRequests: '1024Mi'
-      memoryLimits: '2048Mi'
+      schedule: "30 11 10 11 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
@@ -27,14 +23,12 @@ spec:
         FEATURE_CASEWORKER_NOC: true
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
-        CRON_WAIT_TIME_MINS: 0
+        CRON_WAIT_TIME_MINS: 1
+        TASK_NAME: FixHearingTimeTask
         CRON_DRY_RUN: false
-        TASK_NAME: GlobalSearchMigrationTask
-        CRON_GLOBAL_SEARCH_MIGRATION_ENABLED: false
-        CRON_GLOBAL_SEARCH_MIGRATION_BATCH_SIZE: 500
-        CRON_SUPPLEMENTARY_DATA_UPDATE: true
-        CRON_GLOBAL_SEARCH_MIGRATION_CASE_TYPE_ID: FinancialRemedyMVP2
-        GLOBAL_SEARCH_ENABLED: true
+        CRON_FIX_HEARING_TIME_ENABLED: true
+        CRON_FIX_HEARING_TIME_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_FIX_HEARING_TIME_CASE_LIST_FILENAME: "fixHearingTime-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
