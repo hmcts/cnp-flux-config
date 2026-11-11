@@ -15,6 +15,12 @@ spec:
         APIM_SUBSCRIPTION_ID: "890625e2-7a8b-445c-81b4-8044a062cef3" # DTS-SPS-PROD
         APIM_RESOURCE_GROUP: "rg-sps-platform-prod"
         APIM_SERVICE_NAME: "sps-api-mgmt-prod"
+        # No resource app is registered in the prod directory yet. Blank refuses a grant for
+        # that API with a 503; the chart default is a sandbox app id.
+        ENTRA_RESOURCE_APP_ID_SLC: ""
+        ENTRA_RESOURCE_APP_ID_RCC: ""
+        ENTRA_RESOURCE_APP_ID_PCD: ""
+        ENTRA_RESOURCE_APP_ID_DL: ""
       keyVaults:
         amp-marketplace:
           secrets:
@@ -30,7 +36,13 @@ spec:
               alias: POSTGRES_DATABASE
             - name: marketplace-NOTIFY-API-KEY
               alias: NOTIFY_API_KEY
-      # ENTRA_RESOURCE_APP_ID_SLC/RCC and the Entra onboarding credentials are deliberately
-      # absent: sbox and demo read them from kvspsextidsbox and kvspsextidaat, and the prod
-      # directory has neither the resource apps nor a vault to read them from yet. Listing a
-      # secret the vault does not hold leaves the pod in Init rather than disabling the feature.
+        # Entra onboarding credentials (amp-client-onboarding), managed and rotated by hmcts/external-entra-id
+        kvspsextidprod:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-app-amp-client-onboarding-client-id
+              alias: ENTRA_ONBOARDING_CLIENT_ID
+            - name: entra-app-amp-client-onboarding-secret
+              alias: ENTRA_ONBOARDING_CLIENT_SECRET
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID
