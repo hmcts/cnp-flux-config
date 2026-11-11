@@ -20,5 +20,13 @@ spec:
               alias: REDIS_KEY
             - name: marketplace-web-session-secret
               alias: SESSION_SECRET
-      # Entra sign-in credentials are deliberately absent, as above: demo reads them from
-      # kvspsextidaat and prod has no equivalent yet.
+        # Entra sign-in credentials, managed and rotated by hmcts/external-entra-id
+        kvspsextidprod:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-app-web-api-marketplace-client-id
+              alias: ENTRA_CLIENT_ID
+            - name: entra-app-web-api-marketplace-secret
+              alias: ENTRA_CLIENT_SECRET
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID
