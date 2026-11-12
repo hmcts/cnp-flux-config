@@ -17,29 +17,6 @@ spec:
                 value:
                   windowsOptions:
                     runAsUserName: ContainerUser
-              # Guard the pinned chart workaround so future populated fields are not removed.
-              - op: test
-                path: /spec/jobTargetRef/template/metadata/annotations
-                value: null
-              - op: remove
-                path: /spec/jobTargetRef/template/metadata/annotations
-              - op: test
-                path: /spec/jobTargetRef/template/spec/volumes
-                value: null
-              - op: remove
-                path: /spec/jobTargetRef/template/spec/volumes
-              - op: test
-                path: /spec/jobTargetRef/template/spec/containers/0/volumeMounts
-                value: null
-              - op: remove
-                path: /spec/jobTargetRef/template/spec/containers/0/volumeMounts
-              # Chart 2.5.3 incorrectly copies rollout.strategy into propagationPolicy.
-              - op: test
-                path: /spec/rollout/propagationPolicy
-                value: gradual
-              - op: replace
-                path: /spec/rollout/propagationPolicy
-                value: background
   values:
     scaleType: Job
     image: hmctsprod.azurecr.io/azure-devops-agent-windows:prod-fcc24e75-1783430255 # {"$imagepolicy": "flux-system:azure-devops-agent-windows"}
@@ -77,8 +54,8 @@ spec:
   chart:
     spec:
       chart: function
-      version: 2.5.3
+      version: 2.7.0
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctsprod-oci
         namespace: flux-system
