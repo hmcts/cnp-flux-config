@@ -6,10 +6,23 @@ metadata:
 spec:
   values:
     nodejs:
+      keyVaults:
+        sptribs:
+          secrets:
+            - name: redis-new
+              alias: redis-access-key
+            - app-insights-instrumentation-key
+            - idam-systemupdate-username
+            - idam-systemupdate-password
+            - idam-dss-update-ui-secret
+            - s2s-case-api-secret
+            - sptribs-dss-update-case-dynatrace-url
       ingressHost: update.special-tribunals.service.gov.uk
       spotInstances:
         enabled: false
       environment:
+        REDIS_HOST: 'sptribs-frontend-prod.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
         IDAM_API_URL: https://hmcts-access.service.gov.uk/o/token
         IDAM_WEB_URL: https://hmcts-access.service.gov.uk/o/authorize
         IDAM_END_SESSION_URL: https://hmcts-access.service.gov.uk/o/endSession
