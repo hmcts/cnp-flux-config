@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: snl-ui
+spec:
+  values:
+    nodejs:
+      keyVaults:
+        snl:
+          disabled: true
+        snl-aat:
+          excludeEnvironmentSuffix: true
+          mountPath: /mnt/secrets/snl
+          secrets:
+            - nodejs-app-insights-connection-string
+            - session-secret
+            - cft-idam-client-secret
