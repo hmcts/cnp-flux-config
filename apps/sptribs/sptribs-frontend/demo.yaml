@@ -5,9 +5,24 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/sptribs/frontend:prod-7ce86f6-20260908170346  #{"$imagepolicy": "flux-system:demo-sptribs-frontend"}
+      image: hmctsprod.azurecr.io/sptribs/frontend:prod-ec2bbcb-20261112222206 #{"$imagepolicy": "flux-system:demo-sptribs-frontend"}
       environment:
         PCQ_ENABLED: false
         RATE_LIMITER_DISABLED: true
-#        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
-#        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
+        #        IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
+        #        IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
+        REDIS_HOST: 'sptribs-frontend-demo.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
+      keyVaults:
+        sptribs:
+          secrets:
+            - idam-ui-secret
+            - idam-systemupdate-username
+            - idam-systemupdate-password
+            - name: redis-new
+              alias: redis-access-key
+            - s2s-case-api-secret
+            - app-insights-connection-string
+            - postcode-lookup-token
+            - specialTribunals-cic-pcq-token
+            - sptribs-frontend-dynatrace-url

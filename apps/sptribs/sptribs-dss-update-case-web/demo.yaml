@@ -6,12 +6,25 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:prod-8445732-20260817101729
+      image: hmctsprod.azurecr.io/sptribs/dss-update-case-web:prod-d666b3d-20261111105836 #{"$imagepolicy": "flux-system:demo-sptribs-dss-update-case-web"}
       environment:
         RATE_LIMITER_DISABLED: true
         IDAM_API_URL: https://idam-api.demo.platform.hmcts.net/o/token
         IDAM_WEB_URL: https://idam-web-public.demo.platform.hmcts.net/login
         IDAM_END_SESSION_URL: https://idam-web-public.demo.platform.hmcts.net/o/endSession
+        REDIS_HOST: 'sptribs-frontend-demo.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
+      keyVaults:
+        sptribs:
+          secrets:
+            - name: redis-new
+              alias: redis-access-key
+            - app-insights-instrumentation-key
+            - idam-systemupdate-username
+            - idam-systemupdate-password
+            - idam-dss-update-ui-secret
+            - s2s-case-api-secret
+            - sptribs-dss-update-case-dynatrace-url
       ingressSessionAffinity:
         enabled: true
         sessionCookieName: sticky

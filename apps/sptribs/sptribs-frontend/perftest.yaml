@@ -5,10 +5,21 @@ metadata:
 spec:
   values:
     nodejs:
-      image: hmctsprod.azurecr.io/sptribs/frontend:prod-7ce86f6-20260908170346 #{"$imagepolicy": "flux-system:perftest-sptribs-frontend"}
+      image: hmctsprod.azurecr.io/sptribs/frontend:prod-ec2bbcb-20261112222206 #{"$imagepolicy": "flux-system:perftest-sptribs-frontend"}
       environment:
-#        IDAM_API_URL: https://idam-api.perftest.platform.hmcts.net/o/token
-#        IDAM_WEB_URL: https://idam-web-public.perftest.platform.hmcts.net/login
-#        IDAM_HMCTS_URL: https://hmcts-access.perftest.platform.hmcts.net
-#        IDAM_END_SESSION_URL: 'https://idam-web-public.perftest.platform.hmcts.net/o/endSession'
         PCQ_ENABLED: false
+        REDIS_HOST: 'sptribs-frontend-perftest.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
+      keyVaults:
+        sptribs:
+          secrets:
+            - idam-ui-secret
+            - idam-systemupdate-username
+            - idam-systemupdate-password
+            - name: redis-new
+              alias: redis-access-key
+            - s2s-case-api-secret
+            - app-insights-connection-string
+            - postcode-lookup-token
+            - specialTribunals-cic-pcq-token
+            - sptribs-frontend-dynatrace-url

@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ../../../base/slack-provider/prod
+  - ../../transcribe-api/transcribe-api.yaml
+  - ../../transcribe-web/transcribe-web.yaml
+namespace: transcribe
+patches:
+  - path: ../../serviceaccount/prod.yaml
+  - path: ../../transcribe-api/prod.yaml
+  - path: ../../transcribe-web/prod.yaml

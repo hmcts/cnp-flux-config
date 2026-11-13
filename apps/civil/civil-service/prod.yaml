@@ -32,5 +32,14 @@ spec:
         CACHE_BOUNCE_VAR: 1
         DUMMY_VAR: 3
         MIGRATION_BATCHSIZE: 5000
+        CCD_SDK_DECENTRALISED_ES_INDEXER_ENABLED: false # keep off until cutover so preloaded cases are never indexed
+        CIVIL_CCD_DATA_MIGRATION_ENABLED: true
+        CIVIL_CCD_DATA_MIGRATION_MODE: PRELOAD_EVENTS
+        CIVIL_CCD_DATA_MIGRATION_CRON: "0 */10 * * * *" # TEMPORARY 24/7 run until Monday 2026-11-09, then revert to nightly: starts every 10 min all day; with the 2h cap that is back-to-back runs
+        CIVIL_CCD_DATA_MIGRATION_MAX_RUN_TIME: 2h # one run holds the lock and later triggers skip until it finishes; runs resume from the stored high-water mark
+        CCD_DATA_MIGRATION_EVENT_ID_WINDOW_SIZE: "10000" # as ET prod, which went 1M -> 500k -> 50k -> 10k; wide windows time out in the dense Civil id range
+        CCD_DATA_MIGRATION_MAX_BATCHES_PER_RUN: "1000000" # as ET prod; the SDK default of 100 ends each run after ~10 minutes, so the 2h cap never applies
+        CCD_DATA_MIGRATION_STATEMENT_TIMEOUT: 30m
+        SCHEDULER_ACTIVE_SCHEDULERS: ExpiredDraftStore
       spotInstances:
         enabled: false

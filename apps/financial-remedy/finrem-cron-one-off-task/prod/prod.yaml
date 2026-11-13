@@ -5,10 +5,8 @@ metadata:
 spec:
   releaseName: finrem-cron-one-off-task
   values:
-    java:
-      memoryRequests: '4Gi'
     job:
-      schedule: "30 13 03 09 *"
+      schedule: "30 11 10 11 *"
       environment:
         IDAM_API_URL: https://idam-api.platform.hmcts.net
         IDAM_OIDC_URL: https://hmcts-access.service.gov.uk
@@ -26,11 +24,11 @@ spec:
         FEATURE_SEND_TO_FRC: true
         FEATURE_CFV_ENABLED: true
         CRON_WAIT_TIME_MINS: 1
-        TASK_NAME: RemoveDuplicateDocumentsTask
+        TASK_NAME: FixHearingTimeTask
         CRON_DRY_RUN: false
-        CRON_REMOVE_DUPLICATE_DOCUMENTS_ENABLED: true
-        CRON_REMOVE_DUPLICATE_DOCUMENTS_CASE_TYPE_ID: FinancialRemedyContested
-        CRON_REMOVE_DUPLICATE_DOCUMENTS_CASE_LIST_FILENAME: "removeDuplicateDocuments-encrypted.csv"
+        CRON_FIX_HEARING_TIME_ENABLED: true
+        CRON_FIX_HEARING_TIME_CASE_TYPE_ID: FinancialRemedyContested
+        CRON_FIX_HEARING_TIME_CASE_LIST_FILENAME: "fixHearingTime-encrypted.csv"
     global:
       jobKind: CronJob
       enableKeyVaults: true
