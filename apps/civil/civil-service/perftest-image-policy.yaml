@@ -2,9 +2,13 @@ apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: perftest-civil-service
+  annotations:
+    hmcts.github.com/prod-automated: disabled
 spec:
   filterTags:
-    pattern: '^prod-[a-f0-9]+-(?P<ts>[0-9]+)'
+    # DTSCCI-6722 perf test: pinned to one PR 8510 (Spring Boot 4) commit so later pushes to the PR
+    # cannot change the image between runs. Revert to the prod pattern when testing ends.
+    pattern: '^pr-8510-d874a41-(?P<ts>[0-9]+)'
     extract: '$ts'
   policy:
     alphabetical:
