@@ -5,6 +5,18 @@ metadata:
   namespace: azure-devops
 spec:
   releaseName: azure-devops-agent-windows
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: ScaledJob
+              name: azure-devops-agent-windows-function
+            patch: |
+              - op: add
+                path: /spec/jobTargetRef/template/spec/securityContext
+                value:
+                  windowsOptions:
+                    runAsUserName: ContainerUser
   values:
     scaleType: Job
     image: hmctsprod.azurecr.io/azure-devops-agent-windows:prod-fcc24e75-1783430255 # {"$imagepolicy": "flux-system:azure-devops-agent-windows"}
@@ -42,8 +54,8 @@ spec:
   chart:
     spec:
       chart: function
-      version: 2.5.3
+      version: 2.7.0
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic
+        name: hmctsprod-oci
         namespace: flux-system
