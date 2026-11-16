@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: amp-marketplace-web
+spec:
+  values:
+    global:
+      enableKeyVaults: true
+    nodejs:
+      ingressHost: amp-marketplace-web.platform.hmcts.net
+      workloadClientID: "15737775-923e-4090-9819-6d9180d303fb"
+      environment:
+        ENTRA_REDIRECT_URI: "https://amp-marketplace-web.platform.hmcts.net/auth/callback"
+        ENTRA_POST_LOGOUT_REDIRECT_URI: "https://amp-marketplace-web.platform.hmcts.net/"
+      keyVaults:
+        amp-marketplace:
+          secrets:
+            - name: marketplace-web-redis-host
+              alias: REDIS_HOST
+            - name: marketplace-web-redis-port
+              alias: REDIS_PORT
+            - name: marketplace-web-redis-access-key
+              alias: REDIS_KEY
+            - name: marketplace-web-session-secret
+              alias: SESSION_SECRET
+        # Entra sign-in credentials, managed and rotated by hmcts/external-entra-id
+        kvspsextidprod:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-app-web-api-marketplace-client-id
+              alias: ENTRA_CLIENT_ID
+            - name: entra-app-web-api-marketplace-secret
+              alias: ENTRA_CLIENT_SECRET
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID

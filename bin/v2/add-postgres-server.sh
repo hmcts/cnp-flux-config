@@ -28,13 +28,13 @@ if [ ! -f "apps/$NAMESPACE_NAME/preview/aso" ]; then
 
   (
     cat <<EOF
-apiVersion: dbforpostgresql.azure.com/v1api20230601preview
+apiVersion: dbforpostgresql.azure.com/v20250801
 kind: FlexibleServer
 metadata:
   name: ${NAMESPACE}-${ENVIRONMENT}
   namespace: ${NAMESPACE}
 spec:
-  version: "16"
+  version: "17"
   sku:
     name: Standard_D2ds_v5
     tier: GeneralPurpose

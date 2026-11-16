@@ -7,9 +7,13 @@ spec:
   values:
     job:
       environment:
-        CRON_CASE_TYPE_ID: ET_EnglandWales
-      suspend: false
-      schedule: "0 17 * * *"
+        CRON_CASE_TYPE_ID: ET_EnglandWales,ET_Scotland
+        TASK_NAME: ClearCaseTtlTask
+        CRON_CLEAR_CASE_TTL_DRY_RUN: false
+        CRON_CLEAR_CASE_TTL_MAX_CASES_PER_SEARCH: 5000
+        CRON_CLEAR_CASE_TTL_MAX_CASES_TO_PROCESS: 5000
+      suspend: true
+      schedule: "*/10 * * * *"
     global:
       jobKind: CronJob
       enableKeyVaults: true
