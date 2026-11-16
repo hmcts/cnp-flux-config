@@ -12,10 +12,12 @@ spec:
       environment:
         APPLICATIONINSIGHTS_ENABLED: "false"
         APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
-        # SELF_ISSUED mints its own tokens, which is how demo runs but is not what production
-        # should serve. Switching to ENTRA needs the two prod resource apps registered first, and
-        # both AUTH_AUDIENCE_* set together - a blank one fails startup rather than falling back.
-        AUTH_KEY_SOURCE: "SELF_ISSUED"
+        AUTH_KEY_SOURCE: "ENTRA"
+        AUTH_TENANT_ID: "0d0315f6-3c04-4edb-ac37-b05f580cc122"
+        AUTH_AUDIENCE_SLC: "cabebf93-f8bd-42c1-9fd2-0fff1bd13177"
+        AUTH_AUDIENCE_RCC: "38852e1f-a8b9-463f-bb9e-73e9c166a1ae"
+        AUTH_AUDIENCE_PCD: "d9478881-b17f-40ef-a1b3-57728323430c"
+        AUTH_AUDIENCE_DL: "7bffe402-e979-443e-8703-7b5a4e90d5c0"
       keyVaults:
         amp-try-it-now:
           secrets:
