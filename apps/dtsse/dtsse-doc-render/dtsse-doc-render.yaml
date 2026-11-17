@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dtsse-doc-render
+spec:
+  releaseName: dtsse-doc-render
+  values:
+    nodejs:
+      image: hmctsprod.azurecr.io/dtsse/doc-render:prod-0000000-00000000000000 #{"$imagepolicy": "flux-system:dtsse-doc-render"}
+  chart:
+    spec:
+      chart: ./stable/dtsse-doc-render
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
