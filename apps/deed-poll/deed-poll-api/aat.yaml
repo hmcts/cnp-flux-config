@@ -6,7 +6,8 @@ spec:
   values:
     java:
       # Apply deed-poll-infra's AAT API identity secrets before merging this patch.
-      # Helm replaces this list: retain all six secrets from the API chart.
+      # Helm replaces this list, so it must repeat every secret in the API chart's java.keyVaults.deed-poll.secrets
+      # (charts/deed-poll-api/values.yaml), plus any added here. A secret added to the chart alone never reaches AAT.
       keyVaults:
         deed-poll:
           secrets:
@@ -29,6 +30,9 @@ spec:
               alias: DEED_POLL_SYSTEM_PASSWORD
             - name: api-s2s-secret
               alias: DEED_POLL_API_S2S_SECRET
+            # DOCX previews (deed-poll-api#161): copied into deed-poll-aat by deed-poll-infra docmosis.tf.
+            - name: docmosis-access-key
+              alias: DOCMOSIS_ACCESS_KEY
       environment:
         IDAM_API_ISSUER_URL: https://hmcts-access.aat.platform.hmcts.net/o
         # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the

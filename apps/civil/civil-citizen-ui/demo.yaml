@@ -7,12 +7,14 @@ spec:
   values:
     nodejs:
       replicas: 2
+      cpuRequests: 250m
+      cpuLimits: 250m
       readinessDelay: 45
       readinessTimeout: 5
       readinessPeriod: 15
       useInterpodAntiAffinity: true
       ingressHost: moneyclaims.demo.platform.hmcts.net
-      image: hmctsprod.azurecr.io/civil/citizen-ui:pr-7977-acc826c-20261102091710 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
+      image: hmctsprod.azurecr.io/civil/citizen-ui:pr-8523-e1e91a4-20261118082847 #{"$imagepolicy": "flux-system:demo-civil-citizen-ui"}
       keyVaults:
         civil-cui:
           resourceGroup: civil-citizen-ui
@@ -35,6 +37,6 @@ spec:
         OCMC_URL: https://moneyclaims1.demo.platform.hmcts.net
         IDAM_SIGN_OUT_REDIRECT_URL: https://moneyclaims.demo.platform.hmcts.net/dashboard
         OAUTH_CLIENT_REDIRECT: https://moneyclaims.demo.platform.hmcts.net/oauth2/callback
-        TEMP_VAR: 3
+        TEMP_VAR: 5
         SESSION_COOKIE_MAX_AGE: 120000
         SETTLEMENT_AGREEMENT_ENABLED: true

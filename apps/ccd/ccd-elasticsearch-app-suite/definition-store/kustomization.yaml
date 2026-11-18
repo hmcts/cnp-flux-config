@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../ccd-definition-store-api/ccd-definition-store-api.yaml
+patches:
+  - path: ../../ccd-definition-store-api/ithc.yaml
+  - target:
+      group: helm.toolkit.fluxcd.io
+      version: v2
+      kind: HelmRelease
+      name: ccd-definition-store-api
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ccd-elasticsearch-app-definition-store-api
+      - op: replace
+        path: /spec/releaseName
+        value: ccd-elasticsearch-app-definition-store-api
+      - op: add
+        path: /spec/values/java/ingressHost
+        value: ccd-elasticsearch-app-definition-store-api-ithc.service.core-compute-ithc.internal
+      - op: add
+        path: /spec/values/java/keyVaults
+        value:
+          ccd:
+            secrets:
+              - name: definition-store-api-POSTGRES-USER-V15
+                alias: DEFINITION_STORE_DB_USERNAME
+              - name: definition-store-api-POSTGRES-PASS-V15
+                alias: DEFINITION_STORE_DB_PASSWORD
+              - name: ccd-definition-s2s-secret
+                alias: DEFINITION_STORE_IDAM_KEY
+              - name: ccd-ELASTICSEARCH-APP-URL
+                alias: ELASTIC_SEARCH_HOST
+              - name: storage-account-primary-connection-string
+                alias: AZURE_STORAGE_CONNECTION_STRING
+              - name: app-insights-connection-string
+                alias: app-insights-connection-string
