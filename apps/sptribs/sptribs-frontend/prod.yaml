@@ -5,10 +5,25 @@ metadata:
 spec:
   values:
     nodejs:
+      keyVaults:
+        sptribs:
+          secrets:
+            - idam-ui-secret
+            - idam-systemupdate-username
+            - idam-systemupdate-password
+            - name: redis-new
+              alias: redis-access-key
+            - s2s-case-api-secret
+            - app-insights-connection-string
+            - postcode-lookup-token
+            - specialTribunals-cic-pcq-token
+            - sptribs-frontend-dynatrace-url
       ingressHost: special-tribunals.service.gov.uk
       spotInstances:
         enabled: false
       environment:
+        REDIS_HOST: 'sptribs-frontend-prod.uksouth.redis.azure.net'
+        REDIS_PORT: '10000'
         PCQ_ENABLED: true
         EQUALITY_URL: https://equality-and-diversity.platform.hmcts.net
         IDAM_API_URL: https://hmcts-access.service.gov.uk/o/token
