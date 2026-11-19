@@ -11,8 +11,8 @@ spec:
       workloadClientID: "fb098a2c-bb71-46e0-b9f6-46f388f6c970"
       environment:
         ENVIRONMENT_NAME: SBOX
-        APPLICATIONINSIGHTS_ENABLED: "false"
-        APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
+        APPLICATIONINSIGHTS_ENABLED: "true"
+        APPLICATIONINSIGHTS_CONFIGURATION_FILE: /mnt/secrets/amp-marketplace-sbox/app-insights-config
         AZURE_TENANT_ID: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
         APIM_SUBSCRIPTION_ID: "bd2864ed-4f3e-45ed-9c6a-8d179674bab1" # DTS-SPS-SBOX
         APIM_RESOURCE_GROUP: "rg-sps-platform-sbox"
@@ -37,6 +37,7 @@ spec:
               alias: POSTGRES_DATABASE
             - name: marketplace-NOTIFY-API-KEY
               alias: NOTIFY_API_KEY
+            - name: app-insights-config
         # Entra onboarding credentials (amp-client-onboarding), managed and rotated by hmcts/external-entra-id
         kvspsextidsbox:
           excludeEnvironmentSuffix: true
