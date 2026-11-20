@@ -9,8 +9,8 @@ spec:
     java:
       ingressHost: amp-try-it-now.sandbox.platform.hmcts.net
       environment:
-        APPLICATIONINSIGHTS_ENABLED: "false"
-        APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=00000000-0000-0000-0000-000000000000"
+        APPLICATIONINSIGHTS_ENABLED: "true"
+        APPLICATIONINSIGHTS_CONFIGURATION_FILE: /mnt/secrets/amp-try-it-now-sbox/app-insights-config
         # ENTRA. The constraint that held this at SELF_ISSUED was that rcc had no resource app;
         # external-entra-id#36 created amp-api-try-rcc and that is no longer true.
         #
@@ -48,3 +48,4 @@ spec:
               alias: POSTGRES_PORT
             - name: try-it-now-POSTGRES-DATABASE
               alias: POSTGRES_DATABASE
+            - name: app-insights-config
