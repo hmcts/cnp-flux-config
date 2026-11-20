@@ -22,3 +22,11 @@ patches:
       kind: Deployment
       name: helm-controller
       namespace: flux-system
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --concurrent=10
+    target:
+      kind: Deployment
+      name: source-controller
+      namespace: flux-system
