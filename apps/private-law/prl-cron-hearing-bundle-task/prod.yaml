@@ -7,7 +7,7 @@ spec:
   releaseName: prl-cron-hearing-bundle-task
   values:
     job:
-      image: hmctsprod.azurecr.io/prl/cos:prod-624ada7-20261116161524 #{"$imagepolicy": "flux-system:prl-cos"}
+      image: hmctsprod.azurecr.io/prl/cos:prod-d6ca1c8-20261123155713 #{"$imagepolicy": "flux-system:prl-cos"}
       environment:
         TASK_NAME: PrepareHearingBundleTask
         FEATURE_EXAMPLE: true
@@ -31,6 +31,7 @@ spec:
         AM_ROLE_ASSIGNMENT_API_URL: http://am-role-assignment-service-prod.service.core-compute-prod.internal
         PRL_S2S_AUTHORISED_SERVICES: api_gw,prl_citizen_frontend,fis_hmc_api,ccd_data,payment_app
         REFDATA_API_URL: http://rd-commondata-api-prod.service.core-compute-prod.internal
+        COMMON_DATA_API: http://rd-commondata-api-prod.service.core-compute-prod.internal
       schedule: 0 2 * * *
     global:
       jobKind: CronJob

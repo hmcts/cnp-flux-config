@@ -11,6 +11,9 @@ spec:
       secondaryingress:
         hostName: static-build.hmcts.net
       containerEnv:
+        # CVE-2026-114938: temporary mitigation until patched JDK images are deployed.
+        - name: JDK_JAVA_OPTIONS
+          value: "-XX:-UseBASE64Intrinsics"
         - name: ENVIRONMENT
           value: "prod"
         - name: JOB_CACHE_STORAGE_ACCOUNT
@@ -54,6 +57,8 @@ spec:
                         value: xui-{environment}
                       - key: JAVA_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+                      - key: JDK_JAVA_OPTIONS
+                        value: "-XX:-UseBASE64Intrinsics"
                       - key: GRADLE_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: REGISTRY_NAME
@@ -433,8 +438,6 @@ spec:
                     name: "kubernetes"
                     namespace: "jenkins"
                     podLabels:
-                    - key: "aadpodidbinding"
-                      value: "jenkins"
                     - key: "cloud"
                       value: "kubernetes"
                     templates:
@@ -444,6 +447,10 @@ spec:
                       - args: "/bin/sh -c cat"
                         command: "/tini --"
                         image: "hmctsprod.azurecr.io/jenkins/build-agent:db8a7c"
+                        envVars:
+                        - envVar:
+                            key: "JDK_JAVA_OPTIONS"
+                            value: "-XX:-UseBASE64Intrinsics"
                         livenessProbe:
                           failureThreshold: 3
                           initialDelaySeconds: 150
@@ -465,6 +472,10 @@ spec:
                           successThreshold: 1
                           timeoutSeconds: 5
                         name: "jnlp"
+                        envVars:
+                        - envVar:
+                            key: "JDK_JAVA_OPTIONS"
+                            value: "-XX:-UseBASE64Intrinsics"
                         resourceLimitCpu: "2000m"
                         resourceLimitMemory: "6Gi"
                         resourceRequestCpu: "1000m"

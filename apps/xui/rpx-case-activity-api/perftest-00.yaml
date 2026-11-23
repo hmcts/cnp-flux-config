@@ -7,7 +7,11 @@ spec:
   values:
     nodejs:
       replicas: 1
-      image: hmctsprod.azurecr.io/xui/case-activity-api:pr-1-fc58ecb-20260720160836 #{"$imagepolicy": "flux-system:perftest-rpx-case-activity-api"}
+      image: hmctsprod.azurecr.io/xui/case-activity-api:pr-39-e407408-20261123170903 #{"$imagepolicy": "flux-system:perftest-rpx-case-activity-api"}
       environment:
+        RPX_BASE_URL: http://ccd-data-store-api-perftest.service.core-compute-perftest.internal
+        RPX_CASE_ACCESS_CHECK_ENABLED: true
+        # Keep tracker keys in one Redis hash slot for MULTI/EXEC transactions.
+        REDIS_KEY_PREFIX: "activity:{tracker}:"
         DUMMY_VAR_TO_REDEPLOY: 1
         APPINSIGHTS_SAMPLING_PERCENTAGE: 100
