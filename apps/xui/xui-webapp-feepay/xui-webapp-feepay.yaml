@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: xui-webapp-feepay
+spec:
+  releaseName: xui-webapp-feepay
+  values:
+    nodejs:
+      replicas: 2
+      useInterpodAntiAffinity: true
+      image: hmctsprod.azurecr.io/xui/webapp:prod-c8c7795-20261124102749 #{"$imagepolicy": "flux-system:xui-webapp-feepay"}
+      environment:
+        FEATURE_COMPRESSION_ENABLED: false
+  chart:
+    spec:
+      chart: ./stable/xui-webapp
+      sourceRef:
+        kind: GitRepository
+        name: hmcts-charts
+        namespace: flux-system
+      interval: 1m
