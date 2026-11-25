@@ -7,6 +7,7 @@ spec:
   releaseName: prl-cron-request-order-task
   values:
     job:
+      suspend: true
       image: hmctsprod.azurecr.io/prl/cos:pr-3727-3223605-20260625082015 #{"$imagepolicy": "flux-system:perftest-prl-cron-request-order-task"}
       environment:
         APP_ENV: "perftest"
@@ -29,7 +30,7 @@ spec:
         REQUEST_ORDER_TASK_FL401_CADENCE: 1
         REQUEST_ORDER_TASK_CADENCE_MULTIPLIER: 1
         REQUEST_ORDER_TASK_RELEASE_DATE: "2026-09-15"
-      schedule: "00 13 * * *"
+      schedule: 00 13 * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
