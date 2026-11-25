@@ -6,6 +6,7 @@ spec:
   releaseName: prl-cron-request-order-task
   values:
     job:
+      suspend: true
       ingressClass: traefik-private
       image: hmctspublic.azurecr.io/prl/cos:prod-76bf995-20241216170533 #{"$imagepolicy": "flux-system:prl-cron-request-order-task"}
       environment:
@@ -25,7 +26,7 @@ spec:
         REQUEST_ORDER_TASK_FL401_CADENCE: 1
         REQUEST_ORDER_TASK_CADENCE_MULTIPLIER: 1
         REQUEST_ORDER_TASK_RELEASE_DATE: "2026-09-15"
-      schedule: 0/10 * 1 10 *
+      schedule: 0/10 * * * *
     global:
       jobKind: CronJob
       enableKeyVaults: true
