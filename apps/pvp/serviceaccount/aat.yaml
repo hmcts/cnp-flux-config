@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${NAMESPACE}
+  namespace: ${NAMESPACE}
+  annotations:
+    # TODO-after-terraform-apply: the client ID of pvp-aat-mi, which pvp-api's Terraform creates
+    # (output managed_identity_client_id, a list: take [0]). Until it is filled, pods can't read Key Vault.
+    azure.workload.identity/client-id: "TODO-after-terraform-apply"
+automountServiceAccountToken: false
