@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cft-listing-data-api
+spec:
+  releaseName: cft-listing-data-api
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      enableKeyVaults: true
+    python:
+      image: hmctsprod.azurecr.io/pvp/cft-listing-data-api:prod-925191c-20261125152733 # {"$imagepolicy": "flux-system:cft-listing-data-api"}
+  chart:
+    spec:
+      chart: cft-listing-data-api
+      version: ">=0.1.0-0"
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
+      interval: 1m
