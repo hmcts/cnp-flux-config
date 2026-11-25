@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: pvp
+  namespace: flux-system
+spec:
+  path: ./apps/pvp/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "pvp"
+      WI_NAME: "pvp"
+      TEAM_NOTIFICATION_CHANNEL: "pvp-check"
+      TEAM_AAD_GROUP_ID: "7ba1a226-ec5b-4c26-a719-f3fdd2bae689"
