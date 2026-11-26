@@ -7,6 +7,14 @@ spec:
   values:
     nodejs:
       java:
-      image: hmctsprod.azurecr.io/ccd/case-activity-api:prod-314cbed-20261126155020 #{"$imagepolicy": "flux-system:demo-ccd-case-activity-api"}
+      image: hmctsprod.azurecr.io/ccd/case-activity-api:prod-04baebf-20261126130301 #{"$imagepolicy": "flux-system:demo-ccd-case-activity-api"}
       environment:
+        REDIS_HOST: ccd-case-activity-api-{{ .Values.global.environment }}.uksouth.redis.azure.net
+        REDIS_PORT: 10000
         DUMMY_VAR_TO_REDEPLOY: 2
+      keyVaults:
+        ccd:
+          secrets:
+            - name: activity-managed-redis-password
+              alias: activity-redis-password
+            - name: app-insights-connection-string
