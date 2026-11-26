@@ -7,7 +7,7 @@ spec:
   chart:
     spec:
       chart: jenkins
-      version: 5.9.64
+      version: 5.10.0
       sourceRef:
         kind: HelmRepository
         name: jenkins
@@ -30,11 +30,17 @@ spec:
         -Dhudson.model.WorkspaceCleanupThread.retainForDays=2
         -Djenkins.scm.api.SCMEvent.EVENT_THREAD_POOL_SIZE=11
         -Dotel.instrumentation.jenkins.web.enabled=false
+      containerSecurityContext:
+        capabilities:
+          drop: []
       ingress:
         hostName: sandbox-build.hmcts.net
       secondaryingress:
         hostName: static-sandbox-build.hmcts.net
       containerEnv:
+        # CVE-2026-114938: temporary mitigation until patched JDK images are deployed.
+        - name: JDK_JAVA_OPTIONS
+          value: "-XX:-UseBASE64Intrinsics"
         - name: ENVIRONMENT
           value: "sandbox"
         - name: AZURE_KEYVAULT_URL
@@ -97,7 +103,7 @@ spec:
                               github('hmcts/cnp-jenkins-config')
                               credentials('hmcts-jenkins-cnp')
                             }
-                            branch('github-rate-limits')
+                            branch('master')
                           }
                         }
                         scriptPath('jobdsl/Jenkinsfile_github_app_rate_limits')
@@ -137,6 +143,8 @@ spec:
                         value: sandbox
                       - key: JAVA_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+                      - key: JDK_JAVA_OPTIONS
+                        value: "-XX:-UseBASE64Intrinsics"
                       - key: GRADLE_OPTS
                         value: -Xmx2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
                       - key: SANDBOX_AKS_CLUSTER_NAME
@@ -223,8 +231,6 @@ spec:
                     name: "kubernetes"
                     namespace: "jenkins"
                     podLabels:
-                    - key: "aadpodidbinding"
-                      value: "jenkins"
                     - key: "cloud"
                       value: "kubernetes"
                     templates:
@@ -236,6 +242,9 @@ spec:
                         args: "/bin/sh -c cat"
                         command: "/tini --"
                         envVars:
+                        - envVar:
+                            key: "JDK_JAVA_OPTIONS"
+                            value: "-XX:-UseBASE64Intrinsics"
                         - envVar:
                             key: "DOCKER_HOST"
                             value: "tcp://localhost:2376"
@@ -263,6 +272,9 @@ spec:
                         image: "hmctsprod.azurecr.io/jenkins/k8s-agent:00010"
                         command: "jenkins-agent"
                         envVars:
+                        - envVar:
+                            key: "JDK_JAVA_OPTIONS"
+                            value: "-XX:-UseBASE64Intrinsics"
                         - envVar:
                             key: "DOCKER_HOST"
                             value: "tcp://localhost:2376"

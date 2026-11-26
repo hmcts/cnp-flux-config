@@ -358,6 +358,32 @@ spec:
                       }
                     }
                   }
+                  pipelineJob('GitHub App Rate Limits') {
+                    properties {
+                      disableConcurrentBuilds()
+                    }
+                    logRotator {
+                      numToKeep(50)
+                    }
+                    triggers {
+                      cron('H/5 * * * *')
+                    }
+                    definition {
+                      cpsScm {
+                        scm {
+                          git {
+                            remote {
+                              github('hmcts/cnp-jenkins-config')
+                              credentials('hmcts-jenkins-cnp')
+                            }
+                            branch('master')
+                          }
+                        }
+                        scriptPath('jobdsl/Jenkinsfile_github_app_rate_limits')
+                        lightweight(true)
+                      }
+                    }
+                  }
       sidecars:
         configAutoReload:
           image:

@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pvp-api
+spec:
+  releaseName: pvp-api
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      # Without it the chart mounts no Key Vault secret, and the API has no database.
+      enableKeyVaults: true
+    python:
+      image: hmctsprod.azurecr.io/pvp/api:prod-b9accd0-20261125211526 # {"$imagepolicy": "flux-system:pvp-api"}
+      # TODO: PVP_SHORT_NOTICE_DAYS and PVP_DECISION_VALID_DAYS are unset, so no referral is short notice and no
+      # closed referral reopens. Set them under environment: once the service has decided the numbers.
+    # The iCasework stand-in, on by default in the chart: AAT reads its made-up OPTIC report.
+    standin:
+      image: hmctsprod.azurecr.io/pvp/icasework-standin:prod-b9accd0-20261125211526 # {"$imagepolicy": "flux-system:pvp-icasework-standin"}
+    # The retention purge CronJob, from the API's image. Kept on the same tag even while it is off.
+    purge:
+      image: hmctsprod.azurecr.io/pvp/api:prod-b9accd0-20261125211526 # {"$imagepolicy": "flux-system:pvp-api"}
+      # TODO: off until Security and information governance set the retention period. Then set
+      # enabled: true and environment.PVP_RETENTION_DAYS.
+  chart:
+    spec:
+      chart: pvp-api
+      version: ">=0.1.0-0"
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
+      interval: 1m

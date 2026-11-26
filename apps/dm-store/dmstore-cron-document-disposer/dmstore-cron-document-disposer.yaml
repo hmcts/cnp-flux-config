@@ -5,9 +5,12 @@ metadata:
 spec:
   releaseName: dmstore-cron-document-disposer
   values:
+    java:
+      enabled: false
     job:
+      enabled: true
       disableActiveClusterCheck: false
-      image: hmctsprod.azurecr.io/dm/store:prod-bbe0e56-20261019080852 #{"$imagepolicy": "flux-system:dm-store"}
+      image: hmctsprod.azurecr.io/dm/store:prod-916193a-20261119135627 #{"$imagepolicy": "flux-system:dm-store"}
       environment:
         TASK_NAME: UpdateTtlJob
       schedule: "0 0 31 2 *" #schedule of "0 0 31 2 *" is a mechanism to not run the job at all (31st feb is a nonfiring date)
@@ -16,9 +19,9 @@ spec:
         enableKeyVaults: true
   chart:
     spec:
-      chart: dmstore-cron
-      version: 0.0.2
+      chart: ./stable/dm-store
       sourceRef:
-        kind: HelmRepository
-        name: hmctspublic-oci
+        kind: GitRepository
+        name: hmcts-charts
         namespace: flux-system
+      interval: 1m

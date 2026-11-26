@@ -59,7 +59,6 @@ resources:
   - ../../../apps/dynatrace/base/kustomize.yaml
   - ../../../apps/dynatrace/dynakube/kustomize.yaml
   - ../../../apps/rota/base/kustomize.yaml
-  - ../../../apps/apim/base/kustomize.yaml
   - ../../../apps/amp/base/kustomize.yaml
   - ../../../apps/coe/base/kustomize.yaml
   - ../../../apps/pt/base/kustomize.yaml
@@ -67,8 +66,13 @@ resources:
   - ../../../apps/snl/base/kustomize.yaml
   - ../../../apps/deed-poll/base/kustomize.yaml
   - ../../../apps/transcribe/base/kustomize.yaml
+  - ../../../apps/ctam/base/kustomize.yaml
 patches:
   - path: ../../../apps/base/kustomize.yaml
+    target:
+      kind: Kustomization
+      annotationSelector: hmcts.github.com/kustomize-defaults != disabled
+  - path: ../../../apps/base/java4shell-mitigation-patch.yaml
     target:
       kind: Kustomization
       annotationSelector: hmcts.github.com/kustomize-defaults != disabled

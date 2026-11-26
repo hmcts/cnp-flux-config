@@ -6,7 +6,8 @@ spec:
   values:
     java:
       # Apply deed-poll-infra's AAT API identity secrets before merging this patch.
-      # Helm replaces this list: retain all six secrets from the API chart.
+      # Helm replaces this list, so it must repeat every secret in the API chart's java.keyVaults.deed-poll.secrets
+      # (charts/deed-poll-api/values.yaml), plus any added here. A secret added to the chart alone never reaches AAT.
       keyVaults:
         deed-poll:
           secrets:
@@ -29,6 +30,9 @@ spec:
               alias: DEED_POLL_SYSTEM_PASSWORD
             - name: api-s2s-secret
               alias: DEED_POLL_API_S2S_SECRET
+            # DOCX previews (deed-poll-api#161): copied into deed-poll-aat by deed-poll-infra docmosis.tf.
+            - name: docmosis-access-key
+              alias: DOCMOSIS_ACCESS_KEY
       environment:
         IDAM_API_ISSUER_URL: https://hmcts-access.aat.platform.hmcts.net/o
         # Password-grant tokens (the CCD system user's included) carry ForgeRock's internal issuer, not the
@@ -49,5 +53,9 @@ spec:
         # Step 3: link one record per case-list request, oldest first, while the first links are checked.
         CCD_LINKING_SWEEP_ENABLED: "true"
         CCD_LINKING_SWEEP_MAX_RECORDS: "1"
-        DOCUMENT_STORE: filesystem
+        # AAT test documents must survive API pod replacement and be shared across replicas.
+        # Existing Local test documents must be re-uploaded; this does not migrate their files.
+        DOCUMENT_STORE: cdam
+        # 100 MiB AAT capacity for durable generated-deed preparation; owned staging stays off.
+        DOCUMENT_STAGING_MAX_TOTAL_BYTES: "104857600"
         DOCUMENT_STAGING_ENABLED: "false"

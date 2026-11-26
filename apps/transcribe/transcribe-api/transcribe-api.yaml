@@ -6,8 +6,12 @@ spec:
   releaseName: transcribe-api
   interval: 1m
   values:
+    # Background pollers (python -m transcribe_api.worker), same image as the API.
+    # The chart runs it only on the active cron cluster.
+    worker:
+      image: hmctsprod.azurecr.io/transcribe/api:prod-9285ed2-20261124075803 # {"$imagepolicy": "flux-system:transcribe-api"}
     python:
-      image: hmctsprod.azurecr.io/transcribe/api:prod-ee0f535-20261014230851 # {"$imagepolicy": "flux-system:transcribe-api"}
+      image: hmctsprod.azurecr.io/transcribe/api:prod-9285ed2-20261124075803 # {"$imagepolicy": "flux-system:transcribe-api"}
   chart:
     spec:
       chart: ./stable/transcribe-api

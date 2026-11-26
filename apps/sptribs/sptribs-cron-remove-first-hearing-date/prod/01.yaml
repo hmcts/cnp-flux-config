@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sptribs-cron-remove-first-hearing-date
+spec:
+  values:
+    job:
+      suspend: true
+      environment:
+        REMOVE_FIRST_HEARING_DATE_CASE_REFERENCE: ""
+        REMOVE_FIRST_HEARING_DATE_ENABLED: "false"
+        REMOVE_FIRST_HEARING_DATE_BATCH_SIZE: "100"
+        REMOVE_FIRST_HEARING_DATE_BATCH_PAUSE_MS: "5000"
+        IDAM_API_BASEURL: https://idam-api.platform.hmcts.net
+        SPRING_APPLICATION_JSON: |
+          {
+            "ccd": {
+              "decentralised-runtime": {
+                "system-user": {
+                  "id": "sptribs-prod-system-migration",
+                  "username": "sptribs-prod-system-migration",
+                  "first-name": "Production",
+                  "last-name": "System Migration"
+                }
+              }
+            }
+          }
+    global:
+      jobKind: CronJob
+      enableKeyVaults: true
+      tenantId: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+      environment: prod
