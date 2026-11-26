@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pvp-api
+spec:
+  # AAT reads iCasework UAT, which holds test data, instead of the stand-in: pvp-api's
+  # charts/pvp-api/values.icasework-uat.yaml. The key and secret are set in pvp-aat by hand
+  # (tools/set_icasework_keys.sh); without them the pod can't mount its secrets.
+  values:
+    standin:
+      enabled: false
+    python:
+      environment:
+        PVP_DATA_CLASS: synthetic
+        PVP_OPTIC_ENVIRONMENT: uat
+        PVP_OPTIC_STANDIN_URL: null
+        PVP_OPTIC_REPORT_IDS: null
+        PVP_OPTIC_API_KEY: null
+        PVP_OPTIC_API_SECRET: null
+      keyVaults:
+        pvp:
+          secrets:
+            - name: database-url
+              alias: PVP_DATABASE_URL
+            - name: app-insights-connection-string
+              alias: APPLICATIONINSIGHTS_CONNECTION_STRING
+            - name: optic-api-key
+              alias: PVP_OPTIC_API_KEY
+            - name: optic-api-secret
+              alias: PVP_OPTIC_API_SECRET
