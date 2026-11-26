@@ -6,3 +6,29 @@ spec:
   values:
     nodejs:
       ingressHost: amp-marketplace-web.aat.platform.hmcts.net
+      # amp-aat-mi (managed-identities-aat-rg), shared with amp-marketplace in aat
+      workloadClientID: "d422f9a5-7562-44ba-9098-fd5043170103"
+      environment:
+        # The chart turns sign in off in aat; the credentials below turn it on.
+        ENTRA_ENABLED: "true"
+      keyVaults:
+        amp-marketplace:
+          secrets:
+            - name: marketplace-web-redis-host
+              alias: REDIS_HOST
+            - name: marketplace-web-redis-port
+              alias: REDIS_PORT
+            - name: marketplace-web-redis-access-key
+              alias: REDIS_KEY
+            - name: marketplace-web-session-secret
+              alias: SESSION_SECRET
+        # Entra sign-in credentials, managed and rotated by hmcts/external-entra-id
+        kvspsextidaat:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-app-web-api-marketplace-client-id
+              alias: ENTRA_CLIENT_ID
+            - name: entra-app-web-api-marketplace-secret
+              alias: ENTRA_CLIENT_SECRET
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID

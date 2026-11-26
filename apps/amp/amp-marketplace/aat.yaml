@@ -27,3 +27,11 @@ spec:
               alias: POSTGRES_PORT
             - name: marketplace-POSTGRES-DATABASE
               alias: POSTGRES_DATABASE
+        # Admin sign-in (/admin/**): the tenant and the web app it trusts, managed by hmcts/external-entra-id
+        kvspsextidaat:
+          excludeEnvironmentSuffix: true
+          secrets:
+            - name: entra-tenant-id
+              alias: ENTRA_TENANT_ID
+            - name: entra-app-web-api-marketplace-client-id
+              alias: ADMIN_AUTH_AUDIENCE
