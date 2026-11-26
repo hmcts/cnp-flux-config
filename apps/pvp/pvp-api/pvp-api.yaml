@@ -16,7 +16,7 @@ spec:
       # Without it the chart mounts no Key Vault secret, and the API has no database.
       enableKeyVaults: true
     python:
-      image: hmctsprod.azurecr.io/pvp/api:prod-2073dae-20261126163038 # {"$imagepolicy": "flux-system:pvp-api"}
+      image: hmctsprod.azurecr.io/pvp/api:prod-a4f02d4-20261126164505 # {"$imagepolicy": "flux-system:pvp-api"}
       # TODO: PVP_SHORT_NOTICE_DAYS and PVP_DECISION_VALID_DAYS are unset, so no referral is short notice and no
       # closed referral reopens. Set them under environment: once the service has decided the numbers.
     # The iCasework stand-in, on by default in the chart: AAT reads its made-up OPTIC report.
@@ -24,7 +24,7 @@ spec:
       image: hmctsprod.azurecr.io/pvp/icasework-standin:prod-a4f02d4-20261126164505 # {"$imagepolicy": "flux-system:pvp-icasework-standin"}
     # The retention purge CronJob, from the API's image. Kept on the same tag even while it is off.
     purge:
-      image: hmctsprod.azurecr.io/pvp/api:prod-2073dae-20261126163038 # {"$imagepolicy": "flux-system:pvp-api"}
+      image: hmctsprod.azurecr.io/pvp/api:prod-a4f02d4-20261126164505 # {"$imagepolicy": "flux-system:pvp-api"}
       # TODO: off until Security and information governance set the retention period. Then set
       # enabled: true and environment.PVP_RETENTION_DAYS.
   chart:
