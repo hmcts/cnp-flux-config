@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cft-listing-data-api
+spec:
+  values:
+    python:
+      environment:
+        # Who a ServiceAuthorization token belongs to. Without it every hearings request is a 401.
+        S2S_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
