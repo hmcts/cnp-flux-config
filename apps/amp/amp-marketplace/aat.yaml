@@ -41,10 +41,15 @@ spec:
               alias: AUDIT_INGESTION_ENDPOINT
             - name: audit-ingestion-rule-id
               alias: AUDIT_INGESTION_RULE_ID
-        # Admin sign-in (/admin/**): the tenant and the web app it trusts, managed by hmcts/external-entra-id
+        # Admin sign-in (/admin/**) and the amp-client-onboarding credentials that register consumers'
+        # applications, managed by hmcts/external-entra-id
         kvspsextidaat:
           excludeEnvironmentSuffix: true
           secrets:
+            - name: entra-app-amp-client-onboarding-client-id
+              alias: ENTRA_ONBOARDING_CLIENT_ID
+            - name: entra-app-amp-client-onboarding-secret
+              alias: ENTRA_ONBOARDING_CLIENT_SECRET
             - name: entra-tenant-id
               alias: ENTRA_TENANT_ID
             - name: entra-app-web-api-marketplace-client-id
