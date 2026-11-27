@@ -5,3 +5,15 @@ resources:
 
 patches:
 - path: ../../traefik2/sbox/01.yaml
+- patch: |-
+    $patch: delete
+    apiVersion: aadpodidentity.k8s.io/v1
+    kind: AzureIdentity
+    metadata:
+      name: aks-pod-identity-mi
+      namespace: admin
+  target:
+    group: aadpodidentity.k8s.io
+    kind: AzureIdentity
+    name: aks-pod-identity-mi
+    version: v1
