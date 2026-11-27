@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pvp-frontend
+spec:
+  # Entra sign-in, with AAT's app registration (pvp-aat), on the public host its redirect URIs name. The chart keeps
+  # sign-in off by default (pvp-frontend's charts/pvp-frontend/values.yaml).
+  values:
+    nodejs:
+      ingressHost: pvp.aat.platform.hmcts.net
+      environment:
+        PVP_AUTH: entra
+        PVP_ENTRA_TENANT_ID: "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+        PVP_ENTRA_CLIENT_ID: "be03228f-72cb-4382-8e09-3d859faa3b76"
+        # Where Entra sends people back to: https:// and the ingressHost above.
+        PVP_APP_URL: https://pvp.aat.platform.hmcts.net
+      # A list replaces the chart's, so the telemetry secret is listed again. Both sign-in secrets are written to
+      # pvp-aat by pvp-api's infrastructure/sign_in.tf; without either, the pod can't mount its secrets.
+      keyVaults:
+        pvp:
+          secrets:
+            - name: app-insights-connection-string
+              alias: APPLICATIONINSIGHTS_CONNECTION_STRING
+            - name: entra-client-secret
+              alias: PVP_ENTRA_CLIENT_SECRET
+            - name: session-key
+              alias: PVP_SESSION_KEY
