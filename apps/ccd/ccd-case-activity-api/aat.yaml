@@ -9,3 +9,11 @@ spec:
       replicas: 4
       environment:
         REDIS_ACTIVITY_TTL: 15
+        REDIS_HOST: ccd-case-activity-api-{{ .Values.global.environment }}.uksouth.redis.azure.net
+        REDIS_PORT: 10000
+      keyVaults:
+        ccd:
+          secrets:
+            - name: activity-managed-redis-password
+              alias: activity-redis-password
+            - name: app-insights-connection-string
