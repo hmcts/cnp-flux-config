@@ -8,11 +8,24 @@ spec:
     ingressHost: pact-broker.sandbox.platform.hmcts.net
     postgresqlHost: cft-pact-broker-ptlsbox.postgres.database.azure.com
     vaultName: cftsbox-intsvc
+    image: pactfoundation/pact-broker:3.2.0-pactbroker2.124.0
+    applicationPort: 9292
+    entrypoint: exec sh /pact_broker/entrypoint.sh
+    enableServiceLinks: false
+    environment:
+      PACT_BROKER_PORT: "9292"
+      PACT_DO_NOT_TRACK: "true"
+      PACT_BROKER_DATABASE_CLEAN_ENABLED: "true"
+      PACT_BROKER_DATABASE_CLEAN_DRY_RUN: "true"
+      PACT_BROKER_DATABASE_CLEAN_CRON_SCHEDULE: "*/10 7,18 * * 1-5"
+      PACT_BROKER_DATABASE_CLEAN_DELETION_LIMIT: "500"
+      PACT_BROKER_DATABASE_CLEAN_KEEP_VERSION_SELECTORS: '[{"tag": true, "latest": true}, {"branch": true, "latest": true}, {"latest": true}, {"max_age": 90}]'
+      PACT_BROKER_DATABASE_CLEAN_KEEP_BRANCH_SELECTORS: '[{"max_age": 90}, {"branch": ["master", "main"]}]'
   chart:
     spec:
       chart: pact-broker
-      version: 0.16.0
+      version: 0.17.0
       sourceRef:
         kind: HelmRepository
-        name: hmctspublic-oci
+        name: hmctsprod-oci
         namespace: flux-system
