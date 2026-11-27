@@ -10,8 +10,8 @@ spec:
       suspend: false
       useInterpodAntiAffinity: true
       aadIdentityName: sscs
-      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:prod-45bbebe-20261124163937 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
-      schedule: "00 13 02 11 *"
+      image: hmctsprod.azurecr.io/sscs/ccd-case-migration:pr-201-93bfbc0-20261125120603 #{"$imagepolicy": "flux-system:demo-sscs-ccd-case-migration"}
+      schedule: "10 16 26 11 *"
       keyVaults:
         sscs:
           resourceGroup: sscs
@@ -52,7 +52,8 @@ spec:
         ELASTIC_ENABLED: true
         MIGRATION_QUERY_SIZE: 500
         MIGRATION_CASE_LIMIT: "1000"
-        DUMMY: false
+        DUMMY: true
+        ARCHIVE_OLD_DRAFTS_ENABLED: true
         VENUE_MIGRATION_ENABLED: true
     global:
       environment: demo

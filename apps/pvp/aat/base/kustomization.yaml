@@ -3,4 +3,11 @@ kind: Kustomization
 resources:
   - ../../base
   - ../../../rbac/nonprod-role.yaml
+  - ../../pvp-api/pvp-api.yaml
+  - ../../pvp-frontend/pvp-frontend.yaml
+  - ../../../base/slack-provider/aat
+  - ../../../base/docker-registry/aat
 namespace: pvp
+patches:
+  - path: ../../serviceaccount/aat.yaml
+  - path: ../../pvp-api/aat.yaml

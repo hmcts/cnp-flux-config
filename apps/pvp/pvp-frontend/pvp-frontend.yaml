@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pvp-frontend
+spec:
+  releaseName: pvp-frontend
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    global:
+      # Without it the chart mounts no Key Vault secret.
+      enableKeyVaults: true
+    nodejs:
+      image: hmctsprod.azurecr.io/pvp/frontend:prod-5261bb1-20261127102727 # {"$imagepolicy": "flux-system:pvp-frontend"}
+      # The chart's internal ingressHost stays. The public host goes in only with sign-in.
+  chart:
+    spec:
+      chart: pvp-frontend
+      version: ">=0.1.0-0"
+      sourceRef:
+        kind: HelmRepository
+        name: hmctsprod-oci
+        namespace: flux-system
+      interval: 1m

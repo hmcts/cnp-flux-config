@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cft-listing
+  namespace: flux-system
+spec:
+  path: ./apps/cft-listing/${ENVIRONMENT}/base
+  postBuild:
+    substitute:
+      NAMESPACE: "cft-listing"
+      WI_NAME: "cft-listing"
+      TEAM_NOTIFICATION_CHANNEL: "pvp-check"
+      TEAM_AAD_GROUP_ID: "7ba1a226-ec5b-4c26-a719-f3fdd2bae689"
